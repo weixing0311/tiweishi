@@ -9,5 +9,8 @@
 #import "JFABaseTableViewController.h"
 
 @interface RealNameAuthenticationViewController : JFABaseTableViewController
+@property (weak, nonatomic) IBOutlet UITextField *nameTF;
+@property (weak, nonatomic) IBOutlet UITextField *sfzTf;
 
+- (IBAction)didRz:(id)sender;
 @end

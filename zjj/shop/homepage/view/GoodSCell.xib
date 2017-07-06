@@ -1,19 +1,84 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GoodSCell">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="167" height="220"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <rect key="frame" x="0.0" y="0.0" width="167" height="220"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C9u-f2-h9E">
+                        <rect key="frame" x="0.0" y="0.0" width="167" height="167"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="C9u-f2-h9E" secondAttribute="height" multiplier="1:1" id="upz-7E-10t"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="脂将军体脂管理服务套餐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbX-P7-o3R">
+                        <rect key="frame" x="5" y="170" width="157" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="7zF-qw-MYJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥1380" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIH-eW-IFI">
+                        <rect key="frame" x="5" y="193" width="56" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" priority="20" constant="100" id="Bzm-hg-c4l"/>
+                            <constraint firstAttribute="height" constant="17" id="iKi-KH-wsw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="1" green="0.095024956600000002" blue="0.031412760419999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JPk-jS-juI">
+                        <rect key="frame" x="95" y="190" width="62" height="27"/>
+                        <color key="backgroundColor" red="0.94703024625778198" green="0.52993190288543701" blue="0.29891932010650635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="62" id="H3m-VL-avM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                        <state key="normal" title="立即购买">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="didBuy:" destination="gTV-IL-0wX" eventType="touchUpInside" id="8Mx-KJ-xKW"/>
+                        </connections>
+                    </button>
+                </subviews>
             </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="C9u-f2-h9E" secondAttribute="trailing" id="66Q-aQ-pqZ"/>
+                <constraint firstAttribute="bottom" secondItem="JPk-jS-juI" secondAttribute="bottom" constant="3" id="89h-yD-Nfi"/>
+                <constraint firstItem="C9u-f2-h9E" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FQy-DY-xyB"/>
+                <constraint firstItem="JPk-jS-juI" firstAttribute="top" secondItem="gbX-P7-o3R" secondAttribute="bottom" id="YO7-Je-h6t"/>
+                <constraint firstAttribute="trailing" secondItem="JPk-jS-juI" secondAttribute="trailing" constant="10" id="c4O-dq-b7x"/>
+                <constraint firstItem="C9u-f2-h9E" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="j0y-k0-aTY"/>
+                <constraint firstItem="gbX-P7-o3R" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="m2y-c4-lPS"/>
+                <constraint firstAttribute="trailing" secondItem="gbX-P7-o3R" secondAttribute="trailing" constant="5" id="upS-wF-8dd"/>
+                <constraint firstItem="eIH-eW-IFI" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="xMj-KG-Gsm"/>
+                <constraint firstItem="eIH-eW-IFI" firstAttribute="top" secondItem="gbX-P7-o3R" secondAttribute="bottom" constant="3" id="xXF-CQ-lmu"/>
+            </constraints>
+            <connections>
+                <outlet property="buyButton" destination="JPk-jS-juI" id="V6a-aS-Kkg"/>
+                <outlet property="imageView" destination="C9u-f2-h9E" id="lkp-gG-Ohi"/>
+                <outlet property="priceLabel" destination="eIH-eW-IFI" id="GsU-JM-xgi"/>
+                <outlet property="titleLabel" destination="gbX-P7-o3R" id="U9g-c9-f4R"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
         </collectionViewCell>
     </objects>
 </document>

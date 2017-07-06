@@ -6,10 +6,10 @@
 //  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
 //
 
-#import "ShareDataDetailView.h"
+#import "ShareDetailView.h"
 #import "HealthDetailsItem.h"
 #import "EvaluationDetailDatasCell.h"
-@implementation ShareDataDetailView
+@implementation ShareDetailView
 
 - (instancetype)init
 {
@@ -26,8 +26,10 @@
     self.headImageView.layer.cornerRadius = self.headImageView.frame.size.width / 2;
     self.headImageView.layer.borderColor = [UIColor orangeColor].CGColor;
     self.headImageView.layer.borderWidth = 1;
+    
 //    self.tableView.delegate = self;
 //    self.tableView.dataSource= self;
+    [self setInfo];
 
 }
 -(void)setInfo
@@ -37,7 +39,7 @@
 
     self.bodyAgeLabel.text =[NSString stringWithFormat:@"%d",[HealthDetailsItem instance].bodyAge];
 
-//    self.bmrLabel.text = [NSString stringWithFormat:@"%f",[HealthDetailsItem instance].bmr];
+    self.bmrLabel.text = [NSString stringWithFormat:@"%f",[HealthDetailsItem instance].bmr];
 
     [self.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
     self.nameLabel.text =[SubUserItem shareInstance].nickname;
@@ -124,14 +126,26 @@
     [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(tisStr.length-3, 3)];
     
     self.scaleResultStatusLabel.attributedText = tisString;
+    [self getImage];
+}
 
+-(void)getImage
+{
+    UIGraphicsBeginImageContext(self.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
+    UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文
+    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 2;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 103;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * identifier = @"EvaluationDetailDatasCell";

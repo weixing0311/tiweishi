@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 @interface NSDictionary (JFASafeObject)
 
 -(id)safeObjectForKey:(id)key;

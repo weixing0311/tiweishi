@@ -18,4 +18,12 @@
 }
 */
 
+- (IBAction)didUserInfo:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(showUserList)]) {
+        [self.delegate showUserList];
+    }
+}
+
+- (IBAction)didClickMenu:(id)sender {
+}
 @end

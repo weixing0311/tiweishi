@@ -11,4 +11,5 @@
 
 #import "AFNetworking.h"
 #import "Reachability.h"
+#import "JFANetWorkServiceItem.h"
 #endif

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "BabyBluetooth.h"
 @interface BTManager : NSObject
 
 @end

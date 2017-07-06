@@ -8,6 +8,15 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface jzsSchoolWebViewController : JFABaseTableViewController
+@interface jzsSchoolWebViewController : JFABaseTableViewController<UIWebViewDelegate>
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIButton *zanBtn;
+@property (weak, nonatomic) IBOutlet UIButton *collectionBtn;
 
+- (IBAction)didCollection:(id)sender;
+- (IBAction)didZan:(id)sender;
+@property (nonatomic,copy)NSString * urlStr;
+@property (nonatomic,assign)int  iscollection;
+@property (nonatomic,assign)int  islike;
+@property (nonatomic,assign)int  informateId;
 @end

@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UpdataAddressCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phonenumLabel;
 
 @end

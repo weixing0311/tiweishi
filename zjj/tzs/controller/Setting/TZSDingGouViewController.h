@@ -8,6 +8,12 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZSDingGouViewController : JFABaseTableViewController
+@interface TZSDingGouViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+- (IBAction)placeTheOrder:(id)sender;
 
 @end

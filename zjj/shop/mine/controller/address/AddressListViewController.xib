@@ -1,12 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressListViewController">
             <connections>
+                <outlet property="tableview" destination="AyR-1l-8ji" id="Bgy-oT-OJC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +19,34 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AyR-1l-8ji">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdQ-Yc-lGG">
+                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <color key="backgroundColor" red="0.99109692260000004" green="0.213834791" blue="0.18167625309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <state key="normal" title="新增收货地址">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="didAdd:" destination="-1" eventType="touchUpInside" id="PVy-Bj-yBm"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="AyR-1l-8ji" secondAttribute="bottom" constant="50" id="8SG-nr-UvT"/>
+                <constraint firstAttribute="trailing" secondItem="AyR-1l-8ji" secondAttribute="trailing" id="HT6-VK-rNi"/>
+                <constraint firstItem="AyR-1l-8ji" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="V4z-x8-tgd"/>
+                <constraint firstAttribute="bottom" secondItem="sdQ-Yc-lGG" secondAttribute="bottom" id="eiS-40-qto"/>
+                <constraint firstItem="sdQ-Yc-lGG" firstAttribute="top" secondItem="AyR-1l-8ji" secondAttribute="bottom" id="jQh-xm-rAj"/>
+                <constraint firstItem="sdQ-Yc-lGG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lcq-aB-12h"/>
+                <constraint firstAttribute="trailing" secondItem="sdQ-Yc-lGG" secondAttribute="trailing" id="wxC-Nl-AlY"/>
+                <constraint firstItem="AyR-1l-8ji" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ydW-Lb-kYr"/>
+            </constraints>
         </view>
     </objects>
 </document>

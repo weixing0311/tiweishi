@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol userListDelegate;
+@interface UserListView : UIView<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+@property (nonatomic,strong)UITableView * userTableview;
+@property (nonatomic,strong)NSMutableArray * dataArray;
+@property (nonatomic,assign)id<userListDelegate>delegate;
+-(void)refreshInfo;
+@end
+@protocol userListDelegate <NSObject>
 
-@interface UserListView : UIView
+-(void)changeShowUserWithSubId:(NSString *)subId isAdd:(BOOL)isAdd;
 
 @end

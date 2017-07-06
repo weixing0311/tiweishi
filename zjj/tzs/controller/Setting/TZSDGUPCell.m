@@ -21,4 +21,11 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)didBuy:(id)sender {
+    
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(didBuyWithCell:)]) {
+        [self.delegate didBuyWithCell:self];
+    }
+
+}
 @end

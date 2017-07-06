@@ -8,6 +8,9 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZSOrderDetailViewController : JFABaseTableViewController
+@interface TZSOrderDetailViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (nonatomic,copy)NSString * orderNo;
+
 
 @end

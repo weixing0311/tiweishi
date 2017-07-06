@@ -6,9 +6,9 @@
 //  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
 //
 
-#import "OrderHeader.h"
+#import "TZSOrderHeader.h"
 
-@implementation OrderHeader
+@implementation TZSOrderHeader
 
 /*
 // Only override drawRect: if you perform custom drawing.

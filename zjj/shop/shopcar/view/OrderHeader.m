@@ -18,4 +18,8 @@
 }
 */
 
+- (IBAction)delete:(id)sender {
+}
+- (IBAction)didDelete:(id)sender {
+}
 @end

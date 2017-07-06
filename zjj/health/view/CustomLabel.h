@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomLabel : UIView
-
+@property(nonatomic,strong) NSMutableAttributedString * attributedString;
+@property(nonatomic,assign)BOOL isCenterAlignment;
+-(void)append:(NSString *)text font:(UIFont *)font color:(UIColor *)color;
 @end

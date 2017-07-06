@@ -7,8 +7,6 @@
 //
 
 #import "ADCarouselView.h"
-#import "UIImageView+WebCache.h"
-
 #define kADCarouselViewLeftMargin 10
 
 #define kPageControlViewDefaultW 80
@@ -78,7 +76,8 @@
 - (void)setImgUrl:(NSString *)imgUrl
 {
     _imgUrl = imgUrl;
-    [self.imgView sd_setImageWithURL:[NSURL URLWithString:_imgUrl] placeholderImage:self.placeholderImage];
+    
+    [self.imgView setImageWithURL:[NSURL URLWithString:_imgUrl] placeholderImage:self.placeholderImage];
 }
 
 - (void)layoutSubviews
@@ -232,7 +231,9 @@
     ADCarouselViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"carouselViewCell" forIndexPath:indexPath];
     cell.imgView.contentMode = self.imageContentMode;
     cell.placeholderImage = self.placeholderImage;
-    NSString *imgName = self.carouselImages[indexPath.row];
+    NSString *imgName;
+    imgName = self.carouselImages[indexPath.row];
+    
     if ([imgName hasPrefix:@"http://"] || [imgName hasPrefix:@"https://"])
     {
         cell.imgUrl = imgName;
@@ -319,15 +320,10 @@
     
     if (_currentIndex < self.imgs.count + 1)
     {
-//        NSLog(@"%zd",currentIndex);
         NSInteger index = _currentIndex > 0 ? _currentIndex - 1 : 0;
         self.pageControlView.currentPage = index;
-        
         self.titleLabel.hidden = !self.titles.count;
-        if (self.titles.count > index)
-        {
-            self.titleLabel.text = self.titles[index];
-        }
+        self.titleLabel.text = self.titles[currentIndex];
         
         return;
     }
@@ -340,7 +336,7 @@
     
     [self.carouselView reloadData];
     self.pageControlView.hidden = !_imgs.count;
-    self.pageControlView.numberOfPages = _imgs.count;
+//    self.pageControlView.numberOfPages = _imgs.count;
 }
 
 - (ADPageControlView *)pageControlView

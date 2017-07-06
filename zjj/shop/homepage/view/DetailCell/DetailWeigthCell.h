@@ -10,4 +10,5 @@
 
 @interface DetailWeigthCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *weigthLabel;
 @end

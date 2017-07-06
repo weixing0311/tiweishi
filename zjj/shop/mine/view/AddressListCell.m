@@ -21,4 +21,33 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)didDelete:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didClickDeleteWithCell:)]) {
+        [self.delegate didClickDeleteWithCell:self];
+    }
+}
+
+- (IBAction)didEdit:(id)sender {
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didClickEditWithCell:)]) {
+        [self.delegate didClickEditWithCell:self];
+    }
+
+    
+}
+- (IBAction)isDefault:(id)sender
+{
+    
+    if (self.defaultBtn.selected ==YES){}
+    else
+    {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(didClickChangeDefaultWithCell:)]) {
+            [self.delegate didClickChangeDefaultWithCell:self];
+        }
+ 
+    }
+    
+    
+    
+}
 @end

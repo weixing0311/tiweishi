@@ -9,6 +9,55 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
+#import "AAGlobalMacro.h"
+#import "UIImage+scal.h"
+#import "JFABaseDefine.h"
+#import "AFNetworking.h"
+#import "JFABaseCategoryHeader.h"
+#import <TFScale/TFScale.h>
+#import "UserModel.h"
+#import "BaseSservice.h"
+#import "NSString+RSA.h"
+#import "HealthItem.h"
+#import "UIImageView+AFNetworking.h"
+#import "UIButton+AFNetworking.h"
+#import "UIView+Board.h"
+#import "MJRefresh.h"
+#import "SubUserItem.h"
+
+#define HEXCOLOR(hex) [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16)) / 255.0 green:((float)((hex & 0xFF00) >> 8)) / 255.0 blue:((float)(hex & 0xFF)) / 255.0 alpha:1]
+
+#define kdidReLoign              @"tokenlostPleaseReLoign"
+#define kMyloignInfo             @"ksavemyloignresuleinfokey"
+#define kRefreshInfo             @"userInfoChangeThenRefreshAllInfoView"
+/**
+ * 订单页面进入选择地址页面，选择地址后传递
+ */
+#define kSendAddress             @"sendaddresstolastpage"
+
+
+
+///URL
+#define kuHeaderserReviewUrl     @"app/evaluatData/queryEvaluatHome.do"
+#define ksearchUserReviewUrl     @"app/evaluatData/queryEvaluatData.do"
+#define kShareUserReviewInfoUrl  @"app/evaluatData/queryEvaluatInfo.do"
+#define kAddUserReviewInfoUrl    @"app/evaluatData/addEvaluatData.do"
+#define kDeleteUserReviewInfoUrl @"app/evaluatData/deleteEvaluatData.do"
+#define kaddUserInfoUrl          @"app/evaluatUser/perfectMainUser.do"
+#define kAddSubUserUrl           @"app/evaluatUser/addChild.do"
+#define kReloadSubUserInfoUrl    @"app/evaluatUser/updateChild.do"
+#define kDeleteSubUserUrl        @"app/evaluatUser/deleteChild.do"
+#define kSendMobileVerUrl        @"app/user/sendSMS.do"
+#define kLoignWithVerUrl         @"app/user/login.do"
+
+
+#define kgetGoodsListInfo        @"app/product/queryProductList.do"
+#define kBannerListUrl           @"app/homeRecommend/queryRecommend.do"
+#define kProductsDetail          @"app/product/queryProductsDetail.do"
+//heathUrl
+
+
+
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 

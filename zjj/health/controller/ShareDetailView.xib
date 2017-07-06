@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ShareDataDetailView">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ShareDetailView">
             <rect key="frame" x="0.0" y="0.0" width="562" height="1000"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -19,11 +19,6 @@
                     <rect key="frame" x="0.0" y="0.0" width="562" height="1000"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWT-fs-nhP" customClass="UILabel">
-                    <rect key="frame" x="45" y="534" width="471" height="33"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2V4-L7-kPQ">
                     <rect key="frame" x="148" y="237" width="265" height="264"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -109,11 +104,6 @@
                         <outlet property="delegate" destination="iN0-l3-epB" id="rR5-Jr-htX"/>
                     </connections>
                 </tableView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ixc-Ba-a4g" customClass="UILabel">
-                    <rect key="frame" x="32" y="578" width="499" height="35"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.25" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7oB-M7-mlk">
                     <rect key="frame" x="225" y="121" width="1" height="52"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -140,6 +130,20 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiW-5l-cCy">
+                    <rect key="frame" x="45" y="534" width="471" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIq-pw-tpH">
+                    <rect key="frame" x="32" y="578" width="499" height="35"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -147,15 +151,17 @@
                 <outlet property="bmrLabel" destination="E9I-9N-32w" id="EIc-YL-UD8"/>
                 <outlet property="bodyAgeLabel" destination="J2M-UP-u42" id="VjW-YT-TKm"/>
                 <outlet property="generateTimeLabel" destination="MyH-eA-8RV" id="nyV-Dg-c9P"/>
+                <outlet property="headImageView" destination="LbJ-PA-ncY" id="rRE-6I-xsO"/>
+                <outlet property="nameLabel" destination="4Po-Me-hn2" id="RdQ-aS-QyO"/>
                 <outlet property="qrCodeImageView" destination="zzb-2w-7Ls" id="bue-OP-24h"/>
-                <outlet property="scaleResultStatusLabel" destination="ixc-Ba-a4g" id="r3M-1F-dPK"/>
+                <outlet property="scaleResultStatusLabel" destination="wIq-pw-tpH" id="La7-jT-Am2"/>
                 <outlet property="tableView" destination="6UY-Xg-vJU" id="Hdw-yi-iCS"/>
                 <outlet property="testDateLabel" destination="Sjx-it-85r" id="eCx-eR-dsT"/>
                 <outlet property="trendArrowImageView" destination="DGz-M8-fvZ" id="vRR-yM-jBM"/>
                 <outlet property="trendLabel" destination="l5P-0j-kW3" id="SfN-GH-pPN"/>
                 <outlet property="weightBgImageView" destination="2V4-L7-kPQ" id="Ugf-QT-a2e"/>
                 <outlet property="weightLabel" destination="q7S-o4-PYG" id="n6i-ba-Ttx"/>
-                <outlet property="weightStatusLabel" destination="IWT-fs-nhP" id="vn0-Mt-aLt"/>
+                <outlet property="weightStatusLabel" destination="DiW-5l-cCy" id="iUp-sN-b4g"/>
             </connections>
             <point key="canvasLocation" x="97" y="28"/>
         </view>

@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol TZSSendCellDelegate;
 @interface TZSSendCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *headimageView;
+- (IBAction)didAdd:(id)sender;
+- (IBAction)didRed:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *limitLabel;//限制Label
+@property (nonatomic,assign)id<TZSSendCellDelegate>delegate;
+@end
+@protocol TZSSendCellDelegate <NSObject>
+
+-(void)didAddWithCell:(TZSSendCell*)cell;
+-(void)didRedWithCell:(TZSSendCell*)cell;
 
 @end

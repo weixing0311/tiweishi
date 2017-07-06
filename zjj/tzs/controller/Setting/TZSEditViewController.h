@@ -8,6 +8,7 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZSEditViewController : JFABaseTableViewController
+@interface TZSEditViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

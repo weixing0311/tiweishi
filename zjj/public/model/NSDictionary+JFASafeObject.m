@@ -26,5 +26,11 @@
 
 -(void)safeSetObject:(id)object key:(NSString *)key
 {
+    if (!object) {
+        object=@"";
+    }
+    if (!key) {
+        return;
+    }
 }
 @end

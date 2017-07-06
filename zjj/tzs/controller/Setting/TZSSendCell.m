@@ -21,4 +21,16 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)didAdd:(id)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(didAddWithCell:)]) {
+        [self.delegate didAddWithCell:self];
+    }
+}
+
+- (IBAction)didRed:(id)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(didRedWithCell:)]) {
+        [self.delegate didRedWithCell:self];
+    }
+
+}
 @end

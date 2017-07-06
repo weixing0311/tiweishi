@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"意见反馈";
     // Do any additional setup after loading the view from its nib.
 }
 

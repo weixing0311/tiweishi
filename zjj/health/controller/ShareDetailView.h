@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShareDataDetailView : UIView<UITableViewDelegate,UITableViewDataSource>
+@interface ShareDetailView : UIView<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet    UILabel     * nameLabel;
 @property (weak, nonatomic) IBOutlet    UILabel     * generateTimeLabel;

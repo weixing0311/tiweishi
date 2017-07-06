@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HealthDetailsItem.h"
 @interface EvaluationDetailScroeDescriptionCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UILabel * bmrLabel;
+@property (weak, nonatomic) IBOutlet UILabel * bodyAgeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView * headImageView;
+@property (weak, nonatomic) IBOutlet UILabel * nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel * scaleResultStatusLabel;
+@property (weak, nonatomic) IBOutlet UIImageView * trendArrowImageView;
+@property (weak, nonatomic) IBOutlet UILabel * trendLabel;
+@property (weak, nonatomic) IBOutlet UIImageView * weightBgImageView;
+@property (weak, nonatomic) IBOutlet UILabel * weightLabel;
+@property (weak, nonatomic) IBOutlet UILabel * weightStatusLabel;
+@property (weak, nonatomic) IBOutlet UILabel * testDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel * timeLabel;
+-(void)setUpinfoWithItem;
 @end

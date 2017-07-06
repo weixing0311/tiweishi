@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface BodyFatDivisionAgreementViewController : UIViewController
+#import "JFABaseTableViewController.h"
+@interface BodyFatDivisionAgreementViewController : JFABaseTableViewController
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+- (IBAction)alredyRead:(id)sender;
+- (IBAction)IAgree:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *readBtn;
 
 @end

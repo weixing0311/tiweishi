@@ -7,16 +7,62 @@
 //
 
 #import "jzsSchoolWebViewController.h"
-
+#import "MBProgressHUD.h"
 @interface jzsSchoolWebViewController ()
 
 @end
 
 @implementation jzsSchoolWebViewController
-
+{
+    MBProgressHUD * hud;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self getReadNum];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"文章详情";
+    [self setNbColor];
+    if (self.islike ==1) {
+        self.zanBtn.selected = YES;
+    }else
+    {
+        self.zanBtn.selected = NO;
+    }
+    
+    if (self.iscollection ==1) {
+        self.collectionBtn.selected =YES;
+    }
+    else
+    {
+        self.collectionBtn.selected =NO;
+  
+    }
+    self.webView.delegate = self;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]]];
+    hud =[[MBProgressHUD alloc]initWithView:self.view];
+    hud.label.text = @"加载中...";
+    [self.view addSubview:hud];
+    [hud showAnimated:YES];
     // Do any additional setup after loading the view from its nib.
+}
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [hud hideAnimated:YES];
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [hud hideAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,5 +79,86 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)didCollection:(id)sender {
+    
+    NSString * col ;
+    if (self.collectionBtn.selected==YES) {
+      col = @"1";
+    }else{
+        col =@"2";
+    }
+    [self didCollectionWithNetWithCollection:col];
+}
+
+- (IBAction)didZan:(id)sender {
+    NSString * islike;
+    if (self.zanBtn.selected ==YES) {
+        islike =@"1";
+    }else{
+        islike=@"2";
+    }
+    [self didZanWithNetWithLike:islike];
+}
+/**
+ *  上传点赞/取消点赞
+ */
+-(void)didZanWithNetWithLike:(NSString *)like
+{
+    NSMutableDictionary * param = [NSMutableDictionary dictionary];
+    [param safeSetObject:@(self.informateId) forKey:@"informateId"];
+    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [param safeSetObject:like forKey:@"isLike"];
+    [[BaseSservice sharedManager]post1:@"app/informate/changeIsLike.do" paramters:param success:^(NSDictionary *dic) {
+        DLog(@"dic--%@",dic);
+        if (self.zanBtn.selected ==YES) {
+            self.zanBtn.selected =NO;
+        }else{
+            self.zanBtn.selected =YES;
+        }
+    } failure:^(NSError *error) {
+        DLog(@"error--%@",error);
+    }];
+    
+
+}
+/**
+ * 上传收藏/取消收藏
+ */
+-(void)didCollectionWithNetWithCollection:(NSString *)col
+{
+    NSMutableDictionary * param = [NSMutableDictionary dictionary];
+    [param safeSetObject:@(self.informateId) forKey:@"informateId"];
+    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [param safeSetObject:col forKey:@"isCollection"];
+
+    [[BaseSservice sharedManager]post1:@"app/informate/changeIsCollection.do" paramters:param success:^(NSDictionary *dic) {
+        DLog(@"dic--%@",dic);
+        if (self.collectionBtn.selected ==YES) {
+            self.collectionBtn.selected =NO;
+        }else{
+            self.collectionBtn.selected =YES;
+        }
+
+    } failure:^(NSError *error) {
+        DLog(@"error--%@",error);
+    }];
+    
+ 
+}
+/*
+ !- 上传文章阅读数量
+ */
+-(void)getReadNum
+{
+    NSMutableDictionary * param = [NSMutableDictionary dictionary];
+    [param safeSetObject:@(self.informateId) forKey:@"informateId"];
+    [[BaseSservice sharedManager]post1:@"app/informate/changeReadNum.do" paramters:param success:^(NSDictionary *dic) {
+        DLog(@"dic--%@",dic);
+    } failure:^(NSError *error) {
+        DLog(@"error--%@",error);
+    }];
+    
+}
 
 @end

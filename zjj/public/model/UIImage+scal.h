@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (scal)
-
+-(UIImage*)scaleToSize:(CGSize)size;
+-(CGSize)changeimageViewSize;
 @end

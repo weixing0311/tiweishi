@@ -7,7 +7,7 @@
 //
 
 #import "JFABaseTableViewController.h"
-
-@interface OrderDetailViewController : JFABaseTableViewController
-
+@interface OrderDetailViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (nonatomic,copy)NSString * orderNo;
 @end

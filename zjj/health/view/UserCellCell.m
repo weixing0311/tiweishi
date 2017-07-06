@@ -21,4 +21,9 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)didClickDelete:(id)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(deleteSubUserWithCell:)]) {
+        [self.delegate deleteSubUserWithCell:self];
+    }
+}
 @end

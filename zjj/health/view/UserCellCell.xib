@@ -1,7 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,9 +17,55 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tos-yo-uIy">
+                        <rect key="frame" x="10" y="5" width="33.5" height="33.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Tos-yo-uIy" secondAttribute="height" multiplier="1:1" id="xCf-6p-a9Z"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhP-4z-XeW">
+                        <rect key="frame" x="53.5" y="13" width="150" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="F4E-xB-sgX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqs-hA-T2w">
+                        <rect key="frame" x="262" y="15" width="40" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="jL7-YJ-g7W"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="删除">
+                            <color key="titleColor" red="0.99109692260000004" green="0.213834791" blue="0.18167625309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="didClickDelete:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Cu5-EE-MCI"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="tqs-hA-T2w" secondAttribute="trailing" constant="10" id="Pmi-nG-ybf"/>
+                    <constraint firstItem="bhP-4z-XeW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WdH-5N-vej"/>
+                    <constraint firstItem="bhP-4z-XeW" firstAttribute="leading" secondItem="Tos-yo-uIy" secondAttribute="trailing" constant="10" id="ZO0-IG-soC"/>
+                    <constraint firstItem="tqs-hA-T2w" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="aGL-be-Zhm"/>
+                    <constraint firstItem="Tos-yo-uIy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="aLN-zb-7HJ"/>
+                    <constraint firstAttribute="bottom" secondItem="Tos-yo-uIy" secondAttribute="bottom" constant="5" id="dCC-kf-kmA"/>
+                    <constraint firstItem="tqs-hA-T2w" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="fjS-KU-Ixq"/>
+                    <constraint firstItem="Tos-yo-uIy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hfx-PT-XJd"/>
+                    <constraint firstItem="bhP-4z-XeW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="qeq-Tv-dQ8"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="deleteBtn" destination="tqs-hA-T2w" id="nUO-Uz-kdG"/>
+                <outlet property="headImage" destination="Tos-yo-uIy" id="gvP-fD-DEv"/>
+                <outlet property="namelabel" destination="bhP-4z-XeW" id="jZT-Yv-SI4"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

@@ -8,6 +8,8 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface AboutUsViewController : JFABaseTableViewController
+@interface AboutUsViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

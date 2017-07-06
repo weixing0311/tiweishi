@@ -1,12 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TZSMyDingGouViewController">
             <connections>
+                <outlet property="segment" destination="waU-hD-amW" id="fq7-Nn-rig"/>
+                <outlet property="tableview" destination="T26-aa-msL" id="glL-ft-Za2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +20,37 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="waU-hD-amW">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="29"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <segments>
+                        <segment title="全部"/>
+                        <segment title="待付款"/>
+                        <segment title="已完成"/>
+                        <segment title="已取消"/>
+                    </segments>
+                    <color key="tintColor" red="0.99109692260000004" green="0.213834791" blue="0.18167625309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="didChangeStatussegment:" destination="-1" eventType="valueChanged" id="1u2-Wn-nn0"/>
+                    </connections>
+                </segmentedControl>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="T26-aa-msL">
+                    <rect key="frame" x="0.0" y="28" width="375" height="639"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="T26-aa-msL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="07S-ER-PH0"/>
+                <constraint firstAttribute="trailing" secondItem="waU-hD-amW" secondAttribute="trailing" id="0bn-SC-g46"/>
+                <constraint firstItem="waU-hD-amW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6Uw-PQ-dky"/>
+                <constraint firstItem="T26-aa-msL" firstAttribute="top" secondItem="waU-hD-amW" secondAttribute="bottom" id="CK6-ZO-9Uk"/>
+                <constraint firstAttribute="bottom" secondItem="T26-aa-msL" secondAttribute="bottom" id="PJ6-F1-Hoz"/>
+                <constraint firstAttribute="trailing" secondItem="T26-aa-msL" secondAttribute="trailing" id="gbp-Wy-0JV"/>
+                <constraint firstItem="waU-hD-amW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="loJ-0L-x8c"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="95.5"/>
         </view>
     </objects>
 </document>

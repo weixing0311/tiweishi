@@ -8,6 +8,7 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface BaseWebViewController : JFABaseTableViewController
-
+@interface BaseWebViewController : JFABaseTableViewController<UIWebViewDelegate>
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (nonatomic, copy)NSString * urlStr;
 @end

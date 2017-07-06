@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailReturnGoodsCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *returnGoodImage;
+@property (weak, nonatomic) IBOutlet UILabel *returnGoodLabel;
 
 @end

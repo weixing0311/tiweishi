@@ -8,6 +8,9 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZdetaolViewController : JFABaseTableViewController
+@interface TZdetaolViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic,copy)NSString *dataId;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+
 
 @end

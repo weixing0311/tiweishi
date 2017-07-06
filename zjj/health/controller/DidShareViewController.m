@@ -7,7 +7,8 @@
 //
 
 #import "DidShareViewController.h"
-
+#import "ShareDetailView.h"
+#import "ShareBottomView.h"
 @interface DidShareViewController ()
 
 @end
@@ -16,6 +17,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ShareDetailView * de = [self getXibCellWithTitle:@"ShareDetailView"];
+    de.frame = self.view.bounds;
+//    [de setInfo];
+    [self.view addSubview:de];
+    
+    ShareBottomView * sb = [self getXibCellWithTitle:@"ShareBottomView"];
+    sb.frame = CGRectMake(0, self.view.frame.size.height-50, JFA_SCREEN_WIDTH, 50);
+    [self.view addSubview:sb];
     // Do any additional setup after loading the view.
 }
 

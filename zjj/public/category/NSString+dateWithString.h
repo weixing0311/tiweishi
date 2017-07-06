@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (dateWithString)
-
+-(NSString*)yyyymmdd;
+-(NSString *)getdateCount;
+-(NSString*)mmdd;
 @end

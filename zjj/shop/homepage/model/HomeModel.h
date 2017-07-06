@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface HomeModel : NSObject
-
++(HomeModel *)shareInstance;
+-(NSMutableArray *)arraySortingWithArray:(NSMutableArray *)array;//banner排序
 @end

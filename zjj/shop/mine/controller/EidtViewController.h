@@ -8,6 +8,7 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface EidtViewController : JFABaseTableViewController
+@interface EidtViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

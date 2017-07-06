@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShareTrendCell : UITableViewCell
+@interface ShareTrendListCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView * value2TrendImageView;
 @property (weak, nonatomic) IBOutlet UILabel * nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel * value1Label;

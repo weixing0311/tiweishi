@@ -8,6 +8,32 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface LoignViewController : JFABaseTableViewController
+@interface LoignViewController : JFABaseTableViewController<UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *mobileTf;
+
+@property (weak, nonatomic) IBOutlet UITextField *verTF;
+@property (weak, nonatomic) IBOutlet UIButton *verbtn;
+@property (weak, nonatomic) IBOutlet UIButton *resignAugement;
+@property (weak, nonatomic) IBOutlet UIButton *loignBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *vxLoign;
+@property (weak, nonatomic) IBOutlet UIButton *qqLoign;
+
+
+- (IBAction)didLoign:(id)sender;
+
+- (IBAction)vxLoign:(id)sender;
+- (IBAction)QQloign:(id)sender;
+
+- (IBAction)getVer:(id)sender;
+
+- (IBAction)showResignAugement:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UIScrollView *bgview;
+
+
+
+
 
 @end

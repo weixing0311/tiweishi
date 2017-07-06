@@ -9,5 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface TimeModel : NSObject
-
++(TimeModel *)shareInstance;
+/**
+ *  计算年龄
+ */
+- (int)ageWithDateOfBirth:(NSString *)date;
 @end

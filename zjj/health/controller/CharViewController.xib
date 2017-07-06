@@ -1,12 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharViewController">
             <connections>
+                <outlet property="dateLabel" destination="x5B-yI-GAO" id="dly-tQ-sRc"/>
+                <outlet property="lenghtSegment" destination="HDj-Nh-KgN" id="F7K-lR-K8N"/>
+                <outlet property="listSegment" destination="7te-hz-5XH" id="JOo-hT-NvH"/>
+                <outlet property="superChartView" destination="xdR-cq-agE" id="69C-Dm-fmE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +23,87 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HDj-Nh-KgN">
+                    <rect key="frame" x="50" y="45" width="275" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="8sL-I8-dZv"/>
+                    </constraints>
+                    <segments>
+                        <segment title="三天"/>
+                        <segment title="周"/>
+                        <segment title="月"/>
+                    </segments>
+                    <color key="tintColor" red="0.89411764709999997" green="0.43529411759999997" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="lengthSegment:" destination="-1" eventType="valueChanged" id="NiN-WW-lbb"/>
+                    </connections>
+                </segmentedControl>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5B-yI-GAO">
+                    <rect key="frame" x="166" y="115" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" priority="20" constant="200" id="ghk-Y9-39J"/>
+                        <constraint firstAttribute="height" constant="21" id="iUC-Hx-S4j"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwH-tH-ZAy">
+                    <rect key="frame" x="126" y="111" width="30" height="30"/>
+                    <state key="normal" title="&lt;"/>
+                    <connections>
+                        <action selector="didRed:" destination="-1" eventType="touchUpInside" id="ow7-bg-bjU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IZa-JH-2Au">
+                    <rect key="frame" x="218" y="111" width="30" height="30"/>
+                    <state key="normal" title="&gt;"/>
+                    <connections>
+                        <action selector="didAdd:" destination="-1" eventType="touchUpInside" id="I67-UX-I6U"/>
+                    </connections>
+                </button>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7te-hz-5XH">
+                    <rect key="frame" x="20" y="171" width="335" height="29"/>
+                    <segments>
+                        <segment title="BMI"/>
+                        <segment title="体脂"/>
+                        <segment title="脂肪量"/>
+                        <segment title="水分"/>
+                        <segment title="骨骼肌"/>
+                    </segments>
+                    <connections>
+                        <action selector="listSegment:" destination="-1" eventType="valueChanged" id="pcs-uD-jD4"/>
+                    </connections>
+                </segmentedControl>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdR-cq-agE">
+                    <rect key="frame" x="0.0" y="229" width="375" height="375"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="xdR-cq-agE" secondAttribute="height" multiplier="1:1" id="uFO-J2-uZl"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="HDj-Nh-KgN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="39V-AD-O0l"/>
+                <constraint firstItem="xdR-cq-agE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6qo-FI-ncd"/>
+                <constraint firstItem="IZa-JH-2Au" firstAttribute="leading" secondItem="x5B-yI-GAO" secondAttribute="trailing" constant="10" id="A4g-f9-ofw"/>
+                <constraint firstItem="fwH-tH-ZAy" firstAttribute="top" secondItem="HDj-Nh-KgN" secondAttribute="bottom" constant="31" id="F5R-JG-elE"/>
+                <constraint firstItem="x5B-yI-GAO" firstAttribute="leading" secondItem="fwH-tH-ZAy" secondAttribute="trailing" constant="10" id="LaD-4z-keH"/>
+                <constraint firstItem="xdR-cq-agE" firstAttribute="top" secondItem="7te-hz-5XH" secondAttribute="bottom" constant="30" id="Oqk-nj-6Np"/>
+                <constraint firstItem="HDj-Nh-KgN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="RRW-Wk-j1P"/>
+                <constraint firstItem="x5B-yI-GAO" firstAttribute="top" secondItem="HDj-Nh-KgN" secondAttribute="bottom" constant="35" id="ZJX-TX-ofF"/>
+                <constraint firstItem="IZa-JH-2Au" firstAttribute="top" secondItem="HDj-Nh-KgN" secondAttribute="bottom" constant="31" id="a1u-zy-nwC"/>
+                <constraint firstAttribute="trailing" secondItem="xdR-cq-agE" secondAttribute="trailing" id="ebr-7Q-6rt"/>
+                <constraint firstItem="7te-hz-5XH" firstAttribute="top" secondItem="fwH-tH-ZAy" secondAttribute="bottom" constant="30" id="fLc-2c-sEg"/>
+                <constraint firstItem="x5B-yI-GAO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="g9w-0p-zSK"/>
+                <constraint firstAttribute="trailing" secondItem="7te-hz-5XH" secondAttribute="trailing" constant="20" id="hJn-4Z-tun"/>
+                <constraint firstAttribute="trailing" secondItem="HDj-Nh-KgN" secondAttribute="trailing" constant="50" id="yZ1-ZG-1tW"/>
+                <constraint firstItem="7te-hz-5XH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="zZD-6d-Emx"/>
+            </constraints>
+            <point key="canvasLocation" x="35.5" y="81.5"/>
         </view>
     </objects>
 </document>

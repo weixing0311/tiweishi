@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImageView (Round)
-
+typedef void (^success)( UIImage *image);
+-(void)setMyImageWithUrl:(NSString *)url placeHolder:(UIImage *)placeHolder success:(success)success;
 @end

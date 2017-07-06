@@ -8,6 +8,11 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZSConfirmTheViewController : JFABaseTableViewController
-
+@interface TZSConfirmTheViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (nonatomic,strong)NSString * productStr;
+- (IBAction)placeTheOrder:(id)sender;
+@property (nonatomic,strong) NSMutableArray * dataArray;
+@property (nonatomic,strong)NSMutableDictionary * param;
 @end

@@ -7,15 +7,19 @@
 //
 
 #import "LineChart.h"
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @implementation LineChart
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
+-(void)Labels
+{
+    self.visible = YES;
+}
+
+-(void)Grid
+{
+    self.visible = YES;
+}
 @end

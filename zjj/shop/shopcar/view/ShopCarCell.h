@@ -7,7 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "shopCarCellItem.h"
+@class ShopCarCell;
+@protocol shopCarCellDelegate<NSObject>
+-(void)getCountWithCell:(ShopCarCell *)cell type:(BOOL)type;
+-(void)getCellGoodsCountWithCell:(ShopCarCell *)cell count:(int)count;
+-(void)deleteCell:(ShopCarCell*)cell;
+@end
 @interface ShopCarCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *headerImgView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *weightLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UILabel *huodongLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *huodongImageView;
+- (IBAction)didDelete:(id)sender;
 
+@property (nonatomic,assign)id<shopCarCellDelegate>delegate;
+
+- (IBAction)addCount:(id)sender;
+- (IBAction)redCount:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
+- (IBAction)didChooseCell:(id)sender;
+
+-(void)setUpWithItem:(shopCarCellItem *)item;
 @end

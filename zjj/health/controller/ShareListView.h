@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShareTrendView : UIView<UITableViewDelegate,UITableViewDataSource>
+@interface ShareListView : UIView<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel * nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel * generateTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel * date1Label;
@@ -21,5 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UIImageView * qrCodeImageView;
 @property (weak, nonatomic) IBOutlet UIImageView * headImageView;
-
+@property (nonatomic,strong) NSMutableArray * dataArray;
+@property (nonatomic,strong) NSMutableArray * infoArray;
+-(void)setInfoWithArr:(NSMutableArray *) arr;
 @end

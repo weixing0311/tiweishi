@@ -8,6 +8,9 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZSMyDingGouViewController : JFABaseTableViewController
+@interface TZSMyDingGouViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
+- (IBAction)didChangeStatussegment:(id)sender;
 
 @end

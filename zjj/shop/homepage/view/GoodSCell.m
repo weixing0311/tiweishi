@@ -14,5 +14,13 @@
     [super awakeFromNib];
     // Initialization code
 }
-
+-(void)updataWithItem:(GoodsItem*)item
+{
+    [self.imageView setImageWithURL:[NSURL URLWithString:item.imageUrl]];
+    self.titleLabel.text = item.productName;
+    self.priceLabel.text  =item.productPrice;
+    
+}
+- (IBAction)didBuy:(id)sender {
+}
 @end

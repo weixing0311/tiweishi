@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol userViewDelegate;
 @interface UserView : UIView
+@property (weak, nonatomic) IBOutlet UIButton *headBtn;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *menuBtn;
+- (IBAction)didUserInfo:(id)sender;
+- (IBAction)didClickMenu:(id)sender;
+@property (nonatomic,assign)id<userViewDelegate>delegate;
+
+@end
+@protocol userViewDelegate <NSObject>
+
+-(void)showUserList;
 
 @end

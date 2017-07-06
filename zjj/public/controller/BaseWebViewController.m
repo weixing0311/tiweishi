@@ -16,9 +16,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNbColor];
+    self.webView.delegate = self;
+    NSURL *url = [NSURL URLWithString:self.urlStr];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]] ;
+    
     // Do any additional setup after loading the view from its nib.
 }
-
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

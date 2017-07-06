@@ -8,6 +8,6 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface InfomationViewController : JFABaseTableViewController
+@interface InfomationViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
 
 @end

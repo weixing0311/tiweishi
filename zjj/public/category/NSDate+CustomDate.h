@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSDate (CustomDate)
-
+-(NSString*)yyyymmddhhmmss;
+-(NSString*)mmddhhmm;
+-(NSString*)mmdd;
 @end

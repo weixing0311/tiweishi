@@ -9,5 +9,6 @@
 #import "JFABaseTableViewController.h"
 
 @interface HelpViewController : JFABaseTableViewController
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end

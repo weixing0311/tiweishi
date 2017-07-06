@@ -16,6 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"钱包管理";
+    [self setNbColor];
     // Do any additional setup after loading the view from its nib.
 }
 

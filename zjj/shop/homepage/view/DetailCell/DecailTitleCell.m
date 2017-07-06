@@ -21,4 +21,30 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)didAdd:(id)sender {
+    int count  = [self.countLabel.text intValue];
+    count++;
+    self.countLabel.text =[NSString stringWithFormat:@"%d",count];
+     [self countChange];
+}
+
+- (IBAction)didRed:(id)sender {
+    
+    int count  = [self.countLabel.text intValue];
+    if (count ==1) {
+        return;
+    }
+    count--;
+    self.countLabel.text =[NSString stringWithFormat:@"%d",count];
+    [self countChange];
+}
+
+-(void)countChange
+{
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(changeCount:)]) {
+        [self.delegate changeCount:[self.countLabel.text intValue]];
+    }
+}
+
+
 @end

@@ -14,7 +14,9 @@
 
 - (CGFloat)heightForLabelWithWidth:(CGFloat)isWidth isFont:(UIFont*)labelFont{
     CGFloat height = 0.0f;
-    height = ceilf([self sizeWithFont:labelFont constrainedToSize:CGSizeMake(isWidth, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height);
+//    height = ceilf([self sizeWithFont:labelFont constrainedToSize:CGSizeMake(isWidth, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height);
+    NSDictionary *attribute = @{NSFontAttributeName: labelFont};
+    height = [self boundingRectWithSize:CGSizeMake(isWidth, CGFLOAT_MAX) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size.height;
     return height;
 }
 
@@ -29,7 +31,9 @@
 
 - (CGFloat)widthForLabelWithHeight:(CGFloat)isHeight isFont:(UIFont*)font {
     CGFloat width = 0.0f;
-    width = ceilf([self sizeWithFont:font constrainedToSize:CGSizeMake(CGFLOAT_MAX, isHeight) lineBreakMode:NSLineBreakByWordWrapping].width);
+//    width = ceilf([self sizeWithFont:font constrainedToSize:CGSizeMake(CGFLOAT_MAX, isHeight) lineBreakMode:NSLineBreakByWordWrapping].width);
+    NSDictionary *attribute = @{NSFontAttributeName: font};
+    width = [self boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, isHeight) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size.width;
     return width;
 }
 -(NSString*)md5String
@@ -52,7 +56,9 @@
                                    attributes:@{NSFontAttributeName:font}
                                       context:nil].size;
     }else{
-        textSize = [self sizeWithFont:font constrainedToSize:size lineBreakMode:0];
+        NSDictionary *attribute = @{NSFontAttributeName: font};
+        textSize = [self boundingRectWithSize:size options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+//        textSize = [self sizeWithFont:font constrainedToSize:size lineBreakMode:0];
     }
     return textSize;
 }

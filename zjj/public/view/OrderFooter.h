@@ -7,7 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef enum
+{
+    STATUS_WAIT_PAY,
+    STATUS_SUCCESS,
+    STATUS_CANCEL,
+}PayStatus;
 @interface OrderFooter : UIView
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *firstBtn;
+@property (weak, nonatomic) IBOutlet UIButton *secondBtn;
+
+@property(nonatomic,assign)PayStatus status;
+- (IBAction)didFirstClick:(id)sender;
+
+- (IBAction)didSecondClick:(id)sender;
+
+-(void)setStatus:(PayStatus)status;
 @end

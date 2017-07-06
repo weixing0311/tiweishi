@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol LineChartDelegate
+
+-(void)didSelectDataPointWithX:(CGFloat)X y:(CGFloat)y;
+@end
 
 @interface LineChart : UIView
+@property (nonatomic, assign)  id<LineChartDelegate>delegate;
+@property (nonatomic, assign)  BOOL visible;
+@property (nonatomic, copy)    NSString * values;
+@property (nonatomic, assign)  CGFloat    count;
+@property (nonatomic, strong)  UIColor *color;
+@property (nonatomic, assign)  BOOL enabled;
 
+
+-(void)Labels;
+-(void)Grid;
+-(void)Axis;
 @end

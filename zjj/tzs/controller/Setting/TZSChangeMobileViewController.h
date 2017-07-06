@@ -9,5 +9,12 @@
 #import "JFABaseTableViewController.h"
 
 @interface TZSChangeMobileViewController : JFABaseTableViewController
+@property (weak, nonatomic) IBOutlet UITextField *mobileTF;
+@property (weak, nonatomic) IBOutlet UITextField *vertf;
+@property (weak, nonatomic) IBOutlet UITextField *passwordtf;
+@property (weak, nonatomic) IBOutlet UITextField *oldMobileTf;
+@property (weak, nonatomic) IBOutlet UIButton *verBtn;
+- (IBAction)pushVer:(id)sender;
+- (IBAction)didUpdate:(id)sender;
 
 @end

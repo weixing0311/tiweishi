@@ -1,12 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OrderViewController">
             <connections>
+                <outlet property="segment" destination="wrT-PJ-vFw" id="4xu-xc-uv8"/>
+                <outlet property="tableview" destination="TPS-XG-EXu" id="MEQ-xj-sUo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +20,36 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TPS-XG-EXu">
+                    <rect key="frame" x="0.0" y="29" width="375" height="638"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="wrT-PJ-vFw">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="29"/>
+                    <segments>
+                        <segment title="全部"/>
+                        <segment title="待付款"/>
+                        <segment title="待收货"/>
+                        <segment title="已完成"/>
+                        <segment title="已取消"/>
+                    </segments>
+                    <color key="tintColor" red="0.94572418928146362" green="0.51665598154067993" blue="0.31462016701698303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="didChangeStatussegment:" destination="-1" eventType="valueChanged" id="nPZ-SG-Ls7"/>
+                    </connections>
+                </segmentedControl>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="TPS-XG-EXu" secondAttribute="bottom" id="4Za-rx-ody"/>
+                <constraint firstAttribute="trailing" secondItem="wrT-PJ-vFw" secondAttribute="trailing" id="A1W-oP-IbP"/>
+                <constraint firstItem="TPS-XG-EXu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="29" id="HCC-ZH-A6o"/>
+                <constraint firstItem="TPS-XG-EXu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Md1-dL-yEL"/>
+                <constraint firstItem="wrT-PJ-vFw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bFn-TK-cMn"/>
+                <constraint firstItem="wrT-PJ-vFw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o8N-HU-m6q"/>
+                <constraint firstAttribute="trailing" secondItem="TPS-XG-EXu" secondAttribute="trailing" id="syS-xX-Vmb"/>
+            </constraints>
         </view>
     </objects>
 </document>

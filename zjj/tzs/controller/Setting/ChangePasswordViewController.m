@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"修改密码";
+    [self setNbColor];
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -24,14 +27,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)updata:(id)sender {
+    NSMutableDictionary * param = [NSMutableDictionary dictionary];
+    [param setObject:self.passwordtf.text forKey:@"oldPassword"];
+    [param setObject:self.thenewPasswordtf.text forKey:@"password"];
+    [param setObject:self.repasswordtf.text forKey:@"repPassword"];
+    
+    [[BaseSservice sharedManager]post1:@"app/user/changePassword.do" paramters:param success:^(NSDictionary *dic) {
+        [self showError:@"修改成功"];
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSError *error) {
+        [self showError:@"修改失败"];
+    }];
+
 }
-*/
-
 @end

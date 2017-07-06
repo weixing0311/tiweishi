@@ -7,7 +7,50 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JFASubNetWorkErrorView.h"
+#import "ServiceResultErrorView.h"
+#import "JFANetWorkServiceItem.h"
+#import "AppDelegate.h"
+@interface JFABaseTableViewController : UIViewController<subNetWorkDelegate>
 
-@interface JFABaseTableViewController : UIViewController
+@property(nonatomic,strong)NSMutableArray* requestArray;
+@property(nonatomic,strong)UIView * loadingView;
+@property(nonatomic,strong)ServiceResultErrorView * errorView;
+@property(nonatomic,strong)JFASubNetWorkErrorView* networkErrorView;
+-(void)refreshForNetworkError;
+-(UIImage*)backImage;
+- (void)back;
+-(void)BrokenNetworkReconnection;
+-(void)doloign;
+-(void)showHUD:(HUDType)type message:(NSString*)message detai:(NSString*)detailMsg Hdden:(BOOL)hidden;
+-(void)hiddenHUD;
+#pragma mark-NetService
+-(void)loadNewData;
+-(JFANetWorkServiceItem *)getServiceItem;
+-(void)startService;
+-(void)startServiceWithItem:(JFANetWorkServiceItem*)item isShowLoading:(BOOL)isShowLoading;
+-(void)serviceSucceededWithResult:(id)result operation:(NSURLSessionTask*)operation;
+-(void)serviceFailedWithError:(NSError*)error operation:(NSURLSessionTask*)operation;
+-(BOOL)isEqualUrl:(NSString*)url forOperation:(NSURLSessionTask*)operation;
+-(void)showNetworkError;
+-(void)showError;
+/*！添加mjrefresh*/
+-(void)setRefrshWithTableView:(UITableView *)tb;
+/**
+ *下拉刷新方法
+ */
+-(void)headerRereshing;
+/*! 上拉加载方法 */
+-(void)footerRereshing;
+
+/*! 加载xibview  */
+-(id)getXibCellWithTitle:(NSString *)title;
+/*!  隐藏tableview内容下方下划线*/
+-(void)setExtraCellLineHiddenWithTb:(UITableView *)tb;
+
+/*! 设置navigaionbar 和title的颜色 */
+-(void)setNbColor;
+
+-(void)showError:(NSString *)text;
 
 @end

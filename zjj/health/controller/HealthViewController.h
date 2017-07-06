@@ -8,6 +8,7 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface HealthViewController : JFABaseTableViewController
+@interface HealthViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic)  UITableView *tableView;
 
 @end

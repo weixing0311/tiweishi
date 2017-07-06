@@ -8,6 +8,8 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface JzSchoolViewController : JFABaseTableViewController
+@interface JzSchoolViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

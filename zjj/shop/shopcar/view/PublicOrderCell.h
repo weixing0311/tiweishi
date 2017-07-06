@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PublicOrderCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tuihuoLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *tuihuoImage;
 
 @end

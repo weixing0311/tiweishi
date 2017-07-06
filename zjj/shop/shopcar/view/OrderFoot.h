@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderFoot : UIView
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
+@property (weak, nonatomic) IBOutlet UIButton *redBtn;
+@property (weak, nonatomic) IBOutlet UIButton *secondBtn;
+- (IBAction)secondDidClick:(id)sender;
+- (IBAction)redDidClick:(id)sender;
 
 @end

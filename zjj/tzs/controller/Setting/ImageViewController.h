@@ -8,6 +8,9 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface ImageViewController : JFABaseTableViewController
+@interface ImageViewController : JFABaseTableViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+- (IBAction)ChangeHeadImage:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *changeBtn;
 
 @end

@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12121"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +18,37 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4l-H3-D9E">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                    <color key="backgroundColor" red="0.96109229326248169" green="0.70174193382263184" blue="0.65180885791778564" alpha="0.1737478595890411" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="fZd-Ga-rxn"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HMA-dk-EWb">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.94572418928146362" green="0.51665598154067993" blue="0.31462016701698303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="V36-ye-whF"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buH-pV-A2X">
+                    <rect key="frame" x="36" y="9" width="240" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="B4l-H3-D9E" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2rr-Vn-HBd"/>
+                <constraint firstItem="B4l-H3-D9E" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9dk-8b-fQb"/>
+                <constraint firstItem="HMA-dk-EWb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Hbk-TC-lxz"/>
+                <constraint firstItem="HMA-dk-EWb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QZg-1e-zJl"/>
+                <constraint firstAttribute="trailing" secondItem="B4l-H3-D9E" secondAttribute="trailing" id="RSi-UP-KdU"/>
+                <constraint firstAttribute="trailing" secondItem="HMA-dk-EWb" secondAttribute="trailing" id="mhO-Js-CXO"/>
+            </constraints>
+            <point key="canvasLocation" x="132.5" y="68.5"/>
         </view>
     </objects>
 </document>

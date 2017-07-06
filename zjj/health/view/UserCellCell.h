@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol userCellDelegate;
 @interface UserCellCell : UITableViewCell
+@property (nonatomic,assign)id<userCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UIImageView *headImage;
+@property (weak, nonatomic) IBOutlet UILabel *namelabel;
+- (IBAction)didClickDelete:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+
+@end
+@protocol userCellDelegate <NSObject>
+
+-(void)deleteSubUserWithCell:(UserCellCell*)cell;
 
 @end

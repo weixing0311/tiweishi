@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol subNetWorkDelegate <NSObject>
+-(void)didRefreshInfo;
+@end
 
 @interface JFASubNetWorkErrorView : UIView
-
+@property (nonatomic, assign)id<subNetWorkDelegate>delegate;
+-(instancetype)initWithFrame:(CGRect)frame bgimage:(UIImage*)bgimage;
 @end

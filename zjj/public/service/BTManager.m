@@ -7,7 +7,15 @@
 //
 
 #import "BTManager.h"
-
+static BTManager * btmanager;
 @implementation BTManager
++(BTManager*)shareInstance
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        btmanager = [[BTManager alloc]init];
+    });
+    return btmanager;
+}
 
 @end

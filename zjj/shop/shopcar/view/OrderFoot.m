@@ -18,4 +18,9 @@
 }
 */
 
+- (IBAction)secondDidClick:(id)sender {
+}
+
+- (IBAction)redDidClick:(id)sender {
+}
 @end

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OrderHeader : UIView
+@interface TZSOrderHeader : UIView
+@property (weak, nonatomic) IBOutlet UILabel *orderNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end

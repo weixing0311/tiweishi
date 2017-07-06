@@ -9,5 +9,16 @@
 #import <Foundation/Foundation.h>
 
 @interface SubUserItem : NSObject
-
++(SubUserItem *)shareInstance;
+@property (nonatomic , assign)int   age;
+@property (nonatomic , copy)NSString * birthday;
+@property (nonatomic , copy)NSString * nickname;
+@property (nonatomic , copy)NSString * subId;
+@property (nonatomic , copy)NSString * height;
+@property (nonatomic , copy)NSString * headUrl;
+@property (nonatomic , assign)int   sex;
+-(void)setInfoWithHealthId:(NSString* )healthId;
+-(void)setInfoWithMainUser;
+-(void)setInfoWithDic:(NSDictionary *)dict;
+-(void)removeAll;
 @end

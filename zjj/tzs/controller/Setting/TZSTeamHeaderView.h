@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface TZSTeamHeaderView : UIView
+@property (weak, nonatomic) IBOutlet UILabel *orderNum;
+@property (weak, nonatomic) IBOutlet UILabel *ordername;
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
 @end

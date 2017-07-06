@@ -15,7 +15,24 @@
 #import "NSDate+Utilities.h"
 
 // Thanks, AshFurrow
-static const unsigned componentFlags = (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit);
+
+//NSEraCalendarUnit  = kCFCalendarUnitEra ,
+//NSYearCalendarUnit  = kCFCalendarUnitYear ,
+//NSMonthCalendarUnit  = kCFCalendarUnitMonth ,
+//NSDayCalendarUnit  = kCFCalendarUnitDay ,
+//NSHourCalendarUnit  = kCFCalendarUnitHour ,
+//NSMinuteCalendarUnit  = kCFCalendarUnitMinute ,
+//NSSecondCalendarUnit  = kCFCalendarUnitSecond ,
+//NSWeekCalendarUnit  = kCFCalendarUnitWeek ,
+//NSWeekdayCalendarUnit  = kCFCalendarUnitWeekday ,
+//NSWeekdayOrdinalCalendarUnit  = kCFCalendarUnitWeekdayOrdinal ,
+//NSQuarterCalendarUnit  = kCFCalendarUnitQuarter ,
+//NSWeekOfMonthCalendarUnit  = kCFCalendarUnitWeekOfMonth ,
+//NSWeekOfYearCalendarUnit  = kCFCalendarUnitWeekOfYear ,
+//NSYearForWeekOfYearCalendarUnit  = kCFCalendarUnitYearForWeekOfYear
+//NSCalendarCalendarUnit  = (1 << 20),
+//NSTimeZoneCalendarUnit  = (1 << 21),
+static const unsigned componentFlags = (kCFCalendarUnitYear| kCFCalendarUnitMonth | kCFCalendarUnitDay | kCFCalendarUnitWeek |  kCFCalendarUnitHour | kCFCalendarUnitMinute | kCFCalendarUnitSecond | kCFCalendarUnitWeekday | kCFCalendarUnitWeekdayOrdinal);
 
 @implementation NSDate (Utilities)
 

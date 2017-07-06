@@ -1,12 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TZSDingGouViewController">
             <connections>
+                <outlet property="countLabel" destination="TP2-Jd-FMa" id="Vrd-EQ-XzP"/>
+                <outlet property="priceLabel" destination="QVG-SX-JTZ" id="bYm-lX-ZHA"/>
+                <outlet property="tableview" destination="ina-fc-63C" id="gGD-wa-oTN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +21,82 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FUL-rI-3pN">
+                    <rect key="frame" x="0.0" y="606" width="375" height="61"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oab-74-IVA">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="0we-Lp-fI0"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTv-m6-lmS">
+                            <rect key="frame" x="255" y="0.0" width="120" height="61"/>
+                            <color key="backgroundColor" red="1" green="0.095024956600000002" blue="0.031412760419999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="Zl4-sh-2ie"/>
+                            </constraints>
+                            <state key="normal" title="去进货">
+                                <color key="titleColor" white="0.96999999999999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="placeTheOrder:" destination="-1" eventType="touchUpInside" id="hau-cg-Cpd"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单总价：￥0.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVG-SX-JTZ">
+                            <rect key="frame" x="10" y="9" width="235" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="TDI-cg-uBD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已选服务：0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TP2-Jd-FMa">
+                            <rect key="frame" x="10" y="34" width="235" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="Xw0-G4-Yp1"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="sTv-m6-lmS" firstAttribute="leading" secondItem="TP2-Jd-FMa" secondAttribute="trailing" constant="10" id="0sJ-5l-yyB"/>
+                        <constraint firstAttribute="height" constant="61" id="5mL-gQ-LmJ"/>
+                        <constraint firstItem="TP2-Jd-FMa" firstAttribute="top" secondItem="QVG-SX-JTZ" secondAttribute="bottom" constant="5" id="98L-7t-UQd"/>
+                        <constraint firstItem="sTv-m6-lmS" firstAttribute="leading" secondItem="QVG-SX-JTZ" secondAttribute="trailing" constant="10" id="F7P-Ui-LDk"/>
+                        <constraint firstItem="oab-74-IVA" firstAttribute="top" secondItem="FUL-rI-3pN" secondAttribute="top" id="Kkf-5g-VYl"/>
+                        <constraint firstItem="QVG-SX-JTZ" firstAttribute="top" secondItem="oab-74-IVA" secondAttribute="bottom" constant="8" id="X5J-ie-47d"/>
+                        <constraint firstItem="QVG-SX-JTZ" firstAttribute="leading" secondItem="FUL-rI-3pN" secondAttribute="leading" constant="10" id="hIA-n8-4dw"/>
+                        <constraint firstItem="TP2-Jd-FMa" firstAttribute="leading" secondItem="FUL-rI-3pN" secondAttribute="leading" constant="10" id="hNx-TM-u9t"/>
+                        <constraint firstItem="oab-74-IVA" firstAttribute="leading" secondItem="FUL-rI-3pN" secondAttribute="leading" id="i7V-Qd-gfH"/>
+                        <constraint firstItem="sTv-m6-lmS" firstAttribute="top" secondItem="FUL-rI-3pN" secondAttribute="top" id="qoD-dG-Ukb"/>
+                        <constraint firstAttribute="trailing" secondItem="oab-74-IVA" secondAttribute="trailing" id="tH3-Ns-vxi"/>
+                        <constraint firstAttribute="trailing" secondItem="sTv-m6-lmS" secondAttribute="trailing" id="tK2-pB-PcB"/>
+                        <constraint firstAttribute="bottom" secondItem="sTv-m6-lmS" secondAttribute="bottom" id="zpF-Cg-YaM"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ina-fc-63C">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="606"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="FUL-rI-3pN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9ix-uM-zL5"/>
+                <constraint firstItem="ina-fc-63C" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Hik-ua-48p"/>
+                <constraint firstAttribute="trailing" secondItem="ina-fc-63C" secondAttribute="trailing" id="Hna-Bx-Bmu"/>
+                <constraint firstAttribute="bottom" secondItem="FUL-rI-3pN" secondAttribute="bottom" id="Lif-FG-UDY"/>
+                <constraint firstAttribute="trailing" secondItem="FUL-rI-3pN" secondAttribute="trailing" id="U3n-DX-dIP"/>
+                <constraint firstItem="FUL-rI-3pN" firstAttribute="top" secondItem="ina-fc-63C" secondAttribute="bottom" id="mm5-ve-eb4"/>
+                <constraint firstItem="ina-fc-63C" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="u07-EI-tHS"/>
+            </constraints>
+            <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>
     </objects>
 </document>

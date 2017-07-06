@@ -8,6 +8,8 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface AddressListViewController : JFABaseTableViewController
-
+@interface AddressListViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+- (IBAction)didAdd:(id)sender;
+@property(nonatomic,assign)BOOL isComeFromOrder;
 @end

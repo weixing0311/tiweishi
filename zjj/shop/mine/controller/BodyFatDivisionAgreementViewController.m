@@ -7,7 +7,7 @@
 //
 
 #import "BodyFatDivisionAgreementViewController.h"
-
+#import "RealNameAuthenticationViewController.h"
 @interface BodyFatDivisionAgreementViewController ()
 
 @end
@@ -34,4 +34,21 @@
 }
 */
 
+- (IBAction)alredyRead:(id)sender {
+    if (self.readBtn.selected ==YES) {
+        self.readBtn.selected = NO;
+    }else{
+        self.readBtn.selected = YES;
+    }
+    
+}
+
+- (IBAction)IAgree:(id)sender {
+    if (self.readBtn.selected ==NO) {
+        [self showHUD:onlyMsg message:@"请阅读协议" detai:nil Hdden:YES];
+        return;
+    }
+    RealNameAuthenticationViewController *rn = [[RealNameAuthenticationViewController alloc]init];
+    [self.navigationController pushViewController:rn animated:YES];
+}
 @end

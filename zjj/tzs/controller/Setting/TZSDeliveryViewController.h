@@ -8,6 +8,8 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZSDeliveryViewController : JFABaseTableViewController
+@interface TZSDeliveryViewController : JFABaseTableViewController<UITableViewDataSource,UITableViewDelegate>
+- (IBAction)didNext:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

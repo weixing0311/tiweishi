@@ -8,6 +8,12 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface UserViewController : JFABaseTableViewController
+@interface UserViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UIButton *button1;
+@property (weak, nonatomic) IBOutlet UIButton *button2;
+@property (weak, nonatomic) IBOutlet UIImageView *headerImage;
+- (IBAction)loignout:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
 
 @end

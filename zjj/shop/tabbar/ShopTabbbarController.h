@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ShopTabbbarController : UITabBarController
-
+-(void)selectSuperTabbar;
 @end

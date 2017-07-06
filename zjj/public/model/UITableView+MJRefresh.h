@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MJRefresh.h"
 @interface UITableView (MJRefresh)
+
 
 @end

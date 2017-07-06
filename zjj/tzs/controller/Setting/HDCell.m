@@ -12,6 +12,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.titleLabel.layer.masksToBounds = YES;
+    self.titleLabel.layer.cornerRadius  = 5;
+    self.titleLabel.layer.borderWidth = 1;
+    self.titleLabel.layer.borderColor=[UIColor redColor].CGColor;
+
     // Initialization code
 }
 

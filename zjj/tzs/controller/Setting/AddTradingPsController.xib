@@ -1,12 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddTradingPsController">
             <connections>
+                <outlet property="fifImageView" destination="efH-Jm-8ph" id="7b3-ay-G92"/>
+                <outlet property="forImageView" destination="h0a-eY-TDg" id="Hgs-m2-fU9"/>
+                <outlet property="fsImageView" destination="hXK-r0-6Ej" id="M9X-27-sQ8"/>
+                <outlet property="passwordTf" destination="ghZ-Hk-O6x" id="Ma1-Mf-uQ9"/>
+                <outlet property="secImageView" destination="N9h-dS-kgd" id="opf-5T-gtc"/>
+                <outlet property="sexImageView" destination="DYm-Q8-xZ9" id="Ta3-p7-0aq"/>
+                <outlet property="thiImageView" destination="IYg-qn-r7g" id="5JG-5N-WsI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +25,88 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xNH-Gh-bZQ">
+                    <rect key="frame" x="20" y="100" width="335" height="44"/>
+                    <subviews>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passw_kong.png" translatesAutoresizingMaskIntoConstraints="NO" id="hXK-r0-6Ej">
+                            <rect key="frame" x="10" y="0.0" width="44" height="44"/>
+                        </imageView>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passw_kong.png" translatesAutoresizingMaskIntoConstraints="NO" id="N9h-dS-kgd">
+                            <rect key="frame" x="64" y="0.0" width="44.5" height="44"/>
+                        </imageView>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passw_kong.png" translatesAutoresizingMaskIntoConstraints="NO" id="IYg-qn-r7g">
+                            <rect key="frame" x="118.5" y="0.0" width="44" height="44"/>
+                        </imageView>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passw_kong.png" translatesAutoresizingMaskIntoConstraints="NO" id="h0a-eY-TDg">
+                            <rect key="frame" x="172.5" y="0.0" width="44" height="44"/>
+                        </imageView>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passw_kong.png" translatesAutoresizingMaskIntoConstraints="NO" id="efH-Jm-8ph">
+                            <rect key="frame" x="226.5" y="0.0" width="44.5" height="44"/>
+                        </imageView>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passw_kong.png" translatesAutoresizingMaskIntoConstraints="NO" id="DYm-Q8-xZ9">
+                            <rect key="frame" x="281" y="0.0" width="44" height="44"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="N9h-dS-kgd" secondAttribute="bottom" id="1h0-KL-9Lj"/>
+                        <constraint firstItem="efH-Jm-8ph" firstAttribute="top" secondItem="xNH-Gh-bZQ" secondAttribute="top" id="2WY-zG-oJv"/>
+                        <constraint firstItem="N9h-dS-kgd" firstAttribute="top" secondItem="xNH-Gh-bZQ" secondAttribute="top" id="33U-hf-fl7"/>
+                        <constraint firstItem="DYm-Q8-xZ9" firstAttribute="width" secondItem="hXK-r0-6Ej" secondAttribute="width" id="5B2-tF-yjR"/>
+                        <constraint firstItem="hXK-r0-6Ej" firstAttribute="leading" secondItem="xNH-Gh-bZQ" secondAttribute="leading" constant="10" id="5sR-Wk-QKi"/>
+                        <constraint firstAttribute="bottom" secondItem="DYm-Q8-xZ9" secondAttribute="bottom" id="8Lr-S6-gUQ"/>
+                        <constraint firstAttribute="bottom" secondItem="efH-Jm-8ph" secondAttribute="bottom" id="BZ3-To-541"/>
+                        <constraint firstItem="h0a-eY-TDg" firstAttribute="top" secondItem="xNH-Gh-bZQ" secondAttribute="top" id="FVC-dE-P3G"/>
+                        <constraint firstAttribute="bottom" secondItem="h0a-eY-TDg" secondAttribute="bottom" id="HfA-RX-uju"/>
+                        <constraint firstAttribute="bottom" secondItem="hXK-r0-6Ej" secondAttribute="bottom" id="HkT-gx-sVn"/>
+                        <constraint firstItem="h0a-eY-TDg" firstAttribute="width" secondItem="hXK-r0-6Ej" secondAttribute="width" id="Ib2-m6-vOx"/>
+                        <constraint firstAttribute="height" constant="44" id="JTI-Vo-hmd"/>
+                        <constraint firstItem="N9h-dS-kgd" firstAttribute="leading" secondItem="hXK-r0-6Ej" secondAttribute="trailing" constant="10" id="RIu-mj-ERy"/>
+                        <constraint firstItem="DYm-Q8-xZ9" firstAttribute="leading" secondItem="efH-Jm-8ph" secondAttribute="trailing" constant="10" id="U4O-qN-XhH"/>
+                        <constraint firstAttribute="trailing" secondItem="DYm-Q8-xZ9" secondAttribute="trailing" constant="10" id="WhB-nC-RK9"/>
+                        <constraint firstItem="IYg-qn-r7g" firstAttribute="top" secondItem="xNH-Gh-bZQ" secondAttribute="top" id="XsQ-jP-czR"/>
+                        <constraint firstAttribute="bottom" secondItem="IYg-qn-r7g" secondAttribute="bottom" id="aIB-vF-XmS"/>
+                        <constraint firstItem="IYg-qn-r7g" firstAttribute="leading" secondItem="N9h-dS-kgd" secondAttribute="trailing" constant="10" id="ctp-AU-g2F"/>
+                        <constraint firstItem="hXK-r0-6Ej" firstAttribute="top" secondItem="xNH-Gh-bZQ" secondAttribute="top" id="lvJ-wp-G44"/>
+                        <constraint firstItem="DYm-Q8-xZ9" firstAttribute="top" secondItem="xNH-Gh-bZQ" secondAttribute="top" id="oeo-dJ-cu8"/>
+                        <constraint firstItem="N9h-dS-kgd" firstAttribute="width" secondItem="hXK-r0-6Ej" secondAttribute="width" id="prA-Yw-xlr"/>
+                        <constraint firstItem="IYg-qn-r7g" firstAttribute="width" secondItem="hXK-r0-6Ej" secondAttribute="width" id="v72-ev-NLh"/>
+                        <constraint firstItem="efH-Jm-8ph" firstAttribute="leading" secondItem="h0a-eY-TDg" secondAttribute="trailing" constant="10" id="woO-Ws-ck8"/>
+                        <constraint firstItem="efH-Jm-8ph" firstAttribute="width" secondItem="hXK-r0-6Ej" secondAttribute="width" id="x8B-1e-ND2"/>
+                        <constraint firstItem="h0a-eY-TDg" firstAttribute="leading" secondItem="IYg-qn-r7g" secondAttribute="trailing" constant="10" id="xuU-eG-aWC"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置并牢记6位数字交易密码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="da4-7c-qCM">
+                    <rect key="frame" x="37.5" y="182" width="300" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="osl-je-Qge"/>
+                        <constraint firstAttribute="width" constant="300" id="rcA-pT-fCg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ghZ-Hk-O6x">
+                    <rect key="frame" x="129" y="263" width="97" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="da4-7c-qCM" firstAttribute="top" secondItem="xNH-Gh-bZQ" secondAttribute="bottom" constant="38" id="5ps-vY-rVh"/>
+                <constraint firstItem="da4-7c-qCM" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ml3-Pf-qaK"/>
+                <constraint firstItem="xNH-Gh-bZQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="OP0-HZ-aPa"/>
+                <constraint firstItem="xNH-Gh-bZQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="WMD-JJ-ope"/>
+                <constraint firstAttribute="trailing" secondItem="xNH-Gh-bZQ" secondAttribute="trailing" constant="20" id="dfr-gO-Fte"/>
+            </constraints>
+            <point key="canvasLocation" x="35.5" y="81.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="passw_kong.png" width="44" height="44"/>
+    </resources>
 </document>

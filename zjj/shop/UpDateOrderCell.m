@@ -14,7 +14,20 @@
     [super awakeFromNib];
     // Initialization code
 }
+-(void)setUpCellWithGoodsDetailItem:(GoodsDetailItem *)item
+{
+    [self.headImageView setImageWithURL:[NSURL URLWithString:item.image]];
+    self.titleLabel.text = item.productName;
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",item.productPrice];
+}
+-(void)setUpCellWithShopCarCellItem:(shopCarCellItem *)item
+{
+    [self.headImageView setImageWithURL:[NSURL URLWithString:item.image]];
+    self.titleLabel.text = item.productName;
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",item.productPrice];
+    self.countLabel.text = [NSString stringWithFormat:@"x%@",item.quantity];
 
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

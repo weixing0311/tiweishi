@@ -8,6 +8,9 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface TZSTeamDGViewController : JFABaseTableViewController
+@interface TZSTeamDGViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)ChangeType:(id)sender;
 
 @end

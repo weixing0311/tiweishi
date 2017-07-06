@@ -7,7 +7,10 @@
 //
 
 #import "JFABaseTableViewController.h"
+#import "ADCarouselView.h"
 
-@interface HomePageViewController : JFABaseTableViewController
+@interface HomePageViewController : JFABaseTableViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ADCarouselViewDelegate>
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
 
 @end

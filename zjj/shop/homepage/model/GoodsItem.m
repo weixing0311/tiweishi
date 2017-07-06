@@ -9,5 +9,14 @@
 #import "GoodsItem.h"
 
 @implementation GoodsItem
-
+-(void)setGoodsInfoWithDict:(NSDictionary *)dict
+{
+    self.imageUrl      = [dict safeObjectForKey:@"defPicture"];
+    self.productName   = [dict safeObjectForKey:@"productName"];
+    self.productNo     = [dict safeObjectForKey:@"productNo"];
+    self.viceTitle     = [dict safeObjectForKey:@"viceTitle"];
+    self.oldPrice      = [dict safeObjectForKey:@"oldPrice"];
+    self.productPrice  = [dict safeObjectForKey:@"productPrice"];
+    
+}
 @end

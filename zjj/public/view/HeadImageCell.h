@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HeadImageCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 
 @end

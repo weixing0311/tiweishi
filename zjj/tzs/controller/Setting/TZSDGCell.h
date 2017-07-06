@@ -7,7 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol TZSDGCellDelegate;
+@interface TZSDGCell : UITableViewCell<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
-@interface TZSDGCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UITableView *hdTableView;
+
+@property (nonatomic,assign)id<TZSDGCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UIView *countView;
+
+- (IBAction)didAdd:(id)sender;
+- (IBAction)didRed:(id)sender;
+-(void)setHdArray:(NSArray *)arr;
+@end
+@protocol TZSDGCellDelegate <NSObject>
+
+-(void)addCountWithCell:(TZSDGCell *)cell;
+-(void)redCountWithCell:(TZSDGCell *)cell;
 
 @end

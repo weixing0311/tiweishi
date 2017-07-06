@@ -7,7 +7,62 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomLabel.h"
+#import <CoreBluetooth/CoreBluetooth.h>
+@protocol healthMainDelegate;
+@interface HealthMainCell : UITableViewCell<CBCentralManagerDelegate>
 
-@interface HealthMainCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet  UIButton     *   scaleButton;
+@property (weak, nonatomic) IBOutlet  UIButton     *   shareButton;
+
+@property (weak, nonatomic) IBOutlet  UIButton     *   weightBgButton;
+@property (weak, nonatomic) IBOutlet  UIImageView  *   weightBgImageView;
+@property (weak, nonatomic) IBOutlet  UILabel  *   scaleResultStatusLabel;
+@property (weak, nonatomic) IBOutlet  UILabel      *   weightLabel;
+@property (weak, nonatomic) IBOutlet  UILabel      *   trendLabel;
+@property (weak, nonatomic) IBOutlet  UILabel      *   visceralFatWeightLabel;
+@property (weak, nonatomic) IBOutlet  UILabel      *   fatWeight;  // 体脂重
+
+@property (weak, nonatomic) IBOutlet  UILabel      *   bmrLabel;
+@property (weak, nonatomic) IBOutlet  UILabel      *   bodyAgeLabel;
+@property (weak, nonatomic) IBOutlet  UILabel      *   lineLabel;
+
+@property (weak, nonatomic) IBOutlet  UIImageView  *   dangerTipImageView;
+@property (weak, nonatomic) IBOutlet  UILabel      *   dangerTipLabel;
+
+@property (weak, nonatomic) IBOutlet  UILabel      *   warningTipLabel;
+@property (weak, nonatomic) IBOutlet  UIImageView  *   warningTipImageView;
+
+@property (weak, nonatomic) IBOutlet  UILabel      *   timeLabel;
+
+@property (weak, nonatomic) IBOutlet  UIImageView  *   trendArrowImageView;
+
+//@property (weak, nonatomic) IBOutlet  LineChart      *    chartView;
+@property (weak, nonatomic) IBOutlet  UILabel      *   noDataTipLabel;
+@property (weak, nonatomic) IBOutlet  UIButton     *   chartButton;
+@property (weak, nonatomic) IBOutlet UIButton *enterChart;
+- (IBAction)didEnterChart:(id)sender;
+
+@property (nonatomic,assign)id<healthMainDelegate>delegate;
+- (IBAction)didScale:(id)sender;
+
+- (IBAction)showWeight:(id)sender;
+
+- (IBAction)didShare:(id)sender;
+
+
+-(void)setUpInfo:(HealthItem*)item;
+
+-(void)clearView;
+
+
+
+@end
+@protocol healthMainDelegate <NSObject>
+
+-(void)didUpdateinfo;
+-(void)didShare;
+-(void)enterDetailView;
+-(void)didEnterChart;
 
 @end

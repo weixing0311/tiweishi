@@ -14,6 +14,12 @@ typedef NS_OPTIONS(NSUInteger, TFDeviceType) {
     TFDeviceTypeMyBody = 1 << 1,        // 老秤
     TFDeviceTypeMyBodyMini = 1 << 2,    // 新秤
 };
+//typedef enum : NSUInteger {
+//    myBody,
+//    bracelet,
+//    myBodyMini,
+//    myBodyPlus,
+//} DeviceType;
 
 @interface TFScaleManager : NSObject
 

@@ -28,7 +28,7 @@
  *	@brief	notify the model number updated after readModelNumber is called.
  *
  *	@param 	device 	device is notified
- *	@param 	modelNumer model number value of notification.
+ *	@param 	modelNumber model number value of notification.
  */
 - (void) didModelNumberUpdated:(VTDeviceModel *)device modelNumber:(NSData *)modelNumber;
 

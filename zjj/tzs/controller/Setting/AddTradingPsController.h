@@ -8,6 +8,13 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface AddTradingPsController : JFABaseTableViewController
+@interface AddTradingPsController : JFABaseTableViewController<UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UIImageView *fsImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *secImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *thiImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *forImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *fifImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *sexImageView;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTf;
 
 @end

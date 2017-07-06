@@ -9,5 +9,9 @@
 #import "JFABaseTableViewController.h"
 
 @interface ChangePasswordViewController : JFABaseTableViewController
+@property (weak, nonatomic) IBOutlet UITextField *passwordtf;
+@property (weak, nonatomic) IBOutlet UITextField *thenewPasswordtf;
+@property (weak, nonatomic) IBOutlet UITextField *repasswordtf;
+- (IBAction)updata:(id)sender;
 
 @end

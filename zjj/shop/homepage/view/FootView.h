@@ -10,4 +10,9 @@
 
 @interface FootView : UIView
 
+@property (weak, nonatomic) IBOutlet UIImageView *secionimage;
+@property (weak, nonatomic) IBOutlet UIImageView *title;
+@property (weak, nonatomic) IBOutlet UIButton *firstBtn;
+@property (weak, nonatomic) IBOutlet UIButton *secondBtn;
+@property (weak, nonatomic) IBOutlet UIButton *thirdBtn;
 @end

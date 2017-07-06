@@ -10,4 +10,7 @@
 
 @interface DetailCxCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *cxImageView;
+@property (weak, nonatomic) IBOutlet UILabel *cxContentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cxLabel;
 @end

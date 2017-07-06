@@ -6,9 +6,9 @@
 //  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
 //
 
-#import "ShareTrendCell.h"
+#import "ShareTrendListCell.h"
 
-@implementation ShareTrendCell
+@implementation ShareTrendListCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

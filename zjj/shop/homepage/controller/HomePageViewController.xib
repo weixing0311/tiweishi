@@ -9,9 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GoodsDetailViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomePageViewController">
             <connections>
-                <outlet property="tableview" destination="h4J-JO-VL7" id="U24-GK-UP4"/>
+                <outlet property="collectionView" destination="Baw-Px-ZVv" id="MAs-Cw-bNg"/>
+                <outlet property="layout" destination="wFg-ox-Q2Z" id="EBJ-bp-wUc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,74 +21,23 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lX-tb-MJh">
-                    <rect key="frame" x="0.0" y="617" width="125" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="zne-r6-h8W"/>
-                    </constraints>
-                    <state key="normal" title="购物车">
-                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="didshopCar:" destination="-1" eventType="touchUpInside" id="5b9-JT-vmo"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JR-jD-U8Y">
-                    <rect key="frame" x="125" y="617" width="125" height="50"/>
-                    <color key="backgroundColor" red="1" green="0.48583990030000002" blue="0.1987243638" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="UYG-2K-QiE"/>
-                    </constraints>
-                    <state key="normal" title="加入购物车">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addShopCar:" destination="-1" eventType="touchUpInside" id="l1R-YY-Fam"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dW-wE-8hS">
-                    <rect key="frame" x="250" y="617" width="125" height="50"/>
-                    <color key="backgroundColor" red="0.99109692260000004" green="0.213834791" blue="0.18167625309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="376-hu-4FX"/>
-                    </constraints>
-                    <state key="normal" title="立即购买">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="didBuy:" destination="-1" eventType="touchUpInside" id="vaZ-eh-nTP"/>
-                    </connections>
-                </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Cc-Dc-kYA">
-                    <rect key="frame" x="0.0" y="616" width="375" height="1"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="OEY-9k-7J0"/>
-                    </constraints>
-                </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="h4J-JO-VL7">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="616"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Baw-Px-ZVv">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wFg-ox-Q2Z">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="3lX-tb-MJh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1ap-fI-siP"/>
-                <constraint firstItem="5Cc-Dc-kYA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5CI-yT-bqn"/>
-                <constraint firstItem="h4J-JO-VL7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="77p-uO-bSu"/>
-                <constraint firstItem="4dW-wE-8hS" firstAttribute="leading" secondItem="2JR-jD-U8Y" secondAttribute="trailing" id="AU0-7B-Kib"/>
-                <constraint firstItem="2JR-jD-U8Y" firstAttribute="width" secondItem="3lX-tb-MJh" secondAttribute="width" id="CzB-pX-uCB"/>
-                <constraint firstItem="h4J-JO-VL7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RWU-Jx-EJ9"/>
-                <constraint firstItem="4dW-wE-8hS" firstAttribute="width" secondItem="3lX-tb-MJh" secondAttribute="width" id="TDb-n5-2db"/>
-                <constraint firstAttribute="bottom" secondItem="4dW-wE-8hS" secondAttribute="bottom" id="XuI-yq-oHi"/>
-                <constraint firstAttribute="bottom" secondItem="2JR-jD-U8Y" secondAttribute="bottom" id="cc8-GY-CH0"/>
-                <constraint firstAttribute="trailing" secondItem="5Cc-Dc-kYA" secondAttribute="trailing" id="gXG-Do-v5j"/>
-                <constraint firstAttribute="bottom" secondItem="3lX-tb-MJh" secondAttribute="bottom" id="hwc-IV-LmY"/>
-                <constraint firstAttribute="trailing" secondItem="4dW-wE-8hS" secondAttribute="trailing" id="jXM-wl-Qs2"/>
-                <constraint firstItem="2JR-jD-U8Y" firstAttribute="top" secondItem="5Cc-Dc-kYA" secondAttribute="bottom" id="mDs-xo-QnE"/>
-                <constraint firstItem="5Cc-Dc-kYA" firstAttribute="top" secondItem="h4J-JO-VL7" secondAttribute="bottom" id="mYm-6D-Zfi"/>
-                <constraint firstItem="2JR-jD-U8Y" firstAttribute="leading" secondItem="3lX-tb-MJh" secondAttribute="trailing" id="s4f-5b-tdN"/>
-                <constraint firstAttribute="trailing" secondItem="h4J-JO-VL7" secondAttribute="trailing" id="wiH-5p-QQf"/>
+                <constraint firstItem="Baw-Px-ZVv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0Vb-6M-3rN"/>
+                <constraint firstAttribute="trailing" secondItem="Baw-Px-ZVv" secondAttribute="trailing" id="KfW-0i-PXm"/>
+                <constraint firstAttribute="bottom" secondItem="Baw-Px-ZVv" secondAttribute="bottom" id="Sha-zl-BLV"/>
+                <constraint firstItem="Baw-Px-ZVv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ZWI-am-8ov"/>
             </constraints>
             <point key="canvasLocation" x="35.5" y="68.5"/>
         </view>

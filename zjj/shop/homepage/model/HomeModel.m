@@ -7,7 +7,21 @@
 //
 
 #import "HomeModel.h"
-
+static HomeModel * model;
 @implementation HomeModel
-
++(HomeModel *)shareInstance
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        model =[[ HomeModel alloc]init];
+    });
+    return model;
+}
+-(NSMutableArray *)arraySortingWithArray:(NSMutableArray *)array
+{
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"orders" ascending:YES]];
+    [array sortUsingDescriptors:sortDescriptors];
+    return array;
+}
 @end
