@@ -75,9 +75,9 @@
  */
 @property (nonatomic,strong) NSMutableArray  * child;//子用户
 /**
- * 地址（暂时没有）
+ * 身高
  */
-@property (nonatomic,copy  ) NSString * heigth;//地址
+@property (nonatomic,assign) float   heigth;//身高
 
 /**
  *  体脂师等级名称
@@ -205,4 +205,11 @@
  *  更新本地个人信息
  */
 -(void)setTzsInfoWithDict:(NSDictionary *)dict;
+
+
+
+-(void)showSuccessWithStatus:(NSString *)status;
+-(void)showErrorWithStatus:(NSString *)status;
+-(void)showInfoWithStatus:(NSString *)status;
+-(void)dismiss;
 @end

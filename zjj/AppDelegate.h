@@ -22,9 +22,6 @@ typedef enum : NSUInteger {
 
 - (void)saveContext;
 -(void)loignOut;
--(void)showHUD:(HUDType)type message:(NSString*)message detai:(NSString*)detailMsg Hdden:(BOOL)hidden;
--(void)hiddenHUD;
--(void)showHUDtishiWithText:(NSString *)text;
 -(void)showAletViewWithmessage:(NSString *)message;
 @end
 

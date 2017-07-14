@@ -7,6 +7,7 @@
 //
 
 #import "ShareHealthItem.h"
+#import "NSString+dateWithString.h"
 static ShareHealthItem *item;
 
 @implementation ShareHealthItem
@@ -84,7 +85,7 @@ static ShareHealthItem *item;
     
     
     
-    self.createTime =[dict safeObjectForKey:@"createTime"];//检测时间
+    self.createTime =[[dict safeObjectForKey:@"createTime"] dateyyyymmddhhmmss ];//检测时间
     self.mCalorie = [[dict safeObjectForKey:@"mCalorie"]floatValue];// 脂肪量
 
 }

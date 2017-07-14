@@ -28,9 +28,20 @@
 @end
 
 @implementation CharViewController
+{
+    UIButton * selectBtn;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.tabBarController.tabBar.hidden=YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTBRedColor];
+    self.title = @"历史趋势";
     self.timeLength = 3;
     self.endDate = [NSDate date];
     self.startDate =[self.endDate dateByAddingTimeInterval:(-self.timeLength * 24 * 60 * 60)];
@@ -48,6 +59,17 @@
     
     self.lenghtSegment.selectedSegmentIndex =0;
     self.listSegment.selectedSegmentIndex = 0;
+    
+    for (int i =0;i<5; i++) {
+        UIButton *btn = (UIButton *)[self.view viewWithTag:i+1];
+        if (i==0) {
+            btn.selected = YES;
+            selectBtn = btn;
+        }else{
+            btn.selected = NO;
+        }
+    }
+    
     
     [self getListInfo];
     [self configTheChartView:AAChartTypeLine];
@@ -98,12 +120,12 @@
     
     for (int i =(self.dataArray.count-1); i>=0; i--) {
         ShareHealthItem * item =[self.dataArray objectAtIndex:i];
-        NSString * time = item.createTime;
-        float mfat = item.mFat;
-        float mwater = item.mWater;
-        float mCalorie = item.mCalorie;
-        float bmi = item.bmi;
-        float mbone = item.mBone;
+        NSDate   *   time = item.createTime;
+        float   mfat = [[NSString stringWithFormat:@"%.1f",item.fatPercentage*100]floatValue];
+        float   mwater =[[NSString stringWithFormat:@"%.1f",item.waterWeight]floatValue] ;
+        float   mCalorie = [[NSString stringWithFormat:@"%.1f",item.fatWeight]floatValue];
+        float   bmi =[[NSString stringWithFormat:@"%.1f",item.bmi]floatValue];
+        float   mbone =[[NSString stringWithFormat:@"%.1f",item.boneMuscleWeight]floatValue];
         
         [self.dateArray addObject:[time mmdd]];
         [self.mfatArray addObject:@(mfat)];
@@ -112,20 +134,51 @@
         [self.bmiArray addObject:@(bmi)];
         [self.mBoneArray addObject:@(mbone)];
     }
-    [self ChartViewsetDateArray:self.dateArray infoArray:_bmiArray title:@"BMI"];
+
+    NSInteger tag  =selectBtn.tag;
+    switch (tag) {
+        case 1:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_bmiArray title:@"BMI"];
+            
+            break;
+        case 2:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mfatArray title:@"体脂"];
+            
+            break;
+        case 3:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mCalorieArray title:@"脂肪量"];
+            
+            break;
+        case 4:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_waterArray title:@"水分"];
+            
+            break;
+        case 5:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"骨骼肌"];
+            
+            break;
+            
+        default:
+            break;
+    }
+    
+    
 }
 
 -(void)configTheChartView:(NSString *)chartType{
-        self.chartView = [[AAChartView alloc]init];
-        self.chartView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width);
-        self.chartView.contentHeight = self.view.frame.size.width;
-        [self.superChartView addSubview:self.chartView];
+    self.chartView = [[AAChartView alloc]init];
+    self.chartView.frame =CGRectMake(0, 0, JFA_SCREEN_WIDTH-40, JFA_SCREEN_WIDTH-40);
+    self.chartView.contentWidth = JFA_SCREEN_WIDTH-40;
+    self.chartView.contentHeight = JFA_SCREEN_WIDTH-40;
+    [self.superChartView addSubview:self.chartView];
     self.chartModel= AAObject(AAChartModel).chartTypeSet(chartType)
     .titleSet(@"")
     .subtitleSet(@"")
     .pointHollowSet(true)
     .categoriesSet(self.dateArray)
     .yAxisTitleSet(@"")
+    .crosshairsSet(NO)
+    .yAxisGridLineWidthSet(@(0))
     .seriesSet(@[
                  AAObject(AASeriesElement)
                  .nameSet(@"")
@@ -151,8 +204,8 @@
 */
 
 - (IBAction)didRed:(id)sender {
-    self.endDate = self.startDate;
-    self.startDate = [self.startDate dateByAddingTimeInterval:(-self.timeLength * 24 * 60 * 60)];
+    self.endDate   = [self.endDate dateByAddingTimeInterval:(-24*60*60)];
+    self.startDate = [self.startDate dateByAddingTimeInterval:(-1 * 24 * 60 * 60)];
     self.dateLabel.text = [NSString stringWithFormat:@"%@-%@",[self.startDate mmdd],[self.endDate mmdd]];
     [self getListInfo];
 }
@@ -162,8 +215,8 @@
         return;
     }
     
-    self.startDate = self.endDate;
-    self.endDate = [self.startDate dateByAddingTimeInterval:(self.timeLength * 24 * 60 * 60)];
+    self.startDate = [self.startDate dateByAddingTimeInterval:( 24 * 60 * 60)];
+    self.endDate = [self.endDate dateByAddingTimeInterval:( 24 * 60 * 60)];
     self.dateLabel.text = [NSString stringWithFormat:@"%@-%@",[self.startDate mmdd],[self.endDate mmdd]];
     [self getListInfo];
 
@@ -226,10 +279,14 @@
 }
 -(void)ChartViewsetDateArray:(NSMutableArray *)dateArray infoArray:(NSMutableArray *)infoarray title:(NSString *)title
 {
+    // AAChartTypeLine
     self.chartModel= AAObject(AAChartModel).chartTypeSet(AAChartTypeLine)
     .titleSet(title)
     .subtitleSet(@"")
     .pointHollowSet(true)
+    .crosshairsSet(NO)
+    .yAxisGridLineWidthSet(@(0))
+
     .categoriesSet(dateArray)
     .yAxisTitleSet(@"")
     .seriesSet(@[
@@ -240,5 +297,45 @@
                ) ;
     [self.chartView aa_drawChartWithChartModel:_chartModel];
 
+}
+- (IBAction)didChangeChart:(UIButton *)sender {
+    
+    if (sender.tag == selectBtn.tag) {
+        return;
+    }
+    selectBtn.selected = NO;
+    sender.selected = YES;
+    selectBtn = sender;
+    switch (sender.tag) {
+        case 1:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_bmiArray title:@"BMI"];
+            
+            break;
+        case 2:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mfatArray title:@"体脂"];
+            break;
+        case 3:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mCalorieArray title:@"脂肪量"];
+            break;
+        case 4:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_waterArray title:@"水分"];
+            break;
+        case 5:
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"骨骼肌"];
+            break;
+            
+        default:
+            break;
+    }
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
 }
 @end

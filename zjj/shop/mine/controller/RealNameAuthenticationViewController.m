@@ -53,15 +53,17 @@
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.nameTF.text forKey:@"userName"];
     [param setObject:self.sfzTf.text forKey:@"userCode"];
-    [self showHUD:hotwheels message:nil detai:@"认证中。。" Hdden:NO];
+    [SVProgressHUD showWithStatus: @"认证中。。"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+
     [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" paramters:param success:^(NSDictionary *dic) {
         TzsTabbarViewController *tzs =[[TzsTabbarViewController alloc]init];
-        [self hiddenHUD];
+        [SVProgressHUD dismiss];
         
-        [self showHUD:onlyMsg message:@"认证成功.." detai:nil Hdden:YES];
+        [[UserModel shareInstance] showSuccessWithStatus:@"认证成功"];
         self.view.window.rootViewController = tzs;
     } failure:^(NSError *error) {
-         [self hiddenHUD];
+         [SVProgressHUD dismiss];
     }];
 }
 - (IBAction)didRz:(id)sender {
@@ -76,12 +78,4 @@
     
 }
 
--(void)showHUD:(HUDType)type message:(NSString *)message detai:(NSString *)detailMsg Hdden:(BOOL)hidden
-{
-    [super showHUD:type message:message detai:detailMsg Hdden:hidden];
-}
--(void)hiddenHUD
-{
-    [super hiddenHUD];
-}
 @end

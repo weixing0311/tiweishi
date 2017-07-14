@@ -10,6 +10,9 @@
 #import "ShareCell.h"
 #import "ShareHealthItem.h"
 #import "ShareListView.h"
+#import <ShareSDK/NSMutableDictionary+SSDKShare.h>
+#import "SVProgressHUD.h"
+#import "NSDate+CustomDate.h"
 @interface ShareViewController ()
 @property (nonatomic,strong)NSMutableArray * chooseArray;
 @end
@@ -24,14 +27,21 @@
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.tabBarController.tabBar.hidden=YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setTBRedColor];
     self.title = @"分享";
-    [self setNbColor];
     self.tableview.delegate =self;
     self.tableview.dataSource= self;
-
+    [self setExtraCellLineHiddenWithTb:self.tableview];
     [self getShareInfo];
     
 }
@@ -44,8 +54,8 @@
     
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
-    [param safeSetObject:beginDate forKey:@"startDate"];
-    [param safeSetObject:endDate forKey:@"endDate"];
+    [param safeSetObject:[beginDate yyyymmdd] forKey:@"startDate"];
+    [param safeSetObject:[endDate  yyyymmdd] forKey:@"endDate"];
     [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatList.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict =[dic safeObjectForKey:@"data"];
         
@@ -83,6 +93,12 @@
         
     };
     cell.tag = indexPath.row;
+    if (indexPath.row%2==0) {
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+    }else{
+        cell.contentView.backgroundColor = HEXCOLOR(0xeeeeee);
+
+    }
     cell.backgroundColor = [UIColor clearColor];
     ShareHealthItem * item = [self.dataArray objectAtIndex:indexPath.row];
     [cell setUpCellWithItem:item];
@@ -102,7 +118,7 @@
             cell.chooseBtn.selected = YES;
             [self.chooseArray addObject:cell];
         }else{
-            [self showError:@"最多只能选两条"];
+            [[UserModel shareInstance] showInfoWithStatus:@"最多只能选两条"];
         }
     }
 }
@@ -121,12 +137,8 @@
     // Pass the selected object to the new view controller.
 }
 */
--(void)showShareView
+-(UIImage *)showShareView
 {
-    if (self.chooseArray.count!=2) {
-        [self showError:@"请选择两条数据"];
-        return;
-    }
     ShareListView * shareTr = [self getXibCellWithTitle:@"ShareListView"];
     
     ShareCell * cell1 = [self.chooseArray objectAtIndex:0];
@@ -139,24 +151,91 @@
     [shareTr setInfoWithArr:arr];
     [self.view addSubview:shareTr];
     [self.view bringSubviewToFront:shareTr];
-    [self getImageWithView:shareTr];
+   return  [self getImageWithView:shareTr];
+    
 }
 - (IBAction)didShareVX:(id)sender {
     
-    [self showShareView];
-    
+    if (self.chooseArray.count!=2) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请选择两条数据"];
+        return ;
+    }
+    UIImage * image = [self showShareView];
+
+    [self shareWithType:SSDKPlatformSubTypeWechatTimeline image:image];
 }
 
 - (IBAction)didShareFriedns:(id)sender {
-    [self showShareView];
+    if (self.chooseArray.count!=2) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请选择两条数据"];
+        return ;
+    }
+   UIImage * image = [self showShareView];
+    [self shareWithType:SSDKPlatformSubTypeWechatSession image:image];
 }
 
 - (IBAction)didShareQQ:(id)sender {
-    [self showShareView];
+    if (self.chooseArray.count!=2) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请选择两条数据"];
+        return ;
+    }
+   UIImage * image = [self showShareView];
+    [self shareWithType:SSDKPlatformTypeQQ image:image];
+
+}
+-(void) shareWithType:(SSDKPlatformType)type image:(UIImage *)image
+{
+    if (!image) {
+        return;
+    }
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    NSArray* imageArray = @[image];
+    
+    [shareParams SSDKSetupShareParamsByText:nil
+                                     images:imageArray
+                                        url:nil
+                                      title:nil
+                                       type:SSDKContentTypeImage];
+    
+    [shareParams SSDKEnableUseClientShare];
+    [SVProgressHUD showWithStatus:@"开始分享"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+
+    
+    //进行分享
+    [ShareSDK share:type
+         parameters:shareParams
+     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         
+         switch (state) {
+             case SSDKResponseStateSuccess:
+             {
+                 [[UserModel shareInstance]dismiss];
+//                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                break;
+             }
+             case SSDKResponseStateFail:
+             {
+                 [[UserModel shareInstance]dismiss];
+//                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+                 break;
+             }
+             case SSDKResponseStateCancel:
+             {
+                 [[UserModel shareInstance]dismiss];
+//                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                 break;
+             }
+             default:
+                 break;
+         }
+     }];
+
 }
 
-
--(void)getImageWithView:(UIView*)view
+-(UIImage *)getImageWithView:(UIView*)view
 {
     UIGraphicsBeginImageContext(view.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
@@ -164,6 +243,7 @@
     UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文
     UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
     [view removeFromSuperview];
+    return viewImage;
 }
 
 

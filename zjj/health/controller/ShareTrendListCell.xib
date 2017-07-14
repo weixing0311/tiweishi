@@ -65,7 +65,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_danger_up" translatesAutoresizingMaskIntoConstraints="NO" id="FBh-Gm-YgY">
-                                <rect key="frame" x="10" y="24" width="4" height="9"/>
+                                <rect key="frame" x="10" y="19.5" width="8" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="8" id="PT9-H6-HnF"/>
+                                    <constraint firstAttribute="height" constant="18" id="eYd-WB-0kc"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

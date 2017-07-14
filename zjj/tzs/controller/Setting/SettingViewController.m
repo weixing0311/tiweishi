@@ -34,12 +34,11 @@
     [self setShardow];
 
     
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo"]];
+    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
-    [self showHUD:hotwheels message:@"asldfkjasl" detai:@"asldaslkdf" Hdden:YES];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)setShardow

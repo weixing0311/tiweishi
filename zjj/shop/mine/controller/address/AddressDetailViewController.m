@@ -121,30 +121,23 @@
     //编辑还是添加
     if (self.isEdit ==YES) {
         [[BaseSservice sharedManager]post1:@"app/userAddress/updateAddress.do" paramters:param success:^(NSDictionary *dic) {
-            if ([[dic objectForKey:@"status"]isEqualToString:@"success"]) {
-                [self showHUD:onlyMsg message:@"修改成功" detai:nil Hdden:YES];
+                [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
                 [self.navigationController popViewControllerAnimated:YES];
-            }else{
-                [self showHUD:onlyMsg message:[dic objectForKey:@"message"] detai:nil Hdden:YES];
-            }
-        } failure:^(NSError *error) {
             
+        } failure:^(NSError *error) {
+            [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
         }];
    
     }else{
     
     [[BaseSservice sharedManager]post1:@"app/userAddress/addAddress.do" paramters:param success:^(NSDictionary *dic) {
-        if ([[dic objectForKey:@"status"]isEqualToString:@"success"]) {
-            [self showHUD:onlyMsg message:@"修改成功" detai:nil Hdden:YES];
+            [[UserModel shareInstance] showSuccessWithStatus: @"添加成功"];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
             [self.navigationController popViewControllerAnimated:YES];
-        }else{
-            [self showHUD:onlyMsg message:[dic objectForKey:@"message"] detai:nil Hdden:YES];
-        }
 
     } failure:^(NSError *error) {
-        
+        [[UserModel shareInstance] showErrorWithStatus:@"添加失败"];
     }];
     
     }

@@ -11,7 +11,7 @@
 #import "ResignAgumentViewController.h"
 #import "ChangeUserInfoViewController.h"
 #import "TzsTabbarViewController.h"
-#import "MBProgressHUD.h"
+#import "ForgetPasswordViewController.h"
 @interface LoignViewController ()
 
 @end
@@ -21,7 +21,6 @@
     BOOL isupView;
     NSTimer * _timer;
     NSInteger timeNumber;
-    MBProgressHUD * progressHUD;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -35,11 +34,16 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showkeyboard) name:UIKeyboardWillShowNotification object:nil];
     
     isupView = YES;
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenKeyBoard)]];
+    
+    
+    
+    self.forgetpsBtn.hidden = YES;
+    
+    
     self.mobileTf.delegate = self;
     self.mobileTf.keyboardType = UIKeyboardTypeNumberPad;
     self.mobileTf.returnKeyType = UIReturnKeyNext;
@@ -47,23 +51,27 @@
     self.verTF.delegate = self;
     self.verTF.keyboardType = UIKeyboardTypeNumberPad;
     self.verTF.returnKeyType = UIReturnKeyGo;
+    
+    self.loignMobileTf.delegate = self;
+    self.loignMobileTf.keyboardType = UIKeyboardTypeNumberPad;
+    self.loignMobileTf.returnKeyType = UIReturnKeyNext;
+    self.loignMobileTf.returnKeyType = UIReturnKeyDone;
+    
+    self.passWordTf.delegate = self;
+    self.passWordTf.keyboardType = UIKeyboardTypeDefault;
+    self.passWordTf.returnKeyType = UIReturnKeyDone;
+    self.passWordTf.secureTextEntry = YES;
+    self.verLoignBtn.selected = YES;
+    self.psLoignBtn.selected = NO;
+    self.passWordView.hidden = YES;
+    self.verView.hidden = NO;
+    
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 -(void)hiddenKeyBoard
 {
@@ -73,35 +81,126 @@
 
 }
 
-- (IBAction)didLoign:(id)sender {
+- (IBAction)pageChange:(UIButton *)sender {
     
-    DLog(@"点击登录");
+    if (sender ==self.verLoignBtn) {
+        if (self.verLoignBtn.selected ==YES) {
+            return;
+        }else{
+            self.verView.hidden =NO;
+            self.passWordView.hidden = YES;
+            self.forgetpsBtn.hidden =YES;
+
+            [self.mobileTf becomeFirstResponder];
+            self.verLoignBtn.selected = YES;
+            self.psLoignBtn.selected = NO;
+        }
+    }else{
+        if (self.psLoignBtn.selected ==YES) {
+            return;
+        }else{
+            self.verView.hidden =YES;
+            self.passWordView.hidden = NO;
+            self.forgetpsBtn.hidden =NO;
+            
+            [self.loignMobileTf becomeFirstResponder];
+            self.verLoignBtn.selected = NO;
+            self.psLoignBtn.selected = YES;
+   
+    }
+    }
+    
+    
+    
+}
+
+-(void)loIgnWithPassword
+{
     [self bgViewDown];
     
-    if ([self.mobileTf.text isEqualToString:@""]||[self.mobileTf.text isEqualToString:@" "]||!self.mobileTf.text) {
-        [self showHUD:onlyMsg message:@"请输入手机号" detai:nil Hdden:YES];
+    if ([self.loignMobileTf.text isEqualToString:@""]||[self.loignMobileTf.text isEqualToString:@" "]||!self.loignMobileTf.text) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入手机号"];
         return;
     }
-    if ([self.verTF.text isEqualToString:@""]||[self.verTF.text isEqualToString:@" "]||!self.verTF.text) {
-        [self showHUD:onlyMsg message:@"请输入验证码" detai:nil Hdden:YES];
+    if ([self.passWordTf.text isEqualToString:@""]||[self.passWordTf.text isEqualToString:@" "]||!self.passWordTf.text) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入验证码"];
+        
         return;
     }
-    [self showHUD:hotwheels message:@"登录中。。。" detai:nil Hdden:NO];
-    NSMutableDictionary *param =[ NSMutableDictionary dictionary];
-    [param setObject:[NSString encryptString:self.mobileTf.text] forKey:@"mobilePhone"];
-    [param setObject:self.verTF.text forKey:@"vcode"];
-    DLog(@"param--%@",param);
-    [[BaseSservice sharedManager]post1:kLoignWithVerUrl paramters:param success:^(NSDictionary *dic) {
-        [self hiddenHUD];
-
+    NSMutableDictionary * param = [NSMutableDictionary dictionary];
+    
+    [param safeSetObject:[NSString encryptString:self.loignMobileTf.text] forKey:@"mobilePhone"];
+    [param safeSetObject:[NSString encryptString:self.passWordTf.text] forKey:@"password"];
+        
+    
+    [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance] showSuccessWithStatus:@"登录成功"];
         [[UserModel shareInstance]setInfoWithDic:[dic objectForKey:@"data"]];
         [[NSUserDefaults standardUserDefaults]setObject:[[dic objectForKey:@"data"]objectForKey:@"userId"] forKey:kMyloignInfo];
         
         
         
         if ([UserModel shareInstance].nickName.length>0) {
+            
             TabbarViewController *tab = [[TabbarViewController alloc]init];
             self.view.window.rootViewController = tab;
+            
+        }else{
+            ChangeUserInfoViewController *cg =[[ChangeUserInfoViewController alloc]init];
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cg];
+            cg.changeType =1;
+            [self presentViewController:nav animated:YES completion:nil];
+        }
+
+    } failure:^(NSError *error) {
+//        [[UserModel shareInstance] showErrorWithStatus:@"登录失败"];
+        [_timer invalidate];
+        [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.verbtn.enabled = YES;
+
+    }];
+}
+-(void)loignWithVer
+{
+    [self bgViewDown];
+    
+    if ([self.mobileTf.text isEqualToString:@""]||[self.mobileTf.text isEqualToString:@" "]||!self.mobileTf.text) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入手机号"];
+        return;
+    }
+    if ([self.verTF.text isEqualToString:@""]||[self.verTF.text isEqualToString:@" "]||!self.verTF.text) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入验证码"];
+        
+        return;
+    }
+    [SVProgressHUD showWithStatus:@"登录中。。。"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+
+    NSMutableDictionary *param =[ NSMutableDictionary dictionary];
+    [param setObject:[NSString encryptString:self.mobileTf.text] forKey:@"mobilePhone"];
+    [param setObject:self.verTF.text forKey:@"vcode"];
+    DLog(@"param--%@",param);
+    [[BaseSservice sharedManager]post1:kLoignWithVerUrl paramters:param success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
+        [[UserModel shareInstance] showSuccessWithStatus:@"登录成功"];
+        
+        
+        [_timer invalidate];
+        [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.verbtn.enabled = YES;
+        
+        
+        
+        [[UserModel shareInstance]setInfoWithDic:[dic objectForKey:@"data"]];
+        [[NSUserDefaults standardUserDefaults]setObject:[[dic objectForKey:@"data"]objectForKey:@"userId"] forKey:kMyloignInfo];
+        
+        
+        
+        if ([UserModel shareInstance].nickName.length>0) {
+            
+            TabbarViewController *tab = [[TabbarViewController alloc]init];
+            self.view.window.rootViewController = tab;
+            
         }else{
             ChangeUserInfoViewController *cg =[[ChangeUserInfoViewController alloc]init];
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cg];
@@ -112,52 +211,44 @@
         
         
     } failure:^(NSError *error) {
-        [self hiddenHUD];
-
-        NSDictionary *dic = error.userInfo;
-        NSString * message ;
-        if ([[dic allKeys]containsObject:@"message"]) {
-            message =[dic objectForKey:@"message"];
-        }else{
-         message =@"获取失败";
-        }
-        UIAlertController *al = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
         
-        [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            [_timer invalidate];
-            [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-            self.verbtn.enabled = YES;
-            
-        }]];
-        [self presentViewController:al animated:YES completion:nil];
-
+//        [[UserModel shareInstance] showErrorWithStatus:@"登录失败"];
+        [_timer invalidate];
+        [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.verbtn.enabled = YES;
+        
     }];
 
+}
+
+- (IBAction)didLoign:(id)sender {
     
+    DLog(@"点击登录");
     
+    if (self.verLoignBtn.selected ==YES) {
+        [self loignWithVer];
+    }else{
+        [self loIgnWithPassword];
+    }
     
 }
--(void)showHUD:(HUDType)type message:(NSString*)message detai:(NSString*)detailMsg Hdden:(BOOL)hidden
+-(void)clearTextField
 {
-    [super showHUD:type message:message detai:detailMsg Hdden:hidden];
+    self.mobileTf.text = @"";
+    self.verTF.text =@"";
+    self.loignMobileTf.text = @"";
+    self.passWordTf.text = @"";
 }
--(void)hiddenHUD
-{
-    [super hiddenHUD];
-}
-
-
-- (IBAction)vxLoign:(id)sender {
+- (IBAction)forgetPass:(id)sender {
     
-    DLog(@"点击微信登录");
-    [self bgViewDown];
+    ForgetPasswordViewController * fo = [[ForgetPasswordViewController alloc]init];
+//    fo.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+
+    [self presentViewController:fo animated:YES completion:nil];
+    
 }
 
-- (IBAction)QQloign:(id)sender {
-    
-    DLog(@"点击QQ登录");
-    [self bgViewDown];
-}
+
 
 - (IBAction)getVer:(UIButton *)sender {
     timeNumber = 59;
@@ -183,27 +274,26 @@
             msg = @"已发送";
         }
         DLog(@"%@",msg);
-        [self showHUD:onlyMsg message:msg detai:nil Hdden:YES];
-
+        [[UserModel shareInstance] showSuccessWithStatus:msg];
         
         
     } failure:^(NSError * error) {
         NSLog(@"faile--%@",error);
+        [_timer invalidate];
+        [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.verbtn.enabled = YES;
+
         NSDictionary *dic = error.userInfo;
         if ([[dic allKeys]containsObject:@"message"]) {
             UIAlertController *al = [UIAlertController alertControllerWithTitle:@"提示" message:[dic objectForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
             
             [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                [_timer invalidate];
-                [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-                self.verbtn.enabled = YES;
                 
             }]];
             [self presentViewController:al animated:YES completion:nil];
             
         }else{
-            [self showHUD:onlyMsg message:@"登录失败" detai:nil Hdden:YES];
-            
+            [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
         }
 
     }];
@@ -231,14 +321,16 @@
     ResignAgumentViewController * res = [[ResignAgumentViewController alloc]init];
     [self.navigationController pushViewController:res animated:YES];
 }
+
+
 -(void)showkeyboard
 {
     
     if (isupView) {
         isupView = NO;
-        [UIView animateWithDuration:0.25 animations:^{
-            self.bgview.contentOffset = CGPointMake(0, 100);
-        }];
+//        [UIView animateWithDuration:0.25 animations:^{
+//            self.bgview.contentOffset = CGPointMake(0, 100);
+//        }];
     }
 
 }
@@ -248,9 +340,11 @@
     isupView = YES;
     [self.mobileTf resignFirstResponder];
     [self.verTF resignFirstResponder];
-    [UIView animateWithDuration:0.5 animations:^{
-        self.bgview.contentOffset = CGPointMake(0, 0);
-    }];
+    [self.loignMobileTf resignFirstResponder];
+    [self.passWordTf resignFirstResponder];
+//    [UIView animateWithDuration:0.5 animations:^{
+//        self.bgview.contentOffset = CGPointMake(0, 0);
+//    }];
 
 }
 
@@ -259,11 +353,16 @@
     if (textField ==self.mobileTf) {
         [self.mobileTf resignFirstResponder];
         [self.verTF becomeFirstResponder];
-    }else{
-        [self.verTF resignFirstResponder];
-        [self didLoign:nil];
+    }else if(textField==self.passWordTf){
+        [self.passWordTf resignFirstResponder];
+    }else if (textField ==self.loignMobileTf)
+    {
+        [self.loignMobileTf resignFirstResponder];
     }
     return YES;
 }
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 @end

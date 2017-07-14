@@ -38,10 +38,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEQ-nx-moI">
-                            <rect key="frame" x="0.0" y="1" width="93.5" height="59"/>
+                            <rect key="frame" x="0.0" y="1" width="94" height="59"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分享至" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stA-vA-oqS">
-                                    <rect key="frame" x="8" y="19.5" width="79.5" height="20"/>
+                                    <rect key="frame" x="8" y="19.5" width="80" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Few-a0-49P"/>
                                     </constraints>
@@ -50,8 +50,8 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFx-WF-1sm">
-                                    <rect key="frame" x="92.5" y="8" width="1" height="43"/>
-                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <rect key="frame" x="93" y="8" width="1" height="43"/>
+                                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="FyY-v7-r07"/>
                                     </constraints>
@@ -68,17 +68,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jlw-df-31T">
-                            <rect key="frame" x="94.5" y="1" width="92.5" height="59"/>
+                            <rect key="frame" x="94" y="1" width="93.5" height="59"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weixin_" translatesAutoresizingMaskIntoConstraints="NO" id="eW1-0g-NJv">
-                                    <rect key="frame" x="26.5" y="9.5" width="40" height="40"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="friends_" translatesAutoresizingMaskIntoConstraints="NO" id="eW1-0g-NJv">
+                                    <rect key="frame" x="32" y="14.5" width="30" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="eYP-7P-W8P"/>
-                                        <constraint firstAttribute="width" constant="40" id="lg9-MN-06G"/>
+                                        <constraint firstAttribute="height" constant="30" id="eYP-7P-W8P"/>
+                                        <constraint firstAttribute="width" constant="30" id="lg9-MN-06G"/>
                                     </constraints>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kK-xV-lKQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="92.5" height="59"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="93.5" height="59"/>
                                     <connections>
                                         <action selector="didShareVX:" destination="-1" eventType="touchUpInside" id="aCB-XL-4hQ"/>
                                     </connections>
@@ -95,17 +95,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rSa-jT-xU9">
-                            <rect key="frame" x="188" y="1" width="93.5" height="59"/>
+                            <rect key="frame" x="187.5" y="1" width="94" height="59"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="friends_" translatesAutoresizingMaskIntoConstraints="NO" id="La4-da-uLp">
-                                    <rect key="frame" x="26" y="9.5" width="40" height="40"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weixin_" translatesAutoresizingMaskIntoConstraints="NO" id="La4-da-uLp">
+                                    <rect key="frame" x="32" y="14.5" width="30" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="eu4-cw-sgq"/>
-                                        <constraint firstAttribute="height" constant="40" id="hc6-r3-KHj"/>
+                                        <constraint firstAttribute="width" constant="30" id="eu4-cw-sgq"/>
+                                        <constraint firstAttribute="height" constant="30" id="hc6-r3-KHj"/>
                                     </constraints>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="930-dj-bhc">
-                                    <rect key="frame" x="0.0" y="0.0" width="93.5" height="59"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="94" height="59"/>
                                     <connections>
                                         <action selector="didShareFriedns:" destination="-1" eventType="touchUpInside" id="F3O-wd-PeI"/>
                                     </connections>
@@ -122,17 +122,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o8l-Jk-ICK">
-                            <rect key="frame" x="282.5" y="1" width="92.5" height="59"/>
+                            <rect key="frame" x="281.5" y="1" width="93.5" height="59"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qq_" translatesAutoresizingMaskIntoConstraints="NO" id="Upc-H7-DAO">
-                                    <rect key="frame" x="25.5" y="9.5" width="40" height="40"/>
+                                    <rect key="frame" x="31" y="14.5" width="30" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="ZDw-21-rpc"/>
-                                        <constraint firstAttribute="height" constant="40" id="aA0-eq-yYl"/>
+                                        <constraint firstAttribute="width" constant="30" id="ZDw-21-rpc"/>
+                                        <constraint firstAttribute="height" constant="30" id="aA0-eq-yYl"/>
                                     </constraints>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZCY-Al-9SX">
-                                    <rect key="frame" x="0.0" y="0.0" width="92.5" height="59"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="93.5" height="59"/>
                                     <connections>
                                         <action selector="didShareQQ:" destination="-1" eventType="touchUpInside" id="8Xb-bc-qgh"/>
                                     </connections>
@@ -158,8 +158,8 @@
                         <constraint firstItem="QHU-ob-942" firstAttribute="leading" secondItem="4Zh-Qh-fwC" secondAttribute="leading" id="J7R-a6-eX4"/>
                         <constraint firstAttribute="trailing" secondItem="o8l-Jk-ICK" secondAttribute="trailing" id="Lfc-W3-CMI"/>
                         <constraint firstItem="o8l-Jk-ICK" firstAttribute="width" secondItem="nEQ-nx-moI" secondAttribute="width" id="NC4-6S-llT"/>
-                        <constraint firstItem="o8l-Jk-ICK" firstAttribute="leading" secondItem="rSa-jT-xU9" secondAttribute="trailing" constant="1" id="NzS-E9-iQu"/>
-                        <constraint firstItem="rSa-jT-xU9" firstAttribute="leading" secondItem="Jlw-df-31T" secondAttribute="trailing" constant="1" id="SL1-xe-Pqm"/>
+                        <constraint firstItem="o8l-Jk-ICK" firstAttribute="leading" secondItem="rSa-jT-xU9" secondAttribute="trailing" id="NzS-E9-iQu"/>
+                        <constraint firstItem="rSa-jT-xU9" firstAttribute="leading" secondItem="Jlw-df-31T" secondAttribute="trailing" id="SL1-xe-Pqm"/>
                         <constraint firstAttribute="height" constant="60" id="g2N-f5-496"/>
                         <constraint firstAttribute="bottom" secondItem="Jlw-df-31T" secondAttribute="bottom" id="lu0-2s-iiA"/>
                         <constraint firstAttribute="trailing" secondItem="QHU-ob-942" secondAttribute="trailing" id="mIg-uL-ndM"/>
@@ -170,7 +170,7 @@
                         <constraint firstAttribute="bottom" secondItem="rSa-jT-xU9" secondAttribute="bottom" id="uOk-HP-pQe"/>
                         <constraint firstItem="nEQ-nx-moI" firstAttribute="leading" secondItem="4Zh-Qh-fwC" secondAttribute="leading" id="vRd-WO-F8a"/>
                         <constraint firstItem="QHU-ob-942" firstAttribute="top" secondItem="4Zh-Qh-fwC" secondAttribute="top" id="xWx-LA-pVf"/>
-                        <constraint firstItem="Jlw-df-31T" firstAttribute="leading" secondItem="nEQ-nx-moI" secondAttribute="trailing" constant="1" id="zWs-bg-7jX"/>
+                        <constraint firstItem="Jlw-df-31T" firstAttribute="leading" secondItem="nEQ-nx-moI" secondAttribute="trailing" id="zWs-bg-7jX"/>
                     </constraints>
                 </view>
             </subviews>

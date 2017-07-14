@@ -7,6 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef enum {
+    IS_ENUM_WEIGHT,
+    IS_ENUM_FATWEIGHT,
+    IS_ENUM_visceral,
+    
+
+
+}enumsType;
 
 @interface HealthItem : NSObject
 @property (nonatomic,assign) float              waterWeight ;//// 细胞总水
@@ -36,7 +44,7 @@
 @property (nonatomic,assign) int                weightLevel ;////体重判定标准
 @property (nonatomic,copy  ) NSString     *     createTime ;////检测时间
 @property (nonatomic,assign) float              fatPercentage;
-
+@property (nonatomic,assign)enumsType           type;
 -(void)setobjectWithDic:(NSDictionary *)dict ;//
 
 /*

@@ -15,20 +15,26 @@
 @property (weak, nonatomic) IBOutlet UIButton *verbtn;
 @property (weak, nonatomic) IBOutlet UIButton *resignAugement;
 @property (weak, nonatomic) IBOutlet UIButton *loignBtn;
+@property (weak, nonatomic) IBOutlet UITextField *loignMobileTf;
+@property (weak, nonatomic) IBOutlet UITextField *passWordTf;
 
-@property (weak, nonatomic) IBOutlet UIButton *vxLoign;
-@property (weak, nonatomic) IBOutlet UIButton *qqLoign;
+@property (weak, nonatomic) IBOutlet UIView *passWordView;
+@property (weak, nonatomic) IBOutlet UIView *verView;
+
+@property (weak, nonatomic) IBOutlet UIButton *verLoignBtn;
+@property (weak, nonatomic) IBOutlet UIButton *psLoignBtn;
+- (IBAction)pageChange:(UIButton *)sender;
 
 
 - (IBAction)didLoign:(id)sender;
 
-- (IBAction)vxLoign:(id)sender;
-- (IBAction)QQloign:(id)sender;
+- (IBAction)forgetPass:(id)sender;
 
 - (IBAction)getVer:(id)sender;
 
-- (IBAction)showResignAugement:(id)sender;
 
+
+@property (weak, nonatomic) IBOutlet UIButton *forgetpsBtn;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgview;
 

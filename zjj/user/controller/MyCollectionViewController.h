@@ -8,6 +8,7 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface MyCollectionViewController : JFABaseTableViewController
+@interface MyCollectionViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

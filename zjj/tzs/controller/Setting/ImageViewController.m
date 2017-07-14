@@ -65,13 +65,15 @@
     
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [self showHUD:hotwheels message:@"上传中。。。" detai:nil Hdden:NO];
+    [SVProgressHUD showWithStatus:@"上传中.."];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+
     [[BaseSservice sharedManager]postImage:@"app/user/uploadHeadImg.do" paramters:param imageData:fileData success:^(NSDictionary *dic) {
-        [self hiddenHUD];
+        [SVProgressHUD dismiss];
         [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
-        [self showHUD:onlyMsg message:@"上传成功" detai:nil Hdden:YES];
+        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
     } failure:^(NSError *error) {
-        [self hiddenHUD];
+        [SVProgressHUD dismiss];
         DLog(@"faile-error-%@",error);
     }];
 }

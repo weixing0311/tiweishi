@@ -8,7 +8,8 @@
 
 #import "ShareDetailView.h"
 #import "HealthDetailsItem.h"
-#import "EvaluationDetailDatasCell.h"
+#import "HealthDetailNormalCell.h"
+#import "NSString+dateWithString.h"
 @implementation ShareDetailView
 
 - (instancetype)init
@@ -35,11 +36,11 @@
 -(void)setInfo
 {
     
-    self.generateTimeLabel.text =[HealthDetailsItem instance].createTime ;
+    self.generateTimeLabel.text =[[HealthDetailsItem instance].createTime mmddhhmm] ;
 
     self.bodyAgeLabel.text =[NSString stringWithFormat:@"%d",[HealthDetailsItem instance].bodyAge];
 
-    self.bmrLabel.text = [NSString stringWithFormat:@"%f",[HealthDetailsItem instance].bmr];
+    self.bmrLabel.text = [NSString stringWithFormat:@"%.0f",[HealthDetailsItem instance].bmr];
 
     [self.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
     self.nameLabel.text =[SubUserItem shareInstance].nickname;
@@ -148,11 +149,11 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * identifier = @"EvaluationDetailDatasCell";
+    static NSString * identifier = @"HealthDetailNormalCell";
     
-    EvaluationDetailDatasCell  *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    HealthDetailNormalCell  *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        NSArray *nibs = [[NSBundle mainBundle]loadNibNamed:@"EvaluationDetailDatasCell" owner:nil options:nil];
+        NSArray *nibs = [[NSBundle mainBundle]loadNibNamed:@"HealthDetailNormalCell" owner:nil options:nil];
         cell = [nibs lastObject];
     };
     cell.tag = indexPath.row;

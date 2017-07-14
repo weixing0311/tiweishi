@@ -10,6 +10,7 @@
 #import "ChangeUserInfo2ViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+Extension.h"
+#import "LoignViewController.h"
 @interface ChangeUserInfoViewController ()
 
 @end
@@ -17,12 +18,28 @@
 @implementation ChangeUserInfoViewController
 {
     int   _sex;
+    BOOL upDataImage;//上传头像 默认为NO；
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.tabBarController.tabBar.hidden=YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setTBRedColor];
+    upDataImage = NO;
+    UIBarButtonItem * rig =[[UIBarButtonItem alloc]initWithTitle:@"切换账号" style:UIBarButtonItemStyleDone target:self action:@selector(loingOut)];
+    self.testImageView.image = [UIImage imageNamed: @"head_default"];
+    _sex =2;
+
     switch (self.changeType) {
         case 1://完善资料
+            
+    self.navigationItem.rightBarButtonItem = rig;
+ 
         self.title =@"完善资料";
             break;
         case 2:
@@ -41,20 +58,30 @@
             break;
     }
     
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:254/255.0 green:86/255.0 blue:0/255.0 alpha:1];
-    self.testImageView .layer.cornerRadius = 45;
+    self.testImageView .layer.cornerRadius = 55;
     self.testImageView.layer.masksToBounds = YES;
-    _sex =2;
+    self.testImageView.layer.borderWidth= 10;
+    self.testImageView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+
+    
+    
+    
+    
     self.nickNameLb.returnKeyType = UIReturnKeyDone;
     self.nickNameLb.delegate = self;
     
     // Do any additional setup after loading the view from its nib.
 }
+-(void)loingOut
+{
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
+    [[UserModel shareInstance]removeAllObject];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 -(void)isChangeInfo
 {
     self.nickNameLb.text = [SubUserItem shareInstance].nickname;
-    [self.testImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
+    [self.testImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]placeholderImage:[UIImage imageNamed:@"head_default"]];
     
     _sex = [SubUserItem shareInstance].sex;
     
@@ -100,12 +127,12 @@
     ChangeUserInfo2ViewController *c2 =[[ChangeUserInfo2ViewController alloc]init];
     
     if (!self.nickNameLb.text||[self.nickNameLb.text isEqualToString:@""]||[self.nickNameLb.text isEqualToString:@" "]) {
-        [self showError:@"请输入昵称"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入昵称"];
         return;
     }
     c2.nickName = self.nickNameLb.text;
     
-    if (self.testImageView.image) {
+    if (upDataImage==YES) {
         NSData *fileData = UIImageJPEGRepresentation(self.testImageView.image,0.001);
         c2.imageData =[NSData dataWithData:fileData];
      }
@@ -166,6 +193,7 @@
         [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
         
         self.testImageView.image = image;
+        upDataImage = YES;
         
     }
     [self dismissViewControllerAnimated:YES completion:nil];

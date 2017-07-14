@@ -14,37 +14,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>ASIHTTPRequest.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>BabyBluetooth.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>DACircularProgress.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>MBProgressHUD.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>PSTCollectionView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-zjj.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Reachability.xcscheme</key>
+		<key>SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -57,17 +32,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>586F2DFA9BDCC6675C2546793A69E5CC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5B6D67BBE55E8A4092016268C688AD91</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8C9A61F6F1358BDC520E7A785A4DC86A</key>
+		<key>7809EEB276073330EAF3B7F937461647</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,7 +42,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9C623D1AF8229419BA603B3C66BE24B9</key>
+		<key>9A6675A5D90BBF36FEA046DACC94EA0F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,22 +52,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B35CB295C1DF6B318D4EC0A99AD1982D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C791F0A928C1A8FE97074DFC9ACF4E75</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E90D25BBBD444CE7D1E8B7AF5A844F83</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F0EA78F8F3362DEBC9840500226DA5E7</key>
+		<key>E6F7ADD7A38162266580E2C1A6D22461</key>
 		<dict>
 			<key>primary</key>
 			<true/>

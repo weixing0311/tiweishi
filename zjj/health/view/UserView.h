@@ -11,10 +11,11 @@
 @interface UserView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *headBtn;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *menuBtn;
+
 - (IBAction)didUserInfo:(id)sender;
-- (IBAction)didClickMenu:(id)sender;
+
 @property (nonatomic,assign)id<userViewDelegate>delegate;
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 
 @end
 @protocol userViewDelegate <NSObject>

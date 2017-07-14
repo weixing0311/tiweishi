@@ -19,6 +19,9 @@
     self.value2StatusBgView.layer.masksToBounds = YES;
     self.value2StatusBgView.layer.cornerRadius = 5;
 
+    self.value1Label.adjustsFontSizeToFitWidth = YES;
+    self.value2Label.adjustsFontSizeToFitWidth = YES;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

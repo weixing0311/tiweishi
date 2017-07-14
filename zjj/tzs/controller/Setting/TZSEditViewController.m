@@ -77,7 +77,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo"]];
+        [cell.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
         return cell;
     }else{
         static NSString *identifier = @"cell";
@@ -202,15 +202,6 @@
 
 
 
--(void)showHUD:(HUDType)type message:(NSString *)message detai:(NSString *)detailMsg Hdden:(BOOL)hidden
-{
-    [super showHUD:type message:message detai:detailMsg Hdden:hidden];
-    
-}
--(void)hiddenHUD
-{
-    [super hiddenHUD];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -247,7 +247,7 @@
 -(void)didClickFirstBtnWithView:(OrderFootBtnView*)view
 {
     //去支付
-    [self showError:@"去支付"];
+    [[UserModel shareInstance] showInfoWithStatus:@"去支付"];
 }
 -(void)didClickSecondBtnWithView:(OrderFootBtnView*)view
 {

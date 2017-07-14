@@ -35,10 +35,10 @@
     [param setObject:self.repasswordtf.text forKey:@"repPassword"];
     
     [[BaseSservice sharedManager]post1:@"app/user/changePassword.do" paramters:param success:^(NSDictionary *dic) {
-        [self showError:@"修改成功"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
-        [self showError:@"修改失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
     }];
 
 }

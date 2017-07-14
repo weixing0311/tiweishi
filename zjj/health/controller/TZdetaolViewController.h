@@ -10,6 +10,8 @@
 
 @interface TZdetaolViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,copy)NSString *dataId;
+@property(retain, nonatomic) NSIndexPath *selectIndex;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 

@@ -22,11 +22,11 @@ static SubUserItem * item;
 {
     self.headUrl     = [dict safeObjectForKey:@"headimgurl"];
     self.nickname    = [dict safeObjectForKey:@"nickName"];
-    self.height      = [dict safeObjectForKey:@"heigth"];
+    self.height      = [[dict safeObjectForKey:@"heigth"]floatValue];
     self.birthday    = [dict safeObjectForKey:@"birthday"];
     self.sex         = [[dict safeObjectForKey:@"sex"]intValue];
     self.age = [[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
-    self.subId       = [dict safeObjectForKey:@"subId"];
+    self.subId       = [dict safeObjectForKey:@"id"];
     
 }
 
@@ -46,7 +46,7 @@ static SubUserItem * item;
 {
     self.headUrl =nil;
     self.nickname = nil;
-    self.height = nil;
+    self.height = 0;
     self.birthday = nil;
     self.sex = YES;
     self.age = 0;
@@ -56,6 +56,7 @@ static SubUserItem * item;
 {
     if ([[UserModel shareInstance].healthId isEqualToString:healthId]) {
         [self setInfoWithMainUser];
+
         return;
     }
     
@@ -65,5 +66,6 @@ static SubUserItem * item;
             [self setInfoWithDic:dic];
         }
     }
+
 }
 @end

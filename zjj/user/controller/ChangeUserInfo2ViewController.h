@@ -9,7 +9,7 @@
 #import "JFABaseTableViewController.h"
 
 @interface ChangeUserInfo2ViewController : JFABaseTableViewController<UIScrollViewDelegate,UIPickerViewDelegate>
-@property (weak, nonatomic) IBOutlet UIDatePicker *pickView;
+@property (strong, nonatomic) UIDatePicker *pickView;
 - (IBAction)didFinish:(id)sender;
 @property (nonatomic ,assign) BOOL isFirstAddInfo;
 

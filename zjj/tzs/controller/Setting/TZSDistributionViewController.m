@@ -262,9 +262,9 @@
     [param safeSetObject:@"" forKey:@"cancelRemark"];
     [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"取消订单成功--%@",dic);
-        [self showError:@"订单取消成功"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"订单取消成功"];
     } failure:^(NSError *error) {
-        [self showError:@"订单取消失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"订单取消失败"];
 
         DLog(@"取消订单失败--%@",error);
     }];

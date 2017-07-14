@@ -37,10 +37,19 @@
 
 -(void)setInfoWithArr:(NSMutableArray *) arr
 {
-    [self.infoArray addObjectsFromArray:[self paixuWithArr:arr]];
-    
+//    [self paixuWithArr:arr];
+    self.infoArray = [NSMutableArray arrayWithArray:[arr sortedArrayWithOptions:NSSortStable usingComparator:^ NSComparisonResult (ShareHealthItem *  m1,ShareHealthItem * m2){
+        
+//        return item1.createTime.compare(item2.createTime) == .orderedAscending
+        return [m1.createTime compare:m2.createTime]==NSOrderedDescending;
+    }]];
+
+ 
     ShareHealthItem * item1 = [self.infoArray objectAtIndex:0];
     ShareHealthItem * item2 = [self.infoArray objectAtIndex:1];
+
+    
+    
     
     [self.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
     self.nameLabel.text = [SubUserItem shareInstance].nickname;
@@ -57,7 +66,8 @@
     
     // 减脂量
     
-    float fatChangeWeight = item1.fatWeight -item2.fatWeight;
+    float fatChangeWeight = [[NSString stringWithFormat:@"%.1f",item2.fatWeight]floatValue] -[[NSString stringWithFormat:@"%.1f",item1.fatWeight]floatValue];
+    
     NSMutableAttributedString * fatChangeWeightAttStr =[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%.1fkg",fabsf(fatChangeWeight)]];
     [fatChangeWeightAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(fatChangeWeightAttStr.length-3, 3)];
     
@@ -67,7 +77,7 @@
     // 减重量
     
     
-    float weightChange = item1.weight -item2.weight;
+    float weightChange = item2.weight -item1.weight;
     NSMutableAttributedString * WeightChangeAttStr =[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%.1fkg",fabsf(weightChange)]];
     [WeightChangeAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(WeightChangeAttStr.length-3, 3)];
     
@@ -84,9 +94,8 @@
     //    return view
     //}
     
-    [self createInfo];
+    [self createInfoWithItem1:item1 Item2:item2];
     
-    [self.tableView reloadData];
     
     
 }
@@ -104,6 +113,12 @@
         NSArray * arr =[[NSBundle mainBundle]loadNibNamed:identifier owner:nil options:nil];
         cell = [arr lastObject];
     }
+    self.infoArray = [NSMutableArray arrayWithArray:[self.infoArray sortedArrayWithOptions:NSSortStable usingComparator:^ NSComparisonResult (ShareHealthItem *  m1,ShareHealthItem * m2){
+        
+        //        return item1.createTime.compare(item2.createTime) == .orderedAscending
+        return [m1.createTime compare:m2.createTime]==NSOrderedDescending;
+    }]];
+
     NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
     cell.nameLabel.text = [dic safeObjectForKey:@"title"];
     cell.value1Label.text = [dic safeObjectForKey:@"value1"];
@@ -155,60 +170,23 @@
     
     return cell;
 }
--(int)gettimeXWithTime1:(NSString *)tiem1 time2:(NSString *)time2
+-(int)gettimeXWithTime1:(NSDate *)tiem1 time2:(NSDate *)time2
 {
-    NSDateFormatter *date = [[NSDateFormatter alloc]init];
-    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *startD =[date dateFromString:tiem1];
-    NSDate *endD = [date dateFromString:time2];
-    NSTimeInterval start = [startD timeIntervalSince1970]*1;
-    NSTimeInterval end = [endD timeIntervalSince1970]*1;
+    
+    
+    NSTimeInterval start = [tiem1 timeIntervalSince1970]*1;
+    NSTimeInterval end = [time2 timeIntervalSince1970]*1;
     NSTimeInterval value = end - start;
-    int day = (int)value / (24 * 3600);
+    int day = round(value / (24 * 3600));
     return  day;
 }
 
--(NSArray *)paixuWithArr:(NSMutableArray *)arr
-{
-    NSArray *sortArray = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        
-        ShareHealthItem * item1 = obj1;
-        ShareHealthItem * item2 = obj2;
-        
-        
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        
-        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm"];
-        
-        NSDate *date1= [dateFormatter dateFromString:item1.createTime];
-        NSDate *date2= [dateFormatter dateFromString:item2.createTime];
-        
-        
-        
-        NSComparisonResult result = [date1 compare:date2];
-        return  result = NSOrderedAscending;
-        //        if (date1 == [date1 earlierDate: date2]) { //不使用intValue比较无效
-        //
-        //            return NSOrderedDescending;//降序
-        //
-        //        }else if (date1 == [date1 laterDate: date2]) {
-        //            return NSOrderedAscending;//升序
-        //
-        //        }else{
-        //            return NSOrderedSame;//相等
-        //        }  
-        
-    }];
-    return sortArray;
-}
 
 
--(void)createInfo
+
+-(void)createInfoWithItem1:(ShareHealthItem *)item1 Item2:(ShareHealthItem *)item2
 {
     
-    ShareHealthItem * item1 = self.infoArray[0];
-    ShareHealthItem * item2 = self.infoArray[1];
 
     //体重
     NSString * weightStatus1 = [[ShareHealthItem shareInstance] getHeightWithLevel:item1.weightLevel status:IS_BODYWEIGHT];
@@ -237,21 +215,22 @@
     
     
     NSDictionary * dic1 = [NSDictionary dictionaryWithObjectsAndKeys:@"身体年龄",@"title",[NSString stringWithFormat:@"%d",item1.bodyAge],@"value1",[NSString stringWithFormat:@"%d",item2.bodyAge],@"value2", nil];
-    NSDictionary * dic2 = [NSDictionary dictionaryWithObjectsAndKeys:@"基础代谢 ",@"title",[NSString stringWithFormat:@"%.1f",item1.bmr],@"value1",[NSString stringWithFormat:@"%.1f",item2.bmr],@"value2", nil];
+    
+    NSDictionary * dic2 = [NSDictionary dictionaryWithObjectsAndKeys:@"基础代谢 ",@"title",[NSString stringWithFormat:@"%.0f",item1.bmr],@"value1",[NSString stringWithFormat:@"%.0f",item2.bmr],@"value2", nil];
 
-    NSDictionary * dic3 = [NSDictionary dictionaryWithObjectsAndKeys:@"体重(kg]",@"title",[NSString stringWithFormat:@"%.1f",item1.weight],@"value1",[NSString stringWithFormat:@"%.1f",item2.weight],@"value2",weightStatus1,@"level1",weightStatus2,@"level2", nil];
+    NSDictionary * dic3 = [NSDictionary dictionaryWithObjectsAndKeys:@"体重(kg)",@"title",[NSString stringWithFormat:@"%.1f",item1.weight],@"value1",[NSString stringWithFormat:@"%.1f",item2.weight],@"value2",weightStatus1,@"level1",weightStatus2,@"level2", nil];
 
     NSDictionary * dic4 = [NSDictionary dictionaryWithObjectsAndKeys:@"肥胖等级",@"title",[self getwl:item1.weightLevel],@"value1",[self getwl:item2.weightLevel],@"value2",weightStatus1,@"level1",weightStatus1,@"level2", nil];
 
-    NSDictionary * dic5 = [NSDictionary dictionaryWithObjectsAndKeys:@"体脂率(%]",@"title",[NSString stringWithFormat:@"%.1f",item1.fatPercentage],@"value1",[NSString stringWithFormat:@"%.1f",item2.fatPercentage],@"value2",fatpercent1,@"level1",fatpercent2,@"level2", nil];
+    NSDictionary * dic5 = [NSDictionary dictionaryWithObjectsAndKeys:@"体脂率(%)",@"title",[NSString stringWithFormat:@"%.1f",item1.fatPercentage],@"value1",[NSString stringWithFormat:@"%.1f",item2.fatPercentage],@"value2",fatpercent1,@"level1",fatpercent2,@"level2", nil];
 
-    NSDictionary * dic6 = [NSDictionary dictionaryWithObjectsAndKeys:@"脂肪量(kg]",@"title",[NSString stringWithFormat:@"%.1f",item1.fatWeight],@"value1",[NSString stringWithFormat:@"%.1f",item2.fatWeight],@"value2", fatLevel1,@"level1",fatLevel2,@"level2",nil];
+    NSDictionary * dic6 = [NSDictionary dictionaryWithObjectsAndKeys:@"脂肪量(kg)",@"title",[NSString stringWithFormat:@"%.1f",item1.fatWeight],@"value1",[NSString stringWithFormat:@"%.1f",item2.fatWeight],@"value2", fatLevel1,@"level1",fatLevel2,@"level2",nil];
 
     NSDictionary * dic7 = [NSDictionary dictionaryWithObjectsAndKeys:@"BMI",@"title",[NSString stringWithFormat:@"%.1f",item1.bmi],@"value1",[NSString stringWithFormat:@"%.1f",item2.bmi],@"value2", BMI1,@"level1",BMI2,@"level2",nil];
 
-    NSDictionary * dic8 = [NSDictionary dictionaryWithObjectsAndKeys:@"蛋白质(kg]",@"title",[NSString stringWithFormat:@"%.1f",item1.proteinWeight],@"value1",[NSString stringWithFormat:@"%.1f",item2.proteinWeight],@"value2",protein1,@"level1",protein2,@"level2", nil];
+    NSDictionary * dic8 = [NSDictionary dictionaryWithObjectsAndKeys:@"蛋白质(kg)",@"title",[NSString stringWithFormat:@"%.1f",item1.proteinWeight],@"value1",[NSString stringWithFormat:@"%.1f",item2.proteinWeight],@"value2",protein1,@"level1",protein2,@"level2", nil];
 
-    NSDictionary * dic9 = [NSDictionary dictionaryWithObjectsAndKeys:@"骨骼肌(kg]",@"title",[NSString stringWithFormat:@"%.1f",item1.boneMuscleWeight],@"value1",[NSString stringWithFormat:@"%.1f",item2.boneMuscleWeight],@"value2",boneMuscle1,@"level1",boneMuscle2,@"level2", nil];
+    NSDictionary * dic9 = [NSDictionary dictionaryWithObjectsAndKeys:@"骨骼肌(kg)",@"title",[NSString stringWithFormat:@"%.1f",item1.boneMuscleWeight],@"value1",[NSString stringWithFormat:@"%.1f",item2.boneMuscleWeight],@"value2",boneMuscle1,@"level1",boneMuscle2,@"level2", nil];
 
 
     
@@ -264,6 +243,9 @@
     [_dataArray addObject:dic7];
     [_dataArray addObject:dic8];
     [_dataArray addObject:dic9];
+    
+    [self.tableView reloadData];
+
 }
 
 -(NSString *)getwl:(int )weightLevel

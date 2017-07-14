@@ -20,13 +20,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray_cell" translatesAutoresizingMaskIntoConstraints="NO" id="Qbf-el-KCk">
-                        <rect key="frame" x="10" y="0.0" width="14" height="80"/>
+                        <rect key="frame" x="10" y="0.0" width="12" height="80"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="14" id="iqQ-VB-N1Z"/>
+                            <constraint firstAttribute="width" constant="12" id="iqQ-VB-N1Z"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="06月09号 星期五" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcD-AG-iTr">
-                        <rect key="frame" x="34" y="8" width="177" height="20"/>
+                        <rect key="frame" x="32" y="8" width="177" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="177" id="2cN-ec-YPz"/>
                             <constraint firstAttribute="height" constant="20" id="Szq-Dr-Sdc"/>
@@ -36,14 +36,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dashboard_" translatesAutoresizingMaskIntoConstraints="NO" id="9e7-hQ-jXa">
-                        <rect key="frame" x="34" y="33" width="15" height="15"/>
+                        <rect key="frame" x="32" y="33" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="1Pg-ej-bww"/>
                             <constraint firstAttribute="width" constant="15" id="Nto-dv-YB0"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16：50" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozX-xY-ydn">
-                        <rect key="frame" x="57" y="30" width="184" height="20"/>
+                        <rect key="frame" x="55" y="30" width="184" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="b1W-mf-MbA"/>
                             <constraint firstAttribute="width" constant="184" id="yKl-1C-MWj"/>
@@ -53,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGx-iz-zoY">
-                        <rect key="frame" x="126.5" y="59" width="93" height="20"/>
+                        <rect key="frame" x="125" y="59" width="94" height="20"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内脂" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PXZ-V2-mBO">
                                 <rect key="frame" x="15" y="0.0" width="30" height="20"/>
@@ -71,7 +71,7 @@
                                     <constraint firstAttribute="height" constant="20" id="Awu-HG-c6l"/>
                                     <constraint firstAttribute="width" constant="55" id="nD1-4n-39k"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.99386935759999995" blue="0.1987243638" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -87,7 +87,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lhW-3b-571">
-                        <rect key="frame" x="219.5" y="59" width="92.5" height="20"/>
+                        <rect key="frame" x="219" y="59" width="93" height="20"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="体脂" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBH-9f-QXV">
                                 <rect key="frame" x="12" y="0.0" width="30" height="20"/>
@@ -105,7 +105,7 @@
                                     <constraint firstAttribute="height" constant="20" id="55v-0w-jbE"/>
                                     <constraint firstAttribute="width" constant="50" id="uAT-vA-2st"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.095024956600000002" blue="0.031412760419999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -122,7 +122,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3PG-fH-u23">
-                        <rect key="frame" x="34" y="59" width="92.5" height="20"/>
+                        <rect key="frame" x="32" y="59" width="93" height="20"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="体重" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWo-5W-wkh">
                                 <rect key="frame" x="0.0" y="0.0" width="30" height="20"/>
@@ -140,7 +140,7 @@
                                     <constraint firstAttribute="width" constant="56" id="hW6-Tv-MuB"/>
                                     <constraint firstAttribute="height" constant="20" id="yr5-OC-gL0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.095024956600000002" blue="0.031412760419999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -180,6 +180,7 @@
             <connections>
                 <outlet property="bodyFatLabel" destination="vpr-9i-JKd" id="INT-XJ-CcV"/>
                 <outlet property="dateLabel" destination="RcD-AG-iTr" id="lCq-rh-pdk"/>
+                <outlet property="leftImage" destination="Qbf-el-KCk" id="UEh-aN-MAq"/>
                 <outlet property="neifatLabel" destination="AIl-ou-DDg" id="7g8-Lz-3Uh"/>
                 <outlet property="timeLabel" destination="ozX-xY-ydn" id="J6X-7S-XwG"/>
                 <outlet property="weightlabel" destination="UR0-Cl-NAz" id="cuQ-Qy-ZAj"/>

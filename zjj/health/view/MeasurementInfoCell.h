@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *weightlabel;
 @property (weak, nonatomic) IBOutlet UILabel *neifatLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bodyFatLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *leftImage;
 -(void)setUpCellWithItem:(HealthItem *)item;
 @end

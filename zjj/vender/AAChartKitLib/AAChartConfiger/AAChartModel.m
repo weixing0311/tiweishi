@@ -33,7 +33,7 @@
         self.xAxisGridLineWidth = @0;
         self.yAxisLabelsEnabled = YES;
         self.yAxisGridLineWidth = @1;
-        self.legendEnabled = YES;
+        self.legendEnabled = NO;
         self.legendLayout = AAChartLegendLayoutTypeHorizontal;
         self.legendAlign = AAChartLegendAlignTypeCenter;
         self.legendVerticalAlign = AAChartLegendVerticalAlignTypeBottom;

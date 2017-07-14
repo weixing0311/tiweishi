@@ -10,6 +10,7 @@
 
 @interface NSDate (CustomDate)
 -(NSString*)yyyymmddhhmmss;
+-(NSString *)yyyymmdd;
 -(NSString*)mmddhhmm;
 -(NSString*)mmdd;
 @end

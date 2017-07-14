@@ -95,11 +95,11 @@
     
     
     [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
-        [self showError:@"取消成功"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"取消成功"];
         [self.tableview headerBeginRefreshing];
         
     } failure:^(NSError *error) {
-        
+        [[UserModel shareInstance] showErrorWithStatus:@"取消失败"];
     }];
 }
 

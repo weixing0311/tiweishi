@@ -37,6 +37,23 @@
 
 @property (weak, nonatomic) IBOutlet  UIImageView  *   trendArrowImageView;
 
+
+
+@property (weak, nonatomic) IBOutlet UILabel * title1Label;
+@property (weak, nonatomic) IBOutlet UILabel * title2Label;
+@property (weak, nonatomic) IBOutlet UILabel * title3Label;
+@property (weak, nonatomic) IBOutlet UILabel * title4Label;
+@property (weak, nonatomic) IBOutlet UILabel * value1Label;
+@property (weak, nonatomic) IBOutlet UILabel * value2Label;
+@property (weak, nonatomic) IBOutlet UILabel * value3Label;
+@property (weak, nonatomic) IBOutlet UILabel * value4Label;
+
+
+
+
+
+
+
 //@property (weak, nonatomic) IBOutlet  LineChart      *    chartView;
 @property (weak, nonatomic) IBOutlet  UILabel      *   noDataTipLabel;
 @property (weak, nonatomic) IBOutlet  UIButton     *   chartButton;

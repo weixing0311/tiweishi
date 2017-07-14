@@ -9,61 +9,77 @@
 #import "AboutUsViewController.h"
 
 @interface AboutUsViewController ()
-
+@property (nonatomic,assign)int clickNum;
 @end
 
 @implementation AboutUsViewController
+{
+    NSTimer * _timer;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    self.tabBarController.tabBar.hidden=YES;
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTBRedColor];
     self.title = @"关于我们";
+    _clickNum =0;
+}
+
     // Do any additional setup after loading the view from its nib.
-    self.tableview.delegate = self;
-    self.tableview.dataSource = self;
     // Do any additional setup after loading the view from its nib.
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 2;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString * identifier = @"cell";
-    UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-    }
-    switch (indexPath.row) {
-        case 0:
-            cell.textLabel.text = @"客服电话";
-            cell.detailTextLabel.text = @"4006119516";
-
-            break;
-        case 1:
-            cell.textLabel.text = @"公众号";
-            cell.detailTextLabel.text = @"脂将军官网";
-
-            break;
-            
-        default:
-            break;
-    }
-    return cell;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)openDeBug:(id)sender {
+    
+    if (_clickNum==0) {
+        DLog(@"开启倒计时");
+        [self setOpenDeBugTimer];
+    }
+    _clickNum ++;
+    if (_clickNum==3) {
+        DLog(@"显示debugView");
+        [self openDebugs];
+        self.logoBtn.userInteractionEnabled = NO;
+        [_timer invalidate];
+        _clickNum =0;
+    }
 }
-*/
+-(void)setOpenDeBugTimer
+{
+    _timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(clearNum) userInfo:nil repeats:NO];
+}
+-(void)clearNum
+{
+    _clickNum=0;
+}
 
+
+-(void)openDebugs
+{
+    self.DebugView.hidden =NO;
+}
+
+
+- (IBAction)didClickMobile:(id)sender {
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://4006119516"]];
+}
+- (IBAction)SwitchChange:(UISwitch *)sender {
+    if (sender.isOn) {
+        DLog(@"开启debug模式");
+        [[NSUserDefaults standardUserDefaults]setObject:@"open" forKey:@"UserOpenUpdateDebugKey"];
+    }else{
+        DLog(@"关闭debug模式");
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserOpenUpdateDebugKey"];
+        self.DebugView.hidden= YES;
+        self.logoBtn.userInteractionEnabled = NO;
+
+    }
+}
 @end

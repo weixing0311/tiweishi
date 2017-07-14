@@ -48,12 +48,12 @@
     [param safeSetObject:passwordStr forKey:@"tradePwd"];
     [[BaseSservice sharedManager]post1:@"app/walletManagement/addUserTradePwd.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"%@",dic);
-        [self showError:@"设置成功"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"设置成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
         DLog(@"%@",error);
 
-        [self showError:@"设置失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"设置失败"];
     }];
 }
 

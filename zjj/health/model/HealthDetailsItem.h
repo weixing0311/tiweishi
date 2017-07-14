@@ -18,7 +18,7 @@
 
 @property (nonatomic,assign) float              score;//分数
 
-
+@property (nonatomic,assign) float              lastWeight;
 @property (nonatomic,assign) float              weight;// 体重
 @property (nonatomic,assign) int                weightLevel;//体重判定标准
 
@@ -85,6 +85,7 @@
 @property (nonatomic,assign) int                warn;//警告
 @property (nonatomic,assign) int                serious;//严重
 -(void)getInfoWithDict:(NSDictionary *)dict;
+-(NSMutableDictionary *)setSliderInfoWithRow:(NSInteger)row btnTag:(NSInteger)btnTag;
 /*
  
  "waterWeight":3913.92,

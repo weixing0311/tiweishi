@@ -38,13 +38,15 @@ static UserModel *model;
 {
     self.headUrl     = [dict safeObjectForKey:@"headimgurl"];
     self.nickName    = [dict safeObjectForKey:@"nickName"];
-    self.heigth      = [dict safeObjectForKey:@"heigth"];
+    self.birthday    = [dict safeObjectForKey:@"birthday"];
+    self.heigth      = [[dict safeObjectForKey:@"heigth"]floatValue];
     self.gender      = [[dict safeObjectForKey:@"sex"]intValue];
     self.healthId    = [dict safeObjectForKey:@"id"];
-    if (!self.subId) {
-        self.subId   = [dict safeObjectForKey:@"id"];
-    }
+    self.subId       = [dict safeObjectForKey:@"id"];
+    self.age         = [[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
     [self writeToDoc];
+    [[SubUserItem shareInstance]setInfoWithMainUser];
+
 }
 
 
@@ -57,18 +59,17 @@ static UserModel *model;
     self.headUrl     = [dict safeObjectForKey:@"headimgurl"];
     self.nickName    = [dict safeObjectForKey:@"nickName"];
     self.gender      = [[dict safeObjectForKey:@"sex"]intValue];
-    self.heigth      = [dict safeObjectForKey:@"heigth"];
+    self.heigth      = [[dict safeObjectForKey:@"heigth"]floatValue];
     self.birthday    = [dict safeObjectForKey:@"birthday"];
     self.token       = [dict safeObjectForKey:@"token"];
-    
+    self.age         = [[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
+
     self.userType    = [dict safeObjectForKey:@"userType"];
     self.grade       = [dict safeObjectForKey:@"grade"];
     self.gradeName   = [dict safeObjectForKey:@"gradeName"];
     self.isAttest    = [dict safeObjectForKey:@"isAttest"];
     self.healthId    = [dict safeObjectForKey:@"id"];
-    if (!self.subId) {
-        self.subId   = [dict safeObjectForKey:@"id"];
-    }
+    self.subId   = [dict safeObjectForKey:@"id"];
 
     [_child removeAllObjects];
     _child=[NSMutableArray arrayWithArray:[dict safeObjectForKey:@"child"]];
@@ -93,7 +94,7 @@ static UserModel *model;
     [dict safeSetObject: self.headUrl    forKey:@"headimgurl"];
     [dict safeSetObject: self.nickName   forKey:@"nickName"];
     [dict safeSetObject: @(self.gender)  forKey:@"sex"];
-    [dict safeSetObject: self.heigth     forKey:@"heigth"];
+    [dict safeSetObject: @(self.heigth)  forKey:@"heigth"];
     [dict safeSetObject: self.birthday   forKey:@"birthday"];
     [dict safeSetObject: self.token      forKey:@"token"];
     [dict safeSetObject: self.child      forKey:@"child"];
@@ -103,7 +104,7 @@ static UserModel *model;
     [dict safeSetObject: self.isAttest   forKey:@"isAttest"];
     [dict safeSetObject: self.healthId   forKey:@"id"];
     [dict safeSetObject: self.subId      forKey:@"subId"];
-    
+    [dict safeSetObject: @(self.age )        forKey:@"age"];
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *filePath = [path stringByAppendingPathComponent:@"UserInfo.plist"];
     [dict writeToFile:filePath atomically:YES];
@@ -122,7 +123,7 @@ static UserModel *model;
     self.headUrl     = [dict safeObjectForKey:@"headimgurl"];
     self.nickName    = [dict safeObjectForKey:@"nickName"];
     self.gender      = [[dict safeObjectForKey:@"sex"]intValue];
-    self.heigth      = [dict safeObjectForKey:@"heigth"];
+    self.heigth      = [[dict safeObjectForKey:@"heigth"]floatValue];
     self.birthday    = [dict safeObjectForKey:@"birthday"];
     self.token       = [dict safeObjectForKey:@"token"];
     self.child       = [dict safeObjectForKey:@"child"];
@@ -131,6 +132,7 @@ static UserModel *model;
     self.gradeName   = [dict safeObjectForKey:@"gradeName"];
     self.isAttest    = [dict safeObjectForKey:@"isAttest"];
     self.healthId    = [dict safeObjectForKey:@"id"];
+    self.age         = [[dict safeObjectForKey:@"age"]intValue];
     if (!self.subId) {
         self.subId   = [dict safeObjectForKey:@"id"];
     }else{
@@ -140,9 +142,16 @@ static UserModel *model;
 }
 -(BOOL)isHaveUserInfo
 {
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *filePath = [path stringByAppendingPathComponent:@"UserInfo.plist"];
-    return filePath?YES:NO;
+    NSString *localPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [localPath  stringByAppendingPathComponent:@"UserInfo.plist"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:filePath]) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+
 }
 
 -(void)removeAllObject
@@ -153,7 +162,7 @@ static UserModel *model;
     self.headUrl = @"";
     self.nickName = @"";
     self.gender =YES;
-    self.heigth = @"";
+    self.heigth = 0;
     self.birthday = @"";
     self.token = @"";
     [self.child removeAllObjects];
@@ -178,11 +187,10 @@ static UserModel *model;
     if (!self.child||self.child.count<1) {
         [self.child addObject:dict];
     }else{
-        NSDictionary * oldDict;
         for (int i=0;i<self.child.count;i++) {
             NSDictionary * dic = [self.child objectAtIndex:i];
             if ([[dic objectForKey:@"id"]intValue]==[[dict objectForKey:@"id"]intValue]) {
-                [self.child removeObject:oldDict];
+                [self.child removeObject:dic];
             }
         }
 
@@ -207,7 +215,7 @@ static UserModel *model;
     [param safeSetObject:self.userId forKey:@"userId"];
     [param safeSetObject:self.nickName forKey:@"nickName"];
     [param safeSetObject:@(self.gender) forKey:@"sex"];
-    [param safeSetObject:self.heigth forKey:@"heigth"];
+    [param safeSetObject:@(self.heigth) forKey:@"heigth"];
     [param safeSetObject:self.birthday forKey:@"birthday"];
     
     return param;
@@ -226,17 +234,18 @@ static UserModel *model;
 
 -(void)setTzsInfoWithDict:(NSDictionary *)dict
 {
-    self.gradeName = [dict safeObjectForKey:@"gradeName"];
-    self.headUrl   = [dict safeObjectForKey:@"headimgurl"];
-    self.isAttest  = [dict safeObjectForKey:@"isAttest"];
-    self.nickName  = [dict safeObjectForKey:@"nickName"];
-    self.phoneNum  = [dict safeObjectForKey:@"phone"];
-    self.tradePassword = [dict safeObjectForKey:@"tradePassword"];
-    self.username  = [dict safeObjectForKey:@"userName"];
-    self.userType  = [dict safeObjectForKey:@"userType"];
-    self.balance   = [[dict safeObjectForKey:@"balance"]floatValue];
+    self.gradeName      = [dict safeObjectForKey:@"gradeName"];
+    self.headUrl        = [dict safeObjectForKey:@"headimgurl"];
+    self.isAttest       = [dict safeObjectForKey:@"isAttest"];
+    self.nickName       = [dict safeObjectForKey:@"nickName"];
+    self.phoneNum       = [dict safeObjectForKey:@"phone"];
+    self.tradePassword  = [dict safeObjectForKey:@"tradePassword"];
+    self.username       = [dict safeObjectForKey:@"userName"];
+    self.userType       = [dict safeObjectForKey:@"userType"];
+    self.balance        = [[dict safeObjectForKey:@"balance"]floatValue];
     self.qrcodeImageUrl = [dict safeObjectForKey:@"cardUrl"];
-    self.linkerUrl    = [dict safeObjectForKey:@"inviteUrl"];
+    self.linkerUrl      = [dict safeObjectForKey:@"inviteUrl"];
+    self.age            =[[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
     [self writeToDoc];
 }
 
@@ -257,11 +266,11 @@ static UserModel *model;
 {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     // app名称
-    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+//    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     // app build版本
-    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+//    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
     
     return app_Version;
     
@@ -328,6 +337,31 @@ static UserModel *model;
 //    self.child
     [self writeToDoc];
 }
+
+
+-(void)showSuccessWithStatus:(NSString *)status
+{
+    [SVProgressHUD setMaximumDismissTimeInterval:1];
+    [SVProgressHUD setMinimumDismissTimeInterval:1];
+    [SVProgressHUD showSuccessWithStatus:status];
+}
+-(void)showErrorWithStatus:(NSString *)status
+{
+    [SVProgressHUD setMaximumDismissTimeInterval:1];
+    [SVProgressHUD setMinimumDismissTimeInterval:1];
+    [SVProgressHUD showErrorWithStatus:status];
+}
+-(void)showInfoWithStatus:(NSString *)status
+{
+    [SVProgressHUD setMaximumDismissTimeInterval:1];
+    [SVProgressHUD setMinimumDismissTimeInterval:1];
+    [SVProgressHUD showInfoWithStatus:status];
+}
+-(void)dismiss
+{
+    [SVProgressHUD dismiss];
+}
+
 
 
 -(void)removeAllInfo

@@ -16,6 +16,7 @@
 - (IBAction)listSegment:(UISegmentedControl *)sender;
 @property (weak, nonatomic) IBOutlet UIView *superChartView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *listSegment;
+- (IBAction)didChangeChart:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *lenghtSegment;
 @end

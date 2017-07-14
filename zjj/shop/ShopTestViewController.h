@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ShopTestViewController : UIViewController
+#import "JFABaseTableViewController.h"
+@interface ShopTestViewController :JFABaseTableViewController
 
 @end

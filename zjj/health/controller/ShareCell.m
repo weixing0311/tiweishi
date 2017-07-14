@@ -7,7 +7,7 @@
 //
 
 #import "ShareCell.h"
-
+#import "HealthModel.h"
 @implementation ShareCell
 
 - (void)awakeFromNib {
@@ -16,11 +16,17 @@
 }
 -(void)setUpCellWithItem:(ShareHealthItem *)item
 {
-    self.dateLabel.   text = [self getDateWithString:item.createTime];
-    self.timeLabel.   text = [self getTimeWithString:item.createTime];
+    self.dateLabel.   text = [self getDateWithDate:item.createTime];
+    self.timeLabel.   text = [self getDateWithDate:item.createTime];
     self.weightlabel. text = [NSString stringWithFormat:@"%.1fkg",item.weight];
     self.neifatLabel. text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
     self.bodyFatLabel.text = [NSString stringWithFormat:@"%.1f",item.fatWeight];
+    
+    self.weightlabel.textColor = [[HealthModel shareInstance]getHealthShareColorWithStatus:IS_MODEL_BODYWEIGHT item:item];
+    self.neifatLabel.textColor = [[HealthModel shareInstance]getHealthShareColorWithStatus:IS_MODEL_VISCERALFAT item:item];
+    self.bodyFatLabel.textColor = [[HealthModel shareInstance]getHealthShareColorWithStatus:IS_MODEL_FAT item:item];
+    
+    
 }
 
 -(NSString *)getDateWithString:(NSString *)str
@@ -36,6 +42,17 @@
     NSString *string= [outputFormatter stringFromDate:inputDate];
     return string;
 }
+
+-(NSString * )getDateWithDate:(NSDate *)date
+{
+    NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];
+    [outputFormatter setLocale:[NSLocale currentLocale]];
+    [outputFormatter setDateFormat:@"MM月dd日"];
+    NSString *string= [outputFormatter stringFromDate:date];
+    return string;
+
+}
+
 -(void)getweekWithString:(NSString *)str
 {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];

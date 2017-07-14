@@ -8,6 +8,7 @@
 
 #import "HealthMainCell.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "HealthModel.h"
 @implementation HealthMainCell
 {
     CBCentralManager *CM;
@@ -26,11 +27,12 @@
     self.weightLabel.attributedText = weightAttStr;
     
     // 内脂
-    NSMutableAttributedString *  visceralFatWeightAttStr =[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%.0f", item.visceralFatPercentage]] ;
+    NSMutableAttributedString *  visceralFatWeightAttStr =[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%.1f", item.visceralFatPercentage]] ;
     self.visceralFatWeightLabel.attributedText = visceralFatWeightAttStr;
     
     // 内脂警告判断
-    
+    self.visceralFatWeightLabel.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_VISCERALFAT item:item];
+
     if (item.visceralFatPercentageLevel == 2) {
         self.warningTipLabel.hidden = NO;
         self.warningTipImageView.hidden = NO;
@@ -70,7 +72,7 @@
         self.dangerTipLabel.text = @"预警";
         self.dangerTipImageView.image = [UIImage imageNamed:@"warning_tip_bg"];
     }
-    else if (item.visceralFatPercentageLevel == 3) {
+    else if (item.fatWeightLevel == 3) {
         self.dangerTipLabel.hidden = NO;
         self.dangerTipImageView.hidden = NO;
         
@@ -81,21 +83,22 @@
         self.dangerTipLabel.hidden = YES;
         self.dangerTipImageView.hidden = YES;
     }
-
+    self.fatWeight.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_FAT item:item];
     
     
     // 趋势提示
     if (item.weight) {
         float weightChange = item.weight - item.lastWeight;
-        self.trendLabel.text = [NSString stringWithFormat:@"%1.fkg",abs(weightChange)];
-        self.trendArrowImageView.image =[UIImage imageNamed:weightChange>0?@"trand_down_icon":@"trand_up_icon"];
-        self.trendArrowImageView.hidden = YES;
+        DLog(@"%f--%f",item.weight,item.lastWeight);
+        self.trendLabel.text = [NSString stringWithFormat:@"%.1fkg",fabsf(weightChange)];
+        self.trendArrowImageView.image =[UIImage imageNamed:weightChange>0?@"trand_up_icon":@"trand_down_icon"];
+        self.trendArrowImageView.hidden = NO;
     }
     else {
         self.trendArrowImageView.hidden = YES;
         self.trendLabel.text = @"-";
     }
-    
+    DLog(@"%@", self.trendArrowImageView);
     if (item.weightLevel==1||item.weightLevel==3||item.weightLevel==4) {
         self.weightBgImageView.image = [UIImage imageNamed:@"warning_bg"];
         [self.scaleButton setBackgroundImage:[UIImage imageNamed:@"warning_button"] forState:UIControlStateNormal];
@@ -137,7 +140,22 @@
     [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(tisStr.length-3, 3)];
     
     self.scaleResultStatusLabel.attributedText = tisString;
+    self.scaleResultStatusLabel.adjustsFontSizeToFitWidth = YES;
     
+    self.title1Label.text = @"BMI";
+    self.title2Label.text = @"水分";
+    self.title3Label.text = @"蛋白质";
+    self.title4Label.text = @"肌肉";
+    
+    self.value1Label.text =[NSString stringWithFormat:@"%.1f",item.bmi];
+    self.value2Label.text =[NSString stringWithFormat:@"%.1fkg",item.waterWeight];
+    self.value3Label.text =[NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
+    self.value4Label.text =[NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
+    
+    self.value1Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_BMI item:item];
+    self.value2Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_WATER item:item];
+    self.value3Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_PROTEIN item:item];
+    self.value4Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_MUSCLE item:item];
     
 }
 

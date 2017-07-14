@@ -17,6 +17,8 @@
 #import "ChangeUserInfoViewController.h"
 #import "ShareViewController.h"
 #import "CharViewController.h"
+#import "WWXBlueToothManager.h"
+#import "HealthModel.h"
 @interface HealthViewController ()<userListDelegate,userViewDelegate,healthMainDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
@@ -36,6 +38,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     self.tabBarController.tabBar.hidden = NO;
+    [self refreshMyInfoView];
 
 }
 - (void)viewDidLoad {
@@ -46,15 +49,15 @@
     headerArr = [NSMutableArray array];
     listArr   = [NSMutableArray array];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshMyInfoView:) name:kRefreshInfo object:nil];
 
+    //删除评测数据返回后刷新
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshPcInfo) name:@"deletePCINFO" object:nil];
     _userView = [self getXibCellWithTitle:@"UserView"];
     _userView.delegate =self;
     _userView.frame =CGRectMake(0, 0, JFA_SCREEN_WIDTH, 64);
     [self.view addSubview:_userView];
     
-    [_userView.headBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
+    [_userView.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
     [self buildUserListView];
     [self buildTableview];
@@ -68,6 +71,8 @@
     self.userListView.backgroundColor =RGBACOLOR(0/225.0f, 0/225.0f, 0/225.0f, .3);
     self.userListView.hidden = YES;
     self.userListView.delegate = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     [self.view addSubview:self.userListView];
     
 }
@@ -76,7 +81,7 @@
 
 -(void)buildTableview
 {
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, self.view.frame.size.height-64)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, self.view.frame.size.height-64-49)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -84,6 +89,7 @@
 }
 -(void)headerRereshing
 {
+    self.tableView.footerHidden =NO;
     page = 1;
     isrefresh = YES;
     [self getListInfo];
@@ -92,6 +98,7 @@
 -(void)footerRereshing
 {
     isrefresh =NO;
+    page++;
     [self getListInfo];
 }
 
@@ -130,8 +137,6 @@
     [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
         if (isrefresh ==YES) {
             [listArr removeAllObjects];
-        }else{
-            page++;
         }
         [self.tableView footerEndRefreshing];
         [self.tableView headerEndRefreshing];
@@ -145,6 +150,11 @@
             [listArr addObject:item];
 
         }
+        
+        if (arr.count<30) {
+            [self.tableView setFooterHidden:YES];
+        }
+        
             [self.tableView reloadData];
             
 
@@ -153,7 +163,13 @@
         [self.tableView headerEndRefreshing];
 
         if (error.code ==402) {
+            if (isrefresh ==NO) {
+                
+            }else{
             [listArr removeAllObjects];
+            [self.tableView setFooterHidden:YES];
+
+            }
             [self.tableView reloadData];
         }
 
@@ -164,30 +180,31 @@
  * 上传数据
  */
 
--(void)updataInfo
+-(void)updataInfoWithDict:(NSDictionary *)dic
 {
+    
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    
-    [param safeSetObject:@"3.1" forKey:@"mBone"];
-    [param safeSetObject:@"6" forKey:@"mVisceralFat"];
-    [param safeSetObject:@"65.7" forKey:@"mWeight"];
+    [param setDictionary:dic];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
-    [param safeSetObject:@"14.7" forKey:@"mFat"];
-    [param safeSetObject:@"1577" forKey:@"mCalorie"];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [param safeSetObject:@"34.2" forKey:@"mMuscle"];
-    [param safeSetObject:@"22.7" forKey:@"mBmi"];
-    [param safeSetObject:@"60.1" forKey:@"mWater"];
     
+    DLog(@"上传数据---%@",param);
     
     [[BaseSservice sharedManager]post1:@"app/evaluatData/addEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
         
-        [self getHeaderInfo];
-        [self getListInfo];
+        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        [self.tableView headerBeginRefreshing];
+        
+        TZdetaolViewController * tzDetai =[[TZdetaolViewController alloc]init];
+        tzDetai.dataId = [[dic safeObjectForKey:@"data"] safeObjectForKey:@"DataId"];
+        tzDetai.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:tzDetai animated:YES];
+        
         
         DLog(@"url-app/evaluatData/addEvaluatData.do  dic--%@",dic);
         
     } failure:^(NSError *error) {
+        [[UserModel shareInstance] showErrorWithStatus:@"上传失败"];
         DLog(@"url-app/evaluatData/addEvaluatData.do  dic--%@",error);
 
     }];
@@ -202,6 +219,9 @@
 }
 -(void)enterDetailView
 {
+    if (!headerArr||headerArr.count<1) {
+        return;
+    }
     HealthItem * item = [headerArr objectAtIndex:0];
 
     TZdetaolViewController * tz =[[TZdetaolViewController alloc]init];
@@ -212,6 +232,11 @@
 }
 -(void)didEnterChart
 {
+    
+    if (listArr.count<2) {
+        [[UserModel shareInstance] showInfoWithStatus:@"数据过少，无法查看趋势"];
+        return;
+    }
     CharViewController * cr =[[CharViewController alloc]init];
     self.navigationController.navigationBarHidden = NO;
     cr.hidesBottomBarWhenPushed=YES;
@@ -221,16 +246,15 @@
 #pragma mark ---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 
--(void)refreshMyInfoView:(id)indo
+-(void)refreshMyInfoView
 {
-    [_userView.headBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[UserModel shareInstance].headUrl]];
-    _userView.nameLabel.text = [UserModel shareInstance].nickName;
+    [_userView.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
 }
 
 -(void)refreshPcInfo
 {
-    [self getHeaderInfo];
-    [self getListInfo];
+    [self.tableView headerBeginRefreshing];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -248,7 +272,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==0) {
-        return 550;
+        return 570;
     }else{
         return 80;
     }
@@ -262,7 +286,7 @@
             NSArray *nibs = [[NSBundle mainBundle]loadNibNamed:@"HealthMainCell" owner:nil options:nil];
             cell = [nibs lastObject];
             }
-        cell.backgroundColor = [UIColor clearColor];
+
         cell.delegate = self;
         if (headerArr.count>0) {
             HealthItem *item = [headerArr objectAtIndex:0];
@@ -280,11 +304,20 @@
         if (cell == nil) {
             cell = [self getXibCellWithTitle:identifier];
             
-            cell.backgroundColor = [UIColor clearColor];
-            HealthItem * item = [listArr objectAtIndex:indexPath.row];
-            [cell setUpCellWithItem:item];
             
         };
+//        cell.backgroundColor = [UIColor clearColor];
+        HealthItem * item = [listArr objectAtIndex:indexPath.row];
+        [cell setUpCellWithItem:item];
+
+        if (indexPath.row%2==0) {
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.leftImage.image = [UIImage imageNamed:@"gray_cell"];
+        }else{
+            cell.contentView.backgroundColor = HEXCOLOR(0xeeeeee);
+            cell.leftImage.image = [UIImage imageNamed:@"orange_cell"];
+
+        }
         return cell;
     }
 }
@@ -294,7 +327,7 @@
     if (indexPath.section ==0) {
         return;
     }
-    HealthItem * item = [listArr objectAtIndex:0];
+    HealthItem * item = [listArr objectAtIndex:indexPath.row];
     TZdetaolViewController *tz = [[TZdetaolViewController alloc]init];
     tz.hidesBottomBarWhenPushed=YES;
     self.navigationController.navigationBarHidden = NO;
@@ -303,18 +336,6 @@
     [self.navigationController pushViewController:tz animated:YES];
     
 }
--(void)doloign
-{
-    
-    UIAlertController *al = [UIAlertController alertControllerWithTitle:@"提示" message:@"登录失效，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
-    [al addAction:[UIAlertAction actionWithTitle:@"重新登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        LoignViewController *lo = [[LoignViewController alloc]init];
-        self.view.window.rootViewController =lo;
-        
-    }]];
-    [self presentViewController:al animated:YES completion:nil];
-}
-
 
 #pragma mark ---show subviewdelegate
 -(void)showUserList
@@ -346,10 +367,9 @@
 -(void)reloadAll
 {
     
-    
     [self getListInfo];
     [self getHeaderInfo];
-    [_userView.headBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
+    [_userView.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     _userView.nameLabel.text =[SubUserItem shareInstance].nickname;
     
 }
@@ -359,7 +379,26 @@
 }
 -(void)didUpdateinfo
 {
-    [self updataInfo];
+    
+    [SVProgressHUD showWithStatus:@"请上秤。。"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+
+    [[WWXBlueToothManager shareInstance]startScanWithStatus:^(NSString *statusString) {
+        [SVProgressHUD showWithStatus:statusString];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+        [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil mssage:statusString];
+
+    } success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
+        [self updataInfoWithDict:dic];
+        
+    } faile:^(NSError *error, NSString *errMsg) {
+        [SVProgressHUD dismiss];
+        [[WWXBlueToothManager shareInstance]stop];
+        [[UserModel shareInstance] showErrorWithStatus:errMsg];
+        [[HealthModel shareInstance]UpdateBlueToothInfoWithError:error mssage:errMsg];
+    }];
+
 }
 /*
 #pragma mark - Navigation

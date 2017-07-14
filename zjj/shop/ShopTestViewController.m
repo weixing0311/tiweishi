@@ -7,7 +7,6 @@
 //
 
 #import "ShopTestViewController.h"
-#import "ShopTabbbarController.h"
 @interface ShopTestViewController ()
 
 @end
@@ -15,38 +14,20 @@
 @implementation ShopTestViewController
 -(void)viewWillAppear:(BOOL)animated
 {
-   [ super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = NO;
+    [super viewWillAppear:animated];
+    [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTBRedColor];
     // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterShop) name:@"enterShopVC" object:nil];
-}
--(void)enterShop
-{
-    ShopTabbbarController *tb= [[ShopTabbbarController alloc]init];
-    self.tabBarController.tabBar.hidden = YES;
-    [self presentViewController:tb animated:YES completion:nil];
+
 }
 
--(void)didback
-{
-    self.tabBarController.selectedIndex =0;
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

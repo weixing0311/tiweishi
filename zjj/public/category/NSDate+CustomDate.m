@@ -25,7 +25,15 @@
     NSString *string= [outputFormatter stringFromDate:self];
     return string;
 }
+-(NSString *)yyyymmdd
+{
+    NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];
+    [outputFormatter setLocale:[NSLocale currentLocale]];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *string= [outputFormatter stringFromDate:self];
+    return string;
 
+}
 -(NSString*)mmdd
 {
     NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];

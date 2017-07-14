@@ -21,15 +21,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tos-yo-uIy">
-                        <rect key="frame" x="10" y="5" width="33.5" height="33.5"/>
+                        <rect key="frame" x="20" y="5" width="33.5" height="33.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Tos-yo-uIy" secondAttribute="height" multiplier="1:1" id="xCf-6p-a9Z"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <real key="value" value="16.75"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhP-4z-XeW">
-                        <rect key="frame" x="53.5" y="13" width="150" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhP-4z-XeW">
+                        <rect key="frame" x="63.5" y="13" width="35" height="17.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="150" id="F4E-xB-sgX"/>
+                            <constraint firstAttribute="width" priority="20" constant="150" id="F4E-xB-sgX"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -48,8 +54,19 @@
                             <action selector="didClickDelete:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Cu5-EE-MCI"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="年龄" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6U-Mw-rUL">
+                        <rect key="frame" x="118.5" y="12" width="35" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="4rO-tA-AXc"/>
+                            <constraint firstAttribute="width" priority="20" constant="100" id="BA2-hS-Asx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="r6U-Mw-rUL" firstAttribute="leading" secondItem="bhP-4z-XeW" secondAttribute="trailing" constant="20" id="6WS-hE-e2g"/>
                     <constraint firstAttribute="trailingMargin" secondItem="tqs-hA-T2w" secondAttribute="trailing" constant="10" id="Pmi-nG-ybf"/>
                     <constraint firstItem="bhP-4z-XeW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WdH-5N-vej"/>
                     <constraint firstItem="bhP-4z-XeW" firstAttribute="leading" secondItem="Tos-yo-uIy" secondAttribute="trailing" constant="10" id="ZO0-IG-soC"/>
@@ -57,11 +74,13 @@
                     <constraint firstItem="Tos-yo-uIy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="aLN-zb-7HJ"/>
                     <constraint firstAttribute="bottom" secondItem="Tos-yo-uIy" secondAttribute="bottom" constant="5" id="dCC-kf-kmA"/>
                     <constraint firstItem="tqs-hA-T2w" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="fjS-KU-Ixq"/>
-                    <constraint firstItem="Tos-yo-uIy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hfx-PT-XJd"/>
+                    <constraint firstItem="r6U-Mw-rUL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gp2-XL-Kly"/>
+                    <constraint firstItem="Tos-yo-uIy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="hfx-PT-XJd"/>
                     <constraint firstItem="bhP-4z-XeW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="qeq-Tv-dQ8"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="ageLabel" destination="r6U-Mw-rUL" id="BoY-LL-P2n"/>
                 <outlet property="deleteBtn" destination="tqs-hA-T2w" id="nUO-Uz-kdG"/>
                 <outlet property="headImage" destination="Tos-yo-uIy" id="gvP-fD-DEv"/>
                 <outlet property="namelabel" destination="bhP-4z-XeW" id="jZT-Yv-SI4"/>

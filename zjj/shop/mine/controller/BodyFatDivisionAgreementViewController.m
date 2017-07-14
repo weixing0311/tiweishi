@@ -45,7 +45,7 @@
 
 - (IBAction)IAgree:(id)sender {
     if (self.readBtn.selected ==NO) {
-        [self showHUD:onlyMsg message:@"请阅读协议" detai:nil Hdden:YES];
+        [[UserModel shareInstance] showInfoWithStatus:@"请阅读协议"];
         return;
     }
     RealNameAuthenticationViewController *rn = [[RealNameAuthenticationViewController alloc]init];

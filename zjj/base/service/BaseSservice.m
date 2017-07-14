@@ -32,7 +32,7 @@
         manager.responseSerializer=[self getPostResponseSerSerializer];
         manager.requestSerializer=[self getPostRequestSerializer];
 
-        manager.requestSerializer.timeoutInterval = 5;
+        manager.requestSerializer.timeoutInterval = 15;
         manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
         [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         
@@ -44,8 +44,10 @@
 }
 -(NSString*)JFADomin
 {
+    //生产
+    return @"http://test.fitgeneral.com/";
     //测试域名
-    return @"http://192.168.0.130:8101/";
+//    return @"http://192.168.0.130:8101/";
     //x
 //    return @"http://192.168.0.115:8080/";
 }
@@ -61,26 +63,26 @@
 }
 
 
--(NSURLSessionTask*)post:(NSString*)url
+-(NSURLSessionTask*)postDebugWithUrl:(NSString*)url
                paramters:(NSDictionary*)paramters
-                 success:(void (^)(NSURLSessionDataTask *  task, NSDictionary *  responseObject))success
-                 failure:(void (^)(NSURLSessionDataTask * task, NSError *  error))failure
 {
     
-    
+    [manager.requestSerializer setValue:[UserModel shareInstance].userId?[UserModel shareInstance].userId:@"" forHTTPHeaderField:@"userId"];
+    [manager.requestSerializer setValue:@"2" forHTTPHeaderField:@"source"];
+    [manager.requestSerializer setValue:[UserModel shareInstance].token?[UserModel shareInstance].token:@"" forHTTPHeaderField:@"token"];
+    [manager.requestSerializer setValue:[[UserModel shareInstance] getVersion] forHTTPHeaderField:@"version"];
+    DLog(@"request.Url-%@",[NSString stringWithFormat:@"%@%@",[self JFADomin],url]);
+    DLog(@"Debug蓝牙上传message:%@",paramters);
     NSURLSessionTask * task = [manager POST:[NSString stringWithFormat:@"%@%@",[self JFADomin],url] parameters:paramters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary * dic = [self dictionaryWithData:responseObject];
-        DLog(@"%@--%@",dic ,[dic objectForKey:@"message"]);
-        int  code = [[dic objectForKey:@"code"]intValue];
-        if (code ==601) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:kdidReLoign object:nil];
-        }
-        success(task,dic);
+        DLog(@"Debug蓝牙数据上传成功");
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        failure(task,error);
+        DLog(@"Debug蓝牙数据上传失败:%@",error);
+
     }];
     return task;
+
 }
+
 -(NSURLSessionTask*)post1:(NSString*)url
                paramters:(NSMutableDictionary *)paramters
                  success:(requestSuccessBlock)success
@@ -93,18 +95,17 @@
     DLog(@"request.Url-%@",[NSString stringWithFormat:@"%@%@",[self JFADomin],url]);
     
     
-    [(AppDelegate *)[UIApplication sharedApplication].delegate showHUD:hotwheels message:@"加载中.." detai:nil Hdden:NO];
-    
+    [SVProgressHUD show];
     
     NSURLSessionTask * task = [manager POST:[NSString stringWithFormat:@"%@%@",[self JFADomin],url] parameters:paramters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [(AppDelegate *)[UIApplication sharedApplication].delegate hiddenHUD];
+        [SVProgressHUD dismiss];
         NSDictionary * dic = [self dictionaryWithData:responseObject];
         
         NSString * statusStr =[dic safeObjectForKey:@"status"];
         int  code =[[dic safeObjectForKey:@"code"]intValue];
         DLog(@"%@--%@--%@",dic ,[dic objectForKey:@"code"],[dic objectForKey:@"message"]);
        
-        
+        //登录失效
         if (code  ==601) {
             
             [(AppDelegate *)[UIApplication sharedApplication].delegate loignOut];
@@ -115,13 +116,23 @@
         if (statusStr&&[statusStr isEqualToString:@"success"]) {
             success(dic);
         }else{
-            
+            [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
             NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
             failure(error);
         }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [(AppDelegate *)[UIApplication sharedApplication].delegate hiddenHUD];
+        [SVProgressHUD dismiss];
+        
+
+        if ([error code] ==-1009) {
+            [[UserModel shareInstance] showErrorWithStatus:@"连接失败，请检查网络"];
+        }
+        
+        if ([error code] ==-1005) {
+            [[UserModel shareInstance] showErrorWithStatus:@"连接失败，请检查网络"];
+        }
+        DLog(@"error--%ld-%@",(long)error.code,[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]);
         failure(error);
     }];
     return task;
@@ -138,15 +149,21 @@
     [manager.requestSerializer setValue:[UserModel shareInstance].token?[UserModel shareInstance].token:@"" forHTTPHeaderField:@"token"];
     [manager.requestSerializer setValue:[[UserModel shareInstance] getVersion] forHTTPHeaderField:@"version"];
 
+    [SVProgressHUD show];
     
     NSURLSessionTask * task =[manager POST:[NSString stringWithFormat:@"%@%@",[self JFADomin],url] parameters:paramters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        if (imageData) {
+        if (imageData&&imageData.length>1) {
             [formData appendPartWithFileData:imageData name:@"headimgurl" fileName:@"headimgurl.png" mimeType:@"image/png"];
         }
 
     } progress:^(NSProgress * _Nonnull uploadProgress) {
+//        [SVProgressHUD showProgress:uploadProgress.localizedDescription status:@"Loading"];
+
         DLog(@"上传进度--%@",uploadProgress.localizedDescription);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+        [SVProgressHUD dismiss];
+        
         NSDictionary * dic = [self dictionaryWithData:responseObject];
         
         NSString * statusStr =[dic safeObjectForKey:@"status"];
@@ -162,6 +179,10 @@
         
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        if ([error code] ==-1005) {
+            [[UserModel shareInstance] showErrorWithStatus:@"连接失败，请检查网络"];
+        }
         failure(error);
 
     }];

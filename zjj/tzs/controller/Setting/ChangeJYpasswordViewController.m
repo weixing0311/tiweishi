@@ -34,24 +34,24 @@
 - (IBAction)pudata:(id)sender {
     
     if (self.oldpassword.text.length <1) {
-        [self showError:@"请输入旧密码"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入旧密码"];
         return;
     }
     if (self.mobiletf.text.length<11) {
-        [self showError:@"请输入正确手机号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入正确手机号"];
         return;
     }
     
     if (self.verTf.text.length<1) {
-        [self showError:@"请输入验证码"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入验证码"];
         return;
     }
     if (self.theNewpasswordtf.text.length<1) {
-        [self showError:@"请输入新密码"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入新密码"];
         return;
     }
     if (self.renewpassword.text.length<1||![self.renewpassword.text isEqualToString:self.theNewpasswordtf.text]) {
-        [self showError:@"两次密码不一致"];
+        [[UserModel shareInstance] showInfoWithStatus:@"两次密码不一致"];
         return;
     }
     
@@ -64,16 +64,16 @@
     [param setObject:self.verTf.text forKey:@"vcode"];
         
     [[BaseSservice sharedManager]post1:@"/app/user/changeTradePassword.do" paramters:param success:^(NSDictionary *dic) {
-        [self showError:@"修改成功"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
     } failure:^(NSError *error) {
-        [self showError:@"修改失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
     }];
 
 }
 
 - (IBAction)pushVer:(id)sender {
     if (self.mobiletf.text.length<11) {
-        [self showError:@"请输入正确手机号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入正确手机号"];
         return;
     }
     
@@ -88,9 +88,9 @@
     
     [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
         
-        [self showError:@"已发送"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {
-        [self showError:@"发送失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
     }];
 
 

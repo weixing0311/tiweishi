@@ -9,7 +9,15 @@
 #import "AppDelegate.h"
 #import "TabbarViewController.h"
 #import "LoignViewController.h"
-#import "MBProgressHUD.h"
+#import "WXXShareManager.h"
+
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import "ChangeUserInfoViewController.h"
+#import <UMMobClick/MobClick.h>
 @interface AppDelegate ()
 
 @end
@@ -17,12 +25,23 @@
 @implementation AppDelegate
 {
     LoignViewController *lo;
-    MBProgressHUD * progressHUD;
     NSTimer      * hudTimer;
     
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [MobClick setLogEnabled:YES];
+    UMConfigInstance.appKey = @"5938fc6fae1bf85185000571";
+    [MobClick startWithConfigure:UMConfigInstance];
+
+    //取消所有本地通知
+    [[UIApplication sharedApplication]cancelAllLocalNotifications];
+    
+    
+    
+    
+    
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -30,35 +49,81 @@
     if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
         [[UserModel shareInstance]readToDoc];
         [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
-        TabbarViewController * tabbar = [[TabbarViewController alloc]init];
-        [self.window setRootViewController:tabbar];
+        if ([UserModel shareInstance].birthday.length>2) {
+            TabbarViewController * tabbar = [[TabbarViewController alloc]init];
+            [self.window setRootViewController:tabbar];
+ 
+        }else{
+            ChangeUserInfoViewController * cg =[[ChangeUserInfoViewController alloc]init];
+            UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:cg];
+            cg.changeType = 1;
+            [self.window setRootViewController:nav];
+        }
+        
     }else{
     
     lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
-    UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:lo];
-    [self.window setRootViewController:nav];
+//    UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:lo];
+    [self.window setRootViewController:lo];
     
     }
-    
+//    [[WXXShareManager shareInstance]buildShareSdk];
+    [ShareSDK registerActivePlatforms:@[
+                                        @(SSDKPlatformTypeWechat),
+                                        @(SSDKPlatformTypeQQ)]
+                             onImport:^(SSDKPlatformType platformType) {
+                                 
+                                 switch (platformType)
+                                 {
+                                     case SSDKPlatformTypeWechat:
+                                         [ShareSDKConnector connectWeChat:[WXApi class] delegate:self];
+                                         break;
+                                     case SSDKPlatformTypeQQ:
+                                         [ShareSDKConnector connectQQ:[QQApiInterface class]
+                                                    tencentOAuthClass:[TencentOAuth class]];
+                                         break;
+                                     default:
+                                         break;
+                                 }
+                             }
+                      onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+                          
+                          switch (platformType)
+                          {
+                              case SSDKPlatformTypeWechat:
+                                  [appInfo SSDKSetupWeChatByAppId:@"wxea8fcaf6d87a2715"
+                                                        appSecret:@"504c2084e7c1636499478fc8e079acf1"];
+                                  break;
+                              case SSDKPlatformTypeQQ:
+                                  [appInfo SSDKSetupQQByAppId:@"1106040974"
+                                                       appKey:@"bRnLRej36spjLLsp"
+                                                     authType:SSDKAuthTypeBoth];
+                                  break;
+                              default:
+                                  break;
+                          }
+                      }];
+
     
     // Override point for customization after application launch.
     return YES;
 }
 -(void)loignOut
 {
-    UIAlertController *al = [UIAlertController alertControllerWithTitle:@"警告" message:@"登录已过期，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
+    [[UserModel shareInstance]removeAllObject];
+    [[SubUserItem shareInstance]removeAll];
+
+    UIAlertController *al = [UIAlertController alertControllerWithTitle:@"警告" message:@"有人在其他设备登录您的脂将军账号，本设备将会强制退出。如果这不是您本人操作，请立刻通过登录页面找回密码功能修改密码，慎防盗号。" preferredStyle:UIAlertControllerStyleAlert];
     [al addAction:[UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
-        [[UserModel shareInstance]removeAllObject];
-        [[SubUserItem shareInstance]removeAll];
         
         if (!lo) {
             lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
-            UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:lo];
-            [self.window setRootViewController:nav];
+//            UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:lo];
+            [self.window setRootViewController:lo];
 
         }else{
-            [self.window setRootViewController:lo.navigationController];
+            [self.window setRootViewController:lo];
         }
     }]];
     [self.window.rootViewController presentViewController:al animated:YES completion:nil];
@@ -70,63 +135,6 @@
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
     [self.window.rootViewController presentViewController:al animated:YES completion:nil];
 
-}
--(void)showHUD:(HUDType)type message:(NSString*)message detai:(NSString*)detailMsg Hdden:(BOOL)hidden
-{
-    if (progressHUD) {
-        return;
-    }
-    switch (type) {
-        case hotwheels:
-            progressHUD.label.text = message;
-            progressHUD.detailsLabel.text = detailMsg;
-            progressHUD.mode = MBProgressHUDModeIndeterminate;
-            
-            break;
-        case onlyMsg:
-            progressHUD.label.text = message;
-            progressHUD.detailsLabel.text = detailMsg;
-            progressHUD.mode = MBProgressHUDModeText;
-            
-            break;
-        case progress:
-            progressHUD.label.text = message;
-            progressHUD.detailsLabel.text = detailMsg;
-            progressHUD.mode = MBProgressHUDModeDeterminateHorizontalBar;
-            
-            break;
-            
-        default:
-            break;
-    }
-    progressHUD = [[MBProgressHUD alloc]initWithView:self.window.rootViewController.view];
-    [self.window.rootViewController.view addSubview:progressHUD];
-    if (hidden==YES) {
-        [progressHUD hideAnimated:YES afterDelay:1];
-        [progressHUD removeFromSuperViewOnHide];
-
-    }else{
-        [progressHUD showAnimated:YES];
-        
-    }
-    hudTimer =[NSTimer timerWithTimeInterval:10 target:self selector:@selector(hiddenHUD) userInfo:nil repeats:NO];
-}
-
--(void)showHUDtishiWithText:(NSString *)text
-{
-    MBProgressHUD * hud = [[MBProgressHUD alloc]initWithWindow:self.window];
-    hud.mode = MBProgressHUDModeText;
-    hud.label.text = text;
-    [hud hideAnimated:YES afterDelay:2];
-}
-
-
--(void)hiddenHUD
-{
-    [progressHUD hideAnimated:YES];
-    if (progressHUD) {
-        [progressHUD removeFromSuperViewOnHide];
-    }
 }
 
 

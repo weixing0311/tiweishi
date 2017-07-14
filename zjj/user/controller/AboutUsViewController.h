@@ -10,6 +10,10 @@
 
 @interface AboutUsViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UIButton *mobileBtn;
+- (IBAction)didClickMobile:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *DebugView;
+- (IBAction)SwitchChange:(UISwitch *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *logoBtn;
 
 @end

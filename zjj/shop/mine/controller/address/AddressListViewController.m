@@ -40,16 +40,13 @@
     
     [[BaseSservice sharedManager]post1:@"app/userAddress/addressList.do" paramters:param success:^(NSDictionary *dic) {
         
-        NSString * status = [dic objectForKey:@"status"];
-        if ([status isEqualToString:@"success"]) {
             self.dataArray =[NSMutableArray arrayWithCapacity:0];
             [self.dataArray addObjectsFromArray:[[dic safeObjectForKey:@"data"]objectForKey:@"array"]];
             [self.tableview reloadData];
 
-        }else{
-            [self showHUD:onlyMsg message:[dic objectForKey:@"message"] detai:nil Hdden:YES];
-        }
+        
     } failure:^(NSError *error) {
+        
         
     }];
 }
@@ -120,13 +117,13 @@
 }
 -(void)didClickChangeDefaultWithCell:(AddressListCell*)cell
 {
-    [self showHUD:hotwheels message:@"修改中..." detai:nil Hdden:NO];
-    
+    [SVProgressHUD showWithStatus:@"修改中。。"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
     NSDictionary *dict = [self.dataArray objectAtIndex:cell.tag];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
     [[BaseSservice sharedManager]post1:@"app/userAddress/setDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
-        [self hiddenHUD];
+        [SVProgressHUD dismiss];
         
         NSString * status = [dic objectForKey:@"status"];
         if ([status isEqualToString:@"success"]) {
@@ -147,7 +144,7 @@
     } failure:^(NSError *error) {
         cell.defaultBtn.selected = NO;
 
-        [self hiddenHUD];
+        [SVProgressHUD dismiss];
     }];
 
 }

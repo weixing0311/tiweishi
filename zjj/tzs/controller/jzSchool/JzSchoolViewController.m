@@ -15,6 +15,9 @@
 @end
 
 @implementation JzSchoolViewController
+{
+    int page;
+}
 -(NSMutableArray *)dataArray{
     if (!_dataArray) {
         self.dataArray = [NSMutableArray array];
@@ -32,28 +35,29 @@
     [self setNbColor];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
-    
+    [self setRefrshWithTableView:self.tableview];
+
     [self setExtraCellLineHiddenWithTb:self.tableview];
-    [self.tableview addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [self.tableview headerBeginRefreshing];
     
     
-    // 设置文字(也可以不设置,默认的文字在MJRefreshConst中修改)
-    self.tableview.headerPullToRefreshText = @"下拉可以刷新了";
-    self.tableview.headerReleaseToRefreshText = @"松开马上刷新了";
-    self.tableview.headerRefreshingText = @"刷新中..";
     
-//    [self.tableview headerBeginRefreshing];
-// Do any additional setup after loading the view from its nib.
 }
 /**
  *  下拉刷新
  */
 -(void)headerRereshing
 {
+    page =1;
     [self getListInfo];
     
 }
+-(void)footerRereshing
+{
+    page ++;
+    [self getListInfo];
+
+}
+
 /**
  * 获取数据
  */
@@ -61,13 +65,17 @@
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [param safeSetObject:@(page) forKey:@"page"];
+    [param safeSetObject:@"30" forKey:@"pageSize"];
     [[BaseSservice sharedManager]post1:@"app/informate/queryInformateList.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         [self.tableview headerEndRefreshing];
+        [self.tableview footerEndRefreshing];
         [self.dataArray setArray:[[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"]];
         [self.tableview reloadData];
     } failure:^(NSError *error) {
         [self.tableview headerEndRefreshing];
+        [self.tableview footerEndRefreshing];
 
         DLog(@"error--%@",error);
     }];

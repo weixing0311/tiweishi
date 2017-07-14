@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "zjj/shop/homepage/controller/GoodsDetailViewController.m"
-            timestampString = "520913585.913713"
+            filePath = "zjj/base/model/WWXBlueToothManager.m"
+            timestampString = "521710678.943692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
-            landmarkName = "-dictionaryWithJsonString:"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "zjj/tzs/controller/Setting/TZSConfirmTheViewController.m"
-            timestampString = "520939620.536395"
+            filePath = "zjj/health/controller/ShareDetailView.m"
+            timestampString = "521712188.355911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
-            landmarkName = "-getufUpdatainfo"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "-setInfo"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -51,30 +51,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "zjj/shop/OrderViewController.m"
-            timestampString = "520917414.314885"
+            filePath = "zjj/health/view/UserListView.m"
+            timestampString = "521714755.214985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
-            landmarkName = "-didClickFirstBtnWithView:"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "-deleteSubUserWithCell:"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/shop/UpdataOrderViewController.m"
-            timestampString = "520939620.536395"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "-getwarehousingWithproviceId:"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UserListView deleteSubUserWithCell:]"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/health/view/UserListView.m"
+                  timestampString = "521716315.770655"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
+                  offsetFromSymbolStart = "396">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__38-[UserListView deleteSubUserWithCell:]_block_invoke"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/health/view/UserListView.m"
+                  timestampString = "521716315.772478"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

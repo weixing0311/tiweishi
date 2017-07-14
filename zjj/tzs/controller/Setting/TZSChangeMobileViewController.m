@@ -38,7 +38,7 @@
 - (IBAction)pushVer:(id)sender {
     
     if (self.mobileTF.text.length<11) {
-        [self showError:@"请输入正确手机号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入正确手机号"];
         return;
     }
     
@@ -53,9 +53,9 @@
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
-        [self showError:@"已发送"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError *error) {
-        [self showError:@"发送失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
     }];
     
     
@@ -63,21 +63,21 @@
 
 - (IBAction)didUpdate:(id)sender {
     if (self.oldMobileTf.text.length <11) {
-        [self showError:@"请输入注册手机号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入注册手机号"];
         return;
     }
   
     if (self.mobileTF.text.length <11) {
-        [self showError:@"请输入新手机号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入新手机号"];
         return;
     }
     if (self.vertf.text.length<4) {
-        [self showError:@"请输入验证码"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入验证码"];
         return;
     }
     
-    if (self.passwordtf.text.length<1) {
-        [self showError:@"请输入密码"];
+    if (self.passwordtf.text.length<6) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入密码,密码不能少于6位"];
         return;
     }
 
@@ -89,10 +89,10 @@
     [param setObject:self.vertf.text forKey:@"vcode"];
     
     [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
-        [self showError:@"修改成功"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
-        [self showError:@"修改失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
     }];
 
 }

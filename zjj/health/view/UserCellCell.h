@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *namelabel;
 - (IBAction)didClickDelete:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 
 @end
 @protocol userCellDelegate <NSObject>

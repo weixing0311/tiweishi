@@ -9,7 +9,6 @@
 #import "JFABaseTableViewController.h"
 #import "BaseSservice.h"
 #import "JFASubNetWorkErrorView.h"
-#import "MBProgressHUD.h"
 #import "LoignViewController.h"
 #import "MJRefresh.h"
 @interface JFABaseTableViewController ()
@@ -20,9 +19,7 @@
 @end
 
 @implementation JFABaseTableViewController
-{
-    MBProgressHUD * progressHUD;
-}
+
 @synthesize requestArray=_requestArray;
 @synthesize loadingView=_loadingView;
 @synthesize errorView=_errorView;
@@ -50,11 +47,11 @@
         self.requestArray=[[NSMutableArray alloc] initWithCapacity:0];
     }
     _errorView = [[ServiceResultErrorView alloc]initWithFrame:self.view.frame];
-    
-    _networkErrorView = [[JFASubNetWorkErrorView alloc]initWithFrame:[UIScreen mainScreen].bounds bgimage:[UIImage storeImageNamed:@"bg_network_error_new"]];
-    _networkErrorView.delegate = self;
-    _networkErrorView.hidden = YES;
-    [self.view addSubview:_networkErrorView];
+//    
+//    _networkErrorView = [[JFASubNetWorkErrorView alloc]initWithFrame:[UIScreen mainScreen].bounds bgimage:[UIImage storeImageNamed:@"bg_network_error_new"]];
+//    _networkErrorView.delegate = self;
+//    _networkErrorView.hidden = YES;
+//    [self.view addSubview:_networkErrorView];
 
 }
 
@@ -63,6 +60,12 @@
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
+}
+-(void)setTBRedColor
+{
+    self.navigationController.navigationBar.barTintColor = HEXCOLOR(0xfb0628);
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
 }
 -(void)doloign
 {
@@ -100,28 +103,7 @@
     [self startServiceWithItem:[self getServiceItem] isShowLoading:NO];
 }
 
--(void)startServiceWithItem:(JFANetWorkServiceItem*)item isShowLoading:(BOOL)isShowLoading
-{
-    
-    if (item) {
-        NSURLSessionTask* req=nil;
-        if ([item.method isEqualToString:@"POST"]) {
-            req=[[BaseSservice sharedManager] post:item.url paramters:item.parameters success:^(NSURLSessionTask *operation, id responseObject) {
-                [self serviceSucceededWithResult:responseObject operation:operation];
-            } failure:^(NSURLSessionTask *operation, NSError *error) {
-                [self serviceFailedWithError:error operation:operation];
-            }];
-        }else{
-            req=[[BaseSservice sharedManager] get:item.url paramters:item.parameters success:^(NSURLSessionTask *operation, id responseObject) {
-                [self serviceSucceededWithResult:responseObject operation:operation];
-            } failure:^(NSURLSessionTask *operation, NSError *error) {
-                [self serviceFailedWithError:error operation:operation];
-            }];
-        }
-        
-        [self.requestArray addObject:req];
-    }
-}
+
 
 -(void)serviceSucceededWithResult:(id)result operation:(NSURLSessionTask*)operation
 {
@@ -170,16 +152,6 @@
     self.networkErrorView.hidden = YES;
 }
 
-
--(void)showHUD:(HUDType)type message:(NSString*)message detai:(NSString*)detailMsg Hdden:(BOOL)hidden
-{
-    [(AppDelegate *)[UIApplication sharedApplication].delegate showHUD:type message:message detai:detailMsg Hdden:hidden];
-}
--(void)hiddenHUD
-{
-    
-    [(AppDelegate *)[UIApplication sharedApplication].delegate hiddenHUD];
-}
 
 
 -(id)getXibCellWithTitle:(NSString *)title

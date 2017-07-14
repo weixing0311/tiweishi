@@ -9,9 +9,10 @@
 #import "UserViewController.h"
 #import "ChangeUserInfoViewController.h"
 #import "MyCollectionViewController.h"
-#import "bdAccountViewController.h"
-#import "setUpViewController.h"
+#import "AboutUsViewController.h"
 #import "LoignViewController.h"
+#import "CharViewController.h"
+#import "ChangPasswordViewController.h"
 @interface UserViewController ()
 
 @end
@@ -22,20 +23,18 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     self.tabBarController.tabBar.hidden = NO;
-    [self refreshMyInfoView];
+    [self refreshMyUserInfoView];
   
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
-
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
-    [self.headerImage setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl]];
+    self.tableview.scrollEnabled = NO;
+    self.headerImage.layer.borderWidth= 2;
+    self.headerImage.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+
+    [self.headerImage setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl]placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nickNameLabel.text = [UserModel shareInstance].nickName;
 
     // Do any additional setup after loading the view from its nib.
@@ -43,9 +42,9 @@
 
     [self setNavigationBarType];
 }
--(void)refreshMyInfoView
+-(void)refreshMyUserInfoView
 {
-    [self.headerImage setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head-default"]];
+    [self.headerImage setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nickNameLabel.text = [SubUserItem shareInstance].nickname;
 }
 -(void)setNavigationBarType
@@ -61,7 +60,10 @@
 //    [self.navigationController.navigationBar setBackgroundImage:img forBarMetrics:UIBarMetricsDefault];
 //    self.navigationController.navigationBar.clipsToBounds = YES;
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 4;
@@ -83,12 +85,13 @@
             cell.imageView.image = [UIImage imageNamed:@"collect_"];
             break;
         case 2:
-            cell.textLabel.text = @"账号绑定";
-            cell.imageView.image = [UIImage imageNamed:@"user_"];
+            cell.textLabel.text = @"修改登录密码";
+            cell.imageView.image = [UIImage imageNamed:@"pwd"];
             break;
+
         case 3:
-            cell.textLabel.text = @"设置";
-            cell.imageView.image = [UIImage imageNamed:@"settings_"];
+            cell.textLabel.text = @"关于我们";
+            cell.imageView.image = [UIImage imageNamed:@"me"];
             break;
             
         default:
@@ -99,35 +102,42 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ChangeUserInfoViewController *cv =[[ChangeUserInfoViewController alloc]init];
-    MyCollectionViewController *mc =[[MyCollectionViewController alloc]init];
-    bdAccountViewController *bd =[[bdAccountViewController alloc]init];
-    setUpViewController *su =[[setUpViewController alloc]init];
-    self.hidesBottomBarWhenPushed=YES;
 
-    switch (indexPath.row) {
-        case 0:
-            if ([[UserModel shareInstance].healthId isEqualToString:[UserModel shareInstance].subId]) {
-                cv.changeType =2;
-            }else{
-                cv.changeType =4;
-            }
-            [self.navigationController pushViewController:cv animated:YES];
-            break;
-        case 1:
-            [self.navigationController pushViewController:mc animated:YES];
-            break;
-        case 2:
-            [self.navigationController pushViewController:bd animated:YES];
-            break;
-        case 3:
-            [self.navigationController pushViewController:su animated:YES];
-            break;
-            
-        default:
-            break;
     
+    if (indexPath.row ==0) {
+        ChangeUserInfoViewController *cv =[[ChangeUserInfoViewController alloc]init];
+        cv.hidesBottomBarWhenPushed=YES;
+        if ([[UserModel shareInstance].healthId isEqualToString:[UserModel shareInstance].subId]) {
+            cv.changeType =2;
+        }else{
+            cv.changeType =4;
+        }
+        [self.navigationController pushViewController:cv animated:YES];
+   
+    }else if (indexPath.row ==1)
+    {
+        MyCollectionViewController *mc =[[MyCollectionViewController alloc]init];
+        mc.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:mc animated:YES];
+
+    }else if (indexPath.row==2)
+    {
+        ChangPasswordViewController *vc =[ [ChangPasswordViewController alloc]init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
+    
+    
+    else{
+        AboutUsViewController *su =[[AboutUsViewController alloc]init];
+        su.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:su animated:YES];
+  
+    }
+    
+    
+    
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -153,5 +163,23 @@
 
     
     
+}
+- (IBAction)enterChangeUserInfoVC:(id)sender {
+    ChangeUserInfoViewController *cv =[[ChangeUserInfoViewController alloc]init];
+    cv.hidesBottomBarWhenPushed=YES;
+    if ([[UserModel shareInstance].healthId isEqualToString:[UserModel shareInstance].subId]) {
+        cv.changeType =2;
+    }else{
+        cv.changeType =4;
+    }
+    [self.navigationController pushViewController:cv animated:YES];
+    
+
+}
+- (IBAction)EnterCharVC:(UIButton *)sender {
+    CharViewController * cv = [[CharViewController alloc]init];
+    cv.hidesBottomBarWhenPushed=YES;
+
+    [self.navigationController pushViewController:cv animated:YES];
 }
 @end

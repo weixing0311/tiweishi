@@ -12,4 +12,6 @@
 -(NSString*)yyyymmdd;
 -(NSString *)getdateCount;
 -(NSString*)mmdd;
+-(NSString*)mmddhhmm;
+-(NSDate *)dateyyyymmddhhmmss;
 @end

@@ -7,15 +7,12 @@
 //
 
 #import "jzsSchoolWebViewController.h"
-#import "MBProgressHUD.h"
 @interface jzsSchoolWebViewController ()
 
 @end
 
 @implementation jzsSchoolWebViewController
-{
-    MBProgressHUD * hud;
-}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -42,10 +39,10 @@
     }
     self.webView.delegate = self;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]]];
-    hud =[[MBProgressHUD alloc]initWithView:self.view];
-    hud.label.text = @"加载中...";
-    [self.view addSubview:hud];
-    [hud showAnimated:YES];
+
+    [SVProgressHUD showWithStatus:@"加载中.."];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+
     // Do any additional setup after loading the view from its nib.
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -58,11 +55,11 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [hud hideAnimated:YES];
+    [SVProgressHUD dismiss];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [hud hideAnimated:YES];
+    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -110,6 +107,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:like forKey:@"isLike"];
     [[BaseSservice sharedManager]post1:@"app/informate/changeIsLike.do" paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance] showSuccessWithStatus:nil];
         DLog(@"dic--%@",dic);
         if (self.zanBtn.selected ==YES) {
             self.zanBtn.selected =NO;
@@ -117,6 +115,7 @@
             self.zanBtn.selected =YES;
         }
     } failure:^(NSError *error) {
+        [[UserModel shareInstance] showErrorWithStatus:nil];
         DLog(@"error--%@",error);
     }];
     
@@ -134,6 +133,7 @@
 
     [[BaseSservice sharedManager]post1:@"app/informate/changeIsCollection.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
+        [[UserModel shareInstance] showSuccessWithStatus:nil];
         if (self.collectionBtn.selected ==YES) {
             self.collectionBtn.selected =NO;
         }else{
@@ -141,6 +141,7 @@
         }
 
     } failure:^(NSError *error) {
+        [[UserModel shareInstance] showErrorWithStatus:nil];
         DLog(@"error--%@",error);
     }];
     

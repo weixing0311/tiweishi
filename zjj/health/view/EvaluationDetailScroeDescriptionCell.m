@@ -25,13 +25,13 @@
     if (![HealthDetailsItem instance].DataId) {
         return;
     }
-    NSString * headURLStr = [UserModel shareInstance].headUrl;
-    [self. headImageView setImageWithURL:[NSURL URLWithString:headURLStr]];
+    NSString * headURLStr = [SubUserItem shareInstance].headUrl;
+    [self. headImageView setImageWithURL:[NSURL URLWithString:headURLStr]placeholderImage:[UIImage imageNamed:@"head_default"]];
     
-    self.nameLabel.text = [UserModel shareInstance].nickName;
+    self.nameLabel.text = [SubUserItem shareInstance].nickname;
     self.timeLabel.text = [NSString stringWithFormat:@"生成日期：%@",[HealthDetailsItem instance].createTime];
     self.bodyAgeLabel.text = [NSString stringWithFormat:@"身体年龄：%d",[HealthDetailsItem instance].bodyAge];
-    self.bmrLabel.text = [NSString stringWithFormat:@"基础代谢：%.1f",[HealthDetailsItem instance].bmr];
+    self.bmrLabel.text = [NSString stringWithFormat:@"基础代谢：%.0f",[HealthDetailsItem instance].bmr];
 
     switch ([HealthDetailsItem instance].weightLevel) {
         case 1:
@@ -74,9 +74,9 @@
     
     // 趋势提示
     if  ([HealthDetailsItem instance].weight) {
-        float weightChange = [HealthDetailsItem instance].weight;
-        self.trendLabel.text = [NSString stringWithFormat:@"%.1fkg",abs(weightChange) ];
-        self.trendArrowImageView.image =[UIImage imageNamed:weightChange > 0 ?@"trand_down_icon" : @"trand_up_icon"];
+        float weightChange = [HealthDetailsItem instance].weight-[HealthDetailsItem instance].lastWeight;
+        self.trendLabel.text = [NSString stringWithFormat:@"%.1fkg",fabsf(weightChange) ];
+        self.trendArrowImageView.image =[UIImage imageNamed:weightChange > 0 ?@"trand_up_icon" : @"trand_down_icon"];
         self.trendArrowImageView.hidden = NO;
     }
     else {
@@ -120,6 +120,7 @@
     [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(tisStr.length-3, 3)];
     
     self.scaleResultStatusLabel.attributedText = tisString;
+    self.scaleResultStatusLabel.adjustsFontSizeToFitWidth = YES;
 
 }
 

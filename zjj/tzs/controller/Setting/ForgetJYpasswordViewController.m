@@ -34,24 +34,24 @@
 
 - (IBAction)updata:(id)sender {
     if (self.cardTf.text.length <1) {
-        [self showError:@"请输入银行卡号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入银行卡号"];
         return;
     }
     if (self.mobiletf.text.length<11) {
-        [self showError:@"请输入正确手机号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入正确手机号"];
         return;
     }
     
     if (self.vertf.text.length<1) {
-        [self showError:@"请输入验证码"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入验证码"];
         return;
     }
     if (self.passwordtf.text.length<1) {
-        [self showError:@"请输入密码"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入密码"];
         return;
     }
     if (self.repasswordtf.text.length<1||![self.repasswordtf.text isEqualToString:self.passwordtf.text]) {
-        [self showError:@"两次密码不一致"];
+        [[UserModel shareInstance] showInfoWithStatus:@"两次密码不一致"];
         return;
     }
     
@@ -66,10 +66,10 @@
     [[BaseSservice sharedManager]post1:@"app/user/findTradePassword.do" paramters:param success:^(NSDictionary *dic) {
         
         
-        [self showError:@"修改成功"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
-        [self showError:@"修改失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
     }];
     
 }
@@ -77,7 +77,7 @@
 - (IBAction)getVer:(id)sender {
     
     if (self.mobiletf.text.length<11) {
-        [self showError:@"请输入正确手机号"];
+        [[UserModel shareInstance] showInfoWithStatus:@"请输入正确手机号"];
         return;
     }
     
@@ -92,9 +92,9 @@
     
     [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
         
-        [self showError:@"已发送"];
+        [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {
-        [self showError:@"发送失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
     }];
     
 }

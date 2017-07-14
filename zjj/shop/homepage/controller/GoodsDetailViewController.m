@@ -26,6 +26,11 @@
     NSMutableArray * _bannerArray;
     NSMutableArray * _hdArray;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNbColor];
@@ -148,7 +153,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section==0) {
-        carouselView = [ADCarouselView carouselViewWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/365*235)];
+        carouselView = [ADCarouselView carouselViewWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH)];
         carouselView.loop = YES;
         carouselView.imgs = [GoodsDetailItem shareInstance].pictureArray;
         carouselView.automaticallyScrollDuration = 5;
@@ -268,10 +273,10 @@
     [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/saveShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
         [self getgoodsCountWithNet];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshShopCart" object:nil];
-//            [(AppDelegate *)[UIApplication sharedApplication] showHUD:onlyMsg message:@"加入成功" detai:nil Hdden:YES];
+        [[UserModel shareInstance] showSuccessWithStatus:@"加入成功"];
         
     } failure:^(NSError *error) {
-        
+        [[UserModel shareInstance] showErrorWithStatus:@"加入失败"];
     }];
 
     
@@ -367,9 +372,9 @@
 
 -(NSString *)getUrlWithString:(NSString *)string
 {
-    NSString *str3 = [string stringByReplacingOccurrencesOfString:@"\"" withString:@"-"];
+//    NSString *str3 = [string stringByReplacingOccurrencesOfString:@"\"" withString:@"-"];
 //    NSString * str4 = [str3 stringByReplacingOccurrencesOfString:@"/>" withString:@"}"];
-    NSArray  *array = [str3 componentsSeparatedByString:@"-"];//--分隔符
+    NSArray  *array = [string componentsSeparatedByString:@"\""];//--分隔符
     for (NSString * str in array) {
         if ([str containsString:@"http"]) {
             return str;

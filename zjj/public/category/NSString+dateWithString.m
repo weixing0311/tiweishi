@@ -34,6 +34,18 @@
     NSString *string= [outputFormatter stringFromDate:inputDate];
     return string;
 }
+-(NSString*)mmddhhmm
+{
+    NSDateFormatter *inputFormatter= [[NSDateFormatter alloc] init];
+    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *inputDate = [inputFormatter dateFromString:self];
+    NSLog(@"date= %@", inputDate);
+    NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];
+    [outputFormatter setLocale:[NSLocale currentLocale]];
+    [outputFormatter setDateFormat:@"MM月dd日 HH:mm"];
+    NSString *string= [outputFormatter stringFromDate:inputDate];
+    return string;
+}
 
 
 
@@ -102,4 +114,11 @@
     
 }
 
+-(NSDate *)dateyyyymmddhhmmss
+{
+    NSDateFormatter *inputFormatter= [[NSDateFormatter alloc] init];
+    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *inputDate = [inputFormatter dateFromString:self];
+    return inputDate;
+}
 @end

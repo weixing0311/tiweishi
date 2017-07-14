@@ -97,7 +97,7 @@ typedef enum
 
 
 
-@property (nonatomic,copy  ) NSString     *     createTime ;//检测时间
+@property (nonatomic,copy  ) NSDate     *     createTime ;//检测时间
 @property (nonatomic,assign) float          mCalorie ;// 脂肪量
 -(void)setobjectWithDic:(NSDictionary *)dict ;
 -(NSString *)getHeightWithLevel:(int)level status:(mytype)isMytype;

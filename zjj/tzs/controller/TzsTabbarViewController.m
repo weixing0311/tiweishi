@@ -10,6 +10,8 @@
 #import "HelpViewController.h"
 #import "JzSchoolViewController.h"
 #import "SettingViewController.h"
+#import "ShopTestViewController.h"
+#import "TabbarViewController.h"
 @interface TzsTabbarViewController ()
 
 @end
@@ -17,6 +19,11 @@
 @implementation TzsTabbarViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    ShopTestViewController *st =[[ShopTestViewController alloc]init];
+    st.title = @"健康";
+    
     HelpViewController *news = [[HelpViewController alloc]init];
     UINavigationController * nav1 = [[UINavigationController alloc]initWithRootViewController:news];
     nav1.navigationBar.barTintColor = [UIColor redColor];
@@ -33,23 +40,39 @@
     UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:shop];
     nav3.navigationBar.barTintColor = [UIColor redColor];
 
-    self.viewControllers = @[nav1,nav2,nav3];
+    self.viewControllers = @[st,nav1,nav2,nav3];
 
     UITabBarItem * item1 =[self.tabBar.items objectAtIndex:0];
     UITabBarItem * item2 =[self.tabBar.items objectAtIndex:1];
     UITabBarItem * item3 =[self.tabBar.items objectAtIndex:2];
+    UITabBarItem * item4 =[self.tabBar.items objectAtIndex:3];
     
-    item1.image = [UIImage imageNamed:@"fonter-help"];
-    item1.selectedImage = [UIImage imageNamed:@"fonter-help-red"];
+    item1.image = [UIImage imageNamed:@"health  gray_"];
+    item1.selectedImage = [UIImage imageNamed:@"health_"];
+
     
-    item2.image = [UIImage imageNamed:@"footer-jianzhi"];
-    item2.selectedImage = [UIImage imageNamed:@"footer-jianzhi-red"];
+    item2.image = [UIImage imageNamed:@"fonter-help"];
+    item2.selectedImage = [UIImage imageNamed:@"fonter-help-red"];
     
-    item3.image = [UIImage imageNamed:@"footer-PersonalCenter"];
-    item3.selectedImage = [UIImage imageNamed:@"footer-PersonalCenter-red"];
+    item3.image = [UIImage imageNamed:@"footer-jianzhi"];
+    item3.selectedImage = [UIImage imageNamed:@"footer-jianzhi-red"];
     
-    self.selectedIndex=2;
+    item4.image = [UIImage imageNamed:@"footer-PersonalCenter"];
+    item4.selectedImage = [UIImage imageNamed:@"footer-PersonalCenter-red"];
+    
+    self.selectedIndex=3;
     // Do any additional setup after loading the view.
+}
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    DLog(@"item name = %@", item.title);
+    
+    if ([item.title isEqualToString:@"健康"]) {
+        
+        TabbarViewController * tb= [[TabbarViewController alloc]init];
+        self.view.window.rootViewController = tb;
+
+    }
 }
 
 - (void)didReceiveMemoryWarning {

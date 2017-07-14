@@ -8,6 +8,7 @@
 
 #import "UserListView.h"
 #import "UserCellCell.h"
+#import "TimeModel.h"
 @interface UserListView()<userCellDelegate>
 @end
 @implementation UserListView
@@ -49,6 +50,7 @@
 }
 -(void)hiddenMe
 {
+    [self.dataArray removeAllObjects];
     self.hidden = YES;
 }
 -(void)refreshInfo
@@ -108,18 +110,35 @@
     }
     if (indexPath.section ==0) {
         NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
-        [cell.headImage setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"headimgurl"]]];
+        
+        
+
+        [cell.headImage setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"headimgurl"]]placeholderImage:[UIImage imageNamed:@"head_default"]];
         cell.delegate = self;
         cell.tag = indexPath.row;
+        
+        cell.ageLabel .hidden =NO;
         cell.namelabel.text = [dic safeObjectForKey:@"nickName"];
-        if ([[dic objectForKey:@"id"]intValue ]==[[UserModel shareInstance].healthId intValue]) {
+        
+        int age = [[TimeModel shareInstance] ageWithDateOfBirth:[dic safeObjectForKey:@"birthday"]];
+        cell.ageLabel.text = [NSString stringWithFormat:@"%d岁",age];
+        NSString * subId =[NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"id"]];
+        //设置不能删除当前用户
+        DLog(@"%@",subId);
+        DLog(@"%@",[UserModel shareInstance].subId);
+        
+        if ([subId isEqualToString:[UserModel shareInstance].subId]||[subId isEqualToString:[UserModel shareInstance].healthId]) {
             cell.deleteBtn.hidden = YES;
         }else{
-            cell.deleteBtn.hidden =NO;
+            cell.deleteBtn.hidden = NO;
         }
+        
+        
+ 
     }else{
         cell.headImage.image = [UIImage imageNamed:@"add_"];
-        cell.namelabel.text = @"添加子用户";
+        cell.ageLabel.hidden = YES;
+        cell.namelabel.text = @"添加一起用秤人员";
         cell.deleteBtn . hidden = YES;
     }
     return cell;
@@ -133,6 +152,12 @@
     if (indexPath.section ==0) {
         
         NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
+        
+        NSString * subId =[dic safeObjectForKey:@"id"];
+        if ([subId isEqualToString:[UserModel shareInstance].subId]) {
+            self.hidden =YES;
+            return;
+        }
         
         if (self.delegate &&[self.delegate respondsToSelector:@selector(changeShowUserWithSubId:isAdd:)]) {
             [self.delegate changeShowUserWithSubId:[dic safeObjectForKey:@"id"] isAdd:NO];
@@ -148,17 +173,28 @@
 
 -(void)deleteSubUserWithCell:(UserCellCell*)cell
 {
-    NSDictionary *dic =[self.dataArray objectAtIndex:cell.tag];
+    NSDictionary *dict =[self.dataArray objectAtIndex:cell.tag];
+    NSString * subId =[NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"id"]];
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    [param setObject:[dic safeObjectForKey:@"id"] forKey:@"id"];
+    [param safeSetObject:subId forKey:@"id"];
     [[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteChild.do" paramters:param success:^(NSDictionary *dic) {
         self.hidden = YES;
-        [self showError:@"删除成功"];
-        [[UserModel shareInstance]removeChildDict:dic];
+        [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
+        [[UserModel shareInstance]removeChildDict:dict];
         
+        
+        
+//        if ([subId isEqualToString:[UserModel shareInstance].subId]) {
+//            NSDictionary * dict =[_dataArray objectAtIndex:0];
+//            
+//            if (self.delegate &&[self.delegate respondsToSelector:@selector(changeShowUserWithSubId:isAdd:)]) {
+//                [self.delegate changeShowUserWithSubId:[dict safeObjectForKey:@"id"] isAdd:NO];
+//            }
+
+//        }
         
     } failure:^(NSError *error) {
-        [self showError:@"删除失败"];
+        [[UserModel shareInstance] showErrorWithStatus:@"删除失败"];
     }];
 }
 -(void)showError:(NSString *)text;

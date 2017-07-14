@@ -7,7 +7,7 @@
 //
 
 #import "MeasurementInfoCell.h"
-
+#import "HealthModel.h"
 @implementation MeasurementInfoCell
 
 - (void)awakeFromNib {
@@ -21,7 +21,12 @@
     self.timeLabel.   text = [self getTimeWithString:item.createTime];
     self.weightlabel. text = [NSString stringWithFormat:@"%.1fkg",item.weight];
     self.neifatLabel. text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
-    self.bodyFatLabel.text = [NSString stringWithFormat:@"%.1f",item.fatWeight];
+    self.bodyFatLabel.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
+    
+    self.weightlabel.textColor = [[HealthModel shareInstance] getHealthHeaderColorWithStatus:IS_MODEL_BODYWEIGHT item:item];
+    self.neifatLabel.textColor = [[HealthModel shareInstance] getHealthHeaderColorWithStatus:IS_MODEL_VISCERALFAT item:item];
+    self.bodyFatLabel.textColor = [[HealthModel shareInstance] getHealthHeaderColorWithStatus:IS_MODEL_FAT item:item];
+    
 }
 
 -(NSString *)getDateWithString:(NSString *)str

@@ -22,8 +22,6 @@
 - (void)back;
 -(void)BrokenNetworkReconnection;
 -(void)doloign;
--(void)showHUD:(HUDType)type message:(NSString*)message detai:(NSString*)detailMsg Hdden:(BOOL)hidden;
--(void)hiddenHUD;
 #pragma mark-NetService
 -(void)loadNewData;
 -(JFANetWorkServiceItem *)getServiceItem;
@@ -50,7 +48,7 @@
 
 /*! 设置navigaionbar 和title的颜色 */
 -(void)setNbColor;
-
+-(void)setTBRedColor;
 -(void)showError:(NSString *)text;
 
 @end

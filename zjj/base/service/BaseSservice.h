@@ -22,10 +22,8 @@ typedef void (^requestFailureBlock)(NSError *error);
 
 -(id)getPostRequestSerializer;
 
--(NSURLSessionTask*)post:(NSString*)url
-               paramters:(NSDictionary*)paramters
-                 success:(void (^)(NSURLSessionDataTask *  task, NSDictionary *   responseObject))success
-                 failure:(void (^)(NSURLSessionDataTask *  task, NSError *  error))failure;
+-(NSURLSessionTask*)postDebugWithUrl:(NSString*)url paramters:(NSDictionary*)paramters;
+
 -(NSURLSessionTask*)post1:(NSString*)url
                paramters:(NSMutableDictionary *)paramters
                  success:(requestSuccessBlock)success

@@ -6,11 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "默认头像.png",
+      "filename" : "personal-tou@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "personal-tou@3x.png",
       "scale" : "3x"
     }
   ],
