@@ -30,6 +30,7 @@
 @implementation CharViewController
 {
     UIButton * selectBtn;
+    UIButton * dateLengthBtn;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -57,8 +58,13 @@
     self.waterArray = [NSMutableArray array];
 
     
-    self.lenghtSegment.selectedSegmentIndex =0;
-    self.listSegment.selectedSegmentIndex = 0;
+//    self.lenghtSegment.selectedSegmentIndex =0;
+//    self.listSegment.selectedSegmentIndex = 0;
+    
+    UIButton *button =(UIButton *)[self.view viewWithTag:11];
+    button.selected = YES;
+    dateLengthBtn = button;
+    
     
     for (int i =0;i<5; i++) {
         UIButton *btn = (UIButton *)[self.view viewWithTag:i+1];
@@ -236,6 +242,33 @@
     self.startDate =[self.endDate dateByAddingTimeInterval:(-self.timeLength * 24 * 60 * 60)];
     self.dateLabel.text = [NSString stringWithFormat:@"%@-%@",[self.startDate mmdd],[self.endDate mmdd]];
     [self getListInfo];
+}
+- (IBAction)ChangeLength:(UIButton *)sender {
+    UIButton * button =sender;
+    
+    if (button==dateLengthBtn) {
+        return;
+    }else{
+        button.selected = YES;
+        dateLengthBtn.selected =NO;
+        dateLengthBtn = button;
+        if (sender.tag ==11) {
+            self.timeLength =3;
+        }else if (button.tag ==12){
+            self.timeLength =7;
+        }else{
+            self.timeLength=30;
+        }
+        DLog(@"选择时长__%d",self.timeLength);
+        self.endDate = [NSDate date];
+        self.startDate =[self.endDate dateByAddingTimeInterval:(-self.timeLength * 24 * 60 * 60)];
+        self.dateLabel.text = [NSString stringWithFormat:@"%@-%@",[self.startDate mmdd],[self.endDate mmdd]];
+        [self getListInfo];
+
+    }
+    
+    
+    
 }
 
 

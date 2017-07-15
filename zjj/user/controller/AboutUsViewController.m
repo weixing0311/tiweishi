@@ -28,8 +28,17 @@
     [self setTBRedColor];
     self.title = @"关于我们";
     _clickNum =0;
-}
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"UserOpenUpdateDebugKey"]) {
+        self.DebugView.hidden = NO;
+        self.logoBtn.userInteractionEnabled = NO;
+    }else{
+        self.DebugView.hidden = YES;
+        self.logoBtn.userInteractionEnabled = YES;
+    }
+    self.myversionLabel.text =[NSString stringWithFormat:@"v%@",[[UserModel shareInstance] getVersion]];
+    self.versionLabel.text =[NSString stringWithFormat:@"版本号：v%@",[[UserModel shareInstance] getVersion]];
 
+}
     // Do any additional setup after loading the view from its nib.
     // Do any additional setup after loading the view from its nib.
 - (void)didReceiveMemoryWarning {
@@ -63,7 +72,16 @@
 
 -(void)openDebugs
 {
-    self.DebugView.hidden =NO;
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"确定要打开DEBUG模式吗？" message:@"DEBUG模式会严重影响体测速度，调试结束后请及时关闭，确定要打开DEBUG模式吗？" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.DebugView.hidden =NO;
+
+        [[NSUserDefaults standardUserDefaults]setObject:@"open" forKey:@"UserOpenUpdateDebugKey"];
+
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:al animated:YES completion:nil];
 }
 
 
@@ -73,13 +91,66 @@
 - (IBAction)SwitchChange:(UISwitch *)sender {
     if (sender.isOn) {
         DLog(@"开启debug模式");
-        [[NSUserDefaults standardUserDefaults]setObject:@"open" forKey:@"UserOpenUpdateDebugKey"];
     }else{
         DLog(@"关闭debug模式");
         [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"UserOpenUpdateDebugKey"];
         self.DebugView.hidden= YES;
-        self.logoBtn.userInteractionEnabled = NO;
+        self.logoBtn.userInteractionEnabled = YES;
 
     }
 }
+- (IBAction)checkTheUpdate:(id)sender {
+    
+    [self getUpdateInfo];
+    
+}
+
+-(void)getUpdateInfo
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString * bundleVersion =[infoDictionary objectForKey:@"CFBundleVersion"];
+    
+    [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" paramters:nil success:^(NSDictionary *dic) {
+        DLog(@"dic --%@",dic);
+        NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
+        int   upDataVersion = [[dataDic safeObjectForKey:@"version"]intValue];
+        int   isForce = [[dataDic safeObjectForKey:@"isForce"]intValue];
+        
+        NSString * updateMessage=[dataDic safeObjectForKey:@"message" ];
+        
+        
+
+        if (upDataVersion>[bundleVersion intValue]) {
+            UIAlertController * la =[UIAlertController alertControllerWithTitle:@"有新版本需要更新" message:updateMessage preferredStyle:UIAlertControllerStyleAlert];
+            [la addAction:[UIAlertAction actionWithTitle:@"跳转到AppStore" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [[UIApplication sharedApplication ] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/id1209417912"]];
+                
+            }]];
+            
+            if (isForce==0) {
+                [la addAction:[UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [UserModel shareInstance].ignoreVerSion = [UserModel shareInstance].upDataVersion;
+                    [[NSUserDefaults standardUserDefaults]setObject:@([UserModel shareInstance].ignoreVerSion) forKey:@"ignoreVerSion"];
+                    
+                    [UserModel shareInstance].isUpdate =NO;
+                }]];
+            }
+            
+            [self presentViewController:la animated:YES completion:nil];
+            
+
+        }else{
+            UIAlertController * la =[UIAlertController alertControllerWithTitle:@"您当前版本为最新版本，无需更新" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [la addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
+            
+            [self presentViewController:la animated:YES completion:nil];
+            
+        }
+
+        
+    } failure:^(NSError *error) {
+        DLog(@"error--%@",error);
+    }];
+}
+
 @end

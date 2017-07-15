@@ -85,8 +85,13 @@
 {
 //    UITabBarItem* item = tabBarController.tabBarItem;
     
-    if (viewController ==self.viewControllers[1]||viewController ==self.viewControllers[2]||viewController ==self.viewControllers[3]) {
+    if (viewController ==self.viewControllers[1]||viewController ==self.viewControllers[2]) {
+        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
+        return NO;
+    }else if (viewController ==self.viewControllers[3])
+    {
         [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放，如需查看请关注《脂将军官方》公众号"];
+
         return NO;
     }
     return YES;

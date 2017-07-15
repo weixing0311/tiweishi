@@ -42,7 +42,7 @@
     NSLog(@"date= %@", inputDate);
     NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];
     [outputFormatter setLocale:[NSLocale currentLocale]];
-    [outputFormatter setDateFormat:@"MM月dd日 HH:mm"];
+    [outputFormatter setDateFormat:@"MM月dd日 HH:mm:ss"];
     NSString *string= [outputFormatter stringFromDate:inputDate];
     return string;
 }

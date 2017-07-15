@@ -8,7 +8,7 @@
 
 #import "HealthModel.h"
 #import "HealthDetailsItem.h"
-
+#import "SubProjectItem.h"
 
 #define warningColor   [UIColor colorWithRed:246/255.0 green:172/255.0 blue:2/255.0 alpha:1]
 #define normalColor    [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1]
@@ -196,6 +196,7 @@
 
 -(UIColor *)getHealthDetailColorWithStatus:(isMyType)myType
 {
+    SubProjectItem * subItem = [[SubProjectItem alloc]init];
     switch (myType) {
         case IS_MODEL_BMI:
             switch ([HealthDetailsItem instance].bmiLevel) {
@@ -475,6 +476,7 @@
 }
 -(UIColor *)getHealthShareColorWithStatus:(isMyType)myType item:(ShareHealthItem*)item
 {
+    
     switch (myType) {
         case IS_MODEL_BMI:
             switch (item.bmiLevel) {
@@ -618,7 +620,9 @@
 
 -(void)UpdateBlueToothInfoWithError:(NSError *)error mssage:(NSString *)message
 {
-    return;
+    if (![[NSUserDefaults standardUserDefaults]objectForKey:@"UserOpenUpdateDebugKey"]) {
+        return;
+    }
     
     NSString * errorMessage = [NSString stringWithFormat:@"%@--%@",error,message];
     
@@ -628,6 +632,59 @@
     [param safeSetObject:errorMessage forKey:@"message"];
     [[BaseSservice sharedManager]postDebugWithUrl:@"app/userDebugMsg/savemsg.do" paramters:param ];
 }
+
+/*
+ IS_BMI,
+ IS_VISCERALFAT,//内脂
+ IS_FAT,//脂肪
+ IS_FATPERCENT,//体脂  fatPercentage
+ IS_SAME,//肌肉\骨骼肌\水分\蛋白质\骨重判定标准
+ IS_BODYWEIGHT,//体重判定
+ IS_SIZE,//体型
+ 
+ weightLevel  1偏瘦2正常3警告4警告5超重6超重  1低 2正常  3456 高
+ fatPercentage level  1正常2低3高
+ 
+ bmi  1低  2正常3高4高
+ fatweightlevel  1正常2低3高
+ 
+ waterlevel 1正常 else 低
+ 
+ 蛋白质  1正常 else低
+ 
+ muscle 肌肉 1正常 else 低
+ 
+ boneMuscle  1正常 else低
+ 
+ 内脂  1正常2超标3高
+ 
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

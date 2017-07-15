@@ -61,7 +61,7 @@
     _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
     [self buildUserListView];
     [self buildTableview];
-
+    [[UserModel shareInstance]getUpdateInfo];
 
 }
 

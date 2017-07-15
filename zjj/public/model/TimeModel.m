@@ -48,32 +48,26 @@ static TimeModel * model;
     return aa;
 }
 
-- (int)ageWithDateOfBirth:(NSString *)date;
+- (int)ageWithDateOfBirth:(NSString *)dateStr;
 {
-    // 出生日期转换 年月日
-    NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
-    [dateformater setDateFormat:@"yyyy-MM-dd"];
-    NSDate *dta = [[NSDate alloc] init];
+    NSTimeZone *timeZone=[NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     
-    dta = [dateformater dateFromString:date];
-
-    NSDateComponents *components1 = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:dta];
-    NSInteger brithDateYear  = [components1 year];
-    NSInteger brithDateDay   = [components1 day];
-    NSInteger brithDateMonth = [components1 month];
+    NSDateFormatter *fmt=[[NSDateFormatter alloc]init];
+    fmt.dateFormat = @"yyyy-MM-dd";
+    fmt.timeZone = timeZone;
+    NSDateFormatter *dstFmt=[[NSDateFormatter alloc]init];
+    dstFmt.dateFormat = @"yyyy-MM-dd";
+    dstFmt.timeZone = timeZone;
     
-    // 获取系统当前 年月日
-    NSDateComponents *components2 = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:[NSDate date]];
-    NSInteger currentDateYear  = [components2 year];
-    NSInteger currentDateDay   = [components2 day];
-    NSInteger currentDateMonth = [components2 month];
-    
-    // 计算年龄
-    NSInteger iAge = currentDateYear - brithDateYear - 1;
-    if ((currentDateMonth > brithDateMonth) || (currentDateMonth == brithDateMonth && currentDateDay >= brithDateDay)) {
-        iAge++;
-    }
-    
-    return iAge;
+    NSDate *srcDate=[fmt dateFromString:dateStr];
+    //获得当前系统时间
+    NSDate *currentDate = [NSDate date];
+    //获得当前系统时间与出生日期之间的时间间隔
+    NSTimeInterval time = [currentDate timeIntervalSinceDate:srcDate];
+    //时间间隔以秒作为单位,求年的话除以60*60*24*356
+    int age = ((int)time)/(3600*24*365);
+    return age;
 }
+
+
 @end

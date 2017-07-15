@@ -21,7 +21,7 @@
 {
     NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];
     [outputFormatter setLocale:[NSLocale currentLocale]];
-    [outputFormatter setDateFormat:@"MM月dd日 hh:mm"];
+    [outputFormatter setDateFormat:@"MM月dd日 hh:mm:ss"];
     NSString *string= [outputFormatter stringFromDate:self];
     return string;
 }

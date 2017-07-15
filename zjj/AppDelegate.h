@@ -23,5 +23,6 @@ typedef enum : NSUInteger {
 - (void)saveContext;
 -(void)loignOut;
 -(void)showAletViewWithmessage:(NSString *)message;
+-(void)showUpdateAlertViewWithMessage;
 @end
 

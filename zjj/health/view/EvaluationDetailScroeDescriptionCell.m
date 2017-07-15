@@ -47,7 +47,7 @@
             self.weightStatusLabel.textColor = HEXCOLOR(0xf4a519);
             break;
         case 4:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"中度肥胖重"];
+            self.weightStatusLabel.text = [NSString stringWithFormat:@"中度肥胖"];
             self.weightStatusLabel.textColor = HEXCOLOR(0xf4a519);
             break;
         case 5:

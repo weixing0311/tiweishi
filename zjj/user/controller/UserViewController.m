@@ -91,7 +91,7 @@
 
         case 3:
             cell.textLabel.text = @"关于我们";
-            cell.imageView.image = [UIImage imageNamed:@"me"];
+            cell.imageView.image = [UIImage imageNamed:@"aboutUs"];
             break;
             
         default:
@@ -156,11 +156,17 @@
 
 - (IBAction)loignout:(id)sender {
     
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
-    [[UserModel shareInstance]removeAllObject];
-    LoignViewController *lo = [[LoignViewController alloc]init];
-    self.view.window.rootViewController = lo;
-
+    UIAlertController * la =[UIAlertController alertControllerWithTitle:@"是否确认退出登录？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [la addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
+        [[UserModel shareInstance]removeAllObject];
+        LoignViewController *lo = [[LoignViewController alloc]init];
+        self.view.window.rootViewController = lo;
+    }]];
+    [la addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+ 
+    [self presentViewController:la animated:YES completion:nil];
     
     
 }

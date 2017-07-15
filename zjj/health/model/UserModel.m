@@ -9,8 +9,10 @@
 #import "UserModel.h"
 #import "ACSimpleKeychain.h"
 #import "TimeModel.h"
+#import "AppDelegate.h"
 static UserModel *model;
 @implementation UserModel
+
 +(UserModel *)shareInstance
 {
     static dispatch_once_t onceToken;
@@ -200,14 +202,20 @@ static UserModel *model;
 }
 -(void)removeChildDict:(NSDictionary *)dict
 {
-    for (int i=0;i<self.child.count;i++) {
-        NSDictionary * dic = [self.child objectAtIndex:i];
-        if ([[dic objectForKey:@"id"]intValue]==[[dic objectForKey:@"id"]intValue]) {
-            [self.child removeObject:dic];
-            [self writeToDoc];
-            return;
-        }
+    if (self.child.count<1||!self.child) {
+        return;
     }
+    
+    [self.child removeObject:dict];
+//    for (int i=0;i<self.child.count;i++) {
+//        NSDictionary * dic = [self.child objectAtIndex:i];
+//        if ([[dic objectForKey:@"id"]intValue]==[[dic objectForKey:@"id"]intValue]) {
+//            DLog(@"dictId-%@  dicId%@",[dict objectForKey:@"id"],[dict objectForKey:@"id"]);
+//            [self.child removeObject:dic];
+//            [self writeToDoc];
+//            return;
+//        }
+//    }
 }
 -(NSMutableDictionary *)getChangeUserInfoDict
 {
@@ -368,5 +376,35 @@ static UserModel *model;
 {
     
 }
+
+-(void)getUpdateInfo
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    int  bundleVersion =[[infoDictionary objectForKey:@"CFBundleVersion"]intValue];
+    
+    [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" paramters:nil success:^(NSDictionary *dic) {
+        
+        DLog(@"dic --%@",dic);
+        NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
+       self.updateMessage =[dataDic safeObjectForKey:@"message" ];
+        self.upDataVersion = [[dataDic safeObjectForKey:@"version"]intValue];
+        self.isForce = [[dataDic safeObjectForKey:@"isForce"]intValue];
+        if (self.upDataVersion <= bundleVersion||self.upDataVersion ==self.ignoreVerSion) {
+            self.isUpdate =NO;
+        }else
+        {
+            self.isUpdate =YES;
+        }
+        
+        [self showUpdataAlert];
+    } failure:^(NSError *error) {
+        DLog(@"error--%@",error);
+    }];
+}
+-(void)showUpdataAlert
+{
+    [(AppDelegate*)[UIApplication sharedApplication].delegate showUpdateAlertViewWithMessage];
+}
+
 
 @end

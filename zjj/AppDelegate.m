@@ -18,6 +18,7 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "ChangeUserInfoViewController.h"
 #import <UMMobClick/MobClick.h>
+#import "YMSocketUtils.h"
 @interface AppDelegate ()
 
 @end
@@ -31,15 +32,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    
     [MobClick setLogEnabled:YES];
     UMConfigInstance.appKey = @"5938fc6fae1bf85185000571";
     [MobClick startWithConfigure:UMConfigInstance];
 
+    [MobClick setAppVersion:[[UserModel shareInstance]getVersion]];
     //取消所有本地通知
     [[UIApplication sharedApplication]cancelAllLocalNotifications];
     
-    
-    
+    //获取忽略版本号
+    [UserModel shareInstance].ignoreVerSion = [[[NSUserDefaults standardUserDefaults]objectForKey:@"ignoreVerSion"]intValue];
     
     
     
@@ -119,7 +122,6 @@
         
         if (!lo) {
             lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
-//            UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:lo];
             [self.window setRootViewController:lo];
 
         }else{
@@ -136,9 +138,37 @@
     [self.window.rootViewController presentViewController:al animated:YES completion:nil];
 
 }
+-(void)showUpdateAlertViewWithMessage
+{
+    if ([UserModel shareInstance].isUpdate==YES) {
+
+    UIAlertController * la =[UIAlertController alertControllerWithTitle:@"有新版本需要更新" message:[UserModel shareInstance].updateMessage preferredStyle:UIAlertControllerStyleAlert];
+    [la addAction:[UIAlertAction actionWithTitle:@"跳转到AppStore" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication ] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/id1209417912"]];
+
+    }]];
+    
+    if ([UserModel shareInstance].isForce==0) {
+        [la addAction:[UIAlertAction actionWithTitle:@"忽略" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [UserModel shareInstance].ignoreVerSion = [UserModel shareInstance].upDataVersion;
+            [[NSUserDefaults standardUserDefaults]setObject:@([UserModel shareInstance].ignoreVerSion) forKey:@"ignoreVerSion"];
+            
+            [UserModel shareInstance].isUpdate =NO;
+        }]];
+    }
+        
+        [self.window.rootViewController presentViewController:la animated:YES completion:nil];
+        
+    }
+
+}
+
+
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    [self showUpdateAlertViewWithMessage];
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }

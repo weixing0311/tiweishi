@@ -208,6 +208,35 @@
 
 
 
+#define mark  ---版本更新
+/**
+ *是否需要更新
+ */
+@property (nonatomic,assign)BOOL isUpdate;//
+/**
+ * 更新alert的Message
+ */
+@property (nonatomic,copy  )NSString * updateMessage;//
+/**
+ * 忽略更新版本号
+ */
+@property (nonatomic,assign)int   ignoreVerSion;//
+
+/**
+ * 更新版本号
+ */
+@property (nonatomic,assign)int   upDataVersion;//
+
+/**
+ *  是否需要强更  1否2是
+ */
+@property (nonatomic,assign)int isForce;//
+
+/**
+ *  查看更新
+ */
+-(void)getUpdateInfo;
+
 -(void)showSuccessWithStatus:(NSString *)status;
 -(void)showErrorWithStatus:(NSString *)status;
 -(void)showInfoWithStatus:(NSString *)status;

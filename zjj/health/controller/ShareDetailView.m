@@ -37,7 +37,7 @@
 {
     
     self.generateTimeLabel.text =[[HealthDetailsItem instance].createTime mmddhhmm] ;
-
+    self.generateTimeLabel.adjustsFontSizeToFitWidth = YES;
     self.bodyAgeLabel.text =[NSString stringWithFormat:@"%d",[HealthDetailsItem instance].bodyAge];
 
     self.bmrLabel.text = [NSString stringWithFormat:@"%.0f",[HealthDetailsItem instance].bmr];
@@ -53,9 +53,9 @@
     
     // 趋势提示
     if  ([HealthDetailsItem instance].weight) {
-        float weightChange = [HealthDetailsItem instance].weight;
+        float weightChange = [HealthDetailsItem instance].weight-[HealthDetailsItem instance].lastWeight;
         self.trendLabel.text = [NSString stringWithFormat:@"%.1fkg",fabsf(weightChange) ];
-        self.trendArrowImageView.image =[UIImage imageNamed:weightChange > 0 ?@"trand_down_icon" : @"trand_up_icon"];
+        self.trendArrowImageView.image =[UIImage imageNamed:weightChange > 0 ?@"trand_up_icon" : @"trand_down_icon"];
         self.trendArrowImageView.hidden = NO;
     }
     else {
@@ -76,7 +76,7 @@
             self.weightStatusLabel.textColor = HEXCOLOR(0xf4a519);
             break;
         case 4:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"中度肥胖重"];
+            self.weightStatusLabel.text = [NSString stringWithFormat:@"中度肥胖"];
             self.weightStatusLabel.textColor = HEXCOLOR(0xf4a519);
             break;
         case 5:
@@ -127,7 +127,7 @@
     [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(tisStr.length-3, 3)];
     
     self.scaleResultStatusLabel.attributedText = tisString;
-    [self getImage];
+//    [self getImage];
 }
 
 -(void)getImage
@@ -136,7 +136,7 @@
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
     UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文
-    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
+//    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

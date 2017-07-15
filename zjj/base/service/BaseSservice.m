@@ -129,7 +129,7 @@
             [[UserModel shareInstance] showErrorWithStatus:@"连接失败，请检查网络"];
         }
         
-        if ([error code] ==-1005) {
+        if ([error code] ==-1001) {
             [[UserModel shareInstance] showErrorWithStatus:@"连接失败，请检查网络"];
         }
         DLog(@"error--%ld-%@",(long)error.code,[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]);

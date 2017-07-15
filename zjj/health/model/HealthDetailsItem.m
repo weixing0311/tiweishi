@@ -243,7 +243,13 @@ static HealthDetailsItem *item;
     
     float onedd = width/3/(maxdd-mindd);
     
-    
+    /*
+     width =300;
+     onedd = 25;
+     100-100/4*1
+     =100*3/4 =75
+     
+     */
     
     if (locinfo<mindd) {
         

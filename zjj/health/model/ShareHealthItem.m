@@ -262,15 +262,28 @@ static ShareHealthItem *item;
 -(NSString *)getHeightWithLevel:(int)level status:(mytype)isMytype
 {
     /*
-     IS_BMI,
-     IS_VISCERALFAT,//内脂
-     IS_FAT,//脂肪
-     IS_FATPERCENT,//体脂  fatPercentage
-     IS_SAME,//肌肉\骨骼肌\水分\蛋白质\骨重判定标准
-     IS_BODYWEIGHT,//体重判定
-     IS_SIZE,//体型
+     weightLevel  1偏瘦2正常3警告4警告5超重6超重  1低 2正常  3456 高
+     fatPercentage level  1正常2低3高
+     
+     bmi  1低  2正常3高4高
+     fatweightlevel  1正常2低3高
+     
+     waterlevel 1正常 else 低
+     
+     蛋白质  1正常 else低
+     
+     muscle 肌肉 1正常 else 低
+     
+     boneMuscle  1正常 else低
+     
+     内脂  1正常2超标3高
+     
+     
+     
+     
+     
      */
-    
+
     switch (isMytype) {
         case IS_BMI:
             switch (level) {
@@ -297,10 +310,10 @@ static ShareHealthItem *item;
                     return @"正常";
                     break;
                 case 2:
-                    return @"高";
+                    return @"超标";
                     break;
                 case 3:
-                    return @"超标";
+                    return @"高";
                     break;
                     
                 default:
@@ -317,7 +330,7 @@ static ShareHealthItem *item;
                     return @"高";
                     break;
                 case 3:
-                    return @"超标";
+                    return @"高";
                     break;
                     
                 default:
@@ -326,6 +339,23 @@ static ShareHealthItem *item;
             
             break;
         case IS_FATPERCENT:
+            switch (level) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"高";
+                    break;
+                case 3:
+                    return @"高";
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            break;
+        case IS_BODYWEIGHT:
             switch (level) {
                 case 1:
                     return @"低";
@@ -337,33 +367,13 @@ static ShareHealthItem *item;
                     return @"高";
                     break;
                 case 4:
-                    return @"超标";
-                    break;
-                    
-                default:
-                    break;
-            }
-            
-            break;
-        case IS_BODYWEIGHT:
-            switch (level) {
-                case 1:
-                    return @"偏瘦";
-                    break;
-                case 2:
-                    return @"正常";
-                    break;
-                case 3:
-                    return @"轻度肥胖";
-                    break;
-                case 4:
-                    return @"中度肥胖";
+                    return @"高";
                     break;
                 case 5:
-                    return @"重度肥胖";
+                    return @"高";
                     break;
                 case 6:
-                    return @"极度肥胖";
+                    return @"高";
                     break;
                     
                 default:
@@ -404,18 +414,22 @@ static ShareHealthItem *item;
                 default:
                     break;
             }
-            
+
+            break;
+        case IS_BONEMUSCLE:
+            if (level==1) {
+                return @"正常";
+            }
+            else{
+                return @"低";
+            }
             break;
         case IS_SAME:
-            switch (level) {
-                case 1:
-                    return @"正常";
-                    break;
-                case 2:
-                    return @"高";
-                    break;
-                default:
-                    break;
+            if (level==1) {
+                return @"正常";
+            }else
+            {
+                return @"低";
             }
             break;
         default:

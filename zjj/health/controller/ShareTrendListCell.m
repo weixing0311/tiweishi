@@ -22,6 +22,7 @@
     self.value1Label.adjustsFontSizeToFitWidth = YES;
     self.value2Label.adjustsFontSizeToFitWidth = YES;
     
+    self.value2TrendImageView.hidden = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

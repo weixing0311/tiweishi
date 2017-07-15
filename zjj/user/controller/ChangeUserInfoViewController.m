@@ -135,7 +135,9 @@
     if (upDataImage==YES) {
         NSData *fileData = UIImageJPEGRepresentation(self.testImageView.image,0.001);
         c2.imageData =[NSData dataWithData:fileData];
-     }
+    }else{
+    c2.imageData =nil;
+    }
     c2.sex = _sex;
     c2.changeType = self.changeType;
     [self.navigationController pushViewController:c2 animated:YES];

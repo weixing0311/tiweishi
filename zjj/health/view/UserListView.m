@@ -9,6 +9,8 @@
 #import "UserListView.h"
 #import "UserCellCell.h"
 #import "TimeModel.h"
+#import "AddSubUserCell.h"
+#import "AppDelegate.h"
 @interface UserListView()<userCellDelegate>
 @end
 @implementation UserListView
@@ -58,7 +60,7 @@
     [self.dataArray removeAllObjects];
     [self.dataArray addObject:[self addBaseUser]];
     [self.dataArray addObjectsFromArray:[UserModel shareInstance].child];
-    self.userTableview.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44*self.dataArray.count+44);
+    self.userTableview.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 50*self.dataArray.count+50);
     [self.userTableview reloadData];
 }
 -(NSMutableDictionary *)addBaseUser
@@ -100,19 +102,24 @@
         return 1;
     }
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * identifier =@"UserCellCell";
-    UserCellCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        NSArray * arr =[[NSBundle mainBundle]loadNibNamed:identifier owner:nil options:nil];
-        cell = [arr lastObject];
-    }
     if (indexPath.section ==0) {
+        
+        
+        static NSString * identifier =@"UserCellCell";
+        UserCellCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            NSArray * arr =[[NSBundle mainBundle]loadNibNamed:identifier owner:nil options:nil];
+            cell = [arr lastObject];
+        }
+
         NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
         
-        
-
         [cell.headImage setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"headimgurl"]]placeholderImage:[UIImage imageNamed:@"head_default"]];
         cell.delegate = self;
         cell.tag = indexPath.row;
@@ -133,15 +140,21 @@
             cell.deleteBtn.hidden = NO;
         }
         
-        
+        return cell;
+
  
     }else{
-        cell.headImage.image = [UIImage imageNamed:@"add_"];
-        cell.ageLabel.hidden = YES;
-        cell.namelabel.text = @"添加一起用秤人员";
-        cell.deleteBtn . hidden = YES;
+        
+        static NSString * identifier =@"AddSubUserCell";
+        AddSubUserCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            NSArray * arr =[[NSBundle mainBundle]loadNibNamed:identifier owner:nil options:nil];
+            cell = [arr lastObject];
+        }
+
+        return cell;
+
     }
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -173,30 +186,44 @@
 
 -(void)deleteSubUserWithCell:(UserCellCell*)cell
 {
-    NSDictionary *dict =[self.dataArray objectAtIndex:cell.tag];
-    NSString * subId =[NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"id"]];
-    NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    [param safeSetObject:subId forKey:@"id"];
-    [[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteChild.do" paramters:param success:^(NSDictionary *dic) {
-        self.hidden = YES;
-        [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
-        [[UserModel shareInstance]removeChildDict:dict];
-        
-        
-        
-//        if ([subId isEqualToString:[UserModel shareInstance].subId]) {
-//            NSDictionary * dict =[_dataArray objectAtIndex:0];
-//            
-//            if (self.delegate &&[self.delegate respondsToSelector:@selector(changeShowUserWithSubId:isAdd:)]) {
-//                [self.delegate changeShowUserWithSubId:[dict safeObjectForKey:@"id"] isAdd:NO];
-//            }
+    
 
-//        }
-        
-    } failure:^(NSError *error) {
-        [[UserModel shareInstance] showErrorWithStatus:@"删除失败"];
-    }];
-}
+    NSDictionary *dict =[self.dataArray objectAtIndex:cell.tag];
+
+    NSString * message = [NSString stringWithFormat:@"确认删除账号'%@'吗？",[dict safeObjectForKey:@"nickName"]];
+    
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString * subId =[NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"id"]];
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        [param safeSetObject:subId forKey:@"id"];
+        [[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteChild.do" paramters:param success:^(NSDictionary *dic) {
+            self.hidden = YES;
+            [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
+            [[UserModel shareInstance]removeChildDict:dict];
+            
+            
+            
+            //        if ([subId isEqualToString:[UserModel shareInstance].subId]) {
+            //            NSDictionary * dict =[_dataArray objectAtIndex:0];
+            //
+            //            if (self.delegate &&[self.delegate respondsToSelector:@selector(changeShowUserWithSubId:isAdd:)]) {
+            //                [self.delegate changeShowUserWithSubId:[dict safeObjectForKey:@"id"] isAdd:NO];
+            //            }
+            
+            //        }
+            
+        } failure:^(NSError *error) {
+            [[UserModel shareInstance] showErrorWithStatus:@"删除失败"];
+        }];
+
+    }]];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+//    [(AppDelegate*)[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:al animated:YES completion:nil];
+    [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:al animated:YES completion:nil];
+    
+ }
 -(void)showError:(NSString *)text;
 {
     errorLabel  = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];

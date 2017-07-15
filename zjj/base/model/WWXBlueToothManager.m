@@ -9,6 +9,11 @@
 #import "WWXBlueToothManager.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "TimeModel.h"
+#import "HealthModel.h"
+#import "YMSocketUtils.h"
+
+
+
 #define VSVALEUUID          @"f433bd80-75b8-11e2-97d9-0002a5d5c51b"
 #define BODYMINIUUID        @"0000bca0-0000-1000-8000-00805f9b34fb"
 #define CHARACTERISTICSUUID @"1a2ea400-75b9-11e2-be05-0002a5d5c51b"
@@ -117,14 +122,60 @@ static WWXBlueToothManager * manager;
     
     self.age =[[TimeModel shareInstance] ageWithDateOfBirth:[SubUserItem shareInstance].birthday];
     self.height =[SubUserItem shareInstance].height;
+    NSString * writeStr =[NSString stringWithFormat:@"写入数据id:%@;sex:%d;age:%d;height:%d",[UserModel shareInstance].userId,self.sex,self.age,self.height];
+    [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:writeStr];
+
+    DLog(@"写入数据id:%@;sex:%d;age:%d;height:%d",[UserModel shareInstance].userId,self.sex-1,self.age,self.height);
     
 
+    
+//    Byte byte1[1];
+//    byte1[0] = 0x10;
+//    
+//    Byte byte2[1];
+//    byte2[0] =(Byte)0xff & [[UserModel shareInstance].userId intValue];
+//    
+//    Byte byte3[1];
+//    byte3[0] =(Byte)0xff & [[UserModel shareInstance].userId intValue];
+//
+//    Byte byte4[1];
+//    byte4[0] =(Byte)0xff & [[UserModel shareInstance].userId intValue];
+//
+//    Byte byte5[1];
+//    byte5[0] =(Byte)0xff & [[UserModel shareInstance].userId intValue];
+//
+//    NSData * data1 = [NSData dataWithBytes:byte1 length:1];
+//    NSData * data2 = [NSData dataWithBytes:byte2 length:1];
+//    NSData * data3 = [NSData dataWithBytes:byte3 length:1];
+//    NSData * data4 = [NSData dataWithBytes:byte4 length:1];
+//    NSData * data5 = [NSData dataWithBytes:byte5 length:1];
+//
+//    NSMutableData * upData = [NSMutableData new];
+//    [upData appendData:data1];
+//    [upData appendData:data2];
+//    [upData appendData:data3];
+//    [upData appendData:data4];
+//    [upData appendData:data5];
+//    return upData;
+    
     Byte bytes[5];
-    bytes[0] =0x10;
-    bytes[1] =(Byte)0xff & [[UserModel shareInstance].userId intValue];
-    bytes[2] =(Byte)0xff &self.sex;
-    bytes[3] =(Byte)0xff &self.age;
-    bytes[4] =(Byte)0xff &self.height;
+    bytes[0] =(Byte)0xff & 16;
+    bytes[1] =(Byte)0xff & [[UserModel shareInstance].userId intValue]>>8;
+    if (self.sex ==1) {
+        bytes[2] =0x00;
+  
+    }else{
+        bytes[2] =(Byte)0xff & 1;
+
+    }
+    bytes[3] =(Byte)0xff & self.age;
+    bytes[4] =(Byte)0xff & self.height;
+//    bytes[0] = 0x10;
+//    bytes[1] = (0xff00 & [[UserModel shareInstance].userId intValue]) >> 8;
+//    bytes[2] = (0xff0000 & self.sex) >> 16;
+//    bytes[3] = (0xff000000 & self.age) >> 24;
+//    bytes[4] = (0xff00000000 & self.height) >> 32;
+
     
     NSData * data = [[NSData alloc]initWithBytes:bytes length:5];
     return data;
@@ -230,16 +281,21 @@ static WWXBlueToothManager * manager;
         
         if ([peripheral.name hasPrefix:@"VScale"] ) {
             DLog(@"扫描到servces %@",service.UUID.UUIDString);
+
             if ([self isEqualWithString:service.UUID.UUIDString string:VSVALEUUID]==YES) {
                 [_timer invalidate];
+                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"扫描到servces %@",service.UUID.UUIDString]];
+
                 [peripheral discoverCharacteristics:nil forService:service];
                 
             }
-        }else{
+        }else if([peripheral.name hasPrefix:@"bodymini"]){
             DLog(@"%@",service.UUID);
             DLog(@"扫描到servces %@",service.UUID.UUIDString);
             
             if ([self isEqualWithString:service.UUID.UUIDString string:BODYMINIUUID]==YES) {
+                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"扫描到servces %@",service.UUID.UUIDString]];
+
                 [_timer invalidate];
                 [peripheral discoverCharacteristics:nil forService:service];
             }
@@ -274,7 +330,8 @@ static WWXBlueToothManager * manager;
             if ([self isEqualWithString:characteristic.UUID.UUIDString string:CHARACTERISTICSUUID]==YES) {
                 DLog(@"匹配成功service:%@ 的 Characteristic: %@",service.UUID,characteristic.UUID);
 
-                
+                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"匹配成功service:%@ 的 Characteristic: %@",service.UUID,characteristic.UUID]];
+
                 //添加通知
                 [self notifyCharacteristic:peripheral characteristic:characteristic];
                 //读取信息
@@ -283,6 +340,8 @@ static WWXBlueToothManager * manager;
                 
             }else if ([self isEqualWithString:characteristic.UUID.UUIDString string:@"29f11080-75b9-11e2-8bf6-0002a5d5c51b"])
             {
+                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"存储mOldScaleConfigCharacteristic"]];
+
                 self.mOldScaleConfigCharacteristic = characteristic;
             }
         }
@@ -299,7 +358,7 @@ static WWXBlueToothManager * manager;
 //获取的charateristic的值
 -(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error{
     if (error) {
-        self.faileBlock(error, @"读取失败");
+//        self.faileBlock(error, @"读取失败");
     }
     
     NSData * data = characteristic.value;
@@ -318,6 +377,8 @@ static WWXBlueToothManager * manager;
             int h = byte[4] & 0xff;
             int l = byte[5] & 0xff;
             float  weight = (float) ((h * 256 + l) / 10.0);
+            [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"获得体重"]];
+
             //这个体重第一次返回数据的时候weight == 0，而后面的几次反馈就会有数据
             if (weight == 0)
             {
@@ -327,7 +388,7 @@ static WWXBlueToothManager * manager;
             
             DLog(@"%@",[NSString  stringWithFormat:@"获取到体重%f",weight]);
             
-            self.statusBlock(@"开始云计算。。");
+            self.statusBlock(@"开始云计算，请勿下秤。。");
             
             NSData * data = [self getWriteInfo];
             
@@ -345,7 +406,7 @@ static WWXBlueToothManager * manager;
         //    //将接收到的十六进制数据 转成 十六进制字符串
         if (data.length<1 ) {
             DLog(@"失败");
-            self.faileBlock(nil, @"测量出现异常，请下秤重测");
+//            self.faileBlock(nil, @"测量出现异常，请下秤重测");
             
             return;
         }
@@ -382,14 +443,6 @@ static WWXBlueToothManager * manager;
         [param setObject:mCalorie     forKey:@"mCalorie"];
         [param setObject:mBmi         forKey:@"mBmi"];
         [param setObject:weightStr    forKey:@"mWeight"];
-        //    [param safeSetObject:@"3.1" forKey:@"mBone"];
-        //    [param safeSetObject:@"6" forKey:@"mVisceralFat"];
-        //    [param safeSetObject:@"65.7" forKey:@"mWeight"];
-        //    [param safeSetObject:@"14.7" forKey:@"mFat"];
-        //    [param safeSetObject:@"1577" forKey:@"mCalorie"];
-        //    [param safeSetObject:@"34.2" forKey:@"mMuscle"];
-        //    [param safeSetObject:@"22.7" forKey:@"mBmi"];
-        //    [param safeSetObject:@"60.1" forKey:@"mWater"];
 
         self.successBlock(param);
         DLog(@"%@-%@-%@-%@-%@-%@",mFat,setmWater,mBone,mMuscle,mVisceralFat,mCalorie);
@@ -481,6 +534,20 @@ static WWXBlueToothManager * manager;
     }
     
 }
+//写入数据是否成功
+-(void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    if (error) {
+        self.faileBlock(error, @"写入失败");
+        DLog(@"=======%@",error.userInfo);
+    }else{
+        DLog(@"发送数据成功");
+    }
+    
+    /* When a write occurs, need to set off a re-read of the local CBCharacteristic to update its value */
+    [peripheral readValueForCharacteristic:characteristic];
+}
+
 
 
 @end

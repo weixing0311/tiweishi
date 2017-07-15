@@ -30,11 +30,10 @@
                         <constraint firstAttribute="height" constant="35" id="8sL-I8-dZv"/>
                     </constraints>
                     <segments>
-                        <segment title="3天"/>
+                        <segment title="" image="天未选中_"/>
                         <segment title="周"/>
                         <segment title="月"/>
                     </segments>
-                    <color key="tintColor" red="0.89411764709999997" green="0.43529411759999997" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -188,6 +187,51 @@
                         <constraint firstAttribute="bottom" secondItem="4uJ-xp-1P7" secondAttribute="bottom" id="zpB-bL-kRI"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v8d-xk-6TB">
+                    <rect key="frame" x="50" y="45" width="275" height="35"/>
+                    <subviews>
+                        <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lx-gh-se0">
+                            <rect key="frame" x="0.0" y="0.0" width="91.5" height="35"/>
+                            <state key="normal" image="天未选中_"/>
+                            <state key="selected" image="天选中_"/>
+                            <connections>
+                                <action selector="ChangeLength:" destination="-1" eventType="touchUpInside" id="ny4-AL-xKh"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1E-Ws-4Go">
+                            <rect key="frame" x="91.5" y="0.0" width="91.5" height="35"/>
+                            <state key="normal" image="周未选中_"/>
+                            <state key="selected" image="周选中_"/>
+                            <connections>
+                                <action selector="ChangeLength:" destination="-1" eventType="touchUpInside" id="2LI-76-9be"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJA-P1-3s1">
+                            <rect key="frame" x="183" y="0.0" width="91.5" height="35"/>
+                            <state key="normal" image="月未选中_"/>
+                            <state key="selected" image="月选中_"/>
+                            <connections>
+                                <action selector="ChangeLength:" destination="-1" eventType="touchUpInside" id="ZEs-1o-5jk"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="GJA-P1-3s1" firstAttribute="width" secondItem="8lx-gh-se0" secondAttribute="width" id="Bw4-w3-cXq"/>
+                        <constraint firstItem="GJA-P1-3s1" firstAttribute="top" secondItem="v8d-xk-6TB" secondAttribute="top" id="ClJ-x5-33T"/>
+                        <constraint firstItem="8lx-gh-se0" firstAttribute="leading" secondItem="v8d-xk-6TB" secondAttribute="leading" id="I9b-Fc-n25"/>
+                        <constraint firstAttribute="trailing" secondItem="GJA-P1-3s1" secondAttribute="trailing" id="IPx-DG-vo9"/>
+                        <constraint firstItem="GJA-P1-3s1" firstAttribute="leading" secondItem="f1E-Ws-4Go" secondAttribute="trailing" id="Uc8-dR-LQu"/>
+                        <constraint firstItem="f1E-Ws-4Go" firstAttribute="top" secondItem="v8d-xk-6TB" secondAttribute="top" id="arj-ad-uT7"/>
+                        <constraint firstAttribute="height" constant="35" id="c6a-DE-bQv"/>
+                        <constraint firstItem="f1E-Ws-4Go" firstAttribute="leading" secondItem="8lx-gh-se0" secondAttribute="trailing" id="dmS-S2-nzQ"/>
+                        <constraint firstAttribute="bottom" secondItem="8lx-gh-se0" secondAttribute="bottom" id="fxh-m1-vdh"/>
+                        <constraint firstAttribute="bottom" secondItem="GJA-P1-3s1" secondAttribute="bottom" id="hLE-nE-Z4P"/>
+                        <constraint firstAttribute="bottom" secondItem="f1E-Ws-4Go" secondAttribute="bottom" id="mCf-zJ-A0s"/>
+                        <constraint firstItem="f1E-Ws-4Go" firstAttribute="width" secondItem="8lx-gh-se0" secondAttribute="width" id="xMl-9D-8r7"/>
+                        <constraint firstItem="8lx-gh-se0" firstAttribute="top" secondItem="v8d-xk-6TB" secondAttribute="top" id="xjj-6n-Lmq"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -198,7 +242,9 @@
                 <constraint firstItem="fwH-tH-ZAy" firstAttribute="top" secondItem="HDj-Nh-KgN" secondAttribute="bottom" constant="31" id="F5R-JG-elE"/>
                 <constraint firstItem="x5B-yI-GAO" firstAttribute="leading" secondItem="fwH-tH-ZAy" secondAttribute="trailing" constant="10" id="LaD-4z-keH"/>
                 <constraint firstItem="xdR-cq-agE" firstAttribute="top" secondItem="7te-hz-5XH" secondAttribute="bottom" constant="30" id="Oqk-nj-6Np"/>
+                <constraint firstItem="v8d-xk-6TB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="Pdt-f7-Vha"/>
                 <constraint firstItem="HDj-Nh-KgN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="RRW-Wk-j1P"/>
+                <constraint firstItem="v8d-xk-6TB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="Tzd-HJ-PhC"/>
                 <constraint firstAttribute="trailing" secondItem="3lH-9f-1eh" secondAttribute="trailing" constant="20" id="X0D-uR-u7h"/>
                 <constraint firstItem="x5B-yI-GAO" firstAttribute="top" secondItem="HDj-Nh-KgN" secondAttribute="bottom" constant="35" id="ZJX-TX-ofF"/>
                 <constraint firstItem="IZa-JH-2Au" firstAttribute="top" secondItem="HDj-Nh-KgN" secondAttribute="bottom" constant="31" id="a1u-zy-nwC"/>
@@ -207,6 +253,7 @@
                 <constraint firstItem="x5B-yI-GAO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="g9w-0p-zSK"/>
                 <constraint firstItem="3lH-9f-1eh" firstAttribute="top" secondItem="IZa-JH-2Au" secondAttribute="bottom" constant="10" id="hHe-qq-Cn6"/>
                 <constraint firstAttribute="trailing" secondItem="7te-hz-5XH" secondAttribute="trailing" constant="20" id="hJn-4Z-tun"/>
+                <constraint firstAttribute="trailing" secondItem="v8d-xk-6TB" secondAttribute="trailing" constant="50" id="n4Q-Qn-Qen"/>
                 <constraint firstItem="3lH-9f-1eh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="pmh-2S-BG8"/>
                 <constraint firstAttribute="trailing" secondItem="HDj-Nh-KgN" secondAttribute="trailing" constant="50" id="yZ1-ZG-1tW"/>
                 <constraint firstItem="7te-hz-5XH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="zZD-6d-Emx"/>
@@ -214,4 +261,12 @@
             <point key="canvasLocation" x="35.5" y="81.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="周未选中_" width="90" height="30"/>
+        <image name="周选中_" width="90" height="30"/>
+        <image name="天未选中_" width="90" height="30"/>
+        <image name="天选中_" width="90" height="30"/>
+        <image name="月未选中_" width="90" height="30"/>
+        <image name="月选中_" width="90" height="30"/>
+    </resources>
 </document>

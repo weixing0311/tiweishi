@@ -74,12 +74,21 @@
     NSString * mindateStr = @"1900-01-01 00:00:00";
     NSDate * minDate = [formatter dateFromString:mindateStr];
 
-    NSString * defaultDateStr = @"1900-01-01 00:00:00";
+    NSString * defaultDateStr = @"1990-01-01 00:00:00";
     NSDate * defaultDate = [formatter dateFromString:defaultDateStr];
     
     self.pickView.minimumDate = minDate;
     self.pickView.maximumDate = maxDate;
-    self.pickView.date = [SubUserItem shareInstance].birthday.length>0?[[SubUserItem shareInstance].birthday dateyyyymmddhhmmss]:defaultDate;
+    
+//    if (self.changeType==1||self.changeType ==3) {
+        self.pickView.date = defaultDate;
+
+//    }else{
+//        self.pickView.date =   [[SubUserItem shareInstance].birthday dateyyyymmddhhmmss];
+//
+//    }
+    
+    
 
     [self.pickView addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged ];
     

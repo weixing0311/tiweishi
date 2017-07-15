@@ -116,3 +116,28 @@ typedef enum {
 @property (nonatomic,assign) NSDecimal          mCalorie ;// 脂肪量
 */
 @end
+
+/*
+ weightLevel  1偏瘦2正常3警告4警告5超重6超重  1低 2正常  3456 高
+ fatPercentage level  1正常2低3高
+ 
+ bmi  1低  2正常3高4高
+ fatweightlevel  1正常2低3高
+ 
+ waterlevel 1正常 else 低
+ 
+ 蛋白质  1正常 else低
+ 
+ muscle 肌肉 1正常 else 低
+ 
+ boneMuscle  1正常 else低
+ 
+ 内脂  1正常2超标3高
+ 
+ 
+ 
+ 
+ 
+ */
+
+
