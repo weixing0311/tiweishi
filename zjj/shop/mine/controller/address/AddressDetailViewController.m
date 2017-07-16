@@ -120,7 +120,7 @@
     
     //编辑还是添加
     if (self.isEdit ==YES) {
-        [[BaseSservice sharedManager]post1:@"app/userAddress/updateAddress.do" paramters:param success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/updateAddress.do" paramters:param success:^(NSDictionary *dic) {
                 [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
                 [self.navigationController popViewControllerAnimated:YES];
@@ -131,7 +131,7 @@
    
     }else{
     
-    [[BaseSservice sharedManager]post1:@"app/userAddress/addAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/addAddress.do" paramters:param success:^(NSDictionary *dic) {
             [[UserModel shareInstance] showSuccessWithStatus: @"添加成功"];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
             [self.navigationController popViewControllerAnimated:YES];
@@ -156,7 +156,7 @@
 
 -(void)getCityInfo
 {
-    [[BaseSservice sharedManager]post1:@"app/area/queryArea.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/area/queryArea.do" paramters:nil success:^(NSDictionary *dic) {
         
         
         [self.dataArray addObjectsFromArray:[[dic objectForKey:@"data"] objectForKey:@"array"]];

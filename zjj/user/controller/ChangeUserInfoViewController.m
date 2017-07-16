@@ -23,7 +23,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.tabBarController.tabBar.hidden=YES;
 }
 
@@ -124,6 +125,13 @@
 
 - (IBAction)next:(id)sender {
     
+    
+    if (self.nickNameLb.text.length>6) {
+        [[UserModel shareInstance] showInfoWithStatus:@"昵称最长为6字符"];
+        return;
+
+    }
+    
     ChangeUserInfo2ViewController *c2 =[[ChangeUserInfo2ViewController alloc]init];
     
     if (!self.nickNameLb.text||[self.nickNameLb.text isEqualToString:@""]||[self.nickNameLb.text isEqualToString:@" "]) {
@@ -154,7 +162,7 @@
             
         }
         pickerImage.delegate = self;
-        pickerImage.allowsEditing = NO;
+        pickerImage.allowsEditing = YES;
         [self presentViewController:pickerImage animated:YES completion:nil];
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

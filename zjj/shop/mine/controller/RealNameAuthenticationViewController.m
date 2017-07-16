@@ -30,7 +30,7 @@
     [param safeSetObject:self.sfzTf.text forKey:@""];
     [param setObject:self.nameTF.text forKey:@""];
     
-    [[BaseSservice sharedManager]post1:@"" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"" paramters:param success:^(NSDictionary *dic) {
         
         if ([[dic objectForKey:@"status"]isEqualToString:@"success"]) {
             
@@ -56,7 +56,7 @@
     [SVProgressHUD showWithStatus: @"认证中。。"];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
-    [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" paramters:param success:^(NSDictionary *dic) {
         TzsTabbarViewController *tzs =[[TzsTabbarViewController alloc]init];
         [SVProgressHUD dismiss];
         

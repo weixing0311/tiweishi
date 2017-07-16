@@ -42,4 +42,5 @@ typedef void (^requestFailureBlock)(NSError *error);
                     imageData:(NSData *)imageData
                       success:(requestSuccessBlock)success
                       failure:(requestFailureBlock)failure;
+
 @end

@@ -38,7 +38,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    [[BaseSservice sharedManager]post1:@"app/userAddress/addressList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/addressList.do" paramters:param success:^(NSDictionary *dic) {
         
             self.dataArray =[NSMutableArray arrayWithCapacity:0];
             [self.dataArray addObjectsFromArray:[[dic safeObjectForKey:@"data"]objectForKey:@"array"]];
@@ -106,7 +106,7 @@
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
-    [[BaseSservice sharedManager]post1:@"app/userAddress/deleteAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/deleteAddress.do" paramters:param success:^(NSDictionary *dic) {
         [self.dataArray removeObject:dict];
         
         [self.tableview reloadData];
@@ -122,7 +122,7 @@
     NSDictionary *dict = [self.dataArray objectAtIndex:cell.tag];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
-    [[BaseSservice sharedManager]post1:@"app/userAddress/setDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/setDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         
         NSString * status = [dic objectForKey:@"status"];

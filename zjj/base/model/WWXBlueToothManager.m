@@ -122,8 +122,8 @@ static WWXBlueToothManager * manager;
     
     self.age =[[TimeModel shareInstance] ageWithDateOfBirth:[SubUserItem shareInstance].birthday];
     self.height =[SubUserItem shareInstance].height;
-    NSString * writeStr =[NSString stringWithFormat:@"写入数据id:%@;sex:%d;age:%d;height:%d",[UserModel shareInstance].userId,self.sex,self.age,self.height];
-    [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:writeStr];
+    
+    [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"写入数据id:%@;sex:%d;age:%d;height:%d",[UserModel shareInstance].userId,self.sex,self.age,self.height]];
 
     DLog(@"写入数据id:%@;sex:%d;age:%d;height:%d",[UserModel shareInstance].userId,self.sex-1,self.age,self.height);
     
@@ -284,7 +284,7 @@ static WWXBlueToothManager * manager;
 
             if ([self isEqualWithString:service.UUID.UUIDString string:VSVALEUUID]==YES) {
                 [_timer invalidate];
-                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"扫描到servces %@",service.UUID.UUIDString]];
+                [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"扫描到servces %@",service.UUID.UUIDString]];
 
                 [peripheral discoverCharacteristics:nil forService:service];
                 
@@ -294,7 +294,8 @@ static WWXBlueToothManager * manager;
             DLog(@"扫描到servces %@",service.UUID.UUIDString);
             
             if ([self isEqualWithString:service.UUID.UUIDString string:BODYMINIUUID]==YES) {
-                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"扫描到servces %@",service.UUID.UUIDString]];
+                [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"扫描到servces %@",service.UUID.UUIDString]];
+
 
                 [_timer invalidate];
                 [peripheral discoverCharacteristics:nil forService:service];
@@ -329,8 +330,8 @@ static WWXBlueToothManager * manager;
         {
             if ([self isEqualWithString:characteristic.UUID.UUIDString string:CHARACTERISTICSUUID]==YES) {
                 DLog(@"匹配成功service:%@ 的 Characteristic: %@",service.UUID,characteristic.UUID);
+                [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"匹配成功service:%@ 的 Characteristic: %@",service.UUID,characteristic.UUID]];
 
-                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"匹配成功service:%@ 的 Characteristic: %@",service.UUID,characteristic.UUID]];
 
                 //添加通知
                 [self notifyCharacteristic:peripheral characteristic:characteristic];
@@ -340,7 +341,7 @@ static WWXBlueToothManager * manager;
                 
             }else if ([self isEqualWithString:characteristic.UUID.UUIDString string:@"29f11080-75b9-11e2-8bf6-0002a5d5c51b"])
             {
-                [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"存储mOldScaleConfigCharacteristic"]];
+                [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"存储mOldScaleConfigCharacteristic"]];
 
                 self.mOldScaleConfigCharacteristic = characteristic;
             }
@@ -377,7 +378,9 @@ static WWXBlueToothManager * manager;
             int h = byte[4] & 0xff;
             int l = byte[5] & 0xff;
             float  weight = (float) ((h * 256 + l) / 10.0);
-            [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil  mssage:[NSString stringWithFormat:@"获得体重"]];
+            
+            [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"获得体重"]];
+
 
             //这个体重第一次返回数据的时候weight == 0，而后面的几次反馈就会有数据
             if (weight == 0)
@@ -389,7 +392,7 @@ static WWXBlueToothManager * manager;
             DLog(@"%@",[NSString  stringWithFormat:@"获取到体重%f",weight]);
             
             self.statusBlock(@"开始云计算，请勿下秤。。");
-            
+            [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"开始写入数据"]];
             NSData * data = [self getWriteInfo];
             
             [self writeCharacteristic:peripheral characteristic:self.mOldScaleConfigCharacteristic value:data];
@@ -502,6 +505,7 @@ static WWXBlueToothManager * manager;
     [peripheral writeValue:value forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
         }else{
             DLog(@"该字段不可写！");
+            self.faileBlock(nil, @"写入失败，写入信息有误");
         }
     
     

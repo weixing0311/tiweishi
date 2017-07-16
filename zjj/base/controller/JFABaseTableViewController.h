@@ -17,6 +17,8 @@
 @property(nonatomic,strong)UIView * loadingView;
 @property(nonatomic,strong)ServiceResultErrorView * errorView;
 @property(nonatomic,strong)JFASubNetWorkErrorView* networkErrorView;
+@property (nonatomic,strong)NSURLSessionTask * currentTasks;
+
 -(void)refreshForNetworkError;
 -(UIImage*)backImage;
 - (void)back;

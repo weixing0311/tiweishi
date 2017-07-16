@@ -3146,7 +3146,7 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = AZ8E9LFA87;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -3773,7 +3773,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3821,7 +3822,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -3848,7 +3850,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = AZ8E9LFA87;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3871,7 +3875,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/zjj/PrefixHeader.pch";
 				INFOPLIST_FILE = zjj/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3885,6 +3889,8 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.hguard.tiweishi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "zjj/health/view/zjj-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -3898,6 +3904,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
 				DEVELOPMENT_TEAM = AZ8E9LFA87;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -3921,7 +3929,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/zjj/PrefixHeader.pch";
 				INFOPLIST_FILE = zjj/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3934,6 +3942,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.hguard.tiweishi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b6043f34-debc-4c82-adb2-c168061508aa";
+				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: cn.hguard.tiweishi";
 				SWIFT_OBJC_BRIDGING_HEADER = "zjj/health/view/zjj-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

@@ -29,7 +29,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -81,7 +82,7 @@
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.productNo forKey:@"productNo"];
-    [[BaseSservice sharedManager]post1:kProductsDetail paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kProductsDetail paramters:param success:^(NSDictionary *dic) {
         [[GoodsDetailItem shareInstance]setupInfoWithDict:[dic objectForKey:@"data"]];
         [_hdArray  addObjectsFromArray:[GoodsDetailItem shareInstance].promotList];
         [self.tableview reloadData];
@@ -94,7 +95,7 @@
 {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductCount.do" paramters:param success:^(NSDictionary *dic) {
         self.shopCartCountLabel.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"data"]objectForKey:@"total"]];
     } failure:^(NSError *error) {
         
@@ -106,7 +107,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.productNo forKey:@"productNo"];
-    [[BaseSservice sharedManager]post1:@"app/product/queryAppPictureDetail.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/product/queryAppPictureDetail.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict = [dic objectForKey:@"data"];
         
         NSString * url1 =[self getUrlWithString:[dict safeObjectForKey:@"pictureDetail"]];
@@ -270,7 +271,7 @@
     
     [param safeSetObject:jsonValue forKey:@"jsonData"];
     
-    [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/saveShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/saveShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
         [self getgoodsCountWithNet];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshShopCart" object:nil];
         [[UserModel shareInstance] showSuccessWithStatus:@"加入成功"];

@@ -36,7 +36,7 @@
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryUserStock.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryUserStock.do" paramters:param success:^(NSDictionary *dic) {
         _dataArray =[[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"];
         [self.tableview reloadData];
         DLog(@"dic--%@",dic);

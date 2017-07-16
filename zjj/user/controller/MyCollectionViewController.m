@@ -20,7 +20,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.tabBarController.tabBar.hidden=YES;
 
 }
@@ -80,7 +81,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:@(page) forKey:@"page"];
     [param setObject:@"30" forKey:@"pageSize"];
-    [[BaseSservice sharedManager]post1:@"app/informate/queryCollectionList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryCollectionList.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         if ( page==1) {
             [self.dataArray removeAllObjects];

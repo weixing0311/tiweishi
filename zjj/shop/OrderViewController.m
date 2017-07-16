@@ -24,6 +24,12 @@
     int pageSize;
     OrderFootBtnView * footBtn;
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的订单";
@@ -66,7 +72,7 @@
     [param setObject:@"" forKey:@"status"];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    [[BaseSservice sharedManager]post1:@"app/orderList/searchOrderListByUserID.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/searchOrderListByUserID.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
@@ -94,7 +100,7 @@
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     
-    [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"取消成功"];
         [self.tableview headerBeginRefreshing];
         

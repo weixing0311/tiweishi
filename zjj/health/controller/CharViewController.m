@@ -35,7 +35,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.tabBarController.tabBar.hidden=YES;
 }
 
@@ -91,7 +92,7 @@
     [param safeSetObject:self.startDate forKey:@"startDate"];
     [param safeSetObject:self.endDate forKey:@"endDate"];
     
-    [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatList.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         NSArray * arr = [dataDict safeObjectForKey:@"array"];
         [_dataArray removeAllObjects];

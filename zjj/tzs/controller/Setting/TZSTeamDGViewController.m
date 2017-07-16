@@ -65,7 +65,7 @@
     [param safeSetObject:@(pageSize) forKey:@"pageSize"];
     [param safeSetObject:[NSString stringWithFormat:@"1,2"] forKey:@"stockType"];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [[BaseSservice sharedManager]post1:@"/app/order/info/queryOrderInfoList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/order/info/queryOrderInfoList.do" paramters:param success:^(NSDictionary *dic) {
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
        [ _infoArray  addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];

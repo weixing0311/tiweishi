@@ -34,7 +34,7 @@
     [param setObject:self.thenewPasswordtf.text forKey:@"password"];
     [param setObject:self.repasswordtf.text forKey:@"repPassword"];
     
-    [[BaseSservice sharedManager]post1:@"app/user/changePassword.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePassword.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {

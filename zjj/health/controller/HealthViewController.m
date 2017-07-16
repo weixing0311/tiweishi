@@ -36,7 +36,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     self.tabBarController.tabBar.hidden = NO;
     [self refreshMyInfoView];
 
@@ -107,7 +108,7 @@
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     
-    [[BaseSservice sharedManager]post1:kuHeaderserReviewUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kuHeaderserReviewUrl paramters:param success:^(NSDictionary *dic) {
         
         
             [headerArr removeAllObjects];
@@ -134,7 +135,7 @@
     [param safeSetObject:@"" forKey:@"endDate"];
     [param safeSetObject:@(page) forKey:@"page"];
     [param safeSetObject:@(pageSize) forKey:@"pageSize"];
-    [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
         if (isrefresh ==YES) {
             [listArr removeAllObjects];
         }
@@ -190,7 +191,7 @@
     
     DLog(@"上传数据---%@",param);
     
-    [[BaseSservice sharedManager]post1:@"app/evaluatData/addEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/addEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
         [self.tableView headerBeginRefreshing];
@@ -213,7 +214,7 @@
 {
     ShareViewController * ss =[[ShareViewController alloc]init];
     ss.hidesBottomBarWhenPushed=YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 
     [self.navigationController pushViewController:ss animated:YES];
 }
@@ -226,7 +227,7 @@
 
     TZdetaolViewController * tz =[[TZdetaolViewController alloc]init];
     tz.hidesBottomBarWhenPushed=YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
     tz.dataId = [NSString stringWithFormat:@"%d",item.DataId];
     [self.navigationController pushViewController:tz animated:YES];
 }
@@ -238,7 +239,7 @@
         return;
     }
     CharViewController * cr =[[CharViewController alloc]init];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
     cr.hidesBottomBarWhenPushed=YES;
 
     [self.navigationController pushViewController:cr animated:YES];
@@ -330,7 +331,7 @@
     HealthItem * item = [listArr objectAtIndex:indexPath.row];
     TZdetaolViewController *tz = [[TZdetaolViewController alloc]init];
     tz.hidesBottomBarWhenPushed=YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 
     tz.dataId = [NSString stringWithFormat:@"%d",item.DataId];
     [self.navigationController pushViewController:tz animated:YES];
@@ -340,16 +341,21 @@
 #pragma mark ---show subviewdelegate
 -(void)showUserList
 {
-    self.userListView.hidden = NO;
-    [self.view bringSubviewToFront:self.userListView];
-    [self.userListView refreshInfo];
+    if (self.userListView.hidden ==YES) {
+        self.userListView.hidden = NO;
+        [self.view bringSubviewToFront:self.userListView];
+        [self.userListView refreshInfo];
+    }else{
+        self.userListView.hidden = YES;
+    }
+
 }
 -(void)changeShowUserWithSubId:(NSString *)subId isAdd:(BOOL)isAdd
 {
     if (isAdd) {
         ChangeUserInfoViewController * cu = [[ChangeUserInfoViewController alloc]init];
         cu.changeType = 3;
-        self.navigationController.navigationBarHidden = NO;
+//        self.navigationController.navigationBarHidden = NO;
         cu.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:cu animated:YES];
     }else{
@@ -386,17 +392,21 @@
     [[WWXBlueToothManager shareInstance]startScanWithStatus:^(NSString *statusString) {
         [SVProgressHUD showWithStatus:statusString];
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
-        [[HealthModel shareInstance]UpdateBlueToothInfoWithError:nil mssage:statusString];
 
     } success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
+        [[HealthModel shareInstance]setLogInUpLoadString:@"上传成功"];
+        [[HealthModel shareInstance]UpdateBlueToothInfo];
+
         [self updataInfoWithDict:dic];
         
     } faile:^(NSError *error, NSString *errMsg) {
         [SVProgressHUD dismiss];
         [[WWXBlueToothManager shareInstance]stop];
         [[UserModel shareInstance] showErrorWithStatus:errMsg];
-        [[HealthModel shareInstance]UpdateBlueToothInfoWithError:error mssage:errMsg];
+        [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"上传失败--error---%@",error]];
+
+        [[HealthModel shareInstance]UpdateBlueToothInfo];
     }];
 
 }

@@ -73,6 +73,15 @@ typedef enum
 /**
  * 上传Debug-----上称蓝牙请求过程
  */
--(void)UpdateBlueToothInfoWithError:(NSError *)error mssage:(NSString *)message;
+-(void)UpdateBlueToothInfo;
 
+/**
+ * 上传debug信息
+ */
+@property (nonatomic,copy)NSString   *  UpLoadlogString;
+
+/**
+ * debug信息拼接
+ */
+-(void)setLogInUpLoadString:(NSString *)logStr;
 @end

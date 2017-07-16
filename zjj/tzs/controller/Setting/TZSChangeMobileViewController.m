@@ -52,7 +52,7 @@
     [param setObject:self.vertf.text forKey:@"vcode"];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError *error) {
         [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
@@ -88,7 +88,7 @@
     [param setObject:self.passwordtf.text forKey:@"password"];
     [param setObject:self.vertf.text forKey:@"vcode"];
     
-    [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {

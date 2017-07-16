@@ -66,7 +66,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGb-p9-H9f">
-                    <rect key="frame" x="60" y="486" width="255" height="45"/>
+                    <rect key="frame" x="60" y="471" width="255" height="45"/>
                     <color key="backgroundColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="0mf-gN-jOK"/>
@@ -137,7 +137,7 @@
                 <constraint firstItem="Pv4-8n-uc1" firstAttribute="top" secondItem="8pn-Co-1cM" secondAttribute="bottom" constant="15" id="b54-Ai-yng"/>
                 <constraint firstAttribute="trailing" secondItem="7CN-bA-kL3" secondAttribute="trailing" id="fnj-zE-VJM"/>
                 <constraint firstItem="8pn-Co-1cM" firstAttribute="top" secondItem="mCh-e3-7yv" secondAttribute="bottom" constant="8" id="hWi-pm-tkW"/>
-                <constraint firstItem="iGb-p9-H9f" firstAttribute="top" secondItem="8xQ-bp-Cyo" secondAttribute="bottom" constant="40" id="hqC-AU-2XC"/>
+                <constraint firstItem="iGb-p9-H9f" firstAttribute="top" secondItem="8xQ-bp-Cyo" secondAttribute="bottom" constant="25" id="hqC-AU-2XC"/>
                 <constraint firstItem="8xQ-bp-Cyo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jql-bQ-icg"/>
                 <constraint firstItem="Pv4-8n-uc1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="loI-5S-Yag"/>
                 <constraint firstItem="iGb-p9-H9f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="sUz-oM-IBJ"/>

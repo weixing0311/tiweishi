@@ -616,20 +616,20 @@
     return nil;
 }
 
+-(void)setLogInUpLoadString:(NSString *)logStr
+{
+    self.UpLoadlogString =[self.UpLoadlogString stringByAppendingString:[NSString stringWithFormat:@",%@",logStr]];
+}
 
-
--(void)UpdateBlueToothInfoWithError:(NSError *)error mssage:(NSString *)message
+-(void)UpdateBlueToothInfo
 {
     if (![[NSUserDefaults standardUserDefaults]objectForKey:@"UserOpenUpdateDebugKey"]) {
         return;
     }
     
-    NSString * errorMessage = [NSString stringWithFormat:@"%@--%@",error,message];
-    
-    
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [param safeSetObject:errorMessage forKey:@"message"];
+    [param safeSetObject:self.UpLoadlogString forKey:@"message"];
     [[BaseSservice sharedManager]postDebugWithUrl:@"app/userDebugMsg/savemsg.do" paramters:param ];
 }
 

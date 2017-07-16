@@ -25,7 +25,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getbalance];
 }
 - (void)viewDidLoad {
@@ -50,7 +51,7 @@
 }
 -(void)getbalance
 {
-    [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
         self.assetsLabel.text = [NSString stringWithFormat:@"总资产：￥%.2f",[UserModel shareInstance].balance];
@@ -63,7 +64,7 @@
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
 
         

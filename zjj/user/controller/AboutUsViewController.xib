@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutUsViewController">
             <connections>
                 <outlet property="DebugView" destination="U5o-0g-9E8" id="BSy-CT-CIW"/>
+                <outlet property="Debugswitch" destination="kWW-jd-iVu" id="Mmt-E6-apf"/>
                 <outlet property="logoBtn" destination="Nbm-QH-hfc" id="bMh-6i-LP3"/>
                 <outlet property="mobileBtn" destination="Mb8-4S-udf" id="tYP-cg-6fh"/>
                 <outlet property="myversionLabel" destination="y2n-vA-YdP" id="w4x-ec-cj7"/>

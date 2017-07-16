@@ -63,7 +63,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    [[BaseSservice sharedManager]post1:@"app/orderList/getDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/getDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"success --%@",dic);
 
         addressDict =[NSMutableDictionary dictionaryWithDictionary:[dic objectForKey:@"data"]];
@@ -85,7 +85,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[self getWarehousingUpdateInfo] forKey:@"products"];
     [param setObject:proviceId forKey:@"proviceId"];
-    [[BaseSservice sharedManager]post1:@"app/warehouseno/getWarehouseNo.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/warehouseno/getWarehouseNo.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict = [dic safeObjectForKey:@"data"];
         warehouseNo = [dict safeObjectForKey:@"warehouseNo"];
         [self getTransfortationPriceWithproviceId:proviceId warehouseNo:warehouseNo];
@@ -105,7 +105,7 @@
     [param safeSetObject:[self getufUpdatainfo] forKey:@"products"];
     [param safeSetObject:proviceId forKey:@"proviceId"];
     [param safeSetObject:warehouseNo1 forKey:@"warehouseNo"];
-    [[BaseSservice sharedManager]post1:@"app/freigthCount/freigthProductCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/freigthCount/freigthProductCount.do" paramters:param success:^(NSDictionary *dic) {
         weightStr = [[dic objectForKey:@"data"]objectForKey:@"freight"];
         self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.0f",[[self.param objectForKey:@"payableAmount"]floatValue]+[weightStr floatValue]];
         [self.tableview reloadData];
@@ -267,7 +267,7 @@
     
     
     DLog(@"上传数据---%@",self.param);
-    [[BaseSservice sharedManager]post1:@"app/orderList/saveOrderInfo.do" paramters:self.param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/saveOrderInfo.do" paramters:self.param success:^(NSDictionary *dic) {
         DLog(@"下单成功--%@",dic);
     } failure:^(NSError *error) {
         DLog(@"下单失败--%@",error);

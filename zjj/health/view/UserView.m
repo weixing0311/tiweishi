@@ -24,6 +24,5 @@
     }
 }
 
-- (IBAction)didClickMenu:(id)sender {
-}
+
 @end

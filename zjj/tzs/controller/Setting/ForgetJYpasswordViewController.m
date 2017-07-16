@@ -63,7 +63,7 @@
     [param setObject:self.vertf.text forKey:@"vcode"];
     
     
-    [[BaseSservice sharedManager]post1:@"app/user/findTradePassword.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/findTradePassword.do" paramters:param success:^(NSDictionary *dic) {
         
         
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
@@ -90,7 +90,7 @@
     [param setObject:self.mobiletf.text forKey:@"mobilePhone"];
     [param setObject:@"5" forKey:@"msgType"];
     
-    [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {

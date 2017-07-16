@@ -30,7 +30,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.tabBarController.tabBar.hidden=YES;
 }
 
@@ -56,7 +57,7 @@
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     [param safeSetObject:[beginDate yyyymmdd] forKey:@"startDate"];
     [param safeSetObject:[endDate  yyyymmdd] forKey:@"endDate"];
-    [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatList.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict =[dic safeObjectForKey:@"data"];
         
         NSArray * arr =[dict safeObjectForKey:@"array"];
@@ -107,7 +108,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
     ShareCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     
     if (cell.chooseBtn.selected==YES) {

@@ -20,7 +20,7 @@
     self.timeLabel.   text = [self getDateWithDate:item.createTime];
     self.weightlabel. text = [NSString stringWithFormat:@"%.1fkg",item.weight];
     self.neifatLabel. text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
-    self.bodyFatLabel.text = [NSString stringWithFormat:@"%.1f",item.fatWeight];
+    self.bodyFatLabel.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
     
     self.weightlabel.textColor = [[HealthModel shareInstance]getHealthShareColorWithStatus:IS_MODEL_BODYWEIGHT item:item];
     self.neifatLabel.textColor = [[HealthModel shareInstance]getHealthShareColorWithStatus:IS_MODEL_VISCERALFAT item:item];

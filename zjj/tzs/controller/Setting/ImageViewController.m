@@ -68,7 +68,7 @@
     [SVProgressHUD showWithStatus:@"上传中.."];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
-    [[BaseSservice sharedManager]postImage:@"app/user/uploadHeadImg.do" paramters:param imageData:fileData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadHeadImg.do" paramters:param imageData:fileData success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];

@@ -20,7 +20,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getWaitPayCount];
 
 }
@@ -50,7 +51,7 @@
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary *dict =[dic objectForKey:@"data"];
         
         int getWaitPayCount = [[dict safeObjectForKey:@"getWaitPayCount"]intValue];
@@ -115,7 +116,7 @@
         web.urlStr = @"";
     }
     web.hidesBottomBarWhenPushed = YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 
     [self.navigationController pushViewController:web animated:YES];
 }
@@ -137,7 +138,7 @@
 - (IBAction)didSetUp:(id)sender {
     EidtViewController *ed = [[EidtViewController alloc]init];
     ed.hidesBottomBarWhenPushed = YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 
     [self.navigationController pushViewController:ed animated:YES];
 }
@@ -146,7 +147,7 @@
     OrderViewController * od =[[OrderViewController alloc]init];
     od.getOrderType = IS_WATE_PAY;
     od.hidesBottomBarWhenPushed = YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
     
 
     [self.navigationController pushViewController:od animated:YES];
@@ -156,7 +157,7 @@
     OrderViewController * od =[[OrderViewController alloc]init];
     od.getOrderType = IS_WAIT_GETGOOD;
     od.hidesBottomBarWhenPushed = YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
     
 
     [self.navigationController pushViewController:od animated:YES];
@@ -166,7 +167,7 @@
     OrderViewController * od =[[OrderViewController alloc]init];
     od.getOrderType =IS_ALL;
     od.hidesBottomBarWhenPushed = YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
     
 
     [self.navigationController pushViewController:od animated:YES];
@@ -174,7 +175,7 @@
 
 - (IBAction)didTzs:(id)sender {
     BodyFatDivisionAgreementViewController *bd = [[BodyFatDivisionAgreementViewController alloc]init];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 
     bd.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:bd animated:YES];

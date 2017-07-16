@@ -36,7 +36,7 @@
 {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductList.do" paramters:param success:^(NSDictionary *dic) {
         
             [self.dataArray removeAllObjects];
             NSArray *arr =[[dic objectForKey:@"data" ]objectForKey:@"productArray"];
@@ -145,7 +145,7 @@
     [param safeSetObject:jsonValue forKey:@"jsonData"];
     DLog(@"%@--jsonvalue:%@",param,jsonValue);
     
-    [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/delShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/delShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
         
             [self.dataArray removeAllObjects];
             NSArray *arr =[[dic objectForKey:@"data" ]objectForKey:@"productArray"];

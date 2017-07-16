@@ -19,7 +19,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.tabBarController.tabBar.hidden=YES;
 
 }
@@ -76,7 +77,7 @@
     
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.DebugView.hidden =NO;
-
+        [self.Debugswitch setOn:YES];
         [[NSUserDefaults standardUserDefaults]setObject:@"open" forKey:@"UserOpenUpdateDebugKey"];
 
     }]];
@@ -110,7 +111,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString * bundleVersion =[infoDictionary objectForKey:@"CFBundleVersion"];
     
-    [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic --%@",dic);
         NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
         int   upDataVersion = [[dataDic safeObjectForKey:@"version"]intValue];

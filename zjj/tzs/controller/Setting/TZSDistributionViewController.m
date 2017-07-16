@@ -64,7 +64,7 @@
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:@"1,10,0" forKey:@"status"];
     
-    [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
@@ -90,7 +90,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:@"" forKey:@"orderNo"];
     
-    [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
         
         
     } failure:^(NSError *error) {
@@ -260,7 +260,7 @@
     [param safeSetObject:[dic safeObjectForKey:@"orderNo"] forKey:@"orderNo"];
     [param safeSetObject:[UserModel shareInstance].nickName  forKey:@"userName"];
     [param safeSetObject:@"" forKey:@"cancelRemark"];
-    [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"取消订单成功--%@",dic);
         [[UserModel shareInstance] showSuccessWithStatus:@"订单取消成功"];
     } failure:^(NSError *error) {

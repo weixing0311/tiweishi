@@ -34,7 +34,8 @@
 {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 
 }
 - (void)viewDidLoad {
@@ -97,7 +98,7 @@
     [param setObject:@(self.count) forKey:@"pageSize"];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    [[BaseSservice sharedManager]post1:kgetGoodsListInfo paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kgetGoodsListInfo paramters:param success:^(NSDictionary *dic) {
         DLog(@"goods---%@--message_%@",dic,[dic objectForKey:@"message"]);
         [self.collectionView headerEndRefreshing];
         [self.collectionView footerEndRefreshing];
@@ -119,7 +120,7 @@
 }
 -(void)getBanner
 {
-    [[BaseSservice sharedManager]post1:kBannerListUrl paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kBannerListUrl paramters:nil success:^(NSDictionary *dic) {
         DLog(@"bannerdic---%@",dic);
         NSMutableArray *arr =[[dic objectForKey:@"data"]objectForKey:@"array"];
         NSMutableArray *array =[[HomeModel shareInstance]arraySortingWithArray:arr];
@@ -261,7 +262,7 @@
     GoodsDetailViewController *gs = [[GoodsDetailViewController alloc]init];
     gs.productNo = item.productNo;
     gs.hidesBottomBarWhenPushed = YES;
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 
     [self.navigationController pushViewController:gs animated:YES];
     

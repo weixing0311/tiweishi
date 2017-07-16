@@ -60,7 +60,13 @@
     [self.dataArray removeAllObjects];
     [self.dataArray addObject:[self addBaseUser]];
     [self.dataArray addObjectsFromArray:[UserModel shareInstance].child];
-    self.userTableview.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 50*self.dataArray.count+50);
+    float height =0.0;
+    if (50*self.dataArray.count+50>JFA_SCREEN_HEIGHT-150) {
+        height = JFA_SCREEN_HEIGHT-150;
+    }else{
+        height =50*self.dataArray.count+50;
+    }
+    self.userTableview.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, height);
     [self.userTableview reloadData];
 }
 -(NSMutableDictionary *)addBaseUser
@@ -197,7 +203,8 @@
         NSString * subId =[NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"id"]];
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         [param safeSetObject:subId forKey:@"id"];
-        [[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteChild.do" paramters:param success:^(NSDictionary *dic) {
+        
+    [[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteChild.do" paramters:param success:^(NSDictionary *dic) {
             self.hidden = YES;
             [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
             [[UserModel shareInstance]removeChildDict:dict];

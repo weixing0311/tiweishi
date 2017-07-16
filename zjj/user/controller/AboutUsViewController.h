@@ -16,5 +16,6 @@
 - (IBAction)SwitchChange:(UISwitch *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *logoBtn;
 @property (weak, nonatomic) IBOutlet UILabel *myversionLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *Debugswitch;
 
 @end

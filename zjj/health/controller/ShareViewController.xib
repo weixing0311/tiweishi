@@ -23,8 +23,45 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Rr-UD-2XS">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DyJ-A7-CTR">
+                            <rect key="frame" x="0.0" y="79" width="375" height="1"/>
+                            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="fQS-NZ-x55"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择您最近30天测量结果中的2条数据,并生成体脂趋势报告分享给好友" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pFr-VT-6ji">
+                            <rect key="frame" x="50" y="22" width="305" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aboutUs.png" translatesAutoresizingMaskIntoConstraints="NO" id="vsf-92-WF9">
+                            <rect key="frame" x="20" y="30" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="9cK-BU-MBv"/>
+                                <constraint firstAttribute="height" constant="20" id="hLd-v3-SgG"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="pFr-VT-6ji" firstAttribute="leading" secondItem="vsf-92-WF9" secondAttribute="trailing" constant="10" id="0Dc-Fi-low"/>
+                        <constraint firstItem="vsf-92-WF9" firstAttribute="leading" secondItem="0Rr-UD-2XS" secondAttribute="leading" constant="20" id="12p-2n-D8k"/>
+                        <constraint firstAttribute="trailing" secondItem="pFr-VT-6ji" secondAttribute="trailing" constant="20" id="Ef1-L2-sCP"/>
+                        <constraint firstAttribute="trailing" secondItem="DyJ-A7-CTR" secondAttribute="trailing" id="Jfd-Jh-hrq"/>
+                        <constraint firstItem="DyJ-A7-CTR" firstAttribute="leading" secondItem="0Rr-UD-2XS" secondAttribute="leading" id="MTY-rB-KM8"/>
+                        <constraint firstItem="vsf-92-WF9" firstAttribute="centerY" secondItem="0Rr-UD-2XS" secondAttribute="centerY" id="Nia-Yi-mPC"/>
+                        <constraint firstAttribute="height" constant="80" id="Q6p-Xn-hdF"/>
+                        <constraint firstAttribute="bottom" secondItem="DyJ-A7-CTR" secondAttribute="bottom" id="TEa-gL-r9R"/>
+                        <constraint firstItem="pFr-VT-6ji" firstAttribute="centerY" secondItem="0Rr-UD-2XS" secondAttribute="centerY" id="lSV-T9-hvM"/>
+                    </constraints>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tuP-5x-SAP">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
+                    <rect key="frame" x="0.0" y="80" width="375" height="527"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Zh-Qh-fwC">
@@ -178,16 +215,20 @@
             <constraints>
                 <constraint firstItem="tuP-5x-SAP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2T0-pY-h1H"/>
                 <constraint firstItem="4Zh-Qh-fwC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4pR-AW-ihA"/>
+                <constraint firstItem="tuP-5x-SAP" firstAttribute="top" secondItem="0Rr-UD-2XS" secondAttribute="bottom" id="Bxm-1S-06a"/>
+                <constraint firstAttribute="trailing" secondItem="0Rr-UD-2XS" secondAttribute="trailing" id="NWU-vi-ljF"/>
                 <constraint firstAttribute="bottom" secondItem="4Zh-Qh-fwC" secondAttribute="bottom" id="OBa-d9-ecc"/>
                 <constraint firstAttribute="trailing" secondItem="tuP-5x-SAP" secondAttribute="trailing" id="U7Q-gZ-Wp1"/>
+                <constraint firstItem="0Rr-UD-2XS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="W36-nh-x9B"/>
                 <constraint firstItem="4Zh-Qh-fwC" firstAttribute="top" secondItem="tuP-5x-SAP" secondAttribute="bottom" id="ZwE-DH-cbd"/>
-                <constraint firstItem="tuP-5x-SAP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hbz-vX-49y"/>
                 <constraint firstAttribute="trailing" secondItem="4Zh-Qh-fwC" secondAttribute="trailing" id="jZc-nE-mNH"/>
+                <constraint firstItem="0Rr-UD-2XS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="plT-CM-NOF"/>
             </constraints>
             <point key="canvasLocation" x="35.5" y="69.5"/>
         </view>
     </objects>
     <resources>
+        <image name="aboutUs.png" width="21" height="20"/>
         <image name="friends_" width="39" height="39"/>
         <image name="qq_" width="39" height="39"/>
         <image name="weixin_" width="39" height="39"/>

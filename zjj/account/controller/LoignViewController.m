@@ -22,16 +22,7 @@
     NSTimer * _timer;
     NSInteger timeNumber;
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showkeyboard) name:UIKeyboardWillShowNotification object:nil];
@@ -51,7 +42,7 @@
     self.verTF.delegate = self;
     self.verTF.keyboardType = UIKeyboardTypeNumberPad;
     self.verTF.returnKeyType = UIReturnKeyGo;
-    
+    [self.verTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     self.loignMobileTf.delegate = self;
     self.loignMobileTf.keyboardType = UIKeyboardTypeNumberPad;
     self.loignMobileTf.returnKeyType = UIReturnKeyNext;
@@ -70,7 +61,16 @@
 }
 
 
+-(void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == self.verTF) {
+        if (textField.text.length >= 4) {
+            textField.text = [textField.text substringToIndex:4];
+            [self.verTF resignFirstResponder];
+        }
+    }
 
+}
 
 
 -(void)hiddenKeyBoard
@@ -133,7 +133,7 @@
     [param safeSetObject:[NSString encryptString:self.passWordTf.text] forKey:@"password"];
         
     
-    [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"登录成功"];
         [[UserModel shareInstance]setInfoWithDic:[dic objectForKey:@"data"]];
         [[NSUserDefaults standardUserDefaults]setObject:[[dic objectForKey:@"data"]objectForKey:@"userId"] forKey:kMyloignInfo];
@@ -180,7 +180,7 @@
     [param setObject:[NSString encryptString:self.mobileTf.text] forKey:@"mobilePhone"];
     [param setObject:self.verTF.text forKey:@"vcode"];
     DLog(@"param--%@",param);
-    [[BaseSservice sharedManager]post1:kLoignWithVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kLoignWithVerUrl paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"登录成功"];
         
@@ -259,7 +259,7 @@
     [param setObject:self.mobileTf.text forKey:@"mobilePhone"];
     [param setObject:@"2" forKey:@"msgType"];
     
-    [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
         
         NSDictionary *dict = dic;
         NSString * status = [dict objectForKey:@"status"];

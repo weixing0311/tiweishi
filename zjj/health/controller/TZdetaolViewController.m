@@ -29,13 +29,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     self.tabBarController.tabBar.hidden=YES;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTBRedColor];
-    self.title=@"评测报告";
+    self.title=@"体脂报告";
     // Do any additional setup after loading the view.
     cell1Height = 117;
     cell2Height = 117;
@@ -87,7 +88,10 @@
     view.backgroundColor =[UIColor whiteColor];
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 269, 42)];
     button.center  = view.center;
-    [button setBackgroundImage:[UIImage imageNamed:@"button_normal"] forState:UIControlStateNormal];
+    [button setBackgroundColor:HEXCOLOR(0xee0a3b)];
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius = button.frame.size.height / 2;
+//    [button setBackgroundImage:[UIImage imageNamed:@"button_normal"] forState:UIControlStateNormal];
     [button setTitle:@"删除数据" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(deleteInfo) forControlEvents:UIControlEventTouchUpInside];
@@ -100,7 +104,7 @@
     [param safeSetObject:self.dataId forKey:@"dataId"];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     
-    [[BaseSservice sharedManager]post1:kShareUserReviewInfoUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kShareUserReviewInfoUrl paramters:param success:^(NSDictionary *dic) {
         [[HealthDetailsItem instance]getInfoWithDict:[dic objectForKey:@"data" ]];
         [self.tableview reloadData];
         DLog(@"%@",dic);
@@ -118,7 +122,7 @@
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     [param safeSetObject:@([HealthDetailsItem instance].DataId) forKey:@"dataId"];
-    [[BaseSservice sharedManager]post1:@"app/evaluatData/deleteEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/deleteEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"deletePCINFO" object:nil];
         [self.navigationController popViewControllerAnimated:YES];

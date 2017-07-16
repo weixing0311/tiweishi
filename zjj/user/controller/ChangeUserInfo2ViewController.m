@@ -152,7 +152,7 @@
     [self.param safeSetObject:self.birTf.text forKey:@"birthday"];
 
     
-    [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
@@ -193,7 +193,7 @@
     [self.param safeSetObject:self.birTf.text forKey:@"birthday"];
 
     
-    [[BaseSservice sharedManager]postImage:@"app/evaluatUser/addChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/addChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
@@ -236,7 +236,7 @@
     [self.param safeSetObject:self.birTf.text forKey:@"birthday"];
     [self.param safeSetObject:[UserModel shareInstance].subId forKey:@"id"];
 
-    [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
         [[UserModel shareInstance]setMainUserInfoWithDic:[dic objectForKey:@"data"]];
         [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
         
@@ -270,7 +270,7 @@
 
 
     
-    [[BaseSservice sharedManager]postImage:@"/app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"/app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];

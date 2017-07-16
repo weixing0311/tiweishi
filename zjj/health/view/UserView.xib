@@ -28,8 +28,8 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qM0-m0-daM">
-                    <rect key="frame" x="60" y="25" width="42" height="30"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qM0-m0-daM">
+                    <rect key="frame" x="60" y="25" width="0.0" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="adG-fR-REj"/>
                     </constraints>
@@ -52,9 +52,9 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REA-Db-1QU">
-                    <rect key="frame" x="10" y="15" width="40" height="40"/>
+                    <rect key="frame" x="10" y="15" width="70" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="40" id="8cD-YF-oTG"/>
+                        <constraint firstAttribute="width" constant="70" id="8cD-YF-oTG"/>
                         <constraint firstAttribute="height" constant="40" id="yE8-cD-AC7"/>
                     </constraints>
                     <connections>
@@ -67,8 +67,9 @@
                 <constraint firstItem="aMV-Ts-Zir" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="B7T-Ru-Ndu"/>
                 <constraint firstItem="aMV-Ts-Zir" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="CvP-cJ-IiD"/>
                 <constraint firstItem="qM0-m0-daM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="D4T-SR-q1X"/>
-                <constraint firstItem="qM0-m0-daM" firstAttribute="leading" secondItem="REA-Db-1QU" secondAttribute="trailing" constant="10" id="IJh-Ce-aQF"/>
+                <constraint firstItem="UxM-mj-RDw" firstAttribute="trailing" secondItem="aMV-Ts-Zir" secondAttribute="trailing" id="GIo-ks-B5J"/>
                 <constraint firstItem="REA-Db-1QU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="QuQ-3c-P9v"/>
+                <constraint firstItem="qM0-m0-daM" firstAttribute="leading" secondItem="UxM-mj-RDw" secondAttribute="trailing" constant="10" id="Zff-JJ-5Fs"/>
                 <constraint firstItem="REA-Db-1QU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="aRl-kr-kuP"/>
                 <constraint firstItem="qM0-m0-daM" firstAttribute="leading" secondItem="UxM-mj-RDw" secondAttribute="trailing" constant="10" id="fbl-Rg-TNo"/>
                 <constraint firstItem="1fx-Jd-JdC" firstAttribute="top" secondItem="UxM-mj-RDw" secondAttribute="bottom" constant="7" id="mWa-5s-lEf"/>

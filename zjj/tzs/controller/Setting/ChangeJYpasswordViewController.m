@@ -63,7 +63,7 @@
     [param setObject:self.renewpassword.text forKey:@"repPassword"];
     [param setObject:self.verTf.text forKey:@"vcode"];
         
-    [[BaseSservice sharedManager]post1:@"/app/user/changeTradePassword.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/changeTradePassword.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
     } failure:^(NSError *error) {
         [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
@@ -86,7 +86,7 @@
     [param setObject:self.mobiletf.text forKey:@"mobilePhone"];
     [param setObject:@"4" forKey:@"msgType"];
     
-    [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {

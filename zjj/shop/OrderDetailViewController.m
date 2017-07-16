@@ -43,7 +43,7 @@
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param setObject:self.orderNo forKey:@"orderNo"];
     
-    [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryOrderDetail.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryOrderDetail.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
         _infoDict = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"][0];
         [_dataArray addObjectsFromArray:[_infoDict safeObjectForKey:@"itemJson"]];

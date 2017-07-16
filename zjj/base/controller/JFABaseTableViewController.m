@@ -169,11 +169,7 @@
 
 -(void)dealloc
 {
-    for (NSURLSessionTask* operation in self.requestArray) {
-        if ([operation isKindOfClass:[NSURLSessionTask class]]) {
-            [operation cancel];
-        }
-    }
+    [self.currentTasks cancel];
 }
 
 -(void)setRefrshWithTableView:(UITableView *)tb
@@ -224,6 +220,8 @@
     [[NSRunLoop mainRunLoop] addTimer:hiddenErrorTimer forMode:NSRunLoopCommonModes];
 
 }
+
+
 -(void)hiddenErrirLabel
 {
     errorLabel.hidden = YES;

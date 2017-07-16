@@ -38,14 +38,16 @@
         
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/plain", @"text/javascript", @"text/json", @"text/html", nil];
         
-        manager.securityPolicy.allowInvalidCertificates = YES;
+        manager.securityPolicy.allowInvalidCertificates = NO;
     }
     return self;
 }
 -(NSString*)JFADomin
 {
+    //正式
+    return @"https://mall.fitgeneral.com/";
     //生产
-    return @"http://test.fitgeneral.com/";
+//    return @"http://test.fitgeneral.com/";
     //测试域名
 //    return @"http://192.168.0.130:8101/";
     //x
@@ -126,11 +128,11 @@
         
 
         if ([error code] ==-1009) {
-            [[UserModel shareInstance] showErrorWithStatus:@"连接失败，请检查网络"];
+            [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
         }
         
         if ([error code] ==-1001) {
-            [[UserModel shareInstance] showErrorWithStatus:@"连接失败，请检查网络"];
+            [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
         }
         DLog(@"error--%ld-%@",(long)error.code,[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]);
         failure(error);
