@@ -31,6 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTBRedColor];
+    self.baseScr.contentSize = CGSizeMake(0, 550);
     upDataImage = NO;
     UIBarButtonItem * rig =[[UIBarButtonItem alloc]initWithTitle:@"切换账号" style:UIBarButtonItemStyleDone target:self action:@selector(loingOut)];
     self.testImageView.image = [UIImage imageNamed: @"head_default"];

@@ -14,7 +14,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
-@property (weak, nonatomic) IBOutlet UITableView *hdTableView;
+@property (weak, nonatomic) IBOutlet UILabel *cxImageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cxDetailLabel;
+- (IBAction)didShowCuXDetailView:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *cxView;
+
 
 @property (nonatomic,assign)id<TZSDGCellDelegate>delegate;
 @property (weak, nonatomic) IBOutlet UIView *countView;
@@ -27,5 +31,6 @@
 
 -(void)addCountWithCell:(TZSDGCell *)cell;
 -(void)redCountWithCell:(TZSDGCell *)cell;
+-(void)showCXDetailWithCell:(TZSDGCell * )cell;
 
 @end

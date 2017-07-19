@@ -12,6 +12,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cxtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (nonatomic,assign)int restrictionNum;
+
 - (IBAction)didAdd:(id)sender;
 - (IBAction)didRed:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;

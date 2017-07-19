@@ -44,7 +44,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="s3f-yr-026" firstAttribute="centerY" secondItem="RnZ-SK-bpG" secondAttribute="centerY" id="0eZ-n0-vFe"/>
                         <constraint firstItem="s3f-yr-026" firstAttribute="leading" secondItem="HJg-50-jQa" secondAttribute="trailing" constant="10" id="1wV-OJ-qyM"/>
@@ -67,7 +67,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请填写身份证号" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ABn-Hs-cqy">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入身份证号" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ABn-Hs-cqy">
                             <rect key="frame" x="125" y="25" width="230" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="Y34-sB-pVF"/>
@@ -101,19 +101,32 @@
                         <action selector="didRz:" destination="-1" eventType="touchUpInside" id="3cJ-oa-KbX"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="*请他填写本人真实信息，否则后续出现问题，本公司不予承担责任！" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmc-7E-zCO">
+                    <rect key="frame" x="10" y="151" width="355" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="10" constant="60" id="dmN-4b-Hvq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.63738762842465757" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="RnZ-SK-bpG" secondAttribute="trailing" id="0Eh-Ux-drV"/>
+                <constraint firstItem="Pmc-7E-zCO" firstAttribute="top" secondItem="94q-DS-A7u" secondAttribute="bottom" constant="10" id="1es-VF-jFR"/>
                 <constraint firstItem="RnZ-SK-bpG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="CHi-h5-Y8S"/>
+                <constraint firstAttribute="trailing" secondItem="Pmc-7E-zCO" secondAttribute="trailing" constant="10" id="Cww-0h-IiL"/>
                 <constraint firstAttribute="bottom" secondItem="pWv-Bh-2dy" secondAttribute="bottom" id="MB8-kd-2Q2"/>
                 <constraint firstAttribute="trailing" secondItem="94q-DS-A7u" secondAttribute="trailing" id="Ozm-Qz-iYF"/>
                 <constraint firstItem="94q-DS-A7u" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TXc-2H-rNj"/>
                 <constraint firstItem="RnZ-SK-bpG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fzB-EI-eDa"/>
+                <constraint firstItem="Pmc-7E-zCO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="hbq-I4-ZTY"/>
                 <constraint firstAttribute="trailing" secondItem="pWv-Bh-2dy" secondAttribute="trailing" id="m49-lA-tqT"/>
                 <constraint firstItem="94q-DS-A7u" firstAttribute="top" secondItem="RnZ-SK-bpG" secondAttribute="bottom" constant="1" id="x9z-uU-YiG"/>
                 <constraint firstItem="pWv-Bh-2dy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yof-00-oKI"/>
             </constraints>
+            <point key="canvasLocation" x="35.5" y="64.5"/>
         </view>
     </objects>
 </document>

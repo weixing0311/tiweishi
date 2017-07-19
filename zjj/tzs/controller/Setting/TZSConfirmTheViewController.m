@@ -11,6 +11,7 @@
 #import "UpdataAddressCell.h"
 #import "UpDateOrderCell.h"
 #import "PublicCell.h"
+#import "DistributionBottomCell.h"
 @interface TZSConfirmTheViewController ()
 @property (nonatomic,assign)float freight;
 @property (nonatomic,copy  )NSString * address;
@@ -103,7 +104,7 @@
     [param safeSetObject:warehouseNo forKey:@"warehouseNo"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/freigthCount/freigthProductCount.do" paramters:param success:^(NSDictionary *dic) {
         weightStr = [[dic objectForKey:@"data"]objectForKey:@"freight"];
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.0f",[[self.param objectForKey:@"payableAmount"]floatValue]+[weightStr floatValue]];
+        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
         [self.tableview reloadData];
     } failure:^(NSError *error) {
         DLog(@"error --%@",error);
@@ -170,13 +171,23 @@
     }else if (indexPath.section ==1)
     {
         return 100;
-    }else{
+    }else if(indexPath.section ==2){
         return 40;
+    }else{
+        return 75;
     }
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 5;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 5;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -207,23 +218,36 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         NSDictionary *dic =[_dataArray objectAtIndex:indexPath.row];
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:@"defPicture"]];
+        [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"defPicture"]]placeholderImage:[UIImage imageNamed:@"head_default"]];
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];
-        cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
+        cell.priceLabel.text = @"";
+//        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];
+        cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"chooseCount"]];
 
         
         return cell;
-    }else{
+    }else if(indexPath.section ==2){
         static NSString * identifier = @"PublicCell";
         PublicCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell ) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        
         cell.headImageView.image = [UIImage imageNamed:@"personal-receiving"];
         cell.titleLabel.text = @"配送方式";
-//        cell.secondLabel.text =[NSString stringWithFormat:@"￥%@",weightStr ];
+        cell.secondLabel.text =[NSString stringWithFormat:@"快递配送" ];
         return cell;
+    }else
+    {
+        static NSString * identifier = @"DistributionBottomCell";
+        DistributionBottomCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell ) {
+            cell = [self getXibCellWithTitle:identifier];
+        }
+        
+        cell.ufLabel.text =[NSString stringWithFormat:@"+￥%@",weightStr ];
+        return cell;
+
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -288,9 +312,9 @@
         
         int freightTemplateId  =[[dic objectForKey:@"freightTemplateId"] intValue];
         float weight = [[dic objectForKey:@"productWeight"] floatValue];
-        int count = [[dic objectForKey:@"quantity"] intValue];
+        int count = [[dic objectForKey:@"chooseCount"] intValue];
         if (freightTemplateId ==0) {
-            weight1 +=weight*count;
+            weight1 +=weight * count;
         }else{
             weight2 +=weight * count;
         }

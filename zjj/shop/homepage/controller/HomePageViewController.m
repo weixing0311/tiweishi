@@ -56,7 +56,7 @@
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;//实现代理
     self.collectionView.dataSource = self;                  //实现数据源方法
-    self.collectionView.backgroundColor= [UIColor colorWithWhite:0.8 alpha:1];
+    self.collectionView.backgroundColor= HEXCOLOR(0xf8f8f8);
     self.collectionView.allowsMultipleSelection = YES;      //实现多选，默认是NO
     self.collectionView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, self.view.frame.size.height-self.tabBarController.tabBar.frame.size.height);
     [self.view addSubview:self.collectionView];
@@ -162,7 +162,7 @@
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return CGSizeMake(JFA_SCREEN_WIDTH, 430);
+    return CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/375*461);
 }
 //创建headview
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
@@ -202,7 +202,8 @@
         UICollectionReusableView *foot = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footView" forIndexPath:indexPath];
         NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FootView" owner:nil options:nil];
         FootView *footV = [views lastObject];
-        footV.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 430);
+        footV.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/375*461);
+        footV.backgroundColor = HEXCOLOR(0xf8f8f8);
         [foot addSubview:footV];
         for (BannerItem *item in _bannerInfoArray) {
             if ([item.recommendID isEqualToString:@"2"]) {

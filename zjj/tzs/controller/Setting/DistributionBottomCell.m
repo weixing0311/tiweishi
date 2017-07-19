@@ -1,21 +1,18 @@
-
 //
-//  JZSchoolCell.m
+//  DistributionBottomCell.m
 //  zjj
 //
-//  Created by iOSdeveloper on 2017/6/30.
+//  Created by iOSdeveloper on 2017/7/19.
 //  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
 //
 
-#import "JZSchoolCell.h"
+#import "DistributionBottomCell.h"
 
-@implementation JZSchoolCell
+@implementation DistributionBottomCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.timeLabel.adjustsFontSizeToFitWidth = YES;
-    self.zanLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

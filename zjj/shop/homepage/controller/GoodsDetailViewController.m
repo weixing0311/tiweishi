@@ -16,15 +16,18 @@
 #import "GoodsDetailItem.h"
 #import "ShopCarViewController.h"
 #import "UpdataOrderViewController.h"
+#import "CXdetailView.h"
 @interface GoodsDetailViewController ()<decailTitleCellDelegate>
 @property (nonatomic,assign)int goodsCount;
 @end
 
 @implementation GoodsDetailViewController
 {
-    ADCarouselView * carouselView;
+    ADCarouselView * goodscarouselView;
     NSMutableArray * _bannerArray;
     NSMutableArray * _hdArray;
+    GoodsDetailItem * item;
+    CXdetailView * cuxDetailView;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -36,16 +39,24 @@
     [super viewDidLoad];
     [self setNbColor];
     self.goodsCount =1;
+    if (goodscarouselView) {
+        [goodscarouselView removeFromSuperview];
+    }
     _bannerArray = [NSMutableArray array];
     _hdArray = [NSMutableArray array];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.tableview.backgroundColor = [UIColor clearColor];
+//    self.tableview.contentInset =UIEdgeInsetsMake(JFA_SCREEN_WIDTH, 0, 0, 0);
     [self setExtraCellLineHiddenWithTb:self.tableview];
-    
+    self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
 
     self.detailView.hidden = YES;
     self.webView2.hidden = YES;
+    [self initCxDetailView];
+    
+    
     self.segment2.selectedSegmentIndex = 0;
     UIView *view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     [self.navigationItem setTitleView:view];
@@ -60,12 +71,18 @@
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor grayColor],NSForegroundColorAttributeName,[UIColor darkGrayColor],UITextAttributeTextShadowColor ,nil];
     [self.segment2 setTitleTextAttributes:dic forState:UIControlStateSelected];
     
-    
     [self getInfo];
     [self getgoodsCountWithNet];
     [self getImageAndTextWithNet];
     // Do any additional setup after loading the view from its nib.
 }
+-(void)initCxDetailView
+{
+    cuxDetailView = [[CXdetailView alloc]initWithFrame:self.view.bounds];
+    cuxDetailView.hidden = YES;
+    [self.view addSubview:cuxDetailView];
+}
+
 -(void)changepage:(UISegmentedControl*)seg
 {
     if (seg.selectedSegmentIndex ==0) {
@@ -83,14 +100,20 @@
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.productNo forKey:@"productNo"];
     self.currentTasks = [[BaseSservice sharedManager]post1:kProductsDetail paramters:param success:^(NSDictionary *dic) {
-        [[GoodsDetailItem shareInstance]setupInfoWithDict:[dic objectForKey:@"data"]];
-        [_hdArray  addObjectsFromArray:[GoodsDetailItem shareInstance].promotList];
+        item = [[GoodsDetailItem alloc]init ];
+        [item setupInfoWithDict:[dic objectForKey:@"data"]];
+//        [itemsetupInfoWithDict:[dic objectForKey:@"data"]];
+//        [carouselView setImgs: item.pictureArray];
+//        [carouselView.carouselView reloadData];
+        [_hdArray  addObjectsFromArray:item.promotList];
+        
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
         
     }];
 }
+//获取商品数量
 -(void)getgoodsCountWithNet
 {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -101,6 +124,7 @@
         
     }];
 }
+//获取详情webview
 -(void)getImageAndTextWithNet
 {
     
@@ -110,8 +134,8 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/product/queryAppPictureDetail.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict = [dic objectForKey:@"data"];
         
-        NSString * url1 =[self getUrlWithString:[dict safeObjectForKey:@"pictureDetail"]];
-        NSString * url2 =[self getUrlWithString:[dict safeObjectForKey:@"textDetail"]];
+        NSString * url1 =[dict safeObjectForKey:@"pictureDetail"];
+        NSString * url2 =[dict safeObjectForKey:@"textDetail"];
 
         [self setWebViewWithUrl:url1 url2:url2];
         
@@ -121,10 +145,13 @@
     }];
 
 }
+
+//加载webview
 -(void)setWebViewWithUrl:(NSString *)url1 url2:(NSString *)url2
 {
-    [self.webView1 loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url1]]];
-    [self.webView2 loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url2]]];
+    [self.webView1 loadHTMLString:url1 baseURL:nil];
+    [self.webView2 loadHTMLString:url2 baseURL:nil];
+
 }
 
 -(void)setValueInArray:(NSString *)picture
@@ -138,7 +165,7 @@
     if (indexPath.section==0) {
         return 140;
     }else if(indexPath.section ==1){
-        return 21;
+        return 35;
     }else{
         return 44;
     }
@@ -146,7 +173,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section ==0) {
-        return JFA_SCREEN_WIDTH/365*235;
+        return JFA_SCREEN_WIDTH;
     }else{
         return 0;
     }
@@ -154,12 +181,12 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section==0) {
-        carouselView = [ADCarouselView carouselViewWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH)];
-        carouselView.loop = YES;
-        carouselView.imgs = [GoodsDetailItem shareInstance].pictureArray;
-        carouselView.automaticallyScrollDuration = 5;
-        carouselView.placeholderImage = [UIImage imageNamed:@"zhanweifu"];
-        return carouselView;
+        goodscarouselView = [ADCarouselView carouselViewWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH)];
+        goodscarouselView.loop = YES;
+        goodscarouselView.imgs=  item.pictureArray;
+        goodscarouselView.automaticallyScrollDuration = 5;
+        goodscarouselView.placeholderImage = [UIImage imageNamed:@"zhanweifu"];
+        return goodscarouselView;
     }
     else{
         return nil;
@@ -168,7 +195,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -177,11 +204,17 @@
         return 1;
     }
     else if (section==1) {
-        return _hdArray.count;
-    }else{
-        return 2;
-   
+        if (item.promotList&&item.promotList.count>0) {
+            return 1;
+        }else{
+        return 0;
+        }
     }
+//        else{
+//        return 2;
+//   
+//    }
+    return 0;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -193,22 +226,25 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        cell.titleLabel.text = [GoodsDetailItem shareInstance].productName;
-        cell.cxtitleLabel.text = [GoodsDetailItem shareInstance].viceTitle;
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[GoodsDetailItem shareInstance].productPrice];
+        cell.titleLabel.text = item.productName;
+        cell.cxtitleLabel.text = item.viceTitle;
+        cell.restrictionNum = item.restrictionNum;
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",item.productPrice];
         cell.delegate = self;
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
 
         return cell;
     }
-    else if (indexPath.section ==1) {
+//    else if (indexPath.section ==1) {
+    else{
         static NSString * identifier = @"HDCell";
         HDCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             NSArray * arr = [[NSBundle mainBundle]loadNibNamed:identifier owner:nil options:nil];
             cell = [arr lastObject];
         }
-        NSDictionary *dic =[_hdArray objectAtIndex:indexPath.row];
+
+        NSDictionary *dic =[_hdArray objectAtIndex:0];
         int hdtype = [[dic objectForKey:@"promotionType"]intValue];
         if (hdtype ==1) {
             cell.titleLabel.text = @"满减";
@@ -216,40 +252,48 @@
             cell.titleLabel.text= @"满赠";
         }
         cell.detailLabel.text = [dic objectForKey:@"promotionDetail"];
-        cell.selectionStyle =UITableViewCellSelectionStyleNone;
-
         return cell;
         
         
     }
-    else {
-        if (indexPath.row==0) {
-            static NSString * identifier = @"DetailWeigthCell";
-            DetailWeigthCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            if (!cell) {
-                cell =[self getXibCellWithTitle:identifier];
-            }
-            cell.weigthLabel.text = [NSString stringWithFormat:@"%@kg",[GoodsDetailItem shareInstance].productWeight];
-            cell.selectionStyle =UITableViewCellSelectionStyleNone;
-
-            return cell;
-            
-            
-        }else{
-            static NSString * identifier = @"DetailReturnGoodsCell";
-            DetailReturnGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-            if (!cell) {
-                cell = [self getXibCellWithTitle:identifier];
-            }
-            cell.returnGoodLabel.text = @"不支持七天无理由退货";
-            cell.selectionStyle =UITableViewCellSelectionStyleNone;
-
-            return cell;
-        }
-    }
+//    else {
+//        if (indexPath.row==0) {
+//            static NSString * identifier = @"DetailWeigthCell";
+//            DetailWeigthCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//            if (!cell) {
+//                cell =[self getXibCellWithTitle:identifier];
+//            }
+//            cell.weigthLabel.text = [NSString stringWithFormat:@"%@kg",item.productWeight];
+//            cell.selectionStyle =UITableViewCellSelectionStyleNone;
+//
+//            return cell;
+//            
+//            
+//        }else{
+//            static NSString * identifier = @"DetailReturnGoodsCell";
+//            DetailReturnGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//            if (!cell) {
+//                cell = [self getXibCellWithTitle:identifier];
+//            }
+//            cell.returnGoodLabel.text = @"不支持七天无理由退货";
+//            cell.selectionStyle =UITableViewCellSelectionStyleNone;
+//
+//            return cell;
+//        }
+//    }
 
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section ==1) {
+//        cuxDetailView
+        [cuxDetailView showCuxiaoTabViewWithArray:item.promotList];
+    }
+}
 -(void)changeCount:(int)count
 {
     self.goodsCount = count;
@@ -262,7 +306,7 @@
 - (IBAction)addShopCar:(id)sender {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     NSMutableDictionary *dic =[NSMutableDictionary dictionary];
-    [dic safeSetObject:[GoodsDetailItem shareInstance].productNo forKey:@"productNo"];
+    [dic safeSetObject:item.productNo forKey:@"productNo"];
     [dic safeSetObject:@(self.goodsCount) forKey:@"quantity"];
     NSArray *arr = @[dic];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:arr,@"jsonArray",[UserModel shareInstance].userId,@"userId", nil];
@@ -272,12 +316,13 @@
     [param safeSetObject:jsonValue forKey:@"jsonData"];
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/saveShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance] showSuccessWithStatus:@"加入成功"];
+
         [self getgoodsCountWithNet];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshShopCart" object:nil];
-        [[UserModel shareInstance] showSuccessWithStatus:@"加入成功"];
         
     } failure:^(NSError *error) {
-        [[UserModel shareInstance] showErrorWithStatus:@"加入失败"];
+//        [[UserModel shareInstance] showErrorWithStatus:@"加入失败"];
     }];
 
     
@@ -287,11 +332,11 @@
     
     UpdataOrderViewController *upd =[[UpdataOrderViewController alloc]init];
     
-    upd.dataArray= [NSMutableArray arrayWithObject:[GoodsDetailItem shareInstance]];
+    upd.dataArray= [NSMutableArray arrayWithObject:item];
     upd.isComeFromShopCart =NO;
     upd.goodsCount = self.goodsCount;
-    [upd.param safeSetObject:@([[GoodsDetailItem shareInstance].productPrice floatValue]*self.goodsCount) forKey:@"totalPrice"];
-    [upd.param safeSetObject:@([[GoodsDetailItem shareInstance].productPrice floatValue]*self.goodsCount -[self getPreferentialPrice] ) forKey:@"payableAmount"];
+    [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount) forKey:@"totalPrice"];
+    [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount -[self getPreferentialPrice] ) forKey:@"payableAmount"];
     [upd.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
     
     [self.navigationController pushViewController:upd animated:YES];
@@ -301,8 +346,45 @@
 -(NSString *)getUpdateInfo
 {
     NSMutableDictionary * dic =[NSMutableDictionary dictionary];
-    [dic safeSetObject:[GoodsDetailItem shareInstance].productNo forKey:@"productNo"];
+    [dic safeSetObject:item.productNo forKey:@"productNo"];
     [dic safeSetObject:@(self.goodsCount) forKey:@"quantity"];
+    
+    
+    [dic setObject:item.productPrice forKey:@"unitPrice"];
+    NSArray *    promotArr = item.promotList;
+    
+    for (int i =0 ; i<promotArr.count;i++) {
+        NSDictionary * promotDict = [promotArr objectAtIndex:i];
+        int promotionType = [[promotDict safeObjectForKey:@"promotionType"]intValue];
+        NSString * promotListId =[promotDict safeObjectForKey:@"id"];
+        
+        //判断是否有满减 -- 有加字段 -gift id
+        if (promotionType==1) {
+            int maxCount = [[promotDict safeObjectForKey:@"maxQuantity"]intValue];
+            int minCount = [[promotDict safeObjectForKey:@"minQuantity"]intValue];
+            if (self.goodsCount>=minCount&&self.goodsCount<maxCount) {
+                [dic setObject:promotListId forKey:@"giftId"];
+            }
+        }
+        //判断是否有满赠 有则加字段 --gift
+        if (promotionType ==2) {
+            NSMutableDictionary * mzDic= [NSMutableDictionary dictionary];
+            NSString * giveProductNo = [NSString stringWithFormat:@"%@",[promotDict safeObjectForKey:@"giveProductNo"]];
+            NSString * giveQuantity = [NSString stringWithFormat:@"%@",[promotDict safeObjectForKey:@"giveQuantity"]];
+            
+            [mzDic safeSetObject:promotListId forKey:@"giftId"];
+            [mzDic safeSetObject:giveProductNo forKey:@"giveProductNo"];
+            [mzDic safeSetObject:giveQuantity forKey:@"giveQuantity"];
+            int maxCount = [[promotDict safeObjectForKey:@"maxQuantity"]intValue];
+            int minCount = [[promotDict safeObjectForKey:@"minQuantity"]intValue];
+            if (self.goodsCount>=minCount&&self.goodsCount<maxCount) {
+
+            [dic safeSetObject:mzDic forKey:@"gift"];
+            }
+        }
+    }
+    
+    
     NSArray *arr = @[dic];
     NSString * str =[self DataTOjsonString:arr];
     return str;
@@ -324,10 +406,10 @@
 {
     
     
-    if (![GoodsDetailItem shareInstance].promotList||[GoodsDetailItem shareInstance].promotList.count<1) {
+    if (!item.promotList||item.promotList.count<1) {
         return 0;
     }
-    NSArray * arr =[NSArray arrayWithArray:[GoodsDetailItem shareInstance].promotList];
+    NSArray * arr =[NSArray arrayWithArray:item.promotList];
     for (NSDictionary *dict in arr) {
         if ([[dict objectForKey:@"promotionType"]intValue]==1) {
             int maxCount = [[dict safeObjectForKey:@"maxQuantity"]intValue];
@@ -354,40 +436,6 @@
     }
     return jsonString;
 }
--(NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
-    if (jsonString == nil) {
-        return nil;
-    }
-    NSString * string = [self getUrlWithString:jsonString];
-    NSData *jsonData = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                        options:NSJSONReadingMutableContainers
-                                                          error:&err];
-    if(err) {
-        NSLog(@"json解析失败：%@",err);
-        return nil;
-    }
-    return dic;
-}
-
--(NSString *)getUrlWithString:(NSString *)string
-{
-//    NSString *str3 = [string stringByReplacingOccurrencesOfString:@"\"" withString:@"-"];
-//    NSString * str4 = [str3 stringByReplacingOccurrencesOfString:@"/>" withString:@"}"];
-    NSArray  *array = [string componentsSeparatedByString:@"\""];//--分隔符
-    for (NSString * str in array) {
-        if ([str containsString:@"http"]) {
-            return str;
-        }
-    }
-    return nil;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (IBAction)changeWebView:(UISegmentedControl*)sender {
     if (sender.selectedSegmentIndex==0) {
@@ -398,4 +446,16 @@
         self.webView1.hidden = YES;
     }
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+- (void)dealloc
+{
+    [self.currentTasks cancel];
+    goodscarouselView=nil;
+    
+}
+
 @end

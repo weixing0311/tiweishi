@@ -12,7 +12,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserViewController">
             <connections>
                 <outlet property="headerImage" destination="mCh-e3-7yv" id="rgn-xl-jgz"/>
+                <outlet property="loignOutBtn" destination="iGb-p9-H9f" id="hz8-AM-0jt"/>
                 <outlet property="nickNameLabel" destination="8pn-Co-1cM" id="3Ux-FZ-y9k"/>
+                <outlet property="rightLoignOut" destination="7ri-cU-iyc" id="Qdh-4D-8Eu"/>
                 <outlet property="tableview" destination="8xQ-bp-Cyo" id="aej-3d-mBa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -65,7 +67,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGb-p9-H9f">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGb-p9-H9f">
                     <rect key="frame" x="60" y="471" width="255" height="45"/>
                     <color key="backgroundColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -114,6 +116,19 @@
                         <action selector="enterChangeUserInfoVC:" destination="-1" eventType="touchUpInside" id="qsE-e6-9B7"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ri-cU-iyc">
+                    <rect key="frame" x="311" y="30" width="40" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="41X-Tr-F9f"/>
+                        <constraint firstAttribute="width" constant="40" id="u2L-2T-8Vk"/>
+                    </constraints>
+                    <state key="normal" title="退出">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="loignout:" destination="-1" eventType="touchUpInside" id="Z76-ap-nKQ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -124,6 +139,7 @@
                 <constraint firstItem="7CN-bA-kL3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GB5-Io-acm"/>
                 <constraint firstItem="XWR-gm-jbQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Hhz-zH-uOR"/>
                 <constraint firstAttribute="trailing" secondItem="8xQ-bp-Cyo" secondAttribute="trailing" id="IO1-L3-sOS"/>
+                <constraint firstItem="7ri-cU-iyc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="ITH-Cq-GJS"/>
                 <constraint firstAttribute="trailing" secondItem="XWR-gm-jbQ" secondAttribute="trailing" constant="10" id="LGs-Wd-M4V"/>
                 <constraint firstItem="iGb-p9-H9f" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Mjd-9n-ddd"/>
                 <constraint firstItem="qVY-eB-lhu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="O9B-0k-iBW"/>
@@ -140,6 +156,7 @@
                 <constraint firstItem="iGb-p9-H9f" firstAttribute="top" secondItem="8xQ-bp-Cyo" secondAttribute="bottom" constant="25" id="hqC-AU-2XC"/>
                 <constraint firstItem="8xQ-bp-Cyo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jql-bQ-icg"/>
                 <constraint firstItem="Pv4-8n-uc1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="loI-5S-Yag"/>
+                <constraint firstAttribute="trailing" secondItem="7ri-cU-iyc" secondAttribute="trailing" constant="24" id="oKQ-Pu-h04"/>
                 <constraint firstItem="iGb-p9-H9f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="sUz-oM-IBJ"/>
                 <constraint firstItem="XWR-gm-jbQ" firstAttribute="top" secondItem="qVY-eB-lhu" secondAttribute="bottom" constant="6" id="wT4-DG-Xfy"/>
             </constraints>

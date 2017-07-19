@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,7 +23,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ql3-Ti-X2e">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="146" width="375" height="375"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="ql3-Ti-X2e" secondAttribute="height" multiplier="1:1" id="0QH-9F-uH7"/>
+                    </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="maq-sT-qH8">
                     <rect key="frame" x="0.0" y="617" width="375" height="50"/>
@@ -38,15 +42,13 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ql3-Ti-X2e" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="3AN-Dh-7ls"/>
-                <constraint firstItem="ql3-Ti-X2e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DyC-hm-Gt8"/>
                 <constraint firstItem="maq-sT-qH8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="E7P-Od-waK"/>
                 <constraint firstAttribute="trailing" secondItem="maq-sT-qH8" secondAttribute="trailing" id="ExC-2b-20n"/>
                 <constraint firstAttribute="trailing" secondItem="ql3-Ti-X2e" secondAttribute="trailing" id="Niw-O7-KML"/>
                 <constraint firstItem="ql3-Ti-X2e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Uge-et-GHM"/>
-                <constraint firstAttribute="bottom" secondItem="ql3-Ti-X2e" secondAttribute="bottom" id="c7m-rG-Jek"/>
                 <constraint firstAttribute="bottom" secondItem="maq-sT-qH8" secondAttribute="bottom" id="f7X-CT-cc2"/>
                 <constraint firstItem="ql3-Ti-X2e" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="pDY-Zw-BBL"/>
             </constraints>

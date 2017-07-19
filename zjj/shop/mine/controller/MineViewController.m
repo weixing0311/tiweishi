@@ -36,6 +36,8 @@
     self.nickName.text = [UserModel shareInstance].nickName;
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.waitSendLabel.hidden = YES;
+    self.waitpayCountLabel .hidden = YES;
 }
 -(void)refreshMyInfoView
 {
@@ -54,15 +56,15 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary *dict =[dic objectForKey:@"data"];
         
-        int getWaitPayCount = [[dict safeObjectForKey:@"getWaitPayCount"]intValue];
+        int getWaitPayCount = [[dict safeObjectForKey:@"uncollected"]intValue];
         int unpaid          = [[dict safeObjectForKey:@"unpaid"]intValue];
-        if (getWaitPayCount==0) {
-            self.waitpayCountLabel.hidden = YES;
+        if (unpaid==0) {
+            self.waitSendLabel.hidden = YES;
         }else{
             self.waitSendLabel.hidden =NO;
             self.waitSendLabel.text = [NSString stringWithFormat:@"%d",getWaitPayCount];
         }
-        if (unpaid==0) {
+        if (getWaitPayCount==0) {
             self.waitpayCountLabel.hidden = YES;
         }else{
             self.waitpayCountLabel.hidden =NO;

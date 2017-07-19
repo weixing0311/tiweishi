@@ -379,6 +379,11 @@
 		6CA024C21F19021C00F54DF3 /* AddSubUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA024C01F19021C00F54DF3 /* AddSubUserCell.xib */; };
 		6CA024C51F19BA3400F54DF3 /* SubProjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA024C41F19BA3400F54DF3 /* SubProjectItem.m */; };
 		6CA024C81F19DBA100F54DF3 /* YMSocketUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA024C71F19DBA100F54DF3 /* YMSocketUtils.m */; };
+		6CC81FC91F1DB0EA00EB470C /* GoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC81FC81F1DB0EA00EB470C /* GoodsModel.m */; };
+		6CC81FCC1F1E509D00EB470C /* CXdetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC81FCB1F1E509D00EB470C /* CXdetailView.m */; };
+		6CC81FCE1F1E50B700EB470C /* CXdetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CC81FCD1F1E50B700EB470C /* CXdetailView.xib */; };
+		6CC81FD21F1FA0E200EB470C /* DistributionBottomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC81FD01F1FA0E200EB470C /* DistributionBottomCell.m */; };
+		6CC81FD31F1FA0E200EB470C /* DistributionBottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CC81FD11F1FA0E200EB470C /* DistributionBottomCell.xib */; };
 		6CCEEAB41EEE3D71002E1618 /* MeasurementInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CCEEAB21EEE3D71002E1618 /* MeasurementInfoCell.m */; };
 		6CCEEAB51EEE3D71002E1618 /* MeasurementInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEEAB31EEE3D71002E1618 /* MeasurementInfoCell.xib */; };
 		6CCEEAEA1EEE6AE3002E1618 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CCEEAE91EEE6AE3002E1618 /* CoreBluetooth.framework */; };
@@ -1040,6 +1045,14 @@
 		6CA024C41F19BA3400F54DF3 /* SubProjectItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubProjectItem.m; sourceTree = "<group>"; };
 		6CA024C61F19DBA100F54DF3 /* YMSocketUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSocketUtils.h; sourceTree = "<group>"; };
 		6CA024C71F19DBA100F54DF3 /* YMSocketUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSocketUtils.m; sourceTree = "<group>"; };
+		6CC81FC71F1DB0EA00EB470C /* GoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsModel.h; sourceTree = "<group>"; };
+		6CC81FC81F1DB0EA00EB470C /* GoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsModel.m; sourceTree = "<group>"; };
+		6CC81FCA1F1E509D00EB470C /* CXdetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXdetailView.h; sourceTree = "<group>"; };
+		6CC81FCB1F1E509D00EB470C /* CXdetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXdetailView.m; sourceTree = "<group>"; };
+		6CC81FCD1F1E50B700EB470C /* CXdetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CXdetailView.xib; sourceTree = "<group>"; };
+		6CC81FCF1F1FA0E200EB470C /* DistributionBottomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistributionBottomCell.h; sourceTree = "<group>"; };
+		6CC81FD01F1FA0E200EB470C /* DistributionBottomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistributionBottomCell.m; sourceTree = "<group>"; };
+		6CC81FD11F1FA0E200EB470C /* DistributionBottomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DistributionBottomCell.xib; sourceTree = "<group>"; };
 		6CCEEAB11EEE3D71002E1618 /* MeasurementInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementInfoCell.h; sourceTree = "<group>"; };
 		6CCEEAB21EEE3D71002E1618 /* MeasurementInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementInfoCell.m; sourceTree = "<group>"; };
 		6CCEEAB31EEE3D71002E1618 /* MeasurementInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeasurementInfoCell.xib; sourceTree = "<group>"; };
@@ -1718,6 +1731,8 @@
 				6C3639C31F0247FC00268851 /* TimeModel.m */,
 				6C8F53CA1F11D3A800C7A275 /* WXXShareManager.h */,
 				6C8F53CB1F11D3A800C7A275 /* WXXShareManager.m */,
+				6CC81FC71F1DB0EA00EB470C /* GoodsModel.h */,
+				6CC81FC81F1DB0EA00EB470C /* GoodsModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2147,6 +2162,9 @@
 				6C3639E11F02AAA100268851 /* TZSConfirmTheViewController.h */,
 				6C3639E21F02AAA100268851 /* TZSConfirmTheViewController.m */,
 				6C3639E31F02AAA100268851 /* TZSConfirmTheViewController.xib */,
+				6CC81FCF1F1FA0E200EB470C /* DistributionBottomCell.h */,
+				6CC81FD01F1FA0E200EB470C /* DistributionBottomCell.m */,
+				6CC81FD11F1FA0E200EB470C /* DistributionBottomCell.xib */,
 			);
 			name = "TrueOrder(确认订单)";
 			sourceTree = "<group>";
@@ -2631,6 +2649,9 @@
 				6CD010FB1EF7FD6E00FB9419 /* DetailReturnGoodsCell.h */,
 				6CD010FC1EF7FD6E00FB9419 /* DetailReturnGoodsCell.m */,
 				6CD010FD1EF7FD6E00FB9419 /* DetailReturnGoodsCell.xib */,
+				6CC81FCA1F1E509D00EB470C /* CXdetailView.h */,
+				6CC81FCB1F1E509D00EB470C /* CXdetailView.m */,
+				6CC81FCD1F1E50B700EB470C /* CXdetailView.xib */,
 			);
 			path = DetailCell;
 			sourceTree = "<group>";
@@ -3146,7 +3167,7 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = AZ8E9LFA87;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -3273,6 +3294,7 @@
 				6CD010FF1EF7FD6E00FB9419 /* DetailReturnGoodsCell.xib in Resources */,
 				6C3638DF1EFCEB2A00268851 /* TZSEditViewController.xib in Resources */,
 				6C36381D1EFCAF5500268851 /* home-weight01@3x.png in Resources */,
+				6CC81FD31F1FA0E200EB470C /* DistributionBottomCell.xib in Resources */,
 				6C3639EF1F035A5B00268851 /* TZSSendCell.xib in Resources */,
 				6C3639DF1F02A65200268851 /* TZSDeliveryViewController.xib in Resources */,
 				6C36397D1EFE47E100268851 /* AAChartKit.podspec in Resources */,
@@ -3334,6 +3356,7 @@
 				6C3637F61EFCAF5500268851 /* footer-ShoppingCart-red@2x.png in Resources */,
 				6CCEEB431EEE8591002E1618 /* MineTableViewCell.xib in Resources */,
 				6C3637DC1EFCAF5500268851 /* balance@2x.png in Resources */,
+				6CC81FCE1F1E50B700EB470C /* CXdetailView.xib in Resources */,
 				6C3637F31EFCAF5500268851 /* footer-PersonalCenter-red@3x.png in Resources */,
 				6CA024AB1F14BE1100F54DF3 /* me@3x.png in Resources */,
 				6C3638211EFCAF5500268851 /* home-weight03@3x.png in Resources */,
@@ -3585,10 +3608,13 @@
 				6CCEEB211EEE7F56002E1618 /* HomePageViewController.m in Sources */,
 				6CD0115F1EF8D79900FB9419 /* BaseWebViewController.m in Sources */,
 				6C36397A1EFE47E100268851 /* AAChartView.m in Sources */,
+				6CC81FD21F1FA0E200EB470C /* DistributionBottomCell.m in Sources */,
 				6C3639841EFE47E100268851 /* AAAnimation.m in Sources */,
 				6C363A071F03940500268851 /* MJRefreshFooterView.m in Sources */,
 				6CD92FF81F0B28FE00D7989E /* ShareCell.m in Sources */,
 				6CD92FF31F0B280500D7989E /* ShareViewController.m in Sources */,
+				6CC81FC91F1DB0EA00EB470C /* GoodsModel.m in Sources */,
+				6CC81FCC1F1E509D00EB470C /* CXdetailView.m in Sources */,
 				6C1B2B5B1EECDE350092AAF0 /* AppDelegate.m in Sources */,
 				6C36397C1EFE47E100268851 /* AAOptionsConstructor.m in Sources */,
 				6C363A101F04FD1000268851 /* OrderDetailViewController.m in Sources */,
@@ -3773,8 +3799,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3822,8 +3848,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -3850,9 +3876,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AZ8E9LFA87;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3904,8 +3930,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AZ8E9LFA87;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -3942,8 +3968,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.hguard.tiweishi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b6043f34-debc-4c82-adb2-c168061508aa";
-				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: cn.hguard.tiweishi";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "zjj/health/view/zjj-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

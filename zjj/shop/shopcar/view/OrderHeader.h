@@ -14,5 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *orderNum;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 - (IBAction)didDelete:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *orderNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *orderStatusLabel;
 
 @end

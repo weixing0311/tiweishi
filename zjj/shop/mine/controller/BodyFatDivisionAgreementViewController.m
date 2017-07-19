@@ -22,23 +22,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTBRedColor];
+    self.title = @"脂将军体脂师合作协议";
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)alredyRead:(id)sender {
     if (self.readBtn.selected ==YES) {
@@ -50,11 +39,26 @@
 }
 
 - (IBAction)IAgree:(id)sender {
-    if (self.readBtn.selected ==NO) {
-        [[UserModel shareInstance] showInfoWithStatus:@"请阅读协议"];
-        return;
-    }
+//    if (self.readBtn.selected ==NO) {
+//        [[UserModel shareInstance] showInfoWithStatus:@"请阅读协议"];
+//        return;
+//    }
     RealNameAuthenticationViewController *rn = [[RealNameAuthenticationViewController alloc]init];
     [self.navigationController pushViewController:rn animated:YES];
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 @end

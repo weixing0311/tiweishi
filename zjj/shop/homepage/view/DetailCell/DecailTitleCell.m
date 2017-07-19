@@ -23,6 +23,9 @@
 
 - (IBAction)didAdd:(id)sender {
     int count  = [self.countLabel.text intValue];
+    if (count ==self.restrictionNum) {
+        return;
+    }
     count++;
     self.countLabel.text =[NSString stringWithFormat:@"%d",count];
      [self countChange];

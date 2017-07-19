@@ -93,8 +93,7 @@
 
 @interface ADCarouselView()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
-/**轮播控件*/
-@property (weak, nonatomic) UICollectionView *carouselView;
+
 
 /**布局*/
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
@@ -134,16 +133,16 @@
         //设置滚动方向
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         //1.2初始化collectionview
-        UICollectionView *carouselView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
-        carouselView.showsHorizontalScrollIndicator = NO;
-        carouselView.pagingEnabled = YES;
-        carouselView.delegate = self;
-        carouselView.dataSource = self;
+        self.carouselView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
+        self.carouselView.showsHorizontalScrollIndicator = NO;
+        self.carouselView.pagingEnabled = YES;
+        self.carouselView.delegate = self;
+        self.carouselView.dataSource = self;
         //2、注册cell类型
-        [carouselView registerClass:[ADCarouselViewCell class] forCellWithReuseIdentifier:@"carouselViewCell"];
-        self.carouselView = carouselView;
+        [self.carouselView registerClass:[ADCarouselViewCell class] forCellWithReuseIdentifier:@"carouselViewCell"];
+        self.carouselView = self.carouselView;
         //3、添加为子控件
-        [self addSubview:carouselView];
+        [self addSubview:self.carouselView];
         //4、设置自动滚动时间间隔
         self.loop = NO;
         self.automaticallyScrollDuration = 0;

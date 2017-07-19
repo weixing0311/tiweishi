@@ -12,6 +12,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.cxImgLabel.layer.masksToBounds = YES;
+    self.cxImgLabel.layer.cornerRadius  = 5;
+    self.cxImgLabel.layer.borderWidth = 1;
+    self.cxImgLabel.layer.borderColor=[UIColor redColor].CGColor;
+
     // Initialization code
 }
 

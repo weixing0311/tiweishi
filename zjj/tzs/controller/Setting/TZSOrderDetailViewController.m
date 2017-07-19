@@ -10,7 +10,7 @@
 #import "UpDateOrderCell.h"
 #import "TZSOrderHeader.h"
 #import "UpdataAddressCell.h"
-
+#import "DistributionBottomCell.h"
 @interface TZSOrderDetailViewController ()
 
 @end
@@ -67,7 +67,7 @@
         
     }else{
 
-    return 3;
+    return 1;
     }
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -75,10 +75,10 @@
     UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 40)];
 
     if (section==0) {
-        view.backgroundColor =[UIColor colorWithWhite:.8 alpha:1];
+        view.backgroundColor =HEXCOLOR(0xeeeeee);
         
         TZSOrderHeader *header = [self getXibCellWithTitle:@"TZSOrderHeader"];
-        header.frame = CGRectMake(0, 5, JFA_SCREEN_WIDTH, 30);
+        header.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 40);
         header.backgroundColor =[UIColor whiteColor];
         header.orderNumLabel.text = [NSString stringWithFormat:@"订单号：%@",[_infoDict objectForKey:@"orderNo"]];
         
@@ -105,8 +105,10 @@
  if (indexPath.section ==0)
     {
         return 100;
-    }else{
+    }else if(indexPath.section ==2){
         return 44;
+    }else{
+        return 75;
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,24 +146,19 @@
     }
     else
     {
-        static NSString * identifier = @"cell1";
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        static NSString * identifier = @"DistributionBottomCell";
+
+        DistributionBottomCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+            cell = [self getXibCellWithTitle:identifier];
         }
-        if (indexPath.row ==0) {
-            cell.textLabel.text =@"商品金额";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]];
-        }else if(indexPath.row ==1){
-            cell.textLabel.text =@"商品优惠";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]-[[_infoDict objectForKey:@"payableAmount"]floatValue]];
-            cell.detailTextLabel.textColor =[UIColor greenColor];
-        }else{
-            cell.textLabel.text = @"实付款：";
-            cell.detailTextLabel.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
-            cell.detailTextLabel.textColor =[UIColor redColor];
-        }
+        
+        cell.totoaPriceLabel.text = [NSString stringWithFormat:@"+￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]];
+        cell.uhLabel.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]-[[_infoDict objectForKey:@"payableAmount"]floatValue]];
+        cell.thirdTitleLabel.text = @"实付款";
+        cell.ufLabel.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
         return cell;
+        
     }
 }
 -(NSString *)getStatusWithStatus:(int)myStatus

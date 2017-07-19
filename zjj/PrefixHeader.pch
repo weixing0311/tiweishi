@@ -26,6 +26,11 @@
 #import "SubUserItem.h"
 #import "SVProgressHUD.h"
 #import <ShareSDK/ShareSDK.h>
+
+
+#import "GoodsModel.h"
+
+
 #define HEXCOLOR(hex) [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16)) / 255.0 green:((float)((hex & 0xFF00) >> 8)) / 255.0 blue:((float)(hex & 0xFF)) / 255.0 alpha:1]
 
 #define kdidReLoign              @"tokenlostPleaseReLoign"

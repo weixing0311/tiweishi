@@ -52,6 +52,8 @@
 -(void)getAddress:(NSNotification*)noti
 {
     [addressDict setDictionary:noti.userInfo];
+    [self getwarehousingWithproviceId:[addressDict objectForKey:@"provinceId"]];
+
     [self.tableview reloadData];
 }
 
@@ -144,7 +146,7 @@
         
         cell.titleLabel.text = [addressDict safeObjectForKey:@"receiver"];
         cell.phonenumLabel.text = [addressDict safeObjectForKey:@"phone"];
-        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"provinceName"]?[addressDict safeObjectForKey:@"provinceName"]:@"",[addressDict safeObjectForKey:@"cityName"]?[addressDict safeObjectForKey:@"cityName"]:@"",[addressDict safeObjectForKey:@"countyName"]?[addressDict safeObjectForKey:@"countyName"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"addr"]:@""];
+        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"province"],[addressDict safeObjectForKey:@"city"],[addressDict safeObjectForKey:@"county"],[addressDict safeObjectForKey:@"addr"]];
         return cell;
     }
     else if (indexPath.section ==1)
@@ -207,6 +209,7 @@
     
     if (indexPath.section ==0) {
         AddressListViewController *add = [[AddressListViewController alloc]init];
+        add.isComeFromOrder = YES;
         [self.navigationController pushViewController:add animated:YES];
     }
     else if (indexPath.section ==1)
@@ -229,7 +232,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==0) {
-        return 60;
+        return 80;
     }else if (indexPath.section ==1)
     {
         return 100;
@@ -269,7 +272,10 @@
     DLog(@"上传数据---%@",self.param);
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/saveOrderInfo.do" paramters:self.param success:^(NSDictionary *dic) {
         DLog(@"下单成功--%@",dic);
+        [[UserModel shareInstance]showSuccessWithStatus:@"提交成功"];
     } failure:^(NSError *error) {
+        [[UserModel shareInstance]showErrorWithStatus:@"提交失败"];
+
         DLog(@"下单失败--%@",error);
     }];
 }
@@ -332,11 +338,26 @@
             DLog(@"%@",item.freightTemplateId);
             DLog(@"fre--%d",freightTemplateId);
             float weight = [item.productWeight floatValue];
+            float giveWeight = 0.0;//赠品重量
+            //获取赠品重量
+            if (item.promotList.count>0) {
+                for (NSDictionary * dic in item.promotList) {
+                    if ([[dic safeObjectForKey:@"promotionType"]intValue]==2) {
+                        float productWeight = [[dic safeObjectForKey:@"productWeight"]floatValue];
+                        int giveQuantity = [[dic safeObjectForKey:@"giveQuantity"]intValue];
+                        giveWeight +=productWeight*giveQuantity;
+                    }
+                }
+            }
+            
+            
             int count = [item.quantity intValue];
             if (freightTemplateId ==0) {
                 weight1 +=weight*count;
+                weight1 +=giveWeight;
             }else{
                 weight2 +=weight * count;
+                weight2 +=giveWeight;
             }
 
         }else
@@ -347,10 +368,34 @@
             DLog(@"fre--%d",freightTemplateId);
             float weight = [item.productWeight floatValue];
             int count = self.goodsCount;
+            
+            float giveWeight = 0.0;//赠品重量
+            //获取赠品重量
+            if (item.promotList.count>0) {
+                for (NSDictionary * dic in item.promotList) {
+                    if ([[dic safeObjectForKey:@"promotionType"]intValue]==2) {
+                        float productWeight = [[dic safeObjectForKey:@"productWeight"]floatValue];
+                        int giveQuantity = [[dic safeObjectForKey:@"giveQuantity"]intValue];
+
+                        int maxCount = [[dic safeObjectForKey:@"maxQuantity"]intValue];
+                        int minCount = [[dic safeObjectForKey:@"minQuantity"]intValue];
+                        if (self.goodsCount>=minCount&&self.goodsCount<maxCount) {
+  
+                            giveWeight +=productWeight*giveQuantity;
+                        }
+                        
+                    }
+                }
+            }
+            
             if (freightTemplateId ==0) {
                 weight1 +=weight*count;
+                weight1 +=giveWeight;
+
             }else{
                 weight2 +=weight * count;
+                weight2 +=giveWeight;
+
             }
 
         }

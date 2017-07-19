@@ -18,6 +18,11 @@
 @end
 
 @implementation UserViewController
+{
+    
+    __weak IBOutlet UIButton *rightLoignOut;
+    __weak IBOutlet UIButton *loignOutBtn;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -32,6 +37,7 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.scrollEnabled = NO;
+//    [self addFootView];
     self.headerImage.layer.borderWidth= 2;
     self.headerImage.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
 
@@ -42,7 +48,31 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:254/255.0 green:86/255.0 blue:0/255.0 alpha:1];
 
     [self setNavigationBarType];
+    CGRect rect = loignOutBtn.frame;
+    if (rect.origin.y+rect.size.height>JFA_SCREEN_HEIGHT-64) {
+        loignOutBtn.hidden = YES;
+        rightLoignOut.hidden = NO;
+    }else{
+        loignOutBtn.hidden = NO;
+        rightLoignOut.hidden = YES;
+    }
+    
+    
 }
+//-(void)addFootView
+//{
+//    UIView * footv = [[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 70)];
+//    UIButton * loignOutBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-120, 45)];
+//    [loignOutBtn setBackgroundColor:HEXCOLOR(0xEE0A3B)];
+//    [loignOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
+//    [loignOutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    loignOutBtn.center = footv.center;
+//    loignOutBtn.layer.cornerRadius = 5;
+//    loignOutBtn.layer.masksToBounds=  YES;
+//    [loignOutBtn addTarget:self action:@selector(loignout:) forControlEvents:UIControlEventTouchUpInside];
+//    [footv addSubview:loignOutBtn];
+//    self.tableview.tableFooterView = footv;
+//}
 -(void)refreshMyUserInfoView
 {
     [self.headerImage setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];

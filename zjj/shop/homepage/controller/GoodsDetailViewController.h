@@ -8,8 +8,9 @@
 
 #import "JFABaseTableViewController.h"
 
-@interface GoodsDetailViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
+@interface GoodsDetailViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *bannerView;
 @property (nonatomic,copy)NSString *productNo;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 
@@ -24,6 +25,5 @@
 @property (weak, nonatomic) IBOutlet UIWebView *webView1;
 @property (weak, nonatomic) IBOutlet UIWebView *webView2;
 - (IBAction)changeWebView:(id)sender;
-
 
 @end

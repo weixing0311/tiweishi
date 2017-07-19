@@ -19,12 +19,7 @@
 
     // Initialization code
     
-    self.hdTableView.delegate = self;
-    self.hdTableView.dataSource =self;
-    self.hdTableView.userInteractionEnabled = NO;
-    self.hdTableView.scrollEnabled= NO;
-    [self.hdTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self setExtraCellLineHiddenWithTb:self.hdTableView];
+
     hdArr= [NSMutableArray array];
     
 }
@@ -35,39 +30,6 @@
     [tb setTableFooterView:view];
 }
 
--(void)setHdArray:(NSArray *)arr
-{
-    [hdArr removeAllObjects];
-    [hdArr addObjectsFromArray:arr];;
-    [self.hdTableView reloadData];
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return hdArr.count;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 20;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString * identifier = @"HDCell";
-    HDCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        NSArray * arr = [[NSBundle mainBundle]loadNibNamed:identifier owner:nil options:nil];
-        cell = [arr lastObject];
-    }
-    NSDictionary *dic =[hdArr objectAtIndex:indexPath.row];
-    int hdtype = [[dic objectForKey:@"promotionType"]intValue];
-    if (hdtype ==1) {
-        cell.titleLabel.text = @"满减";
-    }else{
-        cell.titleLabel.text= @"满赠";
-    }
-    cell.detailLabel.text = [dic objectForKey:@"promotionDetail"];
-    
-    return cell;
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -97,5 +59,10 @@
 }
 
 - (IBAction)didbuy:(id)sender {
+}
+- (IBAction)didShowCuXDetailView:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(showCXDetailWithCell:)]) {
+        [self.delegate showCXDetailWithCell:self];
+    }
 }
 @end

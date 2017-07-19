@@ -16,13 +16,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
+//    [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTBRedColor];
     // Do any additional setup after loading the view.
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

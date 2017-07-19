@@ -9,9 +9,23 @@
 #import "AddressListCell.h"
 
 @implementation AddressListCell
-
+{
+    
+    __weak IBOutlet UIButton *deleteBtn;
+    __weak IBOutlet UIButton *edtiBtn;
+}
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    edtiBtn.layer.masksToBounds = YES;
+    edtiBtn.layer.cornerRadius  = 5;
+    edtiBtn.layer.borderWidth = 1;
+    edtiBtn.layer.borderColor=HEXCOLOR(0x666666).CGColor;
+    
+    deleteBtn.layer.masksToBounds = YES;
+    deleteBtn.layer.cornerRadius  = 5;
+    deleteBtn.layer.borderWidth = 1;
+    deleteBtn.layer.borderColor=HEXCOLOR(0x666666).CGColor;
     // Initialization code
 }
 

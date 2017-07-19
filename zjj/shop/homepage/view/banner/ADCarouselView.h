@@ -20,7 +20,8 @@
 @end
 
 @interface ADCarouselView : UIView
-
+/**轮播控件*/
+@property (strong, nonatomic) UICollectionView *carouselView;
 /**图片资源数组*/
 @property (nonatomic, strong) NSArray *imgs;
 

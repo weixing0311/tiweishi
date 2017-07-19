@@ -16,9 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTBRedColor];
    self.title = @"头像";
-    self.navigationController.navigationBar.barTintColor = RGBACOLOR(0/225.0F, 0/225.0F, 0/225.0F, .5);
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
     [self.imageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     

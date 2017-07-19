@@ -10,6 +10,7 @@
 
 @interface ChangeUserInfoViewController : JFABaseTableViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *headBtn;
+@property (weak, nonatomic) IBOutlet UIScrollView *baseScr;
 @property (weak, nonatomic) IBOutlet UITextField *nickNameLb;
 @property (weak, nonatomic) IBOutlet UIButton *manBtn;
 @property (weak, nonatomic) IBOutlet UIButton *genderBtn;

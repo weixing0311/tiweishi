@@ -28,7 +28,7 @@
 
 -(void)setInfoWithDict:(NSDictionary *)dict
 {
-    [self.headimageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"default_"]];
+    [self.headimageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.levelLabel.text = [UserModel shareInstance].gradeName;
     self.levelImage.image = [[UserModel shareInstance] getLevelImage];

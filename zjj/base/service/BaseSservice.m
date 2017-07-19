@@ -45,9 +45,9 @@
 -(NSString*)JFADomin
 {
     //正式
-    return @"https://mall.fitgeneral.com/";
+//    return @"https://mall.fitgeneral.com/";
     //生产
-//    return @"http://test.fitgeneral.com/";
+    return @"http://test.fitgeneral.com/";
     //测试域名
 //    return @"http://192.168.0.130:8101/";
     //x
@@ -126,15 +126,17 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
         
+        DLog(@"error--%ld-%@",(long)error.code,[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]);
 
         if ([error code] ==-1009) {
             [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
+            return ;
         }
         
         if ([error code] ==-1001) {
             [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
+            return;
         }
-        DLog(@"error--%ld-%@",(long)error.code,[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]);
         failure(error);
     }];
     return task;

@@ -23,7 +23,7 @@
 @property (nonatomic,copy  )NSString * restrictionNum;//单笔订单限购数量
 @property (nonatomic,copy  )NSString * status;//1正常 2已下架 0 删除
 @property (nonatomic,copy  )NSString * quantity;//数量
-
+@property (nonatomic,strong)NSArray * promotTitle;
 
 @property (nonatomic,strong)NSArray * promotList;
 

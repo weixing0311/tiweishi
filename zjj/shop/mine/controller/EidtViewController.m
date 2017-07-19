@@ -10,6 +10,7 @@
 #import "PublicCell.h"
 #import "BaseWebViewController.h"
 #import "AddressListViewController.h"
+#import "ChangePasswordViewController.h"
 @interface EidtViewController ()
 
 @end

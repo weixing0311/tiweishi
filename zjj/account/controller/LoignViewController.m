@@ -72,13 +72,11 @@
 
 }
 
-
 -(void)hiddenKeyBoard
 {
     [self.mobileTf resignFirstResponder];
     [self.verTF resignFirstResponder];
     [self bgViewDown];
-
 }
 
 - (IBAction)pageChange:(UIButton *)sender {

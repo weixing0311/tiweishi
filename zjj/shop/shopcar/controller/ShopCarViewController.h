@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *didChoose;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *settlementBtn;
+@property (weak, nonatomic) IBOutlet UILabel *priceDetailLb;
 
 - (IBAction)didSettlement:(id)sender;
 - (IBAction)didChoose:(id)sender;

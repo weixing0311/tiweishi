@@ -23,7 +23,7 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="脂将军" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="us2-ha-1Jw">
-                    <rect key="frame" x="50" y="12" width="52" height="20"/>
+                    <rect key="frame" x="50" y="12" width="140.5" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="HkI-KM-Dad"/>
                         <constraint firstAttribute="width" priority="20" constant="200" id="drl-n0-tEr"/>
@@ -32,19 +32,8 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqP-nk-De8">
-                    <rect key="frame" x="345" y="12" width="20" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="20" id="XDF-F4-FXo"/>
-                        <constraint firstAttribute="height" constant="20" id="hX4-Q0-7Dj"/>
-                    </constraints>
-                    <state key="normal" image="delete2.png"/>
-                    <connections>
-                        <action selector="didDelete:" destination="iN0-l3-epB" eventType="touchUpInside" id="wLG-YZ-0UP"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已发货" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZA1-G0-ANp">
-                    <rect key="frame" x="275" y="12" width="60" height="20"/>
+                    <rect key="frame" x="290" y="12" width="60" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="XRT-eF-n5A"/>
                         <constraint firstAttribute="height" constant="20" id="bAP-WK-Xcq"/>
@@ -53,11 +42,10 @@
                     <color key="textColor" red="1" green="0.095024956600000002" blue="0.031412760419999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1231231231" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XN-F7-wPZ">
-                    <rect key="frame" x="110" y="12" width="100" height="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1231231231" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XN-F7-wPZ">
+                    <rect key="frame" x="198.5" y="12" width="71.5" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="rHJ-0U-Dx5"/>
-                        <constraint firstAttribute="width" constant="100" id="t8j-g2-5MG"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.94572418928146362" green="0.51665598154067993" blue="0.31462016701698303" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -70,24 +58,24 @@
                 <constraint firstItem="7XN-F7-wPZ" firstAttribute="leading" secondItem="us2-ha-1Jw" secondAttribute="trailing" constant="8" id="3Ic-Um-1Go"/>
                 <constraint firstItem="us2-ha-1Jw" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6rO-6a-ofR"/>
                 <constraint firstItem="bre-ne-cIs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="8cY-HD-L2Q"/>
-                <constraint firstAttribute="trailing" secondItem="HqP-nk-De8" secondAttribute="trailing" constant="10" id="8dT-Su-LjD"/>
                 <constraint firstItem="us2-ha-1Jw" firstAttribute="leading" secondItem="bre-ne-cIs" secondAttribute="trailing" constant="10" id="FV8-7E-lAf"/>
+                <constraint firstItem="ZA1-G0-ANp" firstAttribute="leading" secondItem="7XN-F7-wPZ" secondAttribute="trailing" constant="20" id="INn-q5-FgC"/>
                 <constraint firstItem="7XN-F7-wPZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ImT-8c-R6N"/>
                 <constraint firstItem="bre-ne-cIs" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="W9S-pT-yJW"/>
-                <constraint firstItem="HqP-nk-De8" firstAttribute="leading" secondItem="ZA1-G0-ANp" secondAttribute="trailing" constant="10" id="ZZL-UR-nrE"/>
-                <constraint firstItem="HqP-nk-De8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="zwn-qZ-1bs"/>
+                <constraint firstAttribute="trailing" secondItem="ZA1-G0-ANp" secondAttribute="trailing" constant="25" id="rPC-ff-9IR"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="imageView" destination="bre-ne-cIs" id="68t-aW-rBy"/>
                 <outlet property="orderNum" destination="7XN-F7-wPZ" id="IXl-in-kSs"/>
+                <outlet property="orderNumLabel" destination="7XN-F7-wPZ" id="Ks0-rs-zz5"/>
+                <outlet property="orderStatusLabel" destination="ZA1-G0-ANp" id="U6H-Qr-dPn"/>
                 <outlet property="statusLabel" destination="ZA1-G0-ANp" id="LVR-PO-8WK"/>
                 <outlet property="title" destination="us2-ha-1Jw" id="FqP-ue-inz"/>
             </connections>
         </view>
     </objects>
     <resources>
-        <image name="delete2.png" width="17" height="20"/>
         <image name="ding-logo.png" width="70" height="70"/>
     </resources>
 </document>

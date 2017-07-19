@@ -33,7 +33,7 @@
     // Do any additional setup after loading the view from its nib.
     _dataArray =[NSMutableArray array];
     _infoArray =[NSMutableArray array];
-    
+    [self setExtraCellLineHiddenWithTb:self.tableview];
     [self setRefrshWithTableView:self.tableview];
 
     [self.tableview  headerBeginRefreshing];

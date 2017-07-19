@@ -18,10 +18,15 @@
 #import "TZSDeliveryViewController.h"
 #import "TZSDistributionViewController.h"
 #import "AddTradingPsController.h"
+
 @interface SettingViewController ()
 @end
 
 @implementation SettingViewController
+{
+    UIView * ImagespView;
+    UIImageView * bigHeadImageView;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -42,6 +47,20 @@
     self.cerLabel.text = [UserModel shareInstance].isAttest;
     // Do any additional setup after loading the view from its nib.
 }
+
+//刷新个人信息
+-(void)refreshUserInfo
+{
+    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
+    self.nameLabel.text = [UserModel shareInstance].nickName;
+    self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
+    self.tzsLabel.text = [UserModel shareInstance].gradeName;
+    self.cerLabel.text = [UserModel shareInstance].isAttest;
+    self.assetsLabel.text = [NSString stringWithFormat:@"(余额：￥%.2f)",[UserModel shareInstance].balance];
+
+    
+}
+
 -(void)setShardow
 {
     [self.firstView  setViewShadow];
@@ -49,12 +68,13 @@
     [self.thirdView  setViewShadow];
     [self.forthView  setViewShadow];
 }
+//获取个人信息
 -(void)getbalance
 {
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
-        self.assetsLabel.text = [NSString stringWithFormat:@"总资产：￥%.2f",[UserModel shareInstance].balance];
+        [self refreshUserInfo];
         
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);
@@ -80,6 +100,35 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark --点击头像
+- (IBAction)showHeadImage:(id)sender {
+    if (!ImagespView) {
+        ImagespView =[[UIView alloc]initWithFrame:self.view.bounds];
+        ImagespView.backgroundColor = RGBACOLOR(0, 0, 0, 0.7);
+        [ImagespView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenMe) ]];
+        
+        bigHeadImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 130, 60, 60)];
+        [bigHeadImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+        bigHeadImageView.userInteractionEnabled = YES;
+        
+        [ImagespView addSubview:bigHeadImageView];
+        [self.view.window addSubview:ImagespView];
+    }
+    ImagespView.hidden = NO;
+    
+    [UIView animateWithDuration:.5 animations:^{
+        bigHeadImageView.frame= CGRectMake(0, (JFA_SCREEN_HEIGHT-JFA_SCREEN_WIDTH)/2, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH);
+    } completion:nil];
+}
+-(void)hiddenMe
+{
+    [UIView animateWithDuration:.5 animations:^{
+        bigHeadImageView.frame= CGRectMake(20, 130, 60, 60);
+    } completion:^(BOOL finished) {
+        ImagespView.hidden = YES;
+    }];
+
+}
 
 
 #pragma mark-- 邀请
@@ -90,6 +139,7 @@
     QrCodeView *rcodeView = [nib objectAtIndex:0];
 
     rcodeView.frame = self.view.frame;
+    [rcodeView setInfoWithDict:nil];
     [self.view.window addSubview: rcodeView];
 }
 -(void)removeImage:(UIGestureRecognizer*)tap
@@ -127,12 +177,14 @@
 - (IBAction)send:(id)sender {
     self.navigationController.navigationBarHidden =NO;
     TZSDeliveryViewController *ed =[[TZSDeliveryViewController alloc]init];
+    ed.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ed animated:YES];
 }
 #pragma mark--我的配送
 - (IBAction)mySend:(id)sender {
     self.navigationController.navigationBarHidden =NO;
     TZSDistributionViewController * ds =[[TZSDistributionViewController alloc]init];
+    ds.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ds animated:YES];
     
 }
@@ -140,6 +192,7 @@
 - (IBAction)address:(id)sender {
     self.navigationController.navigationBarHidden =NO;
     AddressListViewController *ad =[[AddressListViewController alloc]init];
+    ad.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ad animated:YES];
 }
 #pragma mark--充值

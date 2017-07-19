@@ -29,21 +29,25 @@ static GoodsDetailItem * item;
     }
     return self;
 }
+-(void)attemptDealloc
+{
+    item = nil;
+}
 -(void)setupInfoWithDict:(NSDictionary *)dict
 {
-    self.productNo =              [dict safeObjectForKey:@"productNo"];
-    self.productName =            [dict safeObjectForKey:@"productName"];
-    self.viceTitle =              [dict safeObjectForKey:@"viceTitle"];
-    self.oldPrice =               [dict safeObjectForKey:@"oldPrice"];
-    self.productPrice =           [dict safeObjectForKey:@"productPrice"];
-    self.productWeight =          [dict safeObjectForKey:@"productWeight"];
-    self.image =                  [dict safeObjectForKey:@"defPicture"];
-    self.fatTeacherproductPrice = [dict safeObjectForKey:@"fatTeacherproductPrice"];
-    self.promotList =             [dict safeObjectForKey:@"promotList"];
-    self.freightTemplateId =      [dict safeObjectForKey:@"freightTemplateId"];
-    self.isDelivery            =  [[dict safeObjectForKey:@"isDelivery"]intValue];
-    self.isDistribution        =  [[dict safeObjectForKey:@"isDistribution"]intValue];
-    
+    self.productNo =               [dict safeObjectForKey:@"productNo"];
+    self.productName =             [dict safeObjectForKey:@"productName"];
+    self.viceTitle =               [dict safeObjectForKey:@"viceTitle"];
+    self.oldPrice =                [dict safeObjectForKey:@"oldPrice"];
+    self.productPrice =            [dict safeObjectForKey:@"productPrice"];
+    self.productWeight =           [dict safeObjectForKey:@"productWeight"];
+    self.image =                   [dict safeObjectForKey:@"defPicture"];
+    self.fatTeacherproductPrice =  [dict safeObjectForKey:@"fatTeacherproductPrice"];
+    self.promotList =              [dict safeObjectForKey:@"promotList"];
+    self.freightTemplateId      =  [dict safeObjectForKey:@"freightTemplateId"];
+    self.isDelivery             =  [[dict safeObjectForKey:@"isDelivery"]intValue];
+    self.isDistribution         =  [[dict safeObjectForKey:@"isDistribution"]intValue];
+    self.restrictionNum         =  [[dict safeObjectForKey:@"restrictionNum"]intValue];
     
     NSString * picture2 =         [dict safeObjectForKey:@"picture2"];
     NSString * picture3 =         [dict safeObjectForKey:@"picture3"];

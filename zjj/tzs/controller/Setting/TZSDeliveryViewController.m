@@ -96,7 +96,7 @@
 -(void)didAddWithCell:(TZSSendCell*)cell
 {
     
-    NSDictionary *dic = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary *dic = [_dataArray objectAtIndex:cell.tag];
     int quantity = [[dic objectForKey:@"quantity"]intValue];
     int count = [cell.numberLabel.text intValue];
     if (quantity ==count) {
@@ -105,6 +105,7 @@
     else{
         count++;
         cell.numberLabel.text =[NSString stringWithFormat:@"%d",count];
+        [dic safeSetObject:@(count) forKey:@"chooseCount"];
     }
     [self setInfoInChooseArr:dic add:YES];
     
@@ -112,13 +113,15 @@
 
 -(void)didRedWithCell:(TZSSendCell*)cell
 {
-    NSDictionary *dic = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary *dic = [_dataArray objectAtIndex:cell.tag];
     int count = [cell.numberLabel.text intValue];
     if (count==0) {
         return;
     }
     else{
         count--;
+        [dic safeSetObject:@(count) forKey:@"chooseCount"];
+
         cell.numberLabel.text =[NSString stringWithFormat:@"%d",count];
     }
     [self setInfoInChooseArr:dic add:NO];

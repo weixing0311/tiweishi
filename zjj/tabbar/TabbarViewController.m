@@ -8,7 +8,7 @@
 
 #import "TabbarViewController.h"
 #import "HealthViewController.h"
-#import "NewsViewController.h"
+#import "MessageViewController.h"
 #import "foundViewController.h"
 #import "ShopTabbbarController.h"
 #import "UserViewController.h"
@@ -31,14 +31,14 @@
     UINavigationController * nav1 = [[UINavigationController alloc]initWithRootViewController:health];
     health.title = @"健康";
 
-    NewsViewController *news = [[NewsViewController alloc]init];
+    MessageViewController *news = [[MessageViewController alloc]init];
     UINavigationController * nav2 = [[UINavigationController alloc]initWithRootViewController:news];
     news.title = @"消息";
 
     
-    foundViewController * found = [[foundViewController alloc]init];
+//    foundViewController * found = [[foundViewController alloc]init];
     
-//    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
+    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
     UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:found];
     found.title = @"发现";
 
@@ -63,7 +63,7 @@
     UITabBarItem * item2 =[self.tabBar.items objectAtIndex:1];
     UITabBarItem * item3 =[self.tabBar.items objectAtIndex:2];
     UITabBarItem * item4 =[self.tabBar.items objectAtIndex:3];
-    UITabBarItem * item5 =[self.tabBar.items objectAtIndex:4];
+    UITabBarItem * item5 =[self.tabBar.items lastObject];
 
     item1.image = [UIImage imageNamed:@"health  gray_"];
     item1.selectedImage = [UIImage imageNamed:@"health_"];
@@ -85,15 +85,16 @@
 {
 //    UITabBarItem* item = tabBarController.tabBarItem;
     
-    if (viewController ==self.viewControllers[1]||viewController ==self.viewControllers[2]) {
-        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
-        return NO;
-    }else if (viewController ==self.viewControllers[3])
-    {
-        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放，如需查看请关注《脂将军官方》公众号"];
-
-        return NO;
-    }
+//    if (viewController ==self.viewControllers[1]||viewController ==self.viewControllers[2]) {
+//        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
+//        return NO;
+//    }
+        //else if (viewController ==self.viewControllers[3])
+//    {
+//        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放，如需查看请关注《脂将军官方》公众号"];
+//
+//        return NO;
+//    }
     return YES;
     
 
@@ -108,20 +109,20 @@
 //        return;
 //        
 //    }
-//    if ([item.title isEqualToString:@"云服务"]) {
-//        
-//        if ([[UserModel shareInstance].userType isEqualToString:@"1"]) {
-//            
-//            ShopTabbbarController *tb =[[ShopTabbbarController alloc]init];
-//            self.view.window.rootViewController = tb;
-//
-//        }else{
-//            TzsTabbarViewController *tb =[[TzsTabbarViewController alloc]init];
-//            self.view.window.rootViewController = tb;
-//
-//        }
-//        
-//    }
+    if ([item.title isEqualToString:@"云服务"]) {
+        
+        if ([[UserModel shareInstance].userType isEqualToString:@"1"]) {
+            
+            ShopTabbbarController *tb =[[ShopTabbbarController alloc]init];
+            self.view.window.rootViewController = tb;
+
+        }else{
+            TzsTabbarViewController *tb =[[TzsTabbarViewController alloc]init];
+            self.view.window.rootViewController = tb;
+
+        }
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning {

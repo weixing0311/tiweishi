@@ -13,6 +13,7 @@
 -(void)getCountWithCell:(ShopCarCell *)cell type:(BOOL)type;
 -(void)getCellGoodsCountWithCell:(ShopCarCell *)cell count:(int)count;
 -(void)deleteCell:(ShopCarCell*)cell;
+-(void)showCuXiaoDetailViewWithCell:(ShopCarCell *)cell;
 @end
 @interface ShopCarCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *headerImgView;
@@ -30,6 +31,7 @@
 - (IBAction)redCount:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
 - (IBAction)didChooseCell:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *hdTitleLabel;
 
 -(void)setUpWithItem:(shopCarCellItem *)item;
 @end

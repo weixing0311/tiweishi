@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailCxCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *cxImgLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *cxImageView;
 @property (weak, nonatomic) IBOutlet UILabel *cxContentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cxLabel;
 @end

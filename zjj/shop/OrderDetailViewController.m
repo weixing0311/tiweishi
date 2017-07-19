@@ -26,8 +26,8 @@
     [self setNbColor];
     self.tableview .delegate =self;
     self.tableview.dataSource = self;
-    self.view.backgroundColor =[UIColor colorWithWhite:0.9 alpha:1];
-    self.tableview.backgroundColor =[UIColor colorWithWhite:0.9 alpha:1];
+    self.view.backgroundColor =HEXCOLOR(0xeeeeee);
+    self.tableview.backgroundColor =[UIColor clearColor];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     _dataArray = [NSMutableArray array];
     _infoDict = [NSMutableDictionary dictionary ];;
@@ -140,24 +140,40 @@
 }
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section ==4) {
+
+    if (section ==3) {
+        UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44)];
+        view.backgroundColor =HEXCOLOR(0xeeeeee);
+
         int status = [[_infoDict safeObjectForKey:@"status"]intValue];
         if (status==3) {
-        OrderFootBtnView * button = [[OrderFootBtnView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44)];
 
-            [button.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
-            [button.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
-            return button;
+           OrderFootBtnView * footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
+            footBtn.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44);
+            footBtn.tag = section;
+            footBtn.delegate = self;
+            [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+            [footBtn.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
+
+            [view addSubview:footBtn];
+
+            
+            
+            
         }else if (status ==1)
         {
-            OrderFootBtnView * button = [[OrderFootBtnView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44)];
+            OrderFootBtnView * footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
+            footBtn.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44);
+            footBtn.tag = section;
+            footBtn.delegate = self;
+            [footBtn.firstBtn setTitle:@"去付款" forState:UIControlStateNormal];
+            [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
             
-            [button.firstBtn setTitle:@"去付款" forState:UIControlStateNormal];
-            [button.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
-            return button;
+            [view addSubview:footBtn];
   
         }
-        
+        return view;
+
     }
     return nil;
 }
@@ -269,21 +285,53 @@
     }
     else if (status ==1)
     {
-        
+        //去付款
     }
 }
 -(void)didClickSecondBtnWithView:(OrderFootBtnView*)view
 {
     int status = [[_infoDict safeObjectForKey:@"status"]intValue];
+    NSString * orderNo =[_infoDict safeObjectForKey:@"orderNo"];
+
     if (status==3)
     {
         
     }
     else if (status ==1)
     {
-        
+        //取消订单
+        [self cancelOrderWithOrderId:orderNo];
     }
 }
+/**
+ *  取消订单接口
+ */
+-(void)cancelOrderWithOrderId:(NSString *)orderId
+{
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSMutableDictionary * param =[NSMutableDictionary dictionary];
+        [param setObject:orderId forKey:@"orderNo"];
+        [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
+        
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
+            [[UserModel shareInstance] showSuccessWithStatus:@"取消成功"];
+            [self.tableview headerBeginRefreshing];
+            
+        } failure:^(NSError *error) {
+            [[UserModel shareInstance] showErrorWithStatus:@"取消失败"];
+        }];
+
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:nil]];
+
+    
+    [self presentViewController:al animated:YES completion:nil];
+    
+    
+}
+
 /*
  #pragma mark - Navigation
  

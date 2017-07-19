@@ -232,6 +232,12 @@ static UserModel *model;
 
 -(void)didAttestSuccessWithDict:(NSDictionary *)dict
 {
+    /*
+     grade = 1;
+     gradeName = "\U666e\U901a\U4f53\U8102\U5e08";
+     isAttest = "\U5df2\U8ba4\U8bc1";
+     userType = 2;
+     */
     self.grade = [dict safeObjectForKey:@"grade"];
     self.gradeName = [dict safeObjectForKey:@"gradeName"];
     self.isAttest = [dict safeObjectForKey:@"isAttest"];
@@ -242,6 +248,21 @@ static UserModel *model;
 
 -(void)setTzsInfoWithDict:(NSDictionary *)dict
 {
+    /*
+     
+     cardUrl = "http://image.fitgeneral.com/images/code/1500036814067886074.jpg";
+     grade = 1;
+     gradeName = "\U666e\U901a\U4f53\U8102\U5e08";
+     headimgurl = "http://image.fitgeneral.com/images/head/1500084127193733096.png";
+     inviteUrl = "http://test.fitgeneral.com/api/user/scanCode.do?recid=5256";
+     isAttest = "\U5df2\U8ba4\U8bc1";
+     nickName = "\U661f\U661f";
+     phone = 15510106271;
+     tradePassword = "";
+     userBalance = 0;
+     userName = "\U9b4f\U661f";
+     userType = 2;
+     */
     self.gradeName      = [dict safeObjectForKey:@"gradeName"];
     self.headUrl        = [dict safeObjectForKey:@"headimgurl"];
     self.isAttest       = [dict safeObjectForKey:@"isAttest"];

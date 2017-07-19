@@ -27,6 +27,7 @@
     self.affiliation       = [dict safeObjectForKey:@"affiliation"];
     self.restrictionNum    = [dict safeObjectForKey:@"restrictionNum"];
     self.quantity          = [dict safeObjectForKey:@"quantity"];
+    self.promotTitle       = [dict safeObjectForKey:@"promotTitle"];
 }
 
 @end

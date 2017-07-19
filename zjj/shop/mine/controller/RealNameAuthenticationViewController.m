@@ -16,6 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setTBRedColor];
+    self.title = @"实名认证";
+    
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenKeyboard)]];
     // Do any additional setup after loading the view from its nib.
 }
@@ -52,25 +56,29 @@
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.nameTF.text forKey:@"userName"];
-    [param setObject:self.sfzTf.text forKey:@"userCode"];
-    [SVProgressHUD showWithStatus: @"认证中。。"];
+    [param setObject:[NSString encryptString: self.sfzTf.text] forKey:@"userCode"];
+//    [SVProgressHUD showWithStatus: @"认证中。。"];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
     self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" paramters:param success:^(NSDictionary *dic) {
         TzsTabbarViewController *tzs =[[TzsTabbarViewController alloc]init];
-        [SVProgressHUD dismiss];
-        
+//        [SVProgressHUD dismiss];
+        NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
+        [[UserModel shareInstance] didAttestSuccessWithDict:dataDict];
         [[UserModel shareInstance] showSuccessWithStatus:@"认证成功"];
         self.view.window.rootViewController = tzs;
     } failure:^(NSError *error) {
-         [SVProgressHUD dismiss];
+//         [SVProgressHUD dismiss];
     }];
 }
 - (IBAction)didRz:(id)sender {
     if (self.nameTF.text.length<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入姓名"];
+        
         return;
     }
     if (self.sfzTf.text.length<15) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入身份证号"];
         return;
     }
     [self updateInfo];

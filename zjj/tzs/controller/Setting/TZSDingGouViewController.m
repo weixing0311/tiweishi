@@ -9,6 +9,7 @@
 #import "TZSDingGouViewController.h"
 #import "TZSDGCell.h"
 #import "TZSDGUPCell.h"
+#import "CXdetailView.h"
 #import "AppDelegate.h"
 @interface TZSDingGouViewController ()<TZSDGCellDelegate,TZSDGUPCellDelegate>
 
@@ -19,6 +20,7 @@
     NSMutableArray * _dataArray;
     NSMutableArray * _buyArray;
     NSMutableArray * _chooseArray;
+    CXdetailView * cuxiaoDetailView;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,7 +31,9 @@
     _buyArray    = [NSMutableArray array];
     self.tableview.delegate = self;
     self.tableview.dataSource= self;
-    
+    cuxiaoDetailView = [[CXdetailView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
+    cuxiaoDetailView.hidden = YES;
+    [self.view addSubview:cuxiaoDetailView];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     
     [self getInfo];
@@ -62,6 +66,7 @@
     }];
     
 }
+
 
 //提交升级信息
 
@@ -100,6 +105,7 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/submitServiceOrder.do" paramters:dic success:^(NSDictionary *dic) {
         DLog(@"dic --%@",dic);
         
+        [[UserModel shareInstance]showSuccessWithStatus:@"进货成功"];
         [_chooseArray removeAllObjects];
         self.priceLabel.text = @"订单总价：0";
         self.countLabel.text = @"已选服务：0";
@@ -132,8 +138,8 @@
         
         NSDictionary *dic =[_dataArray objectAtIndex:indexPath.row];
         NSArray * promotListArr = [dic objectForKey:@"promotList"];
-        if (promotListArr) {
-            return 88+22*promotListArr.count;
+        if (promotListArr&&promotListArr.count>0) {
+            return 88+30;
         }else{
             return 88;
         }
@@ -173,7 +179,20 @@
         cell.tag = indexPath.row+indexPath.section *100;
         cell.titleLabel .text = [dict safeObjectForKey:@"productName"];
         cell.priceLabel.text = [dict safeObjectForKey:@"productPrice"];
-        [cell setHdArray:[dict objectForKey:@"promotList"]];
+        NSArray * array = [dict objectForKey:@"promotList"];
+        if (array&& array.count>0) {
+            cell.cxView.hidden= NO;
+            NSDictionary *dic =[array objectAtIndex:0];
+            int hdtype = [[dic objectForKey:@"promotionType"]intValue];
+            if (hdtype ==1) {
+                cell.cxImageLabel.text = @"满减";
+            }else{
+                cell.cxImageLabel.text= @"满赠";
+            }
+            cell.cxDetailLabel.text = [dic objectForKey:@"promotionDetail"];
+        }else{
+            cell.cxView.hidden =YES;
+        }
         return cell;
 
     }
@@ -215,6 +234,12 @@
 
 
 #pragma mark ----cellDelegate
+
+-(void)showCXDetailWithCell:(TZSDGCell * )cell
+{
+    NSDictionary *dic = [_dataArray objectAtIndex:cell.tag-100];
+    [cuxiaoDetailView showCuxiaoTabViewWithArray:[dic safeObjectForKey:@"promotList"] ];
+}
 -(void)addCountWithCell:(TZSDGCell *)cell
 {
     NSDictionary *dic = [_dataArray objectAtIndex:cell.tag-100];

@@ -67,9 +67,16 @@
         DLog(@"dic");
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
-
-        [_infoArray addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];
+        if (page==1) {
+            [_infoArray removeAllObjects];
+            [self.tableview setFooterHidden:NO];
+        }
         
+        
+        [_infoArray addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];
+        if (_infoArray.count<30) {
+            [self.tableview setFooterHidden:YES];
+        }
         [self getinfoWithStatus:self.segment.selectedSegmentIndex];
         [self.tableview reloadData];
         
@@ -252,18 +259,21 @@
 -(void)didClickSecondBtnWithView:(OrderFootBtnView*)view
 {
     //取消
-    NSDictionary * dic =[_dataArray objectAtIndex:view.tag];
+    NSMutableDictionary * dict =[_dataArray objectAtIndex:view.tag];
     
     
     //    取消订单
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [param safeSetObject:[dic safeObjectForKey:@"orderNo"] forKey:@"orderNo"];
+    [param safeSetObject:[dict safeObjectForKey:@"orderNo"] forKey:@"orderNo"];
     [param safeSetObject:[UserModel shareInstance].nickName  forKey:@"userName"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
-        DLog(@"删除配送订单成功--%@",dic);
+        DLog(@"删除订单成功--%@",dic);
+        [[UserModel shareInstance]showSuccessWithStatus:@"取消订单成功"];
+        [dict safeSetObject:@"0" forKey:@"status"];
+        [self.tableview reloadData];
     } failure:^(NSError *error) {
-        DLog(@"删除配送订单失败--%@",error);
+        DLog(@"删除订单失败--%@",error);
     }];
 
     
