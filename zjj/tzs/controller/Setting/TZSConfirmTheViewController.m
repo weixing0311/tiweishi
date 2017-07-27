@@ -12,9 +12,8 @@
 #import "UpDateOrderCell.h"
 #import "PublicCell.h"
 #import "DistributionBottomCell.h"
+#import "BaseWebViewController.h"
 @interface TZSConfirmTheViewController ()
-@property (nonatomic,assign)float freight;
-@property (nonatomic,copy  )NSString * address;
 @property (nonatomic,copy  )NSString * warehouseNo;
 @end
 
@@ -32,6 +31,11 @@
     }
     return self;
 }
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.currentTasks cancel];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getAddress:) name:kSendAddress object:nil];
@@ -41,6 +45,7 @@
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self getDefaultAddressFromNet];
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -51,6 +56,9 @@
     addressDict = [NSMutableDictionary dictionaryWithCapacity:0];
     [addressDict setDictionary:noti.userInfo];
     [self.tableview reloadData];
+
+    [self getwarehousingWithproviceId:[addressDict objectForKey:@"provinceId"]];
+
 }
 #pragma mark --接口
 
@@ -115,35 +123,7 @@
 //提交订单
 -(void)updateOrder
 {
-    NSMutableDictionary * param =[NSMutableDictionary dictionary];
-    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [param safeSetObject:@(self.freight) forKey:@"freight"];
-    [param safeSetObject:self.address forKey:@"addressId"];
-    [param safeSetObject:@"" forKey:@"freightType"];
-    [param safeSetObject:@"" forKey:@"buyerRemark"];
-    [param safeSetObject:self.productStr forKey:@"productArray"];
-    
-    
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/addDelivery.do" paramters:param success:^(NSDictionary *dic) {
-        
-        
-        /*
-         {
-         "message": "服务配送保存成功",
-         "status": "success",
-         "data": {
-         "orderNo": "121706191117115119197",
-         "freight": 510
-         },
-         "code": 200}
-
-         
-         */
-    } failure:^(NSError *error) {
-        
-    }];
 }
-
 
 ////取消订单
 //
@@ -207,7 +187,7 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.titleLabel.text =[addressDict safeObjectForKey:@"receiver"];
-        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"provinceName"],[addressDict safeObjectForKey:@"cityName"],[addressDict safeObjectForKey:@"countyName"],[addressDict safeObjectForKey:@"addr"]];
+        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"provinceName"]?[addressDict safeObjectForKey:@"provinceName"]:@"",[addressDict safeObjectForKey:@"cityName"]?[addressDict safeObjectForKey:@"cityName"]:@"",[addressDict safeObjectForKey:@"countyName"]?[addressDict safeObjectForKey:@"countyName"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"addr"]:@""];
         cell.phonenumLabel.text = [addressDict safeObjectForKey:@"phone"];
         return cell;
     }else if (indexPath.section ==1)
@@ -245,11 +225,20 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        cell.ufLabel.text =[NSString stringWithFormat:@"+￥%@",weightStr ];
+        cell.ufLabel.text =[NSString stringWithFormat:@"+￥%@",weightStr?weightStr:@"0" ];
         return cell;
 
     }
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    AddressListViewController * address = [[AddressListViewController alloc]init];
+    address.isComeFromOrder = YES;
+    [self.navigationController pushViewController:address animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
@@ -267,6 +256,43 @@
 */
 
 - (IBAction)placeTheOrder:(id)sender {
+    NSMutableDictionary * param =[NSMutableDictionary dictionary];
+    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [param safeSetObject:weightStr forKey:@"freight"];
+    [param safeSetObject:[addressDict objectForKey:@"id"] forKey:@"addressId"];
+    [param safeSetObject:@"1" forKey:@"freightType"];
+    [param safeSetObject:@"" forKey:@"buyerRemark"];
+    [param safeSetObject:self.productStr forKey:@"productArray"];
+    [param safeSetObject:self.warehouseNo forKey:@"warehouseNo"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/addDelivery.do" paramters:param success:^(NSDictionary *dic) {
+        
+        
+        
+        BaseWebViewController *web = [[BaseWebViewController alloc]init];
+        web.urlStr = @"app/checkstand.html";
+        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+        web.payType =2;
+        web.orderNo = [dic safeObjectForKey:@"orderNo"];
+        web.title  =@"收银台";
+        [self.navigationController pushViewController:web animated:YES];
+        /*
+         {
+         "message": "服务配送保存成功",
+         "status": "success",
+         "data": {
+         "orderNo": "121706191117115119197",
+         "freight": 510
+         },
+         "code": 200}
+         
+         
+         */
+    } failure:^(NSError *error) {
+        
+    }];
+
 }
 
 #pragma mark--获取仓储接口上传数据

@@ -13,6 +13,7 @@
 #import "ForgetJYpasswordViewController.h"
 #import "TZSChangeMobileViewController.h"
 #import "ImageViewController.h"
+#import "LoignViewController.h"
 @interface TZSEditViewController ()
 
 @end
@@ -51,7 +52,17 @@
 //退出登录
 -(void)loignout
 {
+    UIAlertController * la =[UIAlertController alertControllerWithTitle:@"是否确认退出登录？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [la addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
+        [[UserModel shareInstance]removeAllObject];
+        LoignViewController *lo = [[LoignViewController alloc]init];
+        self.view.window.rootViewController = lo;
+    }]];
+    [la addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     
+    
+    [self presentViewController:la animated:YES completion:nil];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -94,9 +105,17 @@
                         break;
                     case 1:
                         cell.textLabel.text = @"姓名";
-                        cell.detailTextLabel.text = [UserModel shareInstance].nickName;
+                        cell.detailTextLabel.text = [UserModel shareInstance].username;
+//                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    
                         break;
-                    case 2:
+                        case 2:
+                        cell.textLabel.text = @"会员名";
+                        cell.detailTextLabel.text = [UserModel shareInstance].nickName;
+                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+                        break;
+                    case 3:
                         cell.textLabel.text = @"手机号";
                         cell.detailTextLabel.text = [UserModel shareInstance].phoneNum;
                         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -133,7 +152,8 @@
                 switch (indexPath.row) {
                     case 0:
                         cell.textLabel.text = @"客服电话";
-                        cell.detailTextLabel.text = @"4008-123-123";
+                        cell.detailTextLabel.text = @"4006-119-516";
+                        cell.detailTextLabel.textColor = [UIColor blueColor];
                         break;
                     case 1:
                         cell.textLabel.text = @"公司简介";
@@ -195,6 +215,9 @@
     {
         if (indexPath.row ==1)
         {
+            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://4006119516"]];
+
+        }else{
             
         }
     }

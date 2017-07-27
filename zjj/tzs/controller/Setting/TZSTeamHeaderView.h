@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface TZSTeamHeaderView : UIView
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *orderNum;
 @property (weak, nonatomic) IBOutlet UILabel *ordername;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mobileLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastTimeLabel;
 
 @end

@@ -108,6 +108,9 @@
 
 -(void)getUpdateInfo
 {
+    return;
+    
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString * bundleVersion =[infoDictionary objectForKey:@"CFBundleVersion"];
     

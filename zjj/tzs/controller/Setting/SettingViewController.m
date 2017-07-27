@@ -26,6 +26,7 @@
 {
     UIView * ImagespView;
     UIImageView * bigHeadImageView;
+    BOOL isBigHeadImage;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -39,6 +40,8 @@
     
     [self setShardow];
 
+    isBigHeadImage = NO;
+    
     
     [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
@@ -127,7 +130,6 @@
     } completion:^(BOOL finished) {
         ImagespView.hidden = YES;
     }];
-
 }
 
 
@@ -167,9 +169,11 @@
 }
 #pragma mark--已订购
 - (IBAction)alsoBuy:(id)sender {
-    self.navigationController.navigationBarHidden =NO;
+//    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
+    web.title = @"已购服务";
     web.hidesBottomBarWhenPushed =YES;
+    web.urlStr = @"app/fatTeacher/orderService.html";
     [self.navigationController pushViewController:web animated:YES];
 }
 
@@ -197,19 +201,20 @@
 }
 #pragma mark--充值
 - (IBAction)topUp:(id)sender {
-    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
-    web.title =@"充值";
+    web.urlStr =@"app/fatTeacher/recharge.html";
     web.hidesBottomBarWhenPushed =YES;
+    web.title = @"充值";
+
     [self.navigationController pushViewController:web animated:YES];
 
 }
 #pragma mark--交易记录
 - (IBAction)TransactionRecords:(id)sender {
-    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
-     web.title =@"交易记录";
+    web.urlStr =@"app/fatTeacher/tradingRecord.html";
     web.hidesBottomBarWhenPushed =YES;
+    web.title = @"交易记录";
     [self.navigationController pushViewController:web animated:YES];
 
 }
@@ -236,14 +241,16 @@
         
         
         [self presentViewController:al animated:YES completion:nil];
-    }
+    }else{
     
     
-    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
-     web.title =@"钱包管理";
+    web.urlStr = @"app/fatTeacher/dailyCash.html";
     web.hidesBottomBarWhenPushed =YES;
+    web.title = @"钱包管理";
+
     [self.navigationController pushViewController:web animated:YES];
+    }
 
 }
 
@@ -253,8 +260,9 @@
 - (IBAction)myIncome:(id)sender {
     self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
-     web.title =@"我的收益";
+    web.urlStr = @"app/fatTeacher/myEarnings.html";
     web.hidesBottomBarWhenPushed =YES;
+    web.title = @"我的收益";
     [self.navigationController pushViewController:web animated:YES];
 
     //WEB
@@ -263,13 +271,14 @@
 - (IBAction)teamOrder:(id)sender {
     self.navigationController.navigationBarHidden =NO;
     TZSTeamDGViewController * ts =[[TZSTeamDGViewController alloc]init];
+    ts.hidesBottomBarWhenPushed =YES;
     [self.navigationController pushViewController:ts animated:YES];
 }
 #pragma mark--团队管理
 - (IBAction)teamManagement:(id)sender {
-    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
-     web.title =@"团队管理";
+    web.urlStr = @"app/fatTeacher/myTeam.html";
+    web.title = @"团队管理";
     web.hidesBottomBarWhenPushed =YES;
     [self.navigationController pushViewController:web animated:YES];
 

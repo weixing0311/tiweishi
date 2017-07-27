@@ -12,6 +12,7 @@
 #import "EidtViewController.h"
 #import "BodyFatDivisionAgreementViewController.h"
 #import "OrderViewController.h"
+#import "ContactUsViewController.h"
 @interface MineViewController ()
 
 @end
@@ -56,20 +57,21 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary *dict =[dic objectForKey:@"data"];
         
-        int getWaitPayCount = [[dict safeObjectForKey:@"uncollected"]intValue];
-        int unpaid          = [[dict safeObjectForKey:@"unpaid"]intValue];
-        if (unpaid==0) {
+        int waitCollect      = [[dict safeObjectForKey:@"uncollected"]intValue];
+        int getWaitPayCount  = [[dict safeObjectForKey:@"unpaid"]intValue];
+        if (waitCollect==0) {
             self.waitSendLabel.hidden = YES;
         }else{
             self.waitSendLabel.hidden =NO;
-            self.waitSendLabel.text = [NSString stringWithFormat:@"%d",getWaitPayCount];
+            self.waitSendLabel.text = [NSString stringWithFormat:@"%d",waitCollect];
+            self.waitSendLabel.adjustsFontSizeToFitWidth = YES;
         }
         if (getWaitPayCount==0) {
             self.waitpayCountLabel.hidden = YES;
         }else{
             self.waitpayCountLabel.hidden =NO;
-            self.waitpayCountLabel.text = [NSString stringWithFormat:@"%d",unpaid];
-
+            self.waitpayCountLabel.text = [NSString stringWithFormat:@"%d",getWaitPayCount];
+            self.waitpayCountLabel.adjustsFontSizeToFitWidth = YES;
         }
     } failure:^(NSError *error) {
         self.waitSendLabel.hidden = YES;
@@ -108,19 +110,21 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BaseWebViewController *web =[[BaseWebViewController alloc]init];
     
     if (indexPath.row ==0) {
+        BaseWebViewController *web =[[BaseWebViewController alloc]init];
         web.title = @"帮助中心";
-        web.urlStr = @"";
+        web.urlStr = @"app/helpConsumers.html";
+        web.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:web animated:YES];
+
     }else{
-        web.title = @"联系我们";
-        web.urlStr = @"";
+        ContactUsViewController * cc = [[ContactUsViewController alloc]init];
+        cc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:cc animated:YES];
     }
-    web.hidesBottomBarWhenPushed = YES;
 //    self.navigationController.navigationBarHidden = NO;
 
-    [self.navigationController pushViewController:web animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

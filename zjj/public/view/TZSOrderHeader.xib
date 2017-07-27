@@ -43,12 +43,12 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="8Ue-fz-LPH" secondAttribute="trailing" id="0dq-4a-061"/>
                 <constraint firstItem="8Ue-fz-LPH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7Ly-Un-Jek"/>
-                <constraint firstItem="1ed-tw-2m8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="8Pl-Ip-Qyh"/>
+                <constraint firstItem="FxK-pN-tJo" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KoJ-0i-62U"/>
+                <constraint firstItem="1ed-tw-2m8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Mau-2C-GNa"/>
                 <constraint firstItem="FxK-pN-tJo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="SN0-Bx-WQG"/>
                 <constraint firstAttribute="bottom" secondItem="8Ue-fz-LPH" secondAttribute="bottom" id="ZtI-Mi-HQX"/>
                 <constraint firstItem="8Ue-fz-LPH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dD1-mp-QTO"/>
                 <constraint firstAttribute="trailing" secondItem="1ed-tw-2m8" secondAttribute="trailing" constant="10" id="jfa-FJ-snr"/>
-                <constraint firstItem="FxK-pN-tJo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="oOH-Oi-HcF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

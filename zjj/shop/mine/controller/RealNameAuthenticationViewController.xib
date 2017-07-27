@@ -21,6 +21,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e8W-t1-RMP">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RnZ-SK-bpG">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                     <subviews>
@@ -101,8 +105,8 @@
                         <action selector="didRz:" destination="-1" eventType="touchUpInside" id="3cJ-oa-KbX"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="*请他填写本人真实信息，否则后续出现问题，本公司不予承担责任！" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmc-7E-zCO">
-                    <rect key="frame" x="10" y="151" width="355" height="60"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*请他填写本人真实信息，否则后续出现问题，本公司不予承担责任！" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmc-7E-zCO">
+                    <rect key="frame" x="10" y="151" width="355" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="10" constant="60" id="dmN-4b-Hvq"/>
                     </constraints>
@@ -111,18 +115,22 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="RnZ-SK-bpG" secondAttribute="trailing" id="0Eh-Ux-drV"/>
                 <constraint firstItem="Pmc-7E-zCO" firstAttribute="top" secondItem="94q-DS-A7u" secondAttribute="bottom" constant="10" id="1es-VF-jFR"/>
                 <constraint firstItem="RnZ-SK-bpG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="CHi-h5-Y8S"/>
                 <constraint firstAttribute="trailing" secondItem="Pmc-7E-zCO" secondAttribute="trailing" constant="10" id="Cww-0h-IiL"/>
+                <constraint firstAttribute="trailing" secondItem="e8W-t1-RMP" secondAttribute="trailing" id="I9v-Gx-k9E"/>
+                <constraint firstItem="e8W-t1-RMP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="KZh-rz-Yz4"/>
                 <constraint firstAttribute="bottom" secondItem="pWv-Bh-2dy" secondAttribute="bottom" id="MB8-kd-2Q2"/>
                 <constraint firstAttribute="trailing" secondItem="94q-DS-A7u" secondAttribute="trailing" id="Ozm-Qz-iYF"/>
                 <constraint firstItem="94q-DS-A7u" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TXc-2H-rNj"/>
                 <constraint firstItem="RnZ-SK-bpG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fzB-EI-eDa"/>
                 <constraint firstItem="Pmc-7E-zCO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="hbq-I4-ZTY"/>
+                <constraint firstItem="e8W-t1-RMP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lsB-nB-hST"/>
                 <constraint firstAttribute="trailing" secondItem="pWv-Bh-2dy" secondAttribute="trailing" id="m49-lA-tqT"/>
+                <constraint firstAttribute="bottom" secondItem="e8W-t1-RMP" secondAttribute="bottom" id="wSS-BB-Pkv"/>
                 <constraint firstItem="94q-DS-A7u" firstAttribute="top" secondItem="RnZ-SK-bpG" secondAttribute="bottom" constant="1" id="x9z-uU-YiG"/>
                 <constraint firstItem="pWv-Bh-2dy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yof-00-oKI"/>
             </constraints>

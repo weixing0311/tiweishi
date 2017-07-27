@@ -13,6 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.headimageView.layer.borderWidth = 1;
+    self.headimageView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

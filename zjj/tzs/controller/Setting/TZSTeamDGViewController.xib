@@ -21,26 +21,29 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="USZ-KY-aUW">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="29"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="USZ-KY-aUW">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="7qi-0l-G6k"/>
+                    </constraints>
                     <segments>
                         <segment title="全部"/>
-                        <segment title="待补充订购"/>
+                        <segment title="待补充"/>
                         <segment title="已完成"/>
                     </segments>
                     <connections>
                         <action selector="ChangeType:" destination="-1" eventType="valueChanged" id="jUH-Rv-TK1"/>
                     </connections>
                 </segmentedControl>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bGR-j7-ae2">
-                    <rect key="frame" x="0.0" y="28" width="375" height="639"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="bGR-j7-ae2">
+                    <rect key="frame" x="0.0" y="41" width="375" height="626"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="bGR-j7-ae2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2Jq-a7-gQy"/>
-                <constraint firstItem="bGR-j7-ae2" firstAttribute="top" secondItem="USZ-KY-aUW" secondAttribute="bottom" id="7iy-hv-NkL"/>
+                <constraint firstItem="bGR-j7-ae2" firstAttribute="top" secondItem="USZ-KY-aUW" secondAttribute="bottom" constant="1" id="7iy-hv-NkL"/>
                 <constraint firstAttribute="trailing" secondItem="bGR-j7-ae2" secondAttribute="trailing" id="Bj3-JY-70R"/>
                 <constraint firstItem="USZ-KY-aUW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="HgY-V6-atu"/>
                 <constraint firstAttribute="trailing" secondItem="USZ-KY-aUW" secondAttribute="trailing" id="iUf-dd-Yyo"/>

@@ -159,11 +159,11 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/area/queryArea.do" paramters:nil success:^(NSDictionary *dic) {
         
         
-        [self.dataArray addObjectsFromArray:[[dic objectForKey:@"data"] objectForKey:@"array"]];
+        [self.dataArray addObjectsFromArray:[[dic safeObjectForKey:@"data"] objectForKey:@"array"]];
         [[NSUserDefaults standardUserDefaults]setObject:self.dataArray forKey:@"DATAINFOARRAY"];
         
-        self.secondArray = [self.dataArray[0] objectForKey:@"children"];
-        self.thirdArray =[self.secondArray[0] objectForKey:@"children"];
+        self.secondArray = [self.dataArray[0] safeObjectForKey:@"children"];
+        self.thirdArray =[self.secondArray[0] safeObjectForKey:@"children"];
         [self.cityPickerView reloadAllComponents];
         
         [self.ProvincialDict setObject:[[self.dataArray objectAtIndex:0]safeObjectForKey:@"text"] forKey:@"text"];
@@ -177,10 +177,14 @@
         if (self.thirdArray.count>0) {
             self.districtDict =self.thirdArray[0];
         }
-        pro =  [[self.dataArray objectAtIndex:0]objectForKey:@"text"];
-        city= [[self.secondArray objectAtIndex:0]objectForKey:@"text"];
-        dis =  [[self.thirdArray objectAtIndex:0]objectForKey:@"text"];
-
+        pro =  [[self.dataArray objectAtIndex:0]safeObjectForKey:@"text"];
+        city= [[self.secondArray objectAtIndex:0]safeObjectForKey:@"text"];
+        if (self.thirdArray.count>0) {
+            
+            dis =  [[self.thirdArray objectAtIndex:0]safeObjectForKey:@"text"];
+        }else{
+            dis = @"";
+        }
 
     } failure:^(NSError *error) {
         
@@ -209,14 +213,14 @@
 {
     if (component ==0) {
         NSDictionary *dic = [self.dataArray objectAtIndex:row];
-        return [dic objectForKey:@"text"];
+        return [dic safeObjectForKey:@"text"];
     }
     else if (component ==1) {
         NSDictionary *dic = [self.secondArray objectAtIndex:row];
-        return [dic objectForKey:@"text"];
+        return [dic safeObjectForKey:@"text"];
     }else{
         NSDictionary *dic = [self.thirdArray objectAtIndex:row];
-        return [dic objectForKey:@"text"];
+        return [dic safeObjectForKey:@"text"];
     }
 
 }
@@ -245,11 +249,11 @@
             self.dataArray = [[NSUserDefaults standardUserDefaults]objectForKey:@"DATAINFOARRAY"];
             
             self.secondArray =[NSMutableArray arrayWithCapacity:0];
-            self.secondArray = [[self.dataArray objectAtIndex:row]objectForKey:@"children"];
+            self.secondArray = [[self.dataArray objectAtIndex:row]safeObjectForKey:@"children"];
             NSDictionary *dic =[self.secondArray objectAtIndex:0];
             self.thirdArray= [NSMutableArray arrayWithCapacity:0];
             self.thirdArray = [dic safeObjectForKey:@"children"];
-            NSLog(@"%@",[dic objectForKey:@"text"]);
+            NSLog(@"%@",[dic safeObjectForKey:@"text"]);
             [self.cityPickerView reloadComponent:1];
             [self.cityPickerView reloadComponent:2];
             
@@ -266,7 +270,11 @@
             }
             pro = [self getString:[[self.dataArray objectAtIndex:row] safeObjectForKey:@"text"]];
             city =[self getString:[[self.secondArray objectAtIndex:0] safeObjectForKey:@"text"]];
-            dis = [self getString:[[self.thirdArray objectAtIndex:0] safeObjectForKey:@"text"]];
+            if (self.thirdArray.count>0) {
+                dis = [self getString:[[self.thirdArray objectAtIndex:0] safeObjectForKey:@"text"]];
+            }else{
+                dis = @"";
+            }
 
         }
         
@@ -275,7 +283,7 @@
     {
         if (row<self.secondArray.count) {
             self.thirdArray =[NSMutableArray arrayWithCapacity:0];
-            self.thirdArray = [[self.secondArray objectAtIndex:row]objectForKey:@"children"];
+            self.thirdArray = [[self.secondArray objectAtIndex:row]safeObjectForKey:@"children"];
             [self.cityPickerView reloadComponent:2];
             
             [self.cityDict setObject:[[self.secondArray objectAtIndex:row]safeObjectForKey:@"text"] forKey:@"text"];
@@ -283,7 +291,12 @@
             
             
             city =[self getString:[[self.secondArray objectAtIndex:row ]safeObjectForKey:@"text"]];
-            dis = [self getString:[[self.thirdArray objectAtIndex:0 ] safeObjectForKey:@"text"]];
+            if (self.thirdArray.count>0) {
+                dis = [self getString:[[self.thirdArray objectAtIndex:0 ] safeObjectForKey:@"text"]];
+
+            }else{
+                dis = @"";
+            }
 
         }
     }

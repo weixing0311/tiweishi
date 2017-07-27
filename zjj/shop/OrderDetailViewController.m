@@ -11,6 +11,7 @@
 #import "TZSOrderHeader.h"
 #import "UpdataAddressCell.h"
 #import "OrderFootBtnView.h"
+#import "WXPsTitleCell.h"
 @interface OrderDetailViewController ()<orderFootBtnViewDelegate>
 
 @end
@@ -59,18 +60,26 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 5;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section ==0) {
         return 1;
-    }else if (section ==1)
+        
+    }
+    else if (section ==1)
+    {
+        return 1;
+        
+    }
+
+    else if (section ==2)
     {
         return _dataArray.count;
         
     }
-    else if(section ==2)
+    else if(section ==3)
     {
         return 2;
         
@@ -80,7 +89,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section ==1) {
+    if (section ==2) {
         return 44;
     }else{
         return 0;
@@ -90,13 +99,20 @@
 {
     if (section ==0) {
         return 10;
-    }else if (section==1)
+    }
+    else if (section==1)
     {
         return 0;
-    }else if (section==2)
+    }
+    else if (section==2)
     {
         return 10;
-    }else{
+    }
+    else if (section==3)
+    {
+        return 10;
+    }
+    else{
         int status = [[_infoDict safeObjectForKey:@"status"]intValue];
         if (status==3||status==1) {
         return 40;
@@ -108,9 +124,19 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 60;
-        
-    }else if (indexPath.section ==1)
+        int status = [[_infoDict objectForKey:@"status"]intValue];
+        if (status==1||status==3) {
+            return 80;
+            
+        }else{
+            return 0;
+        }
+    }
+    else if(indexPath.section ==1)
+    {
+        return 80;
+    }
+    else if (indexPath.section ==2)
     {
         return 100;
     }else{
@@ -121,7 +147,7 @@
 {
     UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 50)];
 
-    if (section ==1) {
+    if (section ==2) {
         view.backgroundColor =[UIColor colorWithWhite:1 alpha:1];
         
         TZSOrderHeader *header = [self getXibCellWithTitle:@"TZSOrderHeader"];
@@ -141,7 +167,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
 
-    if (section ==3) {
+    if (section ==4) {
         UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44)];
         view.backgroundColor =HEXCOLOR(0xeeeeee);
 
@@ -180,6 +206,34 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==0) {
+        
+        static NSString * identifier = @"WXPsTitleCell";
+        
+        WXPsTitleCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
+        int status = [[_infoDict objectForKey:@"status"]intValue];
+        
+        if (!cell) {
+            cell = [self getXibCellWithTitle:identifier];
+        }
+        
+        if (status==3) {
+            cell.payTsView.hidden = YES;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.titleLabel.text  =[_infoDict safeObjectForKey:@"clientDescription"];
+            cell.timeLabel.text = [_infoDict safeObjectForKey:@"operationTime"];
+        }
+        else if(status ==1){
+            cell.payTsView.hidden =NO;
+            cell.lastTime.text =[NSString stringWithFormat:@"剩余：%@",@"0小时0分"];
+            cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%@",[_infoDict safeObjectForKey:@"freight"]];
+        }else{
+            cell.payTsView.hidden = YES;
+        }
+        return cell;
+        
+        
+    }
+    if (indexPath.section ==1) {
         static NSString * identifier = @"UpdataAddressCell";
         UpdataAddressCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
@@ -190,7 +244,7 @@
         cell.phonenumLabel.text = [_infoDict safeObjectForKey:@"consigneePhone"];
         return cell;
     }
-    else if (indexPath.section ==1) {
+    else if (indexPath.section ==2) {
         static NSString * identifier = @"UpDateOrderCell";
         UpDateOrderCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
@@ -206,7 +260,7 @@
         
         return cell;
     }
-    else if (indexPath.section ==2)
+    else if (indexPath.section ==3)
     {
         static NSString * identifier = @"cell1";
         UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];

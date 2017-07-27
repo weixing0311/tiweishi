@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="119.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbc-UI-yPd">
@@ -55,19 +55,19 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHM-I1-Jpx">
-                        <rect key="frame" x="18" y="81" width="15" height="15"/>
+                        <rect key="frame" x="8" y="69" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="15" id="vae-0d-Vmk"/>
-                            <constraint firstAttribute="width" constant="15" id="xDG-dc-Yv1"/>
+                            <constraint firstAttribute="height" constant="40" id="vae-0d-Vmk"/>
+                            <constraint firstAttribute="width" constant="40" id="xDG-dc-Yv1"/>
                         </constraints>
                         <state key="normal" image="checked-false.png"/>
-                        <state key="selected" image="checked.png"/>
+                        <state key="selected" image="checked-true.png"/>
                         <connections>
                             <action selector="isDefault:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tyQ-UG-fbY"/>
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设为默认地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8a-Rt-w7m">
-                        <rect key="frame" x="41" y="84" width="102" height="10"/>
+                        <rect key="frame" x="56" y="84" width="102" height="10"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="102" id="b8T-6y-Xl8"/>
                             <constraint firstAttribute="height" constant="10" id="dAl-0C-QTr"/>
@@ -115,11 +115,11 @@
                     <constraint firstItem="U5K-NA-40y" firstAttribute="leading" secondItem="JvD-WL-Muf" secondAttribute="trailing" constant="10" id="Bsk-Iw-LUl"/>
                     <constraint firstItem="lxY-c7-TLO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DAu-ho-wJv"/>
                     <constraint firstAttribute="trailingMargin" secondItem="u9c-du-NNl" secondAttribute="trailing" constant="10" id="DcX-Dq-nw8"/>
-                    <constraint firstItem="bHM-I1-Jpx" firstAttribute="top" secondItem="lxY-c7-TLO" secondAttribute="bottom" constant="12" id="M6m-ma-qXg"/>
+                    <constraint firstItem="bHM-I1-Jpx" firstAttribute="top" secondItem="lxY-c7-TLO" secondAttribute="bottom" id="M6m-ma-qXg"/>
                     <constraint firstItem="vbc-UI-yPd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="Ns3-nt-6Yp"/>
                     <constraint firstAttribute="trailingMargin" secondItem="uWd-zD-tOe" secondAttribute="trailing" constant="10" id="Qrt-Om-YXP"/>
                     <constraint firstItem="vbc-UI-yPd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="RBa-s4-9DR"/>
-                    <constraint firstItem="bHM-I1-Jpx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="hml-rm-x44"/>
+                    <constraint firstItem="bHM-I1-Jpx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="hml-rm-x44"/>
                     <constraint firstItem="uWd-zD-tOe" firstAttribute="top" secondItem="u9c-du-NNl" secondAttribute="bottom" constant="10" id="ho7-cp-Jum"/>
                     <constraint firstItem="uWd-zD-tOe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="l5Z-7Q-cKH"/>
                     <constraint firstItem="K8a-Rt-w7m" firstAttribute="leading" secondItem="bHM-I1-Jpx" secondAttribute="trailing" constant="8" id="yFm-OH-AtD"/>
@@ -140,6 +140,6 @@
     </objects>
     <resources>
         <image name="checked-false.png" width="19" height="19"/>
-        <image name="checked.png" width="36" height="36"/>
+        <image name="checked-true.png" width="19" height="19"/>
     </resources>
 </document>

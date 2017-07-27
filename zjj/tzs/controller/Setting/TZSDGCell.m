@@ -11,7 +11,6 @@
 @implementation TZSDGCell
 {
     int count ;
-    NSMutableArray * hdArr;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -19,18 +18,16 @@
 
     // Initialization code
     
-
-    hdArr= [NSMutableArray array];
+    self.headImageView.layer.borderWidth = 1;
+    self.headImageView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
+    
+    self.cxImageLabel.layer.masksToBounds = YES;
+    self.cxImageLabel.layer.cornerRadius  = 5;
+    self.cxImageLabel.layer.borderWidth = 1;
+    self.cxImageLabel.layer.borderColor=[UIColor redColor].CGColor;
+    
     
 }
--(void)setExtraCellLineHiddenWithTb:(UITableView *)tb
-{
-    UIView *view =[[UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tb setTableFooterView:view];
-}
-
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

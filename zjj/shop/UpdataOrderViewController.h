@@ -8,6 +8,14 @@
 
 #import "JFABaseTableViewController.h"
 
+
+typedef enum 
+{
+    IS_FROM_SHOPCART,
+    IS_FROM_GOODSDETAIL,
+    IS_FROM_ORDER,
+}ordersType;
+
 @interface UpdataOrderViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
@@ -17,4 +25,5 @@
 @property (nonatomic,copy) NSString * orderItem;
 @property (nonatomic,strong)NSMutableDictionary * param;
 @property (nonatomic,assign)int goodsCount;
+@property (nonatomic,assign)ordersType orderType;
 @end

@@ -36,19 +36,24 @@
     
     
     self.mobileTf.delegate = self;
+    self.mobileTf.returnKeyType = UIReturnKeyGo;
+    self.mobileTf.clearButtonMode=UITextFieldViewModeAlways;
+
     self.mobileTf.keyboardType = UIKeyboardTypeNumberPad;
-    self.mobileTf.returnKeyType = UIReturnKeyNext;
-    
+    [self.mobileTf addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+
     self.verTF.delegate = self;
     self.verTF.keyboardType = UIKeyboardTypeNumberPad;
     self.verTF.returnKeyType = UIReturnKeyGo;
     [self.verTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    self.loignMobileTf.delegate = self;
-    self.loignMobileTf.keyboardType = UIKeyboardTypeNumberPad;
-    self.loignMobileTf.returnKeyType = UIReturnKeyNext;
-    self.loignMobileTf.returnKeyType = UIReturnKeyDone;
     
+    self.loignMobileTf.delegate = self;
+    self.loignMobileTf.clearButtonMode=UITextFieldViewModeAlways;
+    self.loignMobileTf.keyboardType = UIKeyboardTypeNumberPad;
+    [self.loignMobileTf addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+
     self.passWordTf.delegate = self;
+    self.passWordTf.clearButtonMode=UITextFieldViewModeAlways;
     self.passWordTf.keyboardType = UIKeyboardTypeDefault;
     self.passWordTf.returnKeyType = UIReturnKeyDone;
     self.passWordTf.secureTextEntry = YES;
@@ -61,16 +66,7 @@
 }
 
 
--(void)textFieldDidChange:(UITextField *)textField
-{
-    if (textField == self.verTF) {
-        if (textField.text.length >= 4) {
-            textField.text = [textField.text substringToIndex:4];
-            [self.verTF resignFirstResponder];
-        }
-    }
 
-}
 
 -(void)hiddenKeyBoard
 {
@@ -345,20 +341,76 @@
 //    }];
 
 }
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+-(void)textFieldDidChange:(UITextField *)textField
 {
+    if (textField == self.verTF) {
+        if (textField.text.length >= 4) {
+            textField.text = [textField.text substringToIndex:4];
+            [self.verTF resignFirstResponder];
+        }
+    }
     if (textField ==self.mobileTf) {
-        [self.mobileTf resignFirstResponder];
-        [self.verTF becomeFirstResponder];
-    }else if(textField==self.passWordTf){
-        [self.passWordTf resignFirstResponder];
-    }else if (textField ==self.loignMobileTf)
-    {
-        [self.loignMobileTf resignFirstResponder];
+        if (self.mobileTf.text.length>=11) {
+            textField.text = [textField.text substringToIndex:11];
+
+            [self.mobileTf resignFirstResponder];
+        }
+    }
+    if (textField ==self.loignMobileTf) {
+        if (self.loignMobileTf.text.length>=11) {
+            textField.text = [textField.text substringToIndex:11];
+            
+            [self.loignMobileTf resignFirstResponder];
+        }
+    }
+}
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    if (textField ==self.mobileTf) {
+////        [self.mobileTf resignFirstResponder];
+////        [self.verTF becomeFirstResponder];
+//    }else if(textField==self.passWordTf){
+//        [self.passWordTf resignFirstResponder];
+//    }else if (textField ==self.loignMobileTf)
+//    {
+//        [self.loignMobileTf resignFirstResponder];
+//    }
+//    return YES;
+//}
+- (BOOL)isNumText:(NSString *)str{
+    NSString * regex        = @"^[0-9]*$";
+    NSPredicate * pred      = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch            = [pred evaluateWithObject:str];
+    if (isMatch) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    if (textField ==self.mobileTf||textField ==self.loignMobileTf||textField ==self.verTF) {
+//        if (textField.text.length==11) {
+//            return NO;
+//        }
+        if ([self isNumText:string]==YES) {
+            return YES;
+        }else{
+            [[UserModel shareInstance]showInfoWithStatus:@"请输入数字"];
+            return NO;
+ 
+        }
+
     }
     return YES;
+    DLog(@"rang-%@",NSStringFromRange(range));
 }
+
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

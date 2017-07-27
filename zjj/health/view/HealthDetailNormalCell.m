@@ -23,6 +23,9 @@
 
 - (IBAction)showprogress:(UIButton *)sender {
     
+    if (self.tag ==2) {
+        return;
+    }
     if (self.delegate &&[self.delegate respondsToSelector:@selector(getButtonDidClickCount:withCell:)]) {
         [self.delegate getButtonDidClickCount:sender  withCell:self];
     }
@@ -70,7 +73,7 @@
         self.value4Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_WATER];
         self.selectMark4ImageView.hidden = YES;
 
-    }else{
+    }else if(self.tag==1){
         self.title1Label.text = @"蛋白质";
         self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",hItem.proteinWeight];
         self.value1Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_PROTEIN];
@@ -91,6 +94,11 @@
         self.value4Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT];
         self.selectMark4ImageView.hidden = YES;
 
+    }else{
+        self.title1Label.text = @"标准体重";
+        self.title2Label.text = @"体重控制量";
+        self.title3Label.text = @"去脂体重";
+        self.title4Label.text = @"去脂控制量";
     }
     
 }

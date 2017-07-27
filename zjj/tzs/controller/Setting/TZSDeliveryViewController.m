@@ -84,9 +84,9 @@
     [cell.headimageView setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     cell.delegate = self;
     cell.tag = indexPath.row;
-    cell.limitLabel.text = [NSString stringWithFormat:@"每月服务配送数量不得超过%@，当月可配送%@",[dict safeObjectForKey:@"limitQuantity"],[dict safeObjectForKey:@"shippedQuantity"]];
+    cell.limitLabel.text = [NSString stringWithFormat:@"每月服务配送数量不得超过%@，当月可配送%d",[dict safeObjectForKey:@"limitQuantity"],([[dict safeObjectForKey:@"limitQuantity"]intValue]-[[dict safeObjectForKey:@"shippedQuantity"]intValue])];
     cell.titleLabel .text = [dict safeObjectForKey:@"productName"];
-    cell.priceLabel.text = [dict safeObjectForKey:@"productPrice"];
+    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dict safeObjectForKey:@"unitPrice"]];
     cell.countLabel.text = [NSString stringWithFormat:@"库存数量%d",[[dict objectForKey:@"quantity"]intValue]];
     return cell;
 
@@ -128,12 +128,19 @@
     
 }
 - (IBAction)didNext:(id)sender {
+    
+    if (_chooseArray.count<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请选择需要配送的商品"];
+        return;
+    }
+    
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_chooseArray options:NSJSONWritingPrettyPrinted error:nil];
     NSString * str =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     
     TZSConfirmTheViewController * uo = [[TZSConfirmTheViewController alloc]init];
     uo.hidesBottomBarWhenPushed= YES;
+    uo.productStr = str;
     uo.dataArray = [self getHaveChooseArr];
     [uo.param safeSetObject:@([self getPrice]) forKey:@"totalPrice"];
     [uo.param safeSetObject:@([self getPrice]-[self getAllPreferentialOrice]) forKey:@"payableAmount"];

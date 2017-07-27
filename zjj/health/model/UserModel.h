@@ -29,7 +29,7 @@
  */
 @property (nonatomic,copy  ) NSString * birthday;
 /**
- * username
+ * 认证后的真实姓名
  */
 @property (nonatomic,copy  ) NSString * username;
 

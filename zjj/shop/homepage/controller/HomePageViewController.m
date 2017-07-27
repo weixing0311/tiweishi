@@ -162,7 +162,7 @@
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/375*461);
+    return CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/375*531);
 }
 //创建headview
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
@@ -274,6 +274,11 @@
     NSLog(@"%zd",didSelectItemAtIndex);
 }
 
+#pragma mark ---footViewDelegate
+-(void)didClickFootViewBtnWithTag:(NSInteger)tag
+{
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

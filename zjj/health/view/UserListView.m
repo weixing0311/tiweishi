@@ -172,11 +172,6 @@
         
         NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
         
-        NSString * subId =[dic safeObjectForKey:@"id"];
-        if ([subId isEqualToString:[UserModel shareInstance].subId]) {
-            self.hidden =YES;
-            return;
-        }
         
         if (self.delegate &&[self.delegate respondsToSelector:@selector(changeShowUserWithSubId:isAdd:)]) {
             [self.delegate changeShowUserWithSubId:[dic safeObjectForKey:@"id"] isAdd:NO];

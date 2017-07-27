@@ -25,6 +25,13 @@
 @synthesize errorView=_errorView;
 @synthesize networkErrorView=_networkErrorView;
 
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.currentTasks cancel];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[UIBarButtonItem appearance]setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
@@ -57,7 +64,7 @@
 
 -(void)setNbColor
 {
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+    self.navigationController.navigationBar.barTintColor = HEXCOLOR(0xfb0628);
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
 }
@@ -228,6 +235,29 @@
     [errorLabel removeFromSuperview];
     [hiddenErrorTimer invalidate];
 }
+
+
+-(void)ChangeMySegmentStyle:(UISegmentedControl*)segment
+{
+    [segment setTintColor:[UIColor whiteColor]];
+    [segment setBackgroundImage:[UIImage imageNamed:@"selectImg"]
+                            forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    
+    
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor],NSForegroundColorAttributeName,nil];
+    
+    NSDictionary *dics = [NSDictionary dictionaryWithObjectsAndKeys:HEXCOLOR(0x666666),NSForegroundColorAttributeName,nil];
+    [segment setTitleTextAttributes:dics forState:UIControlStateNormal];
+    [segment setTitleTextAttributes:dic forState:UIControlStateSelected];
+    
+
+}
+
+
+
+
+
+
 /*
 #pragma mark - Navigation
 

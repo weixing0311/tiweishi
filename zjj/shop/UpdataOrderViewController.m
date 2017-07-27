@@ -14,6 +14,7 @@
 #import "shopCarCellItem.h"
 #import "GoodsDetailItem.h"
 #import "BaseWebViewController.h"
+
 @interface UpdataOrderViewController ()
 
 @end
@@ -157,15 +158,19 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        if (self.isComeFromShopCart==YES) {
+        if (self.orderType==IS_FROM_SHOPCART) {
            
             shopCarCellItem *item = [self.dataArray objectAtIndex:indexPath.row];
             [cell setUpCellWithShopCarCellItem:item];
             
-        }else{
+        }else if(self.orderType ==IS_FROM_GOODSDETAIL){
             GoodsDetailItem *item = [self.dataArray objectAtIndex:indexPath.row];
             [cell setUpCellWithGoodsDetailItem:item];
             cell.countLabel.text = [NSString stringWithFormat:@"x%d",self.goodsCount];
+        }else{
+            NSDictionary * dic = [self.dataArray objectAtIndex:indexPath.row];
+            [cell setUpCellWithDict:dic];
+            cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic objectForKey:@"quantity"]];
         }
         
         
@@ -273,6 +278,19 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/saveOrderInfo.do" paramters:self.param success:^(NSDictionary *dic) {
         DLog(@"下单成功--%@",dic);
         [[UserModel shareInstance]showSuccessWithStatus:@"提交成功"];
+        BaseWebViewController *web = [[BaseWebViewController alloc]init];
+        web.urlStr = @"app/checkstand.html";
+        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+        web.payType =1;
+        web.orderNo = [dic safeObjectForKey:@"orderNo"];
+        web.title  =@"收银台";
+        [self.navigationController pushViewController:web animated:YES];
+
+        
+        
+        
+        
     } failure:^(NSError *error) {
         [[UserModel shareInstance]showErrorWithStatus:@"提交失败"];
 
@@ -290,7 +308,7 @@
     NSMutableArray * arr=[NSMutableArray array];
     
     for (int i=0; i<_dataArray.count; i++) {
-        if (self.isComeFromShopCart==YES) {
+        if (self.orderType==IS_FROM_SHOPCART) {
             shopCarCellItem * item  =[self.dataArray objectAtIndex:i];
             NSString *  productNo  =item.productNo;
             NSString * quantity = item.quantity;
@@ -301,11 +319,21 @@
             [arr addObject:dict];
         }
         
-        else
+        else if(self.orderType ==IS_FROM_GOODSDETAIL)
         {
             GoodsDetailItem * item = [self.dataArray objectAtIndex:i];
             NSString *  productNo  =item.productNo;
             NSString * quantity = [NSString stringWithFormat:@"%d",self.goodsCount];
+            
+            NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+            [dict safeSetObject:productNo forKey:@"productNo"];
+            [dict safeSetObject:quantity forKey:@"quantity"];
+            [arr addObject:dict];
+        }else
+        {
+            NSDictionary * item = [self.dataArray objectAtIndex:i];
+            NSString *  productNo  =[item objectForKey:@"productNo"] ;
+            NSString * quantity = [NSString stringWithFormat:@"%@",[item safeObjectForKey:@"quantity"]];
             
             NSMutableDictionary * dict = [NSMutableDictionary dictionary];
             [dict safeSetObject:productNo forKey:@"productNo"];
@@ -331,7 +359,7 @@
     float weight2 = 0.0;
 
     for (int i=0; i<_dataArray.count; i++) {
-        if (self.isComeFromShopCart==YES) {
+        if (self.orderType==IS_FROM_SHOPCART) {
             
             shopCarCellItem * item  =[self.dataArray objectAtIndex:i];
             int freightTemplateId  =[item.freightTemplateId intValue];
@@ -360,7 +388,7 @@
                 weight2 +=giveWeight;
             }
 
-        }else
+        }else if(self.orderType ==IS_FROM_GOODSDETAIL)
         {
             GoodsDetailItem * item = [self.dataArray objectAtIndex:i];
             int freightTemplateId  =[item.freightTemplateId intValue];
@@ -398,6 +426,46 @@
 
             }
 
+        }else
+        {
+            NSDictionary * item = [self.dataArray objectAtIndex:i];
+            int freightTemplateId  =[[item safeObjectForKey:@"freightTemplateId"] intValue];
+            DLog(@"%@",[item safeObjectForKey:@"freightTemplateId"]);
+            DLog(@"fre--%d",freightTemplateId);
+            float weight = [[item safeObjectForKey:@"productWeight"] floatValue];
+            int count = self.goodsCount;
+            
+            float giveWeight = 0.0;//赠品重量
+            
+            NSArray * promotListArr = [item safeObjectForKey:@"promotList"];
+            
+            //获取赠品重量
+            if (promotListArr.count>0) {
+                for (NSDictionary * dic in promotListArr) {
+                    if ([[dic safeObjectForKey:@"promotionType"]intValue]==2) {
+                        float productWeight = [[dic safeObjectForKey:@"productWeight"]floatValue];
+                        int giveQuantity = [[dic safeObjectForKey:@"giveQuantity"]intValue];
+                        
+                        int maxCount = [[dic safeObjectForKey:@"maxQuantity"]intValue];
+                        int minCount = [[dic safeObjectForKey:@"minQuantity"]intValue];
+                        if (self.goodsCount>=minCount&&self.goodsCount<maxCount) {
+                            
+                            giveWeight +=productWeight*giveQuantity;
+                        }
+                        
+                    }
+                }
+            }
+            
+            if (freightTemplateId ==0) {
+                weight1 +=weight*count;
+                weight1 +=giveWeight;
+                
+            }else{
+                weight2 +=weight * count;
+                weight2 +=giveWeight;
+                
+            }
         }
 
         

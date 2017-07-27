@@ -17,6 +17,7 @@
 - (IBAction)didAdd:(id)sender;
 - (IBAction)didRed:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UILabel *purchasingLabel;
 @property (nonatomic,assign)id<decailTitleCellDelegate>delegate;
 @end
 @protocol decailTitleCellDelegate <NSObject>

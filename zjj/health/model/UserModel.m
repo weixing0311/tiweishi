@@ -339,11 +339,17 @@ static UserModel *model;
     
     NSString * imageStr;
     if ([self.grade isEqualToString:@"1"]) {
-        imageStr=@"tong";
+        imageStr = @"putong";
     }else if ([self.grade isEqualToString:@"2"]){
+        imageStr=@"tong";
+
+    }else if ([self.grade isEqualToString:@"3"]){
         imageStr =@"yin";
-    }else{
-     imageStr =@"jin";
+
+    }else
+    {
+        imageStr =@"jin";
+
     }
     return [UIImage imageNamed:imageStr];
 }

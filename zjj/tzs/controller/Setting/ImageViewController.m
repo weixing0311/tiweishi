@@ -122,7 +122,7 @@
             
         }
         pickerImage.delegate = self;
-        pickerImage.allowsEditing = NO;
+        pickerImage.allowsEditing = YES;
         [self presentViewController:pickerImage animated:YES completion:nil];
         
     }]];

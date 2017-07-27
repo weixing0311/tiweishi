@@ -8,6 +8,7 @@
 
 #import "BodyFatDivisionAgreementViewController.h"
 #import "RealNameAuthenticationViewController.h"
+#import "BaseWebViewController.h"
 @interface BodyFatDivisionAgreementViewController ()
 
 @end
@@ -26,17 +27,24 @@
     self.title = @"脂将军体脂师合作协议";
     // Do any additional setup after loading the view from its nib.
 }
-
-
-
-- (IBAction)alredyRead:(id)sender {
-    if (self.readBtn.selected ==YES) {
-        self.readBtn.selected = NO;
-    }else{
-        self.readBtn.selected = YES;
-    }
-    
+//行为规范
+- (IBAction)xwgf:(id)sender {
+    BaseWebViewController * web =[[BaseWebViewController alloc]init];
+    web.title = @"脂将军体脂管理师服务行为规范";
+    web.urlStr = @"app/protocolGuiFan.html";
+    [self.navigationController pushViewController:web animated:YES];
 }
+//退换规范
+- (IBAction)thgf:(id)sender {
+    BaseWebViewController * web =[[BaseWebViewController alloc]init];
+    web.title = @"脂将军体脂管理辅助用品退换规则";
+    web.urlStr = @"app/protocolTuiHuan.html";
+    [self.navigationController pushViewController:web animated:YES];
+
+}
+
+
+
 
 - (IBAction)IAgree:(id)sender {
 //    if (self.readBtn.selected ==NO) {

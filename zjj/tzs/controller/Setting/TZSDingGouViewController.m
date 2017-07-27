@@ -11,6 +11,7 @@
 #import "TZSDGUPCell.h"
 #import "CXdetailView.h"
 #import "AppDelegate.h"
+#import "BaseWebViewController.h"
 @interface TZSDingGouViewController ()<TZSDGCellDelegate,TZSDGUPCellDelegate>
 
 @end
@@ -35,6 +36,10 @@
     cuxiaoDetailView.hidden = YES;
     [self.view addSubview:cuxiaoDetailView];
     [self setExtraCellLineHiddenWithTb:self.tableview];
+    
+    
+    
+    
     
     [self getInfo];
     // Do any additional setup after loading the view from its nib.
@@ -111,6 +116,15 @@
         self.countLabel.text = @"已选服务：0";
         [self.tableview reloadData];
         
+        BaseWebViewController *web = [[BaseWebViewController alloc]init];
+        web.urlStr = @"app/checkstand.html";
+        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+        web.payType =1;
+        web.orderNo = [dic safeObjectForKey:@"orderNo"];
+        web.title  =@"收银台";
+        [self.navigationController pushViewController:web animated:YES];
+        
         
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);
@@ -160,9 +174,9 @@
         cell.delegate = self;
         cell.tag = indexPath.row+indexPath.section *100;
         cell.titleLabel .text = [dict safeObjectForKey:@"productName"];
-        cell.secondLabel.text = [dict safeObjectForKey:@"targetGrade"];
-        cell.thirdLabel .text = [dict safeObjectForKey:@"currentGrade"];
-        cell.priceLabel .text = [dict safeObjectForKey:@"totalPrice"];
+        cell.secondLabel.text = [NSString stringWithFormat:@"直升%@",[dict safeObjectForKey:@"targetGrade"]];
+//        cell.thirdLabel .text = [dict safeObjectForKey:@"currentGrade"];
+        cell.priceLabel .text = [NSString stringWithFormat:@"￥%.2f",[[dict safeObjectForKey:@"totalPrice"]floatValue]];
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
         return cell;
 
@@ -178,7 +192,7 @@
         cell.delegate = self;
         cell.tag = indexPath.row+indexPath.section *100;
         cell.titleLabel .text = [dict safeObjectForKey:@"productName"];
-        cell.priceLabel.text = [dict safeObjectForKey:@"productPrice"];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dict safeObjectForKey:@"productPrice"]floatValue]];
         NSArray * array = [dict objectForKey:@"promotList"];
         if (array&& array.count>0) {
             cell.cxView.hidden= NO;

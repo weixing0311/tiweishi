@@ -25,6 +25,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjs-SE-ab1">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9rS-tA-B5g">
                     <rect key="frame" x="0.0" y="10" width="375" height="50"/>
                     <subviews>
@@ -146,7 +150,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.89942893400000001" green="0.89942893400000001" blue="0.89942893400000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="1CX-Hl-Jjw" secondAttribute="trailing" id="0Ac-mo-zUV"/>
                 <constraint firstAttribute="trailing" secondItem="D1j-RT-CIS" secondAttribute="trailing" id="91Y-x1-u92"/>
@@ -155,14 +159,18 @@
                 <constraint firstItem="1CX-Hl-Jjw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JX8-os-fzK"/>
                 <constraint firstItem="7qh-4J-7kt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ssx-lh-utr"/>
                 <constraint firstItem="tdD-cv-faO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WH1-kz-tKY"/>
+                <constraint firstItem="zjs-SE-ab1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="daX-jo-UxG"/>
                 <constraint firstItem="1CX-Hl-Jjw" firstAttribute="top" secondItem="tdD-cv-faO" secondAttribute="bottom" constant="1" id="dfu-SP-VrC"/>
                 <constraint firstItem="9rS-tA-B5g" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="iNP-2o-34A"/>
                 <constraint firstItem="7qh-4J-7kt" firstAttribute="top" secondItem="9rS-tA-B5g" secondAttribute="bottom" constant="1" id="l3S-5Y-Url"/>
                 <constraint firstAttribute="trailing" secondItem="tdD-cv-faO" secondAttribute="trailing" id="mcK-TF-VqF"/>
                 <constraint firstItem="tdD-cv-faO" firstAttribute="top" secondItem="7qh-4J-7kt" secondAttribute="bottom" constant="1" id="t8k-26-HbS"/>
+                <constraint firstItem="zjs-SE-ab1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ukb-yF-QOn"/>
                 <constraint firstAttribute="trailing" secondItem="7qh-4J-7kt" secondAttribute="trailing" id="wPm-Cg-1Lg"/>
                 <constraint firstAttribute="trailing" secondItem="9rS-tA-B5g" secondAttribute="trailing" id="xiR-5v-AYk"/>
                 <constraint firstItem="D1j-RT-CIS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xpF-7Y-fDd"/>
+                <constraint firstAttribute="bottom" secondItem="zjs-SE-ab1" secondAttribute="bottom" id="z1L-bx-N65"/>
+                <constraint firstAttribute="trailing" secondItem="zjs-SE-ab1" secondAttribute="trailing" id="zQS-EC-7ha"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="68.5"/>
         </view>

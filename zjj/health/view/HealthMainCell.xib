@@ -237,8 +237,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t1q-0c-mKE">
                                 <rect key="frame" x="0.0" y="1" width="79.5" height="78"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BMI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvt-rl-UDf">
-                                        <rect key="frame" x="26.5" y="10" width="26.5" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标准体重" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvt-rl-UDf">
+                                        <rect key="frame" x="9.5" y="10" width="62" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="6kt-cX-V77"/>
                                         </constraints>
@@ -247,7 +247,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vnv-nZ-OR3">
-                                        <rect key="frame" x="39.5" y="56" width="0.0" height="21"/>
+                                        <rect key="frame" x="39.5" y="51" width="0.0" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="m66-Zw-6tM"/>
                                         </constraints>
@@ -259,7 +259,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="bvt-rl-UDf" firstAttribute="top" secondItem="t1q-0c-mKE" secondAttribute="top" constant="10" id="5w1-5t-XCF"/>
-                                    <constraint firstItem="Vnv-nZ-OR3" firstAttribute="top" secondItem="bvt-rl-UDf" secondAttribute="bottom" constant="25" id="A5O-Oe-K7r"/>
+                                    <constraint firstItem="Vnv-nZ-OR3" firstAttribute="top" secondItem="bvt-rl-UDf" secondAttribute="bottom" constant="20" id="A5O-Oe-K7r"/>
                                     <constraint firstItem="bvt-rl-UDf" firstAttribute="centerX" secondItem="t1q-0c-mKE" secondAttribute="centerX" id="a5p-4h-UDE"/>
                                     <constraint firstItem="Vnv-nZ-OR3" firstAttribute="centerX" secondItem="t1q-0c-mKE" secondAttribute="centerX" id="kEZ-yG-9Rb"/>
                                 </constraints>
@@ -278,8 +278,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4om-E8-CuD">
                                 <rect key="frame" x="80.5" y="1" width="79" height="78"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="水分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4W-fa-e5d">
-                                        <rect key="frame" x="24" y="10" width="31" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="体重控制量" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4W-fa-e5d">
+                                        <rect key="frame" x="1" y="10" width="77" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Uc7-RZ-z2H"/>
                                         </constraints>
@@ -288,7 +288,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaW-rr-XnH">
-                                        <rect key="frame" x="39.5" y="56" width="0.0" height="21"/>
+                                        <rect key="frame" x="39.5" y="51" width="0.0" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="q6Y-BX-IxN"/>
                                         </constraints>
@@ -299,7 +299,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="FaW-rr-XnH" firstAttribute="top" secondItem="T4W-fa-e5d" secondAttribute="bottom" constant="25" id="a3t-2b-QPf"/>
+                                    <constraint firstItem="FaW-rr-XnH" firstAttribute="top" secondItem="T4W-fa-e5d" secondAttribute="bottom" constant="20" id="a3t-2b-QPf"/>
                                     <constraint firstItem="FaW-rr-XnH" firstAttribute="centerX" secondItem="4om-E8-CuD" secondAttribute="centerX" id="jpk-bh-g8K"/>
                                     <constraint firstItem="T4W-fa-e5d" firstAttribute="top" secondItem="4om-E8-CuD" secondAttribute="top" constant="10" id="xKG-6R-7Ag"/>
                                     <constraint firstItem="T4W-fa-e5d" firstAttribute="centerX" secondItem="4om-E8-CuD" secondAttribute="centerX" id="yeN-UT-5Pr"/>
@@ -319,8 +319,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQB-oU-lPo">
                                 <rect key="frame" x="160.5" y="1" width="79.5" height="78"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="蛋白质" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8d-e7-fWl">
-                                        <rect key="frame" x="16.5" y="10" width="46" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="去脂体重" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8d-e7-fWl">
+                                        <rect key="frame" x="8.5" y="10" width="62" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="wvm-Co-Xed"/>
                                         </constraints>
@@ -329,7 +329,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXW-gr-OK9">
-                                        <rect key="frame" x="39.5" y="56" width="0.0" height="21"/>
+                                        <rect key="frame" x="39.5" y="51" width="0.0" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="1dq-Pw-SO1"/>
                                         </constraints>
@@ -343,7 +343,7 @@
                                     <constraint firstItem="K8d-e7-fWl" firstAttribute="top" secondItem="KQB-oU-lPo" secondAttribute="top" constant="10" id="bHd-Bi-4fx"/>
                                     <constraint firstItem="K8d-e7-fWl" firstAttribute="centerX" secondItem="KQB-oU-lPo" secondAttribute="centerX" id="f2t-0p-kj6"/>
                                     <constraint firstItem="NXW-gr-OK9" firstAttribute="centerX" secondItem="KQB-oU-lPo" secondAttribute="centerX" id="sZF-L2-ap4"/>
-                                    <constraint firstItem="NXW-gr-OK9" firstAttribute="top" secondItem="K8d-e7-fWl" secondAttribute="bottom" constant="25" id="t9R-o6-dYq"/>
+                                    <constraint firstItem="NXW-gr-OK9" firstAttribute="top" secondItem="K8d-e7-fWl" secondAttribute="bottom" constant="20" id="t9R-o6-dYq"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.25" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odj-R5-zuz">
@@ -360,8 +360,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1dS-ub-IOt">
                                 <rect key="frame" x="241" y="1" width="79" height="78"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="肌肉" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bae-Vy-rEU">
-                                        <rect key="frame" x="24.5" y="10" width="31" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="脂肪控制量" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bae-Vy-rEU">
+                                        <rect key="frame" x="1.5" y="10" width="77" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="OqG-On-1Je"/>
                                         </constraints>
@@ -370,7 +370,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6JI-uA-M9S">
-                                        <rect key="frame" x="40" y="56" width="0.0" height="21"/>
+                                        <rect key="frame" x="40" y="51" width="0.0" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Gyk-Xt-huq"/>
                                         </constraints>
@@ -383,7 +383,7 @@
                                 <constraints>
                                     <constraint firstItem="6JI-uA-M9S" firstAttribute="centerX" secondItem="1dS-ub-IOt" secondAttribute="centerX" id="2Q4-yF-Qo8"/>
                                     <constraint firstItem="Bae-Vy-rEU" firstAttribute="centerX" secondItem="1dS-ub-IOt" secondAttribute="centerX" id="aJl-rW-nhj"/>
-                                    <constraint firstItem="6JI-uA-M9S" firstAttribute="top" secondItem="Bae-Vy-rEU" secondAttribute="bottom" constant="25" id="kiM-oV-MvP"/>
+                                    <constraint firstItem="6JI-uA-M9S" firstAttribute="top" secondItem="Bae-Vy-rEU" secondAttribute="bottom" constant="20" id="kiM-oV-MvP"/>
                                     <constraint firstItem="Bae-Vy-rEU" firstAttribute="top" secondItem="1dS-ub-IOt" secondAttribute="top" constant="10" id="rVS-Ws-piK"/>
                                 </constraints>
                             </view>

@@ -22,7 +22,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="My1-HP-5CO">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="29"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="sqa-Bl-IKz"/>
+                    </constraints>
                     <segments>
                         <segment title="全部"/>
                         <segment title="待付款"/>
@@ -30,13 +33,12 @@
                         <segment title="已完成"/>
                         <segment title="已取消"/>
                     </segments>
-                    <color key="tintColor" red="1" green="0.48583990030000002" blue="0.1987243638" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="changeinfo:" destination="-1" eventType="valueChanged" id="WKv-6i-ORC"/>
                     </connections>
                 </segmentedControl>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5ue-MV-eE3">
-                    <rect key="frame" x="0.0" y="28" width="375" height="639"/>
+                    <rect key="frame" x="0.0" y="40" width="375" height="627"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>

@@ -15,6 +15,15 @@
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    
+    self.title1Label.adjustsFontSizeToFitWidth = YES;
+    self.title2Label.adjustsFontSizeToFitWidth = YES;
+    self.title3Label.adjustsFontSizeToFitWidth = YES;
+    self.title4Label.adjustsFontSizeToFitWidth = YES;
+    
+    
+    
     // Initialization code
 }
 -(void)setUpInfo:(HealthItem*)item
@@ -142,10 +151,10 @@
     self.scaleResultStatusLabel.attributedText = tisString;
     self.scaleResultStatusLabel.adjustsFontSizeToFitWidth = YES;
     
-    self.title1Label.text = @"BMI";
-    self.title2Label.text = @"水分";
-    self.title3Label.text = @"蛋白质";
-    self.title4Label.text = @"肌肉";
+    self.title1Label.text = @"标准体重";
+    self.title2Label.text = @"体重控制量";
+    self.title3Label.text = @"去脂体重";
+    self.title4Label.text = @"去脂控制量";
     
     self.value1Label.text =[NSString stringWithFormat:@"%.1f",item.bmi];
     self.value2Label.text =[NSString stringWithFormat:@"%.1fkg",item.waterWeight];

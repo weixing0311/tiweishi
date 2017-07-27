@@ -27,6 +27,9 @@
                     <state key="normal" title="《脂将军体脂管理辅助用品退换规则》">
                         <color key="titleColor" red="0.17168511284722221" green="0.41707356770833331" blue="0.89645724826388884" alpha="0.63738762842465757" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="thgf:" destination="-1" eventType="touchUpInside" id="h7h-op-xOZ"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3、其他以粗体、下划线或者其他形式标识的重要条款。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Fw-fe-DK8">
                     <rect key="frame" x="40" y="103" width="315" height="38"/>
@@ -81,6 +84,9 @@
                     <state key="normal" title="《脂将军体脂管理师服务行为规范》">
                         <color key="titleColor" red="0.17168511284722221" green="0.41707356770833331" blue="0.89645724826388884" alpha="0.63738762842465757" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="xwgf:" destination="-1" eventType="touchUpInside" id="dX2-g3-ZAo"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz1-bb-xFV">
                     <rect key="frame" x="40" y="340" width="295" height="45"/>

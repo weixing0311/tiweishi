@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.headImage.layer.borderWidth = 1;
+    self.headImage.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

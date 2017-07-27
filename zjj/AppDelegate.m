@@ -19,6 +19,9 @@
 #import "ChangeUserInfoViewController.h"
 #import <UMMobClick/MobClick.h>
 #import "YMSocketUtils.h"
+
+
+#import "TzsTabbarViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -49,10 +52,20 @@
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    
+    
+    
+    
     if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
         [[UserModel shareInstance]readToDoc];
         [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
         if ([UserModel shareInstance].birthday.length>2) {
+            
+//            TzsTabbarViewController * tabbar = [[TzsTabbarViewController alloc]init];
+//            [self.window setRootViewController:tabbar];
+            
             TabbarViewController * tabbar = [[TabbarViewController alloc]init];
             [self.window setRootViewController:tabbar];
  

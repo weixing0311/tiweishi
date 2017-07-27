@@ -75,16 +75,8 @@
                         <action selector="didTzs:" destination="-1" eventType="touchUpInside" id="YmU-Al-L27"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8D-gy-Yx3">
-                    <rect key="frame" x="325" y="20" width="30" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="BH5-lB-Oln"/>
-                        <constraint firstAttribute="width" constant="30" id="hkk-OC-fj4"/>
-                    </constraints>
-                    <state key="normal" image="person-xiao.png"/>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8B-gW-z9I">
-                    <rect key="frame" x="285" y="20" width="30" height="30"/>
+                    <rect key="frame" x="325" y="20" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="0SI-Pf-f74"/>
                         <constraint firstAttribute="height" constant="30" id="QVC-PO-Dhk"/>
@@ -319,15 +311,13 @@
                 <constraint firstItem="Jav-19-bU0" firstAttribute="top" secondItem="WPr-Bp-wqk" secondAttribute="bottom" id="ToU-Wc-mGb"/>
                 <constraint firstItem="vzA-fu-qaK" firstAttribute="top" secondItem="Jav-19-bU0" secondAttribute="bottom" constant="1" id="TpJ-WY-VGQ"/>
                 <constraint firstItem="WPr-Bp-wqk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Zuz-0O-FEE"/>
+                <constraint firstAttribute="trailing" secondItem="c8B-gW-z9I" secondAttribute="trailing" constant="20" id="eGW-83-jM8"/>
                 <constraint firstItem="sxi-LK-rG5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="fOl-JC-BQ5"/>
                 <constraint firstItem="sxi-LK-rG5" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="hP3-k3-QOY"/>
-                <constraint firstItem="B8D-gy-Yx3" firstAttribute="leading" secondItem="c8B-gW-z9I" secondAttribute="trailing" constant="10" id="huX-Mt-qvr"/>
                 <constraint firstAttribute="trailing" secondItem="Jav-19-bU0" secondAttribute="trailing" id="j9v-d1-68M"/>
                 <constraint firstItem="Jav-19-bU0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jif-zN-wnK"/>
                 <constraint firstItem="EXE-Nb-kZy" firstAttribute="leading" secondItem="sxi-LK-rG5" secondAttribute="trailing" constant="10" id="oHL-zP-SMA"/>
                 <constraint firstItem="vzA-fu-qaK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pcJ-nP-Paf"/>
-                <constraint firstItem="B8D-gy-Yx3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="qgR-O9-ZPB"/>
-                <constraint firstAttribute="trailing" secondItem="B8D-gy-Yx3" secondAttribute="trailing" constant="20" id="siL-94-b3W"/>
                 <constraint firstItem="c8B-gW-z9I" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="vkg-LO-Oed"/>
                 <constraint firstItem="abI-Bb-fZr" firstAttribute="top" secondItem="vzA-fu-qaK" secondAttribute="bottom" constant="5" id="wyQ-Uh-XDX"/>
                 <constraint firstAttribute="trailing" secondItem="abI-Bb-fZr" secondAttribute="trailing" id="yc8-IP-bTN"/>
@@ -338,7 +328,6 @@
     </objects>
     <resources>
         <image name="person-she.png" width="31" height="31"/>
-        <image name="person-xiao.png" width="31" height="31"/>
         <image name="person_bg" width="720" height="308"/>
         <image name="personal-indent.png" width="29" height="22"/>
         <image name="personal-myOder-icon.png" width="14" height="16"/>

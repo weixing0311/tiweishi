@@ -19,4 +19,5 @@
 
 -(void)setUpCellWithGoodsDetailItem:(GoodsDetailItem *)item;
 -(void)setUpCellWithShopCarCellItem:(shopCarCellItem *)item;
+-(void)setUpCellWithDict:(NSDictionary *)dic;
 @end

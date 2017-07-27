@@ -44,14 +44,7 @@
 }
 -(NSString*)JFADomin
 {
-    //正式
-//    return @"https://mall.fitgeneral.com/";
-    //生产
-    return @"http://test.fitgeneral.com/";
-    //测试域名
-//    return @"http://192.168.0.130:8101/";
-    //x
-//    return @"http://192.168.0.115:8080/";
+    return kMyBaseUrl;
 }
 
 -(id)getPostResponseSerSerializer
@@ -130,12 +123,12 @@
 
         if ([error code] ==-1009) {
             [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
-            return ;
+//            return ;
         }
         
         if ([error code] ==-1001) {
             [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
-            return;
+//            return;
         }
         failure(error);
     }];

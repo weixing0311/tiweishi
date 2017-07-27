@@ -60,9 +60,15 @@
     if (restrictionNum>0||(item.promotList.count&&item.promotList.count>0)) {
         self.hdTitleLabel.hidden = NO;
         self.huodongLabel.hidden = NO;
+        
         if (restrictionNum>0) {
             self.hdTitleLabel.text = @"限购";
             self.huodongLabel.text = [NSString stringWithFormat:@"该商品单笔限购%d件",restrictionNum];
+            if (item.promotList.count>0) {
+                self.moreYhLabel.hidden =NO;
+            }else{
+                self.moreYhLabel.hidden = YES;
+            }
         }else{
             NSString * typeStr = [[item.promotList objectAtIndex:0]objectForKey:@"promotionType"];
             NSString * message = [[item.promotList objectAtIndex:0]objectForKey:@"promotionDetail"];
@@ -72,11 +78,17 @@
                 self.hdTitleLabel.text = @"满赠";
             }
             self.huodongLabel.text =message;
+            if (item.promotList.count>0) {
+                self.moreYhLabel.hidden =NO;
+            }else{
+                self.moreYhLabel.hidden = YES;
+            }
         }
         
     }else{
         self.hdTitleLabel.hidden = YES;
         self.huodongLabel.hidden = YES;
+        self.moreYhLabel.hidden =YES;
    
     }
 //    self.countLabel.text =item.

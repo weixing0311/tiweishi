@@ -16,9 +16,11 @@
 @implementation AddressListViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNbColor];
+    self.title = @"管理收货地址";
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshSelfInfo) name:@"refreshAddressListTableView" object:nil];
     
-    [self setNbColor];
     self.dataArray =[NSMutableArray array];
 
     [self setExtraCellLineHiddenWithTb:self.tableview];
@@ -117,34 +119,38 @@
 }
 -(void)didClickChangeDefaultWithCell:(AddressListCell*)cell
 {
-    [SVProgressHUD showWithStatus:@"修改中。。"];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    
+    for ( int i =0; i<self.dataArray.count; i++) {
+        NSDictionary *dic =[self.dataArray objectAtIndex:i];
+        int  isDefault = [[dic objectForKey:@"isDefault"]intValue];
+        if (isDefault==1&&i==cell.tag) {
+            return;
+        }
+    }
+    
+    
     NSDictionary *dict = [self.dataArray objectAtIndex:cell.tag];
+    
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/setDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
+        [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
         
-        NSString * status = [dic objectForKey:@"status"];
-        if ([status isEqualToString:@"success"]) {
-            
-        cell.defaultBtn.selected = YES;
+        
         
         for ( int i =0; i<self.dataArray.count; i++) {
-            NSDictionary *dic =[self.dataArray objectAtIndex:i];
-            NSString * isDefault = [dic objectForKey:@"isDefault"];
-                isDefault  =@"0";
-            if (i==cell.tag) {
-                isDefault=@"1";
-            }
+            NSMutableDictionary *dic =[self.dataArray objectAtIndex:i];
+            [dic safeSetObject:@"0" forKey:@"isDefault"];
         }
-        
+        NSMutableDictionary * dict = [self.dataArray objectAtIndex:cell.tag];
+        [dict safeSetObject:@"1" forKey:@"isDefault"];
         [self.tableview reloadData];
-        }
+        
     } failure:^(NSError *error) {
         cell.defaultBtn.selected = NO;
-
-        [SVProgressHUD dismiss];
+        
     }];
 
 }

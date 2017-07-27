@@ -22,11 +22,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TPS-XG-EXu">
-                    <rect key="frame" x="0.0" y="73" width="375" height="594"/>
+                    <rect key="frame" x="0.0" y="40" width="375" height="627"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="wrT-PJ-vFw">
-                    <rect key="frame" x="0.0" y="45" width="375" height="29"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="b0y-TR-hKb"/>
+                    </constraints>
                     <segments>
                         <segment title="全部"/>
                         <segment title="待付款"/>
@@ -39,42 +42,18 @@
                         <action selector="didChangeStatussegment:" destination="-1" eventType="valueChanged" id="nPZ-SG-Ls7"/>
                     </connections>
                 </segmentedControl>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ding-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="5E6-Hg-aJB">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="45" id="0PS-f3-07d"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未支付的订单24小时后会取消" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYg-Y0-95F">
-                    <rect key="frame" x="87" y="0.0" width="202" height="45"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="45" id="7pw-Su-A5m"/>
-                        <constraint firstAttribute="width" priority="10" constant="200" id="8tr-yV-OTO"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="TPS-XG-EXu" secondAttribute="bottom" id="4Za-rx-ody"/>
-                <constraint firstItem="5E6-Hg-aJB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8dr-zQ-KyO"/>
                 <constraint firstAttribute="trailing" secondItem="wrT-PJ-vFw" secondAttribute="trailing" id="A1W-oP-IbP"/>
-                <constraint firstItem="5E6-Hg-aJB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CA0-OT-Ky5"/>
-                <constraint firstAttribute="trailing" secondItem="5E6-Hg-aJB" secondAttribute="trailing" id="HKT-Q1-OPK"/>
                 <constraint firstItem="TPS-XG-EXu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Md1-dL-yEL"/>
-                <constraint firstItem="jYg-Y0-95F" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ua6-Vz-RiN"/>
                 <constraint firstItem="TPS-XG-EXu" firstAttribute="top" secondItem="wrT-PJ-vFw" secondAttribute="bottom" id="Yy1-6f-DPu"/>
-                <constraint firstItem="wrT-PJ-vFw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="bFn-TK-cMn"/>
-                <constraint firstItem="jYg-Y0-95F" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="eDF-WE-OHS"/>
+                <constraint firstItem="wrT-PJ-vFw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bFn-TK-cMn"/>
                 <constraint firstItem="wrT-PJ-vFw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o8N-HU-m6q"/>
                 <constraint firstAttribute="trailing" secondItem="TPS-XG-EXu" secondAttribute="trailing" id="syS-xX-Vmb"/>
             </constraints>
             <point key="canvasLocation" x="35.5" y="53.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="ding-bg.png" width="720" height="90"/>
-    </resources>
 </document>

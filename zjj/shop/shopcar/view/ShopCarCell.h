@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *weightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UILabel *moreYhLabel;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *huodongLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *huodongImageView;
 - (IBAction)didDelete:(id)sender;

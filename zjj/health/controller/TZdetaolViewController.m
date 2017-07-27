@@ -140,7 +140,7 @@
     if (section ==0) {
         return 1;
     }else{
-        return 2;
+        return 3;
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

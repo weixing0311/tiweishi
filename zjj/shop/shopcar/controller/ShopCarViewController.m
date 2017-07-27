@@ -10,6 +10,7 @@
 #import "shopCarCellItem.h"
 #import "UpdataOrderViewController.h"
 #import "CXdetailView.h"
+#import "BaseWebViewController.h"
 @interface ShopCarViewController ()
 @property (nonatomic ,strong)NSMutableArray * dataArray;//列表数据
 @property (nonatomic ,strong)UIButton * editBtn;
@@ -78,7 +79,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 130;
+    return 140;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -253,7 +254,7 @@
     
     
     UpdataOrderViewController *uo = [[UpdataOrderViewController alloc]init];
-    uo.isComeFromShopCart = YES;
+    uo.orderType = IS_FROM_SHOPCART;
     uo.hidesBottomBarWhenPushed= YES;
     uo.dataArray = [self getHaveChooseArr];
     [uo.param safeSetObject:@([self getPrice]) forKey:@"totalPrice"];

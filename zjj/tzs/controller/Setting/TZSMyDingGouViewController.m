@@ -12,6 +12,7 @@
 #import "OrderFooter.h"
 #import "OrderFootBtnView.h"
 #import "TZSOrderDetailViewController.h"
+#import "BaseWebViewController.h"
 @interface TZSMyDingGouViewController ()<orderFootBtnViewDelegate>
 
 @end
@@ -34,6 +35,7 @@
     _dataArray =[NSMutableArray array];
     _infoArray =[NSMutableArray array];
 
+    [self ChangeMySegmentStyle:self.segment];
     [self setRefrshWithTableView:self.tableview];
     [self.tableview headerBeginRefreshing];
     // Do any additional setup after loading the view from its nib.
@@ -130,7 +132,7 @@
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     
     if (status ==1) {
-        [footBtn removeFromSuperview];
+//        [footBtn removeFromSuperview];
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
@@ -254,7 +256,19 @@
 -(void)didClickFirstBtnWithView:(OrderFootBtnView*)view
 {
     //去支付
-    [[UserModel shareInstance] showInfoWithStatus:@"去支付"];
+    
+    NSDictionary * dic = [_dataArray objectAtIndex:view.tag];
+    
+    BaseWebViewController *web = [[BaseWebViewController alloc]init];
+    web.urlStr = @"app/checkstand.html";
+    web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+    //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+    web.payType =3;
+    web.orderNo = [dic safeObjectForKey:@"orderNo"];
+    web.title  =@"收银台";
+    [self.navigationController pushViewController:web animated:YES];
+    
+
 }
 -(void)didClickSecondBtnWithView:(OrderFootBtnView*)view
 {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @protocol TZSDGCellDelegate;
-@interface TZSDGCell : UITableViewCell<UITableViewDelegate,UITableViewDataSource>
+@interface TZSDGCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -25,7 +25,6 @@
 
 - (IBAction)didAdd:(id)sender;
 - (IBAction)didRed:(id)sender;
--(void)setHdArray:(NSArray *)arr;
 @end
 @protocol TZSDGCellDelegate <NSObject>
 

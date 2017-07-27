@@ -53,6 +53,7 @@
 
     //删除评测数据返回后刷新
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshPcInfo) name:@"deletePCINFO" object:nil];
+    
     _userView = [self getXibCellWithTitle:@"UserView"];
     _userView.delegate =self;
     _userView.frame =CGRectMake(0, 0, JFA_SCREEN_WIDTH, 64);
@@ -360,7 +361,12 @@
         [self.navigationController pushViewController:cu animated:YES];
     }else{
         
-        
+        if ([subId isEqualToString:[UserModel shareInstance].subId]) {
+            [[SubUserItem shareInstance]setInfoWithHealthId:subId];
+            [self refreshMyInfoView];
+            self.userListView.hidden = YES;
+            return;
+        }
         [[SubUserItem shareInstance]setInfoWithHealthId:subId];
         [[UserModel shareInstance]setHealthidWithId:subId];
         [self reloadAll];

@@ -13,6 +13,7 @@
 #import "OrderDetailViewController.h"
 #import "UpdataOrderViewController.h"
 #import "OrderHeader.h"
+#import "BaseWebViewController.h"
 @interface OrderViewController ()<orderFootBtnViewDelegate>
 @end
 
@@ -38,6 +39,9 @@
     self.tableview.delegate =self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
+    
+    [self ChangeMySegmentStyle:self.segment];
+    
     _dataArray =[NSMutableArray array];
     _infoArray =[NSMutableArray array];
     
@@ -177,7 +181,6 @@
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     
     if (status ==1) {
-        [footBtn removeFromSuperview];
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
@@ -322,18 +325,26 @@
 //        NSString * str =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         
         
+        BaseWebViewController *web = [[BaseWebViewController alloc]init];
+        web.urlStr = @"app/checkstand.html";
+        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+        web.payType =1;
+        web.orderNo = orderNo;
+        web.title  =@"收银台";
+        [self.navigationController pushViewController:web animated:YES];
         
         
-        UpdataOrderViewController *uo = [[UpdataOrderViewController alloc]init];
-        uo.isComeFromShopCart = YES;
-        uo.hidesBottomBarWhenPushed= YES;
-        uo.dataArray = [dic safeObjectForKey:@"itemJson"];
-        [uo.param safeSetObject:[dic safeObjectForKey:@"totalPrice"] forKey:@"totalPrice"];
-//        [uo.param safeSetObject:@([self getPrice]-[self getAllPreferentialOrice]) forKey:@"payableAmount"];
-//        [uo.param safeSetObject:str forKey:@"orderItem"];
-        
-        
-        [self.navigationController pushViewController:uo animated:YES];
+//        UpdataOrderViewController *uo = [[UpdataOrderViewController alloc]init];
+//        uo.orderType = IS_FROM_ORDER;
+//        uo.hidesBottomBarWhenPushed= YES;
+//        uo.dataArray = [dic safeObjectForKey:@"itemJson"];
+//        [uo.param safeSetObject:[dic safeObjectForKey:@"totalPrice"] forKey:@"totalPrice"];
+////        [uo.param safeSetObject:@([self getPrice]-[self getAllPreferentialOrice]) forKey:@"payableAmount"];
+////        [uo.param safeSetObject:str forKey:@"orderItem"];
+//        
+//        
+//        [self.navigationController pushViewController:uo animated:YES];
         
         
         

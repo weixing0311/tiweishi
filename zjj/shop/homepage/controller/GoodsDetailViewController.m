@@ -47,10 +47,12 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.backgroundColor = [UIColor clearColor];
-//    self.tableview.contentInset =UIEdgeInsetsMake(JFA_SCREEN_WIDTH, 0, 0, 0);
     [self setExtraCellLineHiddenWithTb:self.tableview];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.shopCartCountLabel.hidden = YES;
+
+    [self ChangeMySegmentStyle:self.segment2];
 
     self.detailView.hidden = YES;
     self.webView2.hidden = YES;
@@ -67,9 +69,20 @@
     [seg addTarget:self action:@selector(changepage:) forControlEvents:UIControlEventValueChanged];
     seg.selectedSegmentIndex =0;
     [view addSubview:seg];
+    [seg setTintColor:[UIColor redColor]];
+    [seg setBackgroundImage:[UIImage imageNamed:@"selectImg"]
+                             forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor grayColor],NSForegroundColorAttributeName,[UIColor darkGrayColor],UITextAttributeTextShadowColor ,nil];
-    [self.segment2 setTitleTextAttributes:dic forState:UIControlStateSelected];
+    
+    NSDictionary *segDic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont  systemFontOfSize:22],NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName,nil];
+    
+    NSDictionary *segDic2 = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont  systemFontOfSize:18],NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName,nil];
+    [seg setTitleTextAttributes:segDic2 forState:UIControlStateNormal];
+    [seg setTitleTextAttributes:segDic1 forState:UIControlStateSelected];
+    
+
+//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor grayColor],NSForegroundColorAttributeName,[UIColor darkGrayColor],UITextAttributeTextShadowColor ,nil];
+//    [self.segment2 setTitleTextAttributes:dic forState:UIControlStateSelected];
     
     [self getInfo];
     [self getgoodsCountWithNet];
@@ -119,6 +132,13 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductCount.do" paramters:param success:^(NSDictionary *dic) {
+        
+        int total = [[[dic safeObjectForKey:@"data"]safeObjectForKey:@"total"]intValue];
+        if (!total||total==0) {
+            self.shopCartCountLabel.hidden = YES;
+        }else{
+            self.shopCartCountLabel.hidden = NO;
+        }
         self.shopCartCountLabel.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"data"]objectForKey:@"total"]];
     } failure:^(NSError *error) {
         
@@ -233,6 +253,14 @@
         cell.delegate = self;
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
 
+        if (item.restrictionNum==0) {
+            cell.purchasingLabel.hidden = YES;
+        }else{
+            cell.purchasingLabel.hidden =NO;
+            cell.purchasingLabel.text = [NSString stringWithFormat:@"该商品每人单笔订单限购%d件",item.restrictionNum];
+        }
+        
+        
         return cell;
     }
 //    else if (indexPath.section ==1) {
@@ -333,7 +361,7 @@
     UpdataOrderViewController *upd =[[UpdataOrderViewController alloc]init];
     
     upd.dataArray= [NSMutableArray arrayWithObject:item];
-    upd.isComeFromShopCart =NO;
+    upd.orderType =IS_FROM_GOODSDETAIL;
     upd.goodsCount = self.goodsCount;
     [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount) forKey:@"totalPrice"];
     [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount -[self getPreferentialPrice] ) forKey:@"payableAmount"];

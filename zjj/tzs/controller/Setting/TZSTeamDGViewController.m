@@ -13,7 +13,7 @@
 #import "TZSTeamHeaderView.h"
 #import "TZSDingGouViewController.h"
 #import "TeamOrderDetailViewController.h"
-@interface TZSTeamDGViewController ()
+@interface TZSTeamDGViewController ()<orderFootBtnViewDelegate>
 
 @end
 
@@ -36,12 +36,20 @@
     self.tableView.delegate = self;
     self.tableView.dataSource= self;
     pageSize =30;
-
+    [self ChangeMySegmentStyle:self.segment];
     [self setExtraCellLineHiddenWithTb:self.tableView];
     [self setRefrshWithTableView:self.tableView];
     [self.tableView headerBeginRefreshing];
     // Do any additional setup after loading the view from its nib.
 }
+
+-(void)buildHeadView
+{
+    
+}
+
+
+
 -(void)headerRereshing
 {
     [super headerRereshing];
@@ -63,12 +71,23 @@
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:@(page) forKey:@"page"];
     [param safeSetObject:@(pageSize) forKey:@"pageSize"];
-    [param safeSetObject:[NSString stringWithFormat:@"1,2"] forKey:@"stockType"];
+    [param safeSetObject:[NSString stringWithFormat:@"2,3"] forKey:@"stockType"];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
     self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/order/info/queryOrderInfoList.do" paramters:param success:^(NSDictionary *dic) {
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
+        
+        if (page==1) {
+            [_infoArray removeAllObjects];
+            [self.tableView setFooterHidden:NO];
+
+        }
+ 
        [ _infoArray  addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];
+        if (_infoArray.count<30) {
+            [self.tableView setFooterHidden:YES];
+        }
         [self getinfoWithStatus:0];
         [self.tableView reloadData];
 
@@ -94,38 +113,62 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    NSDictionary *dic =[_dataArray objectAtIndex:section];
+    int status = [[dic objectForKey:@"stockType"]intValue];
+    if (status ==2) {
+        return 102;
+    }else{
     return 70;
+    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     NSDictionary *dic =[_dataArray objectAtIndex:section];
-    int status = [[dic objectForKey:@"status"]intValue];
-    if (status ==1) {
-        return 31+46;
+    int status = [[dic objectForKey:@"stockType"]intValue];
+    if (status ==2) {
+        return 31+46+15;
     }else
-        return 31;
+        return 31+15;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
-    UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 70)];
-    view.backgroundColor =[UIColor colorWithWhite:.8 alpha:1];
-    
-    TZSTeamHeaderView *header = [self getXibCellWithTitle:@"TZSTeamHeaderView"];
-    header.frame = CGRectMake(0, 19, JFA_SCREEN_WIDTH, 50);
-    header.backgroundColor =[UIColor whiteColor];
     NSDictionary *dic = [_dataArray objectAtIndex:section];
-    header.orderNum.text = [dic objectForKey:@"orderNo"];
-    header.ordername .text = [dic objectForKey:@"nickName"];
     int status = [[dic objectForKey:@"stockType"]intValue];
+    float height =0.0f;
+    if (status ==2) {
+        height =102;
+    }else{
+        height =70;
+    }
+    UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, height)];
+    view.backgroundColor =HEXCOLOR(0xeeeeee);
+
+    TZSTeamHeaderView *header = [self getXibCellWithTitle:@"TZSTeamHeaderView"];
+    header.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, height-2);
+    header.backgroundColor =[UIColor whiteColor];
+    header.orderNum.text = [dic safeObjectForKey:@"orderNo"];
+    header.ordername .text = [dic safeObjectForKey:@"nickName"];
+    header.mobileLabel.text = [NSString stringWithFormat:@"手机号：%@",[dic safeObjectForKey:@"phone"]?[dic safeObjectForKey:@"phone"]:@""];
     if (status ==1) {
         header.typeLabel.text = @"待支付";
+        header.lastTimeLabel.hidden =YES;
+
     }else if (status ==2) {
         header.typeLabel.text = @"待补货";
+        header.lastTimeLabel.hidden =NO;
+        header.lastTimeLabel.text = @"开始补货";
+
     }
     else{
         header.typeLabel .text = @"已完成";
+        header.lastTimeLabel.hidden =YES;
+
     }
+    
+ 
+    
+    
     [view addSubview:header];
     
     return view;
@@ -136,31 +179,34 @@
     NSDictionary *dic = [_dataArray objectAtIndex:section];
     int status = [[dic objectForKey:@"stockType"]intValue];
     float height = 0.0f;
-    if (status==1) {
-        height =77;
+    if (status==2) {
+        height =87;
     }else{
-        height =31;
+        height =41;
     }
     
     UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, height)];
-    view.backgroundColor =[UIColor colorWithWhite:.8 alpha:1];
+    view.backgroundColor =HEXCOLOR(0xeeeeee);
+    
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
     footer.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic objectForKey:@"totalPrice"]];
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
-    
+    [view addSubview:footer];
+
     if (status ==2) {
         [footBtn removeFromSuperview];
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
-        footBtn.tag = section;
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
+        footBtn.tag = section;
+        footBtn.delegate = self;
         [footBtn.firstBtn setTitle:@"去订购" forState:UIControlStateNormal];
         footBtn.secondBtn.hidden = YES;
         [view addSubview:footBtn];
         
     }
     
-    [view addSubview:footer];
+
     return view;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -190,6 +236,7 @@
     
     TeamOrderDetailViewController * tmo = [[TeamOrderDetailViewController alloc]init];
     tmo.orderNo =[dic objectForKey:@"orderNo"];
+    
     [self.navigationController pushViewController:tmo animated:YES];
 }
 

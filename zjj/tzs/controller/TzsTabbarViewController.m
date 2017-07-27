@@ -7,7 +7,7 @@
 //
 
 #import "TzsTabbarViewController.h"
-#import "HelpViewController.h"
+#import "BaseWebViewController.h"
 #import "JzSchoolViewController.h"
 #import "SettingViewController.h"
 #import "ShopTestViewController.h"
@@ -24,10 +24,8 @@
     ShopTestViewController *st =[[ShopTestViewController alloc]init];
     st.title = @"健康";
     
-    HelpViewController *news = [[HelpViewController alloc]init];
-    UINavigationController * nav1 = [[UINavigationController alloc]initWithRootViewController:news];
-    nav1.navigationBar.barTintColor = [UIColor redColor];
-    
+    BaseWebViewController *news = [[BaseWebViewController alloc]init];
+    news.urlStr = @"app/fatTeacher/help.html";
     news.title = @"帮助中心";
     
     JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
@@ -40,7 +38,7 @@
     UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:shop];
     nav3.navigationBar.barTintColor = [UIColor redColor];
 
-    self.viewControllers = @[st,nav1,nav2,nav3];
+    self.viewControllers = @[st,news,nav2,nav3];
 
     UITabBarItem * item1 =[self.tabBar.items objectAtIndex:0];
     UITabBarItem * item2 =[self.tabBar.items objectAtIndex:1];
@@ -48,19 +46,21 @@
     UITabBarItem * item4 =[self.tabBar.items objectAtIndex:3];
     
     item1.image = [UIImage imageNamed:@"health  gray_"];
-    item1.selectedImage = [UIImage imageNamed:@"health_"];
+    item1.selectedImage = [[UIImage imageNamed:@"health_"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
     
     item2.image = [UIImage imageNamed:@"fonter-help"];
-    item2.selectedImage = [UIImage imageNamed:@"fonter-help-red"];
+    item2.selectedImage = [[UIImage imageNamed:@"fonter-help-red"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     item3.image = [UIImage imageNamed:@"footer-jianzhi"];
-    item3.selectedImage = [UIImage imageNamed:@"footer-jianzhi-red"];
+    item3.selectedImage = [[UIImage imageNamed:@"footer-jianzhi-red"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     item4.image = [UIImage imageNamed:@"footer-PersonalCenter"];
-    item4.selectedImage = [UIImage imageNamed:@"footer-PersonalCenter-red"];
-    
+    item4.selectedImage = [[UIImage imageNamed:@"footer-PersonalCenter-red"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
     self.selectedIndex=3;
+//    self.tabBar.tintColor = HEXCOLOR(0xfb0628);
+
     // Do any additional setup after loading the view.
 }
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
