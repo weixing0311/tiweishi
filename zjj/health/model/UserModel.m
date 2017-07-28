@@ -58,6 +58,7 @@ static UserModel *model;
     self.userId      = [dict safeObjectForKey:@"userId"];
     self.username    = [dict safeObjectForKey:@"userName"];
     self.phoneNum    = [dict safeObjectForKey:@"phone"];
+    self.mphoneNum   = [self changeTelephone:[dict safeObjectForKey:@"phone"]];
     self.headUrl     = [dict safeObjectForKey:@"headimgurl"];
     self.nickName    = [dict safeObjectForKey:@"nickName"];
     self.gender      = [[dict safeObjectForKey:@"sex"]intValue];
@@ -65,7 +66,6 @@ static UserModel *model;
     self.birthday    = [dict safeObjectForKey:@"birthday"];
     self.token       = [dict safeObjectForKey:@"token"];
     self.age         = [[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
-
     self.userType    = [dict safeObjectForKey:@"userType"];
     self.grade       = [dict safeObjectForKey:@"grade"];
     self.gradeName   = [dict safeObjectForKey:@"gradeName"];
@@ -89,7 +89,7 @@ static UserModel *model;
     // 在iOS中，只有一个目录跟传入的参数匹配，所以这个集合里面只有一个元素
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
+    [dict safeSetObject: self.mphoneNum  forKey:@"mphoneNum"];
     [dict safeSetObject: self.userId     forKey:@"userId"];
     [dict safeSetObject: self.username   forKey:@"userName"];
     [dict safeSetObject: self.phoneNum   forKey:@"phone"];
@@ -122,6 +122,7 @@ static UserModel *model;
     self.userId      = [dict safeObjectForKey:@"userId"];
     self.username    = [dict safeObjectForKey:@"userName"];
     self.phoneNum    = [dict safeObjectForKey:@"phone"];
+    self.mphoneNum   = [self changeTelephone:[dict safeObjectForKey:@"phone"]];
     self.headUrl     = [dict safeObjectForKey:@"headimgurl"];
     self.nickName    = [dict safeObjectForKey:@"nickName"];
     self.gender      = [[dict safeObjectForKey:@"sex"]intValue];
@@ -167,6 +168,7 @@ static UserModel *model;
     self.heigth = 0;
     self.birthday = @"";
     self.token = @"";
+    self.mphoneNum =@"";
     [self.child removeAllObjects];
     self.userId = @"";
     NSString *localPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -268,10 +270,11 @@ static UserModel *model;
     self.isAttest       = [dict safeObjectForKey:@"isAttest"];
     self.nickName       = [dict safeObjectForKey:@"nickName"];
     self.phoneNum       = [dict safeObjectForKey:@"phone"];
+    self.mphoneNum   = [self changeTelephone:[dict safeObjectForKey:@"phone"]];
     self.tradePassword  = [dict safeObjectForKey:@"tradePassword"];
     self.username       = [dict safeObjectForKey:@"userName"];
     self.userType       = [dict safeObjectForKey:@"userType"];
-    self.balance        = [[dict safeObjectForKey:@"balance"]floatValue];
+    self.balance        = [[dict safeObjectForKey:@"userBalance"]floatValue];
     self.qrcodeImageUrl = [dict safeObjectForKey:@"cardUrl"];
     self.linkerUrl      = [dict safeObjectForKey:@"inviteUrl"];
     self.age            =[[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
@@ -433,5 +436,16 @@ static UserModel *model;
     [(AppDelegate*)[UIApplication sharedApplication].delegate showUpdateAlertViewWithMessage];
 }
 
+
+/**
+ *手机号加密
+ */
+-(NSString*)changeTelephone:(NSString*)teleStr{
+    
+    NSString *string=[teleStr stringByReplacingOccurrencesOfString:[teleStr substringWithRange:NSMakeRange(3,4)]withString:@"****"];
+    
+    return string;
+    
+}
 
 @end

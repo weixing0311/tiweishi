@@ -11,10 +11,10 @@
 @implementation UIView (Board)
 -(void)setViewShadow
 {
-    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowColor = HEXCOLOR(0xcccccc).CGColor;
     self.layer.shadowOpacity = 0.8f;
     self.layer.shadowRadius = 4.f;
-    self.layer.shadowOffset = CGSizeMake(4,4);
+    self.layer.shadowOffset = CGSizeMake(2,2);
     self.layer.masksToBounds = NO;
     
 //    self.layer.cornerRadius = self.userImage.frame.size.width / 2;

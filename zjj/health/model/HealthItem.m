@@ -40,6 +40,11 @@
     self.warn                       = [[dict safeObjectForKey:@"warn"]intValue];
     self.createTime                 = [ dict safeObjectForKey:@"createTime"];
     self.fatPercentage              = [[dict safeObjectForKey:@"fatPercentage"]floatValue];
+    self.standardWeight             = [[dict safeObjectForKey:@"standardWeight"]floatValue];
+    self.weightControl              = [[dict safeObjectForKey:@"weightControl"]floatValue];
+    self.lbm                        = [[dict safeObjectForKey:@"lbm"]floatValue];
+    self.fatControl                 = [[dict safeObjectForKey:@"fatControl"]floatValue];
+
 }
 
 

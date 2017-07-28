@@ -79,6 +79,10 @@
 @property (nonatomic,assign) float              boneMuscleWeightMin;
 @property (nonatomic,assign) float              boneMuscleWeightMax;
 
+@property (nonatomic,assign) float              standardWeight;//标准体重
+@property (nonatomic,assign) float              weightControl;//体重控制量
+@property (nonatomic,assign) float              lbm;//去脂体重
+@property (nonatomic,assign) float              fatControl;//脂肪控制量
 
 
 @property (nonatomic,assign) int                normal;//正常

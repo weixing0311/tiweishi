@@ -347,7 +347,8 @@
         web.urlStr = @"app/checkstand.html";
         web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
         //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
-        web.payType =1;
+        web.payType =2;
+        web.opt =1;
         web.orderNo = [dic safeObjectForKey:@"orderNo"];
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];

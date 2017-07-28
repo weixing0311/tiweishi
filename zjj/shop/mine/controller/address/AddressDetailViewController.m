@@ -106,20 +106,22 @@
         return;
     }
     
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [param safeSetObject:[self.ProvincialDict  safeObjectForKey:@"value"] forKey:@"provinceId"];
-    [param safeSetObject:[self.cityDict        safeObjectForKey:@"value"] forKey:@"cityId"];
-    [param safeSetObject:[self.districtDict    safeObjectForKey:@"value"] forKey:@"countyId"];
-    [param safeSetObject:self.mobileLabel.text forKey:@"phone"];
-    [param safeSetObject:self.nameLabel.text   forKey:@"receiver"];
-    [param safeSetObject:self.addressTx.text   forKey:@"addr"];
-    [param safeSetObject:@"" forKey:@"postCode"];
-    [param safeSetObject:self.defaultSwitch.isOn?@"1":@"0" forKey:@"isDefault"];//是不是默认地址 0否1是
     
     
-    //编辑还是添加
+    //编辑还是添加/userAddress/updateAddress.do
     if (self.isEdit ==YES) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [param safeSetObject:[self.ProvincialDict  safeObjectForKey:@"value"] forKey:@"provinceId"];
+        [param safeSetObject:[self.cityDict        safeObjectForKey:@"value"] forKey:@"cityId"];
+        [param safeSetObject:[self.districtDict    safeObjectForKey:@"value"] forKey:@"countyId"];
+        [param safeSetObject:[self.defaultDict safeObjectForKey:@"id"] forKey:@"id"];
+        [param safeSetObject:self.mobileLabel.text forKey:@"phone"];
+        [param safeSetObject:self.nameLabel.text   forKey:@"receiver"];
+        [param safeSetObject:self.addressTx.text   forKey:@"addr"];
+        [param safeSetObject:@"" forKey:@"postCode"];
+        [param safeSetObject:self.defaultSwitch.isOn?@"1":@"0" forKey:@"isDefault"];//是不是默认地址 0否1是
+
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/updateAddress.do" paramters:param success:^(NSDictionary *dic) {
                 [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
@@ -130,7 +132,17 @@
         }];
    
     }else{
-    
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [param safeSetObject:[self.ProvincialDict  safeObjectForKey:@"value"] forKey:@"provinceId"];
+        [param safeSetObject:[self.cityDict        safeObjectForKey:@"value"] forKey:@"cityId"];
+        [param safeSetObject:[self.districtDict    safeObjectForKey:@"value"] forKey:@"countyId"];
+        [param safeSetObject:self.mobileLabel.text forKey:@"phone"];
+        [param safeSetObject:self.nameLabel.text   forKey:@"receiver"];
+        [param safeSetObject:self.addressTx.text   forKey:@"addr"];
+        [param safeSetObject:@"" forKey:@"postCode"];
+        [param safeSetObject:self.defaultSwitch.isOn?@"1":@"0" forKey:@"isDefault"];//是不是默认地址 0否1是
+
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/addAddress.do" paramters:param success:^(NSDictionary *dic) {
             [[UserModel shareInstance] showSuccessWithStatus: @"添加成功"];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
@@ -150,7 +162,14 @@
     self.mobileLabel.text =[self.defaultDict objectForKey:@"phone"];
     self.cityTf.text = [NSString stringWithFormat:@"%@%@%@",[self.defaultDict safeObjectForKey:@"province"],[self.defaultDict safeObjectForKey:@"city"],[self.defaultDict safeObjectForKey:@"county"]];
     self.addressTx.text = [self.defaultDict safeObjectForKey:@"addr"];
-
+    if (self.addressTx.text.length>0) {
+        self.tisLabel.text = @"";
+    }
+    if ([[self.defaultDict safeObjectForKey:@"isDefault"]intValue]==1) {
+        [self.defaultSwitch  setOn:YES];;
+    }else{
+        [self.defaultSwitch setOn:NO];
+    }
 }
 
 

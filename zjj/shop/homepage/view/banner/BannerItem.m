@@ -22,7 +22,7 @@
      "contentAmount": 11,
      "orders": 1,
      */
-    
+    self.content       = [dict safeObjectForKey:@"content"];
     self.imageUrl      = [dict safeObjectForKey:@"picture"];
     self.width         = [[dict safeObjectForKey:@"width"]floatValue];
     self.height        = [[dict safeObjectForKey:@"height"]floatValue];

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface BannerItem : NSObject
-@property (nonatomic ,copy  )NSString * content;
+@property (nonatomic ,copy  )NSString * content;   //商品id
 @property (nonatomic ,copy  )NSString * imageUrl;  //图片路径
 @property (nonatomic ,copy  )NSString * recommendName; // 展位名称
 @property (nonatomic ,copy  )NSString * recommendID;  // 展位ID

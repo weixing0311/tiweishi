@@ -28,6 +28,15 @@
     
     
 }
+- (IBAction)didClickChangeCount:(id)sender {
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didChangeCountWithCell:)]) {
+        [self.delegate didChangeCountWithCell:self ];
+    }
+    
+    
+    
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
@@ -37,6 +46,7 @@
 - (IBAction)didAdd:(id)sender {
     
     count = [self.countLabel.text intValue];
+    
     count++;
     self.countLabel.text =[NSString stringWithFormat:@"%d",count];
     
@@ -47,6 +57,9 @@
 
 - (IBAction)didRed:(id)sender {
     count = [self.countLabel.text intValue];
+    if (count ==0) {
+        return;
+    }
     count--;
     self.countLabel.text =[NSString stringWithFormat:@"%d",count];
     if (self.delegate&&[self.delegate respondsToSelector:@selector(redCountWithCell:)]) {

@@ -342,6 +342,7 @@
 		6C73AF6A1F29C8F20042C1A2 /* wei.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C73AF661F29C8F20042C1A2 /* wei.png */; };
 		6C73AF6E1F29D7610042C1A2 /* PayPriceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AF6C1F29D7610042C1A2 /* PayPriceCell.m */; };
 		6C73AF6F1F29D7610042C1A2 /* PayPriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73AF6D1F29D7610042C1A2 /* PayPriceCell.xib */; };
+		6C73AF731F2B1D850042C1A2 /* HomePageWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AF711F2B1D850042C1A2 /* HomePageWebViewController.m */; };
 		6C8F537A1F11C18100C7A275 /* WWXBlueToothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8F53791F11C18000C7A275 /* WWXBlueToothManager.m */; };
 		6C8F53BE1F11D38A00C7A275 /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8F53A71F11D38A00C7A275 /* NSDate+Utilities.m */; };
 		6C8F53BF1F11D38A00C7A275 /* NSDictionary+JFASafeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8F53A91F11D38A00C7A275 /* NSDictionary+JFASafeObject.m */; };
@@ -1005,6 +1006,8 @@
 		6C73AF6B1F29D7610042C1A2 /* PayPriceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPriceCell.h; sourceTree = "<group>"; };
 		6C73AF6C1F29D7610042C1A2 /* PayPriceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayPriceCell.m; sourceTree = "<group>"; };
 		6C73AF6D1F29D7610042C1A2 /* PayPriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayPriceCell.xib; sourceTree = "<group>"; };
+		6C73AF701F2B1D850042C1A2 /* HomePageWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageWebViewController.h; sourceTree = "<group>"; };
+		6C73AF711F2B1D850042C1A2 /* HomePageWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageWebViewController.m; sourceTree = "<group>"; };
 		6C8F53781F11C18000C7A275 /* WWXBlueToothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWXBlueToothManager.h; sourceTree = "<group>"; };
 		6C8F53791F11C18000C7A275 /* WWXBlueToothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWXBlueToothManager.m; sourceTree = "<group>"; };
 		6C8F53A61F11D38A00C7A275 /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
@@ -2819,6 +2822,8 @@
 				6CCEEB1E1EEE7F56002E1618 /* HomePageViewController.h */,
 				6CCEEB1F1EEE7F56002E1618 /* HomePageViewController.m */,
 				6CD011021EF8131600FB9419 /* HomePageViewController.xib */,
+				6C73AF701F2B1D850042C1A2 /* HomePageWebViewController.h */,
+				6C73AF711F2B1D850042C1A2 /* HomePageWebViewController.m */,
 			);
 			name = homeVC;
 			sourceTree = "<group>";
@@ -3796,6 +3801,7 @@
 				6C8F53BF1F11D38A00C7A275 /* NSDictionary+JFASafeObject.m in Sources */,
 				6C3639931EFE47E100268851 /* AAPlotLinesElement.m in Sources */,
 				6CA024C51F19BA3400F54DF3 /* SubProjectItem.m in Sources */,
+				6C73AF731F2B1D850042C1A2 /* HomePageWebViewController.m in Sources */,
 				6C4311391F064DE90094EFF4 /* JZSchoolCell.m in Sources */,
 				6C13C5D11EFA51A100435A27 /* UpdataOrderViewController.m in Sources */,
 				6C363A0B1F03940500268851 /* UIView+MJExtension.m in Sources */,

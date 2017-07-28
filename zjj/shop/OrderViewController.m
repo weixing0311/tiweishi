@@ -153,10 +153,16 @@
         header.statusLabel .text= @"已完成";
         header.statusLabel.textColor =HEXCOLOR(0x666666);
 
-    }else{
+    }else if(status ==1){
         header.statusLabel .text = @"待付款";
         header.statusLabel.textColor =[UIColor redColor];
 
+    }
+    else if (status ==3)
+    {
+        header.statusLabel .text = @"待收货";
+        header.statusLabel.textColor =[UIColor redColor];
+ 
     }
     [view addSubview:header];
     
@@ -167,7 +173,7 @@
     NSDictionary *dic = [_dataArray objectAtIndex:section];
     int status = [[dic objectForKey:@"status"]intValue];
     float height = 0.0f;
-    if (status==1) {
+    if (status==1||status==3) {
         height =87;
     }else{
         height =41;
@@ -175,34 +181,40 @@
     
     UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, height)];
     view.backgroundColor =HEXCOLOR(0xf0f2f5);
+    
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
     footer.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic objectForKey:@"totalPrice"]];
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
+    [view addSubview:footer];
+
     
+    
+
     if (status ==1) {
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
+        footBtn.delegate =self;
         footBtn.tag = section;
-        footBtn.delegate = self;
+        [view addSubview:footBtn];
+
         [footBtn.firstBtn setTitle:@"去支付" forState:UIControlStateNormal];
         [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
-        [view addSubview:footBtn];
         
-    }else if (status ==3)
+    }
+    else if (status ==3)
     {
-        [footBtn removeFromSuperview];
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
+        footBtn.delegate =self;
         footBtn.tag = section;
-        footBtn.delegate = self;
+        [view addSubview:footBtn];
+
         [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
         [footBtn.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
-        [view addSubview:footBtn];
 
     }
     
-    [view addSubview:footer];
     return view;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -217,7 +229,7 @@
 {
     NSDictionary *dic =[_dataArray objectAtIndex:section];
     int status = [[dic objectForKey:@"status"]intValue];
-    if (status ==1) {
+    if (status ==1||status ==3) {
         return 41+46;
     }else
         return 41;
@@ -330,6 +342,7 @@
         web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
         //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
         web.payType =1;
+        web.opt =1;
         web.orderNo = orderNo;
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];

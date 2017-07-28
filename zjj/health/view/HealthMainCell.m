@@ -156,15 +156,15 @@
     self.title3Label.text = @"去脂体重";
     self.title4Label.text = @"去脂控制量";
     
-    self.value1Label.text =[NSString stringWithFormat:@"%.1f",item.bmi];
-    self.value2Label.text =[NSString stringWithFormat:@"%.1fkg",item.waterWeight];
-    self.value3Label.text =[NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
-    self.value4Label.text =[NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
+    self.value1Label.text =[NSString stringWithFormat:@"%.1f",item.standardWeight];
+    self.value2Label.text =[NSString stringWithFormat:@"%.1fkg",item.weightControl];
+    self.value3Label.text =[NSString stringWithFormat:@"%.1fkg",item.lbm];
+    self.value4Label.text =[NSString stringWithFormat:@"%.1fkg",item.fatControl];
     
-    self.value1Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_BMI item:item];
-    self.value2Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_WATER item:item];
-    self.value3Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_PROTEIN item:item];
-    self.value4Label.textColor = [[HealthModel shareInstance]getHealthHeaderColorWithStatus:IS_MODEL_MUSCLE item:item];
+    self.value1Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+    self.value2Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+    self.value3Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+    self.value4Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
     
 }
 

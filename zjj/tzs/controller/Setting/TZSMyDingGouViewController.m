@@ -25,6 +25,11 @@
     int pageSize;
     OrderFootBtnView * footBtn;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的订购";
@@ -132,7 +137,6 @@
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     
     if (status ==1) {
-//        [footBtn removeFromSuperview];
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
@@ -264,6 +268,7 @@
     web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
     //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
     web.payType =3;
+    web.opt =1;
     web.orderNo = [dic safeObjectForKey:@"orderNo"];
     web.title  =@"收银台";
     [self.navigationController pushViewController:web animated:YES];

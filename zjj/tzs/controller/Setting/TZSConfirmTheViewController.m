@@ -31,6 +31,11 @@
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+}
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -188,7 +193,7 @@
         }
         cell.titleLabel.text =[addressDict safeObjectForKey:@"receiver"];
         cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"provinceName"]?[addressDict safeObjectForKey:@"provinceName"]:@"",[addressDict safeObjectForKey:@"cityName"]?[addressDict safeObjectForKey:@"cityName"]:@"",[addressDict safeObjectForKey:@"countyName"]?[addressDict safeObjectForKey:@"countyName"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"addr"]:@""];
-        cell.phonenumLabel.text = [addressDict safeObjectForKey:@"phone"];
+        cell.phonenumLabel.text = [[UserModel shareInstance]changeTelephone:[addressDict safeObjectForKey:@"phone"]];
         return cell;
     }else if (indexPath.section ==1)
     {
@@ -274,6 +279,7 @@
         web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
         //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
         web.payType =2;
+        web.opt =1;
         web.orderNo = [dic safeObjectForKey:@"orderNo"];
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];

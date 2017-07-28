@@ -12,7 +12,7 @@
 #import "CXdetailView.h"
 #import "AppDelegate.h"
 #import "BaseWebViewController.h"
-@interface TZSDingGouViewController ()<TZSDGCellDelegate,TZSDGUPCellDelegate>
+@interface TZSDingGouViewController ()<TZSDGCellDelegate,TZSDGUPCellDelegate,UITextFieldDelegate>
 
 @end
 
@@ -22,6 +22,11 @@
     NSMutableArray * _buyArray;
     NSMutableArray * _chooseArray;
     CXdetailView * cuxiaoDetailView;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,6 +88,18 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/upgradeFatTeacher.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"success--%@",dic);
         
+        NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
+        BaseWebViewController *web = [[BaseWebViewController alloc]init];
+        web.urlStr = @"app/checkstand.html";
+        web.payableAmount = [dataDict safeObjectForKey:@"payableAmount"];
+        //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+        web.payType =3;
+        web.opt =1;
+        web.orderNo = [dataDict safeObjectForKey:@"orderNo"];
+        web.title  =@"收银台";
+        [self.navigationController pushViewController:web animated:YES];
+        
+        
     } failure:^(NSError *error) {
         DLog(@"faile:%@",error);
     }];
@@ -110,6 +127,8 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/submitServiceOrder.do" paramters:dic success:^(NSDictionary *dic) {
         DLog(@"dic --%@",dic);
         
+        NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
+        
         [[UserModel shareInstance]showSuccessWithStatus:@"进货成功"];
         [_chooseArray removeAllObjects];
         self.priceLabel.text = @"订单总价：0";
@@ -118,10 +137,11 @@
         
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
         web.urlStr = @"app/checkstand.html";
-        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        web.payableAmount = [dataDict safeObjectForKey:@"payableAmount"];
         //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
-        web.payType =1;
-        web.orderNo = [dic safeObjectForKey:@"orderNo"];
+        web.payType =3;
+        web.opt =1;
+        web.orderNo = [dataDict safeObjectForKey:@"orderNo"];
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];
         
@@ -246,7 +266,13 @@
     [self presentViewController:al animated:YES completion:nil];
 }
 
+-(void)changeBottomInfo
+{
+    self.countLabel.text = [NSString stringWithFormat:@"已选服务:%d", [self getChooseCount]];
+    
+    self.priceLabel.text = [NSString stringWithFormat:@"订单总价：%.0f，优惠价格：%.0f",[self getPrice],[self getAllPreferentialOrice]];
 
+}
 #pragma mark ----cellDelegate
 
 -(void)showCXDetailWithCell:(TZSDGCell * )cell
@@ -259,10 +285,7 @@
     NSDictionary *dic = [_dataArray objectAtIndex:cell.tag-100];
 //
     [self setInfoInChooseArr:dic add:YES];
-    
-    self.countLabel.text = [NSString stringWithFormat:@"已选服务:%d", [self getChooseCount]];
-    
-    self.priceLabel.text = [NSString stringWithFormat:@"订单总价：%.0f，优惠价格：%.0f",[self getPrice],[self getAllPreferentialOrice]];
+    [self changeBottomInfo];
     
 }
 
@@ -271,11 +294,34 @@
     NSDictionary *dic = [_dataArray objectAtIndex:cell.tag-100];
     [self setInfoInChooseArr:dic add:NO];
     
-    self.countLabel.text = [NSString stringWithFormat:@"已选服务:%d", [self getChooseCount]];
-    
-    self.priceLabel.text = [NSString stringWithFormat:@"订单总价：%.0f，优惠价格：%.0f",[self getPrice],[self getAllPreferentialOrice]];
-    
+ 
+    [self changeBottomInfo];
 }
+-(void)didChangeCountWithCell:(TZSDGCell * )cell
+{
+    
+    NSDictionary * dic = [_dataArray objectAtIndex:cell.tag-100];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"修改数量" message:@"单笔最大购买数量：200" preferredStyle:UIAlertControllerStyleAlert];
+    [al addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.delegate = self;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        DLog(@"%@",al.textFields.firstObject.text);
+        if ([al.textFields.firstObject.text intValue]>=0&&[al.textFields.firstObject.text intValue]<=200) {
+            cell.countLabel.text = al.textFields.firstObject.text;
+            [self changeChooseArrWithDict:dic Count:[al.textFields.firstObject.text intValue]];
+            [self changeBottomInfo];
+        }
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+
+    [self presentViewController:al animated:YES completion:nil];
+}
+
+
 -(void)didBuyWithCell:(TZSDGUPCell *)cell
 {
     UIAlertController *al = [UIAlertController alertControllerWithTitle:@"确定购买此服务？" message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -292,6 +338,8 @@
     [self presentViewController:al animated:YES completion:nil];
 }
 
+
+
 #pragma mark--添加减少选中商品数量并放置在chooseArray中
 -(void)setInfoInChooseArr:(NSDictionary *)dict add:(BOOL)isAdd
 {
@@ -303,31 +351,27 @@
     [test1dic setObject:[dict objectForKey:@"productPrice"] forKey:@"unitPrice"];
     if (_chooseArray.count>0) {
         
-    
+        int count =0;
+        
     for (int i =0;i<_chooseArray.count ;i++) {
         NSMutableDictionary * dic =_chooseArray[i];
         NSString * productNo1 = [dic objectForKey:@"productNo"];
 
         if ([productNo isEqualToString:productNo1]) {
-            int count = [[dic objectForKey:@"quantity"]intValue];
-            if (isAdd ==YES) {
-                count ++;
-                [dic setObject:@(count) forKey:@"quantity"];
-            }else{
-                if (count>1) {
-                    count--;
-                    [dic setObject:@(count) forKey:@"quantity"];
-                    
-                }else{
-                    [_chooseArray removeObject:dic];
-                }
-            }
-        }else{
-            [_chooseArray addObject:test1dic];
+            count = [[dic objectForKey:@"quantity"]intValue];
+            [_chooseArray removeObject:dic];
+            
         }
     }
-    
-    
+        if (isAdd==YES) {
+            [test1dic setObject:@(count+1) forKey:@"quantity"];
+
+        }else{
+            [test1dic setObject:@(count-1) forKey:@"quantity"];
+
+        }
+        [_chooseArray addObject:test1dic];
+ 
     
     }else{
         if (isAdd==YES) {
@@ -338,7 +382,27 @@
     
 }
 
-
+-(void)changeChooseArrWithDict:(NSDictionary *)dict Count:(int)count
+{
+    NSString * productNo = [dict objectForKey:@"productNo"];
+    NSMutableDictionary * test1dic = [NSMutableDictionary dictionary];
+    [test1dic setObject:[dict objectForKey:@"productNo"] forKey:@"productNo"];
+    [test1dic setObject:@(count) forKey:@"quantity"];
+    [test1dic setObject:[dict objectForKey:@"productPrice"] forKey:@"unitPrice"];
+    for (int i =0;i<_chooseArray.count ;i++) {
+        NSMutableDictionary * dic =_chooseArray[i];
+        NSString * productNo1 = [dic objectForKey:@"productNo"];
+        
+        if ([productNo isEqualToString:productNo1]) {
+            count = [[dic objectForKey:@"quantity"]intValue];
+            [_chooseArray removeObject:dic];
+            
+        }
+    }
+    if (count!=0) {
+        [_chooseArray addObject:test1dic];
+    }
+}
 
 #pragma mark--//获取选择单种商品优惠价格
 

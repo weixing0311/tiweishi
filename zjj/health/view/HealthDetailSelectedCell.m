@@ -39,23 +39,31 @@
 
     if (self.tag ==0) {
         self.title1Label.text = @"BMI";
-        self.value1Label.text = [NSString stringWithFormat:@"%.1f",hItem.bmi];
-        self.value1Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_BMI];
-        self.selectMark1ImageView.hidden = YES;
-        
         self.title2Label.text = @"体脂率";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1f%%",hItem.fatPercentage];
-        self.value2Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT];
-        self.selectMark2ImageView.hidden = YES;
-        
         self.title3Label.text = @"脂肪量";
-        self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",hItem.fatWeight];
-        self.value3Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_FAT];
-        self.selectMark3ImageView.hidden = YES;
-        
         self.title4Label.text = @"水分";
+
+        self.value1Label.text = [NSString stringWithFormat:@"%.1f",hItem.bmi];
+        self.value2Label.text = [NSString stringWithFormat:@"%.1f%%",hItem.fatPercentage];
+        self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",hItem.fatWeight];
+
         self.value4Label.text = [NSString stringWithFormat:@"%.1fkg",hItem.waterWeight];
+
+        
+        
+        self.value1Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_BMI];
+        
+        self.value2Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT];
+        
+        self.value3Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_FAT];
+        
         self.value4Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_WATER];
+        
+        
+        
+        self.selectMark1ImageView.hidden = YES;
+        self.selectMark2ImageView.hidden = YES;
+        self.selectMark3ImageView.hidden = YES;
         self.selectMark4ImageView.hidden = YES;
         
     }else{

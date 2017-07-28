@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/shop/homepage/controller/GoodsDetailViewController.m"
-            timestampString = "522750925.464304"
+            timestampString = "522920564.582207"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -52,7 +52,7 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/shop/mine/controller/RealNameAuthenticationViewController.m"
-                  timestampString = "522841821.862664"
+                  timestampString = "522927954.838596"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "37"
@@ -67,7 +67,7 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/shop/mine/controller/RealNameAuthenticationViewController.m"
-                  timestampString = "522841821.866245"
+                  timestampString = "522927954.841945"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "39"
@@ -96,22 +96,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/tzs/controller/Setting/TZSMyDingGouViewController.m"
-            timestampString = "522810282.927542"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
-            landmarkName = "-tableView:viewForFooterInSection:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -122,22 +106,6 @@
             startingLineNumber = "384"
             endingLineNumber = "384"
             landmarkName = "-reloadAll"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/health/controller/HealthViewController.m"
-            timestampString = "522840630.451771"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
-            landmarkName = "-changeShowUserWithSubId:isAdd:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

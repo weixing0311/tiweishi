@@ -192,7 +192,7 @@
         }
         
         else if (indexPath.row ==1) {
-            cell.textLabel.text =[NSString stringWithFormat:@"订购人：%@(TEL:%@)",[_infoDict objectForKey:@"nickName"],[_infoDict objectForKey:@"phone"]];
+            cell.textLabel.text =[NSString stringWithFormat:@"订购人：%@(TEL:%@)",[_infoDict objectForKey:@"nickName"],[[UserModel shareInstance]changeTelephone:[_infoDict objectForKey:@"phone"]]];
 
         }else{
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];

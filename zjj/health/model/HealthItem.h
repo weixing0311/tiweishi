@@ -45,6 +45,12 @@ typedef enum {
 @property (nonatomic,copy  ) NSString     *     createTime ;////检测时间
 @property (nonatomic,assign) float              fatPercentage;
 @property (nonatomic,assign)enumsType           type;
+
+@property (nonatomic,assign) float              standardWeight;//标准体重
+@property (nonatomic,assign) float              weightControl;//体重控制量
+@property (nonatomic,assign) float              lbm;//去脂体重
+@property (nonatomic,assign) float              fatControl;//脂肪控制量
+
 -(void)setobjectWithDic:(NSDictionary *)dict ;//
 
 /*

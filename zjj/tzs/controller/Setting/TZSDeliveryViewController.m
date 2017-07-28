@@ -176,31 +176,25 @@
     [test1dic setObject:[dict objectForKey:@"unitPrice"] forKey:@"unitPrice"];
     if (_chooseArray.count>0) {
         
+        int count =0;
         
         for (int i =0;i<_chooseArray.count ;i++) {
             NSMutableDictionary * dic =_chooseArray[i];
             NSString * productNo1 = [dic objectForKey:@"productNo"];
             
             if ([productNo isEqualToString:productNo1]) {
-                int count = [[dic objectForKey:@"quantity"]intValue];
-                if (isAdd ==YES) {
-                    count ++;
-                    [dic setObject:@(count) forKey:@"quantity"];
-                }else{
-                    if (count>1) {
-                        count--;
-                        [dic setObject:@(count) forKey:@"quantity"];
-                        
-                    }else{
-                        [_chooseArray removeObject:dic];
-                    }
-                }
-            }else{
-                [_chooseArray addObject:test1dic];
+                count = [[dic objectForKey:@"quantity"]intValue];
+                [_chooseArray removeObject:dic];
             }
         }
-        
-        
+        if (isAdd==YES) {
+            [test1dic setObject:@(count+1) forKey:@"quantity"];
+            
+        }else{
+            [test1dic setObject:@(count-1) forKey:@"quantity"];
+            
+        }
+        [_chooseArray addObject:test1dic];
         
     }else{
         if (isAdd==YES) {

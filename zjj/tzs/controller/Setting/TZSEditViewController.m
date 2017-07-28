@@ -70,15 +70,25 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section ==2) {
-        return 2;
-    }else{
+    if (section ==0) {
+        return 4;
+    }else if(section==1){
         return 3;
+    }else{
+        return 2;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 10;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section ==0&&indexPath.row==0) {
+        return 70;
+    }else{
+        return 60;
+    }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -117,7 +127,7 @@
                         break;
                     case 3:
                         cell.textLabel.text = @"手机号";
-                        cell.detailTextLabel.text = [UserModel shareInstance].phoneNum;
+                        cell.detailTextLabel.text = [UserModel shareInstance].mphoneNum;
                         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
                         break;
@@ -188,6 +198,10 @@
         {
             
         }
+        else if (indexPath.row ==1)
+        {
+            
+        }
         else
         {
             TZSChangeMobileViewController *cg =[[TZSChangeMobileViewController alloc]init];
@@ -213,7 +227,7 @@
     }
     else
     {
-        if (indexPath.row ==1)
+        if (indexPath.row ==0)
         {
             [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://4006119516"]];
 

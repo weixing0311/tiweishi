@@ -16,7 +16,8 @@
 #import "GoodsItem.h"
 #import "UIButton+AFNetworking.h"
 #import "HomeHeadView.h"
-@interface HomePageViewController ()
+#import "HomePageWebViewController.h"
+@interface HomePageViewController ()<footViewDelegate>
 @property (nonatomic,assign)int   page;
 @property (nonatomic,assign)int   count;
 
@@ -35,7 +36,8 @@
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
 //    self.navigationController.navigationBarHidden = YES;
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    self.navigationController.navigationBar.hidden = YES;
+//    [self.navigationController setNavigationBarHidden:YES animated:animated];
 
 }
 - (void)viewDidLoad {
@@ -204,6 +206,7 @@
         FootView *footV = [views lastObject];
         footV.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/375*461);
         footV.backgroundColor = HEXCOLOR(0xf8f8f8);
+        footV.delegate = self;
         [foot addSubview:footV];
         for (BannerItem *item in _bannerInfoArray) {
             if ([item.recommendID isEqualToString:@"2"]) {
@@ -272,12 +275,57 @@
 - (void)carouselView:(ADCarouselView *)carouselView didSelectItemAtIndex:(NSInteger)didSelectItemAtIndex
 {
     NSLog(@"%zd",didSelectItemAtIndex);
+    
+    BannerItem * item = [_bannerArray objectAtIndex:didSelectItemAtIndex-1];
+    
+    if (item.type ==1) {
+        
+        HomePageWebViewController * web = [[HomePageWebViewController alloc]init];
+        
+        web.hidesBottomBarWhenPushed = YES;
+        web.urlStr = item.content;
+        [self.navigationController pushViewController:web animated:YES];
+    }else{
+        GoodsDetailViewController *gs = [[GoodsDetailViewController alloc]init];
+        gs.productNo = item.content;
+        gs.hidesBottomBarWhenPushed = YES;
+        
+        [self.navigationController pushViewController:gs animated:YES];
+   
+    }
+
+    
 }
 
 #pragma mark ---footViewDelegate
 -(void)didClickFootViewBtnWithTag:(NSInteger)tag
 {
     
+    
+    for (BannerItem *item in _bannerInfoArray) {
+        if ([item.recommendID isEqualToString:[NSString stringWithFormat:@"%ld",tag-500]]) {
+            
+            if (item.type ==1) {
+                
+                HomePageWebViewController * web = [[HomePageWebViewController alloc]init];
+                
+                web.hidesBottomBarWhenPushed = YES;
+                web.urlStr = item.content;
+                [self.navigationController pushViewController:web animated:YES];
+            }else{
+                GoodsDetailViewController *gs = [[GoodsDetailViewController alloc]init];
+                gs.productNo = item.content;
+                gs.hidesBottomBarWhenPushed = YES;
+                
+                [self.navigationController pushViewController:gs animated:YES];
+                
+            }
+            
+            
+            
+        }
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {

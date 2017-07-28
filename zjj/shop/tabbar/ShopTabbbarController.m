@@ -13,6 +13,7 @@
 #import "MineViewController.h"
 #import "ShopTestViewController.h"
 #import "TabbarViewController.h"
+#import "JzSchoolViewController.h"
 @interface ShopTabbbarController ()
 
 @end
@@ -36,7 +37,8 @@
 
     news.title = @"首页";
     
-    InfomationViewController *found = [[InfomationViewController alloc]init];
+    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
+//    InfomationViewController *found = [[InfomationViewController alloc]init];
     UINavigationController * nav2 = [[UINavigationController alloc]initWithRootViewController:found];
     nav2.navigationBar.barTintColor = [UIColor redColor];
     found.title = @"知识";

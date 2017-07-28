@@ -31,5 +31,5 @@
 -(void)addCountWithCell:(TZSDGCell *)cell;
 -(void)redCountWithCell:(TZSDGCell *)cell;
 -(void)showCXDetailWithCell:(TZSDGCell * )cell;
-
+-(void)didChangeCountWithCell:(TZSDGCell * )cell;
 @end

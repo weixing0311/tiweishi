@@ -150,16 +150,26 @@
                                     <action selector="didAdd:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="QhD-BE-rsw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vaI-uX-ECu">
+                                <rect key="frame" x="26" y="0.0" width="42" height="27"/>
+                                <connections>
+                                    <action selector="didClickChangeCount:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bP6-nI-KjE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="g2q-op-VAC" firstAttribute="leading" secondItem="vaI-uX-ECu" secondAttribute="trailing" id="7PJ-A1-HbB"/>
                             <constraint firstAttribute="trailing" secondItem="g2q-op-VAC" secondAttribute="trailing" constant="1" id="Cnj-Po-anD"/>
                             <constraint firstItem="R7I-MB-qmg" firstAttribute="top" secondItem="74X-fL-mjU" secondAttribute="top" constant="1" id="Cyx-ff-LVi"/>
                             <constraint firstItem="Vne-Tu-upS" firstAttribute="top" secondItem="74X-fL-mjU" secondAttribute="top" constant="1" id="HTW-zk-v1e"/>
                             <constraint firstAttribute="bottom" secondItem="Vne-Tu-upS" secondAttribute="bottom" constant="1" id="Owx-6y-eWD"/>
+                            <constraint firstItem="vaI-uX-ECu" firstAttribute="leading" secondItem="Vne-Tu-upS" secondAttribute="trailing" id="Quf-CL-eMm"/>
                             <constraint firstAttribute="width" constant="94" id="RaO-GX-Cni"/>
                             <constraint firstItem="R7I-MB-qmg" firstAttribute="leading" secondItem="Vne-Tu-upS" secondAttribute="trailing" constant="1" id="TdI-Ad-7kk"/>
+                            <constraint firstAttribute="bottom" secondItem="vaI-uX-ECu" secondAttribute="bottom" id="bFZ-k7-RX8"/>
                             <constraint firstAttribute="height" constant="27" id="cpB-4A-kXN"/>
+                            <constraint firstItem="vaI-uX-ECu" firstAttribute="top" secondItem="74X-fL-mjU" secondAttribute="top" id="fad-4F-Z65"/>
                             <constraint firstItem="Vne-Tu-upS" firstAttribute="leading" secondItem="74X-fL-mjU" secondAttribute="leading" constant="1" id="kKM-Xd-4XQ"/>
                             <constraint firstAttribute="bottom" secondItem="g2q-op-VAC" secondAttribute="bottom" constant="1" id="oQN-9d-swF"/>
                             <constraint firstItem="g2q-op-VAC" firstAttribute="leading" secondItem="R7I-MB-qmg" secondAttribute="trailing" constant="1" id="oWr-rc-nZN"/>

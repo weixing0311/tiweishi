@@ -7,21 +7,17 @@
 //
 
 #import "JFABaseTableViewController.h"
+#import <WebKit/WebKit.h>
 
 @interface BaseWebViewController : JFABaseTableViewController
-//@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (nonatomic,strong)WKWebView * webView;
 @property (nonatomic, copy)NSString * urlStr;
 @property (nonatomic, copy)NSString * orderNo;
 @property (nonatomic, copy)NSString * payableAmount;
 @property (nonatomic,assign)int payType;
+@property (nonatomic,assign)int opt;
 
 
--(void) getHeader;
--(void)exit;
--(void)hideLoad;
--(void)exitToLogin;
-void alert(NSString * message);
-void loading(NSString * message);
 
 
 @end

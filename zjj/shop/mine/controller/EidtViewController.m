@@ -33,6 +33,10 @@
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
 }
+
+
+
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -51,7 +55,12 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 55;
+    
+    if (indexPath.section==0&&indexPath.row==0) {
+        return 70;
+    }else{
+    return 60;
+    }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -87,7 +96,7 @@
                 switch (indexPath.row) {
                     case 0:
                         cell.textLabel.text =@"手机号";
-                        cell.detailTextLabel.text =[UserModel shareInstance].phoneNum;
+                        cell.detailTextLabel.text =[UserModel shareInstance].mphoneNum;
                         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                         
                         break;

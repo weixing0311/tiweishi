@@ -47,7 +47,10 @@
  *手机号
  */
 @property (nonatomic,copy  ) NSString * phoneNum;//手机号
-
+/**
+ *手机号
+ */
+@property (nonatomic,copy  ) NSString * mphoneNum;//加密手机号
 /**
  * 昵称
  */
@@ -241,4 +244,14 @@
 -(void)showErrorWithStatus:(NSString *)status;
 -(void)showInfoWithStatus:(NSString *)status;
 -(void)dismiss;
+
+
+
+
+/**
+ *手机号加密
+ */
+-(NSString*)changeTelephone:(NSString*)teleStr;
+
+
 @end
