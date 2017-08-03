@@ -1,76 +1,109 @@
-
 //
 //  MessageViewController.m
-//  zhijiangjun
+//  zjj
 //
-//  Created by iOSdeveloper on 2017/6/10.
+//  Created by iOSdeveloper on 2017/8/2.
 //  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
 //
 
 #import "MessageViewController.h"
-
+#import "MessageCell.h"
+#import "HomePageWebViewController.h"
 @interface MessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (nonatomic,strong)NSMutableArray * dataArray;
 @end
 
 @implementation MessageViewController
 {
-    NSMutableArray * dataArray;
-    UITableView * tb;
-}
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
-    
-    [tb headerBeginRefreshing];
-
-    
-    
-    
+    int page;
+    int pageSize;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTBRedColor];
-    tb =[[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    tb.delegate = self;
-    tb.dataSource = self;
-    [self.view addSubview:tb];
-    [self setExtraCellLineHiddenWithTb:tb];
-    [self setRefrshWithTableView:tb];
-    [tb setFooterHidden:YES];
-    dataArray = [NSMutableArray array];
-    
-    // Do any additional setup after loading the view.
+    self.tableview.delegate = self;
+    self.tableview.dataSource = self;
+    pageSize =30;
+    self.dataArray = [NSMutableArray array];
+    [self setExtraCellLineHiddenWithTb:self.tableview];
+    [self setRefrshWithTableView:self.tableview];
+    [self.tableview headerBeginRefreshing];
+    // Do any additional setup after loading the view from its nib.
 }
 -(void)headerRereshing
 {
-    [self getInfo];
+    page =1;
+    [self getinfo];
 }
--(void) getInfo{
-    [[BaseSservice sharedManager]post1:@"app/test/getMsg.do" paramters:nil success:^(NSDictionary *dic) {
-        [tb headerEndRefreshing];
-        dataArray =[[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"];
-        [tb reloadData];
+-(void)footerRereshing
+{
+    page++;
+    [self getinfo];
+}
+-(void)getinfo
+{
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:@(page) forKey:@"page"];
+    [params safeSetObject:@(pageSize) forKey:@"pageSize"];
+
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/msg/queryMsgList.do" paramters:params success:^(NSDictionary *dic) {
+        [self.tableview headerEndRefreshing];
+        [self.tableview footerEndRefreshing];
+        
+        if (page ==1) {
+            [self.dataArray removeAllObjects];
+            [self.tableview setFooterHidden:NO];
+            
+        }
+        NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
+        NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
+        if (infoArr.count<30) {
+            [self.tableview setFooterHidden:YES];
+        }
+        
+        [self.dataArray addObjectsFromArray:infoArr];
+        
+        [self.tableview reloadData];
+        
+        
+        
+        
     } failure:^(NSError *error) {
-        [tb headerEndRefreshing];
-        [[UserModel shareInstance]showInfoWithStatus:@"没有新消息"];
+        [self.tableview headerEndRefreshing];
+        [self.tableview footerEndRefreshing];
+
     }];
+    
 }
-
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return dataArray.count;
+    return self.dataArray.count;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return JFA_SCREEN_WIDTH*320/375;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * identifier = @"cell";
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    static NSString * identifier = @"MessageCell";
+    MessageCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [self getXibCellWithTitle:identifier];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDictionary * dic =[self.dataArray objectAtIndex:indexPath.row];
+    cell.tag = indexPath.row;
+    [cell setInfoWithDict:dic];
     return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary * dic = [self.dataArray objectAtIndex:indexPath.row];
+    HomePageWebViewController * home = [[HomePageWebViewController alloc]init];
+    home.urlStr = [dic safeObjectForKey:@"linkUrl"];
+    [self.navigationController pushViewController: home animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -28,6 +28,11 @@
     self.secondBtn.layer.borderWidth = 1;
     self.secondBtn.layer.borderColor=[UIColor grayColor].CGColor;
 
+    self.thirdBtn.layer.masksToBounds = YES;
+    self.thirdBtn.layer.cornerRadius  = 5;
+    self.thirdBtn.layer.borderWidth = 1;
+    self.thirdBtn.layer.borderColor=[UIColor grayColor].CGColor;
+
 }
 -(void)ChangeViewWithStatus:(NSInteger)type
 {
@@ -35,14 +40,14 @@
 
 - (IBAction)didCickFirst:(id)sender {
     
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(didClickFirstBtnWithView:)]) {
-        [self.delegate didClickFirstBtnWithView:self];
+    if (self.myDelegate &&[self.myDelegate respondsToSelector:@selector(didClickFirstBtnWithView:)]) {
+        [self.myDelegate didClickFirstBtnWithView:self];
     }
 }
 
 - (IBAction)didClickSecond:(id)sender {
-    if (self.delegate &&[self.delegate respondsToSelector:@selector(didClickSecondBtnWithView:)]) {
-        [self.delegate didClickSecondBtnWithView:self];
+    if (self.myDelegate &&[self.myDelegate respondsToSelector:@selector(didClickSecondBtnWithView:)]) {
+        [self.myDelegate didClickSecondBtnWithView:self];
     }
 }
 @end

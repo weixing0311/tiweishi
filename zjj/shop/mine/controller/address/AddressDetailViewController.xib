@@ -75,7 +75,7 @@
                     <rect key="frame" x="0.0" y="112" width="375" height="50"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="选择省、市、区" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nKP-kr-Lpu">
-                            <rect key="frame" x="10" y="10" width="355" height="30"/>
+                            <rect key="frame" x="20" y="10" width="335" height="30"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
@@ -85,9 +85,9 @@
                     <constraints>
                         <constraint firstItem="nKP-kr-Lpu" firstAttribute="top" secondItem="tdD-cv-faO" secondAttribute="top" constant="10" id="1nd-iA-nBf"/>
                         <constraint firstAttribute="height" constant="50" id="I9u-Iv-oei"/>
-                        <constraint firstItem="nKP-kr-Lpu" firstAttribute="leading" secondItem="tdD-cv-faO" secondAttribute="leading" constant="10" id="dGv-O5-fwt"/>
+                        <constraint firstItem="nKP-kr-Lpu" firstAttribute="leading" secondItem="tdD-cv-faO" secondAttribute="leading" constant="20" id="dGv-O5-fwt"/>
                         <constraint firstAttribute="bottom" secondItem="nKP-kr-Lpu" secondAttribute="bottom" constant="10" id="eE2-F3-U7y"/>
-                        <constraint firstAttribute="trailing" secondItem="nKP-kr-Lpu" secondAttribute="trailing" constant="10" id="pgA-Nd-Fot"/>
+                        <constraint firstAttribute="trailing" secondItem="nKP-kr-Lpu" secondAttribute="trailing" constant="20" id="pgA-Nd-Fot"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1j-RT-CIS">

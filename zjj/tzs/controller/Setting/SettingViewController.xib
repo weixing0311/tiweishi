@@ -21,6 +21,7 @@
                 <outlet property="headImageView" destination="dUK-Je-hAo" id="hxn-Nd-9Bj"/>
                 <outlet property="nameLabel" destination="bjj-05-cFS" id="YRx-gk-rZx"/>
                 <outlet property="rankBtn" destination="MuW-CP-9Gm" id="tjL-Hu-jXn"/>
+                <outlet property="scrollView" destination="pO7-Eg-9rm" id="6fD-gt-29U"/>
                 <outlet property="secondView" destination="vg0-4v-tGO" id="bPH-x6-pUZ"/>
                 <outlet property="thirdView" destination="gRy-11-lmU" id="Reh-wh-PcN"/>
                 <outlet property="tzsLabel" destination="wSQ-Ml-mJJ" id="RfV-tM-nwO"/>
@@ -70,10 +71,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O92-SW-rcX">
-                                    <rect key="frame" x="15" y="25" width="30" height="30"/>
+                                    <rect key="frame" x="15" y="25" width="40" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="30" id="5WM-z2-xhk"/>
-                                        <constraint firstAttribute="height" constant="30" id="lH3-gG-C48"/>
+                                        <constraint firstAttribute="width" constant="40" id="5WM-z2-xhk"/>
+                                        <constraint firstAttribute="height" constant="40" id="lH3-gG-C48"/>
                                     </constraints>
                                     <state key="normal" image="setpage.png"/>
                                     <connections>

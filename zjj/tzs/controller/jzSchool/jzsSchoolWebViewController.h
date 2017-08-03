@@ -16,7 +16,8 @@
 - (IBAction)didCollection:(id)sender;
 - (IBAction)didZan:(id)sender;
 @property (nonatomic,copy)NSString * urlStr;
-@property (nonatomic,assign)int  iscollection;
-@property (nonatomic,assign)int  islike;
+@property (nonatomic,copy)NSString *  iscollection;
+@property (nonatomic,copy)NSString *  islike;
+@property (nonatomic,copy)NSString * isLikeNum;
 @property (nonatomic,assign)int  informateId;
 @end

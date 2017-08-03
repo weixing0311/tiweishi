@@ -20,6 +20,7 @@
 #import "AddTradingPsController.h"
 
 @interface SettingViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
 
 @implementation SettingViewController
@@ -32,17 +33,18 @@
 {
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBar.hidden = YES;
-//    [self.navigationController setNavigationBarHidden:YES animated:animated];
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getbalance];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setShardow];
-
-    isBigHeadImage = NO;
+    self.scrollView.contentSize = CGSizeMake(0, 0);
     
+    isBigHeadImage = NO;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterOtherViewContoller:) name:@"shouyintaibackToViewController" object:nil];
     
     [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
@@ -52,6 +54,18 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+//进入其他页面
+-(void)enterOtherViewContoller:(NSNotification*)noti
+{
+    int payType = [[noti.userInfo safeObjectForKey:@"payType"]intValue];
+    if (payType ==2) {
+        [self mySend:nil];
+    }
+    else if (payType ==3)
+    {
+        [self mybuy:nil];
+    }
+}
 //刷新个人信息
 -(void)refreshUserInfo
 {
@@ -154,7 +168,7 @@
 
 #pragma mark--订购
 - (IBAction)buy:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     TZSDingGouViewController *dg =[[TZSDingGouViewController alloc]init];
     
     dg.hidesBottomBarWhenPushed = YES;
@@ -163,14 +177,14 @@
 #pragma mark--我的订购
 
 - (IBAction)mybuy:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     TZSMyDingGouViewController *md =[[TZSMyDingGouViewController alloc]init];
     md.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:md animated:YES];
 }
 #pragma mark--已订购
 - (IBAction)alsoBuy:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
     web.title = @"已购服务";
     web.hidesBottomBarWhenPushed =YES;
@@ -180,14 +194,14 @@
 
 #pragma mark--配送服务
 - (IBAction)send:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     TZSDeliveryViewController *ed =[[TZSDeliveryViewController alloc]init];
     ed.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ed animated:YES];
 }
 #pragma mark--我的配送
 - (IBAction)mySend:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     TZSDistributionViewController * ds =[[TZSDistributionViewController alloc]init];
     ds.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ds animated:YES];
@@ -195,14 +209,14 @@
 }
 #pragma mark--地址管理
 - (IBAction)address:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     AddressListViewController *ad =[[AddressListViewController alloc]init];
     ad.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ad animated:YES];
 }
 #pragma mark--充值
 - (IBAction)topUp:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web = [[BaseWebViewController alloc]init];
     web.urlStr = @"app/fatTeacher/recharge.html";
     //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
@@ -214,7 +228,7 @@
 }
 #pragma mark--交易记录
 - (IBAction)TransactionRecords:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
     web.urlStr =@"app/fatTeacher/tradingRecord.html";
     web.hidesBottomBarWhenPushed =YES;
@@ -235,10 +249,10 @@
         
         
         [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            self.navigationController.navigationBar.hidden =NO;
+            self.navigationController.navigationBarHidden =NO;
             AddTradingPsController * at =[[AddTradingPsController alloc]init];
             at.hidesBottomBarWhenPushed =YES;
-            self.navigationController.navigationBar.hidden =NO;
+            self.navigationController.navigationBarHidden =NO;
             [self.navigationController pushViewController:at animated:YES];
         }]];
         
@@ -247,7 +261,7 @@
         [self presentViewController:al animated:YES completion:nil];
     }else{
     
-        self.navigationController.navigationBar.hidden =NO;
+        self.navigationController.navigationBarHidden =NO;
 
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
     web.urlStr = @"app/fatTeacher/dailyCash.html";
@@ -263,7 +277,7 @@
 
 #pragma mark--我的收益
 - (IBAction)myIncome:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
     web.urlStr = @"app/fatTeacher/myEarnings.html";
     web.hidesBottomBarWhenPushed =YES;
@@ -274,14 +288,14 @@
 }
 #pragma mark--团队订购
 - (IBAction)teamOrder:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     TZSTeamDGViewController * ts =[[TZSTeamDGViewController alloc]init];
     ts.hidesBottomBarWhenPushed =YES;
     [self.navigationController pushViewController:ts animated:YES];
 }
 #pragma mark--团队管理
 - (IBAction)teamManagement:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
     web.urlStr = @"app/fatTeacher/myTeam.html";
     web.title = @"团队管理";
@@ -295,7 +309,7 @@
 }
 #pragma mark--设置
 - (IBAction)didEdit:(id)sender {
-    self.navigationController.navigationBar.hidden =NO;
+    self.navigationController.navigationBarHidden =NO;
     
     TZSEditViewController *edit = [[TZSEditViewController alloc]init];
     edit.hidesBottomBarWhenPushed =YES;

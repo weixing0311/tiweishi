@@ -15,7 +15,8 @@
 #import "TZSDingGouViewController.h"
 #import "TZSOrderDetailViewController.h"
 #import "TZSDistributionDetailViewController.h"
-@interface BaseWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
+#import "WXAlipayController.h"
+@interface BaseWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler,UIGestureRecognizerDelegate,UIScrollViewDelegate>
 @end
 
 @implementation BaseWebViewController
@@ -23,11 +24,36 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;;
+//    self.navigationController.navigationBar.hidden = YES;;
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.webView stopLoading];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNbColor];
+    
+    
+    UIBarButtonItem * backItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_"] style:UIBarButtonItemStylePlain target:self action:@selector(didClickBack)];
+    self.navigationItem.leftBarButtonItem = backItem;
+    if (self.rightBtnUrl.length>0) {
+        UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithTitle:self.rightBtnTitle style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
+        self.navigationItem.rightBarButtonItem = rightitem;
+     
+    }
+    
+    
+    
+    //禁止右划返回
+    
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        
+        self.navigationController.interactivePopGestureRecognizer.delegate=self;
+    }
+    
+    
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
     
@@ -43,7 +69,7 @@
     [userContentController addScriptMessageHandler:self name:@"payCallBack"];
     [userContentController addScriptMessageHandler:self name:@"toReorder"];
     [userContentController addScriptMessageHandler:self name:@"toMyOrderDetail"];
-
+    [userContentController addScriptMessageHandler:self name:@"toForward"];
     
     
     configuration.userContentController = userContentController;
@@ -55,12 +81,12 @@
     
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 20, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-20) configuration:configuration];
     
-    
-    
+//    -webkit-overflow-scrolling: touch
     NSString  * urlss = [kMyBaseUrl stringByAppendingString:self.urlStr];
     NSURL * url  =[NSURL URLWithString:urlss];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
+    self.webView.scrollView.delegate = self;
     DLog(@"webUrl = %@",url);
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]] ;
     
@@ -69,15 +95,42 @@
     
 
 }
+
+
+-(NSString*)encodeString:(NSString*)unencodedString{
+    
+    // CharactersToBeEscaped = @":/?&=;+!@#$()~',*";
+    
+    // CharactersToLeaveUnescaped = @"[].";
+    
+    NSString *encodedString = (NSString *)
+    
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                              
+                                                              (CFStringRef)unencodedString,
+                                                              
+                                                              NULL,
+                                                              
+                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                              
+                                                              kCFStringEncodingUTF8));
+    
+    return encodedString;
+    
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
+}
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    
+ 
     
     DLog(@"%ld",(long)((NSHTTPURLResponse *)navigationResponse.response).statusCode);
     if (((NSHTTPURLResponse *)navigationResponse.response).statusCode == 200) {
-        self.navigationController.navigationBar.hidden = YES;
         decisionHandler (WKNavigationResponsePolicyAllow);
 
     }else {
-        self.navigationController.navigationBar.hidden = YES;
         decisionHandler(WKNavigationResponsePolicyCancel);
     }
 }
@@ -141,18 +194,63 @@
     //付款回调
     else if ([message.name isEqualToString:@"payCallBack"])
     {
-        [self payCallBack];
+        [self payCallBackWithDict:message.body];
     }
+    //跳转订购页面
     else if ([message.name isEqualToString:@"toReorder"])
     {
         [self toReorder];
     }
+    //跳转我的订购详情页面
     else if ([message.name isEqualToString:@"toMyOrderDetail"])
     {
         [self toMyOrderDetailWithBody:message.body];
     }
+    //跳转页面
+    else if ([message.name isEqualToString:@"toForward"])
+    {
+        [self loadUrlWithDict:message.body];
+    }
 
 }
+
+
+-(void)loadUrlWithDict:(NSDictionary *)dict
+{
+    if (![dict isKindOfClass:[NSDictionary class]]) {
+        [[UserModel shareInstance]showInfoWithStatus:@"后台参数错误"];
+        return;
+    }
+
+    if ([[dict objectForKey:@"title"]isEqualToString:@"支付宝支付"]) {
+        WXAlipayController  *alipayVC = [[WXAlipayController alloc]init];
+        alipayVC.title = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"title"]];
+        alipayVC.urlStr = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"url"]];
+        [self.navigationController pushViewController:alipayVC animated:YES];
+        return;
+    }
+
+    
+    
+    BaseWebViewController * web = [[BaseWebViewController alloc]init];
+    web.title  = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"title"]];
+    web.urlStr = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"url"]];
+    NSString *rightUrl = [dict safeObjectForKey:@"preUrl"];
+    NSString * rightTitle =[dict safeObjectForKey:@"preTitle"];
+    if (rightUrl.length>0) {
+        web.rightBtnUrl =rightUrl;
+        web.rightBtnTitle =rightTitle;
+    }
+    [self.navigationController pushViewController:web animated:YES];
+}
+-(void)enterRightPage
+{
+    BaseWebViewController * web = [[BaseWebViewController alloc]init];
+    web.title  = self.rightBtnTitle;
+    web.urlStr = self.rightBtnUrl;
+    [self.navigationController pushViewController:web animated:YES];
+}
+
 
 #pragma mark ----已购服务跳转
 /**
@@ -190,7 +288,12 @@
 // 页面开始加载时调用
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    
+    NSString* reqUrl = webView.URL.absoluteString;
+//    DLog(@"%@",reqUrl);
+//    if ([reqUrl hasPrefix:@"alipays://"] || [reqUrl hasPrefix:@"alipay://"]) {
+//    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:reqUrl]];
+        //bSucc是否成功调起支付宝
+//    }
 }
 
 // 当内容开始返回时调用
@@ -239,6 +342,23 @@
     
 //    return dic;
 }
+
+-(void)didClickBack
+{
+    if ([self.title isEqualToString:@"收银台"]) {
+        UIAlertController * al = [ UIAlertController alertControllerWithTitle:@"确认要离开收银台？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [al addAction:[UIAlertAction actionWithTitle:@"继续支付" style:UIAlertActionStyleCancel handler:nil]];
+        [al addAction: [UIAlertAction actionWithTitle:@"确认离开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self backWithPayType];
+        }]];
+        
+        [self presentViewController:al animated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 
 /**
  * 退出web页面
@@ -346,105 +466,96 @@
 /**
  *支付回调
  */
--(void)payCallBack
+-(void)payCallBackWithDict:(NSDictionary *)dict
 {
+    if (![dict isKindOfClass:[NSDictionary class]]) {
+        [[UserModel shareInstance]showInfoWithStatus:@"后台参数错误"];
+        return;
+    }
+
     //payCode 1 取消(返回)  2 失败(暂无)  3 余额不足(不管) 4 成功（）
     //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
-    
-    TZSDistributionViewController * disVC =[[TZSDistributionViewController alloc]init];
-    OrderViewController * ordVC = [[OrderViewController alloc]init];
-    TZSMyDingGouViewController * mdVC = [[TZSMyDingGouViewController alloc]init];
-    int payCode=0;
-    int payType=0;
-    
-    if (payCode ==1) {
-        [self.navigationController popViewControllerAnimated:YES];
+//    orderType = 3;
+//    payCode = 4;
+    int payCode =[[dict safeObjectForKey:@"payCode"]intValue];
+
+    if (payCode==1) {
+        //取消
+        [self alert: @"支付取消"];
     }
     else if (payCode ==2)
     {
-        
+        [self alert:@"支付失败"];
     }
     else if (payCode ==3)
     {
-        
+        [self alert:@"余额不足"];
     }
-    else
+    else if (payCode ==4)
     {
-        
-        UIAlertController * al = [UIAlertController alertControllerWithTitle:@"支付成功" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            
-            for (UIViewController * controller in self.navigationController.viewControllers) {
-                
-                if (payType ==1) {
-                    if ([controller isEqual:ordVC]) {
-                        
-                        [self.navigationController popToViewController:controller animated:YES];
-                    }
-                    else{
-                        
-                        [self.navigationController pushViewController:ordVC animated:YES];
-                        
-                        NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
-                        for (UIViewController *vc in marr) {
-                            if ([vc isKindOfClass:NSClassFromString(@"baseWebViewController")]) {
-                                [marr removeObject:vc];
-                                break;
-                            }
-                        }
-                        self.navigationController.viewControllers = marr;
-                    }
-                    
-                }
-                else if (payType ==2) {
-                    if ([controller isEqual:disVC]) {
-                        [self.navigationController popToViewController:controller animated:YES];
-                        
-                    }
-                    else{
-                        [self.navigationController pushViewController:disVC animated:YES];
-                        NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
-                        for (UIViewController *vc in marr) {
-                            if ([vc isKindOfClass:NSClassFromString(@"baseWebViewController")]) {
-                                [marr removeObject:vc];
-                                break;
-                            }
-                        }
-                        self.navigationController.viewControllers = marr;
-                    }
-                    
-                }
-                else if (payType ==3) {
-                    if ([controller isEqual:mdVC]) {
-                        [self.navigationController popToViewController:controller animated:YES];
-                        
-                    }
-                    else{
-                        [self.navigationController pushViewController:mdVC animated:YES];
-                        
-                        NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
-                        for (UIViewController *vc in marr) {
-                            if ([vc isKindOfClass:NSClassFromString(@"baseWebViewController")]) {
-                                [marr removeObject:vc];
-                                break;
-                            }
-                        }
-                        self.navigationController.viewControllers = marr;
-                    }
-                    
-                }
-                else{
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                }
-            }
-        }]];
-        
-        
+        [self backWithPayType];
     }
     
-    
-    
+}
+
+//支付页面返回方法
+-(void)backWithPayType
+{
+    if (self.payType ==1) {
+        for (UIViewController * controller in self.navigationController.viewControllers) {
+            
+            if ([controller isKindOfClass:[OrderViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+                DLog(@"我曹草草草");
+                return ;
+            }
+        }
+        OrderViewController * ordVC = [[OrderViewController alloc]init];
+        
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [arr removeLastObject];
+        [arr removeLastObject];
+        [arr addObject:ordVC];
+        [self.navigationController setViewControllers:arr];
+        
+    }
+    else if (self.payType ==2) {
+        for (UIViewController * controller in self.navigationController.viewControllers) {
+            
+            if ([controller isKindOfClass:[TZSDistributionViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+                DLog(@"我曹草草草");
+                return ;
+            }
+        }
+        TZSDistributionViewController * disVC =[[TZSDistributionViewController alloc]init];
+        
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [arr removeLastObject];
+        [arr removeLastObject];
+        [arr addObject:disVC];
+        [self.navigationController setViewControllers:arr];
+    }
+    else if (self.payType ==3) {
+        for (UIViewController * controller in self.navigationController.viewControllers) {
+            
+            if ([controller isKindOfClass:[TZSMyDingGouViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+                DLog(@"我曹草草草");
+                return ;
+            }
+        }
+        TZSMyDingGouViewController * mdVC = [[TZSMyDingGouViewController alloc]init];
+        
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [arr removeLastObject];
+        [arr removeLastObject];
+        [arr addObject:mdVC];
+        [self.navigationController setViewControllers:arr];
+    }
+    else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 

@@ -106,7 +106,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         }
-        
+        cell.textLabel.font = [UIFont systemFontOfSize:17];
         switch (indexPath.section) {
             case 0:
                 switch (indexPath.row) {

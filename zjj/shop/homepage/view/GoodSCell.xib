@@ -64,12 +64,21 @@
                             <action selector="didBuy:" destination="gTV-IL-0wX" eventType="touchUpInside" id="8Mx-KJ-xKW"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-NS-T2j">
+                        <rect key="frame" x="95" y="190" width="62" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="62" id="Zi9-EP-nwO"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="zrW-NS-T2j" secondAttribute="trailing" constant="10" id="2We-Ii-eBW"/>
                 <constraint firstAttribute="trailing" secondItem="C9u-f2-h9E" secondAttribute="trailing" id="66Q-aQ-pqZ"/>
                 <constraint firstAttribute="bottom" secondItem="JPk-jS-juI" secondAttribute="bottom" constant="3" id="89h-yD-Nfi"/>
+                <constraint firstItem="zrW-NS-T2j" firstAttribute="top" secondItem="gbX-P7-o3R" secondAttribute="bottom" id="ATh-ZJ-XMn"/>
                 <constraint firstItem="C9u-f2-h9E" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FQy-DY-xyB"/>
+                <constraint firstAttribute="bottom" secondItem="zrW-NS-T2j" secondAttribute="bottom" constant="3" id="WFZ-oy-es7"/>
                 <constraint firstItem="JPk-jS-juI" firstAttribute="top" secondItem="gbX-P7-o3R" secondAttribute="bottom" id="YO7-Je-h6t"/>
                 <constraint firstAttribute="trailing" secondItem="JPk-jS-juI" secondAttribute="trailing" constant="10" id="c4O-dq-b7x"/>
                 <constraint firstItem="C9u-f2-h9E" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="j0y-k0-aTY"/>
@@ -84,7 +93,7 @@
                 <outlet property="priceLabel" destination="eIH-eW-IFI" id="GsU-JM-xgi"/>
                 <outlet property="titleLabel" destination="gbX-P7-o3R" id="U9g-c9-f4R"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="53.5"/>
+            <point key="canvasLocation" x="33.5" y="53"/>
         </collectionViewCell>
     </objects>
 </document>

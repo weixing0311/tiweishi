@@ -106,6 +106,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    cell.textLabel.font = [UIFont systemFontOfSize:17];
     switch (indexPath.row) {
         case 0:
             cell.textLabel.text = @"修改资料";

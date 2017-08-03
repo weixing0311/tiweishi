@@ -129,7 +129,7 @@
            OrderFootBtnView * footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
             footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
             footBtn.tag = section;
-            footBtn.delegate = self;
+            footBtn.myDelegate = self;
             [footBtn.firstBtn setTitle:@"去支付" forState:UIControlStateNormal];
             [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
             [view addSubview:footBtn];
@@ -188,7 +188,7 @@
 //        return cell;
 //        
 //    }
-    
+    int status =    [[_infoDict objectForKey:@"status"]intValue];
      if (indexPath.section ==0) {
         static NSString * identifier = @"UpDateOrderCell";
         UpDateOrderCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
@@ -216,7 +216,12 @@
         if (indexPath.row ==0) {
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];
         }else{
-            cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict safeObjectForKey:@"paymentTypeId"]];
+            if (status==3) {
+                cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict safeObjectForKey:@"paymentTypeId"]];
+
+            }else{
+                cell.textLabel.text =@"";
+            }
         }
         return cell;
         

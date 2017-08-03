@@ -18,7 +18,7 @@
 {
     [self.imageView setImageWithURL:[NSURL URLWithString:item.imageUrl]];
     self.titleLabel.text = item.productName;
-    self.priceLabel.text  =item.productPrice;
+    self.priceLabel.text  =[NSString stringWithFormat:@"%.2f",[item.productPrice floatValue]];
     
 }
 - (IBAction)didBuy:(id)sender {

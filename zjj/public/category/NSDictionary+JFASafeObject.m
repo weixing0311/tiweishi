@@ -15,7 +15,7 @@
     id result=[self objectForKey:key];
     
     if ([result isKindOfClass:[NSNull class]]) {
-        return @"";
+        return nil;
     }
     if ([result isKindOfClass:[NSNumber class]]) {
         return [result stringValue];

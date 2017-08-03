@@ -66,7 +66,13 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *dict =[_dataArray objectAtIndex:indexPath.row];
+    NSString * limitQuantity =[dict safeObjectForKey:@"limitQuantity"];
+    if ([limitQuantity isEqualToString:@"0"]) {
+        return 90;
+    }else{
     return 140;
+    }
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -84,7 +90,19 @@
     [cell.headimageView setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     cell.delegate = self;
     cell.tag = indexPath.row;
-    cell.limitLabel.text = [NSString stringWithFormat:@"每月服务配送数量不得超过%@，当月可配送%d",[dict safeObjectForKey:@"limitQuantity"],([[dict safeObjectForKey:@"limitQuantity"]intValue]-[[dict safeObjectForKey:@"shippedQuantity"]intValue])];
+    
+    
+    NSString * limitQuantity =[dict safeObjectForKey:@"limitQuantity"];
+    if ([limitQuantity isEqualToString:@"0"]) {
+        cell.tsView.hidden = YES;
+        cell.limitLabel.text = @"";
+
+    }else{
+        cell.tsView.hidden =NO;
+        cell.limitLabel.text = [NSString stringWithFormat:@"每月服务配送数量不得超过%@，当月可配送%d",[dict safeObjectForKey:@"limitQuantity"],([[dict safeObjectForKey:@"limitQuantity"]intValue]-[[dict safeObjectForKey:@"shippedQuantity"]intValue])];
+
+    }
+    
     cell.titleLabel .text = [dict safeObjectForKey:@"productName"];
     cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dict safeObjectForKey:@"unitPrice"]];
     cell.countLabel.text = [NSString stringWithFormat:@"库存数量%d",[[dict objectForKey:@"quantity"]intValue]];

@@ -36,8 +36,8 @@
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
 //    self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBar.hidden = YES;
-//    [self.navigationController setNavigationBarHidden:YES animated:animated];
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 
 }
 - (void)viewDidLoad {
@@ -105,19 +105,32 @@
         [self.collectionView headerEndRefreshing];
         [self.collectionView footerEndRefreshing];
 
+        if (self.page ==1) {
+            [_dataArray removeAllObjects];
+            self.collectionView.footerHidden = NO;
+
+        }
+        
         NSArray *array = [[dic objectForKey:@"data"] objectForKey:@"array"];
+        if ( array.count<30) {
+            self.collectionView.footerHidden = YES;
+        }
         for (NSDictionary *dict  in array) {
             GoodsItem *item = [[GoodsItem alloc]init];
             [item setGoodsInfoWithDict:dict];
             [_dataArray addObject:item];
         }
+        
         [self.collectionView reloadData];
         
     } failure:^(NSError *error) {
         [self.collectionView headerEndRefreshing];
         [self.collectionView footerEndRefreshing];
 
-
+        if ([error code]==402) {
+            
+            [[UserModel shareInstance]showInfoWithStatus:@"没有更多商品了"];
+        }
     }];
 }
 -(void)getBanner

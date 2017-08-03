@@ -17,6 +17,7 @@
 - (IBAction)didRed:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *limitLabel;//限制Label
+@property (weak, nonatomic) IBOutlet UIView *tsView;
 @property (nonatomic,assign)id<TZSSendCellDelegate>delegate;
 @end
 @protocol TZSSendCellDelegate <NSObject>

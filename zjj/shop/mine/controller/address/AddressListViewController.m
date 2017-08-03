@@ -109,11 +109,12 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/deleteAddress.do" paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
         [self.dataArray removeObject:dict];
         
         [self.tableview reloadData];
     } failure:^(NSError *error) {
-        
+        [[UserModel shareInstance]showInfoWithStatus:@"删除失败。"];
     }];
 
 }
@@ -150,6 +151,7 @@
         
     } failure:^(NSError *error) {
         cell.defaultBtn.selected = NO;
+        [[UserModel shareInstance]showInfoWithStatus:@"修改失败"];
         
     }];
 

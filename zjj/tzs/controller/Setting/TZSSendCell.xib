@@ -134,7 +134,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.97627311944961548" green="0.78301531076431274" blue="0.34945178031921387" alpha="0.12788955479452055" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.97627311944961548" green="0.78301531076431274" blue="0.31309678819444442" alpha="0.12788955479452055" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="s2c-1H-mtp" firstAttribute="leading" secondItem="FEc-Dz-FwE" secondAttribute="leading" id="8dm-C1-Jt3"/>
                             <constraint firstItem="s2c-1H-mtp" firstAttribute="top" secondItem="Don-Rb-wbG" secondAttribute="bottom" id="ABv-am-LNY"/>
@@ -185,6 +185,7 @@
                 <outlet property="numberLabel" destination="iY8-WV-drs" id="2dO-qA-A4G"/>
                 <outlet property="priceLabel" destination="QSc-KL-uqA" id="tzN-SU-rkH"/>
                 <outlet property="titleLabel" destination="H5H-l7-khR" id="gm7-RL-hfN"/>
+                <outlet property="tsView" destination="FEc-Dz-FwE" id="Csj-b1-FC9"/>
             </connections>
             <point key="canvasLocation" x="-31" y="103"/>
         </tableViewCell>

@@ -149,7 +149,8 @@
         
         //添加标题和分页
         self.titleLabel.frame = kTitleLabelDefaultFrame;
-        self.pageControlView.frame = kPageControlViewDefaultFrame;
+//        self.pageControlView.frame = kPageControlViewDefaultFrame;
+        self.pageControlView.frame = CGRectMake(JFA_SCREEN_WIDTH/2-30, self.frame.size.height-44,60, 30);
         self.titleLabel.textColor = kTitleLabelDefaultTextColor;
         self.titleLabel.font = kTitleLabelDefaultFont;
     }
@@ -335,7 +336,7 @@
     
     [self.carouselView reloadData];
     self.pageControlView.hidden = !_imgs.count;
-//    self.pageControlView.numberOfPages = _imgs.count;
+    self.pageControlView.numberOfPages = _imgs.count;
 }
 
 - (ADPageControlView *)pageControlView

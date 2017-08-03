@@ -13,6 +13,7 @@
 #import "TZSTeamHeaderView.h"
 #import "TZSDingGouViewController.h"
 #import "TeamOrderDetailViewController.h"
+#import "NSString+dateWithString.h"
 @interface TZSTeamDGViewController ()<orderFootBtnViewDelegate>
 
 @end
@@ -45,7 +46,27 @@
 
 -(void)buildHeadView
 {
+    UIView * headView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 50)];
+    headView.backgroundColor =HEXCOLOR(0xf9c850);
+    self.tableView.tableHeaderView=headView;
     
+    UIView * line1View =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 1)];
+    line1View.backgroundColor =[UIColor orangeColor];
+    [headView addSubview:line1View];
+    UIView * line2View =[[UIView alloc]initWithFrame:CGRectMake(0, 49, JFA_SCREEN_WIDTH, 1)];
+    line2View.backgroundColor =[UIColor orangeColor];
+    [headView addSubview:line2View];
+    
+    
+    UILabel * lb =[[UILabel alloc]initWithFrame:CGRectMake(20, 5, JFA_SCREEN_WIDTH-40, 40)];
+    
+    lb.textColor =[UIColor redColor];
+    lb.text = @"如24小时内未能补充订购，订单将自动由上阶成员或平台自动完成补充";
+    lb.numberOfLines=2;
+    lb.font = [UIFont systemFontOfSize:14];
+    [headView addSubview:lb];
+    
+
 }
 
 
@@ -157,7 +178,7 @@
     }else if (status ==2) {
         header.typeLabel.text = @"待补货";
         header.lastTimeLabel.hidden =NO;
-        header.lastTimeLabel.text = @"开始补货";
+        header.lastTimeLabel.text = [NSString stringWithFormat:@"订单补充剩余时间%@",[NSString dateTimeDifferenceWithStartTime:[dic safeObjectForKey:@"payfinishTime"] endTime:@""]];
 
     }
     else{
@@ -199,7 +220,7 @@
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
-        footBtn.delegate = self;
+        footBtn.myDelegate = self;
         [footBtn.firstBtn setTitle:@"去订购" forState:UIControlStateNormal];
         footBtn.secondBtn.hidden = YES;
         [view addSubview:footBtn];
@@ -256,6 +277,13 @@
     }else if(segmentIndex ==2){
         type =3;
     }
+    if (segmentIndex==1) {
+        [self buildHeadView];
+    }else{
+        [self.tableView.tableHeaderView removeFromSuperview];
+        self.tableView.tableHeaderView = nil;
+
+    }
     [_dataArray removeAllObjects];
     
     if (type==100) {
@@ -276,8 +304,10 @@
 - (IBAction)ChangeType:(UISegmentedControl*)sender {
     
     [self getinfoWithStatus:sender.selectedSegmentIndex];
-    
     [self.tableView reloadData];
+
+    
+    
 
     
 }

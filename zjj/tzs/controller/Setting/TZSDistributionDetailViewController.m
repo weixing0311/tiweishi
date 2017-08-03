@@ -158,6 +158,8 @@
 {
     if (section==4) {
         int status = [[_infoDict objectForKey:@"status"]intValue];
+        int operateStatus = [[_infoDict safeObjectForKey:@"operateStatus"]intValue];
+
         float height = 0.0f;
         if (status==1||status ==3) {
             height =87;
@@ -174,7 +176,7 @@
         
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
-        footBtn.delegate =self;
+        footBtn.myDelegate =self;
         footBtn.tag = section;
         [view addSubview:footBtn];
         
@@ -198,7 +200,18 @@
         {
             footBtn.hidden = NO;
             [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
-            footBtn.secondBtn.hidden = YES;
+            if (operateStatus==3) {
+                footBtn.firstBtn.hidden = YES;
+                footBtn.secondBtn.hidden =YES;
+                footBtn.thirdBtn.hidden =NO;
+            }
+            else if(operateStatus==4)
+            {
+                footBtn.firstBtn.hidden = NO;
+                footBtn.secondBtn.hidden =YES;
+                footBtn.thirdBtn.hidden =YES;
+                
+            }
             //        header.statusLabel .text = @"待收货";
             
         }
@@ -222,9 +235,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    int status = [[_infoDict objectForKey:@"status"]intValue];
     if (indexPath.section ==0) {
-        int status = [[_infoDict objectForKey:@"status"]intValue];
-        if (status==1||status==3) {
+        if (status==3) {
             return 80;
 
         }else{
@@ -242,20 +255,29 @@
         return 100;
     }
     else if(indexPath.section ==3){
-        return 44;
+        if (indexPath.row==0) {
+            return 44;
+        }else{
+            if (status==3) {
+                return 44;
+            }else{
+            return 0;
+            }
+   
+        }
     }else{
         return 75;
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    int status = [[_infoDict objectForKey:@"status"]intValue];
+
         if (indexPath.section ==0) {
             
             static NSString * identifier = @"WXPsTitleCell";
     
             WXPsTitleCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-            int status = [[_infoDict objectForKey:@"status"]intValue];
 
             if (!cell) {
                 cell = [self getXibCellWithTitle:identifier];
@@ -267,14 +289,19 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.titleLabel.text  =[_infoDict safeObjectForKey:@"clientDescription"];
                 cell.timeLabel.text = [_infoDict safeObjectForKey:@"operationTime"];
-            }
-            else if(status ==1){
-                cell.payTsView.hidden =NO;
-                cell.lastTime.text =[NSString stringWithFormat:@"剩余：%@",@"0小时0分"];
-                cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%@",[_infoDict safeObjectForKey:@"freight"]];
-            }else{
+            }else
+            {
                 cell.payTsView.hidden = YES;
+                cell.titleLabel.text =@"";
+                cell.timeLabel.text =@"";
             }
+//            else if(status ==1){
+//                cell.payTsView.hidden =NO;
+//                cell.lastTime.text =[NSString stringWithFormat:@"剩余：%@",@"0小时0分"];
+//                cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%@",[_infoDict safeObjectForKey:@"freight"]];
+//            }else{
+//                cell.payTsView.hidden = YES;
+//            }
             return cell;
     
     
@@ -320,7 +347,12 @@
         if (indexPath.row ==0) {
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];
         }else{
-            cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict safeObjectForKey:@"paymentType"]];
+            if (status==3) {
+                cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict safeObjectForKey:@"paymentType"]];
+  
+            }else{
+                cell.textLabel.text = @"";
+            }
         }
         return cell;
         
@@ -367,7 +399,11 @@
 {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if (indexPath.section ==0) {
+    
+    
+    int status = [[_infoDict objectForKey:@"status"]intValue];
+
+        if (indexPath.section ==0&&status==3) {
             BaseWebViewController * web =[[BaseWebViewController alloc]init];
             web.title = @"我的配送";
             NSString * orderNo = [_infoDict safeObjectForKey:@"orderNo"];

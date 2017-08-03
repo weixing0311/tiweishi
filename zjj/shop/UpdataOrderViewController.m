@@ -147,7 +147,7 @@
         
         cell.titleLabel.text = [addressDict safeObjectForKey:@"receiver"];
         cell.phonenumLabel.text = [[UserModel shareInstance]changeTelephone:[addressDict safeObjectForKey:@"phone"]];
-        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"province"],[addressDict safeObjectForKey:@"city"],[addressDict safeObjectForKey:@"county"],[addressDict safeObjectForKey:@"addr"]];
+        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"province"]?[addressDict safeObjectForKey:@"province"]:@"",[addressDict safeObjectForKey:@"city"]?[addressDict safeObjectForKey:@"province"]:@"",[addressDict safeObjectForKey:@"county"]?[addressDict safeObjectForKey:@"county"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"county"]:@""];
         return cell;
     }
     else if (indexPath.section ==1)
@@ -277,14 +277,17 @@
     DLog(@"上传数据---%@",self.param);
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/saveOrderInfo.do" paramters:self.param success:^(NSDictionary *dic) {
         DLog(@"下单成功--%@",dic);
+        
+        NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
+        
         [[UserModel shareInstance]showSuccessWithStatus:@"提交成功"];
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
         web.urlStr = @"app/checkstand.html";
-        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        web.payableAmount = [dataDict safeObjectForKey:@"payableAmount"];
         //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
         web.payType =1;
         web.opt =1;
-        web.orderNo = [dic safeObjectForKey:@"orderNo"];
+        web.orderNo = [dataDict safeObjectForKey:@"orderNo"];
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];
 

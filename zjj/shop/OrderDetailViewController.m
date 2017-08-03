@@ -12,6 +12,7 @@
 #import "UpdataAddressCell.h"
 #import "OrderFootBtnView.h"
 #import "WXPsTitleCell.h"
+#import "BaseWebViewController.h"
 @interface OrderDetailViewController ()<orderFootBtnViewDelegate>
 
 @end
@@ -56,8 +57,25 @@
     }];
     
 }
-
-
+//确认收货
+-(void)ConfirmTheGoodsWithOrderNo:(NSString *)orderNo
+{
+    NSMutableDictionary * param =[NSMutableDictionary dictionary];
+    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
+    [param safeSetObject:orderNo forKey:@"orderNo"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/confirmReceipt.do" paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
+        [self.tableview reloadData];
+        
+    } failure:^(NSError *error) {
+        [[UserModel shareInstance]showErrorWithStatus:@"确认收货失败"];
+        
+    }];
+    
+    
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 5;
@@ -172,18 +190,31 @@
         view.backgroundColor =HEXCOLOR(0xeeeeee);
 
         int status = [[_infoDict safeObjectForKey:@"status"]intValue];
+        int operateStatus = [[_infoDict safeObjectForKey:@"operateStatus"]intValue];
+
         if (status==3) {
 
            OrderFootBtnView * footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
             footBtn.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44);
             footBtn.tag = section;
-            footBtn.delegate = self;
+            footBtn.myDelegate = self;
             [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
-            [footBtn.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
-
+            footBtn.secondBtn .hidden = YES;
             [view addSubview:footBtn];
 
-            
+            if (operateStatus==3) {
+                footBtn.firstBtn.hidden = YES;
+                footBtn.secondBtn.hidden =YES;
+                footBtn.thirdBtn.hidden =NO;
+            }
+            else if(operateStatus==4)
+            {
+                footBtn.firstBtn.hidden = NO;
+                footBtn.secondBtn.hidden =YES;
+                footBtn.thirdBtn.hidden =YES;
+                
+            }
+
             
             
         }else if (status ==1)
@@ -191,7 +222,8 @@
             OrderFootBtnView * footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
             footBtn.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44);
             footBtn.tag = section;
-            footBtn.delegate = self;
+            footBtn.myDelegate = self;
+            footBtn.secondBtn .hidden =NO;
             [footBtn.firstBtn setTitle:@"去付款" forState:UIControlStateNormal];
             [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
             
@@ -205,12 +237,13 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    int status = [[_infoDict objectForKey:@"status"]intValue];
+
     if (indexPath.section ==0) {
         
         static NSString * identifier = @"WXPsTitleCell";
         
         WXPsTitleCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-        int status = [[_infoDict objectForKey:@"status"]intValue];
         
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
@@ -239,6 +272,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        
         cell.titleLabel.text = [_infoDict safeObjectForKey:@"consigneeName"];
         cell.addressLabel.text =[_infoDict safeObjectForKey:@"consigneeAddress"];
         cell.phonenumLabel.text = [_infoDict safeObjectForKey:@"consigneePhone"];
@@ -270,7 +304,13 @@
         if (indexPath.row ==0) {
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];
         }else{
-            cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict objectForKey:@"paymentType"]];
+            if (status==3) {
+                cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict objectForKey:@"paymentType"]];
+                
+            }else{
+                cell.textLabel.text = @"";
+            }
+
         }
         return cell;
         
@@ -297,7 +337,18 @@
         return cell;
     }
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section ==0) {
+        BaseWebViewController * web =[[BaseWebViewController alloc]init];
+        web.title = @"我的配送";
+        NSString * orderNo = [_infoDict safeObjectForKey:@"orderNo"];
+        web.urlStr = [NSString stringWithFormat:@"app/fatTeacher/logisticsInformation.html?orderNo=%@",orderNo];
+        [self.navigationController pushViewController:web animated:YES];
+    }
 
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -335,11 +386,21 @@
     int status = [[_infoDict safeObjectForKey:@"status"]intValue];
     if (status==3)
     {
-        
+        [self ConfirmTheGoodsWithOrderNo:[_infoDict safeObjectForKey:@"orderNo"]];
     }
     else if (status ==1)
     {
         //去付款
+        BaseWebViewController *web = [[BaseWebViewController alloc]init];
+        web.urlStr = @"app/checkstand.html";
+        web.payableAmount = [_infoDict safeObjectForKey:@"payableAmount"];
+        //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+        web.payType =1;
+        web.opt =1;
+        web.orderNo = [_infoDict safeObjectForKey:@"orderNo"];
+        web.title  =@"收银台";
+        [self.navigationController pushViewController:web animated:YES];
+
     }
 }
 -(void)didClickSecondBtnWithView:(OrderFootBtnView*)view

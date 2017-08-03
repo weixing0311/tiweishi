@@ -8,7 +8,7 @@
 
 #import "AddressDetailViewController.h"
 
-@interface AddressDetailViewController ()
+@interface AddressDetailViewController ()<UITextFieldDelegate>
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic,strong)NSMutableArray * secondArray;
 @property (nonatomic,strong)NSMutableArray * thirdArray;
@@ -34,6 +34,10 @@
     _secondArray = [NSMutableArray array];
     _thirdArray =[NSMutableArray array];
     [self getCityInfo];
+    
+    self.mobileLabel.delegate = self;
+    [self.mobileLabel addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+
     
     
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,0, 375, 49)];
@@ -92,9 +96,12 @@
 -(void)updataAddress
 {
     if (self.nameLabel.text.length==0) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入手机号"];
+
         return;
     }
-    if (self.mobileLabel.text .length ==0) {
+    if (self.mobileLabel.text .length !=11) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入正确手机号"];
         return;
     }if (self.addressTx.text.length==0) {
         return;
@@ -386,4 +393,42 @@
 - (IBAction)didFinishChoose:(id)sender {
     [self.cityTf  endEditing:YES];
 }
+-(void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField ==self.mobileLabel) {
+        if (self.mobileLabel.text.length>=11) {
+            textField.text = [textField.text substringToIndex:11];
+            
+            [self.mobileLabel resignFirstResponder];
+        }
+    }
+}
+- (BOOL)isNumText:(NSString *)str{
+    NSString * regex        = @"^[0-9]*$";
+    NSPredicate * pred      = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch            = [pred evaluateWithObject:str];
+    if (isMatch) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    if (textField ==self.mobileLabel) {
+        if ([self isNumText:string]==YES) {
+            return YES;
+        }else{
+            [[UserModel shareInstance]showInfoWithStatus:@"请输入数字"];
+            return NO;
+        }
+    }
+    return YES;
+    DLog(@"rang-%@",NSStringFromRange(range));
+}
+
+
+
 @end

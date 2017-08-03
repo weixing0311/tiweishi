@@ -111,9 +111,10 @@
     NSDictionary *dic =[self.dataArray objectAtIndex:indexPath.row];
     jzsSchoolWebViewController *web =[[jzsSchoolWebViewController alloc]init];
     web.urlStr = [dic safeObjectForKey:@"linkUrl"];
-    web.iscollection = [[dic safeObjectForKey:@"isCollection"]intValue];
-    web.islike = [[dic safeObjectForKey:@"islike"]intValue];
+    web.iscollection = [dic safeObjectForKey:@"isCollection"];
+    web.islike = [dic safeObjectForKey:@"isLike"];
     web.informateId = [[dic safeObjectForKey:@"id"]intValue];
+    web.isLikeNum = [dic safeObjectForKey:@"likeNum"];
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
 }

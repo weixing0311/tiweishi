@@ -22,14 +22,15 @@
     [super viewDidLoad];
     self.title = @"文章详情";
     [self setNbColor];
-    if (self.islike ==1) {
+    [self.zanBtn setTitle:[NSString stringWithFormat:@"点赞(%@)",self.isLikeNum?self.isLikeNum:@""] forState:UIControlStateNormal];
+    if ([self.islike isEqualToString:@"1" ]) {
         self.zanBtn.selected = YES;
     }else
     {
         self.zanBtn.selected = NO;
     }
     
-    if (self.iscollection ==1) {
+    if ([self.iscollection isEqualToString:@"1"]) {
         self.collectionBtn.selected =YES;
     }
     else
@@ -81,9 +82,9 @@
     
     NSString * col ;
     if (self.collectionBtn.selected==YES) {
-      col = @"1";
+      col = @"0";
     }else{
-        col =@"2";
+        col =@"1";
     }
     [self didCollectionWithNetWithCollection:col];
 }
@@ -91,9 +92,9 @@
 - (IBAction)didZan:(id)sender {
     NSString * islike;
     if (self.zanBtn.selected ==YES) {
-        islike =@"1";
+        islike =@"0";
     }else{
-        islike=@"2";
+        islike=@"1";
     }
     [self didZanWithNetWithLike:islike];
 }

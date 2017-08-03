@@ -14,4 +14,8 @@
 -(NSString*)mmdd;
 -(NSString*)mmddhhmm;
 -(NSDate *)dateyyyymmddhhmmss;
+/**
+ *计算时差
+ */
++(NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
 @end

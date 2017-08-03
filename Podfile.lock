@@ -15,6 +15,9 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - JCore (1.1.3)
+  - JPush (3.0.5):
+    - JCore (~> 1.1.1)
   - SVProgressHUD (2.1.2)
   - ZXingObjC (3.1.0):
     - ZXingObjC/All (= 3.1.0)
@@ -23,15 +26,18 @@ PODS:
 DEPENDENCIES:
   - ACSimpleKeychain (~> 0.3)
   - AFNetworking (~> 3.1.0)
+  - JPush (~> 3.0.5)
   - SVProgressHUD (~> 2.1.2)
   - ZXingObjC (~> 3.1.0)
 
 SPEC CHECKSUMS:
   ACSimpleKeychain: 5c2920e4122636f66e0bafe5aa1e46a66334cbfb
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  JCore: dff3c50e9a7522a508cd9096ca79165968e1aed3
+  JPush: dd0b776998aa705a6242b947bf72e5a640387cfe
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   ZXingObjC: bf15b3814f7a105b6d99f47da2333c93a063650a
 
-PODFILE CHECKSUM: b48c600124d275802c80e2fb2145ac5a373bba49
+PODFILE CHECKSUM: 7e5e72ba9ec0f3f48e1b91db0bab06812025031e
 
 COCOAPODS: 1.2.1

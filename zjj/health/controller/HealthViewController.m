@@ -19,6 +19,7 @@
 #import "CharViewController.h"
 #import "WWXBlueToothManager.h"
 #import "HealthModel.h"
+#import "JPUSHService.h"
 @interface HealthViewController ()<userListDelegate,userViewDelegate,healthMainDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
@@ -49,7 +50,7 @@
     // Do any additional setup after loading the view from its nib.
     headerArr = [NSMutableArray array];
     listArr   = [NSMutableArray array];
-    
+    [self setJpush];
 
     //删除评测数据返回后刷新
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshPcInfo) name:@"deletePCINFO" object:nil];
@@ -66,7 +67,16 @@
     [[UserModel shareInstance]getUpdateInfo];
 
 }
+-(void)setJpush
+{
+    [JPUSHService setTags:nil alias:[UserModel shareInstance].userId fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        DLog(@"设置jpush用户id为%@--是否成功-%d",[UserModel shareInstance].userId,iResCode);
+        if (iResCode!=0) {
+            [self setJpush];
+        }
+    }];
 
+}
 -(void)buildUserListView
 {
     self.userListView = [[UserListView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, self.view.frame.size.height-64)];

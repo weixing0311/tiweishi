@@ -441,7 +441,9 @@ static UserModel *model;
  *手机号加密
  */
 -(NSString*)changeTelephone:(NSString*)teleStr{
-    
+    if (teleStr.length!=11) {
+        return teleStr;
+    }
     NSString *string=[teleStr stringByReplacingOccurrencesOfString:[teleStr substringWithRange:NSMakeRange(3,4)]withString:@"****"];
     
     return string;

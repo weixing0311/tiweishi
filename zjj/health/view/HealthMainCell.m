@@ -187,7 +187,7 @@
     [self.scaleButton setBackgroundImage:[UIImage imageNamed:@"health_button"] forState:UIControlStateNormal];
     
     [self.scaleResultStatusLabel clearsContextBeforeDrawing];
-    self.scaleResultStatusLabel.text = @"无体重数据,先体侧一次吧!";
+    self.scaleResultStatusLabel.text = @"无体重数据,先体测一次吧!";
     self.timeLabel.text = @"";
 
 }

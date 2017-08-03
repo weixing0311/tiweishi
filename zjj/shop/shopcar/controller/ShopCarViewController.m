@@ -15,6 +15,7 @@
 @property (nonatomic ,strong)NSMutableArray * dataArray;//列表数据
 @property (nonatomic ,strong)UIButton * editBtn;
 @property (nonatomic ,strong)NSMutableArray * chooseArray;//选择数据
+@property (weak, nonatomic) IBOutlet UIView *emptyView;
 @end
 
 @implementation ShopCarViewController
@@ -30,6 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNbColor];
+    self.title = @"购物车";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getCarInfo) name:@"refreshShopCart" object:nil];
     self.tableView .delegate =self;
     self.tableView.dataSource = self;
@@ -52,7 +54,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductList.do" paramters:param success:^(NSDictionary *dic) {
-        
+        self.emptyView.hidden =YES;
             [self.dataArray removeAllObjects];
             NSArray *arr =[[dic objectForKey:@"data" ]objectForKey:@"productArray"];
             for (NSDictionary *dict in arr) {
@@ -67,6 +69,8 @@
         if ([error code]==402) {
             [self.dataArray removeAllObjects];
             [self.tableView reloadData];
+            self.emptyView.hidden =NO;
+            [self.view bringSubviewToFront:self.emptyView];
         }
     }];
     
@@ -238,6 +242,9 @@
             [self.dataArray removeAllObjects];
             [self.chooseArray removeAllObjects];
             [self.tableView reloadData];
+            self.emptyView.hidden =NO;
+            [self.view bringSubviewToFront:self.emptyView];
+
         }
         
     }];

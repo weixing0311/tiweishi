@@ -10,10 +10,10 @@
 @protocol orderFootBtnViewDelegate;
 @interface OrderFootBtnView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *firstBtn;
+@property (weak, nonatomic) IBOutlet UIButton *thirdBtn;
 @property (weak, nonatomic) IBOutlet UIButton *secondBtn;
-@property (weak, nonatomic) IBOutlet UIButton *diClickFirst;
-@property (weak, nonatomic) IBOutlet UIButton *didClickSecond;
-@property (nonatomic,assign)id<orderFootBtnViewDelegate>delegate;
+
+@property (nonatomic,assign)id<orderFootBtnViewDelegate>myDelegate;
 -(void)ChangeViewWithStatus:(NSInteger)type;
 - (IBAction)didCickFirst:(id)sender;
 - (IBAction)didClickSecond:(id)sender;

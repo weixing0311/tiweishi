@@ -34,7 +34,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+    self.navigationController.navigationBarHidden = NO;
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -191,9 +191,17 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        if (!addressDict||[addressDict allKeys].count==0) {
+            cell.addressLabel.text = @"您还没有收货地址，请先添加。";
+        }else{
+        
         cell.titleLabel.text =[addressDict safeObjectForKey:@"receiver"];
         cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"provinceName"]?[addressDict safeObjectForKey:@"provinceName"]:@"",[addressDict safeObjectForKey:@"cityName"]?[addressDict safeObjectForKey:@"cityName"]:@"",[addressDict safeObjectForKey:@"countyName"]?[addressDict safeObjectForKey:@"countyName"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"addr"]:@""];
         cell.phonenumLabel.text = [[UserModel shareInstance]changeTelephone:[addressDict safeObjectForKey:@"phone"]];
+        }
+
         return cell;
     }else if (indexPath.section ==1)
     {
@@ -265,7 +273,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:weightStr forKey:@"freight"];
     [param safeSetObject:[addressDict objectForKey:@"id"] forKey:@"addressId"];
-    [param safeSetObject:@"1" forKey:@"freightType"];
+    [param safeSetObject:@"2" forKey:@"freightType"];
     [param safeSetObject:@"" forKey:@"buyerRemark"];
     [param safeSetObject:self.productStr forKey:@"productArray"];
     [param safeSetObject:self.warehouseNo forKey:@"warehouseNo"];
@@ -273,14 +281,14 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/addDelivery.do" paramters:param success:^(NSDictionary *dic) {
         
         
-        
+        NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
         web.urlStr = @"app/checkstand.html";
-        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        web.payableAmount = [dataDic safeObjectForKey:@"freight"];
         //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
         web.payType =2;
         web.opt =1;
-        web.orderNo = [dic safeObjectForKey:@"orderNo"];
+        web.orderNo = [dataDic safeObjectForKey:@"orderNo"];
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];
         /*

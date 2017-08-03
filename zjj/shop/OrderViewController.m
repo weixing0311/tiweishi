@@ -107,8 +107,8 @@
  */
 -(void)cancelOrderWithOrderId:(NSString *)orderId
 {
-    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    [al addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认要取消此订单？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSMutableDictionary * param =[NSMutableDictionary dictionary];
         [param setObject:orderId forKey:@"orderNo"];
         [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
@@ -123,7 +123,7 @@
         }];
         
     }]];
-    [al addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:nil]];
+    [al addAction:[UIAlertAction actionWithTitle:@"再想想" style:UIAlertActionStyleCancel handler:nil]];
     
     
     [self presentViewController:al animated:YES completion:nil];
@@ -131,7 +131,31 @@
     
 
 }
-
+-(void)ConfirmTheGoodsWithOrderNo:(NSString *)orderNo
+{
+    NSMutableDictionary * param =[NSMutableDictionary dictionary];
+    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
+    [param safeSetObject:orderNo forKey:@"orderNo"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/confirmReceipt.do" paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
+        [self.tableview reloadData];
+        
+    } failure:^(NSError *error) {
+        for (NSString * str in [error.userInfo allKeys]) {
+            if ([str isEqualToString:@"message"]) {
+                [[UserModel shareInstance]showErrorWithStatus:str];
+                return ;
+            }
+        }
+        [[UserModel shareInstance]showErrorWithStatus:@"确认收货失败"];
+        
+        
+    }];
+    
+    
+}
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
@@ -172,6 +196,8 @@
 {
     NSDictionary *dic = [_dataArray objectAtIndex:section];
     int status = [[dic objectForKey:@"status"]intValue];
+    int operateStatus = [[dic safeObjectForKey:@"operateStatus"]intValue];
+
     float height = 0.0f;
     if (status==1||status==3) {
         height =87;
@@ -194,10 +220,10 @@
     if (status ==1) {
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
-        footBtn.delegate =self;
+        footBtn.myDelegate =self;
         footBtn.tag = section;
         [view addSubview:footBtn];
-
+        footBtn.secondBtn .hidden =NO;
         [footBtn.firstBtn setTitle:@"去支付" forState:UIControlStateNormal];
         [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
         
@@ -206,12 +232,23 @@
     {
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
-        footBtn.delegate =self;
+        footBtn.myDelegate =self;
         footBtn.tag = section;
         [view addSubview:footBtn];
 
-        [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
-        [footBtn.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
+        if (operateStatus==3) {
+            footBtn.firstBtn.hidden = YES;
+            footBtn.secondBtn.hidden =YES;
+            footBtn.thirdBtn.hidden =NO;
+        }
+        else if(operateStatus==4)
+        {
+            footBtn.firstBtn.hidden = NO;
+            footBtn.secondBtn.hidden =YES;
+            footBtn.thirdBtn.hidden =YES;
+            
+        }
+//        [footBtn.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
 
     }
     
@@ -256,7 +293,7 @@
     
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
     [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[infoDic safeObjectForKey:@"unitPrice"]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"]floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
     return cell;
@@ -268,6 +305,7 @@
     NSDictionary *dic = [_dataArray objectAtIndex:indexPath.section];
     OrderDetailViewController *or =[[OrderDetailViewController alloc]init];
     or.orderNo = [dic objectForKey:@"orderNo"];
+    
     [self.navigationController pushViewController:or animated:YES];
     
 }
@@ -331,12 +369,6 @@
     NSString * orderNo =[dic safeObjectForKey:@"orderNo"];
     if (status==1) {
         
-        //       去支付 传值  order 付款  跳转
-        
-//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_chooseArray options:NSJSONWritingPrettyPrinted error:nil];
-//        NSString * str =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
-        
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
         web.urlStr = @"app/checkstand.html";
         web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
@@ -348,23 +380,10 @@
         [self.navigationController pushViewController:web animated:YES];
         
         
-//        UpdataOrderViewController *uo = [[UpdataOrderViewController alloc]init];
-//        uo.orderType = IS_FROM_ORDER;
-//        uo.hidesBottomBarWhenPushed= YES;
-//        uo.dataArray = [dic safeObjectForKey:@"itemJson"];
-//        [uo.param safeSetObject:[dic safeObjectForKey:@"totalPrice"] forKey:@"totalPrice"];
-////        [uo.param safeSetObject:@([self getPrice]-[self getAllPreferentialOrice]) forKey:@"payableAmount"];
-////        [uo.param safeSetObject:str forKey:@"orderItem"];
-//        
-//        
-//        [self.navigationController pushViewController:uo animated:YES];
-        
-        
-        
-        
     }else if (status ==3)
     {
         //确认收货
+        [self ConfirmTheGoodsWithOrderNo:orderNo];
     }
 
     
@@ -376,19 +395,9 @@
     int status = [[dic safeObjectForKey:@"status"]intValue];
     NSString * orderNo =[dic safeObjectForKey:@"orderNo"];
     if (status==1) {
-        
         //        取消订单
-        
         [self cancelOrderWithOrderId:orderNo];
-        
-        
-        
-        
-    }else if (status ==3)
-    {
-        //查看物流
     }
-
 }
 
 

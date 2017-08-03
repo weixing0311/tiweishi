@@ -36,9 +36,9 @@
     news.title = @"消息";
 
     
-//    foundViewController * found = [[foundViewController alloc]init];
+    foundViewController * found = [[foundViewController alloc]init];
     
-    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
+//    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
     UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:found];
     found.title = @"发现";
 

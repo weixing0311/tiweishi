@@ -28,7 +28,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -140,7 +140,7 @@
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
-        footBtn.delegate = self;
+        footBtn.myDelegate = self;
         [footBtn.firstBtn setTitle:@"去支付" forState:UIControlStateNormal];
         [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
         [view addSubview:footBtn];

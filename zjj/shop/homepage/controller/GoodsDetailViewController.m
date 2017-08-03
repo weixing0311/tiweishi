@@ -32,7 +32,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+    [self getgoodsCountWithNet];
+    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,7 +112,9 @@
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.productNo forKey:@"productNo"];
+    [SVProgressHUD showWithStatus:@"加载中..."];
     self.currentTasks = [[BaseSservice sharedManager]post1:kProductsDetail paramters:param success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
         item = [[GoodsDetailItem alloc]init ];
         [item setupInfoWithDict:[dic objectForKey:@"data"]];
 //        [itemsetupInfoWithDict:[dic objectForKey:@"data"]];
@@ -122,7 +125,8 @@
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        
+        [SVProgressHUD dismiss];
+        [[UserModel shareInstance]showInfoWithStatus:@"加载失败"];
     }];
 }
 //获取商品数量
@@ -248,7 +252,7 @@
         cell.titleLabel.text = item.productName;
         cell.cxtitleLabel.text = item.viceTitle;
         cell.restrictionNum = item.restrictionNum;
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",item.productPrice];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[item.productPrice floatValue]];
         cell.delegate = self;
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
 

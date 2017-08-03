@@ -26,6 +26,11 @@
     int pageSize;
     OrderFootBtnView * footBtn;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的配送";
@@ -176,7 +181,8 @@
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     NSDictionary *dic = [_dataArray objectAtIndex:section];
-    int status = [[dic objectForKey:@"status"]intValue];
+    int status = [[dic safeObjectForKey:@"status"]intValue];
+    int operateStatus = [[dic safeObjectForKey:@"operateStatus"]intValue];
     float height = 0.0f;
     if (status==1||status==3) {
         height =87;
@@ -194,7 +200,7 @@
 
     footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
     footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
-    footBtn.delegate =self;
+    footBtn.myDelegate =self;
     footBtn.tag = section;
     [view addSubview:footBtn];
     
@@ -205,7 +211,7 @@
     {
         footBtn.hidden = NO;
         footBtn.secondBtn.hidden = NO;
-        
+        footBtn.firstBtn.hidden =NO;
         [footBtn.firstBtn setTitle:@"去支付" forState:UIControlStateNormal];
         [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
         
@@ -217,9 +223,20 @@
     else if (status ==3)
     {
         footBtn.hidden = NO;
-        footBtn.secondBtn.hidden = YES;
         
         [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+        if (operateStatus==3) {
+            footBtn.firstBtn.hidden = YES;
+            footBtn.secondBtn.hidden =YES;
+            footBtn.thirdBtn.hidden =NO;
+        }
+        else if(operateStatus==4)
+        {
+            footBtn.firstBtn.hidden = NO;
+            footBtn.secondBtn.hidden =YES;
+            footBtn.thirdBtn.hidden =YES;
+
+        }
         //        header.statusLabel .text = @"待收货";
         
     }
@@ -273,7 +290,7 @@
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
     [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[infoDic safeObjectForKey:@"unitPrice"]];
+    cell.priceLabel .hidden = YES;
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
     return cell;
@@ -284,7 +301,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
+    NSDictionary * dic = [_dataArray objectAtIndex:indexPath.section];
     
     TZSDistributionDetailViewController * dt = [[TZSDistributionDetailViewController alloc]init];
     dt.orderNo =[dic safeObjectForKey:@"orderNo"];

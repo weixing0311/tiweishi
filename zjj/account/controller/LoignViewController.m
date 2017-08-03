@@ -12,6 +12,7 @@
 #import "ChangeUserInfoViewController.h"
 #import "TzsTabbarViewController.h"
 #import "ForgetPasswordViewController.h"
+#import "JPUSHService.h"
 @interface LoignViewController ()
 
 @end
@@ -128,6 +129,14 @@
         
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" paramters:param success:^(NSDictionary *dic) {
+        
+        
+        //设置Jpush---别名
+        [JPUSHService setTags:nil alias:[UserModel shareInstance].userId fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            DLog(@"设置jpush用户id为%@--是否成功-%d",[UserModel shareInstance].userId,iResCode);
+        }];
+
+        
         [[UserModel shareInstance] showSuccessWithStatus:@"登录成功"];
         [[UserModel shareInstance]setInfoWithDic:[dic objectForKey:@"data"]];
         [[NSUserDefaults standardUserDefaults]setObject:[[dic objectForKey:@"data"]objectForKey:@"userId"] forKey:kMyloignInfo];

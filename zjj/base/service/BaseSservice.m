@@ -90,10 +90,10 @@
     DLog(@"request.Url-%@",[NSString stringWithFormat:@"%@%@",[self JFADomin],url]);
     
     
-    [SVProgressHUD show];
+//    [SVProgressHUD show];
     
     NSURLSessionTask * task = [manager POST:[NSString stringWithFormat:@"%@%@",[self JFADomin],url] parameters:paramters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
         NSDictionary * dic = [self dictionaryWithData:responseObject];
         
         NSString * statusStr =[dic safeObjectForKey:@"status"];
@@ -111,13 +111,13 @@
         if (statusStr&&[statusStr isEqualToString:@"success"]) {
             success(dic);
         }else{
-            [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
+//            [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
             NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
             failure(error);
         }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
         
         DLog(@"error--%ld-%@",(long)error.code,[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]);
 

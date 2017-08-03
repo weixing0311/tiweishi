@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,6 +14,7 @@
             <connections>
                 <outlet property="bottomView" destination="jy9-gO-C3R" id="5Es-dR-U3q"/>
                 <outlet property="chooseBtn" destination="xA8-O7-4T3" id="Erv-Gy-n03"/>
+                <outlet property="emptyView" destination="mIV-0I-mnc" id="nsW-GD-9tY"/>
                 <outlet property="priceDetailLb" destination="WQh-O1-W5D" id="aWV-DY-MiC"/>
                 <outlet property="priceLabel" destination="HeB-TS-zig" id="bTg-6R-e0t"/>
                 <outlet property="settlementBtn" destination="Rk3-TJ-Q9L" id="AYO-gK-8vl"/>
@@ -123,13 +125,47 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mIV-0I-mnc">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="isEmpty.png" translatesAutoresizingMaskIntoConstraints="NO" id="e4j-Lp-WbE">
+                            <rect key="frame" x="142" y="256.5" width="90" height="94"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="e4j-Lp-WbE" secondAttribute="height" multiplier="30.5:32" id="60R-Gz-apR"/>
+                                <constraint firstAttribute="width" constant="90" id="VSK-Hd-FGK"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您还没有添加商品" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cD-TT-Qou">
+                            <rect key="frame" x="20" y="370" width="335" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="K7D-ZM-vU0"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="e4j-Lp-WbE" firstAttribute="centerX" secondItem="mIV-0I-mnc" secondAttribute="centerX" id="4ew-Rj-Yqn"/>
+                        <constraint firstItem="5cD-TT-Qou" firstAttribute="centerX" secondItem="mIV-0I-mnc" secondAttribute="centerX" id="5qu-Bx-a3v"/>
+                        <constraint firstItem="5cD-TT-Qou" firstAttribute="top" secondItem="e4j-Lp-WbE" secondAttribute="bottom" constant="20" id="UzX-cA-uKS"/>
+                        <constraint firstItem="5cD-TT-Qou" firstAttribute="leading" secondItem="mIV-0I-mnc" secondAttribute="leading" constant="20" id="bua-hR-o2Y"/>
+                        <constraint firstItem="e4j-Lp-WbE" firstAttribute="centerY" secondItem="mIV-0I-mnc" secondAttribute="centerY" id="fjR-dT-AWI"/>
+                        <constraint firstAttribute="trailing" secondItem="5cD-TT-Qou" secondAttribute="trailing" constant="20" id="vgQ-kS-ge7"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="jy9-gO-C3R" firstAttribute="top" secondItem="T7C-Cr-D4O" secondAttribute="bottom" id="5wK-gE-5LO"/>
                 <constraint firstItem="jy9-gO-C3R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7gx-Qz-PGy"/>
+                <constraint firstItem="jy9-gO-C3R" firstAttribute="top" secondItem="mIV-0I-mnc" secondAttribute="bottom" id="F5V-wV-JSl"/>
+                <constraint firstAttribute="trailing" secondItem="mIV-0I-mnc" secondAttribute="trailing" id="K5l-pd-VmB"/>
+                <constraint firstItem="mIV-0I-mnc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MVa-Q9-6F5"/>
                 <constraint firstItem="T7C-Cr-D4O" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Quf-Yn-60h"/>
                 <constraint firstItem="T7C-Cr-D4O" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="T72-FX-K8K"/>
+                <constraint firstItem="mIV-0I-mnc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="f4R-yN-dud"/>
                 <constraint firstAttribute="bottom" secondItem="jy9-gO-C3R" secondAttribute="bottom" id="mb6-KK-tl2"/>
                 <constraint firstAttribute="trailing" secondItem="T7C-Cr-D4O" secondAttribute="trailing" id="mzx-mC-Ri0"/>
                 <constraint firstAttribute="trailing" secondItem="jy9-gO-C3R" secondAttribute="trailing" id="ouf-vk-4m7"/>
@@ -140,5 +176,6 @@
     <resources>
         <image name="checked-false.png" width="19" height="19"/>
         <image name="checked.png" width="36" height="36"/>
+        <image name="isEmpty.png" width="61" height="64"/>
     </resources>
 </document>
