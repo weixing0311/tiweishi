@@ -96,6 +96,18 @@
 
     }
 }
+
+-(BOOL)valiNickName:(NSString * )nickName
+{
+    nickName = [nickName stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    $("#inputNum").val(val.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,''));
+    NSString * NICK_NUM = @"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+";
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", NICK_NUM];
+    BOOL isMatch = [pred evaluateWithObject:nickName];
+    return isMatch;
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -127,11 +139,19 @@
 - (IBAction)next:(id)sender {
     
     
+    if ([self valiNickName:self.nickNameLb.text]!=YES) {
+        [[UserModel shareInstance]showInfoWithStatus:@"昵称只能由中文、字母或数字组成"];
+        return;
+    }
+    
+    
     if (self.nickNameLb.text.length>6) {
         [[UserModel shareInstance] showInfoWithStatus:@"昵称最长为6字符"];
         return;
 
     }
+    
+    
     
     ChangeUserInfo2ViewController *c2 =[[ChangeUserInfo2ViewController alloc]init];
     

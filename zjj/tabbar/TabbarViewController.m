@@ -15,28 +15,35 @@
 #import "ShopTestViewController.h"
 #import "TzsTabbarViewController.h"
 #import "JzSchoolViewController.h"
+#import "HomePageWebViewController.h"
+#import "FriendsCircleViewController.h"
+#import "AppDelegate.h"
 @interface TabbarViewController ()<UITabBarControllerDelegate>
 
 @end
 
 @implementation TabbarViewController
-
+{
+    HealthViewController *health;
+    MessageViewController *news;
+    foundViewController * found;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     self.delegate = self;
     
-    HealthViewController *health = [[HealthViewController alloc]init];
+    health = [[HealthViewController alloc]init];
     UINavigationController * nav1 = [[UINavigationController alloc]initWithRootViewController:health];
     health.title = @"健康";
 
-    MessageViewController *news = [[MessageViewController alloc]init];
+    news = [[MessageViewController alloc]init];
     UINavigationController * nav2 = [[UINavigationController alloc]initWithRootViewController:news];
     news.title = @"消息";
 
     
-    foundViewController * found = [[foundViewController alloc]init];
+    found = [[foundViewController alloc]init];
     
 //    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
     UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:found];
@@ -56,13 +63,13 @@
     UINavigationController * nav5 = [[UINavigationController alloc]initWithRootViewController:user];
     user.title = @"我的";
 
-    self.viewControllers = @[nav1,nav2,nav3,nav4,nav5];
+    self.viewControllers = @[nav1,nav2,nav3,/*nav4,*/nav5];
     
     
     UITabBarItem * item1 =[self.tabBar.items objectAtIndex:0];
     UITabBarItem * item2 =[self.tabBar.items objectAtIndex:1];
     UITabBarItem * item3 =[self.tabBar.items objectAtIndex:2];
-    UITabBarItem * item4 =[self.tabBar.items objectAtIndex:3];
+//    UITabBarItem * item4 =[self.tabBar.items objectAtIndex:3];
     UITabBarItem * item5 =[self.tabBar.items lastObject];
 
     item1.image = [UIImage imageNamed:@"health  gray_"];
@@ -74,12 +81,44 @@
     item3.image = [UIImage imageNamed:@"find gray_"];
     item3.selectedImage = [UIImage imageNamed:@"find_"];
 
-    item4.image = [UIImage imageNamed:@"store gray_"];
-    item4.selectedImage = [UIImage imageNamed:@"store_"];
+//    item4.image = [UIImage imageNamed:@"store gray_"];
+//    item4.selectedImage = [UIImage imageNamed:@"store_"];
 
     item5.image = [UIImage imageNamed:@"mine  gray_"];
     item5.selectedImage = [UIImage imageNamed:@"mine_"];
     self.tabBar.tintColor = HEXCOLOR(0xfb0628);
+   
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didClickNotification:) name:@"GETNOTIFICATIONINFOS" object:nil];
+    
+    
+    
+    
+    
+}
+-(void)didClickNotification:(NSNotification *)noti
+{
+    //判断是不是mainview
+    if (![(AppDelegate *)[UIApplication sharedApplication].delegate.window.rootViewController isKindOfClass:[self class]]) {
+        return;
+    }
+    NSDictionary * dic=noti.userInfo;
+    int type =[[dic safeObjectForKey:@"type"]intValue];
+    NSString * url = [dic safeObjectForKey:@"url"];
+    
+    if (type ==1) {
+        self.selectedIndex = 1;
+        HomePageWebViewController * web= [[HomePageWebViewController alloc]init];
+        web.urlStr = url;
+        web.title = @"消息详情";
+        [news.navigationController pushViewController:web animated:YES];
+    }
+    else if (type ==2)
+    {
+        self.selectedIndex =2;
+        FriendsCircleViewController * fr = [[FriendsCircleViewController alloc]init];
+        [found.navigationController pushViewController:fr animated:YES];
+    }
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {

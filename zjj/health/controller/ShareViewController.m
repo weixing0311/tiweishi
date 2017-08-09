@@ -184,6 +184,7 @@
     [self shareWithType:SSDKPlatformTypeQQ image:image];
 
 }
+
 -(void) shareWithType:(SSDKPlatformType)type image:(UIImage *)image
 {
     if (!image) {

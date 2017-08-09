@@ -210,7 +210,7 @@
     
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
-    footer.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic objectForKey:@"totalPrice"]];
+    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"totalPrice"]floatValue]];
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     [view addSubview:footer];
 

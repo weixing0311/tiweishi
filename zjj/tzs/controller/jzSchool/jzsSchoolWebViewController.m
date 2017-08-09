@@ -39,6 +39,8 @@
   
     }
     self.webView.delegate = self;
+    _webView.scrollView.bouncesZoom = NO;
+    _webView.scrollView.bounces = YES;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]]];
 
     [SVProgressHUD showWithStatus:@"加载中.."];

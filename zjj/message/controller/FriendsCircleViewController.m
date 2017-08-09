@@ -25,7 +25,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"盆友圈分享";
+    self.title = @"朋友圈分享";
     [self setTBRedColor];
     pageSize=30;
     lastClickImageCell=1000000;
@@ -183,7 +183,10 @@
             UIImage *image = [UIImage imageWithData:data];
             
             float imageHeight = JFA_SCREEN_WIDTH * image.size.height/image.size.width ;
-            
+            if (!image) {
+                imageHeight =JFA_SCREEN_WIDTH;
+            }
+
             UIImageView * imageView =[[UIImageView alloc]initWithFrame:CGRectMake(i*JFA_SCREEN_WIDTH+5, (JFA_SCREEN_HEIGHT-imageHeight)/2, JFA_SCREEN_WIDTH-10, imageHeight)];
             imageView.image = image;
             imageView.tag = 100+i;

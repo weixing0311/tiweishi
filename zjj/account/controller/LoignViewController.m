@@ -127,16 +127,16 @@
     [param safeSetObject:[NSString encryptString:self.loignMobileTf.text] forKey:@"mobilePhone"];
     [param safeSetObject:[NSString encryptString:self.passWordTf.text] forKey:@"password"];
         
-    
+    [SVProgressHUD showWithStatus:@"登录中..."];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" paramters:param success:^(NSDictionary *dic) {
         
-        
+        [SVProgressHUD dismiss];
         //设置Jpush---别名
         [JPUSHService setTags:nil alias:[UserModel shareInstance].userId fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
             DLog(@"设置jpush用户id为%@--是否成功-%d",[UserModel shareInstance].userId,iResCode);
         }];
 
-        
+        DLog(@"昵称--%@",[[dic objectForKey:@"data"] objectForKey:@"nickName"]);
         [[UserModel shareInstance] showSuccessWithStatus:@"登录成功"];
         [[UserModel shareInstance]setInfoWithDic:[dic objectForKey:@"data"]];
         [[NSUserDefaults standardUserDefaults]setObject:[[dic objectForKey:@"data"]objectForKey:@"userId"] forKey:kMyloignInfo];
@@ -156,7 +156,8 @@
         }
 
     } failure:^(NSError *error) {
-//        [[UserModel shareInstance] showErrorWithStatus:@"登录失败"];
+        [SVProgressHUD dismiss];
+        [[UserModel shareInstance] showErrorWithStatus:@"登录失败"];
         [_timer invalidate];
         [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         self.verbtn.enabled = YES;

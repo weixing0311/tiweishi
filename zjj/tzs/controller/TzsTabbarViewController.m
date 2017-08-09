@@ -59,7 +59,7 @@
     item4.selectedImage = [[UIImage imageNamed:@"footer-PersonalCenter-red"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
     self.selectedIndex=3;
-//    self.tabBar.tintColor = HEXCOLOR(0xfb0628);
+    self.tabBar.tintColor = HEXCOLOR(0xfb0628);
 
     // Do any additional setup after loading the view.
 }

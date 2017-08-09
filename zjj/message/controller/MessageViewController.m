@@ -9,6 +9,7 @@
 #import "MessageViewController.h"
 #import "MessageCell.h"
 #import "HomePageWebViewController.h"
+#import "jzsSchoolWebViewController.h"
 @interface MessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
@@ -25,6 +26,7 @@
     [self setTBRedColor];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     pageSize =30;
     self.dataArray = [NSMutableArray array];
     [self setExtraCellLineHiddenWithTb:self.tableview];
@@ -71,6 +73,9 @@
         
         
     } failure:^(NSError *error) {
+        
+        
+        
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
 
@@ -83,7 +88,19 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return JFA_SCREEN_WIDTH*320/375;
+    
+    NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
+    NSMutableParagraphStyle * paragraph = [[NSMutableParagraphStyle alloc] init];
+    paragraph.lineSpacing = 10;
+    
+    UIFont *font = [UIFont systemFontOfSize:15];
+    NSDictionary * dict = @{NSFontAttributeName:font,
+                            NSParagraphStyleAttributeName:paragraph};
+
+    NSString * contentStr = [dic safeObjectForKey:@"content"];
+    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-52, 50) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
+
+    return 38+JFA_SCREEN_WIDTH/2.18+size.height+63;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -101,8 +118,15 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary * dic = [self.dataArray objectAtIndex:indexPath.row];
+//    jzsSchoolWebViewController * home = [[jzsSchoolWebViewController alloc]init];
     HomePageWebViewController * home = [[HomePageWebViewController alloc]init];
     home.urlStr = [dic safeObjectForKey:@"linkUrl"];
+    home.isShare = YES;
+    home.title = @"消息详情";
+    home.titleStr = [dic safeObjectForKey:@"title"];
+    home.contentStr = [dic safeObjectForKey:@"content"];
+    home.imageUrl = [dic safeObjectForKey:@"imgUrl"];
+    home.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController: home animated:YES];
 }
 - (void)didReceiveMemoryWarning {

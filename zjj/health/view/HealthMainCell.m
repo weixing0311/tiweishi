@@ -151,20 +151,55 @@
     self.scaleResultStatusLabel.attributedText = tisString;
     self.scaleResultStatusLabel.adjustsFontSizeToFitWidth = YES;
     
-    self.title1Label.text = @"标准体重";
-    self.title2Label.text = @"体重控制量";
-    self.title3Label.text = @"去脂体重";
-    self.title4Label.text = @"去脂控制量";
+    self.title1Label.text = @"目标体重";
+    self.title2Label.text = @"目标体脂率";
+    self.title3Label.text = @"目标体脂";
+    self.title4Label.text = @"目标内脂";
     
-    self.value1Label.text =[NSString stringWithFormat:@"%.1f",item.standardWeight];
-    self.value2Label.text =[NSString stringWithFormat:@"%.1fkg",item.weightControl];
-    self.value3Label.text =[NSString stringWithFormat:@"%.1fkg",item.lbm];
-    self.value4Label.text =[NSString stringWithFormat:@"%.1fkg",item.fatControl];
+    float fatWeightV =0.0;
+    float visceral = 0.0;
+    int sex = [UserModel shareInstance].gender;
+    if (sex ==1) {
+        fatWeightV = 0.2f;
+        visceral = 8;
+    }else{
+        visceral = 6;
+        fatWeightV = 0.24f;
+    }
+    
+    
+    
+    float target1 = item.standardWeight-item.weight<=0?item.standardWeight-item.weight:-0;
+    float target2 = fatWeightV*100-item.fatPercentage*100<=0?fatWeightV*100-item.fatPercentage*100:-0;
+    float target3 = target2 <=0?target2*item.weight/100:-0;
+    float target4 = visceral -item.visceralFatPercentage<=0?visceral-item.visceralFatPercentage:-0;
+
+    self.value1Label.text =[NSString stringWithFormat:@"%.1fkg",target1];
+    self.value2Label.text =[NSString stringWithFormat:@"%.1f%%",target2];
+    self.value3Label.text =[NSString stringWithFormat:@"%.1fkg",target3];
+    self.value4Label.text =[NSString stringWithFormat:@"%.1f",target4];
+
+    self.target1label.text =[NSString stringWithFormat:@"%.1fkg",item.standardWeight];
+    self.target2label.text =[NSString stringWithFormat:@"%.1f%%",fatWeightV*100];
+    self.target3label.text =[NSString stringWithFormat:@"%.1fkg",item.standardWeight *fatWeightV];
+    self.target4label.text =[NSString stringWithFormat:@"%.1f",visceral];
+
+    
+    
+
+    
     
     self.value1Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
     self.value2Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
     self.value3Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
     self.value4Label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+    
+    
+    self.target1label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+    self.target2label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+    self.target3label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+    self.target4label.textColor = [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1];
+
     
 }
 

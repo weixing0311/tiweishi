@@ -20,7 +20,7 @@
 #import <UMMobClick/MobClick.h>
 #import "YMSocketUtils.h"
 
-
+#import "HomePageWebViewController.h"
 #import "TzsTabbarViewController.h"
 
 
@@ -280,6 +280,8 @@ fetchCompletionHandler:
     
     if ([[UIDevice currentDevice].systemVersion floatValue]<10.0 || application.applicationState>0) {
 //        [rootViewController addNotificationCount];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GETNOTIFICATIONINFOS" object:nil userInfo:userInfo];
+
     }
     
     completionHandler(UIBackgroundFetchResultNewData);
@@ -298,11 +300,11 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     UNNotificationRequest *request = notification.request; // 收到推送的请求
     UNNotificationContent *content = request.content; // 收到推送的消息内容
     
-    NSNumber *badge = content.badge;  // 推送消息的角标
-    NSString *body = content.body;    // 推送消息体
-    UNNotificationSound *sound = content.sound;  // 推送消息的声音
-    NSString *subtitle = content.subtitle;  // 推送消息的副标题
-    NSString *title = content.title;  // 推送消息的标题
+//    NSNumber *badge = content.badge;  // 推送消息的角标
+//    NSString *body = content.body;    // 推送消息体
+//    UNNotificationSound *sound = content.sound;  // 推送消息的声音
+//    NSString *subtitle = content.subtitle;  // 推送消息的副标题
+//    NSString *title = content.title;  // 推送消息的标题
     
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
@@ -310,10 +312,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         
 //        [rootViewController addNotificationCount];
         
-    }
-    else {
-        // 判断为本地通知
-        NSLog(@"iOS10 前台收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
     completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
 }
@@ -334,6 +332,10 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
 //        [rootViewController addNotificationCount];
+        
+        int type = [[userInfo safeObjectForKey:@"type"]intValue];
+        NSString * urlStr = [userInfo safeObjectForKey:@"url"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GETNOTIFICATIONINFOS" object:nil userInfo:userInfo];
         
     }
     else {

@@ -294,7 +294,8 @@
     if (item.type ==1) {
         
         HomePageWebViewController * web = [[HomePageWebViewController alloc]init];
-        
+        web.title = @"文章详情";
+
         web.hidesBottomBarWhenPushed = YES;
         web.urlStr = item.content;
         [self.navigationController pushViewController:web animated:YES];
@@ -321,7 +322,8 @@
             if (item.type ==1) {
                 
                 HomePageWebViewController * web = [[HomePageWebViewController alloc]init];
-                
+                web.title = @"文章详情";
+
                 web.hidesBottomBarWhenPushed = YES;
                 web.urlStr = item.content;
                 [self.navigationController pushViewController:web animated:YES];

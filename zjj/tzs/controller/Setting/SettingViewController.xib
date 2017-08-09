@@ -33,7 +33,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="My-Earnings-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="yUU-46-iyf">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tzs_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="yUU-46-iyf">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="180" id="SaI-Ze-TIQ"/>
@@ -67,7 +67,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzF-bo-Tbb">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="My-Earnings-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="fwI-VI-1J2">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tzs_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="fwI-VI-1J2">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O92-SW-rcX">
@@ -899,7 +899,6 @@
         </view>
     </objects>
     <resources>
-        <image name="My-Earnings-bg.png" width="375" height="170"/>
         <image name="add-guan.png.png" width="25" height="25"/>
         <image name="invitation.png" width="67" height="27"/>
         <image name="jilu.png.png" width="25" height="25"/>
@@ -914,6 +913,7 @@
         <image name="server-song.png.png" width="25" height="25"/>
         <image name="setpage.png" width="20" height="20"/>
         <image name="tuan-manage.png.png" width="25" height="25"/>
+        <image name="tzs_bg.png" width="375" height="160"/>
         <image name="yi-server.png.png" width="25" height="25"/>
     </resources>
 </document>

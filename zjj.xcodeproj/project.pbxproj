@@ -11,6 +11,11 @@
 		6C125DF91F33103800B2323F /* message_banner1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C125DF71F33103800B2323F /* message_banner1.jpg */; };
 		6C125DFA1F33103800B2323F /* message_banner3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C125DF81F33103800B2323F /* message_banner3.jpg */; };
 		6C125DFC1F3310C300B2323F /* message_banner2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C125DFB1F3310C300B2323F /* message_banner2.jpg */; };
+		6C125E081F3460FF00B2323F /* banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C125E071F3460FF00B2323F /* banner.jpg */; };
+		6C125E0D1F39AA6F00B2323F /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C125E0A1F39AA6F00B2323F /* NSArray+Extension.m */; };
+		6C125E0E1F39AA6F00B2323F /* NSDictionary+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C125E0C1F39AA6F00B2323F /* NSDictionary+Extension.m */; };
+		6C125E111F3A994000B2323F /* tzs_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C125E0F1F3A994000B2323F /* tzs_bg@2x.png */; };
+		6C125E121F3A994000B2323F /* tzs_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C125E101F3A994000B2323F /* tzs_bg@3x.png */; };
 		6C13C5D11EFA51A100435A27 /* UpdataOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C13C5CF1EFA51A100435A27 /* UpdataOrderViewController.m */; };
 		6C13C5D21EFA51A100435A27 /* UpdataOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C13C5D01EFA51A100435A27 /* UpdataOrderViewController.xib */; };
 		6C13C5D61EFA558300435A27 /* UpDateOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C13C5D41EFA558300435A27 /* UpDateOrderCell.m */; };
@@ -603,6 +608,13 @@
 		6C125DF71F33103800B2323F /* message_banner1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = message_banner1.jpg; sourceTree = "<group>"; };
 		6C125DF81F33103800B2323F /* message_banner3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = message_banner3.jpg; sourceTree = "<group>"; };
 		6C125DFB1F3310C300B2323F /* message_banner2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = message_banner2.jpg; sourceTree = "<group>"; };
+		6C125E071F3460FF00B2323F /* banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner.jpg; sourceTree = "<group>"; };
+		6C125E091F39AA6F00B2323F /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
+		6C125E0A1F39AA6F00B2323F /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
+		6C125E0B1F39AA6F00B2323F /* NSDictionary+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Extension.h"; sourceTree = "<group>"; };
+		6C125E0C1F39AA6F00B2323F /* NSDictionary+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Extension.m"; sourceTree = "<group>"; };
+		6C125E0F1F3A994000B2323F /* tzs_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tzs_bg@2x.png"; sourceTree = "<group>"; };
+		6C125E101F3A994000B2323F /* tzs_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tzs_bg@3x.png"; sourceTree = "<group>"; };
 		6C13C5CE1EFA51A100435A27 /* UpdataOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdataOrderViewController.h; sourceTree = "<group>"; };
 		6C13C5CF1EFA51A100435A27 /* UpdataOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdataOrderViewController.m; sourceTree = "<group>"; };
 		6C13C5D01EFA51A100435A27 /* UpdataOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdataOrderViewController.xib; sourceTree = "<group>"; };
@@ -2692,6 +2704,10 @@
 		6CCEEB501EEF95AE002E1618 /* category */ = {
 			isa = PBXGroup;
 			children = (
+				6C125E091F39AA6F00B2323F /* NSArray+Extension.h */,
+				6C125E0A1F39AA6F00B2323F /* NSArray+Extension.m */,
+				6C125E0B1F39AA6F00B2323F /* NSDictionary+Extension.h */,
+				6C125E0C1F39AA6F00B2323F /* NSDictionary+Extension.m */,
 				6C8F53A61F11D38A00C7A275 /* NSDate+Utilities.h */,
 				6C8F53A71F11D38A00C7A275 /* NSDate+Utilities.m */,
 				6C8F53A81F11D38A00C7A275 /* NSDictionary+JFASafeObject.h */,
@@ -2935,7 +2951,10 @@
 		6CD011331EF8CADA00FB9419 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6C125E0F1F3A994000B2323F /* tzs_bg@2x.png */,
+				6C125E101F3A994000B2323F /* tzs_bg@3x.png */,
 				6C125DF51F32D0FD00B2323F /* default.png */,
+				6C125E071F3460FF00B2323F /* banner.jpg */,
 				6C125DF71F33103800B2323F /* message_banner1.jpg */,
 				6C125DFB1F3310C300B2323F /* message_banner2.jpg */,
 				6C125DF81F33103800B2323F /* message_banner3.jpg */,
@@ -3598,6 +3617,7 @@
 				6CD9300D1F0B984900D7989E /* ShareBottomView.xib in Resources */,
 				6C3637E61EFCAF5500268851 /* contact-us-map@2x.png in Resources */,
 				6C36380D1EFCAF5500268851 /* help-icon07@3x.png in Resources */,
+				6C125E081F3460FF00B2323F /* banner.jpg in Resources */,
 				6C3638131EFCAF5500268851 /* help-icon10@3x.png in Resources */,
 				6CCEEAB51EEE3D71002E1618 /* MeasurementInfoCell.xib in Resources */,
 				6CA024A71F14B32A00F54DF3 /* ForgetPasswordViewController.xib in Resources */,
@@ -3616,6 +3636,7 @@
 				6C3638BC1EFCAF9400268851 /* record-jiangli@2x.png in Resources */,
 				6CD010D71EF62BC500FB9419 /* AddressListCell.xib in Resources */,
 				6C3639A91EFE53EE00268851 /* QrCodeView.xib in Resources */,
+				6C125E111F3A994000B2323F /* tzs_bg@2x.png in Resources */,
 				6C3638071EFCAF5500268851 /* help-icon04@3x.png in Resources */,
 				6CD9301E1F0C964F00D7989E /* passw_kong@2x.png in Resources */,
 				6C3638C01EFCAF9400268851 /* record-shui@2x.png in Resources */,
@@ -3657,6 +3678,7 @@
 				6C3638D51EFCAF9400268851 /* yinpai@3x.png in Resources */,
 				6C73B01D1F31C2320042C1A2 /* message_ol@3x.png in Resources */,
 				6C3638BB1EFCAF9400268851 /* record-freight@3x.png in Resources */,
+				6C125E121F3A994000B2323F /* tzs_bg@3x.png in Resources */,
 				6CD930161F0C953500D7989E /* AddTradingPsController.xib in Resources */,
 				6C13C5E51EFAB18700435A27 /* person-xiao.png in Resources */,
 				6CD010791EF3C77900FB9419 /* ChangeUserInfo2ViewController.xib in Resources */,
@@ -3860,7 +3882,9 @@
 				6CFD992D1EF2355A00802AA4 /* LineChart.m in Sources */,
 				6C8F53C91F11D38A00C7A275 /* UIView+JFAViewAnimation.m in Sources */,
 				6C3639061EFD099500268851 /* TZSChangeMobileViewController.m in Sources */,
+				6C125E0D1F39AA6F00B2323F /* NSArray+Extension.m in Sources */,
 				6C3639EE1F035A5B00268851 /* TZSSendCell.m in Sources */,
+				6C125E0E1F39AA6F00B2323F /* NSDictionary+Extension.m in Sources */,
 				6C3639D31F029B7C00268851 /* OrderFootBtnView.m in Sources */,
 				6C3639991EFE47E100268851 /* AASubtitle.m in Sources */,
 				6CD0111C1EF82A2A00FB9419 /* SettingViewController.m in Sources */,

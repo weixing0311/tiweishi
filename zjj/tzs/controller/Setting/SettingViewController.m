@@ -91,6 +91,8 @@
 {
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
+        DLog(@"昵称--%@",[[dic objectForKey:@"data"] objectForKey:@"nickName"]);
+
         [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
         [self refreshUserInfo];
         

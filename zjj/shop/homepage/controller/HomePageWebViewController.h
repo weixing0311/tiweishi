@@ -10,5 +10,8 @@
 #import "JFABaseTableViewController.h"
 @interface HomePageWebViewController : JFABaseTableViewController
 @property (nonatomic, copy)NSString * urlStr;
-
+@property (nonatomic,assign)BOOL isShare;
+@property (nonatomic,copy)NSString * contentStr;
+@property (nonatomic,copy)NSString * titleStr;
+@property (nonatomic,copy)NSString * imageUrl;
 @end

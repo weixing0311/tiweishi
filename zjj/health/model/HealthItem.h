@@ -17,39 +17,61 @@ typedef enum {
 }enumsType;
 
 @interface HealthItem : NSObject
-@property (nonatomic,assign) float              waterWeight ;//// 细胞总水
-@property (nonatomic,assign) float              weight ;//// 体重
-@property (nonatomic,assign) float              muscleWeight ;//// 肌肉重量
-@property (nonatomic,assign) float              bmi ;//// 体质指数
-@property (nonatomic,assign) float              lastWeight ;////上次体重
-@property (nonatomic,assign) float              fatWeight ;////脂肪重
-@property (nonatomic,assign) float              bmr ;//// 基础代谢率
-@property (nonatomic,assign) float              bodyAge ;//// 身体年龄
-@property (nonatomic,assign) float              visceralFatPercentage ;////内脏脂肪指数
-@property (nonatomic,assign) float              proteinWeight ;//// 蛋白质重量
-
-@property (nonatomic,assign) int                normal ;////正常
-@property (nonatomic,assign) int                warn ;////警告
-@property (nonatomic,assign) int                serious ;////严重
-
-@property (nonatomic,assign) int                DataId ;////评测数据id
-@property (nonatomic,assign) int                bmiLevel ;////bmi程度
-@property (nonatomic,assign) int                visceralFatPercentageLevel ;////内脂判定标准
-@property (nonatomic,assign) int                fatWeightLevel ;////脂肪重判定标准
-@property (nonatomic,assign) int                proteinLevel ;////蛋白质判定标准
-@property (nonatomic,assign) int                waterLevel ;////水分判定标准
-@property (nonatomic,assign) int                muscleLevel ;////肌肉判定标准
+//// 细胞总水
+@property (nonatomic,assign) float              waterWeight ;
+//// 体重
+@property (nonatomic,assign) float              weight ;
+//// 肌肉重量
+@property (nonatomic,assign) float              muscleWeight ;
+//// 体质指数
+@property (nonatomic,assign) float              bmi ;
+////上次体重
+@property (nonatomic,assign) float              lastWeight ;
+////脂肪重
+@property (nonatomic,assign) float              fatWeight ;
+//// 基础代谢率
+@property (nonatomic,assign) float              bmr ;
+//// 身体年龄
+@property (nonatomic,assign) float              bodyAge ;
+////内脏脂肪指数
+@property (nonatomic,assign) float              visceralFatPercentage ;
+//// 蛋白质重量
+@property (nonatomic,assign) float              proteinWeight ;
+////正常
+@property (nonatomic,assign) int                normal ;
+////警告
+@property (nonatomic,assign) int                warn ;
+////严重
+@property (nonatomic,assign) int                serious ;
+////评测数据id
+@property (nonatomic,assign) int                DataId ;
+////bmi程度
+@property (nonatomic,assign) int                bmiLevel ;
+////内脂判定标准
+@property (nonatomic,assign) int                visceralFatPercentageLevel ;
+////脂肪重判定标准
+@property (nonatomic,assign) int                fatWeightLevel ;
+////蛋白质判定标准
+@property (nonatomic,assign) int                proteinLevel ;
+////水分判定标准
+@property (nonatomic,assign) int                waterLevel ;
+////肌肉判定标准
+@property (nonatomic,assign) int                muscleLevel ;
 @property (nonatomic,assign) int                userId ;//
 @property (nonatomic,assign) int                subUserId ;//
-@property (nonatomic,assign) int                weightLevel ;////体重判定标准
-@property (nonatomic,copy  ) NSString     *     createTime ;////检测时间
+////体重判定标准
+@property (nonatomic,assign) int                weightLevel ;
+@property (nonatomic,copy  ) NSString     *     createTime ;
 @property (nonatomic,assign) float              fatPercentage;
 @property (nonatomic,assign)enumsType           type;
-
-@property (nonatomic,assign) float              standardWeight;//标准体重
-@property (nonatomic,assign) float              weightControl;//体重控制量
-@property (nonatomic,assign) float              lbm;//去脂体重
-@property (nonatomic,assign) float              fatControl;//脂肪控制量
+////标准体重
+@property (nonatomic,assign) float              standardWeight;
+////体重控制量
+@property (nonatomic,assign) float              weightControl;
+////去脂体重
+@property (nonatomic,assign) float              lbm;
+////脂肪控制量
+@property (nonatomic,assign) float              fatControl;
 
 -(void)setobjectWithDic:(NSDictionary *)dict ;//
 

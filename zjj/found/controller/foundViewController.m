@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTBRedColor];
-    [self buildBannerView];
+//    [self buildBannerView];
     // Do any additional setup after loading the view.{
 }
 -(void)buildBannerView
@@ -50,7 +50,11 @@
     }
     else if (sender.tag ==2)//口碑推广
     {
-        
+        FriendsCircleViewController * fc =[[FriendsCircleViewController alloc]init];
+        fc.hidesBottomBarWhenPushed = YES;
+        fc.title = @"朋友圈推广";
+        [self.navigationController pushViewController:fc animated:YES];
+
     }
     else if (sender.tag ==3)//朋友圈推广
     {
