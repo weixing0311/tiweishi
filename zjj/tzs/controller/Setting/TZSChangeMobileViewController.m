@@ -8,7 +8,7 @@
 
 #import "TZSChangeMobileViewController.h"
 
-@interface TZSChangeMobileViewController ()
+@interface TZSChangeMobileViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -17,10 +17,22 @@
     int timeNumber;
     NSTimer * _timer;
 }
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [_timer invalidate];
+    [self.currentTasks cancel];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"修改手机号";
     [self setNbColor];
+    self.vertf.delegate = self;
+    self.mobileTF.delegate = self;
+    [self.mobileTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    [self.vertf addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -48,19 +60,35 @@
     self.verBtn.enabled = NO;
  
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    [param setObject:self.mobileTF.text forKey:@"phone"];
-    [param setObject:self.vertf.text forKey:@"vcode"];
+    [param setObject:self.mobileTF.text forKey:@"mobilePhone"];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhoneMsg.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError *error) {
         [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
+        [_timer invalidate];
+        self.verBtn.enabled = YES;
     }];
     
     
 }
-
+-(void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == self.vertf) {
+        if (textField.text.length >= 4) {
+            textField.text = [textField.text substringToIndex:4];
+            [self.vertf resignFirstResponder];
+        }
+    }
+    if (textField ==self.mobileTF) {
+        if (self.mobileTF.text.length>=11) {
+            textField.text = [textField.text substringToIndex:11];
+            
+            [self.mobileTF resignFirstResponder];
+        }
+    }
+}
 - (IBAction)didUpdate:(id)sender {
     if (self.oldMobileTf.text.length <11) {
         [[UserModel shareInstance] showInfoWithStatus:@"请输入注册手机号"];
@@ -85,13 +113,15 @@
     [param setObject:[UserModel shareInstance].userId   forKey:@"userId"];
     [param setObject:self.mobileTF.text forKey:@"phone"];
     [param setObject:self.oldMobileTf.text forKey:@"oldPhone"];
-    [param setObject:self.passwordtf.text forKey:@"password"];
+    [param setObject:[NSString encryptString: self.passwordtf.text] forKey:@"password"];
     [param setObject:self.vertf.text forKey:@"vcode"];
-    
+    [SVProgressHUD show];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
     }];
 
@@ -108,6 +138,37 @@
     [self.verBtn setTitle:[NSString stringWithFormat: @"%ld秒后可重新获取",(long)timeNumber] forState:UIControlStateNormal];
     timeNumber --;
 }
+
+
+- (BOOL)isNumText:(NSString *)str{
+    NSString * regex        = @"^[0-9]*$";
+    NSPredicate * pred      = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch            = [pred evaluateWithObject:str];
+    if (isMatch) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    if (textField ==self.mobileTF||textField ==self.vertf) {
+        if ([self isNumText:string]==YES) {
+            return YES;
+        }else{
+            [[UserModel shareInstance]showInfoWithStatus:@"请输入数字"];
+            return NO;
+            
+        }
+        
+    }
+    return YES;
+    DLog(@"rang-%@",NSStringFromRange(range));
+}
+
+
 - (void)dealloc
 {
     [_timer invalidate];

@@ -45,7 +45,7 @@
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWR-gm-jbQ">
                     <rect key="frame" x="10" y="237" width="355" height="1"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="eOs-0E-D7L"/>
                     </constraints>
@@ -68,7 +68,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGb-p9-H9f">
-                    <rect key="frame" x="60" y="471" width="255" height="45"/>
+                    <rect key="frame" x="20" y="471" width="335" height="45"/>
                     <color key="backgroundColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="0mf-gN-jOK"/>
@@ -76,7 +76,7 @@
                     <state key="normal" title="退出登录"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <real key="value" value="22.5"/>
+                            <integer key="value" value="5"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
@@ -103,7 +103,7 @@
                         <constraint firstAttribute="width" constant="80" id="rRw-Kz-1MK"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCL-Cn-VxW">
@@ -147,7 +147,7 @@
                 <constraint firstItem="XWR-gm-jbQ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RPg-Sn-ofT"/>
                 <constraint firstItem="8xQ-bp-Cyo" firstAttribute="top" secondItem="XWR-gm-jbQ" secondAttribute="bottom" constant="8" id="ShG-9n-asG"/>
                 <constraint firstItem="zCL-Cn-VxW" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="TJZ-fm-PMZ"/>
-                <constraint firstAttribute="trailing" secondItem="iGb-p9-H9f" secondAttribute="trailing" constant="60" id="VNn-gB-dXg"/>
+                <constraint firstAttribute="trailing" secondItem="iGb-p9-H9f" secondAttribute="trailing" constant="20" id="VNn-gB-dXg"/>
                 <constraint firstItem="mCh-e3-7yv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="YbG-xT-FEb"/>
                 <constraint firstItem="8pn-Co-1cM" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZiA-B3-YEU"/>
                 <constraint firstItem="Pv4-8n-uc1" firstAttribute="top" secondItem="8pn-Co-1cM" secondAttribute="bottom" constant="15" id="b54-Ai-yng"/>
@@ -157,7 +157,7 @@
                 <constraint firstItem="8xQ-bp-Cyo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jql-bQ-icg"/>
                 <constraint firstItem="Pv4-8n-uc1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="loI-5S-Yag"/>
                 <constraint firstAttribute="trailing" secondItem="7ri-cU-iyc" secondAttribute="trailing" constant="24" id="oKQ-Pu-h04"/>
-                <constraint firstItem="iGb-p9-H9f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="sUz-oM-IBJ"/>
+                <constraint firstItem="iGb-p9-H9f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="sUz-oM-IBJ"/>
                 <constraint firstItem="XWR-gm-jbQ" firstAttribute="top" secondItem="qVY-eB-lhu" secondAttribute="bottom" constant="6" id="wT4-DG-Xfy"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="53.5"/>

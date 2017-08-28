@@ -45,6 +45,13 @@
     pasteboard.string = _linkStr;
     [self.copBtn setTitle:@"链接已复制到剪切板" forState:UIControlStateNormal];
 }
+- (IBAction)didShare:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didShareWithUrl:)]) {
+        [self.delegate didShareWithUrl:_linkStr];
+        [self removeFromSuperview];
+    }
+    
+}
 
 - (IBAction)didClose:(id)sender {
     [self removeFromSuperview];

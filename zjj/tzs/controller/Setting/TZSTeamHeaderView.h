@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mobileLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastTimeLabel;
-
+@property(nonatomic,retain) NSTimer * timer;
+-(void)setTimeLabelText:(NSString *)text;
 @end

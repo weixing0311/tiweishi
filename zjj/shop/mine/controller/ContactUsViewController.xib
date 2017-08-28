@@ -37,28 +37,28 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wei.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pbi-e7-1nz">
-                    <rect key="frame" x="35" y="178" width="45" height="45"/>
+                    <rect key="frame" x="35" y="160" width="45" height="45"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="0Uc-o4-oIe"/>
                         <constraint firstAttribute="height" constant="45" id="79Z-zg-S23"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tel.png" translatesAutoresizingMaskIntoConstraints="NO" id="T1T-Ya-lIB">
-                    <rect key="frame" x="35" y="240" width="45" height="45"/>
+                    <rect key="frame" x="35" y="222" width="45" height="45"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="a5W-ZN-KFP"/>
                         <constraint firstAttribute="height" constant="45" id="vcx-Jc-mI1"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Email.png" translatesAutoresizingMaskIntoConstraints="NO" id="LvX-5W-10V">
-                    <rect key="frame" x="35" y="302" width="45" height="45"/>
+                    <rect key="frame" x="35" y="284" width="45" height="45"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="7IA-Qp-uYR"/>
                         <constraint firstAttribute="height" constant="45" id="Je5-9P-JbY"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="oDr-5W-JVd">
-                    <rect key="frame" x="35" y="364" width="45" height="45"/>
+                    <rect key="frame" x="35" y="346" width="45" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="3ux-sV-lyT"/>
                         <constraint firstAttribute="width" constant="45" id="9gb-KB-7c7"/>
@@ -69,7 +69,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="TQX-F5-FIp"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -78,7 +78,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="NXd-ax-mQb"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -87,7 +87,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="pUD-sx-C0F"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -96,7 +96,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="eWy-D2-oCW"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -105,7 +105,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="1MH-HJ-B3M"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -114,7 +114,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="9hq-06-Sht"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" red="1" green="0.22037760416666666" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -123,7 +123,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="smj-C5-hoU"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -137,14 +137,14 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLm-iY-PPo">
-                    <rect key="frame" x="35" y="227" width="305" height="1"/>
+                    <rect key="frame" x="35" y="209" width="305" height="1"/>
                     <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="UJi-aS-mXj"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4MN-Ty-LXc">
-                    <rect key="frame" x="35" y="289" width="305" height="1"/>
+                    <rect key="frame" x="35" y="271" width="305" height="1"/>
                     <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="qHq-lN-RXr"/>
@@ -181,7 +181,7 @@
                 <constraint firstItem="MZY-q1-BU0" firstAttribute="top" secondItem="Tmh-ba-8Xw" secondAttribute="bottom" constant="4" id="Ghe-fG-jVk"/>
                 <constraint firstAttribute="trailing" secondItem="Tmh-ba-8Xw" secondAttribute="trailing" constant="20" id="Gqi-eN-Vuf"/>
                 <constraint firstItem="sk3-OS-QLD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="15" id="Gqw-9K-kVb"/>
-                <constraint firstItem="Pbi-e7-1nz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="178" id="KGl-cn-jYx"/>
+                <constraint firstItem="Pbi-e7-1nz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="160" id="KGl-cn-jYx"/>
                 <constraint firstItem="MZY-q1-BU0" firstAttribute="top" secondItem="Tmh-ba-8Xw" secondAttribute="bottom" constant="4" id="OQf-pW-rR8"/>
                 <constraint firstItem="Pbi-e7-1nz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="35" id="Oj4-KZ-TDm"/>
                 <constraint firstItem="tJb-SD-ZVG" firstAttribute="leading" secondItem="LvX-5W-10V" secondAttribute="trailing" constant="10" id="SAZ-Ok-87s"/>

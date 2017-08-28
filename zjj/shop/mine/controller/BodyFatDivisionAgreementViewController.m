@@ -8,7 +8,7 @@
 
 #import "BodyFatDivisionAgreementViewController.h"
 #import "RealNameAuthenticationViewController.h"
-#import "BaseWebViewController.h"
+#import "HomePageWebViewController.h"
 @interface BodyFatDivisionAgreementViewController ()
 
 @end
@@ -29,16 +29,16 @@
 }
 //行为规范
 - (IBAction)xwgf:(id)sender {
-    BaseWebViewController * web =[[BaseWebViewController alloc]init];
+    HomePageWebViewController * web =[[HomePageWebViewController alloc]init];
     web.title = @"脂将军体脂管理师服务行为规范";
-    web.urlStr = @"app/protocolGuiFan.html";
+    web.urlStr = [NSString stringWithFormat:@"%@app/protocolGuiFan.html",kMyBaseUrl];
     [self.navigationController pushViewController:web animated:YES];
 }
 //退换规范
 - (IBAction)thgf:(id)sender {
-    BaseWebViewController * web =[[BaseWebViewController alloc]init];
+    HomePageWebViewController * web =[[HomePageWebViewController alloc]init];
     web.title = @"脂将军体脂管理辅助用品退换规则";
-    web.urlStr = @"app/protocolTuiHuan.html";
+    web.urlStr = [NSString stringWithFormat:@"%@app/protocolTuiHuan.html",kMyBaseUrl];
     [self.navigationController pushViewController:web animated:YES];
 
 }

@@ -26,8 +26,8 @@
                             <constraint firstAttribute="width" secondItem="QEU-ii-jOl" secondAttribute="height" multiplier="1:1" id="zUB-3N-okY"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9h-jB-YM4">
-                        <rect key="frame" x="95" y="15" width="0.0" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1231231231" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9h-jB-YM4">
+                        <rect key="frame" x="95" y="15" width="91" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="GHa-eU-oeg"/>
                             <constraint firstAttribute="width" priority="10" constant="200" id="pvJ-EI-wPI"/>
@@ -36,8 +36,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1q-yI-RcR">
-                        <rect key="frame" x="95" y="60" width="0.0" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123123123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1q-yI-RcR">
+                        <rect key="frame" x="95" y="60" width="83.5" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="20" constant="150" id="B89-lH-6g3"/>
                             <constraint firstAttribute="height" constant="20" id="FRX-aT-gDB"/>
@@ -53,7 +53,17 @@
                             <constraint firstAttribute="height" constant="20" id="uID-Ok-ee7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.6072131999" green="0.68793044910000001" blue="0.99109692260000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTq-gY-M7L">
+                        <rect key="frame" x="95" y="37" width="0.0" height="0.0"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="1" constant="20" id="EmE-Yb-OoH"/>
+                            <constraint firstAttribute="width" priority="10" constant="200" id="bDs-Y6-nHf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -64,6 +74,8 @@
                     <constraint firstAttribute="trailingMargin" secondItem="g6V-U2-Fh9" secondAttribute="trailing" constant="15" id="XPX-gg-Rip"/>
                     <constraint firstItem="Y1q-yI-RcR" firstAttribute="leading" secondItem="QEU-ii-jOl" secondAttribute="trailing" constant="10" id="XrK-no-kbt"/>
                     <constraint firstItem="g6V-U2-Fh9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gal-Nl-um4"/>
+                    <constraint firstItem="YTq-gY-M7L" firstAttribute="top" secondItem="T9h-jB-YM4" secondAttribute="bottom" constant="2" id="gdz-Zz-Sjx"/>
+                    <constraint firstItem="YTq-gY-M7L" firstAttribute="leading" secondItem="QEU-ii-jOl" secondAttribute="trailing" constant="10" id="kS2-Ni-W6M"/>
                     <constraint firstItem="QEU-ii-jOl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="o82-Kd-f4v"/>
                     <constraint firstAttribute="bottom" secondItem="QEU-ii-jOl" secondAttribute="bottom" constant="15" id="p8o-op-0Ej"/>
                     <constraint firstItem="T9h-jB-YM4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="uip-Ep-mbQ"/>
@@ -72,6 +84,7 @@
             <connections>
                 <outlet property="countLabel" destination="g6V-U2-Fh9" id="Ycd-bE-Aek"/>
                 <outlet property="headImageView" destination="QEU-ii-jOl" id="Zke-Xy-hlu"/>
+                <outlet property="price2label" destination="YTq-gY-M7L" id="NrP-jw-hfs"/>
                 <outlet property="priceLabel" destination="Y1q-yI-RcR" id="NDc-rg-KjB"/>
                 <outlet property="titleLabel" destination="T9h-jB-YM4" id="lfG-jk-8lk"/>
             </connections>

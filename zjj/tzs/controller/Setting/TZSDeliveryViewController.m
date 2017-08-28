@@ -9,7 +9,7 @@
 #import "TZSDeliveryViewController.h"
 #import "TZSSendCell.h"
 #import "TZSConfirmTheViewController.h"
-@interface TZSDeliveryViewController ()<TZSSendCellDelegate>
+@interface TZSDeliveryViewController ()<TZSSendCellDelegate,UITextFieldDelegate>
 
 @end
 
@@ -111,13 +111,81 @@
 }
 
 #pragma mark ----cellDelegate
+
+-(void)didChangeCountWithCell:(TZSSendCell*)cell
+{
+    NSMutableDictionary * dic = [_dataArray objectAtIndex:cell.tag];
+    int LimitCount;
+    int linitQuantity  =[[dic safeObjectForKey:@"limitQuantity"]intValue];
+    int quantity =[[dic objectForKey:@"quantity"]intValue];
+
+    NSString * limitQuantity =[NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"limitQuantity"]];
+    if ([limitQuantity isEqualToString:@"0"]) {
+        LimitCount =quantity;
+    }else
+    {
+        if (linitQuantity>quantity) {
+            LimitCount = quantity;
+        }else{
+            LimitCount = linitQuantity;
+        }
+    }
+    
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"修改数量" message:[NSString stringWithFormat:@"单笔最大配送数量：%d",LimitCount] preferredStyle:UIAlertControllerStyleAlert];
+    [al addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.delegate = self;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        DLog(@"%@",al.textFields.firstObject.text);
+        BOOL isNum = [self deptNumInputShouldNumber:al.textFields.firstObject.text];
+        if (isNum !=YES||al.textFields.firstObject.text.length<1) {
+            [[UserModel shareInstance]showInfoWithStatus:@"请输入正确的数量"];
+            return ;
+        }
+
+        if ([al.textFields.firstObject.text intValue]>=0&&[al.textFields.firstObject.text intValue]<=LimitCount) {
+            
+            cell.numberLabel.text =al.textFields.firstObject.text;
+            NSString * count = al.textFields.firstObject.text;
+            [dic safeSetObject:count forKey:@"chooseCount"];
+            [self setInfoInChooseArr:dic add:YES];
+        }else{
+            [[UserModel shareInstance]showInfoWithStatus:@"请输入正确的数量"];
+            return;
+        }
+        
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+
+}
+
 -(void)didAddWithCell:(TZSSendCell*)cell
 {
     
     NSMutableDictionary *dic = [_dataArray objectAtIndex:cell.tag];
-    int quantity = [[dic objectForKey:@"quantity"]intValue];
+    int LimitCount;
+    int linitQuantity  =[[dic safeObjectForKey:@"limitQuantity"]intValue];
+    int quantity =[[dic objectForKey:@"quantity"]intValue];
+    
+    NSString * limitQuantity =[NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"limitQuantity"]];
+    if ([limitQuantity isEqualToString:@"0"]) {
+        LimitCount =quantity;
+    }else
+    {
+        if (linitQuantity>quantity) {
+            LimitCount = quantity;
+        }else{
+            LimitCount = linitQuantity;
+        }
+    }
+
     int count = [cell.numberLabel.text intValue];
-    if (quantity ==count) {
+    if (LimitCount ==count) {
         return;
     }
     else{
@@ -289,6 +357,17 @@
     
     return count;
     
+}
+
+
+- (BOOL) deptNumInputShouldNumber:(NSString *)str
+{
+    NSString *regex = @"[0-9]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -19,7 +19,7 @@
 #import "TZSDistributionViewController.h"
 #import "AddTradingPsController.h"
 
-@interface SettingViewController ()
+@interface SettingViewController ()<qrcodeDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
 
@@ -42,7 +42,9 @@
     
     [self setShardow];
     self.scrollView.contentSize = CGSizeMake(0, 0);
-    
+    self.headImageView.layer.borderWidth = 1;
+    self.headImageView.layer.borderColor=[UIColor orangeColor].CGColor;
+
     isBigHeadImage = NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterOtherViewContoller:) name:@"shouyintaibackToViewController" object:nil];
     
@@ -74,8 +76,8 @@
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
-    self.assetsLabel.text = [NSString stringWithFormat:@"(余额：￥%.2f)",[UserModel shareInstance].balance];
-
+    self.assetsLabel.text = [NSString stringWithFormat:@"(余额:￥%.2f)",[[UserModel shareInstance].balance doubleValue]];
+    [self showSetPassword];
     
 }
 
@@ -91,7 +93,6 @@
 {
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
-        DLog(@"昵称--%@",[[dic objectForKey:@"data"] objectForKey:@"nickName"]);
 
         [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
         [self refreshUserInfo];
@@ -113,7 +114,31 @@
     }];
 
 }
+-(void)showSetPassword
+{
+    NSString * tradePasswordStr = [UserModel shareInstance].tradePassword;
+    
+    if (!tradePasswordStr||tradePasswordStr.length<1) {
+        UIAlertController * al =[UIAlertController alertControllerWithTitle:nil message:@"您还没有交易密码，是否确认添加？" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        
+        
+        [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.navigationController.navigationBarHidden =NO;
+            AddTradingPsController * at =[[AddTradingPsController alloc]init];
+            at.hidesBottomBarWhenPushed =YES;
+            self.navigationController.navigationBarHidden =NO;
+            [self.navigationController pushViewController:at animated:YES];
+        }]];
+        
+        
+        
+        [self presentViewController:al animated:YES completion:nil];
+    }
 
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -122,6 +147,7 @@
 
 #pragma mark --点击头像
 - (IBAction)showHeadImage:(id)sender {
+    return;
     if (!ImagespView) {
         ImagespView =[[UIView alloc]initWithFrame:self.view.bounds];
         ImagespView.backgroundColor = RGBACOLOR(0, 0, 0, 0.7);
@@ -156,7 +182,7 @@
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"QrCodeView"owner:self options:nil];
     
     QrCodeView *rcodeView = [nib objectAtIndex:0];
-
+    rcodeView.delegate = self;
     rcodeView.frame = self.view.frame;
     [rcodeView setInfoWithDict:nil];
     [self.view.window addSubview: rcodeView];
@@ -223,7 +249,9 @@
     web.urlStr = @"app/fatTeacher/recharge.html";
     //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
     web.payType =4;
-    web.title  =@"收银台";
+    web.title  =@"充值";
+    web.rightBtnUrl = @"app/fatTeacher/rechargeRecord.html";
+    web.rightBtnTitle = @"查看明细";
     web.hidesBottomBarWhenPushed= YES;
     [self.navigationController pushViewController:web animated:YES];
 
@@ -241,29 +269,8 @@
 #pragma mark--钱包管理
 - (IBAction)walletManagement:(id)sender {
     
-    NSString * tradePasswordStr = [UserModel shareInstance].tradePassword;
     
-    if (!tradePasswordStr||tradePasswordStr.length<1) {
-        UIAlertController * al =[UIAlertController alertControllerWithTitle:nil message:@"您还没有交易密码，是否确认添加？" preferredStyle:UIAlertControllerStyleAlert];
-        
-        
-        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-        
-        
-        [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            self.navigationController.navigationBarHidden =NO;
-            AddTradingPsController * at =[[AddTradingPsController alloc]init];
-            at.hidesBottomBarWhenPushed =YES;
-            self.navigationController.navigationBarHidden =NO;
-            [self.navigationController pushViewController:at animated:YES];
-        }]];
-        
-        
-        
-        [self presentViewController:al animated:YES completion:nil];
-    }else{
-    
-        self.navigationController.navigationBarHidden =NO;
+    self.navigationController.navigationBarHidden =NO;
 
     BaseWebViewController *web =[[BaseWebViewController alloc]init];
     web.urlStr = @"app/fatTeacher/dailyCash.html";
@@ -271,7 +278,6 @@
     web.title = @"钱包管理";
 
     [self.navigationController pushViewController:web animated:YES];
-    }
 
 }
 
@@ -318,6 +324,86 @@
     [self.navigationController pushViewController:edit animated:YES];
     
 
+}
+
+#pragma mark -----分享
+-(void)didShareWithUrl:(NSString * )urlStr
+{
+    
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"分享" message:@"选择要分享到的平台" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatSession url:urlStr];
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline url:urlStr];
+
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"QQ" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformTypeQQ url:urlStr];
+
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+
+}
+#pragma mark ----share
+-(void) shareWithType:(SSDKPlatformType)type url:(NSString * )url
+{
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+
+    if (type ==SSDKPlatformSubTypeWechatSession||type ==SSDKPlatformSubTypeWechatTimeline) {
+        
+        [shareParams SSDKSetupWeChatParamsByText:@"邀请伙伴" title:@"邀请伙伴" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+    }else if(type ==SSDKPlatformTypeQQ){
+     
+//        [shareParams SSDKSetupQQParamsByText:@"邀请伙伴" title:@"邀请伙伴" url:[NSURL URLWithString:url] audioFlashURL:nil videoFlashURL:nil thumbImage:[UserModel shareInstance].headUrl images:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+    
+        [shareParams SSDKSetupShareParamsByText:@""
+                                         images:[UserModel shareInstance].headUrl
+                                            url:[NSURL URLWithString:url]
+                                          title:@"邀请伙伴"
+                                           type:SSDKContentTypeAuto];
+    
+    }
+    [shareParams SSDKEnableUseClientShare];
+    [SVProgressHUD showWithStatus:@"开始分享"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    
+    //进行分享
+    [ShareSDK share:type
+         parameters:shareParams
+     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         
+         switch (state) {
+             case SSDKResponseStateSuccess:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                 break;
+             }
+             case SSDKResponseStateFail:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 NSString * text  =[error.userInfo objectForKey:@"error_message"];
+                 
+                [[UserModel shareInstance] showErrorWithStatus:text];
+                 break;
+             }
+             case SSDKResponseStateCancel:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                 break;
+             }
+             default:
+                 break;
+         }
+     }];
+    
 }
 
 @end

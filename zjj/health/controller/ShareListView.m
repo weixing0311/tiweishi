@@ -29,6 +29,10 @@
     self.headImageView.layer.cornerRadius = self.headImageView.frame.size.width / 2;
     self.headImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.headImageView.layer.borderWidth = 1;
+    
+
+    
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.infoArray = [NSMutableArray array];
@@ -49,9 +53,12 @@
     ShareHealthItem * item2 = [self.infoArray objectAtIndex:1];
 
     
+
     
+    _qrCodeImageView.image = [UIImage imageWithData:[UserModel shareInstance].qrcodeImageData];
     
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.qrCodeImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl ]placeholderImage:[UIImage imageNamed:@"head_default"]];
+
     self.nameLabel.text = [SubUserItem shareInstance].nickname;
     
     self.date1Label.text = [item1.createTime yyyymmdd];

@@ -8,12 +8,14 @@
 
 #import "MineViewController.h"
 #import "PublicCell.h"
-#import "BaseWebViewController.h"
+#import "HomePageWebViewController.h"
 #import "EidtViewController.h"
 #import "BodyFatDivisionAgreementViewController.h"
 #import "OrderViewController.h"
 #import "ContactUsViewController.h"
-@interface MineViewController ()
+#import "QrCodeView.h"
+
+@interface MineViewController ()<qrcodeDelegate>
 
 @end
 
@@ -24,6 +26,7 @@
 //    self.navigationController.navigationBarHidden = YES;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getWaitPayCount];
+    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
 
 }
 - (void)viewDidLoad {
@@ -85,7 +88,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -95,51 +98,61 @@
         NSArray *arr =[[NSBundle mainBundle]loadNibNamed:@"PublicCell" owner:nil options:nil];
         cell =[arr lastObject];
     }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
     if (indexPath.row==0) {
         cell.titleLabel.text = @"帮助中心";
         cell.secondLabel.text = @"帮助文档";
+        cell.secondLabel.textColor = HEXCOLOR(0x999999);
         cell .headImageView.image= [UIImage imageNamed:@"personal-help-icon"];
-
-    }else{
+    }
+    else if ( indexPath.row ==1)
+    {
         cell.titleLabel.text = @"联系我们";
         cell.secondLabel .text = @"联系方式";
+        cell.secondLabel.textColor = HEXCOLOR(0x999999);
         cell.headImageView.image= [UIImage imageNamed:@"personal-lianxi"];
+ 
+    }
+    else
+    {
+        cell.titleLabel.text = @"邀请注册";
+        cell.secondLabel .text = @"二维码注册";
+        cell.secondLabel.textColor = HEXCOLOR(0x999999);
+        cell.headImageView.image= [UIImage imageNamed:@"personal-recode"];
 
     }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row ==0) {
-        BaseWebViewController *web =[[BaseWebViewController alloc]init];
+        HomePageWebViewController *web =[[HomePageWebViewController alloc]init];
         web.title = @"帮助中心";
-        web.urlStr = @"app/helpConsumers.html";
+        web.urlStr = [NSString stringWithFormat:@"%@app/helpConsumers.html",kMyBaseUrl];
         web.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:web animated:YES];
 
-    }else{
+    }
+    
+    else if(indexPath.row ==1){
         ContactUsViewController * cc = [[ContactUsViewController alloc]init];
         cc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:cc animated:YES];
+    }else{
+        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"QrCodeView"owner:self options:nil];
+        
+        QrCodeView *rcodeView = [nib objectAtIndex:0];
+        rcodeView.delegate = self;
+        rcodeView.frame = self.view.frame;
+        [rcodeView setInfoWithDict:nil];
+        [self.view.window addSubview: rcodeView];
+
     }
 //    self.navigationController.navigationBarHidden = NO;
 
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)didSetUp:(id)sender {
     EidtViewController *ed = [[EidtViewController alloc]init];
@@ -186,4 +199,92 @@
     bd.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:bd animated:YES];
 }
+#pragma mark -----分享
+-(void)didShareWithUrl:(NSString * )urlStr
+{
+    urlStr =[UserModel shareInstance].qrcodeImageUrl;
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"分享" message:@"选择要分享到的平台" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatSession url:urlStr];
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline url:urlStr];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"QQ" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformTypeQQ url:urlStr];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+    
+}
+#pragma mark ----share
+-(void) shareWithType:(SSDKPlatformType)type url:(NSString * )url
+{
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    
+    if (type ==SSDKPlatformSubTypeWechatSession||type ==SSDKPlatformSubTypeWechatTimeline) {
+        
+        [shareParams SSDKSetupWeChatParamsByText:@"" title:@"邀请伙伴" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+    }else{
+        
+        [shareParams SSDKSetupQQParamsByText:@"" title:@"" url:[NSURL URLWithString:url] audioFlashURL:nil videoFlashURL:nil thumbImage:[UserModel shareInstance].headUrl images:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+        
+        
+        
+    }
+    [shareParams SSDKEnableUseClientShare];
+    [SVProgressHUD showWithStatus:@"开始分享"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    
+    //进行分享
+    [ShareSDK share:type
+         parameters:shareParams
+     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         
+         switch (state) {
+             case SSDKResponseStateSuccess:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                 break;
+             }
+             case SSDKResponseStateFail:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+                 break;
+             }
+             case SSDKResponseStateCancel:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                 break;
+             }
+             default:
+                 break;
+         }
+     }];
+    
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
 @end

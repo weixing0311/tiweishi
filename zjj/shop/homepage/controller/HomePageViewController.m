@@ -46,7 +46,7 @@
     _dataArray =[NSMutableArray array];
     _bannerArray =[NSMutableArray array];
     _bannerInfoArray =[NSMutableArray array];
-    _bannerHight =JFA_SCREEN_WIDTH/365*235;
+    _bannerHight =JFA_SCREEN_WIDTH/375*235;
     UIBarButtonItem *backBar = [[UIBarButtonItem alloc]initWithTitle:@"back" style:UIBarButtonItemStyleDone target:self action:@selector(didback)];
     self.navigationItem.leftBarButtonItem = backBar;
 
@@ -249,9 +249,11 @@
 {
     return _dataArray.count;
 }
-//设置边距
+////定义每个Section的四边间距
+
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
+    
     return UIEdgeInsetsMake(5, 5, 5, 5);//分别为上、左、下、右
 }
 
@@ -269,8 +271,18 @@
 {
         return CGSizeMake((JFA_SCREEN_WIDTH-20)/2, (JFA_SCREEN_WIDTH-20)/2/167*220);
 }
+//这个是两行cell之间的间距（上下行cell的间距）
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5;
+}
+//两个cell之间的间距（同一行的cell的间距）
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5;
+}
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];

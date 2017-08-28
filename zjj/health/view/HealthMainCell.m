@@ -9,6 +9,8 @@
 #import "HealthMainCell.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "HealthModel.h"
+#import "NSString+dateWithString.h"
+
 @implementation HealthMainCell
 {
     CBCentralManager *CM;
@@ -28,6 +30,7 @@
 }
 -(void)setUpInfo:(HealthItem*)item
 {
+    self.emptyInfoLabel.hidden = YES;
     // 体重
     NSMutableAttributedString * weightAttStr =[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%.1fkg", item.weight]];
     DLog(@"%@",weightAttStr);
@@ -121,35 +124,12 @@
         self.weightBgImageView.image = [UIImage imageNamed:@"health_bg"];
         [self.scaleButton setBackgroundImage:[UIImage imageNamed:@"health_button"] forState:UIControlStateNormal];
     }
-    self.bodyAgeLabel.text = [NSString stringWithFormat:@"身体年龄: %.0f",item.bodyAge];
+    
+    self.heightLabel.text = [NSString stringWithFormat:@"身高：%.0fcm",[UserModel shareInstance].heigth];
+    self.agelabel.text = [NSString stringWithFormat:@"年龄：%d",[UserModel shareInstance].age];
     self.bmrLabel.text = [NSString stringWithFormat:@"基础代谢: %.0f",item.bmr];
-    
-    
-    
-    NSString * tisStr = [NSString stringWithFormat:@"本次%d项检查中有，%d项预警，%d项警告，%d项正常",item.normal+item.serious+item.warn,item.warn,item.serious,item.normal];
-    
-    NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:tisStr];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0, 2)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1] range:NSMakeRange(2, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(3, 6)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:246/255.0 green:172/255.0 blue:2/255.0 alpha:1] range:NSMakeRange(9, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(10, 4)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:236/255.0 green:85/255.0 blue:78/255.0 alpha:1] range:NSMakeRange(14, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(15, 4)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1] range:NSMakeRange(19, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(tisStr.length-3, 3)];
-    
-    self.scaleResultStatusLabel.attributedText = tisString;
-    self.scaleResultStatusLabel.adjustsFontSizeToFitWidth = YES;
+    self.bmrAgeLabel.text = [NSString stringWithFormat:@"身体年龄: %.0f",item.bodyAge];
+    self.timeLabel.text = [item.createTime yyyymmdd];
     
     self.title1Label.text = @"目标体重";
     self.title2Label.text = @"目标体脂率";
@@ -171,7 +151,7 @@
     
     float target1 = item.standardWeight-item.weight<=0?item.standardWeight-item.weight:-0;
     float target2 = fatWeightV*100-item.fatPercentage*100<=0?fatWeightV*100-item.fatPercentage*100:-0;
-    float target3 = target2 <=0?target2*item.weight/100:-0;
+    float target3 = target2 <=0?fatWeightV*item.standardWeight-item.fatPercentage*item.weight:-0;
     float target4 = visceral -item.visceralFatPercentage<=0?visceral-item.visceralFatPercentage:-0;
 
     self.value1Label.text =[NSString stringWithFormat:@"%.1fkg",target1];
@@ -220,9 +200,7 @@
     
     self.weightBgImageView.image = [UIImage imageNamed:@"health_bg"];
     [self.scaleButton setBackgroundImage:[UIImage imageNamed:@"health_button"] forState:UIControlStateNormal];
-    
-    [self.scaleResultStatusLabel clearsContextBeforeDrawing];
-    self.scaleResultStatusLabel.text = @"无体重数据,先体测一次吧!";
+    self.emptyInfoLabel.hidden = NO;
     self.timeLabel.text = @"";
 
 }

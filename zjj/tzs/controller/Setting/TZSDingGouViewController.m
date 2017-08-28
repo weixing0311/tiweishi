@@ -131,8 +131,8 @@
         
         [[UserModel shareInstance]showSuccessWithStatus:@"进货成功"];
         [_chooseArray removeAllObjects];
-        self.priceLabel.text = @"订单总价：0";
-        self.countLabel.text = @"已选服务：0";
+        self.priceLabel.text = @"合计：0";
+        self.countLabel.text = @"总额:￥0 优惠:￥0";
         [self.tableview reloadData];
         
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
@@ -268,9 +268,9 @@
 
 -(void)changeBottomInfo
 {
-    self.countLabel.text = [NSString stringWithFormat:@"已选服务:%d", [self getChooseCount]];
+    self.countLabel.text = [NSString stringWithFormat:@"总额：￥%.2f，优惠：￥%.2f",[self getPrice],[self getAllPreferentialOrice]];
     
-    self.priceLabel.text = [NSString stringWithFormat:@"订单总价：%.0f，优惠价格：%.0f",[self getPrice],[self getAllPreferentialOrice]];
+    self.priceLabel.text = [NSString stringWithFormat:@"合计:￥%.2f", [self getPrice]-[self getAllPreferentialOrice]];
 
 }
 #pragma mark ----cellDelegate
@@ -309,6 +309,9 @@
     
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         DLog(@"%@",al.textFields.firstObject.text);
+        if (al.textFields.firstObject.text.length<1) {
+            return ;
+        }
         if ([al.textFields.firstObject.text intValue]>=0&&[al.textFields.firstObject.text intValue]<=200) {
             cell.countLabel.text = al.textFields.firstObject.text;
             [self changeChooseArrWithDict:dic Count:[al.textFields.firstObject.text intValue]];

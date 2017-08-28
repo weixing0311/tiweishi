@@ -228,7 +228,7 @@
                                 <action selector="changeHeader:" destination="-1" eventType="touchUpInside" id="m60-8V-Reh"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ja-ha7">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49i-Ja-ha7">
                             <rect key="frame" x="162" y="225" width="50" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="YnQ-yo-0ZB"/>

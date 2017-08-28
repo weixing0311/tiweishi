@@ -75,19 +75,30 @@
                     <rect key="frame" x="0.0" y="112" width="375" height="50"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="选择省、市、区" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nKP-kr-Lpu">
-                            <rect key="frame" x="20" y="10" width="335" height="30"/>
+                            <rect key="frame" x="20" y="12.5" width="325" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="fM1-IR-ilh"/>
+                            </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-right.png" translatesAutoresizingMaskIntoConstraints="NO" id="zEN-GJ-WNG">
+                            <rect key="frame" x="355" y="17.5" width="10" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="1Kz-Ly-lAO"/>
+                                <constraint firstAttribute="width" constant="10" id="X9P-Tu-aXP"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="nKP-kr-Lpu" firstAttribute="top" secondItem="tdD-cv-faO" secondAttribute="top" constant="10" id="1nd-iA-nBf"/>
+                        <constraint firstItem="nKP-kr-Lpu" firstAttribute="centerY" secondItem="tdD-cv-faO" secondAttribute="centerY" id="0jQ-k1-fdz"/>
                         <constraint firstAttribute="height" constant="50" id="I9u-Iv-oei"/>
                         <constraint firstItem="nKP-kr-Lpu" firstAttribute="leading" secondItem="tdD-cv-faO" secondAttribute="leading" constant="20" id="dGv-O5-fwt"/>
-                        <constraint firstAttribute="bottom" secondItem="nKP-kr-Lpu" secondAttribute="bottom" constant="10" id="eE2-F3-U7y"/>
-                        <constraint firstAttribute="trailing" secondItem="nKP-kr-Lpu" secondAttribute="trailing" constant="20" id="pgA-Nd-Fot"/>
+                        <constraint firstAttribute="trailing" secondItem="nKP-kr-Lpu" secondAttribute="trailing" constant="30" id="pgA-Nd-Fot"/>
+                        <constraint firstItem="zEN-GJ-WNG" firstAttribute="centerY" secondItem="tdD-cv-faO" secondAttribute="centerY" id="rGY-Qv-SR5"/>
+                        <constraint firstAttribute="trailing" secondItem="zEN-GJ-WNG" secondAttribute="trailing" constant="10" id="sQX-CE-egs"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1j-RT-CIS">
@@ -175,4 +186,7 @@
             <point key="canvasLocation" x="34.5" y="68.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="arrow-right.png" width="5" height="9"/>
+    </resources>
 </document>

@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFN-iK-f5b">
@@ -44,13 +44,22 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addressLine.png" translatesAutoresizingMaskIntoConstraints="NO" id="dSg-yX-KGo">
+                        <rect key="frame" x="0.0" y="76.5" width="320" height="3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="3" id="XIl-pa-hGm"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="dSg-yX-KGo" secondAttribute="trailing" id="3uJ-AV-zP1"/>
                     <constraint firstItem="PFN-iK-f5b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="GaB-9N-LcH"/>
+                    <constraint firstAttribute="bottom" secondItem="dSg-yX-KGo" secondAttribute="bottom" id="KPs-Ny-Vbo"/>
                     <constraint firstAttribute="trailingMargin" secondItem="cK0-BT-OL5" secondAttribute="trailing" constant="10" id="TR5-oa-X6E"/>
                     <constraint firstItem="cK0-BT-OL5" firstAttribute="leading" secondItem="PFN-iK-f5b" secondAttribute="trailing" constant="10" id="U2K-Tt-9Ag"/>
                     <constraint firstItem="Exu-wQ-j0q" firstAttribute="top" secondItem="PFN-iK-f5b" secondAttribute="bottom" constant="5" id="bH8-Hd-mac"/>
                     <constraint firstItem="cK0-BT-OL5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="lIn-lt-t2b"/>
+                    <constraint firstItem="dSg-yX-KGo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nsJ-lF-iaR"/>
                     <constraint firstItem="Exu-wQ-j0q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="vS6-EZ-o65"/>
                     <constraint firstItem="PFN-iK-f5b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="yV9-ia-R8C"/>
                     <constraint firstAttribute="trailing" secondItem="Exu-wQ-j0q" secondAttribute="trailing" constant="20" id="zy7-lQ-zuR"/>
@@ -64,4 +73,7 @@
             <point key="canvasLocation" x="110" y="31"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="addressLine.png" width="370" height="3"/>
+    </resources>
 </document>

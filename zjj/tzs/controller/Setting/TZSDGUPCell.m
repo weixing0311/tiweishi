@@ -15,6 +15,7 @@
     // Initialization code
     self.headImage.layer.borderWidth = 1;
     self.headImage.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
+    self.priceLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -23,9 +23,10 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gV7-k4-LCa">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="sectionIndexBackgroundColor" red="0.1019607843" green="0.67843137249999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="gV7-k4-LCa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2D1-I3-fvX"/>
                 <constraint firstAttribute="trailing" secondItem="gV7-k4-LCa" secondAttribute="trailing" id="Edo-3S-OBZ"/>

@@ -18,6 +18,10 @@
 @end
 
 @implementation ShareViewController
+{
+    int page;
+    int pageSize;
+}
 - (instancetype)init
 {
     self = [super init];
@@ -40,29 +44,51 @@
     // Do any additional setup after loading the view from its nib.
     [self setTBRedColor];
     self.title = @"分享";
+    pageSize = 30;
     self.tableview.delegate =self;
     self.tableview.dataSource= self;
-    [self setExtraCellLineHiddenWithTb:self.tableview];
-    [self getShareInfo];
     
+    [self setExtraCellLineHiddenWithTb:self.tableview];
+    [self setRefrshWithTableView:self.tableview];
+    
+}
+-(void)headerRereshing
+{
+    page = 1;
+    [self getShareInfo];
+
+}
+-(void)footerRereshing
+{
+    page ++;
+    [self getShareInfo];
+
 }
 -(void)getShareInfo
 {
     
-    NSDate * endDate = [NSDate date];
-    NSDate * beginDate =[endDate dateByAddingTimeInterval:(-30 * 24 * 60 * 60)];
-
-    
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
-    [param safeSetObject:[beginDate yyyymmdd] forKey:@"startDate"];
-    [param safeSetObject:[endDate  yyyymmdd] forKey:@"endDate"];
+    [param safeSetObject:@(page) forKey:@"page"];
+    [param safeSetObject:@(pageSize) forKey:@"pageSize"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatList.do" paramters:param success:^(NSDictionary *dic) {
+        [self.tableview footerEndRefreshing];
+        [self.tableview headerEndRefreshing];
+        
+        if (page==1) {
+            self.tableview.footerHidden = NO;
+            [_dataArray removeAllObjects];
+        }
+        [_chooseArray removeAllObjects];
+
         NSDictionary * dict =[dic safeObjectForKey:@"data"];
         
         NSArray * arr =[dict safeObjectForKey:@"array"];
-        [_dataArray removeAllObjects];
 
+        if (arr.count<30) {
+            self.tableview.footerHidden = YES;
+        }
+        
         for (int i =0; i<arr.count; i++) {
             NSDictionary * ListInfo = [arr objectAtIndex:i];
             ShareHealthItem * item =[[ShareHealthItem alloc]init];
@@ -74,6 +100,9 @@
         
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);
+        [self.tableview footerEndRefreshing];
+        [self.tableview headerEndRefreshing];
+
     }];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -102,6 +131,18 @@
     }
     cell.backgroundColor = [UIColor clearColor];
     ShareHealthItem * item = [self.dataArray objectAtIndex:indexPath.row];
+//    for (int i =0;i<_chooseArray.count;i++) {
+//        ShareCell * chooseCell = _chooseArray[i];
+//        
+//        
+//        
+//        if (chooseCell.tag ==cell.tag) {
+//            cell.chooseBtn.selected = YES;
+//        }else{
+//            cell.chooseBtn.selected =NO;
+//        }
+//    }
+
     [cell setUpCellWithItem:item];
     return cell;
 }
@@ -140,6 +181,13 @@
 */
 -(UIImage *)showShareView
 {
+    
+    NSString * qrCode = [UserModel shareInstance].qrcodeImageUrl;
+    if (!qrCode||qrCode.length<1) {
+        [[UserModel shareInstance]getbalance];
+    }
+    
+    
     ShareListView * shareTr = [self getXibCellWithTitle:@"ShareListView"];
     
     ShareCell * cell1 = [self.chooseArray objectAtIndex:0];

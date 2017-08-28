@@ -10,5 +10,5 @@
 
 @interface HelpViewController : JFABaseTableViewController
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-
+@property (nonatomic,copy)NSString * urlStr;
 @end

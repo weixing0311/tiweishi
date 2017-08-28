@@ -112,13 +112,19 @@
 /**
  *   个人资产
  */
-@property (nonatomic,assign)float balance;
+@property (nonatomic,assign)NSString * balance;
 
 
 /**
  * 二维码
  */
 @property (nonatomic,copy  )NSString * qrcodeImageUrl;
+
+/**
+ * 二维码
+ */
+@property (nonatomic,copy  )NSData * qrcodeImageData;
+
 
 /**
  * 分享链接
@@ -245,8 +251,10 @@
 -(void)showInfoWithStatus:(NSString *)status;
 -(void)dismiss;
 
-
-
+/**
+ *获取个人信息
+ */
+-(void)getbalance;
 
 /**
  *手机号加密

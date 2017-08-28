@@ -220,7 +220,7 @@
     //判断资源类型
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
         //如果是图片
-        UIImage *image =info[UIImagePickerControllerOriginalImage];
+        UIImage *image =info[UIImagePickerControllerEditedImage];
         [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
         
         self.testImageView.image = image;
@@ -258,4 +258,5 @@
     // Return the new image.
     return newImage;
 }
+
 @end

@@ -8,6 +8,8 @@
 
 #import "ImageViewController.h"
 #import "UIImageView+Round.h"
+#import <AVFoundation/AVFoundation.h>
+
 @interface ImageViewController ()
 
 @end
@@ -43,11 +45,22 @@
     //判断资源类型
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
         //如果是图片
-        UIImage *image =info[UIImagePickerControllerOriginalImage];
+        UIImage *image =info[UIImagePickerControllerEditedImage];
+        [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
+
         [self dismissViewControllerAnimated:YES completion:nil];
-        
         self.imageView.image = image;
-        [self updateImageWithImage:image];
+
+        if (picker.sourceType ==UIImagePickerControllerSourceTypeCamera) {
+          NSData *  fileDate = UIImageJPEGRepresentation(image, 0.001);
+            [self updateImageWithImage:fileDate];
+ 
+        }else{
+            NSData *  fileDate = UIImageJPEGRepresentation(image, 0.01);
+            [self updateImageWithImage:fileDate];
+
+        }
+        
     }
 }//点击cancel 调用的方法
 
@@ -57,11 +70,10 @@
 }
 //等比例缩放
 
--(void)updateImageWithImage:(UIImage *)image
+-(void)updateImageWithImage:(NSData *)fileData
 {
     
-    NSData *fileData = UIImageJPEGRepresentation(image, 1.0);
-    
+
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [SVProgressHUD showWithStatus:@"上传中.."];
@@ -71,8 +83,12 @@
         [SVProgressHUD dismiss];
         [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
     } failure:^(NSError *error) {
         [SVProgressHUD dismiss];
+        [[UserModel shareInstance]showInfoWithStatus:@"上传失败"];
+
         DLog(@"faile-error-%@",error);
     }];
 }

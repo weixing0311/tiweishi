@@ -196,7 +196,7 @@
 
 -(UIColor *)getHealthDetailColorWithStatus:(isMyType)myType
 {
-    SubProjectItem * subItem = [[SubProjectItem alloc]init];
+//    SubProjectItem * subItem = [[SubProjectItem alloc]init];
     switch (myType) {
         case IS_MODEL_BMI:
             switch ([HealthDetailsItem instance].bmiLevel) {

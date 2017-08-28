@@ -204,6 +204,16 @@
 }
 -(void)deleteCell:(ShopCarCell*)cell
 {
+    
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"确定删除吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    
+    
     shopCarCellItem * item = [_dataArray objectAtIndex:cell.tag];
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -223,14 +233,14 @@
         [self.dataArray removeObject:item];
         
         for (int i =0;i<self.chooseArray.count;i++) {
-            shopCarCellItem * chooseItem = [self.chooseArray objectAtIndex:i];
-            if ([chooseItem.productNo isEqualToString:item.productNo]) {
-                [self.chooseArray removeObject:chooseItem];
+            NSDictionary * chooseDic = [self.chooseArray objectAtIndex:i];
+            if ([[chooseDic safeObjectForKey:@"productNo"] isEqualToString:item.productNo]) {
+                [self.chooseArray removeObject:chooseDic];
             }
         }
         
         
-        
+        [self changePriceIsNull:NO];
         [self.tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:[NSIndexPath indexPathForRow:cell.tag inSection:0 ]] withRowAnimation:UITableViewRowAnimationLeft];  //删除对应数据的cell
         [[UserModel shareInstance]showSuccessWithStatus:@""];
         
@@ -241,6 +251,8 @@
         if ([error code]==402) {
             [self.dataArray removeAllObjects];
             [self.chooseArray removeAllObjects];
+            [self changePriceIsNull:YES];
+            self.chooseBtn.selected = NO;
             [self.tableView reloadData];
             self.emptyView.hidden =NO;
             [self.view bringSubviewToFront:self.emptyView];
@@ -268,8 +280,8 @@
     [uo.param safeSetObject:@([self getPrice]-[self getAllPreferentialOrice]) forKey:@"payableAmount"];
     [uo.param safeSetObject:str forKey:@"orderItem"];
     
-    
-    
+    [self.chooseArray removeAllObjects];
+    self.chooseBtn.selected = NO;
     //需要下一级页面推送通知
     [self.navigationController pushViewController:uo animated:YES];
     [self changePriceIsNull:YES];
@@ -288,16 +300,16 @@
 {
     if (isNull) {
         self.priceLabel.text = @"0.00元";
-        self.priceDetailLb.text = @"";
-        [self.settlementBtn setTitle:@"结算(0)" forState:UIControlStateNormal];
+        self.priceDetailLb.text = @"总额：%0.00 立减：￥0.00";
+        [self.settlementBtn setTitle:@"去结算(0)" forState:UIControlStateNormal];
         
 
     }else{
         
-    self.priceLabel.text = [NSString stringWithFormat:@"%.0f元",[self getPrice]-[self getAllPreferentialOrice]];
-    self.priceDetailLb.text = [NSString stringWithFormat:@"总额:￥%.1f 立减:￥%.1f",[self getPrice],[self getAllPreferentialOrice]];
+    self.priceLabel.text = [NSString stringWithFormat:@"%.2f元",[self getPrice]-[self getAllPreferentialOrice]];
+    self.priceDetailLb.text = [NSString stringWithFormat:@"总额:￥%.2f 立减:￥%.2f",[self getPrice],[self getAllPreferentialOrice]];
     
-    [self.settlementBtn setTitle:[NSString stringWithFormat:@"结算(%d)",[self getChooseCount]] forState:UIControlStateNormal];
+    [self.settlementBtn setTitle:[NSString stringWithFormat:@"去结算(%d)",[self getChooseCount]] forState:UIControlStateNormal];
     }
 }
 
@@ -316,6 +328,9 @@
     return arr;
 }
 - (IBAction)didChoose:(UIButton *)sender {
+    if (!self.dataArray|| self.dataArray.count<1) {
+        return;
+    }
     [self.chooseArray removeAllObjects];
     if (self.chooseBtn.selected==YES) {
         self.chooseBtn.selected = NO;
@@ -337,7 +352,7 @@
 //        [self.settlementBtn setTitle:[NSString stringWithFormat:@"结算(%d)",[self getChooseCount]] forState:UIControlStateNormal];
 
     }
-    for ( int i =0; i<self.chooseArray.count; i++) {
+    for ( int i =0; i<self.dataArray.count; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
 
         ShopCarCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];

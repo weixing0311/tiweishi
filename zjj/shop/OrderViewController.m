@@ -228,7 +228,7 @@
         [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
         
     }
-    else if (status ==3)
+    else if (status ==3&&operateStatus==4)
     {
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
         footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
@@ -236,18 +236,10 @@
         footBtn.tag = section;
         [view addSubview:footBtn];
 
-        if (operateStatus==3) {
-            footBtn.firstBtn.hidden = YES;
-            footBtn.secondBtn.hidden =YES;
-            footBtn.thirdBtn.hidden =NO;
-        }
-        else if(operateStatus==4)
-        {
-            footBtn.firstBtn.hidden = NO;
-            footBtn.secondBtn.hidden =YES;
-            footBtn.thirdBtn.hidden =YES;
+        footBtn.firstBtn.hidden = NO;
+        footBtn.secondBtn.hidden =YES;
+        footBtn.thirdBtn.hidden =YES;
             
-        }
 //        [footBtn.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
 
     }

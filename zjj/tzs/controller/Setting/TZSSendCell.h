@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol TZSSendCellDelegate;
 @interface TZSSendCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIView *countView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
@@ -24,5 +25,5 @@
 
 -(void)didAddWithCell:(TZSSendCell*)cell;
 -(void)didRedWithCell:(TZSSendCell*)cell;
-
+-(void)didChangeCountWithCell:(TZSSendCell*)cell;
 @end

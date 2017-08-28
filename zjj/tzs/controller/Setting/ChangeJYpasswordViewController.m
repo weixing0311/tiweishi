@@ -58,14 +58,16 @@
     
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param setObject:self.mobiletf.text forKey:@"mobilePhone"];
-    [param setObject:self.oldpassword.text forKey:@"oldPassword"];
-    [param setObject:self.theNewpasswordtf.text forKey:@"password"];
-    [param setObject:self.renewpassword.text forKey:@"repPassword"];
+    [param setObject:[NSString encryptString: self.oldpassword.text] forKey:@"oldPassword"];
+    [param setObject:[NSString encryptString: self.theNewpasswordtf.text] forKey:@"password"];
+    [param setObject:[NSString encryptString: self.renewpassword.text] forKey:@"repPassword"];
     [param setObject:self.verTf.text forKey:@"vcode"];
-        
+    [SVProgressHUD show];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/changeTradePassword.do" paramters:param success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
     }];
 

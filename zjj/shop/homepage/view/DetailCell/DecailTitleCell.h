@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol decailTitleCellDelegate;
 @interface DecailTitleCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIView *countView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cxtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;

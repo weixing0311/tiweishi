@@ -41,13 +41,17 @@
     
     
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,0, 375, 49)];
-    UIBarButtonItem * barFit =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    
+    UIBarButtonItem * barFit =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
-    UIBarButtonItem *bar = [[UIBarButtonItem alloc]
+    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc]
                             initWithTitle:@"完成"style:UIBarButtonItemStylePlain target:self action:@selector(didChooseCity)];
+    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]
+                            initWithTitle:@"取消"style:UIBarButtonItemStylePlain target:self action:@selector(cancelChooseCity)];
+
 //    4.加一个固定的长度作为弹簧效果
 //    5.将设置的按钮加到toolBar上
-    toolBar.items =@[barFit,bar];
+    toolBar.items =@[bar1,barFit,bar2];
 //    6.将toolBar加到text的输入框也就是UiDatePicker上
     
     
@@ -368,6 +372,10 @@
 - (void)didChooseCity {
     
     self.cityTf.text = [NSString stringWithFormat:@"%@ %@ %@",pro,city,dis];
+    [self.cityTf resignFirstResponder];
+}
+-(void)cancelChooseCity
+{
     [self.cityTf resignFirstResponder];
 }
 

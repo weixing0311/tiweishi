@@ -14,6 +14,7 @@
 #import "TZSChangeMobileViewController.h"
 #import "ImageViewController.h"
 #import "LoignViewController.h"
+#import "HomePageWebViewController.h"
 @interface TZSEditViewController ()
 
 @end
@@ -41,12 +42,17 @@
 -(void)addFootView
 {
     UIView *view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 60)];
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-40, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-40, 50)];
     button.center = view.center;
+    view.backgroundColor = HEXCOLOR(0xeeeeee);
+
     [button setTitle:@"退出登录" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(loignout) forControlEvents:UIControlEventTouchUpInside];
-    [button setBackgroundColor:[UIColor redColor]];
+    [button setBackgroundColor:HEXCOLOR(0xEE0A3B)];
     [view addSubview:button];
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius  = 5;
+
     self.tableview.tableFooterView = view;
 }
 //退出登录
@@ -122,7 +128,7 @@
                         case 2:
                         cell.textLabel.text = @"会员名";
                         cell.detailTextLabel.text = [UserModel shareInstance].nickName;
-                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
                         break;
                     case 3:
@@ -198,7 +204,7 @@
         {
             
         }
-        else if (indexPath.row ==1)
+        else if (indexPath.row ==2)
         {
             
         }
@@ -232,6 +238,11 @@
             [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://4006119516"]];
 
         }else{
+//
+            HomePageWebViewController * web= [[HomePageWebViewController alloc]init];
+            web.title = @"公司简介";
+            web.urlStr = [NSString stringWithFormat:@"%@app/fatTeacher/companyProfile.html",kMyBaseUrl];
+            [self.navigationController pushViewController:web animated:YES];
             
         }
     }

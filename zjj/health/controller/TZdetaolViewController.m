@@ -59,6 +59,14 @@
 }
 -(void)buildShareView
 {
+    
+    
+    NSString * qrCode =[UserModel shareInstance].qrcodeImageUrl;
+    if (!qrCode||qrCode.length<1) {
+        [[UserModel shareInstance]getbalance];
+    }
+    
+    
     UIImage * image = [self showShareView];
 
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"分享" message:nil preferredStyle:UIAlertControllerStyleActionSheet];

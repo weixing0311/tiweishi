@@ -12,6 +12,7 @@
 #import "SettingViewController.h"
 #import "ShopTestViewController.h"
 #import "TabbarViewController.h"
+#import "HelpViewController.h"
 @interface TzsTabbarViewController ()
 
 @end
@@ -24,7 +25,7 @@
     ShopTestViewController *st =[[ShopTestViewController alloc]init];
     st.title = @"健康";
     
-    BaseWebViewController *news = [[BaseWebViewController alloc]init];
+    HelpViewController *news = [[HelpViewController alloc]init];
     news.urlStr = @"app/fatTeacher/help.html";
     news.title = @"帮助中心";
     

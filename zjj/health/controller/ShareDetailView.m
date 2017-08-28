@@ -27,7 +27,7 @@
     self.headImageView.layer.cornerRadius = self.headImageView.frame.size.width / 2;
     self.headImageView.layer.borderColor = [UIColor orangeColor].CGColor;
     self.headImageView.layer.borderWidth = 1;
-    
+    _qrCodeImageView.image = [UIImage imageWithData:[UserModel shareInstance].qrcodeImageData];
 //    self.tableView.delegate = self;
 //    self.tableView.dataSource= self;
     [self setInfo];
@@ -38,10 +38,13 @@
     
     self.generateTimeLabel.text =[[HealthDetailsItem instance].createTime mmddhhmm] ;
     self.generateTimeLabel.adjustsFontSizeToFitWidth = YES;
-    self.bodyAgeLabel.text =[NSString stringWithFormat:@"%d",[HealthDetailsItem instance].bodyAge];
+    self.bodyAgeLabel.text =[NSString stringWithFormat:@"身体年龄%d",[HealthDetailsItem instance].bodyAge];
 
-    self.bmrLabel.text = [NSString stringWithFormat:@"%.0f",[HealthDetailsItem instance].bmr];
+    self.bmrLabel.text = [NSString stringWithFormat:@"基础代谢%.0f",[HealthDetailsItem instance].bmr];
 
+    self.ageLabel.text = [NSString stringWithFormat:@"年龄:%d",[UserModel shareInstance].age];
+    self.heightLabel.text = [NSString stringWithFormat:@"身高:%.1f",[UserModel shareInstance].heigth];
+    
     [self.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
     self.nameLabel.text =[SubUserItem shareInstance].nickname;
 
@@ -134,7 +137,7 @@
 {
     UIGraphicsBeginImageContext(self.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
-    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
+//    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
     UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文
 //    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
 }

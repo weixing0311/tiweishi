@@ -32,7 +32,8 @@
     self.timeLabel.text = [NSString stringWithFormat:@"生成日期：%@",[HealthDetailsItem instance].createTime];
     self.bodyAgeLabel.text = [NSString stringWithFormat:@"身体年龄：%d",[HealthDetailsItem instance].bodyAge];
     self.bmrLabel.text = [NSString stringWithFormat:@"基础代谢：%.0f",[HealthDetailsItem instance].bmr];
-
+    self.ageLabel.text = [NSString stringWithFormat:@"年龄：%d",[UserModel shareInstance].age];
+    self.heightLabel.text =[NSString stringWithFormat:@"身高：%.1fcm",[UserModel shareInstance].heigth];
     switch ([HealthDetailsItem instance].weightLevel) {
         case 1:
             self.weightStatusLabel.text = [NSString stringWithFormat:@"偏瘦"];

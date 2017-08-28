@@ -17,5 +17,5 @@
 /**
  *计算时差
  */
-+(NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime;
++(NSString *)getNowTimeWithString:(NSString *)aTimeString;
 @end

@@ -20,14 +20,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gPz-Be-Opg">
-                        <rect key="frame" x="10" y="11" width="29" height="22"/>
+                        <rect key="frame" x="10" y="10" width="21" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="29" id="VU7-aF-PnO"/>
-                            <constraint firstAttribute="height" constant="22" id="t09-BF-B2Y"/>
+                            <constraint firstAttribute="width" constant="21" id="VU7-aF-PnO"/>
+                            <constraint firstAttribute="height" constant="24" id="t09-BF-B2Y"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzc-Ku-DMd">
-                        <rect key="frame" x="49" y="12" width="122" height="20"/>
+                        <rect key="frame" x="41" y="12" width="122" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="It5-aC-his"/>
                             <constraint firstAttribute="width" priority="20" constant="122" id="sL0-7z-nLm"/>
@@ -37,11 +37,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DoS-IT-NhV">
-                        <rect key="frame" x="191" y="12.5" width="101" height="20"/>
+                        <rect key="frame" x="183" y="12.5" width="129" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="A49-ot-8Ec"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -50,7 +50,7 @@
                     <constraint firstItem="gPz-Be-Opg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="34Y-k5-SsM"/>
                     <constraint firstItem="DoS-IT-NhV" firstAttribute="leading" secondItem="fzc-Ku-DMd" secondAttribute="trailing" constant="20" id="J0w-gf-kSF"/>
                     <constraint firstItem="DoS-IT-NhV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KVt-B3-Am2"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="DoS-IT-NhV" secondAttribute="trailing" constant="20" id="Szl-t0-pDX"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="DoS-IT-NhV" secondAttribute="trailing" id="Szl-t0-pDX"/>
                     <constraint firstItem="fzc-Ku-DMd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="aWw-y5-TzI"/>
                     <constraint firstItem="fzc-Ku-DMd" firstAttribute="leading" secondItem="gPz-Be-Opg" secondAttribute="trailing" constant="10" id="bZJ-Ot-HBU"/>
                     <constraint firstItem="gPz-Be-Opg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="j7D-RI-JbD"/>

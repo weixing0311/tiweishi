@@ -11,6 +11,12 @@
 @interface EvaluationDetailScroeDescriptionCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel * bmrLabel;
 @property (weak, nonatomic) IBOutlet UILabel * bodyAgeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *heightLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ageLabel;
+
+
+
+
 @property (weak, nonatomic) IBOutlet UIImageView * headImageView;
 @property (weak, nonatomic) IBOutlet UILabel * nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel * scaleResultStatusLabel;

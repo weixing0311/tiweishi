@@ -150,7 +150,7 @@
         //添加标题和分页
         self.titleLabel.frame = kTitleLabelDefaultFrame;
 //        self.pageControlView.frame = kPageControlViewDefaultFrame;
-        self.pageControlView.frame = CGRectMake(JFA_SCREEN_WIDTH/2-30, self.frame.size.height-44,60, 30);
+        self.pageControlView.frame = CGRectMake(JFA_SCREEN_WIDTH/2-30, self.frame.size.height-20,60, 15);
         self.titleLabel.textColor = kTitleLabelDefaultTextColor;
         self.titleLabel.font = kTitleLabelDefaultFont;
     }
@@ -322,6 +322,9 @@
     {
         NSInteger index = _currentIndex > 0 ? _currentIndex - 1 : 0;
         self.pageControlView.currentPage = index;
+        self.pageControlView.allPageDotBackgroundColor = RGBACOLOR(0, 0, 0, .3);
+        self.pageControlView.currentPageDotColor = RGBACOLOR(255, 255, 255, 1);
+
         self.titleLabel.hidden = !self.titles.count;
         self.titleLabel.text = self.titles[currentIndex];
         
@@ -343,6 +346,9 @@
 {
     if (!_pageControlView) {
         _pageControlView = [ADPageControlView pageControlViewWithFrame:CGRectZero];
+        self.pageControlView.allPageDotBackgroundColor = RGBACOLOR(0, 0, 0, .3);
+        self.pageControlView.currentPageDotColor = RGBACOLOR(255, 255, 255, 1);
+
         [self addSubview:_pageControlView];
     }
     return _pageControlView;

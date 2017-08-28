@@ -114,8 +114,13 @@
         DLog(@"dic--%@",dic);
         if (self.zanBtn.selected ==YES) {
             self.zanBtn.selected =NO;
+            [self.zanBtn setTitle:[NSString stringWithFormat:@"点赞(%@)",self.isLikeNum?@([self.isLikeNum intValue]-1):@""] forState:UIControlStateNormal];
+            self.isLikeNum =[NSString stringWithFormat:@"%d",[self.isLikeNum intValue]-1];
         }else{
             self.zanBtn.selected =YES;
+            [self.zanBtn setTitle:[NSString stringWithFormat:@"点赞(%@)",self.isLikeNum?@([self.isLikeNum intValue]+1):@""] forState:UIControlStateNormal];
+            self.isLikeNum =[NSString stringWithFormat:@"%d",[self.isLikeNum intValue]+1];
+
         }
     } failure:^(NSError *error) {
         [[UserModel shareInstance] showErrorWithStatus:nil];

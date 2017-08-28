@@ -99,6 +99,7 @@
 {
     AddressDetailViewController *ad =[[AddressDetailViewController alloc]init];
     ad.isEdit = YES;
+    ad.title = @"编辑收货地址";
     ad.defaultDict = [self.dataArray objectAtIndex:cell.tag];
     [self.navigationController pushViewController:ad animated:YES];
 }
@@ -159,6 +160,7 @@
 
 - (IBAction)didAdd:(id)sender {
     AddressDetailViewController *ad =[[AddressDetailViewController alloc]init];
+    ad.title = @"新增收货地址";
     [self.navigationController pushViewController:ad animated:YES];
 }
 

@@ -12,6 +12,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 - (IBAction)didRed:(id)sender;
 - (IBAction)didAdd:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *leftBtn;
+@property (weak, nonatomic) IBOutlet UIButton *rightBtn;
+
+
+
 - (IBAction)lengthSegment:(UISegmentedControl *)sender;
 - (IBAction)listSegment:(UISegmentedControl *)sender;
 @property (weak, nonatomic) IBOutlet UIView *superChartView;

@@ -106,6 +106,12 @@
                                             <integer key="value" value="35"/>
                                         </userDefinedRuntimeAttribute>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                            <integer key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                            <color key="value" red="0.95437282986111116" green="0.70076497395833337" blue="0.3300509982638889" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="体脂师" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjj-05-cFS">
@@ -251,7 +257,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cjs-FM-rU9">
                                             <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="server-ding.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Xy-CG-rr9">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_buy_1.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Xy-CG-rr9">
                                                     <rect key="frame" x="42.5" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="WY9-x4-2jF"/>
@@ -287,7 +293,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xyz-ph-cXw">
                                             <rect key="frame" x="115" y="0.0" width="115" height="66.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="my-ding.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="VKs-We-eJ8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_buy_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="VKs-We-eJ8">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="E0v-Z6-sEF"/>
@@ -323,7 +329,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Xi-vC-dPr">
                                             <rect key="frame" x="230" y="0.0" width="115" height="66.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yi-server.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="uGB-Xl-PYC">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_buy_3.png" translatesAutoresizingMaskIntoConstraints="NO" id="uGB-Xl-PYC">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="WdS-1i-PVu"/>
@@ -359,7 +365,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Dr-by-xBP">
                                             <rect key="frame" x="0.0" y="66.5" width="115" height="66.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="server-song.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="bwc-9u-nLi">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_buy_4.png" translatesAutoresizingMaskIntoConstraints="NO" id="bwc-9u-nLi">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="BDd-sx-Utz"/>
@@ -395,7 +401,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11T-ua-Tf3">
                                             <rect key="frame" x="115" y="66.5" width="115" height="66.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="my-song.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="54J-oK-8YA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_buy_5.png" translatesAutoresizingMaskIntoConstraints="NO" id="54J-oK-8YA">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Qdm-Ik-DLb"/>
@@ -431,7 +437,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tyT-6C-yZj">
                                             <rect key="frame" x="230" y="66.5" width="115" height="66.5"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-guan.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="VPf-Z3-BDJ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_buy_6.png" translatesAutoresizingMaskIntoConstraints="NO" id="VPf-Z3-BDJ">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="83n-If-TDB"/>
@@ -519,7 +525,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="gRy-11-lmU">
-                            <rect key="frame" x="15" y="534" width="345" height="120"/>
+                            <rect key="frame" x="15" y="518" width="345" height="104"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的资产" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l6d-EU-f7i">
                                     <rect key="frame" x="8" y="8" width="57.5" height="20"/>
@@ -539,12 +545,12 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxg-ox-CWE">
-                                    <rect key="frame" x="0.0" y="45" width="345" height="75"/>
+                                    <rect key="frame" x="0.0" y="37" width="345" height="67"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BdJ-xh-Gix">
-                                            <rect key="frame" x="0.0" y="0.0" width="115" height="55.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="115" height="67"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jilu.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="TJg-Hv-eCc">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_wallet_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="TJg-Hv-eCc">
                                                     <rect key="frame" x="42.5" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Sc5-ZE-Y1Q"/>
@@ -552,13 +558,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交易记录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZ5-UM-G2D">
-                                                    <rect key="frame" x="0.0" y="38" width="115" height="17"/>
+                                                    <rect key="frame" x="0.0" y="42" width="115" height="24.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fed-wa-xdW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="55"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
                                                     <connections>
                                                         <action selector="TransactionRecords:" destination="-1" eventType="touchUpInside" id="yxT-qd-gtE"/>
                                                     </connections>
@@ -570,7 +576,7 @@
                                                 <constraint firstItem="Fed-wa-xdW" firstAttribute="top" secondItem="BdJ-xh-Gix" secondAttribute="top" id="Dzd-Zv-kBi"/>
                                                 <constraint firstItem="TJg-Hv-eCc" firstAttribute="top" secondItem="BdJ-xh-Gix" secondAttribute="top" constant="8" id="eXH-H4-YA8"/>
                                                 <constraint firstItem="ZZ5-UM-G2D" firstAttribute="leading" secondItem="BdJ-xh-Gix" secondAttribute="leading" id="gGK-iS-Tvf"/>
-                                                <constraint firstItem="ZZ5-UM-G2D" firstAttribute="top" secondItem="TJg-Hv-eCc" secondAttribute="bottom" id="gab-IV-9hR"/>
+                                                <constraint firstItem="ZZ5-UM-G2D" firstAttribute="top" secondItem="TJg-Hv-eCc" secondAttribute="bottom" constant="4" id="gab-IV-9hR"/>
                                                 <constraint firstItem="TJg-Hv-eCc" firstAttribute="centerX" secondItem="BdJ-xh-Gix" secondAttribute="centerX" id="mSc-5f-mA7"/>
                                                 <constraint firstAttribute="trailing" secondItem="Fed-wa-xdW" secondAttribute="trailing" id="npp-bv-XUV"/>
                                                 <constraint firstAttribute="bottom" secondItem="ZZ5-UM-G2D" secondAttribute="bottom" id="s4o-ZE-wq6"/>
@@ -578,9 +584,9 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jv-7k-OJq">
-                                            <rect key="frame" x="115" y="0.0" width="115" height="55.5"/>
+                                            <rect key="frame" x="115" y="0.0" width="115" height="67"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="money-guan.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="q4e-if-sLZ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_wallet_3.png" translatesAutoresizingMaskIntoConstraints="NO" id="q4e-if-sLZ">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="KIa-V4-91K"/>
@@ -588,13 +594,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="钱包管理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ibq-1p-Ioz">
-                                                    <rect key="frame" x="0.0" y="38" width="115" height="17"/>
+                                                    <rect key="frame" x="0.0" y="42" width="115" height="24.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6J-Sp-z8a">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="55"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
                                                     <connections>
                                                         <action selector="walletManagement:" destination="-1" eventType="touchUpInside" id="jDs-UA-4HQ"/>
                                                     </connections>
@@ -610,13 +616,13 @@
                                                 <constraint firstItem="Ibq-1p-Ioz" firstAttribute="leading" secondItem="8jv-7k-OJq" secondAttribute="leading" id="Yoc-xM-1rw"/>
                                                 <constraint firstItem="z6J-Sp-z8a" firstAttribute="top" secondItem="8jv-7k-OJq" secondAttribute="top" id="gn5-oJ-AMc"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ibq-1p-Ioz" secondAttribute="trailing" id="oCq-Xr-HDF"/>
-                                                <constraint firstItem="Ibq-1p-Ioz" firstAttribute="top" secondItem="q4e-if-sLZ" secondAttribute="bottom" id="sal-NG-mdu"/>
+                                                <constraint firstItem="Ibq-1p-Ioz" firstAttribute="top" secondItem="q4e-if-sLZ" secondAttribute="bottom" constant="4" id="sal-NG-mdu"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u6J-ek-hkJ">
-                                            <rect key="frame" x="230" y="0.0" width="115" height="55.5"/>
+                                            <rect key="frame" x="230" y="0.0" width="115" height="67"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="my-earnings.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="R5R-Dw-FKH">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_wallet_4.png" translatesAutoresizingMaskIntoConstraints="NO" id="R5R-Dw-FKH">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="Hph-jQ-LgY"/>
@@ -624,13 +630,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的收益" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Bb-bJ-Doa">
-                                                    <rect key="frame" x="0.0" y="38" width="115" height="17"/>
+                                                    <rect key="frame" x="0.0" y="42" width="115" height="24.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m55-W9-2Bo">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="55"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
                                                     <connections>
                                                         <action selector="myIncome:" destination="-1" eventType="touchUpInside" id="TUI-nh-aS8"/>
                                                     </connections>
@@ -646,7 +652,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="m55-W9-2Bo" secondAttribute="bottom" id="ddi-ou-Nma"/>
                                                 <constraint firstItem="R5R-Dw-FKH" firstAttribute="top" secondItem="u6J-ek-hkJ" secondAttribute="top" constant="8" id="fhx-O0-jJR"/>
                                                 <constraint firstItem="R5R-Dw-FKH" firstAttribute="centerX" secondItem="u6J-ek-hkJ" secondAttribute="centerX" id="lbn-sk-kER"/>
-                                                <constraint firstItem="4Bb-bJ-Doa" firstAttribute="top" secondItem="R5R-Dw-FKH" secondAttribute="bottom" id="ux5-rM-OUc"/>
+                                                <constraint firstItem="4Bb-bJ-Doa" firstAttribute="top" secondItem="R5R-Dw-FKH" secondAttribute="bottom" constant="4" id="ux5-rM-OUc"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -657,6 +663,7 @@
                                         <constraint firstItem="8jv-7k-OJq" firstAttribute="leading" secondItem="BdJ-xh-Gix" secondAttribute="trailing" id="7Kz-pM-6cf"/>
                                         <constraint firstItem="8jv-7k-OJq" firstAttribute="width" secondItem="BdJ-xh-Gix" secondAttribute="width" id="AMq-np-Hay"/>
                                         <constraint firstItem="u6J-ek-hkJ" firstAttribute="height" secondItem="BdJ-xh-Gix" secondAttribute="height" id="HdU-Mf-5QO"/>
+                                        <constraint firstAttribute="bottom" secondItem="BdJ-xh-Gix" secondAttribute="bottom" id="MFJ-4L-YDf"/>
                                         <constraint firstItem="u6J-ek-hkJ" firstAttribute="width" secondItem="BdJ-xh-Gix" secondAttribute="width" id="TQ1-DG-aqF"/>
                                         <constraint firstItem="u6J-ek-hkJ" firstAttribute="leading" secondItem="8jv-7k-OJq" secondAttribute="trailing" id="at0-Aa-VDl"/>
                                         <constraint firstItem="8jv-7k-OJq" firstAttribute="top" secondItem="fxg-ox-CWE" secondAttribute="top" id="bMS-FI-AxF"/>
@@ -702,7 +709,7 @@
                                 <constraint firstItem="ueN-22-DgW" firstAttribute="top" secondItem="l6d-EU-f7i" secondAttribute="bottom" constant="8" id="4dS-bF-YD9"/>
                                 <constraint firstItem="l6d-EU-f7i" firstAttribute="leading" secondItem="gRy-11-lmU" secondAttribute="leadingMargin" id="6ua-1F-k8C"/>
                                 <constraint firstItem="l6d-EU-f7i" firstAttribute="top" secondItem="gRy-11-lmU" secondAttribute="topMargin" id="AIi-g1-jel"/>
-                                <constraint firstItem="fxg-ox-CWE" firstAttribute="top" secondItem="ueN-22-DgW" secondAttribute="bottom" constant="8" id="EQJ-28-wa3"/>
+                                <constraint firstItem="fxg-ox-CWE" firstAttribute="top" secondItem="ueN-22-DgW" secondAttribute="bottom" id="EQJ-28-wa3"/>
                                 <constraint firstItem="ueN-22-DgW" firstAttribute="leading" secondItem="gRy-11-lmU" secondAttribute="leading" id="HXh-ft-wbz"/>
                                 <constraint firstItem="ZyI-dO-Sv7" firstAttribute="top" secondItem="gRy-11-lmU" secondAttribute="top" constant="8" id="JXo-oA-WFZ"/>
                                 <constraint firstItem="ueN-22-DgW" firstAttribute="top" secondItem="vl4-6y-fzW" secondAttribute="bottom" constant="5" id="RYy-fa-DMG"/>
@@ -712,7 +719,7 @@
                                 <constraint firstAttribute="trailing" secondItem="vl4-6y-fzW" secondAttribute="trailing" constant="20" id="XqG-dE-8to"/>
                                 <constraint firstAttribute="trailing" secondItem="ueN-22-DgW" secondAttribute="trailing" id="cm3-A9-3Jg"/>
                                 <constraint firstItem="ZyI-dO-Sv7" firstAttribute="leading" secondItem="l6d-EU-f7i" secondAttribute="trailing" constant="5" id="g8X-1w-g96"/>
-                                <constraint firstAttribute="height" constant="120" id="owy-gL-gkG"/>
+                                <constraint firstAttribute="height" constant="104" id="owy-gL-gkG"/>
                                 <constraint firstAttribute="bottom" secondItem="fxg-ox-CWE" secondAttribute="bottom" id="wPa-Ne-wKy"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
@@ -723,7 +730,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJT-nD-Srg">
-                            <rect key="frame" x="15" y="404" width="345" height="120"/>
+                            <rect key="frame" x="15" y="404" width="345" height="104"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的团队" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="591-zc-MVy">
                                     <rect key="frame" x="8" y="8" width="57.5" height="20"/>
@@ -743,26 +750,26 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Yl-eJ-8ax">
-                                    <rect key="frame" x="0.0" y="37" width="345" height="83"/>
+                                    <rect key="frame" x="0.0" y="37" width="345" height="67"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xtl-wi-JxJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="115" height="83"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="115" height="67"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="my-tuan.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-QI-JU1">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_1.png" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-QI-JU1">
                                                     <rect key="frame" x="42.5" y="10" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="LUg-eu-1J2"/>
                                                         <constraint firstAttribute="height" constant="30" id="Ue0-LE-G0o"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队订购" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-GV-r7G">
-                                                    <rect key="frame" x="0.0" y="40" width="115" height="42.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队订购" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-GV-r7G">
+                                                    <rect key="frame" x="0.0" y="40" width="115" height="26.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xy1-8c-PJO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="82.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
                                                     <connections>
                                                         <action selector="teamOrder:" destination="-1" eventType="touchUpInside" id="3dQ-SG-RG1"/>
                                                     </connections>
@@ -782,9 +789,9 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cu7-7I-KOY">
-                                            <rect key="frame" x="115" y="0.0" width="115" height="83"/>
+                                            <rect key="frame" x="115" y="0.0" width="115" height="67"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tuan-manage.png.png" translatesAutoresizingMaskIntoConstraints="NO" id="aHt-ee-Bzf">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="aHt-ee-Bzf">
                                                     <rect key="frame" x="42" y="10" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="mkA-oI-Y8Y"/>
@@ -792,13 +799,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队管理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOe-vL-RRN">
-                                                    <rect key="frame" x="0.0" y="40" width="115" height="42.5"/>
+                                                    <rect key="frame" x="0.0" y="40" width="115" height="26.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRb-H5-17I">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="82.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
                                                     <connections>
                                                         <action selector="teamManagement:" destination="-1" eventType="touchUpInside" id="K1h-BC-bOT"/>
                                                     </connections>
@@ -818,7 +825,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3IR-xJ-yF3">
-                                            <rect key="frame" x="230" y="0.0" width="115" height="83"/>
+                                            <rect key="frame" x="230" y="0.0" width="115" height="67"/>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -849,7 +856,7 @@
                                 <constraint firstItem="7Yl-eJ-8ax" firstAttribute="top" secondItem="gHh-yV-DBM" secondAttribute="bottom" id="fT9-aN-6wb"/>
                                 <constraint firstAttribute="trailing" secondItem="7Yl-eJ-8ax" secondAttribute="trailing" id="qYm-Mc-wBf"/>
                                 <constraint firstAttribute="bottom" secondItem="7Yl-eJ-8ax" secondAttribute="bottom" id="wZT-Bf-dh7"/>
-                                <constraint firstAttribute="height" constant="120" id="xw0-2A-1KW"/>
+                                <constraint firstAttribute="height" constant="104" id="xw0-2A-1KW"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -862,7 +869,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="gRy-11-lmU" firstAttribute="leading" secondItem="vg0-4v-tGO" secondAttribute="leading" id="6wc-NR-yi6"/>
-                        <constraint firstAttribute="bottom" secondItem="gRy-11-lmU" secondAttribute="bottom" constant="152" id="9A9-8G-N3g"/>
+                        <constraint firstAttribute="bottom" secondItem="gRy-11-lmU" secondAttribute="bottom" constant="50" id="9A9-8G-N3g"/>
                         <constraint firstItem="gRy-11-lmU" firstAttribute="trailing" secondItem="vg0-4v-tGO" secondAttribute="trailing" id="BGc-tL-Ykv"/>
                         <constraint firstAttribute="trailing" secondItem="gzF-bo-Tbb" secondAttribute="trailing" id="FB1-xq-TMM"/>
                         <constraint firstAttribute="trailing" secondItem="IGq-Oa-825" secondAttribute="trailing" constant="15" id="Lfe-J7-7No"/>
@@ -899,21 +906,21 @@
         </view>
     </objects>
     <resources>
-        <image name="add-guan.png.png" width="25" height="25"/>
+        <image name="bodyfat_buy_1.png" width="74" height="74"/>
+        <image name="bodyfat_buy_2.png" width="74" height="74"/>
+        <image name="bodyfat_buy_3.png" width="74" height="74"/>
+        <image name="bodyfat_buy_4.png" width="74" height="74"/>
+        <image name="bodyfat_buy_5.png" width="74" height="74"/>
+        <image name="bodyfat_buy_6.png" width="74" height="74"/>
+        <image name="bodyfat_team_1.png" width="74" height="74"/>
+        <image name="bodyfat_team_2.png" width="74" height="74"/>
+        <image name="bodyfat_wallet_2.png" width="74" height="74"/>
+        <image name="bodyfat_wallet_3.png" width="74" height="74"/>
+        <image name="bodyfat_wallet_4.png" width="74" height="74"/>
         <image name="invitation.png" width="67" height="27"/>
-        <image name="jilu.png.png" width="25" height="25"/>
         <image name="jin.png" width="9" height="13"/>
-        <image name="money-guan.png.png" width="25" height="25"/>
-        <image name="my-ding.png.png" width="25" height="25"/>
-        <image name="my-earnings.png.png" width="25" height="25"/>
-        <image name="my-song.png.png" width="25" height="25"/>
-        <image name="my-tuan.png.png" width="25" height="25"/>
         <image name="new-icon.png" width="20" height="20"/>
-        <image name="server-ding.png.png" width="25" height="25"/>
-        <image name="server-song.png.png" width="25" height="25"/>
-        <image name="setpage.png" width="20" height="20"/>
-        <image name="tuan-manage.png.png" width="25" height="25"/>
+        <image name="setpage.png" width="31" height="31"/>
         <image name="tzs_bg.png" width="375" height="160"/>
-        <image name="yi-server.png.png" width="25" height="25"/>
     </resources>
 </document>

@@ -8,7 +8,7 @@
 
 #import "HelpViewController.h"
 
-@interface HelpViewController ()
+@interface HelpViewController ()<UIWebViewDelegate>
 
 @end
 
@@ -19,6 +19,26 @@
     
 //    app/fatTeacher/help.html
     // Do any additional setup after loading the view from its nib.
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kMyBaseUrl,self.urlStr]]]];
+    self.webView.delegate = self;
+    [SVProgressHUD show];
+}
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [SVProgressHUD dismiss];
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [SVProgressHUD dismiss];
+
 }
 
 - (void)didReceiveMemoryWarning {

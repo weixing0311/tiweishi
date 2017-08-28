@@ -102,17 +102,18 @@
        
         //登录失效
         if (code  ==601) {
-            
+            [SVProgressHUD dismiss];
+
             [(AppDelegate *)[UIApplication sharedApplication].delegate loignOut];
-            
         }else{
 
         
         if (statusStr&&[statusStr isEqualToString:@"success"]) {
             success(dic);
         }else{
-//            [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
+            [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
             NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
+            
             failure(error);
         }
         }
@@ -130,7 +131,7 @@
             [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
 //            return;
         }
-        failure(error);
+//        failure(error);
     }];
     return task;
 }
@@ -141,6 +142,9 @@
                   success:(requestSuccessBlock)success
                   failure:(requestFailureBlock)failure
 {
+    if (!manager) {
+        manager =[AFHTTPSessionManager manager];
+    }
     [manager.requestSerializer setValue:[UserModel shareInstance].userId?[UserModel shareInstance].userId:@"" forHTTPHeaderField:@"userId"];
     [manager.requestSerializer setValue:@"2" forHTTPHeaderField:@"source"];
     [manager.requestSerializer setValue:[UserModel shareInstance].token?[UserModel shareInstance].token:@"" forHTTPHeaderField:@"token"];

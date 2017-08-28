@@ -54,7 +54,7 @@
     self.titleLabel.text = item.productName;
     [self.headerImgView setImageWithURL:[NSURL URLWithString:item.image]];
     self.priceLabel.text = [NSString stringWithFormat:@"%@￥",item.productPrice];
-    self.weightLabel.text = [NSString stringWithFormat:@"重量：%@kg",item.productWeight];
+//    self.weightLabel.text = [NSString stringWithFormat:@"重量：%@kg",item.productWeight];
     self.countLabel.text = item.quantity;
     int restrictionNum = [item.restrictionNum intValue];
     if (restrictionNum>0||(item.promotList.count&&item.promotList.count>0)) {

@@ -13,6 +13,7 @@
 #import "TzsTabbarViewController.h"
 #import "ForgetPasswordViewController.h"
 #import "JPUSHService.h"
+#import "ResignViewController.h"
 @interface LoignViewController ()
 
 @end
@@ -23,7 +24,11 @@
     NSTimer * _timer;
     NSInteger timeNumber;
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self bgViewDown];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showkeyboard) name:UIKeyboardWillShowNotification object:nil];
@@ -73,7 +78,9 @@
 {
     [self.mobileTf resignFirstResponder];
     [self.verTF resignFirstResponder];
-    [self bgViewDown];
+    [self.loignMobileTf resignFirstResponder];
+    [self.passWordTf resignFirstResponder];
+//    [self bgViewDown];
 }
 
 - (IBAction)pageChange:(UIButton *)sender {
@@ -156,8 +163,8 @@
         }
 
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        [[UserModel shareInstance] showErrorWithStatus:@"登录失败"];
+//        [SVProgressHUD dismiss];
+//        [[UserModel shareInstance] showErrorWithStatus:@"登录失败"];
         [_timer invalidate];
         [self.verbtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         self.verbtn.enabled = YES;
@@ -330,25 +337,26 @@
 -(void)showkeyboard
 {
     
-    if (isupView) {
-        isupView = NO;
+//    if (isupView) {
+//        isupView = NO;
 //        [UIView animateWithDuration:0.25 animations:^{
-//            self.bgview.contentOffset = CGPointMake(0, 100);
+//            self.bgview.contentOffset = CGPointMake(0, 240);
 //        }];
-    }
+//    }
 
 }
 
 -(void)bgViewDown
 {
+    return;
     isupView = YES;
     [self.mobileTf resignFirstResponder];
     [self.verTF resignFirstResponder];
     [self.loignMobileTf resignFirstResponder];
     [self.passWordTf resignFirstResponder];
-//    [UIView animateWithDuration:0.5 animations:^{
-//        self.bgview.contentOffset = CGPointMake(0, 0);
-//    }];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.bgview.contentOffset = CGPointMake(0, 0);
+    }];
 
 }
 -(void)textFieldDidChange:(UITextField *)textField
@@ -419,6 +427,10 @@
 }
 
 
+- (IBAction)didResign:(id)sender {
+    ResignViewController * rl = [[ResignViewController alloc]init];
+    [self presentViewController:rl animated:YES completion:nil];
+}
 
 
 - (void)didReceiveMemoryWarning {

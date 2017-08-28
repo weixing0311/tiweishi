@@ -124,33 +124,38 @@
 
 
 
-+(NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime endTime:(NSString *)endTime{
++(NSString *)getNowTimeWithString:(NSString *)aTimeString{
+
     
+    int timeInterval = [aTimeString intValue]/1000;
     
+    int days = (int)(timeInterval/(3600*24));
+    int hours = (int)((timeInterval-days*24*3600)/3600);
+    int minutes = (int)(timeInterval-days*24*3600-hours*3600)/60;
+    int seconds = timeInterval-days*24*3600-hours*3600-minutes*60;
     
-    NSDateFormatter *date = [[NSDateFormatter alloc]init];
-    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *startD =[date dateFromString:startTime];
-    NSDate * endD = [NSDate date];
-//    NSDate *endD = [date dateFromString:endTime];
-    NSTimeInterval start = [startD timeIntervalSince1970]*1;
-    NSTimeInterval end = [endD timeIntervalSince1970]*1;
-    NSTimeInterval value = end - start;
-//    int second = (int)value %60;//秒
-    int minute = (int)value /60%60;
-    int house = (int)value / (24 * 3600)%3600;
-    int day = (int)value / (24 * 3600);
-    NSString *str;
-    if (day != 0) {
-        str = [NSString stringWithFormat:@"%d天%d小时%d分",day,house,minute];
-    }else if (day==0 && house != 0) {
-        str = [NSString stringWithFormat:@"%d小时%d分",house,minute];
-    }else if (day== 0 && house== 0 && minute!=0) {
-        str = [NSString stringWithFormat:@"0小时%d分",minute];
+    NSString *dayStr;NSString *hoursStr;NSString *minutesStr;NSString *secondsStr;
+    //天
+    dayStr = [NSString stringWithFormat:@"%d",days];
+    //小时
+    hoursStr = [NSString stringWithFormat:@"%d",hours];
+    //分钟
+    if(minutes<10)
+        minutesStr = [NSString stringWithFormat:@"0%d",minutes];
+    else
+        minutesStr = [NSString stringWithFormat:@"%d",minutes];
+    //秒
+    if(seconds < 10)
+        secondsStr = [NSString stringWithFormat:@"0%d", seconds];
+    else
+        secondsStr = [NSString stringWithFormat:@"%d",seconds];
+    if (hours<=0&&minutes<=0&&seconds<=0) {
+        return @"活动已经结束！";
     }
-    /*else{
-        str = [NSString stringWithFormat:@"耗时%d秒",second];
-    }*/
-    return str;
+    if (days) {
+        return [NSString stringWithFormat:@"%@天 %@小时 %@分 %@秒", dayStr,hoursStr, minutesStr,secondsStr];
+    }
+    return [NSString stringWithFormat:@"%@小时 %@分 %@秒",hoursStr , minutesStr,secondsStr];
 }
+
 @end

@@ -71,13 +71,16 @@ static UserModel *model;
     self.gradeName   = [dict safeObjectForKey:@"gradeName"];
     self.isAttest    = [dict safeObjectForKey:@"isAttest"];
     self.healthId    = [dict safeObjectForKey:@"id"];
-    self.subId   = [dict safeObjectForKey:@"id"];
-
+    self.subId       = [dict safeObjectForKey:@"id"];
     [_child removeAllObjects];
     _child=[NSMutableArray arrayWithArray:[dict safeObjectForKey:@"child"]];
     
     [[SubUserItem shareInstance]setInfoWithMainUser];
     self.age = [[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
+    
+    self.qrcodeImageUrl = [dict safeObjectForKey:@"cardUrl"];
+    self.qrcodeImageData =[NSData dataWithContentsOfURL:[NSURL URLWithString:self.qrcodeImageUrl]];
+
     [self writeToDoc];
 
 }
@@ -107,6 +110,8 @@ static UserModel *model;
     [dict safeSetObject: self.healthId   forKey:@"id"];
     [dict safeSetObject: self.subId      forKey:@"subId"];
     [dict safeSetObject: @(self.age )        forKey:@"age"];
+    [dict safeSetObject:self.qrcodeImageData forKey:@"qrcodeImageData"];
+    [dict safeSetObject:self.qrcodeImageUrl forKey:@"qrcodeImageUrl"];
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *filePath = [path stringByAppendingPathComponent:@"UserInfo.plist"];
     [dict writeToFile:filePath atomically:YES];
@@ -141,7 +146,8 @@ static UserModel *model;
     }else{
         self.subId   = [dict safeObjectForKey:@"subId"];
     }
-
+    self.qrcodeImageData = [dict safeObjectForKey:@"qrcodeImageData"];
+    self.qrcodeImageUrl = [dict safeObjectForKey:@"qrcodeImageUrl"];
 }
 -(BOOL)isHaveUserInfo
 {
@@ -274,10 +280,12 @@ static UserModel *model;
     self.tradePassword  = [dict safeObjectForKey:@"tradePassword"];
     self.username       = [dict safeObjectForKey:@"userName"];
     self.userType       = [dict safeObjectForKey:@"userType"];
-    self.balance        = [[dict safeObjectForKey:@"userBalance"]floatValue];
-    self.qrcodeImageUrl = [dict safeObjectForKey:@"cardUrl"];
+    self.balance        = [dict safeObjectForKey:@"userBalance"];
     self.linkerUrl      = [dict safeObjectForKey:@"inviteUrl"];
-    self.age            =[[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
+    self.qrcodeImageUrl = [dict safeObjectForKey:@"cardUrl"];
+    self.qrcodeImageData =[NSData dataWithContentsOfURL:[NSURL URLWithString:self.qrcodeImageUrl]];
+    
+    
     [self writeToDoc];
 }
 
@@ -349,10 +357,12 @@ static UserModel *model;
     }else if ([self.grade isEqualToString:@"3"]){
         imageStr =@"yin";
 
-    }else
+    }else if ([self.grade isEqualToString:@"4"])
     {
         imageStr =@"jin";
 
+    }else{
+        imageStr =@"";
     }
     return [UIImage imageNamed:imageStr];
 }
@@ -441,13 +451,28 @@ static UserModel *model;
  *手机号加密
  */
 -(NSString*)changeTelephone:(NSString*)teleStr{
+    if (!teleStr||teleStr.length<11) {
+        return @"";
+    }
     if (teleStr.length!=11) {
         return teleStr;
     }
-    NSString *string=[teleStr stringByReplacingOccurrencesOfString:[teleStr substringWithRange:NSMakeRange(3,4)]withString:@"****"];
-    
+//    NSString *string=[teleStr stringByReplacingOccurrencesOfString:[teleStr substringWithRange:NSMakeRange(3,4)]withString:@"****"];
+    NSString * string = [teleStr stringByReplacingCharactersInRange:NSMakeRange(3, 4)withString:@"****"];
     return string;
     
+}
+////获取个人信息
+-(void)getbalance
+{
+    [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
+        DLog(@"dic--%@",dic);
+        
+        [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
+        
+    } failure:^(NSError *error) {
+        DLog(@"error--%@",error);
+    }];
 }
 
 @end

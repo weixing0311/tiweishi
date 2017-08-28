@@ -14,7 +14,10 @@
 #import "HeadImageCell.h"
 #import "TZSChangeMobileViewController.h"
 #import "ChangePasswordViewController.h"
-@interface EidtViewController ()
+#import "UIImageView+Round.h"
+#import <AVFoundation/AVFoundation.h>
+#import "LoignViewController.h"
+@interface EidtViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @end
 
@@ -26,15 +29,46 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"个人设置";
+    self.title = @"设置";
     [self setNbColor];
     // Do any additional setup after loading the view from its nib.
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
+    [self addFootView];
 }
 
 
+-(void)addFootView
+{
+    UIView *view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 60)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-40, 50)];
+//    view.backgroundColor = HEXCOLOR(0xeeeeee);
+    button.center = view.center;
+    [button setTitle:@"退出登录" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(loignout) forControlEvents:UIControlEventTouchUpInside];
+    [button setBackgroundColor:HEXCOLOR(0xEE0A3B)];
+    [view addSubview:button];
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius  = 5;
+    
+    self.tableview.tableFooterView = view;
+}
+//退出登录
+-(void)loignout
+{
+    UIAlertController * la =[UIAlertController alertControllerWithTitle:@"是否确认退出登录？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [la addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
+        [[UserModel shareInstance]removeAllObject];
+        LoignViewController *lo = [[LoignViewController alloc]init];
+        self.view.window.rootViewController = lo;
+    }]];
+    [la addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    
+    [self presentViewController:la animated:YES completion:nil];
+}
 
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -137,10 +171,40 @@
         {
             UIAlertController *la = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [la addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
+                UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+                if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                    pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+                    
+                }
+                pickerImage.delegate = self;
+                pickerImage.allowsEditing = YES;
+                [self presentViewController:pickerImage animated:YES completion:nil];
+
             }]];
             [la addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSString *mediaType = AVMediaTypeVideo;
                 
+                AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+                
+                if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+                    
+                    
+                    
+                    NSLog(@"相机权限受限");
+                    
+                    return;
+                    
+                }
+                
+                
+                UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+                UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
+                picker.delegate = self;
+                picker.allowsEditing = YES;//设置可编辑
+                picker.sourceType = sourceType;
+                [self presentViewController:picker animated:YES completion:nil];
+
             }]];
 
             [la addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -178,6 +242,68 @@
     }
  
     
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    NSString *mediaType=[info objectForKey:UIImagePickerControllerMediaType];
+    //判断资源类型
+    if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
+        //如果是图片
+        
+        UIImage *image =info[UIImagePickerControllerEditedImage];
+        [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
+
+        [self updateImageWithImage:image];
+
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}//点击cancel 调用的方法
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+-(void)updateImageWithImage:(UIImage *)image
+{
+    
+    NSData *fileData = UIImageJPEGRepresentation(image, 0.001);
+
+    NSMutableDictionary *param =[NSMutableDictionary dictionary];
+    [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [SVProgressHUD showWithStatus:@"上传中.."];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadHeadImg.do" paramters:param imageData:fileData success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
+        [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
+        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        [self.tableview reloadData];
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        [[UserModel shareInstance]showInfoWithStatus:@"上传失败"];
+        DLog(@"faile-error-%@",error);
+    }];
+}
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

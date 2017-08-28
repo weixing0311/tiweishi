@@ -247,7 +247,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
 }
 
 
@@ -297,8 +296,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
     NSDictionary * userInfo = notification.request.content.userInfo;
     
-    UNNotificationRequest *request = notification.request; // 收到推送的请求
-    UNNotificationContent *content = request.content; // 收到推送的消息内容
+//    UNNotificationRequest *request = notification.request; // 收到推送的请求
+//    UNNotificationContent *content = request.content; // 收到推送的消息内容
     
 //    NSNumber *badge = content.badge;  // 推送消息的角标
 //    NSString *body = content.body;    // 推送消息体
@@ -333,8 +332,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         NSLog(@"iOS10 收到远程通知:%@", [self logDic:userInfo]);
 //        [rootViewController addNotificationCount];
         
-        int type = [[userInfo safeObjectForKey:@"type"]intValue];
-        NSString * urlStr = [userInfo safeObjectForKey:@"url"];
+//        int type = [[userInfo safeObjectForKey:@"type"]intValue];
+//        NSString * urlStr = [userInfo safeObjectForKey:@"url"];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GETNOTIFICATIONINFOS" object:nil userInfo:userInfo];
         
     }

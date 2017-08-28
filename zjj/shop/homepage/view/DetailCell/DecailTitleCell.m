@@ -13,6 +13,12 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.countView.layer.masksToBounds = YES;
+    self.countView.layer.cornerRadius  = 5;
+    self.countView.layer.borderWidth = 1;
+    self.countView.layer.borderColor=HEXCOLOR(0xa6a6a6).CGColor;
+    
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

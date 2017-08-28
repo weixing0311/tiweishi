@@ -14,7 +14,6 @@
 #import "JFABaseDefine.h"
 #import "AFNetworking.h"
 #import "JFABaseCategoryHeader.h"
-#import <TFScale/TFScale.h>
 #import "UserModel.h"
 #import "BaseSservice.h"
 #import "NSString+RSA.h"
@@ -26,12 +25,13 @@
 #import "SubUserItem.h"
 #import "SVProgressHUD.h"
 #import <ShareSDK/ShareSDK.h>
-
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 //domain
 //正式
 //#define kMyBaseUrl @"https://mall.fitgeneral.com/"
 //生产
-#define kMyBaseUrl @"http://zjjtest.fitgeneral.com/"
+#define kMyBaseUrl @"http://test.fitgeneral.com/"
 //测试域名
 //#define kMyBaseUrl @"http://192.168.1.130:8101/"
 //x
@@ -44,8 +44,11 @@
 
 #import "GoodsModel.h"
 
-
+////hex 颜色
 #define HEXCOLOR(hex) [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16)) / 255.0 green:((float)((hex & 0xFF00) >> 8)) / 255.0 blue:((float)(hex & 0xFF)) / 255.0 alpha:1]
+////获取image
+#define getImage(image) [UIImage imageNamed:image]
+
 
 #define kdidReLoign              @"tokenlostPleaseReLoign"
 #define kMyloignInfo             @"ksavemyloignresuleinfokey"

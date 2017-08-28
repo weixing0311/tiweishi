@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *paypriceLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *tsImage;
 @property (weak, nonatomic) IBOutlet UILabel *lastTime;
-
+@property(nonatomic,retain) NSTimer * timer;
+-(void)setTimeLabelText:(NSString *)text;
 @end

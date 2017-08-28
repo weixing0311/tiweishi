@@ -13,6 +13,7 @@
 #import "OrderFootBtnView.h"
 #import "WXPsTitleCell.h"
 #import "BaseWebViewController.h"
+#import "OrderPayFootCell.h"
 @interface OrderDetailViewController ()<orderFootBtnViewDelegate>
 
 @end
@@ -48,6 +49,7 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryOrderDetail.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
         _infoDict = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"][0];
+        [_dataArray removeAllObjects];
         [_dataArray addObjectsFromArray:[_infoDict safeObjectForKey:@"itemJson"]];
         
         [self.tableview reloadData];
@@ -99,10 +101,17 @@
     }
     else if(section ==3)
     {
-        return 2;
+        int status = [[_infoDict objectForKey:@"status"]intValue];
+        if (status ==3) {
+            return 2;
+        }else{
+            return 1;
+        }
         
-    }else{
-        return 3;
+    }
+    else
+    {
+        return 1;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -110,17 +119,17 @@
     if (section ==2) {
         return 44;
     }else{
-        return 0;
+        return 5;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if (section ==0) {
-        return 10;
+        return 5;
     }
     else if (section==1)
     {
-        return 0;
+        return 5;
     }
     else if (section==2)
     {
@@ -141,9 +150,10 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section==0) {
+    if (indexPath.section==0)
+    {
         int status = [[_infoDict objectForKey:@"status"]intValue];
-        if (status==1||status==3) {
+        if (status==3||status ==1) {
             return 80;
             
         }else{
@@ -157,8 +167,12 @@
     else if (indexPath.section ==2)
     {
         return 100;
-    }else{
+    }
+    else if(indexPath.section ==3)
+    {
         return 44;
+    }else{
+        return 125;
     }
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -205,7 +219,7 @@
             if (operateStatus==3) {
                 footBtn.firstBtn.hidden = YES;
                 footBtn.secondBtn.hidden =YES;
-                footBtn.thirdBtn.hidden =NO;
+                footBtn.thirdBtn.hidden =YES;
             }
             else if(operateStatus==4)
             {
@@ -250,16 +264,22 @@
         }
         
         if (status==3) {
+            cell.hidden =NO;
             cell.payTsView.hidden = YES;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.titleLabel.text  =[_infoDict safeObjectForKey:@"clientDescription"];
             cell.timeLabel.text = [_infoDict safeObjectForKey:@"operationTime"];
         }
         else if(status ==1){
+            cell.hidden = NO;
             cell.payTsView.hidden =NO;
-            cell.lastTime.text =[NSString stringWithFormat:@"剩余：%@",@"0小时0分"];
-            cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%@",[_infoDict safeObjectForKey:@"freight"]];
+            cell.lastTime.text =[NSString stringWithFormat:@"剩余时间：%@",@"0小时0分"];
+            cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
+            NSString * finishTime =[_infoDict safeObjectForKey:@"timer"];
+            [cell setTimeLabelText:finishTime];
+
         }else{
+            cell.hidden = YES;
             cell.payTsView.hidden = YES;
         }
         return cell;
@@ -289,7 +309,7 @@
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
         [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"]floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
         return cell;
@@ -317,24 +337,26 @@
     }
     else
     {
-        static NSString * identifier = @"cell1";
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        
+        static NSString * identifier = @"OrderPayFootCell";
+        OrderPayFootCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+            cell = [self getXibCellWithTitle:identifier];
         }
-        if (indexPath.row ==0) {
-            cell.textLabel.text =@"商品金额";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]];
-        }else if(indexPath.row ==1){
-            cell.textLabel.text =@"商品优惠";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]-[[_infoDict objectForKey:@"payableAmount"]floatValue]];
-            cell.detailTextLabel.textColor =[UIColor greenColor];
+        
+        cell.value1label.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]];
+        cell.value2label.text =[NSString stringWithFormat:@"+￥%.2f",[[_infoDict safeObjectForKey:@"freight"]floatValue]];
+        cell.value4label.text =[NSString stringWithFormat:@"-￥%.2f",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]-[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];
+        cell.value3label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];
+        
+        if (status ==1) {
+            cell.title3label.text = @"已付款";
         }else{
-            cell.textLabel.text = @"实付款：";
-            cell.detailTextLabel.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
-            cell.detailTextLabel.textColor =[UIColor redColor];
+            cell.title3label.text = @"应付款";
         }
+        
         return cell;
+
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -423,8 +445,8 @@
  */
 -(void)cancelOrderWithOrderId:(NSString *)orderId
 {
-    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    [al addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"提示" message:@"您确定要取消订单吗？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSMutableDictionary * param =[NSMutableDictionary dictionary];
         [param setObject:orderId forKey:@"orderNo"];
         [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
@@ -432,20 +454,22 @@
         
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
             [[UserModel shareInstance] showSuccessWithStatus:@"取消成功"];
-            [self.tableview headerBeginRefreshing];
+            [self getlistInfo_IS_CONSUMERS];
             
         } failure:^(NSError *error) {
             [[UserModel shareInstance] showErrorWithStatus:@"取消失败"];
         }];
 
     }]];
-    [al addAction:[UIAlertAction actionWithTitle:@"" style:UIAlertActionStyleCancel handler:nil]];
+    [al addAction:[UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleCancel handler:nil]];
 
     
     [self presentViewController:al animated:YES completion:nil];
     
     
 }
+
+
 
 /*
  #pragma mark - Navigation

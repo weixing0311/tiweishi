@@ -26,6 +26,12 @@
     self.cxImageLabel.layer.borderWidth = 1;
     self.cxImageLabel.layer.borderColor=[UIColor redColor].CGColor;
     
+    self.countView.layer.masksToBounds = YES;
+    self.countView.layer.cornerRadius  = 5;
+    self.countView.layer.borderWidth = 1;
+    self.countView.layer.borderColor=HEXCOLOR(0xa6a6a6).CGColor;
+
+    
     
 }
 - (IBAction)didClickChangeCount:(id)sender {
@@ -46,8 +52,11 @@
 - (IBAction)didAdd:(id)sender {
     
     count = [self.countLabel.text intValue];
-    
+    if (count>=200) {
+        return;
+    }
     count++;
+    
     self.countLabel.text =[NSString stringWithFormat:@"%d",count];
     
     if (self.delegate&&[self.delegate respondsToSelector:@selector(addCountWithCell:)]) {

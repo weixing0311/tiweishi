@@ -31,10 +31,7 @@ static TimeModel * model;
     dta = [dateformater dateFromString:aDate];
     dtb = [dateformater dateFromString:bDate];
     NSComparisonResult result = [dta compare:dtb];
-    if (result=NSOrderedSame)
-    {
-        //        相等  aa=0
-    }else if (result==NSOrderedAscending)
+    if (result==NSOrderedAscending)
     {
         //bDate比aDate大
         aa=1;

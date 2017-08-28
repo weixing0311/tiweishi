@@ -402,7 +402,8 @@ static WWXBlueToothManager * manager;
             self.faileBlock(nil, @"测量出现异常，请下秤重测");
             DLog(@"测量出现异常，请下秤重测");
         }
-    } else
+    }
+    else
     {
         NSData * data = characteristic.value;
         

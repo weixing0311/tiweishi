@@ -8,6 +8,7 @@
 
 #import "FriendsCircleViewController.h"
 #import "FriendsCircleCell.h"
+#import "FcBigImgViewController.h"
 @interface FriendsCircleViewController ()<UITableViewDelegate,UITableViewDataSource,friendsCircleCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
@@ -21,11 +22,11 @@
 {
     int page;
     int pageSize;
-    int lastClickImageCell;
+    NSInteger lastClickImageCell;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"朋友圈分享";
+    self.title = @"朋友圈推广";
     [self setTBRedColor];
     pageSize=30;
     lastClickImageCell=1000000;
@@ -81,9 +82,23 @@
 //            [imageArr addObject:cardUrl];
             float rowHeight = [self CalculateCellHieghtWithContent:[infoDic safeObjectForKey:@"content"] images:imageArr];
             [infoDic safeSetObject:@(rowHeight) forKey:@"rowHeight"];
- 
+            NSMutableArray * images = [NSMutableArray array];
+            NSMutableArray * shareImages = [NSMutableArray array];
+            for (NSString * imgUrl in imageArr) {
+                UIImage * image = [self getImageFromUrl:imgUrl imgViewWidth:(JFA_SCREEN_WIDTH-108)/3 imgViewHeight:(JFA_SCREEN_WIDTH-108)/3];
+                UIImage * shareImage = [self getShareImageFormUrl:imgUrl];
+                if (image) {
+                    [images addObject:image];
+                }
+                if (shareImage) {
+                    [shareImages addObject:shareImage];
+                }
+            }
+            [infoDic safeSetObject:images forKey:@"images"];
+            [infoDic safeSetObject:shareImages forKey:@"shareImages"];
         }
 
+        
         [self.dataArray addObjectsFromArray:infoArr];
         
         [self.tableview reloadData];
@@ -159,56 +174,14 @@
 #pragma mark ----celldelegate
 -(void)didCheckImagesWithButton:(UIButton *)button cell:(FriendsCircleCell *)cell;
 {
-    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
-    CGRect rect=[button convertRect: button.bounds toView:window];
-    
-    self.originalRect = rect;
     NSDictionary * dic = [self.dataArray objectAtIndex:cell.tag];
     NSArray * images = [dic objectForKey:@"pictures"];
-    NSString * imageUrl =[images objectAtIndex:button.tag-1];
     
-    if (!self.blackView) {
-        self.blackView  = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT)];
-        self.blackView.contentSize = CGSizeMake(JFA_SCREEN_WIDTH*images.count, 0);
-        self.blackView.backgroundColor =RGBACOLOR(0, 0, 0, 0.6);
-    }
-    if (lastClickImageCell!=cell.tag) {
-        
-        for (UIView * view in self.blackView.subviews) {
-            [view removeFromSuperview];
-        }
+    FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
+    fc.images = [NSMutableArray arrayWithArray:images];
+    fc.page = button.tag-1;
     
-        for (int i =0; i<images.count; i++) {
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:images[i]]];
-            UIImage *image = [UIImage imageWithData:data];
-            
-            float imageHeight = JFA_SCREEN_WIDTH * image.size.height/image.size.width ;
-            if (!image) {
-                imageHeight =JFA_SCREEN_WIDTH;
-            }
-
-            UIImageView * imageView =[[UIImageView alloc]initWithFrame:CGRectMake(i*JFA_SCREEN_WIDTH+5, (JFA_SCREEN_HEIGHT-imageHeight)/2, JFA_SCREEN_WIDTH-10, imageHeight)];
-            imageView.image = image;
-            imageView.tag = 100+i;
-            imageView.userInteractionEnabled = YES;
-            [self.blackView addSubview:imageView];
-        
-        [self.blackView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didHiddenMe)]];
-        [self.view.window addSubview:self.blackView];
-        }
-        lastClickImageCell = cell.tag;
-    }
-    self.blackView.pagingEnabled = YES;
-    self.blackView.contentOffset = CGPointMake((button.tag-1)*JFA_SCREEN_WIDTH, 0);
-    self.bigImageView.frame  = rect;
-    [self.bigImageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"default"]];
-    self.bigImageView.hidden =NO;
-    self.blackView.hidden =NO;
-    [UIView animateWithDuration:.3 animations:^{
-        self.bigImageView.frame = CGRectMake(0, (JFA_SCREEN_HEIGHT-JFA_SCREEN_WIDTH)/2, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH);
-    } completion:^(BOOL finished) {
-        
-    }];
+    [self presentViewController:fc animated:YES completion:nil];
     
     
 }
@@ -237,11 +210,17 @@
         return;
     }
     
-    NSArray* imageArray = [dict safeObjectForKey:@"images"];
-    
+    NSArray * imageArray = [dict safeObjectForKey:@"shareImages"];
+    NSArray * imageUrlArr = [dict safeObjectForKey:@"pictures"];
     NSMutableArray *array = [[NSMutableArray alloc]init];
-    for (int i = 0; i <imageArray.count; i++) {
-        NSString *URL = imageArray[i];
+
+    
+    
+    if (![[imageArray lastObject] isKindOfClass:[UIImage class]]||imageArray.count<1||!imageArray) {
+        
+    
+    for (int i = 0; i <imageUrlArr.count; i++) {
+        NSString *URL = imageUrlArr[i];
         NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:URL]];
         UIImage *imagerang = [UIImage imageWithData:data];
         
@@ -256,22 +235,126 @@
         
         [array addObject:imagerang];
     }
+    }
+    else{
+        array  = [NSMutableArray arrayWithArray:imageArray];
+    }
+    
+    if (array.count<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"分享出错 请重试"];
+
+        return;
+    }
+    
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = [dict safeObjectForKey:@"content"];
     [[UserModel shareInstance]showInfoWithStatus:@"文案已复制，请在分享时长按粘贴"];
     
     
-    
-    
     NSArray *activityItems = array;
     UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
     [self presentViewController:activityVC animated:TRUE completion:nil];
 
+}
 
+
+#pragma mark-------根据imgView的宽高获得图片的比例
+
+-(UIImage *)getImageFromUrl:(NSString *)imgUrl imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height{
     
+    
+    UIImage * newImage = [self getImageWithUrl:imgUrl imgViewWidth:width imgViewHeight:height];
+    
+    return newImage;
     
 }
+-(UIImage * )getShareImageFormUrl:(NSString*)url
+{
+    NSString *encodedString = (NSString *)
+    
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                              
+                                                              (CFStringRef)url,
+                                                              
+                                                              (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
+                                                              
+                                                              NULL,
+                                                              
+                                                              kCFStringEncodingUTF8));
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:encodedString]];
+    
+   UIImage *  image =[UIImage imageWithData:data];
+    return image;
+}
+//对象方法
+
+-(UIImage *)getImageWithUrl:(NSString *)imgUrl imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height{
+    NSString *encodedString = (NSString *)
+    
+    CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                              
+                                                              (CFStringRef)imgUrl,
+                                                              
+                                                              (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
+                                                              
+                                                              NULL,
+                                                              
+                                                              kCFStringEncodingUTF8));
+
+    //data 转image
+    
+    UIImage * image ;
+    
+    //根据网址将图片转化成image
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:encodedString]];
+    
+    image =[UIImage imageWithData:data];
+    
+    //图片剪切
+    
+    UIImage * newImage = [self cutImage:image imgViewWidth:width imgViewHeight:height];
+    
+    return newImage;
+    
+}
+
+//裁剪图片
+
+- (UIImage *)cutImage:(UIImage*)image imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height
+
+{
+    
+    //压缩图片
+    
+    CGSize newSize;
+    
+    CGImageRef imageRef = nil;
+    
+    if ((image.size.width / image.size.height) < (width / height)) {
+        
+        newSize.width = image.size.width;
+        
+        newSize.height = image.size.width * height /width;
+        
+        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, fabs(image.size.height - newSize.height) / 2, newSize.width, newSize.height));
+        
+    } else {
+        
+        newSize.height = image.size.height;
+        
+        newSize.width = image.size.height * width / height;
+        
+        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(fabs(image.size.width - newSize.width) / 2, 0, newSize.width, newSize.height));
+        
+    }
+    
+    return [UIImage imageWithCGImage:imageRef];
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -44,7 +44,7 @@
     [super viewDidLoad];
     [self setTBRedColor];
     self.title = @"历史趋势";
-    self.timeLength = 3;
+    self.timeLength = 7;
     self.endDate = [NSDate date];
     self.startDate =[self.endDate dateByAddingTimeInterval:(-self.timeLength * 24 * 60 * 60)];
     self.dateLabel.text = [NSString stringWithFormat:@"%@-%@",[self.startDate mmdd],[self.endDate mmdd]];
@@ -92,7 +92,7 @@
     [param safeSetObject:self.startDate forKey:@"startDate"];
     [param safeSetObject:self.endDate forKey:@"endDate"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatTrend.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         NSArray * arr = [dataDict safeObjectForKey:@"array"];
         [_dataArray removeAllObjects];
@@ -231,13 +231,13 @@
 
 - (IBAction)lengthSegment:(UISegmentedControl *)sender {
     if (sender.selectedSegmentIndex ==0) {
-        self.timeLength = 3;
+        self.timeLength = 7;
         
     }else if (sender.selectedSegmentIndex==1)
     {
-        self.timeLength=7;
+        self.timeLength=30;
     }else{
-        self.timeLength = 30;
+        self.timeLength = 366;
     }
     self.endDate = [NSDate date];
     self.startDate =[self.endDate dateByAddingTimeInterval:(-self.timeLength * 24 * 60 * 60)];
@@ -254,11 +254,23 @@
         dateLengthBtn.selected =NO;
         dateLengthBtn = button;
         if (sender.tag ==11) {
-            self.timeLength =3;
-        }else if (button.tag ==12){
             self.timeLength =7;
+            self.leftBtn.hidden = NO;
+            self.rightBtn.hidden = NO;
+            self.dateLabel.hidden = NO;
+
+        }else if (button.tag ==12){
+            self.timeLength =30;
+            self.leftBtn.hidden = NO;
+            self.rightBtn.hidden = NO;
+            self.dateLabel.hidden = NO;
+
         }else{
-            self.timeLength=30;
+            self.leftBtn.hidden = YES;
+            self.rightBtn.hidden = YES;
+            self.dateLabel.hidden = YES;
+            
+            self.timeLength=366;
         }
         DLog(@"选择时长__%d",self.timeLength);
         self.endDate = [NSDate date];

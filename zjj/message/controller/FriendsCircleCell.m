@@ -31,11 +31,18 @@
     for (UIView * view in self.imagesView.subviews) {
         [view removeFromSuperview];
     }
-//    NSMutableArray * imageArr =[dict safeObjectForKey:@"pictures"];
+    NSMutableArray * imageArr =[dict safeObjectForKey:@"images"];
+    NSMutableArray * picArr = [dict safeObjectForKey:@"pictures"];
+    
+    if (imageArr.count == picArr.count) {
+        [self buildNineImagesWithArray:imageArr];
+
+    }else{
 //    NSString * cardUrl = [dict safeObjectForKey:@"cardUrl"];
 //    [imageArr addObject:cardUrl];
 
-    [self buildNineImagesWithArray:[dict safeObjectForKey:@"pictures"]];
+    [self buildNineImagesWithArray:picArr];
+    }
 }
 
 -(void)buildNineImagesWithArray:(NSArray *)array
@@ -53,7 +60,25 @@
     for(int index = 0; index< array.count; index++) {
         UIButton *cellView = [UIButton buttonWithType:UIButtonTypeCustom ];
         cellView.backgroundColor = HEXCOLOR(0xeeeeee);
-        [cellView setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:array[index]] placeholderImage:[UIImage imageNamed:@"default"]];
+        cellView.layer.borderWidth = 1;
+        cellView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
+
+//        [cellView setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:array[index]] placeholderImage:[UIImage imageNamed:@"default"]];
+        
+        id imageCur = [array objectAtIndex:index];
+        if ([imageCur isKindOfClass:[UIImage class]]) {
+            [cellView setBackgroundImage:imageCur forState:UIControlStateNormal];
+
+        }else{
+        
+            [cellView sd_setImageWithURL:[NSURL URLWithString:array[index]] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                image = [self cutImage:image imgViewWidth:cellW imgViewHeight:cellH];
+            }];
+            
+            
+            
+//        [cellView setBackgroundImage:[self getImageFromUrl:[NSURL URLWithString:array[index]] imgViewWidth:cellW imgViewHeight:cellH] forState:UIControlStateNormal];
+        }
         cellView.tag = index+1;
         [cellView addTarget:self action:@selector(didClickImages:) forControlEvents:UIControlEventTouchUpInside];
         // 计算行号  和   列号
@@ -83,4 +108,75 @@
     }
     
 }
+
+
+
+
+#pragma mark-------根据imgView的宽高获得图片的比例
+
+-(UIImage *)getImageFromUrl:(NSURL *)imgUrl imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height{
+    
+    
+    UIImage * newImage = [self getImageWithUrl:imgUrl imgViewWidth:width imgViewHeight:height];
+    
+    return newImage;
+    
+}
+
+//对象方法
+
+-(UIImage *)getImageWithUrl:(NSURL *)imgUrl imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height{
+    
+    //data 转image
+    
+    UIImage * image ;
+    
+    //根据网址将图片转化成image
+    
+    NSData * data = [NSData dataWithContentsOfURL:imgUrl];
+    
+    image =[UIImage imageWithData:data];
+    
+    //图片剪切
+    
+    UIImage * newImage = [self cutImage:image imgViewWidth:width imgViewHeight:height];
+    
+    return newImage;
+    
+}
+
+//裁剪图片
+
+- (UIImage *)cutImage:(UIImage*)image imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height
+
+{
+    
+    //压缩图片
+    
+    CGSize newSize;
+    
+    CGImageRef imageRef = nil;
+    
+    if ((image.size.width / image.size.height) < (width / height)) {
+        
+        newSize.width = image.size.width;
+        
+        newSize.height = image.size.width * height /width;
+        
+        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, fabs(image.size.height - newSize.height) / 2, newSize.width, newSize.height));
+        
+    } else {
+        
+        newSize.height = image.size.height;
+        
+        newSize.width = image.size.height * width / height;
+        
+        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(fabs(image.size.width - newSize.width) / 2, 0, newSize.width, newSize.height));
+        
+    }
+    
+    return [UIImage imageWithCGImage:imageRef];
+    
+}
+
 @end

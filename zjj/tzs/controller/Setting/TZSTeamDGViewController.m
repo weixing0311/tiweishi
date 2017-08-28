@@ -46,8 +46,18 @@
 
 -(void)buildHeadView
 {
+    [self.tableView.tableHeaderView removeFromSuperview];
+    self.tableView.tableHeaderView = nil;
+
+    
+    if (self.segment.selectedSegmentIndex ==0||self.segment.selectedSegmentIndex==2) {
+        UIView * headView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 5)];
+        self.tableView.tableHeaderView = headView ;
+    }else{
+    
+    
     UIView * headView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 50)];
-    headView.backgroundColor =HEXCOLOR(0xf9c850);
+    headView.backgroundColor =HEXCOLOR(0xfffbf1);
     self.tableView.tableHeaderView=headView;
     
     UIView * line1View =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 1)];
@@ -66,7 +76,7 @@
     lb.font = [UIFont systemFontOfSize:14];
     [headView addSubview:lb];
     
-
+    }
 }
 
 
@@ -147,9 +157,9 @@
     NSDictionary *dic =[_dataArray objectAtIndex:section];
     int status = [[dic objectForKey:@"stockType"]intValue];
     if (status ==2) {
-        return 31+46+15;
+        return 92;
     }else
-        return 31+15;
+        return 46;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -166,19 +176,21 @@
     view.backgroundColor =HEXCOLOR(0xeeeeee);
 
     TZSTeamHeaderView *header = [self getXibCellWithTitle:@"TZSTeamHeaderView"];
-    header.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, height-2);
+    header.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, height-1);
     header.backgroundColor =[UIColor whiteColor];
     header.orderNum.text = [dic safeObjectForKey:@"orderNo"];
     header.ordername .text = [dic safeObjectForKey:@"nickName"];
-    header.mobileLabel.text = [NSString stringWithFormat:@"手机号：%@",[dic safeObjectForKey:@"phone"]?[dic safeObjectForKey:@"phone"]:@""];
+    header.mobileLabel.text = [NSString stringWithFormat:@"手机号：%@",[dic safeObjectForKey:@"phone"]?[[UserModel shareInstance]changeTelephone:[dic safeObjectForKey:@"phone"]]:@""];
     if (status ==1) {
         header.typeLabel.text = @"待支付";
         header.lastTimeLabel.hidden =YES;
 
     }else if (status ==2) {
-        header.typeLabel.text = @"待补货";
+        header.typeLabel.text = @"待补充";
         header.lastTimeLabel.hidden =NO;
-        header.lastTimeLabel.text = [NSString stringWithFormat:@"订单补充剩余时间%@",[NSString dateTimeDifferenceWithStartTime:[dic safeObjectForKey:@"payfinishTime"] endTime:@""]];
+        NSString * finishTime =[dic safeObjectForKey:@"remainingTime"];
+        header.lastTimeLabel.text = [NSString stringWithFormat:@"订单补充剩余时间%@",[NSString getNowTimeWithString:finishTime]];
+        [header setTimeLabelText:finishTime];
 
     }
     else{
@@ -201,24 +213,23 @@
     int status = [[dic objectForKey:@"stockType"]intValue];
     float height = 0.0f;
     if (status==2) {
-        height =87;
+        height =92;
     }else{
-        height =41;
+        height =46;
     }
     
     UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, height)];
     view.backgroundColor =HEXCOLOR(0xeeeeee);
     
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
-    footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
+    footer.frame = CGRectMake(0, 0.5, JFA_SCREEN_WIDTH, 40);
     footer.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic objectForKey:@"totalPrice"]];
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     [view addSubview:footer];
 
     if (status ==2) {
-        [footBtn removeFromSuperview];
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
-        footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
+        footBtn.frame = CGRectMake(0, 41.5, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
         footBtn.myDelegate = self;
         [footBtn.firstBtn setTitle:@"去订购" forState:UIControlStateNormal];
@@ -244,7 +255,16 @@
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
     [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[infoDic safeObjectForKey:@"unitPrice"]];
+    
+    int stockType = [[dic safeObjectForKey:@"stockType"]intValue];
+    if (stockType ==3) {
+        cell.price2label.text = [NSString stringWithFormat:@"成本单价:￥%.2f",[[infoDic safeObjectForKey:@"costPrice"] floatValue]];
+
+    }else{
+        cell.price2label.text = @"";
+    }
+    
+    cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"] floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
     return cell;
@@ -261,7 +281,6 @@
     [self.navigationController pushViewController:tmo animated:YES];
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -277,13 +296,7 @@
     }else if(segmentIndex ==2){
         type =3;
     }
-    if (segmentIndex==1) {
-        [self buildHeadView];
-    }else{
-        [self.tableView.tableHeaderView removeFromSuperview];
-        self.tableView.tableHeaderView = nil;
-
-    }
+    [self buildHeadView];
     [_dataArray removeAllObjects];
     
     if (type==100) {
@@ -306,10 +319,6 @@
     [self getinfoWithStatus:sender.selectedSegmentIndex];
     [self.tableView reloadData];
 
-    
-    
-
-    
 }
 
 -(void)didClickFirstBtnWithView:(OrderFootBtnView*)view

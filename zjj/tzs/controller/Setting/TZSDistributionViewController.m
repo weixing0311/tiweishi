@@ -76,7 +76,18 @@
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
 
-        [_infoArray addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];
+        if (page ==1) {
+            [_infoArray removeAllObjects];
+            self.tableview.footerHidden = NO;
+        }
+        
+        NSArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
+        if (dataArr.count<30) {
+            self.tableview.footerHidden =YES;
+        }
+        [_infoArray addObjectsFromArray:dataArr];
+        
+        
         
         [self getinfoWithStatus:self.segment.selectedSegmentIndex];
         [self.tableview reloadData];
@@ -100,11 +111,11 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
         
-        [[UserModel shareInstance]showSuccessWithStatus:@"收货成功"];
-        [self.tableview reloadData];
+        [[UserModel shareInstance]showSuccessWithStatus:@"取消成功"];
+        [self.tableview headerBeginRefreshing];
 
     } failure:^(NSError *error) {
-        [[UserModel shareInstance]showErrorWithStatus:@"收货失败"];
+        [[UserModel shareInstance]showErrorWithStatus:@"取消失败"];
 
     }];
     
@@ -144,7 +155,7 @@
     view.backgroundColor =[UIColor colorWithWhite:.95 alpha:1];
     
     TZSOrderHeader *header = [self getXibCellWithTitle:@"TZSOrderHeader"];
-    header.frame = CGRectMake(0, 19, JFA_SCREEN_WIDTH, 30);
+    header.frame = CGRectMake(0, 9, JFA_SCREEN_WIDTH, 40);
     header.backgroundColor =[UIColor whiteColor];
     NSDictionary *dic = [_dataArray objectAtIndex:section];
     header.orderNumLabel.text = [dic objectForKey:@"orderNo"];
@@ -193,13 +204,13 @@
     UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, height)];
     view.backgroundColor =HEXCOLOR(0xeeeeee);
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
-    footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
+    footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 40);
     footer.priceLabel.text = [NSString stringWithFormat:@"%.2f元(含运费￥%.2f)",[[dic objectForKey:@"freight"]floatValue],[[dic objectForKey:@"freight"]floatValue]];
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项商品，合计：",[dic objectForKey:@"quantitySum"]];
     [view addSubview:footer];
 
     footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
-    footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
+    footBtn.frame = CGRectMake(0, 42, JFA_SCREEN_WIDTH, 44);
     footBtn.myDelegate =self;
     footBtn.tag = section;
     [view addSubview:footBtn];
@@ -220,23 +231,13 @@
     {
         footBtn.hidden = YES;
     }
-    else if (status ==3)
+    else if (status ==3&&operateStatus==4)
     {
-        footBtn.hidden = NO;
-        
         [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
-        if (operateStatus==3) {
-            footBtn.firstBtn.hidden = YES;
-            footBtn.secondBtn.hidden =YES;
-            footBtn.thirdBtn.hidden =NO;
-        }
-        else if(operateStatus==4)
-        {
-            footBtn.firstBtn.hidden = NO;
-            footBtn.secondBtn.hidden =YES;
-            footBtn.thirdBtn.hidden =YES;
+        footBtn.firstBtn.hidden = NO;
+        footBtn.secondBtn.hidden =YES;
+        footBtn.thirdBtn.hidden =YES;
 
-        }
         //        header.statusLabel .text = @"待收货";
         
     }
@@ -290,7 +291,7 @@
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
     [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
-    cell.priceLabel .hidden = YES;
+//    cell.priceLabel .hidden = YES;
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
     return cell;
@@ -381,24 +382,26 @@
 {
     NSDictionary *dic = [_dataArray objectAtIndex:view.tag];
 
-    int orderType = [[dic safeObjectForKey:@"orderType"]intValue];
-    if (orderType ==2) {
-        //    取消订单
-        NSMutableDictionary * param =[NSMutableDictionary dictionary];
-        [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-        [param safeSetObject:[dic safeObjectForKey:@"orderNo"] forKey:@"orderNo"];
-        [param safeSetObject:[UserModel shareInstance].nickName  forKey:@"userName"];
-        [param safeSetObject:@"" forKey:@"cancelRemark"];
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
-            DLog(@"取消订单成功--%@",dic);
-            [[UserModel shareInstance] showSuccessWithStatus:@"订单取消成功"];
-        } failure:^(NSError *error) {
-            [[UserModel shareInstance] showErrorWithStatus:@"订单取消失败"];
-            
-            DLog(@"取消订单失败--%@",error);
-        }];
-  
-    }else{
+//    int orderType = [[dic safeObjectForKey:@"orderType"]intValue];
+//    if (orderType ==2) {
+//        //    取消订单
+//        NSMutableDictionary * param =[NSMutableDictionary dictionary];
+//        [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+//        [param safeSetObject:[dic safeObjectForKey:@"orderNo"] forKey:@"orderNo"];
+//        [param safeSetObject:[UserModel shareInstance].nickName  forKey:@"userName"];
+//        [param safeSetObject:@"" forKey:@"cancelRemark"];
+//        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
+//            DLog(@"取消订单成功--%@",dic);
+//            [[UserModel shareInstance] showSuccessWithStatus:@"订单取消成功"];
+//            [self.tableview headerBeginRefreshing];
+//
+//        } failure:^(NSError *error) {
+//            [[UserModel shareInstance] showErrorWithStatus:@"订单取消失败"];
+//            
+//            DLog(@"取消订单失败--%@",error);
+//        }];
+//  
+//    }else{
         NSMutableDictionary * param =[NSMutableDictionary dictionary];
         [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         [param safeSetObject:[dic safeObjectForKey:@"orderNo"] forKey:@"orderNo"];
@@ -406,13 +409,15 @@
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
             DLog(@"取消订单成功--%@",dic);
             [[UserModel shareInstance] showSuccessWithStatus:@"订单取消成功"];
+            [self.tableview headerBeginRefreshing];
+
         } failure:^(NSError *error) {
             [[UserModel shareInstance] showErrorWithStatus:@"订单取消失败"];
             
             DLog(@"取消订单失败--%@",error);
         }];
  
-    }
+//    }
     
 }
 

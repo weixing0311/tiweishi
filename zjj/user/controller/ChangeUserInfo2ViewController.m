@@ -197,7 +197,7 @@
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
-        NSString * subId =[NSString stringWithFormat:@"%@",[dataDic safeObjectForKey:@"id"]];
+//        NSString * subId =[NSString stringWithFormat:@"%@",[dataDic safeObjectForKey:@"id"]];
         
         [[UserModel shareInstance]setChildArrWithDict:dataDic];
         

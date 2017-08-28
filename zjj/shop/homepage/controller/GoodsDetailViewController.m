@@ -69,14 +69,14 @@
     [seg addTarget:self action:@selector(changepage:) forControlEvents:UIControlEventValueChanged];
     seg.selectedSegmentIndex =0;
     [view addSubview:seg];
-    [seg setTintColor:[UIColor redColor]];
+    [seg setTintColor:[UIColor clearColor]];
     [seg setBackgroundImage:[UIImage imageNamed:@"selectImg"]
                              forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     
     
-    NSDictionary *segDic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont  systemFontOfSize:22],NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName,nil];
+    NSDictionary *segDic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont  systemFontOfSize:20],NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName,nil];
     
-    NSDictionary *segDic2 = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont  systemFontOfSize:18],NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName,nil];
+    NSDictionary *segDic2 = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont  systemFontOfSize:17],NSFontAttributeName,[UIColor whiteColor],NSForegroundColorAttributeName,nil];
     [seg setTitleTextAttributes:segDic2 forState:UIControlStateNormal];
     [seg setTitleTextAttributes:segDic1 forState:UIControlStateSelected];
     

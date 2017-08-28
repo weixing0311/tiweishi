@@ -20,12 +20,12 @@
     edtiBtn.layer.masksToBounds = YES;
     edtiBtn.layer.cornerRadius  = 5;
     edtiBtn.layer.borderWidth = 1;
-    edtiBtn.layer.borderColor=HEXCOLOR(0x666666).CGColor;
+    edtiBtn.layer.borderColor=HEXCOLOR(0x999999).CGColor;
     
     deleteBtn.layer.masksToBounds = YES;
     deleteBtn.layer.cornerRadius  = 5;
     deleteBtn.layer.borderWidth = 1;
-    deleteBtn.layer.borderColor=HEXCOLOR(0x666666).CGColor;
+    deleteBtn.layer.borderColor=HEXCOLOR(0x999999).CGColor;
     // Initialization code
 }
 

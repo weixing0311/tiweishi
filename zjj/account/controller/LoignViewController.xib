@@ -232,14 +232,37 @@
                                 <action selector="forgetPass:" destination="-1" eventType="touchUpInside" id="2X2-AX-E4J"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nki-Bq-XuP">
+                            <rect key="frame" x="20" y="505" width="335" height="50"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="rDd-C4-QMn"/>
+                            </constraints>
+                            <state key="normal" title="注册">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didResign:" destination="-1" eventType="touchUpInside" id="hdO-8e-683"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.94117647058823528" green="0.94901960784313721" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="6dN-mR-jhs" firstAttribute="top" secondItem="lzy-cP-Fr9" secondAttribute="bottom" constant="40" id="0Ue-vR-6sH"/>
+                        <constraint firstItem="Nki-Bq-XuP" firstAttribute="top" secondItem="qZG-Ug-iHT" secondAttribute="bottom" constant="50" id="687-nE-zwM"/>
+                        <constraint firstAttribute="trailing" secondItem="Nki-Bq-XuP" secondAttribute="trailing" constant="20" id="8cx-S5-WJU"/>
                         <constraint firstAttribute="trailing" secondItem="yUA-CQ-7xU" secondAttribute="trailing" constant="30" id="AHZ-i6-Wwf"/>
                         <constraint firstAttribute="trailing" secondItem="qZG-Ug-iHT" secondAttribute="trailing" constant="10" id="FJg-S0-x1c"/>
                         <constraint firstAttribute="trailing" secondItem="PVm-dk-hjh" secondAttribute="trailing" constant="10" id="GUq-lp-qkt"/>
+                        <constraint firstItem="Nki-Bq-XuP" firstAttribute="leading" secondItem="qUY-Tv-K87" secondAttribute="leading" constant="20" id="JZJ-ea-syz"/>
                         <constraint firstItem="6dN-mR-jhs" firstAttribute="leading" secondItem="qUY-Tv-K87" secondAttribute="leading" id="MzA-YJ-AlQ"/>
+                        <constraint firstItem="Nki-Bq-XuP" firstAttribute="centerX" secondItem="qUY-Tv-K87" secondAttribute="centerX" id="VMo-lB-5UN"/>
                         <constraint firstItem="4IW-Ke-jwE" firstAttribute="top" secondItem="lzy-cP-Fr9" secondAttribute="bottom" constant="40" id="b3t-O5-hvy"/>
                         <constraint firstItem="PVm-dk-hjh" firstAttribute="top" secondItem="qZG-Ug-iHT" secondAttribute="bottom" constant="20" id="bE2-hI-YuW"/>
                         <constraint firstItem="4IW-Ke-jwE" firstAttribute="leading" secondItem="qUY-Tv-K87" secondAttribute="leading" id="esn-CM-W7j"/>

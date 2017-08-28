@@ -2,6 +2,14 @@
 //  BaseWebViewController.m
 //  zjj
 //
+//  Created by iOSdeveloper on 2017/8/14.
+//  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
+//
+
+//
+//  BaseWebViewController.m
+//  zjj
+//
 //  Created by iOSdeveloper on 2017/6/20.
 //  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
 //
@@ -16,6 +24,8 @@
 #import "TZSOrderDetailViewController.h"
 #import "TZSDistributionDetailViewController.h"
 #import "WXAlipayController.h"
+#import "GoodsDetailViewController.h"
+#import "PaySuccessViewController.h"
 @interface BaseWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler,UIGestureRecognizerDelegate,UIScrollViewDelegate>
 @end
 
@@ -24,7 +34,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.hidden = YES;;
+    //    self.navigationController.navigationBar.hidden = YES;;
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -41,7 +51,7 @@
     if (self.rightBtnUrl.length>0) {
         UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithTitle:self.rightBtnTitle style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
         self.navigationItem.rightBarButtonItem = rightitem;
-     
+        
     }
     
     
@@ -52,11 +62,17 @@
         
         self.navigationController.interactivePopGestureRecognizer.delegate=self;
     }
+    NSString *jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
+    WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+
+    
+    
     
     
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
-    
+    [userContentController addUserScript:wkUScript];
+
     [userContentController addScriptMessageHandler:self name:@"getHeader"];
     [userContentController addScriptMessageHandler:self name:@"exit"];
     [userContentController addScriptMessageHandler:self name:@"hideLoad"];
@@ -71,7 +87,7 @@
     [userContentController addScriptMessageHandler:self name:@"toMyOrderDetail"];
     [userContentController addScriptMessageHandler:self name:@"toForward"];
     
-    
+
     configuration.userContentController = userContentController;
     
     WKPreferences *preferences = [WKPreferences new];
@@ -79,23 +95,114 @@
     preferences.minimumFontSize = 40.0;
     configuration.preferences = preferences;
     
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 20, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-20) configuration:configuration];
     
-//    -webkit-overflow-scrolling: touch
+
+    
+    
+    self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds configuration:configuration];
     NSString  * urlss = [kMyBaseUrl stringByAppendingString:self.urlStr];
     NSURL * url  =[NSURL URLWithString:urlss];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.scrollView.delegate = self;
+
     DLog(@"webUrl = %@",url);
+    [self.view addSubview:self.webView];
+
+    [self buildProgressView];
+
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]] ;
     
-    [self.view addSubview:self.webView];
     // Do any additional setup after loading the view from its nib.
     
-
 }
 
+#pragma mark ---progressview
+-(void)buildProgressView
+{
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 2)];
+    self.progressView.backgroundColor = [UIColor blueColor];
+    //设置进度条的高度，下面这句代码表示进度条的宽度变为原来的1倍，高度变为原来的1.5倍.
+    self.progressView.transform = CGAffineTransformMakeScale(1.0f, 1.5f);
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+
+    [self.view addSubview:self.progressView];
+    
+}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"estimatedProgress"]) {
+        self.progressView.progress = self.webView.estimatedProgress;
+        if (self.progressView.progress == 1) {
+            /*
+             *添加一个简单的动画，将progressView的Height变为1.4倍，在开始加载网页的代理中会恢复为1.5倍
+             *动画时长0.25s，延时0.3s后开始动画
+             *动画结束后将progressView隐藏
+             */
+            __weak typeof (self)weakSelf = self;
+            [UIView animateWithDuration:0.25f delay:0.3f options:UIViewAnimationOptionCurveEaseOut animations:^{
+                weakSelf.progressView.transform = CGAffineTransformMakeScale(1.0f, 1.4f);
+            } completion:^(BOOL finished) {
+                weakSelf.progressView.hidden = YES;
+                
+            }];
+        }
+    }else{
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return nil;
+}
+
+//在发送请求之前，决定是否跳转  如果不实现这个代理方法,默认会屏蔽掉打电话等url
+-(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    NSString *url = [navigationAction.request.URL.absoluteString stringByRemovingPercentEncoding];
+    NSString* reUrl=[[webView URL] absoluteString];
+    if ([url containsString:kMyBaseUrl]) {
+        reUrl=url;
+    }
+    
+    //如果是跳转一个新页面
+    if (navigationAction.targetFrame == nil) {
+        [webView loadRequest:navigationAction.request];
+    }
+    DLog(@"navi.url --%@",url);
+    if([url containsString:@"notify.jsp?"] )//支付成功回调
+    {
+        NSDictionary * urlDict = [self getURLParameters:url];
+        
+        int orderType = [[urlDict safeObjectForKey:@"orderType"]intValue];
+        orderType=3;
+        
+        
+        PaySuccessViewController * pas = [[PaySuccessViewController alloc]init];
+        pas.orderType = orderType;
+        [self.navigationController pushViewController:pas animated:YES];
+        
+        decisionHandler(WKNavigationActionPolicyAllow);
+
+        return;
+    }
+    if ([url containsString:@"alipay://"]) {
+        NSString* dataStr=[url substringFromIndex:23];
+        NSLog(@"%@",dataStr);
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[dataStr dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+        NSMutableString* mString=[[NSMutableString alloc] init];
+        [mString appendString:@"alipays://platformapi/startApp?appId=20000125&orderSuffix="];
+        //url进行编码
+        [mString appendString:[self encodeString:dict[@"dataString"]]];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mString]];
+        
+        decisionHandler(WKNavigationActionPolicyAllow);
+        return;
+    }
+    
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
 
 -(NSString*)encodeString:(NSString*)unencodedString{
     
@@ -119,19 +226,17 @@
     
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
-}
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     
- 
+    
     
     DLog(@"%ld",(long)((NSHTTPURLResponse *)navigationResponse.response).statusCode);
     if (((NSHTTPURLResponse *)navigationResponse.response).statusCode == 200) {
         decisionHandler (WKNavigationResponsePolicyAllow);
-
+        
     }else {
         decisionHandler(WKNavigationResponsePolicyCancel);
+        [[UserModel shareInstance]showInfoWithStatus:@"404"];
     }
 }
 #pragma mark - WKUIDelegate
@@ -149,8 +254,8 @@
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
     //message.boby就是JS里传过来的参数
-    NSLog(@"body:%@--%@",message.body,message);
-    DLog(@"name--%@",message.name);
+    //    NSLog(@"body:%@--%@",message.body,message);
+    //    DLog(@"name--%@",message.name);
     //发送头信息
     if ([message.name isEqualToString:@"getHeader"]) {
         [self getHeader];
@@ -211,7 +316,7 @@
     {
         [self loadUrlWithDict:message.body];
     }
-
+    
 }
 
 
@@ -221,20 +326,24 @@
         [[UserModel shareInstance]showInfoWithStatus:@"后台参数错误"];
         return;
     }
-
-    if ([[dict objectForKey:@"title"]isEqualToString:@"支付宝支付"]) {
-        WXAlipayController  *alipayVC = [[WXAlipayController alloc]init];
-        alipayVC.title = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"title"]];
-        alipayVC.urlStr = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"url"]];
-        [self.navigationController pushViewController:alipayVC animated:YES];
-        return;
-    }
-
     
+    //    if ([[dict objectForKey:@"title"]isEqualToString:@"支付宝支付"]) {
+    //        WXAlipayController  *alipayVC = [[WXAlipayController alloc]init];
+    //        alipayVC.title = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"title"]];
+    //        alipayVC.urlStr = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"url"]];
+    //        [self.navigationController pushViewController:alipayVC animated:YES];
+    //        return;
+    //    }
+    
+    NSString * urlstring = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"url"]];
+    if ([urlstring containsString:kMyBaseUrl]) {
+        urlstring = [urlstring stringByReplacingOccurrencesOfString:kMyBaseUrl withString:@""];
+
+    }
     
     BaseWebViewController * web = [[BaseWebViewController alloc]init];
     web.title  = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"title"]];
-    web.urlStr = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"url"]];
+    web.urlStr = urlstring;
     NSString *rightUrl = [dict safeObjectForKey:@"preUrl"];
     NSString * rightTitle =[dict safeObjectForKey:@"preTitle"];
     if (rightUrl.length>0) {
@@ -288,12 +397,13 @@
 // 页面开始加载时调用
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    NSString* reqUrl = webView.URL.absoluteString;
-//    DLog(@"%@",reqUrl);
-//    if ([reqUrl hasPrefix:@"alipays://"] || [reqUrl hasPrefix:@"alipay://"]) {
-//    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:reqUrl]];
-        //bSucc是否成功调起支付宝
-//    }
+    //开始加载网页时展示出progressView
+    self.progressView.hidden = NO;
+    //开始加载网页的时候将progressView的Height恢复为1.5倍
+    self.progressView.transform = CGAffineTransformMakeScale(1.0f, 1.5f);
+    //防止progressView被网页挡住
+    [self.view bringSubviewToFront:self.progressView];
+    
 }
 
 // 当内容开始返回时调用
@@ -305,11 +415,16 @@
 // 页面加载完成之后调用
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    
+    self.progressView.hidden = YES;
+
+    [ webView evaluateJavaScript:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'" completionHandler:nil];
+
 }
 // 页面加载失败时调用
 -(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation
 {
+    //加载失败同样需要隐藏progressView
+    self.progressView.hidden = YES;
     [[UserModel shareInstance]showInfoWithStatus:@"加载失败"];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -330,17 +445,17 @@
     [dic safeSetObject:[UserModel shareInstance].token forKey:@"token"];
     [dic safeSetObject:[UserModel shareInstance].userType forKey:@"userType"];
     
-
+    
     NSString * jsonValue = [self DataTOjsonString:dic];
     NSString *JSResult = [NSString stringWithFormat:@"getUser('%@')",jsonValue];
     
-    DLog(@"JSResult ===%@",JSResult);
+    //    DLog(@"JSResult ===%@",JSResult);
     [self.webView evaluateJavaScript:JSResult completionHandler:^(id _Nullable user, NSError * _Nullable error) {
-        NSLog(@"%@----%@",user, error);
+        //        NSLog(@"%@----%@",user, error);
     }];
-
     
-//    return dic;
+    
+    //    return dic;
 }
 
 -(void)didClickBack
@@ -367,19 +482,22 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+
 /**
  *弹窗 alert
  */
 -(void) alert:(NSString * )message{
     [[UserModel shareInstance] showInfoWithStatus:message];
- 
+    
 }
 /**
  *弹loading
  */
 -(void) loading:(NSString * )message{
     [SVProgressHUD showWithStatus:message];
-
+    
 }
 
 /**
@@ -395,10 +513,10 @@
  */
 -(void)exitToLogin
 {
-        [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
-        [[UserModel shareInstance]removeAllObject];
-        LoignViewController *lo = [[LoignViewController alloc]init];
-        self.view.window.rootViewController = lo;
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
+    [[UserModel shareInstance]removeAllObject];
+    LoignViewController *lo = [[LoignViewController alloc]init];
+    self.view.window.rootViewController = lo;
 }
 /**
  * 充值
@@ -409,24 +527,25 @@
         [[UserModel shareInstance]showInfoWithStatus:@"后台参数错误"];
         return;
     }
-
+    
     
     BaseWebViewController * web =[[BaseWebViewController alloc]init];
     web.payType =4;
     web.urlStr=@"app/checkstand.html";
     web.opt =0;
+    web.title = @"收银台";
     web.orderNo = [message safeObjectForKey:@"orderNo"];
     web.payableAmount =[message safeObjectForKey:@"payableAmount"];
     [self.navigationController pushViewController:web animated:YES];
     
     
-//    NSString  * urlss = [kMyBaseUrl stringByAppendingString:@"app/checkstand.html"];
-//    NSURL * url  =[NSURL URLWithString:urlss];
-//    DLog(@"webUrl = %@",url);
-//    [self.webView loadRequest:[NSURLRequest requestWithURL:url]] ;
-
+    //    NSString  * urlss = [kMyBaseUrl stringByAppendingString:@"app/checkstand.html"];
+    //    NSURL * url  =[NSURL URLWithString:urlss];
+    //    DLog(@"webUrl = %@",url);
+    //    [self.webView loadRequest:[NSURLRequest requestWithURL:url]] ;
     
-
+    
+    
     
 }
 /**
@@ -439,7 +558,7 @@
     [dic safeSetObject:[UserModel shareInstance].token forKey:@"token"];
     [dic safeSetObject:[UserModel shareInstance].userType forKey:@"userType"];
     [dic safeSetObject:self.orderNo forKey:@"orderNo"];
-    [dic safeSetObject:self.payableAmount forKey:@"payableAmount"];
+    [dic safeSetObject:[NSString stringWithFormat:@"%.2f",[self.payableAmount floatValue]] forKey:@"payableAmount"];
     [dic safeSetObject:@(self.payType) forKey:@"orderType"];
     [dic safeSetObject:@(self.opt) forKey:@"opt"];
     
@@ -451,7 +570,7 @@
     [self.webView evaluateJavaScript:JSResult completionHandler:^(id _Nullable user, NSError * _Nullable error) {
         NSLog(@"%@----%@",user, error);
     }];
-
+    
 }
 
 -(void)getSource
@@ -461,7 +580,7 @@
     [self.webView evaluateJavaScript:JSResult completionHandler:^(id _Nullable user, NSError * _Nullable error) {
         NSLog(@"%@----%@",user, error);
     }];
-
+    
 }
 /**
  *支付回调
@@ -472,13 +591,13 @@
         [[UserModel shareInstance]showInfoWithStatus:@"后台参数错误"];
         return;
     }
-
+    
     //payCode 1 取消(返回)  2 失败(暂无)  3 余额不足(不管) 4 成功（）
     //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
-//    orderType = 3;
-//    payCode = 4;
+    //    orderType = 3;
+    //    payCode = 4;
     int payCode =[[dict safeObjectForKey:@"payCode"]intValue];
-
+    
     if (payCode==1) {
         //取消
         [self alert: @"支付取消"];
@@ -493,7 +612,13 @@
     }
     else if (payCode ==4)
     {
-        [self backWithPayType];
+        
+        PaySuccessViewController * pas = [[PaySuccessViewController alloc]init];
+        pas.orderType = self.payType;
+        [self.navigationController pushViewController:pas animated:YES];
+
+        
+//        [self backWithPayType];
     }
     
 }
@@ -506,12 +631,11 @@
             
             if ([controller isKindOfClass:[OrderViewController class]]) {
                 [self.navigationController popToViewController:controller animated:YES];
-                DLog(@"我曹草草草");
                 return ;
             }
         }
         OrderViewController * ordVC = [[OrderViewController alloc]init];
-        
+        ordVC.hidesBottomBarWhenPushed = YES;
         NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
         [arr removeLastObject];
         [arr removeLastObject];
@@ -524,11 +648,12 @@
             
             if ([controller isKindOfClass:[TZSDistributionViewController class]]) {
                 [self.navigationController popToViewController:controller animated:YES];
-                DLog(@"我曹草草草");
+                //                DLog(@"我曹草草草");
                 return ;
             }
         }
         TZSDistributionViewController * disVC =[[TZSDistributionViewController alloc]init];
+        disVC.hidesBottomBarWhenPushed = YES;
         
         NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
         [arr removeLastObject];
@@ -541,11 +666,12 @@
             
             if ([controller isKindOfClass:[TZSMyDingGouViewController class]]) {
                 [self.navigationController popToViewController:controller animated:YES];
-                DLog(@"我曹草草草");
+                //                DLog(@"我曹草草草");
                 return ;
             }
         }
         TZSMyDingGouViewController * mdVC = [[TZSMyDingGouViewController alloc]init];
+        mdVC.hidesBottomBarWhenPushed = YES;
         
         NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
         [arr removeLastObject];
@@ -557,6 +683,7 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
+
 
 
 -(NSString*)DataTOjsonString:(id)object
@@ -602,19 +729,105 @@
     return dic;
     
 }
+
+/**
+ *获取url 中的参数 以字典方式返回
+ */
+- (NSMutableDictionary *)getURLParameters:(NSString *)urlStr {
+    
+//    urlStr = @"http://test.fitgeneral.com/mall/notfy.jsp?orderType=3&total_amount=0.01&timestamp=2017-08-14+14:31:26&sign=PvPo75w/XeteSKJ1o+E1EqgPYPlDdUhCONCiARQR92FUJjT2i7gfsmCUCqcYMaeaZqZJQhEHEPm0nAGliUkULkYYKpRCN1A0oZFhzMuLaSXAjc6BcLH6Cy5JwIFVcOMjs2xVMZ5Pm+fVj+GlHqO7w8jrHTF/sxZu3vBB68zj9HbV0Om+t23k39tqK9t6JI7heLSObf1YQ/+MwtBnly+3hx90sKVLw2IaFpKAfEfvVxhvXACur3gF35MysByu8+mDQUdbPZTpH/mvmt2eMYeO1gARh/djxS2ZdJ0brl9HkNQkAsG1NT8e9rtTSklF3wYt9KY8TfLjQY6IadR8iWNolg==&trade_no=2017081421001004940270810861&sign_type=RSA2&auth_app_id=2017050307089464&charset=UTF-8&seller_id=2088621870283133&method=alipay.trade.wap.pay.return&app_id=2017050307089464&out_trade_no=131708141426510531472&version=1.0";
+    // 查找参数
+    NSRange range = [urlStr rangeOfString:@"?"];
+    if (range.location == NSNotFound) {
+        return nil;
+    }
+    
+    // 以字典形式将参数返回
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    // 截取参数
+    NSString *parametersString = [urlStr substringFromIndex:range.location + 1];
+    
+    // 判断参数是单个参数还是多个参数
+    if ([parametersString containsString:@"&"]) {
+        
+        // 多个参数，分割参数
+        NSArray *urlComponents = [parametersString componentsSeparatedByString:@"&"];
+        
+        for (NSString *keyValuePair in urlComponents) {
+            // 生成Key/Value
+            NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+            NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
+            NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
+            
+            // Key不能为nil
+            if (key == nil || value == nil) {
+                continue;
+            }
+            
+            id existValue = [params valueForKey:key];
+            
+            if (existValue != nil) {
+                
+                // 已存在的值，生成数组
+                if ([existValue isKindOfClass:[NSArray class]]) {
+                    // 已存在的值生成数组
+                    NSMutableArray *items = [NSMutableArray arrayWithArray:existValue];
+                    [items addObject:value];
+                    
+                    [params setValue:items forKey:key];
+                } else {
+                    
+                    // 非数组
+                    [params setValue:@[existValue, value] forKey:key];
+                }
+                
+            } else {
+                
+                // 设置值
+                [params setValue:value forKey:key];
+            }
+        }
+    } else {
+        // 单个参数
+        
+        // 生成Key/Value
+        NSArray *pairComponents = [parametersString componentsSeparatedByString:@"="];
+        
+        // 只有一个参数，没有值
+        if (pairComponents.count == 1) {
+            return nil;
+        }
+        
+        // 分隔值
+        NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
+        NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
+        
+        // Key不能为nil
+        if (key == nil || value == nil) {
+            return nil;
+        }
+        
+        // 设置值
+        [params setValue:value forKey:key];
+    }
+    
+    return params;
+}
+
+
+
+- (void)dealloc {
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+

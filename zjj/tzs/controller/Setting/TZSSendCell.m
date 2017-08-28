@@ -15,6 +15,10 @@
     // Initialization code
     self.headimageView.layer.borderWidth = 1;
     self.headimageView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
+    self.countView.layer.masksToBounds = YES;
+    self.countView.layer.cornerRadius  = 5;
+    self.countView.layer.borderWidth = 1;
+    self.countView.layer.borderColor=HEXCOLOR(0xa6a6a6).CGColor;
 
 }
 
@@ -35,5 +39,13 @@
         [self.delegate didRedWithCell:self];
     }
 
+}
+- (IBAction)showCount:(id)sender {
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didChangeCountWithCell:)]) {
+        [self.delegate didChangeCountWithCell:self ];
+    }
+
+    
 }
 @end

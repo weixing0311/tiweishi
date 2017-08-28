@@ -159,7 +159,7 @@
     }else if(indexPath.section ==2){
         return 40;
     }else{
-        return 75;
+        return 80;
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -196,9 +196,8 @@
         if (!addressDict||[addressDict allKeys].count==0) {
             cell.addressLabel.text = @"您还没有收货地址，请先添加。";
         }else{
-        
         cell.titleLabel.text =[addressDict safeObjectForKey:@"receiver"];
-        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"provinceName"]?[addressDict safeObjectForKey:@"provinceName"]:@"",[addressDict safeObjectForKey:@"cityName"]?[addressDict safeObjectForKey:@"cityName"]:@"",[addressDict safeObjectForKey:@"countyName"]?[addressDict safeObjectForKey:@"countyName"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"addr"]:@""];
+        cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"province"]?[addressDict safeObjectForKey:@"province"]:@"",[addressDict safeObjectForKey:@"city"]?[addressDict safeObjectForKey:@"city"]:@"",[addressDict safeObjectForKey:@"county"]?[addressDict safeObjectForKey:@"county"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"addr"]:@""];
         cell.phonenumLabel.text = [[UserModel shareInstance]changeTelephone:[addressDict safeObjectForKey:@"phone"]];
         }
 
@@ -226,7 +225,7 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        cell.headImageView.image = [UIImage imageNamed:@"personal-receiving"];
+        cell.headImageView.image = [UIImage imageNamed:@"car_"];
         cell.titleLabel.text = @"配送方式";
         cell.secondLabel.text =[NSString stringWithFormat:@"快递配送" ];
         return cell;
@@ -238,7 +237,11 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        cell.ufLabel.text =[NSString stringWithFormat:@"+￥%@",weightStr?weightStr:@"0" ];
+        float  weightPrice  = [weightStr floatValue];
+        cell.ufLabel.text   = [NSString stringWithFormat:@"+￥%.2f",weightPrice]?[NSString stringWithFormat:@"+￥%.2f",weightPrice]:@"0.00";
+        cell.totoaPriceLabel.textColor = [UIColor redColor];
+        cell.ufLabel.textColor = [UIColor redColor];
+        cell.uhLabel.textColor = [UIColor redColor];
         return cell;
 
     }
@@ -247,6 +250,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section!=0) {
+        return;
+    }
     AddressListViewController * address = [[AddressListViewController alloc]init];
     address.isComeFromOrder = YES;
     [self.navigationController pushViewController:address animated:YES];
@@ -269,6 +275,14 @@
 */
 
 - (IBAction)placeTheOrder:(id)sender {
+    
+    
+    if (!addressDict||[addressDict allKeys].count<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请选择地址"];
+        return;
+    }
+
+    
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:weightStr forKey:@"freight"];

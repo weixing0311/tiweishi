@@ -100,7 +100,7 @@
     view.backgroundColor =[UIColor colorWithWhite:.95 alpha:1];
     
     TZSOrderHeader *header = [self getXibCellWithTitle:@"TZSOrderHeader"];
-    header.frame = CGRectMake(0, 19, JFA_SCREEN_WIDTH, 30);
+    header.frame = CGRectMake(0, 9, JFA_SCREEN_WIDTH, 40);
     header.backgroundColor =[UIColor whiteColor];
     NSDictionary *dic = [_dataArray objectAtIndex:section];
     header.orderNumLabel.text = [dic objectForKey:@"orderNo"];
@@ -132,13 +132,13 @@
     UIView * view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, height)];
     view.backgroundColor =[UIColor colorWithWhite:.95 alpha:1];
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
-    footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
+    footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 40);
     footer.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic objectForKey:@"totalPrice"]];
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     
     if (status ==1) {
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
-        footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
+        footBtn.frame = CGRectMake(0, 41.5, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
         footBtn.myDelegate = self;
         [footBtn.firstBtn setTitle:@"去支付" forState:UIControlStateNormal];
@@ -290,6 +290,11 @@
         DLog(@"删除订单成功--%@",dic);
         [[UserModel shareInstance]showSuccessWithStatus:@"取消订单成功"];
         [dict safeSetObject:@"0" forKey:@"status"];
+        [self getinfoWithStatus:self.segment.selectedSegmentIndex];
+        
+        [self.tableview reloadData];
+
+        
         [self.tableview reloadData];
     } failure:^(NSError *error) {
         DLog(@"删除订单失败--%@",error);

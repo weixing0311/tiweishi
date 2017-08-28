@@ -2,7 +2,7 @@
 //  BaseWebViewController.h
 //  zjj
 //
-//  Created by iOSdeveloper on 2017/6/20.
+//  Created by iOSdeveloper on 2017/8/14.
 //  Copyright © 2017年 ZhiJiangjun-iOS. All rights reserved.
 //
 
@@ -23,7 +23,6 @@ typedef enum
 @property (nonatomic,assign)int opt;
 @property (nonatomic,copy)NSString * rightBtnTitle;
 @property (nonatomic,copy)NSString * rightBtnUrl;
-
-
+@property (nonatomic,strong)UIProgressView * progressView;
 
 @end

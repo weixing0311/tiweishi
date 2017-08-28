@@ -15,6 +15,7 @@
 #import "UpdataAddressCell.h"
 #import "BaseWebViewController.h"
 #import "OrderFootBtnView.h"
+#import "OrderPayFootCell.h"
 @interface TZSOrderDetailViewController ()<orderFootBtnViewDelegate>
 
 @end
@@ -26,7 +27,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"商品详情";
+    self.title = @"订购详情";
     [self setNbColor];
     self.tableview .delegate =self;
     self.tableview.dataSource = self;
@@ -55,29 +56,33 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (section==0) {
-//        return 1;
-//    }
-//    else if (section ==1)
-//    {
-//        return 1;
-//        
-//    }
-    
-     if (section ==0)
+    if (section ==0) {
+        return 1;
+    }
+     if (section ==1)
     {
         return _dataArray.count;
         
     }
-    else if(section ==1)
+    else if(section ==2)
     {
+        int status =    [[_infoDict objectForKey:@"status"]intValue];
+        if ( status ==1||status ==0)
+        {
+            return 1;
+            
+        }
+        else{
         return 2;
+        }
         
-    }else{
+    }
+    else
+    {
 
     return 1;
     }
@@ -109,19 +114,25 @@
     if (section ==0) {
         return 40;
     
-    }else
-    return 0;
+    }
+    else
+    {
+    return 5;
+    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section==2) {
+    if (section==3) {
         return 50;
     }
-    return 0;
+    else
+    {
+    return 5;
+    }
 }
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section==2) {
+    if (section==3) {
         UIView *view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 50)];
      int status =    [[_infoDict objectForKey:@"status"]intValue];
         if (status ==1) {
@@ -145,51 +156,60 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.section ==0||indexPath.section ==1) {
-//        return 80;
-//    }
-    if (indexPath.section ==0)
+    if (indexPath.section ==0) {
+        int status =    [[_infoDict objectForKey:@"status"]intValue];
+        if (status ==1) {
+
+        return 80;
+        }else{
+            return 0;
+        }
+    }
+    else if (indexPath.section ==1)
     {
         return 100;
     }
-    else if(indexPath.section ==1){
+    else if(indexPath.section ==2){
         return 44;
     }else{
-        return 75;
+        return 110;
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-//    if (indexPath.section ==0) {
-//        static NSString * identifier = @"WXPsTitleCell";
-//        
-//        WXPsTitleCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-//        if (!cell) {
-//            cell = [self getXibCellWithTitle:identifier];
-//        }
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        cell.titleLabel.text  =@"您的订单已经出库完成,已交付丁丁快递";
-//        cell.timeLabel.text = @"2017.07.25 16:38:29";
-//        return cell;
-//        
-//        
-//    }
-//    else if (indexPath.section == 1){
-//        static NSString * identifier = @"UpdataAddressCell";
-//
-//        UpdataAddressCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//        if (!cell) {
-//            cell = [self getXibCellWithTitle:identifier];
-//        }
-//        cell.titleLabel.text = @"鹏飞ing";
-//        cell.phonenumLabel.text  = @"13800000000";
-//        cell.addressLabel.text = @"我在你左右";
-//        return cell;
-//        
-//    }
     int status =    [[_infoDict objectForKey:@"status"]intValue];
-     if (indexPath.section ==0) {
+    
+    
+    if (indexPath.section ==0) {
+        static NSString * identifier = @"WXPsTitleCell";
+        
+        WXPsTitleCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [self getXibCellWithTitle:identifier];
+        }
+        int status =    [[_infoDict objectForKey:@"status"]intValue];
+        if (status ==1) {
+            cell.hidden = NO;
+        }else{
+            cell.hidden = YES;
+        }
+        cell.payTsView.hidden =NO;
+        cell.lastTime.text =[NSString stringWithFormat:@"剩余时间：%@",@"0小时0分"];
+        cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%@",[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]]];
+        NSString * finishTime =[_infoDict safeObjectForKey:@"remainingTime"];
+        if (finishTime.length<1) {
+            cell.lastTime.text = @"支付已超时";
+            
+        }else{
+        [cell setTimeLabelText:finishTime];
+        }
+        return cell;
+    }
+
+    
+    
+     else if (indexPath.section ==1) {
         static NSString * identifier = @"UpDateOrderCell";
         UpDateOrderCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
@@ -200,12 +220,12 @@
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
         [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
         return cell;
     }
-    else if (indexPath.section ==1)
+    else if (indexPath.section ==2)
     {
         static NSString * identifier = @"cell1";
         UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -216,7 +236,7 @@
         if (indexPath.row ==0) {
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];
         }else{
-            if (status==3) {
+            if (status==10) {
                 cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict safeObjectForKey:@"paymentTypeId"]];
 
             }else{
@@ -228,17 +248,25 @@
     }
     else
     {
-        static NSString * identifier = @"DistributionBottomCell";
-        
-        DistributionBottomCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        static NSString * identifier = @"OrderPayFootCell";
+        OrderPayFootCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        cell.totoaPriceLabel.text = [NSString stringWithFormat:@"+￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]];
-        cell.uhLabel.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]-[[_infoDict objectForKey:@"payableAmount"]floatValue]];
-        cell.thirdTitleLabel.text = @"实付款";
-        cell.ufLabel.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
+        cell.value1label.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]];
+        cell.title2label.text = @"商品优惠";
+        cell.value2label.text =[NSString stringWithFormat:@"-￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]-[[_infoDict objectForKey:@"payableAmount"]floatValue]];
+        cell.value3label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
+        cell.value2label.textColor = HEXCOLOR(0x238B66);
+        if (status ==10) {
+            cell.title3label.text = @"实付款";
+
+        }else{
+            cell.title3label.text = @"应付款";
+        }
+        cell.title4label.text = @"";
+        cell.value4label.text = @"";
         return cell;
         
     }
@@ -320,6 +348,9 @@
     
     
 }
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

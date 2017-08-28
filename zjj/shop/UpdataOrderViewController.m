@@ -144,10 +144,14 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        
+        if (!addressDict||[addressDict allKeys].count==0) {
+            cell.addressLabel.text = @"您还没有收货地址，请先添加。";
+        }else{
+
         cell.titleLabel.text = [addressDict safeObjectForKey:@"receiver"];
         cell.phonenumLabel.text = [[UserModel shareInstance]changeTelephone:[addressDict safeObjectForKey:@"phone"]];
         cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"province"]?[addressDict safeObjectForKey:@"province"]:@"",[addressDict safeObjectForKey:@"city"]?[addressDict safeObjectForKey:@"province"]:@"",[addressDict safeObjectForKey:@"county"]?[addressDict safeObjectForKey:@"county"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"county"]:@""];
+        }
         return cell;
     }
     else if (indexPath.section ==1)
@@ -182,9 +186,9 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        cell.headImageView.image = [UIImage imageNamed:@"personal-receiving"];
+        cell.headImageView.image = [UIImage imageNamed:@"car_"];
         cell.titleLabel.text = @"配送方式";
-        cell.secondLabel.text =@"";
+        cell.secondLabel.text =@"快递配送";
         return cell;
 
     }else{
@@ -220,12 +224,6 @@
     else if (indexPath.section ==1)
     {
         
-    }else{
-        BaseWebViewController *web =[[BaseWebViewController alloc]init];
-        web.title = @"联系我们";
-        web.urlStr = @"";
-        [self.navigationController pushViewController:web animated:YES];
-        
     }
     
 }
@@ -252,6 +250,12 @@
 
 
 - (IBAction)didBuy:(id)sender {
+    
+    
+    if (!addressDict||[addressDict allKeys].count<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请选择地址"];
+        return;
+    }
     
     [self.param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [self.param safeSetObject:[addressDict safeObjectForKey:@"receiver"] forKey:@"consigneeName"];

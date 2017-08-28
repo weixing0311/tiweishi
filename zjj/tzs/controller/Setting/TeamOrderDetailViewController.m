@@ -15,7 +15,7 @@
 #import "PayPriceCell.h"
 #import "TZSDingGouViewController.h"
 @interface TeamOrderDetailViewController ()
-
+@property (nonatomic,copy)NSTimer * timer;
 @end
 
 @implementation TeamOrderDetailViewController
@@ -24,6 +24,7 @@
     NSMutableDictionary * _infoDict;
     TZSOrderHeader *tabHeadView;
     UILabel * _lastLabel;
+    int timeOut;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,6 +72,7 @@
     _lastLabel.textAlignment = NSTextAlignmentCenter;
     [view addSubview:_lastLabel];
     
+//    [self countDownWithtimeInterval:];
     
     UIButton * button  =[[UIButton alloc]initWithFrame:CGRectMake(20,50 , JFA_SCREEN_WIDTH-40, 45)];
     button.backgroundColor =HEXCOLOR(0xee0a3b);
@@ -103,6 +105,8 @@
         }
         tabHeadView.statusLabel .text = [self getStatusWithStatus:status];
 
+        timeOut = [[_infoDict safeObjectForKey:@"remainingTime"]intValue]/1000;
+        [self countDown];
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
@@ -167,18 +171,13 @@
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
         [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
-        cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%@",[dic safeObjectForKey:@"unitPrice"]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
         return cell;
     }
     else
     {
-        static NSString * identifier = @"cell1";
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-        }
         
         if (indexPath.row ==0) {
             
@@ -189,16 +188,30 @@
             }
             cell.countLabel.text =[NSString stringWithFormat:@"共%@项 合计:",[_infoDict safeObjectForKey:@"quantitySum"]];
             cell.priceLabel.text  =[NSString stringWithFormat:@"￥%.2f元",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]];
+            return cell;
         }
         
         else if (indexPath.row ==1) {
+            static NSString * identifier = @"cell1";
+            UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+            }
+
             cell.textLabel.text =[NSString stringWithFormat:@"订购人：%@(TEL:%@)",[_infoDict objectForKey:@"nickName"],[[UserModel shareInstance]changeTelephone:[_infoDict objectForKey:@"phone"]]];
+            return cell;
 
         }else{
+            static NSString * identifier = @"cell1";
+            UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+            }
+
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];
+            return cell;
 
         }
-        return cell;
         
     }
 
@@ -222,7 +235,75 @@
     }
     return nil;
 }
+-(NSString *)getNowTimeWithString:(int)aTimeString{
+    
+    int timeInterval =timeOut;
+    
+    int days = (int)(timeInterval/(3600*24));
+    int hours = (int)((timeInterval-days*24*3600)/3600);
+    int minutes = (int)(timeInterval-days*24*3600-hours*3600)/60;
+    int seconds = timeInterval-days*24*3600-hours*3600-minutes*60;
+    
+    NSString *dayStr;NSString *hoursStr;NSString *minutesStr;NSString *secondsStr;
+    //天
+    dayStr = [NSString stringWithFormat:@"%d",days];
+    //小时
+    hoursStr = [NSString stringWithFormat:@"%d",hours];
+    //分钟
+    if(minutes<10)
+        minutesStr = [NSString stringWithFormat:@"0%d",minutes];
+    else
+        minutesStr = [NSString stringWithFormat:@"%d",minutes];
+    //秒
+    if(seconds < 10)
+        secondsStr = [NSString stringWithFormat:@"0%d", seconds];
+    else
+        secondsStr = [NSString stringWithFormat:@"%d",seconds];
+    if (hours<=0&&minutes<=0&&seconds<=0) {
+        return @"活动已经结束！";
+    }
+    if (days) {
+        return [NSString stringWithFormat:@"%@天 %@小时 %@分", dayStr,hoursStr, minutesStr];
+    }
+    if (minutes==0&&seconds!=0) {
+        return [NSString stringWithFormat:@"%@小时 %d分",hoursStr , [minutesStr intValue]+1];
+ 
+    }else{
+    return [NSString stringWithFormat:@"%@小时 %@分",hoursStr , minutesStr];
+    }
+}
 
+-(void)countDown {
+    
+    if (timeOut!=0) {
+        _timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(refreshTimeLabel:) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSDefaultRunLoopMode];
+    }
+}
+-(void)refreshTimeLabel:(NSTimer *)timer
+{
+    DLog(@"%d",timeOut);
+
+    if (!timeOut||timeOut<=0) {
+        [_timer invalidate];
+        _lastLabel.text = @"补货结束";
+        [self getlistInfo_is_team];
+        return;
+    }
+    [self updateTimeInVisibleCellsWithString:timeOut];
+    timeOut--;
+    
+}
+-(void)updateTimeInVisibleCellsWithString:(int)str{
+    if (str <=0) {
+        _lastLabel.text = @"补货结束";
+    }
+    else
+    {
+        _lastLabel.text = [NSString stringWithFormat:@"订单补充剩余时间%@",[self getNowTimeWithString:str]];
+    }
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharViewController">
             <connections>
                 <outlet property="dateLabel" destination="x5B-yI-GAO" id="dly-tQ-sRc"/>
+                <outlet property="leftBtn" destination="fwH-tH-ZAy" id="7pC-1i-HFi"/>
+                <outlet property="rightBtn" destination="IZa-JH-2Au" id="A6e-7h-kUU"/>
                 <outlet property="superChartView" destination="xdR-cq-agE" id="69C-Dm-fmE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
