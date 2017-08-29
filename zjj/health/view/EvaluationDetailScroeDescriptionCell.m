@@ -26,7 +26,7 @@
         return;
     }
     NSString * headURLStr = [SubUserItem shareInstance].headUrl;
-    [self. headImageView setImageWithURL:[NSURL URLWithString:headURLStr]placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self. headImageView sd_setImageWithURL:[NSURL URLWithString:headURLStr]placeholderImage:[UIImage imageNamed:@"head_default"]];
     
     self.nameLabel.text = [SubUserItem shareInstance].nickname;
     self.timeLabel.text = [NSString stringWithFormat:@"生成日期：%@",[HealthDetailsItem instance].createTime];

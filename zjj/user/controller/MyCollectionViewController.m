@@ -114,7 +114,7 @@
         cell = [self getXibCellWithTitle:identifier];
     }
     NSDictionary *dict =[self.dataArray objectAtIndex:indexPath.row];
-    [cell.headImageView setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"imgUrl"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"imgUrl"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     cell.titleLabel.text = [dict safeObjectForKey:@"title"];
     cell.timeLabel.text = [dict safeObjectForKey:@"releaseTime"];
     cell.zanLabel.text =[NSString stringWithFormat:@"点赞数：%d",[[dict safeObjectForKey:@"likeNum"]intValue]];

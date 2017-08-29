@@ -17,6 +17,7 @@
 #import "ShopCarViewController.h"
 #import "UpdataOrderViewController.h"
 #import "CXdetailView.h"
+#import "BodyFatDivisionAgreementViewController.h"
 @interface GoodsDetailViewController ()<decailTitleCellDelegate>
 @property (nonatomic,assign)int goodsCount;
 @end
@@ -361,16 +362,33 @@
 
 - (IBAction)didBuy:(id)sender {
     
-    UpdataOrderViewController *upd =[[UpdataOrderViewController alloc]init];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"此页面为消费者购买专属，如需升级体脂师，请点击“去认证”" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UpdataOrderViewController *upd =[[UpdataOrderViewController alloc]init];
+        
+        upd.dataArray= [NSMutableArray arrayWithObject:item];
+        upd.orderType =IS_FROM_GOODSDETAIL;
+        upd.goodsCount = self.goodsCount;
+        [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount) forKey:@"totalPrice"];
+        [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount -[self getPreferentialPrice] ) forKey:@"payableAmount"];
+        [upd.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
+        
+        [self.navigationController pushViewController:upd animated:YES];
+
+    }]];
     
-    upd.dataArray= [NSMutableArray arrayWithObject:item];
-    upd.orderType =IS_FROM_GOODSDETAIL;
-    upd.goodsCount = self.goodsCount;
-    [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount) forKey:@"totalPrice"];
-    [upd.param safeSetObject:@([item.productPrice floatValue]*self.goodsCount -[self getPreferentialPrice] ) forKey:@"payableAmount"];
-    [upd.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
     
-    [self.navigationController pushViewController:upd animated:YES];
+    
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        BodyFatDivisionAgreementViewController * bf = [[BodyFatDivisionAgreementViewController alloc]init];
+        [self.navigationController pushViewController:bf animated:YES];
+        
+    }]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+
+    
     
 }
 //获取上传数据

@@ -21,12 +21,17 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pEQ-Zr-cad">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="TPS-XG-EXu">
-                    <rect key="frame" x="0.0" y="40" width="375" height="627"/>
+                    <rect key="frame" x="0.0" y="42" width="375" height="625"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="wrT-PJ-vFw">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="b0y-TR-hKb"/>
                     </constraints>
@@ -45,11 +50,15 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="pEQ-Zr-cad" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="06I-tD-fuJ"/>
                 <constraint firstAttribute="bottom" secondItem="TPS-XG-EXu" secondAttribute="bottom" id="4Za-rx-ody"/>
+                <constraint firstAttribute="bottom" secondItem="pEQ-Zr-cad" secondAttribute="bottom" id="5gg-dv-X5n"/>
                 <constraint firstAttribute="trailing" secondItem="wrT-PJ-vFw" secondAttribute="trailing" id="A1W-oP-IbP"/>
                 <constraint firstItem="TPS-XG-EXu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Md1-dL-yEL"/>
-                <constraint firstItem="TPS-XG-EXu" firstAttribute="top" secondItem="wrT-PJ-vFw" secondAttribute="bottom" id="Yy1-6f-DPu"/>
+                <constraint firstItem="TPS-XG-EXu" firstAttribute="top" secondItem="wrT-PJ-vFw" secondAttribute="bottom" constant="2" id="Yy1-6f-DPu"/>
                 <constraint firstItem="wrT-PJ-vFw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bFn-TK-cMn"/>
+                <constraint firstItem="pEQ-Zr-cad" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="g8E-SD-7Wo"/>
+                <constraint firstAttribute="trailing" secondItem="pEQ-Zr-cad" secondAttribute="trailing" id="guc-2e-4to"/>
                 <constraint firstItem="wrT-PJ-vFw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o8N-HU-m6q"/>
                 <constraint firstAttribute="trailing" secondItem="TPS-XG-EXu" secondAttribute="trailing" id="syS-xX-Vmb"/>
             </constraints>

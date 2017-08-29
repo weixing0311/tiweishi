@@ -14,6 +14,7 @@
 #import "ShopTestViewController.h"
 #import "TabbarViewController.h"
 #import "JzSchoolViewController.h"
+#import "foundViewController.h"
 @interface ShopTabbbarController ()
 
 @end
@@ -37,11 +38,11 @@
 
     news.title = @"首页";
     
-    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
-//    InfomationViewController *found = [[InfomationViewController alloc]init];
+//    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
+    foundViewController *found = [[foundViewController alloc]init];
     UINavigationController * nav2 = [[UINavigationController alloc]initWithRootViewController:found];
     nav2.navigationBar.barTintColor = [UIColor redColor];
-    found.title = @"知识";
+    found.title = @"发现";
     
     ShopCarViewController *shop = [[ShopCarViewController alloc]init];
     shop.title = @"购物车";
@@ -68,8 +69,8 @@
     item2.image = [UIImage imageNamed:@"footer-ShoppingMall"];
     item2.selectedImage = [UIImage imageNamed:@"footer-ShoppingMall-red"];
     
-    item3.image = [UIImage imageNamed:@"footer-knowledge"];
-    item3.selectedImage = [UIImage imageNamed:@"footer-knowledge-red"];
+    item3.image = [UIImage imageNamed:@"find gray_"];
+    item3.selectedImage = [UIImage imageNamed:@"find"];
 
     item4.image = [UIImage imageNamed:@"footer-ShoppingCart"];
     item4.selectedImage = [UIImage imageNamed:@"footer-ShoppingCart-red"];

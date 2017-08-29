@@ -16,7 +16,7 @@
 }
 -(void)updataWithItem:(GoodsItem*)item
 {
-    [self.imageView setImageWithURL:[NSURL URLWithString:item.imageUrl]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:item.imageUrl]];
     self.titleLabel.text = item.productName;
     self.priceLabel.text  =[NSString stringWithFormat:@"%.2f",[item.productPrice floatValue]];
     

@@ -42,7 +42,7 @@
     [self setNbColor];
     self.tableview.delegate =self;
     self.tableview.dataSource = self;
-    
+    self.priceLabel.adjustsFontSizeToFitWidth = YES;
     addressDict =[NSMutableDictionary dictionary];
     
     [self setExtraCellLineHiddenWithTb:self.tableview];
@@ -110,7 +110,7 @@
     [param safeSetObject:warehouseNo1 forKey:@"warehouseNo"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/freigthCount/freigthProductCount.do" paramters:param success:^(NSDictionary *dic) {
         weightStr = [[dic objectForKey:@"data"]objectForKey:@"freight"];
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.0f",[[self.param objectForKey:@"payableAmount"]floatValue]+[weightStr floatValue]];
+        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[[self.param objectForKey:@"payableAmount"]floatValue]+[weightStr floatValue]];
         [self.tableview reloadData];
     } failure:^(NSError *error) {
         DLog(@"error --%@",error);
@@ -152,6 +152,8 @@
         cell.phonenumLabel.text = [[UserModel shareInstance]changeTelephone:[addressDict safeObjectForKey:@"phone"]];
         cell.addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",[addressDict safeObjectForKey:@"province"]?[addressDict safeObjectForKey:@"province"]:@"",[addressDict safeObjectForKey:@"city"]?[addressDict safeObjectForKey:@"province"]:@"",[addressDict safeObjectForKey:@"county"]?[addressDict safeObjectForKey:@"county"]:@"",[addressDict safeObjectForKey:@"addr"]?[addressDict safeObjectForKey:@"county"]:@""];
         }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
         return cell;
     }
     else if (indexPath.section ==1)
@@ -230,7 +232,11 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10;
+    return 2;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 2;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -300,7 +306,7 @@
         
         
     } failure:^(NSError *error) {
-        [[UserModel shareInstance]showErrorWithStatus:@"提交失败"];
+//        [[UserModel shareInstance]showErrorWithStatus:@"提交失败"];
 
         DLog(@"下单失败--%@",error);
     }];

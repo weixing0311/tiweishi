@@ -42,7 +42,7 @@
     [self.view addSubview:cuxiaoDetailView];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     
-    
+    self.countLabel.adjustsFontSizeToFitWidth = YES;
     
     
     
@@ -129,10 +129,9 @@
         
         NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
         
-        [[UserModel shareInstance]showSuccessWithStatus:@"进货成功"];
         [_chooseArray removeAllObjects];
-        self.priceLabel.text = @"合计：0";
-        self.countLabel.text = @"总额:￥0 优惠:￥0";
+        self.priceLabel.text = @"合计：￥0.00";
+        self.countLabel.text = @"总额:￥0.00 优惠:￥0.00";
         [self.tableview reloadData];
         
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
@@ -190,7 +189,7 @@
         }
 
         NSDictionary *dict =[_buyArray objectAtIndex:indexPath.row];
-        [cell.headImage setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@""]];
+        [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@""]];
         cell.delegate = self;
         cell.tag = indexPath.row+indexPath.section *100;
         cell.titleLabel .text = [dict safeObjectForKey:@"productName"];
@@ -208,7 +207,7 @@
         }
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
         NSDictionary *dict =[_dataArray objectAtIndex:indexPath.row];
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         cell.delegate = self;
         cell.tag = indexPath.row+indexPath.section *100;
         cell.titleLabel .text = [dict safeObjectForKey:@"productName"];

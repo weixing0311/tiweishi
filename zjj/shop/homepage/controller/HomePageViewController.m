@@ -177,7 +177,7 @@
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    return CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/375*531);
+    return CGSizeMake(JFA_SCREEN_WIDTH, 530);
 }
 //创建headview
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView

@@ -190,7 +190,9 @@
         
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {
-        [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
+        [_timer invalidate];
+        [self.verBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.verBtn.enabled = YES;
     }];
     
 }

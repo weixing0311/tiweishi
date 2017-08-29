@@ -164,7 +164,12 @@
 -(id)getXibCellWithTitle:(NSString *)title
 {
     NSArray *arr = [[NSBundle mainBundle]loadNibNamed:title owner:nil options:nil];
-    return [arr lastObject];
+    if (arr) {
+        return [arr lastObject];
+
+    }else{
+        return nil;
+    }
 }
 
 -(void)setExtraCellLineHiddenWithTb:(UITableView *)tb

@@ -19,7 +19,7 @@
 }
 -(void)setInfoWithDict:(NSDictionary * )dict
 {
-    [self.BigImageView setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"imgUrl"]] placeholderImage:[UIImage imageNamed:@"find_default2"]];;
+    [self.BigImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"imgUrl"]] placeholderImage:[UIImage imageNamed:@"find_default2"]];;
 
     self.timeLabel.text = [dict safeObjectForKey:@"releaseTime"];
     self.timeLabel.frame = CGRectMake((JFA_SCREEN_WIDTH-[self getWidthWithString:self.timeLabel.text]-20)/2, 8, [self getWidthWithString:self.timeLabel.text]+20, 20) ;

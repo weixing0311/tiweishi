@@ -17,7 +17,11 @@
     // Drawing code
 }
 */
-
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.orderNum.adjustsFontSizeToFitWidth = YES;
+}
 - (IBAction)delete:(id)sender {
 }
 - (IBAction)didDelete:(id)sender {

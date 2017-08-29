@@ -104,7 +104,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
         return cell;
     }else{
         static NSString *identifier = @"cell";
@@ -196,8 +196,9 @@
     if (indexPath.section ==0) {
         if (indexPath.row ==0)
         {
-            ImageViewController *imageVC =[[ImageViewController alloc]init];
-            [self.navigationController pushViewController:imageVC animated:YES];
+//            ImageViewController *imageVC =[[ImageViewController alloc]init];
+//            [self.navigationController pushViewController:imageVC animated:YES];
+            [self ChangeHeadImage:nil];
         }
         
         else if (indexPath.row ==1)
@@ -248,6 +249,108 @@
     }
 }
 
+#pragma mark ----imagepickerdelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    NSString *mediaType=[info objectForKey:UIImagePickerControllerMediaType];
+    //判断资源类型
+    if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
+        //如果是图片
+        UIImage *image =info[UIImagePickerControllerEditedImage];
+        [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        if (picker.sourceType ==UIImagePickerControllerSourceTypeCamera) {
+            NSData *  fileDate = UIImageJPEGRepresentation(image, 0.001);
+            [self updateImageWithImage:fileDate];
+            
+        }else{
+            NSData *  fileDate = UIImageJPEGRepresentation(image, 0.01);
+            [self updateImageWithImage:fileDate];
+            
+        }
+        
+    }
+}//点击cancel 调用的方法
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)updateImageWithImage:(NSData *)fileData
+{
+    
+    
+    NSMutableDictionary *param =[NSMutableDictionary dictionary];
+    [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [SVProgressHUD showWithStatus:@"上传中.."];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadHeadImg.do" paramters:param imageData:fileData success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
+        [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
+        [self.tableview reloadData];
+        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
+    } failure:^(NSError *error) {
+        
+        DLog(@"faile-error-%@",error);
+    }];
+}
+
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+- (IBAction)ChangeHeadImage:(id)sender {
+    
+    
+    
+    UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:@"修改头像" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
+        picker.delegate = self;
+        picker.allowsEditing = YES;//设置可编辑
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+        
+    }]];
+    
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+            
+        }
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self presentViewController:pickerImage animated:YES completion:nil];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+    
+}
 
 
 

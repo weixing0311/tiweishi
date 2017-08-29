@@ -133,8 +133,15 @@
     view.backgroundColor =[UIColor colorWithWhite:.95 alpha:1];
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 40);
-    footer.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic objectForKey:@"totalPrice"]];
-    footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
+    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"totalPrice"] floatValue]];
+    NSString * payStr =@"";
+    if (status ==10) {
+        payStr =@"已付款";
+    }else{
+        payStr =@"需付款";
+    }
+
+    footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，%@：",[dic objectForKey:@"quantitySum"],payStr];
     
     if (status ==1) {
         footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
@@ -188,9 +195,9 @@
     NSDictionary * infoDic = [arr objectAtIndex:indexPath.row];
     
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
-    [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[infoDic safeObjectForKey:@"unitPrice"]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"]doubleValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
     return cell;

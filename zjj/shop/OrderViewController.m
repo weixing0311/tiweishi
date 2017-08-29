@@ -199,7 +199,7 @@
     int operateStatus = [[dic safeObjectForKey:@"operateStatus"]intValue];
 
     float height = 0.0f;
-    if (status==1||status==3) {
+    if (status==1||(status==3&&operateStatus ==4)) {
         height =87;
     }else{
         height =41;
@@ -211,7 +211,15 @@
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
     footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"totalPrice"]floatValue]];
-    footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
+    
+    NSString * payStr =@"";
+    if (status ==10||status ==3) {
+        payStr =@"已付款";
+    }else{
+        payStr =@"需付款";
+    }
+    
+    footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，%@：",[dic objectForKey:@"quantitySum"],payStr];
     [view addSubview:footer];
 
     
@@ -258,7 +266,10 @@
 {
     NSDictionary *dic =[_dataArray objectAtIndex:section];
     int status = [[dic objectForKey:@"status"]intValue];
-    if (status ==1||status ==3) {
+    int operateStatus = [[dic safeObjectForKey:@"operateStatus"]intValue];
+    
+    if (status==1||(status==3&&operateStatus ==4)) {
+
         return 41+46;
     }else
         return 41;
@@ -284,8 +295,8 @@
     NSDictionary * infoDic = [arr objectAtIndex:indexPath.row];
     
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
-    [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"]floatValue]];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"normalPrice"]floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
     return cell;

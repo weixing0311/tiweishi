@@ -22,6 +22,15 @@
     [super viewDidLoad];
     self.title = @"文章详情";
     [self setNbColor];
+    
+    
+    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"share_"] style:UIBarButtonItemStylePlain target:self action:@selector(didShare)];
+    self.navigationItem.rightBarButtonItem = item;
+
+    
+    
+    
+    
     [self.zanBtn setTitle:[NSString stringWithFormat:@"点赞(%@)",self.isLikeNum?self.isLikeNum:@""] forState:UIControlStateNormal];
     if ([self.islike isEqualToString:@"1" ]) {
         self.zanBtn.selected = YES;
@@ -63,6 +72,85 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [SVProgressHUD dismiss];
+}
+
+-(void)didShare
+{
+    UIAlertController * al =[UIAlertController alertControllerWithTitle:@"分享" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline ];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatSession ];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"QQ好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformTypeQQ ];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    
+    [self presentViewController:al animated:YES completion:nil];
+}
+
+-(void) shareWithType:(SSDKPlatformType)type
+{
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    
+    if (type ==SSDKPlatformSubTypeWechatTimeline||type==SSDKPlatformSubTypeWechatSession) {
+        [shareParams SSDKSetupWeChatParamsByText:@"" title:self.shareTitle url:[NSURL URLWithString:self.urlStr] thumbImage:self.shareImage image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+        
+    }else if (type==SSDKPlatformTypeQQ)
+    {
+        [shareParams SSDKSetupShareParamsByText:@""
+                                         images:self.shareImage
+                                            url:[NSURL URLWithString:self.urlStr]
+                                          title:self.shareTitle
+                                           type:SSDKContentTypeWebPage];
+        
+        //        [shareParams SSDKSetupQQParamsByText:self.contentStr title:self.titleStr url:[NSURL URLWithString:self.urlStr] thumbImage:_imageUrl image:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+    }
+    
+    
+    
+    [shareParams SSDKEnableUseClientShare];
+    [SVProgressHUD showWithStatus:@"开始分享"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    
+    //进行分享
+    [ShareSDK share:type
+         parameters:shareParams
+     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         
+         switch (state) {
+             case SSDKResponseStateSuccess:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                 break;
+             }
+             case SSDKResponseStateFail:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+                 DLog(@"error-%@",error);
+                 break;
+             }
+             case SSDKResponseStateCancel:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                 break;
+             }
+             default:
+                 break;
+         }
+     }];
+    
 }
 
 - (void)didReceiveMemoryWarning {

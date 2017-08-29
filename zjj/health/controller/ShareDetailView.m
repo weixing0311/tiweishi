@@ -45,7 +45,7 @@
     self.ageLabel.text = [NSString stringWithFormat:@"年龄:%d",[UserModel shareInstance].age];
     self.heightLabel.text = [NSString stringWithFormat:@"身高:%.1f",[UserModel shareInstance].heigth];
     
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
     self.nameLabel.text =[SubUserItem shareInstance].nickname;
 
 // 体重

@@ -100,7 +100,7 @@
 -(void)updataAddress
 {
     if (self.nameLabel.text.length==0) {
-        [[UserModel shareInstance]showInfoWithStatus:@"请输入手机号"];
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入姓名"];
 
         return;
     }
@@ -108,12 +108,17 @@
         [[UserModel shareInstance]showInfoWithStatus:@"请输入正确手机号"];
         return;
     }if (self.addressTx.text.length==0) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入详细地址"];
+
         return;
     }
     
     if ([self.ProvincialDict allKeys].count==0) {
         return;
-    }if ([self.cityDict allKeys].count==0) {
+    }
+    if ([self.cityDict allKeys].count==0) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请选择省、市、县"];
+
         return;
     }
     

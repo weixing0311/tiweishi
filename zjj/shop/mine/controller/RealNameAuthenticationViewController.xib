@@ -105,7 +105,7 @@
                         <action selector="didRz:" destination="-1" eventType="touchUpInside" id="3cJ-oa-KbX"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*请他填写本人真实信息，否则后续出现问题，本公司不予承担责任！" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmc-7E-zCO">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*请填写本人真实信息，否则后续出现问题，本公司不予承担责任！" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmc-7E-zCO">
                     <rect key="frame" x="10" y="151" width="355" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="10" constant="60" id="dmN-4b-Hvq"/>

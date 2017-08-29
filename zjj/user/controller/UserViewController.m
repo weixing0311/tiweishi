@@ -41,13 +41,12 @@
     self.headerImage.layer.borderWidth= 2;
     self.headerImage.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
 
-    [self.headerImage setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl]placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl]placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nickNameLabel.text = [UserModel shareInstance].nickName;
 
     // Do any additional setup after loading the view from its nib.
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:254/255.0 green:86/255.0 blue:0/255.0 alpha:1];
 
-    [self setNavigationBarType];
     CGRect rect = loignOutBtn.frame;
     if (rect.origin.y+rect.size.height>JFA_SCREEN_HEIGHT-64) {
         loignOutBtn.hidden = YES;
@@ -57,39 +56,12 @@
         rightLoignOut.hidden = YES;
     }
     
-    
 }
-//-(void)addFootView
-//{
-//    UIView * footv = [[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 70)];
-//    UIButton * loignOutBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-120, 45)];
-//    [loignOutBtn setBackgroundColor:HEXCOLOR(0xEE0A3B)];
-//    [loignOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
-//    [loignOutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    loignOutBtn.center = footv.center;
-//    loignOutBtn.layer.cornerRadius = 5;
-//    loignOutBtn.layer.masksToBounds=  YES;
-//    [loignOutBtn addTarget:self action:@selector(loignout:) forControlEvents:UIControlEventTouchUpInside];
-//    [footv addSubview:loignOutBtn];
-//    self.tableview.tableFooterView = footv;
-//}
 -(void)refreshMyUserInfoView
 {
-    [self.headerImage setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self .headerImage sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nickNameLabel.text = [SubUserItem shareInstance].nickname;
-}
--(void)setNavigationBarType
-{
-//    self.navigationController.navigationBar.translucent =YES;
-//    UIColor *color = [UIColor clearColor];
-//    CGRect rect = CGRectMake(0, 0,JFA_SCREEN_WIDTH, 64);
-//    UIGraphicsBeginImageContext(rect.size);
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGContextSetFillColorWithColor(context, [color CGColor]);
-//    CGContextFillRect(context, rect);
-//    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-//    [self.navigationController.navigationBar setBackgroundImage:img forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.clipsToBounds = YES;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

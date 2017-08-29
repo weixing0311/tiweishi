@@ -12,6 +12,9 @@
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *zanBtn;
 @property (weak, nonatomic) IBOutlet UIButton *collectionBtn;
+@property (nonatomic,copy) NSString * shareImage;
+@property (nonatomic,copy) NSString * shareTitle;
+
 
 - (IBAction)didCollection:(id)sender;
 - (IBAction)didZan:(id)sender;

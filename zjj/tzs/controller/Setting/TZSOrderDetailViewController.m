@@ -196,7 +196,7 @@
         }
         cell.payTsView.hidden =NO;
         cell.lastTime.text =[NSString stringWithFormat:@"剩余时间：%@",@"0小时0分"];
-        cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%@",[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]]];
+        cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
         NSString * finishTime =[_infoDict safeObjectForKey:@"remainingTime"];
         if (finishTime.length<1) {
             cell.lastTime.text = @"支付已超时";
@@ -218,7 +218,7 @@
         NSDictionary *dic = [_dataArray objectAtIndex:indexPath.row];
         
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
         cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
@@ -263,7 +263,7 @@
             cell.title3label.text = @"实付款";
 
         }else{
-            cell.title3label.text = @"应付款";
+            cell.title3label.text = @"需付款";
         }
         cell.title4label.text = @"";
         cell.value4label.text = @"";

@@ -206,7 +206,17 @@
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 40);
     footer.priceLabel.text = [NSString stringWithFormat:@"%.2f元(含运费￥%.2f)",[[dic objectForKey:@"freight"]floatValue],[[dic objectForKey:@"freight"]floatValue]];
-    footer.countLabel.text = [NSString stringWithFormat:@"共计%@项商品，合计：",[dic objectForKey:@"quantitySum"]];
+    
+    NSString * payStr =@"";
+    if (status ==10||status ==3) {
+        payStr =@"已付款";
+    }else{
+        payStr =@"需付款";
+    }
+    
+
+    
+    footer.countLabel.text = [NSString stringWithFormat:@"共计%@项商品，%@：",[dic objectForKey:@"quantitySum"],payStr];
     [view addSubview:footer];
 
     footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
@@ -246,6 +256,8 @@
     {
         footBtn.hidden = YES;
         //        header.statusLabel .text= @"已完成";
+    }else{
+        footBtn.hidden = YES;
     }
     
     return view;
@@ -289,7 +301,7 @@
     NSDictionary * infoDic = [arr objectAtIndex:indexPath.row];
     
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
-    [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
 //    cell.priceLabel .hidden = YES;
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];

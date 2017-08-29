@@ -126,7 +126,7 @@
 
         NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
         
-        [cell.headImage setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"headimgurl"]]placeholderImage:[UIImage imageNamed:@"head_default"]];
+        [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"headimgurl"]]placeholderImage:[UIImage imageNamed:@"head_default"]];
         cell.delegate = self;
         cell.tag = indexPath.row;
         

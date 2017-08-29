@@ -30,7 +30,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Exu-wQ-j0q">
-                        <rect key="frame" x="20" y="34" width="280" height="30"/>
+                        <rect key="frame" x="30" y="34" width="270" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="OZp-V2-4ak"/>
                         </constraints>
@@ -50,8 +50,16 @@
                             <constraint firstAttribute="height" constant="3" id="XIl-pa-hGm"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map.png" translatesAutoresizingMaskIntoConstraints="NO" id="7o6-PZ-ZTL">
+                        <rect key="frame" x="15" y="42" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="ub6-cf-Qey"/>
+                            <constraint firstAttribute="width" constant="15" id="vt9-GO-REF"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Exu-wQ-j0q" firstAttribute="leading" secondItem="7o6-PZ-ZTL" secondAttribute="trailing" id="1ec-ee-ZMD"/>
                     <constraint firstAttribute="trailing" secondItem="dSg-yX-KGo" secondAttribute="trailing" id="3uJ-AV-zP1"/>
                     <constraint firstItem="PFN-iK-f5b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="GaB-9N-LcH"/>
                     <constraint firstAttribute="bottom" secondItem="dSg-yX-KGo" secondAttribute="bottom" id="KPs-Ny-Vbo"/>
@@ -60,7 +68,8 @@
                     <constraint firstItem="Exu-wQ-j0q" firstAttribute="top" secondItem="PFN-iK-f5b" secondAttribute="bottom" constant="5" id="bH8-Hd-mac"/>
                     <constraint firstItem="cK0-BT-OL5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="lIn-lt-t2b"/>
                     <constraint firstItem="dSg-yX-KGo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nsJ-lF-iaR"/>
-                    <constraint firstItem="Exu-wQ-j0q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="vS6-EZ-o65"/>
+                    <constraint firstItem="7o6-PZ-ZTL" firstAttribute="top" secondItem="PFN-iK-f5b" secondAttribute="bottom" constant="13" id="sUj-y6-e4W"/>
+                    <constraint firstItem="Exu-wQ-j0q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="vS6-EZ-o65"/>
                     <constraint firstItem="PFN-iK-f5b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="yV9-ia-R8C"/>
                     <constraint firstAttribute="trailing" secondItem="Exu-wQ-j0q" secondAttribute="trailing" constant="20" id="zy7-lQ-zuR"/>
                 </constraints>
@@ -75,5 +84,6 @@
     </objects>
     <resources>
         <image name="addressLine.png" width="370" height="3"/>
+        <image name="map.png" width="64" height="64"/>
     </resources>
 </document>

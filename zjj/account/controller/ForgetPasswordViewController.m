@@ -84,18 +84,7 @@
         [self.getVerBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         self.getVerBtn.enabled = YES;
         
-        NSDictionary *dic = error.userInfo;
-        if ([[dic allKeys]containsObject:@"message"]) {
-            UIAlertController *al = [UIAlertController alertControllerWithTitle:@"提示" message:[dic objectForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
-            
-            [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-            }]];
-            [self presentViewController:al animated:YES completion:nil];
-            
-        }else{
-            [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
-        }
+        
         
     }];
     

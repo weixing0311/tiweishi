@@ -31,7 +31,7 @@
 //正式
 //#define kMyBaseUrl @"https://mall.fitgeneral.com/"
 //生产
-#define kMyBaseUrl @"http://test.fitgeneral.com/"
+#define kMyBaseUrl @"http://test123.fitgeneral.com/"
 //测试域名
 //#define kMyBaseUrl @"http://192.168.1.130:8101/"
 //x

@@ -83,7 +83,7 @@
 -(void)isChangeInfo
 {
     self.nickNameLb.text = [SubUserItem shareInstance].nickname;
-    [self.testImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.testImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]placeholderImage:[UIImage imageNamed:@"head_default"]];
     
     _sex = [SubUserItem shareInstance].sex;
     

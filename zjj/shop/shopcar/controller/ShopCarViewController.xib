@@ -31,19 +31,19 @@
                     <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xA8-O7-4T3">
-                            <rect key="frame" x="20" y="20" width="20" height="20"/>
+                            <rect key="frame" x="0.0" y="10" width="40" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="20" id="YeV-kg-oDN"/>
-                                <constraint firstAttribute="width" constant="20" id="neo-Gt-fz9"/>
+                                <constraint firstAttribute="height" constant="40" id="YeV-kg-oDN"/>
+                                <constraint firstAttribute="width" constant="40" id="neo-Gt-fz9"/>
                             </constraints>
                             <state key="normal" image="checked-false.png"/>
-                            <state key="selected" image="checked.png"/>
+                            <state key="selected" image="checked-true.png"/>
                             <connections>
                                 <action selector="didChoose:" destination="-1" eventType="touchUpInside" id="tSe-uU-FXJ"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="全选" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8y-TF-bvi">
-                            <rect key="frame" x="55" y="20" width="40" height="20"/>
+                            <rect key="frame" x="35" y="20" width="40" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="Jna-yh-pRB"/>
                                 <constraint firstAttribute="width" constant="40" id="fjC-Id-Sln"/>
@@ -89,7 +89,7 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQh-O1-W5D">
-                            <rect key="frame" x="100" y="32" width="156" height="15"/>
+                            <rect key="frame" x="80" y="32" width="176" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="OQk-2W-OZB"/>
                             </constraints>
@@ -108,11 +108,11 @@
                         <constraint firstItem="Rk3-TJ-Q9L" firstAttribute="top" secondItem="jy9-gO-C3R" secondAttribute="top" id="FJc-Kb-QX5"/>
                         <constraint firstAttribute="trailing" secondItem="Rk3-TJ-Q9L" secondAttribute="trailing" id="Idd-c2-StH"/>
                         <constraint firstAttribute="trailing" secondItem="AV0-OJ-eC6" secondAttribute="trailing" id="MQU-ar-lFi"/>
-                        <constraint firstItem="xA8-O7-4T3" firstAttribute="leading" secondItem="jy9-gO-C3R" secondAttribute="leading" constant="20" id="Mul-SQ-Sdv"/>
+                        <constraint firstItem="xA8-O7-4T3" firstAttribute="leading" secondItem="jy9-gO-C3R" secondAttribute="leading" id="Mul-SQ-Sdv"/>
                         <constraint firstItem="Rk3-TJ-Q9L" firstAttribute="leading" secondItem="WQh-O1-W5D" secondAttribute="trailing" constant="5" id="foq-Rx-sDI"/>
                         <constraint firstItem="AV0-OJ-eC6" firstAttribute="leading" secondItem="jy9-gO-C3R" secondAttribute="leading" id="iWh-WM-v5T"/>
                         <constraint firstItem="HeB-TS-zig" firstAttribute="leading" secondItem="fAJ-TG-ENm" secondAttribute="trailing" constant="5" id="ilo-In-k4n"/>
-                        <constraint firstItem="c8y-TF-bvi" firstAttribute="leading" secondItem="xA8-O7-4T3" secondAttribute="trailing" constant="15" id="kez-Vg-e8E"/>
+                        <constraint firstItem="c8y-TF-bvi" firstAttribute="leading" secondItem="xA8-O7-4T3" secondAttribute="trailing" constant="-5" id="kez-Vg-e8E"/>
                         <constraint firstItem="AV0-OJ-eC6" firstAttribute="top" secondItem="jy9-gO-C3R" secondAttribute="top" id="ljU-HX-rMN"/>
                         <constraint firstAttribute="bottom" secondItem="Rk3-TJ-Q9L" secondAttribute="bottom" id="ohT-FW-AwT"/>
                         <constraint firstItem="Rk3-TJ-Q9L" firstAttribute="centerY" secondItem="jy9-gO-C3R" secondAttribute="centerY" id="rQg-zA-PGG"/>
@@ -175,7 +175,7 @@
     </objects>
     <resources>
         <image name="checked-false.png" width="19" height="19"/>
-        <image name="checked.png" width="36" height="36"/>
+        <image name="checked-true.png" width="19" height="19"/>
         <image name="isEmpty.png" width="61" height="64"/>
     </resources>
 </document>

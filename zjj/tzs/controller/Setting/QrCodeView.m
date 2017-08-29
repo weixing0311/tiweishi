@@ -28,11 +28,11 @@
 
 -(void)setInfoWithDict:(NSDictionary *)dict
 {
-    [self.headimageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.headimageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.levelLabel.text = [UserModel shareInstance].gradeName;
     self.levelImage.image = [[UserModel shareInstance] getLevelImage];
-    [self.qrcodeImage setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl] placeholderImage:[UIImage imageNamed:@"demoimage_"]];
+    [self.qrcodeImage sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl] placeholderImage:[UIImage imageNamed:@"demoimage_"]];
     _linkStr = [UserModel shareInstance].linkerUrl;
 
 
@@ -42,7 +42,7 @@
 - (IBAction)didCopy:(id)sender {
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = _linkStr;
+    pasteboard.string = [NSString stringWithFormat:@"%@",_linkStr];
     [self.copBtn setTitle:@"链接已复制到剪切板" forState:UIControlStateNormal];
 }
 - (IBAction)didShare:(id)sender {

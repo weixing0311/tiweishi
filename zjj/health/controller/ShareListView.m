@@ -57,7 +57,7 @@
     
     _qrCodeImageView.image = [UIImage imageWithData:[UserModel shareInstance].qrcodeImageData];
     
-    [self.qrCodeImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl ]placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.qrCodeImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl ]placeholderImage:[UIImage imageNamed:@"head_default"]];
 
     self.nameLabel.text = [SubUserItem shareInstance].nickname;
     

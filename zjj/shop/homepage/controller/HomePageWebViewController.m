@@ -10,8 +10,8 @@
 #import <WebKit/WebKit.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
-@interface HomePageWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler>
-@property (nonatomic,strong)WKWebView * webView;
+@interface HomePageWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler,UIScrollViewDelegate>
+@property (nonatomic,strong)UIWebView * webView;
 
 @end
 
@@ -42,22 +42,34 @@
     
     configuration.userContentController = userContentController;
     
+    
+
+    
+    
     WKPreferences *preferences = [WKPreferences new];
     preferences.javaScriptCanOpenWindowsAutomatically = YES;
     preferences.minimumFontSize = 40.0;
     configuration.preferences = preferences;
     
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT) configuration:configuration];
-    self.webView.UIDelegate = self;
-    self.webView.navigationDelegate = self;
-    self.webView.allowsBackForwardNavigationGestures = YES;
+//    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT) configuration:configuration];
+//    self.webView.UIDelegate = self;
+//    self.webView.navigationDelegate = self;
+//    self.webView.allowsBackForwardNavigationGestures = YES;
+    
+    
+    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT)];
 
+    self.webView.scalesPageToFit = YES;
+    self.webView.scrollView.delegate = self;
+    self.webView.delegate = self;
 
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]]];
     [self.view addSubview:self.webView];
     // Do any additional setup after loading the view from its nib.
 }
-
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return nil;
+}
 -(void)didShare
 {
     UIAlertController * al =[UIAlertController alertControllerWithTitle:@"分享" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
@@ -87,7 +99,12 @@
         
     }else if (type==SSDKPlatformTypeQQ)
     {
-        [shareParams SSDKSetupQQParamsByText:self.contentStr title:self.titleStr url:[NSURL URLWithString:self.urlStr] thumbImage:_imageUrl image:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+        [shareParams SSDKSetupShareParamsByText:self.contentStr
+                                         images:_imageUrl
+                                            url:[NSURL URLWithString:self.urlStr]
+                                          title:self.titleStr
+                                           type:SSDKContentTypeWebPage];
+
     }
     
     
@@ -129,6 +146,52 @@
      }];
     
 }
+
+#pragma  mark ---uiwebview delegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *js = @"function imgAutoFit() { \
+    var imgs = document.getElementsByTagName('img'); \
+    for (var i = 0; i < imgs.length; ++i) {\
+    var img = imgs[i];   \
+    img.style.maxWidth = %f;   \
+    } \
+    }";
+    js = [NSString stringWithFormat:js, [UIScreen mainScreen].bounds.size.width - 20];
+    [_webView stringByEvaluatingJavaScriptFromString:js];
+    [_webView stringByEvaluatingJavaScriptFromString:@"imgAutoFit()"];
+    
+//    NSString * clientheight_str = [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
+//    float clientheight = [clientheight_str floatValue];
+//    //设置到WebView上
+//    _webView.frame = CGRectMake(0, 0, self.view.frame.size.width, clientheight);
+//    //获取WebView最佳尺寸（点）
+//    CGSize frame = [webView sizeThatFits:_webView.frame.size];
+//    //获取内容实际高度（像素）
+//    NSString * height_str= [_webView stringByEvaluatingJavaScriptFromString: @"document.getElementById('webview_content_wrapper').offsetHeight + parseInt(window.getComputedStyle(document.getElementsByTagName('body')[0]).getPropertyValue('margin-top'))  + parseInt(window.getComputedStyle(document.getElementsByTagName('body')[0]).getPropertyValue('margin-bottom'))"];
+//    float height = [height_str floatValue];
+//    //内容实际高度（像素）* 点和像素的比
+//    height = height * frame.height / clientheight;
+    
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [[UserModel shareInstance]showInfoWithStatus:@"页面加载失败"];
+}
+
+
+
+
+#pragma mark ---wkwebviewdelegate
+
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
     
     DLog(@"%ld",(long)((NSHTTPURLResponse *)navigationResponse.response).statusCode);
@@ -167,17 +230,67 @@
 }
 
 // 页面加载完成之后调用
--(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
-{
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
+    [ webView evaluateJavaScript:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'" completionHandler:nil];
+
     
-}
-// 页面加载失败时调用
+    [ webView evaluateJavaScript:@"var script = document.createElement('script');"
+     
+     "script.type = 'text/javascript';"
+     
+     "script.text = \"function ResizeImages() { "
+     
+     "var myimg,oldwidth;"
+     
+     "var maxwidth = 300;" // UIWebView中显示的图片宽度
+     
+     "for(i=1;i <document.images.length;i++){"
+     
+     "myimg = document.images[i];"
+     
+     "oldwidth = myimg.width;"
+     
+     "myimg.width = maxwidth;"
+     
+     "}"
+     
+     "}\";"
+     
+     "document.getElementsByTagName('head')[0].appendChild(script);ResizeImages();" completionHandler:nil];
+    
+    
+    [self remoViewCookies];
+    
+    
+}// 页面加载失败时调用
 -(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation
 {
     [[UserModel shareInstance]showInfoWithStatus:@"加载失败"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+//清除WK缓存，否则H5界面跟新，这边不会更新
+-(void)remoViewCookies{
+    
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue>=9.0) {
+        //        - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation 中就成功了 。
+        //    然而我们等到了iOS9！！！没错！WKWebView的缓存清除API出来了！代码如下：这是删除所有缓存和cookie的
+        NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+        //// Date from
+        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        //// Execute
+        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
+        }];
+    }else{
+        //iOS8清除缓存
+        NSString * libraryPath =  NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject;
+        NSString * cookiesFolderPath = [libraryPath stringByAppendingString:@"/Cookies"];
+        [[NSFileManager defaultManager] removeItemAtPath:cookiesFolderPath error:nil];
+    }
+    
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

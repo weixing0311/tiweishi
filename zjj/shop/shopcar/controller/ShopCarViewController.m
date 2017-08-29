@@ -11,6 +11,7 @@
 #import "UpdataOrderViewController.h"
 #import "CXdetailView.h"
 #import "BaseWebViewController.h"
+#import "BodyFatDivisionAgreementViewController.h"
 @interface ShopCarViewController ()
 @property (nonatomic ,strong)NSMutableArray * dataArray;//列表数据
 @property (nonatomic ,strong)UIButton * editBtn;
@@ -132,7 +133,19 @@
 {
     shopCarCellItem *item = [self.dataArray objectAtIndex:cell.tag];
 
-    [self addOrDeleteGoodsWithItem:item count:[cell.countLabel.text intValue] isAdd:type];
+    
+    if (type==YES) {
+        [self setInfoInChooseArr:item];
+    }else{
+        for (int i =0; i<_chooseArray.count; i++) {
+            NSDictionary *dic =[_chooseArray objectAtIndex:i];
+            if ([[dic objectForKey:@"productNo"] isEqualToString:item.productNo]) {
+                [_chooseArray removeObject:dic];
+            }
+        }
+    }
+
+    
 
     [self changePriceIsNull:NO];
 //    self.priceLabel.text = [NSString stringWithFormat:@"%.0f元",[self getPrice]-[self getAllPreferentialOrice]];
@@ -266,25 +279,47 @@
     if (self.chooseArray.count==0) {
         return;
     }
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_chooseArray options:NSJSONWritingPrettyPrinted error:nil];
-    NSString * str =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"此页面为消费者购买专属，如需升级体脂师，请点击“去认证”" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_chooseArray options:NSJSONWritingPrettyPrinted error:nil];
+        NSString * str =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        
+        
+        
+        UpdataOrderViewController *uo = [[UpdataOrderViewController alloc]init];
+        uo.orderType = IS_FROM_SHOPCART;
+        uo.hidesBottomBarWhenPushed= YES;
+        uo.dataArray = [self getHaveChooseArr];
+        [uo.param safeSetObject:@([self getPrice]) forKey:@"totalPrice"];
+        [uo.param safeSetObject:@([self getPrice]-[self getAllPreferentialOrice]) forKey:@"payableAmount"];
+        [uo.param safeSetObject:str forKey:@"orderItem"];
+        
+        [self.chooseArray removeAllObjects];
+        self.chooseBtn.selected = NO;
+        //需要下一级页面推送通知
+        [self.navigationController pushViewController:uo animated:YES];
+        [self changePriceIsNull:YES];
 
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.chooseBtn.selected = NO;
+        [self.chooseArray removeAllObjects];
+        [self changePriceIsNull:YES];
+
+        BodyFatDivisionAgreementViewController * bf = [[BodyFatDivisionAgreementViewController alloc]init];
+        [self.navigationController pushViewController:bf animated:YES];
+        
+    }]];
+    
+    [self presentViewController:al animated:YES completion:nil];
     
     
     
-    UpdataOrderViewController *uo = [[UpdataOrderViewController alloc]init];
-    uo.orderType = IS_FROM_SHOPCART;
-    uo.hidesBottomBarWhenPushed= YES;
-    uo.dataArray = [self getHaveChooseArr];
-    [uo.param safeSetObject:@([self getPrice]) forKey:@"totalPrice"];
-    [uo.param safeSetObject:@([self getPrice]-[self getAllPreferentialOrice]) forKey:@"payableAmount"];
-    [uo.param safeSetObject:str forKey:@"orderItem"];
     
-    [self.chooseArray removeAllObjects];
-    self.chooseBtn.selected = NO;
-    //需要下一级页面推送通知
-    [self.navigationController pushViewController:uo animated:YES];
-    [self changePriceIsNull:YES];
+    
 //    self.priceLabel.text = [NSString stringWithFormat:@"0元"];
 //    self.priceDetailLb.text = @"";
 //    
@@ -300,7 +335,7 @@
 {
     if (isNull) {
         self.priceLabel.text = @"0.00元";
-        self.priceDetailLb.text = @"总额：%0.00 立减：￥0.00";
+        self.priceDetailLb.text = @"总额：￥0.00 立减：￥0.00";
         [self.settlementBtn setTitle:@"去结算(0)" forState:UIControlStateNormal];
         
 
@@ -404,25 +439,6 @@
                 }
             }
              [_chooseArray addObject:test1dic];
-}
--(void)addOrDeleteGoodsWithItem:(shopCarCellItem *)item count:(int)count isAdd:(BOOL)isAdd
-{
-    NSString * productNo = item.productNo;
-    NSMutableDictionary * test1dic = [NSMutableDictionary dictionary];
-    [test1dic setObject:productNo forKey:@"productNo"];
-    [test1dic setObject:@(count) forKey:@"quantity"];
-    [test1dic setObject:item.productPrice forKey:@"unitPrice"];
-
-    if (isAdd) {
-        [_chooseArray addObject:test1dic];
-    }else{
-        for (int i =0; i<_chooseArray.count; i++) {
-            NSDictionary *dic =[_chooseArray objectAtIndex:i];
-            if ([[dic objectForKey:@"productNo"] isEqualToString:item.productNo]) {
-                [_chooseArray removeObject:dic];
-            }
-        }
-    }
 }
 
 

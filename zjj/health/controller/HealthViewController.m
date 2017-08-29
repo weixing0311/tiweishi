@@ -60,7 +60,7 @@
     _userView.frame =CGRectMake(0, 0, JFA_SCREEN_WIDTH, 64);
     [self.view addSubview:_userView];
     
-    [_userView.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
     [self buildUserListView];
     [self buildTableview];
@@ -260,7 +260,7 @@
 
 -(void)refreshMyInfoView
 {
-    [_userView.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
 }
 
@@ -391,7 +391,7 @@
     
     [self getListInfo];
     [self getHeaderInfo];
-    [_userView.headImageView setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     _userView.nameLabel.text =[SubUserItem shareInstance].nickname;
     
 }

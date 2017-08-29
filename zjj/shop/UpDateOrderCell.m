@@ -19,21 +19,21 @@
 }
 -(void)setUpCellWithGoodsDetailItem:(GoodsDetailItem *)item
 {
-    [self.headImageView setImageWithURL:[NSURL URLWithString:item.image]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.image]];
     self.titleLabel.text = item.productName;
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",item.productPrice];
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[item.productPrice floatValue]];
 }
 -(void)setUpCellWithDict:(NSDictionary *)dic
 {
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]]];
     self.titleLabel.text = [dic safeObjectForKey:@"productName"];
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"]floatValue]];
 }
 -(void)setUpCellWithShopCarCellItem:(shopCarCellItem *)item
 {
-    [self.headImageView setImageWithURL:[NSURL URLWithString:item.image]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.image]];
     self.titleLabel.text = item.productName;
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",item.productPrice];
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[item.productPrice floatValue]];
     self.countLabel.text = [NSString stringWithFormat:@"x%@",item.quantity];
 
 }

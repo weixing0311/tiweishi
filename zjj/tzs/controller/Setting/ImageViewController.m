@@ -21,7 +21,7 @@
     [self setTBRedColor];
    self.title = @"头像";
 
-    [self.imageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     
     [self.imageView setMyImageWithUrl:[UserModel shareInstance].headUrl placeHolder:[UIImage imageNamed:@"head_default"] success:^(UIImage *image) {
         CGSize size = [image changeimageViewSize];

@@ -25,6 +25,10 @@
 
 }
 - (IBAction)showCxDetail:(id)sender {
+    
+    if (self.hdTitleLabel.text.length<1) {
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(showCuXiaoDetailViewWithCell:)]) {
         [self.delegate showCuXiaoDetailViewWithCell:self];
     }
@@ -52,8 +56,8 @@
 {
     shopItem = item;
     self.titleLabel.text = item.productName;
-    [self.headerImgView setImageWithURL:[NSURL URLWithString:item.image]];
-    self.priceLabel.text = [NSString stringWithFormat:@"%@￥",item.productPrice];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:item.image]];
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[item.productPrice doubleValue]];
 //    self.weightLabel.text = [NSString stringWithFormat:@"重量：%@kg",item.productWeight];
     self.countLabel.text = item.quantity;
     int restrictionNum = [item.restrictionNum intValue];
@@ -64,14 +68,14 @@
         if (restrictionNum>0) {
             self.hdTitleLabel.text = @"限购";
             self.huodongLabel.text = [NSString stringWithFormat:@"该商品单笔限购%d件",restrictionNum];
-            if (item.promotList.count>0) {
+            if (item.promotTitle.count>0) {
                 self.moreYhLabel.hidden =NO;
             }else{
                 self.moreYhLabel.hidden = YES;
             }
         }else{
-            NSString * typeStr = [[item.promotList objectAtIndex:0]objectForKey:@"promotionType"];
-            NSString * message = [[item.promotList objectAtIndex:0]objectForKey:@"promotionDetail"];
+            NSString * typeStr = [[item.promotTitle objectAtIndex:0]objectForKey:@"promotionType"];
+            NSString * message = [[item.promotTitle objectAtIndex:0]objectForKey:@"promotionDetail"];
             if ([typeStr isEqualToString:@"1"]) {
                 self.hdTitleLabel.text = @"满减";
             }else{

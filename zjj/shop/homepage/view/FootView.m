@@ -10,7 +10,14 @@
 #import "FootView.h"
 
 @implementation FootView
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.bottomLabel.adjustsFontSizeToFitWidth = YES;
+    }
+    return self;
+}
 - (IBAction)didClickFootBtn:(UIButton *)sender {
     
     if (self.delegate&&[self.delegate respondsToSelector:@selector(didClickFootViewBtnWithTag:)]) {

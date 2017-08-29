@@ -208,11 +208,9 @@
             //        header.statusLabel .text = @"待收货";
             
         }
-        
-        else if (status ==10)
+        else
         {
             footBtn.hidden = YES;
-            //        header.statusLabel .text= @"已完成";
         }
         
         
@@ -286,8 +284,8 @@
             }
             else if(status ==1){
                 cell.payTsView.hidden =NO;
-                cell.lastTime.text =[NSString stringWithFormat:@"剩余：%@",@"0小时0分"];
-                cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%@",[_infoDict safeObjectForKey:@"freight"]];
+                cell.lastTime.text =[NSString stringWithFormat:@"剩余时间:"];
+                cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%.2f",[[_infoDict safeObjectForKey:@"freight"]doubleValue]];
                 NSString * finishTime =[_infoDict safeObjectForKey:@"timer"];
                 [cell setTimeLabelText:finishTime];
 
@@ -327,9 +325,9 @@
         }
         NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
         return cell;
@@ -363,8 +361,8 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        cell.value1label.text = [NSString stringWithFormat:@"+￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]];
-        cell.value2label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"totalPrice"]floatValue]-[[_infoDict objectForKey:@"payableAmount"]floatValue]];
+        cell.value1label.text = [NSString stringWithFormat:@"+￥0.00"];
+        cell.value2label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"freight"] floatValue]];
         cell.value2label.textColor = [UIColor redColor];
         cell.value3label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
         return cell;

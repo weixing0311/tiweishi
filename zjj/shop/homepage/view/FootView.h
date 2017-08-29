@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol footViewDelegate;
 @interface FootView : UIView
+@property (weak, nonatomic) IBOutlet UILabel *bottomLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *secionimage;
 @property (weak, nonatomic) IBOutlet UIImageView *title;

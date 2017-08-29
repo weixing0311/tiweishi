@@ -29,8 +29,6 @@
 		6C125E551F441D2200B2323F /* delete2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C125E531F441D2200B2323F /* delete2@2x.png */; };
 		6C125E561F441D2200B2323F /* delete2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C125E541F441D2200B2323F /* delete2@3x.png */; };
 		6C125E5E1F441F0800B2323F /* QRCodeResignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C125E5D1F441F0800B2323F /* QRCodeResignViewController.m */; };
-		6C125E631F44226A00B2323F /* ResignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C125E611F44226A00B2323F /* ResignListViewController.m */; };
-		6C125E641F44226A00B2323F /* ResignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C125E621F44226A00B2323F /* ResignListViewController.xib */; };
 		6C13C5D11EFA51A100435A27 /* UpdataOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C13C5CF1EFA51A100435A27 /* UpdataOrderViewController.m */; };
 		6C13C5D21EFA51A100435A27 /* UpdataOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C13C5D01EFA51A100435A27 /* UpdataOrderViewController.xib */; };
 		6C13C5D61EFA558300435A27 /* UpDateOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C13C5D41EFA558300435A27 /* UpDateOrderCell.m */; };
@@ -43,7 +41,6 @@
 		6C13C5E51EFAB18700435A27 /* person-xiao.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C13C5E31EFAB18700435A27 /* person-xiao.png */; };
 		6C1B2B581EECDE350092AAF0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1B2B571EECDE350092AAF0 /* main.m */; };
 		6C1B2B5B1EECDE350092AAF0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1B2B5A1EECDE350092AAF0 /* AppDelegate.m */; };
-		6C1B2B641EECDE350092AAF0 /* zjj.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6C1B2B621EECDE350092AAF0 /* zjj.xcdatamodeld */; };
 		6C1B2B661EECDE350092AAF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C1B2B651EECDE350092AAF0 /* Assets.xcassets */; };
 		6C1B2BC11EECDEFD0092AAF0 /* JFABaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1B2B731EECDEFD0092AAF0 /* JFABaseTableViewController.m */; };
 		6C1B2BC21EECDEFD0092AAF0 /* foundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1B2B7F1EECDEFD0092AAF0 /* foundViewController.m */; };
@@ -596,6 +593,7 @@
 		6CDE37FD1EF113EE001F10DE /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDE37FC1EF113EE001F10DE /* CustomLabel.m */; };
 		6CDE37FF1EF117B1001F10DE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CDE37FE1EF117B1001F10DE /* CoreText.framework */; };
 		6CDE38041EF11A86001F10DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CDE38031EF11A86001F10DE /* CoreGraphics.framework */; };
+		6CF778CC1F556BBB0002BDC7 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF778CB1F556BBB0002BDC7 /* map.png */; };
 		6CFD992D1EF2355A00802AA4 /* LineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CFD992C1EF2355A00802AA4 /* LineChart.m */; };
 		6CFD992F1EF26CEA00802AA4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CFD992E1EF26CEA00802AA4 /* libz.tbd */; };
 		6CFD99341EF26DBB00802AA4 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CFD99331EF26DBB00802AA4 /* UserModel.m */; };
@@ -639,9 +637,6 @@
 		6C125E541F441D2200B2323F /* delete2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete2@3x.png"; sourceTree = "<group>"; };
 		6C125E5C1F441F0800B2323F /* QRCodeResignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeResignViewController.h; sourceTree = "<group>"; };
 		6C125E5D1F441F0800B2323F /* QRCodeResignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeResignViewController.m; sourceTree = "<group>"; };
-		6C125E601F44226A00B2323F /* ResignListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResignListViewController.h; sourceTree = "<group>"; };
-		6C125E611F44226A00B2323F /* ResignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResignListViewController.m; sourceTree = "<group>"; };
-		6C125E621F44226A00B2323F /* ResignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResignListViewController.xib; sourceTree = "<group>"; };
 		6C13C5CE1EFA51A100435A27 /* UpdataOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdataOrderViewController.h; sourceTree = "<group>"; };
 		6C13C5CF1EFA51A100435A27 /* UpdataOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdataOrderViewController.m; sourceTree = "<group>"; };
 		6C13C5D01EFA51A100435A27 /* UpdataOrderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdataOrderViewController.xib; sourceTree = "<group>"; };
@@ -660,7 +655,6 @@
 		6C1B2B571EECDE350092AAF0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6C1B2B591EECDE350092AAF0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6C1B2B5A1EECDE350092AAF0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6C1B2B631EECDE350092AAF0 /* zjj.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = zjj.xcdatamodel; sourceTree = "<group>"; };
 		6C1B2B651EECDE350092AAF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C1B2B6A1EECDE350092AAF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C1B2B721EECDEFD0092AAF0 /* JFABaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFABaseTableViewController.h; sourceTree = "<group>"; };
@@ -1422,6 +1416,7 @@
 		6CDE37FC1EF113EE001F10DE /* CustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLabel.m; sourceTree = "<group>"; };
 		6CDE37FE1EF117B1001F10DE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		6CDE38031EF11A86001F10DE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6CF778CB1F556BBB0002BDC7 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		6CFD992B1EF2355A00802AA4 /* LineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineChart.h; sourceTree = "<group>"; };
 		6CFD992C1EF2355A00802AA4 /* LineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineChart.m; sourceTree = "<group>"; };
 		6CFD992E1EF26CEA00802AA4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1509,9 +1504,6 @@
 				6C125E3C1F43EBE300B2323F /* ResignViewController.h */,
 				6C125E3D1F43EBE300B2323F /* ResignViewController.m */,
 				6C125E3E1F43EBE300B2323F /* ResignViewController.xib */,
-				6C125E601F44226A00B2323F /* ResignListViewController.h */,
-				6C125E611F44226A00B2323F /* ResignListViewController.m */,
-				6C125E621F44226A00B2323F /* ResignListViewController.xib */,
 			);
 			name = resign;
 			sourceTree = "<group>";
@@ -1574,7 +1566,6 @@
 				6C1B2B651EECDE350092AAF0 /* Assets.xcassets */,
 				6C1B2B6A1EECDE350092AAF0 /* Info.plist */,
 				6C1B2BEE1EED3B650092AAF0 /* Main.storyboard */,
-				6C1B2B621EECDE350092AAF0 /* zjj.xcdatamodeld */,
 				6C1B2B561EECDE350092AAF0 /* Supporting Files */,
 			);
 			path = zjj;
@@ -3011,6 +3002,7 @@
 		6CD011331EF8CADA00FB9419 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6CF778CB1F556BBB0002BDC7 /* map.png */,
 				6CDBC3F21F4FC7E30059A15E /* bodyfat_buy_1.png */,
 				6CDBC3F31F4FC7E30059A15E /* bodyfat_buy_2.png */,
 				6CDBC3F41F4FC7E30059A15E /* bodyfat_buy_3.png */,
@@ -3642,6 +3634,7 @@
 				6C3638391EFCAF5500268851 /* setpage@2x.png in Resources */,
 				6CD92FDC1F0A786E00D7989E /* ShareDetailView.xib in Resources */,
 				6CD010D21EF62B1D00FB9419 /* AddressListViewController.xib in Resources */,
+				6CF778CC1F556BBB0002BDC7 /* map.png in Resources */,
 				6C3637F61EFCAF5500268851 /* footer-ShoppingCart-red@2x.png in Resources */,
 				6CCEEB431EEE8591002E1618 /* MineTableViewCell.xib in Resources */,
 				6C3637DC1EFCAF5500268851 /* balance@2x.png in Resources */,
@@ -3750,7 +3743,6 @@
 				6C125DFA1F33103800B2323F /* message_banner3.jpg in Resources */,
 				6C3638D51EFCAF9400268851 /* yinpai@3x.png in Resources */,
 				6C73B01D1F31C2320042C1A2 /* message_ol@3x.png in Resources */,
-				6C125E641F44226A00B2323F /* ResignListViewController.xib in Resources */,
 				6C3638BB1EFCAF9400268851 /* record-freight@3x.png in Resources */,
 				6C125E121F3A994000B2323F /* tzs_bg@3x.png in Resources */,
 				6CD930161F0C953500D7989E /* AddTradingPsController.xib in Resources */,
@@ -3916,7 +3908,6 @@
 				6CCEEB211EEE7F56002E1618 /* HomePageViewController.m in Sources */,
 				6C36397A1EFE47E100268851 /* AAChartView.m in Sources */,
 				6CC81FD21F1FA0E200EB470C /* DistributionBottomCell.m in Sources */,
-				6C125E631F44226A00B2323F /* ResignListViewController.m in Sources */,
 				6C3639841EFE47E100268851 /* AAAnimation.m in Sources */,
 				6C363A071F03940500268851 /* MJRefreshFooterView.m in Sources */,
 				6CD92FF81F0B28FE00D7989E /* ShareCell.m in Sources */,
@@ -3931,7 +3922,6 @@
 				6C3639881EFE47E100268851 /* AAChart.m in Sources */,
 				6C3639AD1EFE603F00268851 /* TZSDGUPCell.m in Sources */,
 				6CD0107D1EF3CABE00FB9419 /* MyCollectionViewController.m in Sources */,
-				6C1B2B641EECDE350092AAF0 /* zjj.xcdatamodeld in Sources */,
 				6CD010EF1EF7F9EB00FB9419 /* DecailTitleCell.m in Sources */,
 				6CD010FE1EF7FD6E00FB9419 /* DetailReturnGoodsCell.m in Sources */,
 				6C43110F1F0632AB0094EFF4 /* UIView+Board.m in Sources */,
@@ -4326,19 +4316,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		6C1B2B621EECDE350092AAF0 /* zjj.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6C1B2B631EECDE350092AAF0 /* zjj.xcdatamodel */,
-			);
-			currentVersion = 6C1B2B631EECDE350092AAF0 /* zjj.xcdatamodel */;
-			path = zjj.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 6C1B2B4B1EECDE340092AAF0 /* Project object */;
 }

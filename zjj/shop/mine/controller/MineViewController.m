@@ -26,7 +26,7 @@
 //    self.navigationController.navigationBarHidden = YES;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getWaitPayCount];
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
 
 }
 - (void)viewDidLoad {
@@ -36,16 +36,18 @@
 //    [self setNbColor];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshMyInfoView) name:kRefreshInfo object:nil];
 
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nickName.text = [UserModel shareInstance].nickName;
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.waitSendLabel.hidden = YES;
     self.waitpayCountLabel .hidden = YES;
+    [[UserModel shareInstance]getbalance];
+
 }
 -(void)refreshMyInfoView
 {
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head-default"]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head-default"]];
     self.nickName.text = [UserModel shareInstance].nickName;
 }
 
@@ -228,10 +230,14 @@
     
     if (type ==SSDKPlatformSubTypeWechatSession||type ==SSDKPlatformSubTypeWechatTimeline) {
         
-        [shareParams SSDKSetupWeChatParamsByText:@"" title:@"邀请伙伴" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+        [shareParams SSDKSetupWeChatParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天" title:@"脂将军，互联网体脂管理领导者" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].qrcodeImageUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
     }else{
         
-        [shareParams SSDKSetupQQParamsByText:@"" title:@"" url:[NSURL URLWithString:url] audioFlashURL:nil videoFlashURL:nil thumbImage:[UserModel shareInstance].headUrl images:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+        [shareParams SSDKSetupShareParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天"
+                                         images:[UserModel shareInstance].qrcodeImageUrl
+                                            url:[NSURL URLWithString:url]
+                                          title:@"脂将军，互联网体脂管理领导者"
+                                           type:SSDKContentTypeAuto];
         
         
         

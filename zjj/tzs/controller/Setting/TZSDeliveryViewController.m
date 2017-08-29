@@ -87,7 +87,7 @@
     }
     cell.selectionStyle =UITableViewCellSelectionStyleNone;
     NSDictionary *dict =[_dataArray objectAtIndex:indexPath.row];
-    [cell.headimageView setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+    [cell.headimageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     cell.delegate = self;
     cell.tag = indexPath.row;
     
@@ -104,7 +104,7 @@
     }
     
     cell.titleLabel .text = [dict safeObjectForKey:@"productName"];
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dict safeObjectForKey:@"unitPrice"]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dict safeObjectForKey:@"unitPrice"] doubleValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"库存数量%d",[[dict objectForKey:@"quantity"]intValue]];
     return cell;
 

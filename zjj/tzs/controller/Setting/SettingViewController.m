@@ -48,7 +48,7 @@
     isBigHeadImage = NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterOtherViewContoller:) name:@"shouyintaibackToViewController" object:nil];
     
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
@@ -71,7 +71,7 @@
 //刷新个人信息
 -(void)refreshUserInfo
 {
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
@@ -154,7 +154,7 @@
         [ImagespView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenMe) ]];
         
         bigHeadImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 130, 60, 60)];
-        [bigHeadImageView setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+        [bigHeadImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
         bigHeadImageView.userInteractionEnabled = YES;
         
         [ImagespView addSubview:bigHeadImageView];
@@ -355,17 +355,17 @@
 
     if (type ==SSDKPlatformSubTypeWechatSession||type ==SSDKPlatformSubTypeWechatTimeline) {
         
-        [shareParams SSDKSetupWeChatParamsByText:@"邀请伙伴" title:@"邀请伙伴" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
-    }else if(type ==SSDKPlatformTypeQQ){
-     
-//        [shareParams SSDKSetupQQParamsByText:@"邀请伙伴" title:@"邀请伙伴" url:[NSURL URLWithString:url] audioFlashURL:nil videoFlashURL:nil thumbImage:[UserModel shareInstance].headUrl images:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
-    
-        [shareParams SSDKSetupShareParamsByText:@""
-                                         images:[UserModel shareInstance].headUrl
+        [shareParams SSDKSetupWeChatParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天" title:@"脂将军，互联网体脂管理领导者" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].qrcodeImageUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+    }else{
+        
+        [shareParams SSDKSetupShareParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天"
+                                         images:[UserModel shareInstance].qrcodeImageUrl
                                             url:[NSURL URLWithString:url]
-                                          title:@"邀请伙伴"
+                                          title:@"脂将军，互联网体脂管理领导者"
                                            type:SSDKContentTypeAuto];
-    
+        
+        
+        
     }
     [shareParams SSDKEnableUseClientShare];
     [SVProgressHUD showWithStatus:@"开始分享"];

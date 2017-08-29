@@ -13,6 +13,7 @@
 #import "ShopTestViewController.h"
 #import "TabbarViewController.h"
 #import "HelpViewController.h"
+#import "foundViewController.h"
 @interface TzsTabbarViewController ()
 
 @end
@@ -27,15 +28,16 @@
     
     HelpViewController *news = [[HelpViewController alloc]init];
     news.urlStr = @"app/fatTeacher/help.html";
-    news.title = @"帮助中心";
+    news.title = @"帮助";
     
-    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
+//    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
+    foundViewController * found =[[foundViewController alloc]init];
     UINavigationController * nav2 = [[UINavigationController alloc]initWithRootViewController:found];
     nav2.navigationBar.barTintColor = [UIColor redColor];
-    found.title = @"减脂学院";
+    found.title = @"发现";
     
     SettingViewController *shop = [[SettingViewController alloc]init];
-    shop.title = @"个人中心";
+    shop.title = @"我的";
     UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:shop];
     nav3.navigationBar.barTintColor = [UIColor redColor];
 
@@ -53,8 +55,8 @@
     item2.image = [UIImage imageNamed:@"fonter-help"];
     item2.selectedImage = [[UIImage imageNamed:@"fonter-help-red"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    item3.image = [UIImage imageNamed:@"footer-jianzhi"];
-    item3.selectedImage = [[UIImage imageNamed:@"footer-jianzhi-red"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    item3.image = [UIImage imageNamed:@"find gray_"];
+    item3.selectedImage = [[UIImage imageNamed:@"find"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     item4.image = [UIImage imageNamed:@"footer-PersonalCenter"];
     item4.selectedImage = [[UIImage imageNamed:@"footer-PersonalCenter-red"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

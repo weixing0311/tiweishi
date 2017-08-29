@@ -25,6 +25,7 @@
     [super viewDidLoad];
     [self setTBRedColor];
     self.title = @"脂将军体脂师合作协议";
+
     // Do any additional setup after loading the view from its nib.
 }
 //行为规范

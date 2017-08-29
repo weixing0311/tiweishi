@@ -111,6 +111,7 @@
         if (statusStr&&[statusStr isEqualToString:@"success"]) {
             success(dic);
         }else{
+            [SVProgressHUD dismiss];
             [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
             NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
             
@@ -124,6 +125,7 @@
 
         if ([error code] ==-1009) {
             [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
+            
 //            return ;
         }
         
@@ -131,9 +133,11 @@
             [[UserModel shareInstance] showInfoWithStatus:@"连接失败，请检查网络"];
 //            return;
         }
-//        failure(error);
-    }];
-    return task;
+        if ([error code]==-1011) {
+            [[UserModel shareInstance]showInfoWithStatus:@"页面丢失--404"];
+        }
+        failure(error);
+    }];    return task;
 }
 
 -(NSURLSessionTask*)postImage:(NSString*)url

@@ -67,8 +67,8 @@
         [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
+//        [SVProgressHUD dismiss];
+//        [[UserModel shareInstance] showErrorWithStatus:@"修改失败"];
     }];
 
 }
@@ -92,7 +92,11 @@
         
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {
-        [[UserModel shareInstance] showErrorWithStatus:@"发送失败"];
+        [_timer invalidate];
+        [self.verBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        self.verBtn.enabled = YES;
+
+        
     }];
 
 

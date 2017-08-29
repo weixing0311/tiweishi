@@ -223,7 +223,7 @@
     
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 0.5, JFA_SCREEN_WIDTH, 40);
-    footer.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic objectForKey:@"totalPrice"]];
+footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"totalPrice"]floatValue]];
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     [view addSubview:footer];
 
@@ -253,7 +253,7 @@
     NSDictionary * infoDic = [arr objectAtIndex:indexPath.row];
     
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
-    [cell.headImageView setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+    [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
     
     int stockType = [[dic safeObjectForKey:@"stockType"]intValue];

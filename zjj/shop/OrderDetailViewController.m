@@ -144,7 +144,7 @@
         if (status==3||status==1) {
         return 40;
         }else{
-            return 0;
+            return 5;
         }
     }
 }
@@ -295,7 +295,7 @@
         
         cell.titleLabel.text = [_infoDict safeObjectForKey:@"consigneeName"];
         cell.addressLabel.text =[_infoDict safeObjectForKey:@"consigneeAddress"];
-        cell.phonenumLabel.text = [_infoDict safeObjectForKey:@"consigneePhone"];
+        cell.phonenumLabel.text =[[UserModel shareInstance]changeTelephone:[_infoDict safeObjectForKey:@"consigneePhone"]] ;
         return cell;
     }
     else if (indexPath.section ==2) {
@@ -307,9 +307,9 @@
         NSDictionary *dic = [_dataArray objectAtIndex:indexPath.row];
         
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"]floatValue]];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"normalPrice"]floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
         return cell;
@@ -348,11 +348,11 @@
         cell.value2label.text =[NSString stringWithFormat:@"+￥%.2f",[[_infoDict safeObjectForKey:@"freight"]floatValue]];
         cell.value4label.text =[NSString stringWithFormat:@"-￥%.2f",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]-[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];
         cell.value3label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];
-        
+        cell.title4label.text = @"商品优惠";
         if (status ==1) {
             cell.title3label.text = @"已付款";
         }else{
-            cell.title3label.text = @"应付款";
+            cell.title3label.text = @"需付款";
         }
         
         return cell;

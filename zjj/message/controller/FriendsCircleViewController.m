@@ -78,8 +78,6 @@
         for (NSMutableDictionary * infoDic in infoArr) {
             
             NSMutableArray * imageArr =[infoDic safeObjectForKey:@"pictures"];
-//            NSString * cardUrl = [infoDic safeObjectForKey:@"cardUrl"];
-//            [imageArr addObject:cardUrl];
             float rowHeight = [self CalculateCellHieghtWithContent:[infoDic safeObjectForKey:@"content"] images:imageArr];
             [infoDic safeSetObject:@(rowHeight) forKey:@"rowHeight"];
             NSMutableArray * images = [NSMutableArray array];
@@ -107,7 +105,6 @@
     } failure:^(NSError *error) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
-        [[UserModel shareInstance]showInfoWithStatus:[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]];
     }];
     
 
@@ -245,6 +242,17 @@
 
         return;
     }
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
+    
+    
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/msg/countShareNum.do" paramters:params success:^(NSDictionary *dic) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
     
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];

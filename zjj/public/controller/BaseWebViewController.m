@@ -170,22 +170,6 @@
         [webView loadRequest:navigationAction.request];
     }
     DLog(@"navi.url --%@",url);
-    if([url containsString:@"notify.jsp?"] )//支付成功回调
-    {
-        NSDictionary * urlDict = [self getURLParameters:url];
-        
-        int orderType = [[urlDict safeObjectForKey:@"orderType"]intValue];
-        orderType=3;
-        
-        
-        PaySuccessViewController * pas = [[PaySuccessViewController alloc]init];
-        pas.orderType = orderType;
-        [self.navigationController pushViewController:pas animated:YES];
-        
-        decisionHandler(WKNavigationActionPolicyAllow);
-
-        return;
-    }
     if ([url containsString:@"alipay://"]) {
         NSString* dataStr=[url substringFromIndex:23];
         NSLog(@"%@",dataStr);
@@ -200,7 +184,23 @@
         decisionHandler(WKNavigationActionPolicyAllow);
         return;
     }
-    
+    if([url containsString:@"notify.jsp?"]&&![url containsString:@"https://openapi.alipay.com/gateway.do"] )//支付成功回调
+    {
+        NSDictionary * urlDict = [self getURLParameters:url];
+        
+        int orderType = [[urlDict safeObjectForKey:@"orderType"]intValue];
+        orderType=3;
+        
+        
+        PaySuccessViewController * pas = [[PaySuccessViewController alloc]init];
+        pas.orderType = orderType;
+        [self.navigationController pushViewController:pas animated:YES];
+        
+        decisionHandler(WKNavigationActionPolicyAllow);
+        
+        return;
+    }
+
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
@@ -418,6 +418,9 @@
     self.progressView.hidden = YES;
 
     [ webView evaluateJavaScript:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'" completionHandler:nil];
+    
+    
+    [self remoViewCookies];
 
 }
 // 页面加载失败时调用
@@ -815,7 +818,28 @@
     return params;
 }
 
-
+//清除WK缓存，否则H5界面跟新，这边不会更新
+-(void)remoViewCookies{
+    
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue>=9.0) {
+        //        - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation 中就成功了 。
+        //    然而我们等到了iOS9！！！没错！WKWebView的缓存清除API出来了！代码如下：这是删除所有缓存和cookie的
+        NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+        //// Date from
+        NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        //// Execute
+        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
+        }];
+    }else{
+        //iOS8清除缓存
+        NSString * libraryPath =  NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject;
+        NSString * cookiesFolderPath = [libraryPath stringByAppendingString:@"/Cookies"];
+        [[NSFileManager defaultManager] removeItemAtPath:cookiesFolderPath error:nil];
+    }
+    
+    
+}
 
 - (void)dealloc {
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];

@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2CJ-xp-SqC">
-                    <rect key="frame" x="40" y="270" width="295" height="20"/>
+                    <rect key="frame" x="40" y="254.5" width="295" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="SP7-Rg-9c5"/>
                     </constraints>
@@ -31,19 +31,19 @@
                         <action selector="thgf:" destination="-1" eventType="touchUpInside" id="h7h-op-xOZ"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3、其他以粗体、下划线或者其他形式标识的重要条款。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Fw-fe-DK8">
-                    <rect key="frame" x="40" y="103" width="315" height="38"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3、其它以粗体、下划线或者其他形式标识的重要条款。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Fw-fe-DK8">
+                    <rect key="frame" x="40" y="92" width="315" height="33.5"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="38" id="ANl-Xc-ynI"/>
+                        <constraint firstAttribute="height" priority="15" constant="34" id="ANl-Xc-ynI"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2、与您约定法律适用和管辖的条款；" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="426-hK-1lA">
-                    <rect key="frame" x="40" y="77" width="315" height="21"/>
+                    <rect key="frame" x="40" y="72" width="315" height="15"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="l7q-8c-y5K"/>
+                        <constraint firstAttribute="height" constant="15" id="l7q-8c-y5K"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -59,16 +59,16 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1、与您约定免除或限制责任的条款；" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ia-TY-GRq">
-                    <rect key="frame" x="40" y="51" width="315" height="21"/>
+                    <rect key="frame" x="40" y="51" width="315" height="15"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="91c-Kt-fUL"/>
+                        <constraint firstAttribute="height" constant="15" id="91c-Kt-fUL"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="阅读协议的过程中，如果您不同意相关协议，或其他中的任何条款约定，您应立即停止申请程序！" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0E0-JX-rs6">
-                    <rect key="frame" x="20" y="161" width="335" height="61"/>
+                    <rect key="frame" x="20" y="145.5" width="335" height="61"/>
                     <constraints>
                         <constraint firstAttribute="height" priority="20" constant="100" id="vZF-uA-4md"/>
                     </constraints>
@@ -77,7 +77,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ruw-dC-mCa">
-                    <rect key="frame" x="40" y="242" width="295" height="20"/>
+                    <rect key="frame" x="40" y="226.5" width="295" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="6Cr-3U-oeU"/>
                     </constraints>
@@ -89,14 +89,20 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz1-bb-xFV">
-                    <rect key="frame" x="40" y="340" width="295" height="45"/>
-                    <color key="backgroundColor" red="0.99109692260000004" green="0.29595693789999999" blue="0.14462165129999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="40" y="324.5" width="295" height="45"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.039215686274509803" blue="0.23137254901960785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="NgL-og-wOz"/>
                     </constraints>
                     <state key="normal" title="同意协议">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="IAgree:" destination="-1" eventType="touchUpInside" id="JNH-R6-3eO"/>
                     </connections>
@@ -119,7 +125,7 @@
                 <constraint firstItem="2CJ-xp-SqC" firstAttribute="top" secondItem="Ruw-dC-mCa" secondAttribute="bottom" constant="8" id="SA2-UG-rTq"/>
                 <constraint firstItem="Ruw-dC-mCa" firstAttribute="top" secondItem="0E0-JX-rs6" secondAttribute="bottom" constant="20" id="T0N-S9-eCY"/>
                 <constraint firstItem="Ruw-dC-mCa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="ZiB-FE-AU2"/>
-                <constraint firstItem="426-hK-1lA" firstAttribute="top" secondItem="4Ia-TY-GRq" secondAttribute="bottom" constant="5" id="Zjb-Ti-JQF"/>
+                <constraint firstItem="426-hK-1lA" firstAttribute="top" secondItem="4Ia-TY-GRq" secondAttribute="bottom" constant="6" id="Zjb-Ti-JQF"/>
                 <constraint firstAttribute="trailing" secondItem="pCz-Uw-RGT" secondAttribute="trailing" constant="20" id="b0u-AB-I9i"/>
                 <constraint firstAttribute="trailing" secondItem="Ruw-dC-mCa" secondAttribute="trailing" constant="40" id="iem-lf-fND"/>
                 <constraint firstItem="pCz-Uw-RGT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="reR-HO-eBe"/>

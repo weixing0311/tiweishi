@@ -9,6 +9,8 @@
 #import "ContactUsViewController.h"
 
 @interface ContactUsViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 
 @end
 
@@ -22,7 +24,11 @@
     [super viewDidLoad];
     self.title = @"联系我们";
     [self setTBRedColor];
+    _addressLabel.adjustsFontSizeToFitWidth = YES;
     // Do any additional setup after loading the view from its nib.
+}
+- (IBAction)didClickMobile:(id)sender {
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"tel://4006119516"]];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -26,6 +26,7 @@
     deleteBtn.layer.cornerRadius  = 5;
     deleteBtn.layer.borderWidth = 1;
     deleteBtn.layer.borderColor=HEXCOLOR(0x999999).CGColor;
+    self.mobileLabel.adjustsFontSizeToFitWidth = YES;
     // Initialization code
 }
 

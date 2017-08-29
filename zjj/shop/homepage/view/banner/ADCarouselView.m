@@ -77,7 +77,7 @@
 {
     _imgUrl = imgUrl;
     
-    [self.imgView setImageWithURL:[NSURL URLWithString:_imgUrl] placeholderImage:self.placeholderImage];
+    [self.imgView sd_setImageWithURL:[NSURL URLWithString:_imgUrl] placeholderImage:self.placeholderImage];
 }
 
 - (void)layoutSubviews

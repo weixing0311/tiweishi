@@ -122,11 +122,11 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10;
+    return 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10;
+    return 1;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -134,6 +134,8 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
+    int stockType = [[_infoDict safeObjectForKey:@"stockType"]intValue];
     if (section ==0)
     {
         return _dataArray.count;
@@ -141,7 +143,13 @@
     }
     else
     {
-        return 3;
+        if (stockType==3) {
+            return 4;
+        }
+        else
+        {
+            return 3;
+        }
         
     }
 }
@@ -169,11 +177,19 @@
         NSDictionary *dic = [_dataArray objectAtIndex:indexPath.section];
         
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
-        [cell.headImageView setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
         cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
+        int stockType = [[_infoDict safeObjectForKey:@"stockType"]intValue];
+        if (stockType ==3) {
+            cell.price2label.text = [NSString stringWithFormat:@"成本单价:￥%.2f",[[dic safeObjectForKey:@"costPrice"] floatValue]];
+            
+        }else{
+            cell.price2label.text = @"";
+        }
+
         return cell;
     }
     else
@@ -201,7 +217,7 @@
             cell.textLabel.text =[NSString stringWithFormat:@"订购人：%@(TEL:%@)",[_infoDict objectForKey:@"nickName"],[[UserModel shareInstance]changeTelephone:[_infoDict objectForKey:@"phone"]]];
             return cell;
 
-        }else{
+        }else if(indexPath.row ==2){
             static NSString * identifier = @"cell1";
             UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
             if (!cell) {
@@ -211,6 +227,16 @@
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];
             return cell;
 
+        }else{
+            static NSString * identifier = @"cell1";
+            UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+            }
+            
+            cell.textLabel.text =[NSString stringWithFormat:@"完成时间：%@",[_infoDict objectForKey:@"payfinishTime"]];
+            return cell;
+   
         }
         
     }

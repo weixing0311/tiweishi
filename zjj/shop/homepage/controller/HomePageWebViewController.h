@@ -14,4 +14,5 @@
 @property (nonatomic,copy)NSString * contentStr;
 @property (nonatomic,copy)NSString * titleStr;
 @property (nonatomic,copy)NSString * imageUrl;
+@property (nonatomic,strong)UIProgressView * progressView;
 @end
