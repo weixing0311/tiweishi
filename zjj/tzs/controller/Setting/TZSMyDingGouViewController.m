@@ -13,7 +13,7 @@
 #import "OrderFootBtnView.h"
 #import "TZSOrderDetailViewController.h"
 #import "BaseWebViewController.h"
-@interface TZSMyDingGouViewController ()<orderFootBtnViewDelegate>
+@interface TZSMyDingGouViewController ()<orderFootBtnViewDelegate,tzsOrderDetailDelegate>
 
 @end
 
@@ -133,7 +133,7 @@
     view.backgroundColor =[UIColor colorWithWhite:.95 alpha:1];
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 40);
-    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"totalPrice"] floatValue]];
+    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"payableAmount"] floatValue]];
     NSString * payStr =@"";
     if (status ==10) {
         payStr =@"已付款";
@@ -199,7 +199,14 @@
     
     cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"]doubleValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
+    NSString * isgift = [NSString stringWithFormat:@"%@",[infoDic safeObjectForKey:@"isGift"]];
     
+    if ([isgift isEqualToString:@"1"]) {
+        cell.zengimageView.hidden =NO;
+    }else{
+        cell.zengimageView.hidden =YES;
+    }
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -208,6 +215,7 @@
     NSMutableDictionary * dic =[_dataArray objectAtIndex:indexPath.section];
     TZSOrderDetailViewController * ds =[[TZSOrderDetailViewController alloc]init];
     ds.orderNo =[dic objectForKey:@"orderNo"];
+    ds.delegate = self;
     [self.navigationController pushViewController:ds animated:YES];
     
 }
@@ -310,6 +318,9 @@
     
     
 }
-
+-(void)tzsOrderChange
+{
+    [self.tableview headerBeginRefreshing];
+}
 
 @end

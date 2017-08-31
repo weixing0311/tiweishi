@@ -26,6 +26,7 @@
 //    self.navigationController.navigationBarHidden = YES;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getWaitPayCount];
+    self.tableview.bounces = NO;
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
 
 }
@@ -195,11 +196,36 @@
 }
 
 - (IBAction)didTzs:(id)sender {
-    BodyFatDivisionAgreementViewController *bd = [[BodyFatDivisionAgreementViewController alloc]init];
-//    self.navigationController.navigationBarHidden = NO;
+    
+    int partnerId = [[UserModel shareInstance].partnerId intValue];
+    int parentId = [[UserModel shareInstance].parentId intValue];
+    
+    
+    if (parentId ==0&&partnerId==0) {
+        UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"您当前没有推荐人，请点击“取消”并联系您的推荐人索取二维码进行扫描绑定，或者联系客服后台绑定。如无需绑定推荐人，请点击“继续认证”。" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        [al addAction: [UIAlertAction actionWithTitle:@"取消 " style:UIAlertActionStyleCancel handler:nil]];
+        [al addAction: [UIAlertAction actionWithTitle:@"继续认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            BodyFatDivisionAgreementViewController *bd = [[BodyFatDivisionAgreementViewController alloc]init];
+            //    self.navigationController.navigationBarHidden = NO;
+            
+            bd.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:bd animated:YES];
 
-    bd.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:bd animated:YES];
+        }]];
+        [self presentViewController:al animated:YES completion:nil];
+        return;
+    }else{
+        BodyFatDivisionAgreementViewController *bd = [[BodyFatDivisionAgreementViewController alloc]init];
+        //    self.navigationController.navigationBarHidden = NO;
+        
+        bd.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:bd animated:YES];
+
+    }
+    
+    
 }
 #pragma mark -----分享
 -(void)didShareWithUrl:(NSString * )urlStr

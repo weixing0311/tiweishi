@@ -312,6 +312,14 @@
         cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"normalPrice"]floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
+        NSString * isgift = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"isGift"]];
+        
+        if ([isgift isEqualToString:@"1"]) {
+            cell.zengimageView.hidden =NO;
+        }else{
+            cell.zengimageView.hidden =YES;
+        }
+        
         return cell;
     }
     else if (indexPath.section ==3)
@@ -405,6 +413,10 @@
 
 -(void)didClickFirstBtnWithView:(OrderFootBtnView*)view
 {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(orderChange)]) {
+        [self.delegate orderChange];
+    }
+    
     int status = [[_infoDict safeObjectForKey:@"status"]intValue];
     if (status==3)
     {
@@ -427,6 +439,10 @@
 }
 -(void)didClickSecondBtnWithView:(OrderFootBtnView*)view
 {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(orderChange)]) {
+        [self.delegate orderChange];
+    }
+
     int status = [[_infoDict safeObjectForKey:@"status"]intValue];
     NSString * orderNo =[_infoDict safeObjectForKey:@"orderNo"];
 

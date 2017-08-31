@@ -127,7 +127,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8cL-Na-tbH">
                                     <rect key="frame" x="225" y="55" width="150" height="55"/>
@@ -233,7 +233,8 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nki-Bq-XuP">
-                            <rect key="frame" x="20" y="617" width="335" height="50"/>
+                            <rect key="frame" x="20" y="577" width="335" height="50"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="rDd-C4-QMn"/>
                             </constraints>
@@ -255,6 +256,7 @@
                     <color key="backgroundColor" red="0.94117647058823528" green="0.94901960784313721" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="6dN-mR-jhs" firstAttribute="top" secondItem="lzy-cP-Fr9" secondAttribute="bottom" constant="40" id="0Ue-vR-6sH"/>
+                        <constraint firstItem="Nki-Bq-XuP" firstAttribute="top" secondItem="PVm-dk-hjh" secondAttribute="bottom" constant="72" id="8PI-kw-Thu"/>
                         <constraint firstAttribute="trailing" secondItem="Nki-Bq-XuP" secondAttribute="trailing" constant="20" id="8cx-S5-WJU"/>
                         <constraint firstAttribute="trailing" secondItem="yUA-CQ-7xU" secondAttribute="trailing" constant="30" id="AHZ-i6-Wwf"/>
                         <constraint firstAttribute="trailing" secondItem="qZG-Ug-iHT" secondAttribute="trailing" constant="10" id="FJg-S0-x1c"/>
@@ -270,7 +272,7 @@
                         <constraint firstItem="yUA-CQ-7xU" firstAttribute="leading" secondItem="qUY-Tv-K87" secondAttribute="leading" constant="30" id="icc-xH-DaP"/>
                         <constraint firstAttribute="trailing" secondItem="4IW-Ke-jwE" secondAttribute="trailing" id="j6p-32-ret"/>
                         <constraint firstItem="lzy-cP-Fr9" firstAttribute="top" secondItem="yUA-CQ-7xU" secondAttribute="bottom" constant="45" id="kCf-XJ-a6w"/>
-                        <constraint firstAttribute="bottom" secondItem="Nki-Bq-XuP" secondAttribute="bottom" id="rIr-0X-8el"/>
+                        <constraint firstAttribute="bottom" secondItem="Nki-Bq-XuP" secondAttribute="bottom" constant="40" id="rIr-0X-8el"/>
                         <constraint firstAttribute="trailing" secondItem="6dN-mR-jhs" secondAttribute="trailing" id="tRP-yH-QLd"/>
                         <constraint firstItem="yUA-CQ-7xU" firstAttribute="top" secondItem="qUY-Tv-K87" secondAttribute="top" constant="40" id="urS-P0-6up"/>
                         <constraint firstItem="qZG-Ug-iHT" firstAttribute="leading" secondItem="qUY-Tv-K87" secondAttribute="leading" constant="10" id="wkA-Wu-YM3"/>

@@ -220,59 +220,59 @@
     
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"确定删除吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     [al addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        shopCarCellItem * item = [_dataArray objectAtIndex:cell.tag];
         
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        NSMutableDictionary *dic =[NSMutableDictionary dictionary];
+        [dic safeSetObject:item.productNo forKey:@"productNo"];
+        NSArray *arr = @[dic];
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:arr,@"productList",[UserModel shareInstance].userId,@"userId", nil];
+        
+        NSString *jsonValue = [self DataTOjsonString:dict];
+        
+        [param safeSetObject:jsonValue forKey:@"jsonData"];
+        DLog(@"%@--jsonvalue:%@",param,jsonValue);
+        
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/delShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+            
+            
+            [self.dataArray removeObject:item];
+            
+            for (int i =0;i<self.chooseArray.count;i++) {
+                NSDictionary * chooseDic = [self.chooseArray objectAtIndex:i];
+                if ([[chooseDic safeObjectForKey:@"productNo"] isEqualToString:item.productNo]) {
+                    [self.chooseArray removeObject:chooseDic];
+                }
+            }
+            
+            
+            [self changePriceIsNull:NO];
+            [self.tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:[NSIndexPath indexPathForRow:cell.tag inSection:0 ]] withRowAnimation:UITableViewRowAnimationLeft];  //删除对应数据的cell
+            [[UserModel shareInstance]showSuccessWithStatus:@""];
+            
+            
+            //            [self.tableView reloadData];
+            
+        } failure:^(NSError *error) {
+            if ([error code]==402) {
+                [self.dataArray removeAllObjects];
+                [self.chooseArray removeAllObjects];
+                [self changePriceIsNull:YES];
+                self.chooseBtn.selected = NO;
+                [self.tableView reloadData];
+                self.emptyView.hidden =NO;
+                [self.view bringSubviewToFront:self.emptyView];
+                
+            }
+            
+        }];
+
     }]];
     
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     
+    [self presentViewController:al animated:YES completion:nil];
     
-    
-    shopCarCellItem * item = [_dataArray objectAtIndex:cell.tag];
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    NSMutableDictionary *dic =[NSMutableDictionary dictionary];
-    [dic safeSetObject:item.productNo forKey:@"productNo"];
-    NSArray *arr = @[dic];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:arr,@"productList",[UserModel shareInstance].userId,@"userId", nil];
-    
-    NSString *jsonValue = [self DataTOjsonString:dict];
-    
-    [param safeSetObject:jsonValue forKey:@"jsonData"];
-    DLog(@"%@--jsonvalue:%@",param,jsonValue);
-    
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/delShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
-        
-        
-        [self.dataArray removeObject:item];
-        
-        for (int i =0;i<self.chooseArray.count;i++) {
-            NSDictionary * chooseDic = [self.chooseArray objectAtIndex:i];
-            if ([[chooseDic safeObjectForKey:@"productNo"] isEqualToString:item.productNo]) {
-                [self.chooseArray removeObject:chooseDic];
-            }
-        }
-        
-        
-        [self changePriceIsNull:NO];
-        [self.tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:[NSIndexPath indexPathForRow:cell.tag inSection:0 ]] withRowAnimation:UITableViewRowAnimationLeft];  //删除对应数据的cell
-        [[UserModel shareInstance]showSuccessWithStatus:@""];
-        
-        
-//            [self.tableView reloadData];
-        
-    } failure:^(NSError *error) {
-        if ([error code]==402) {
-            [self.dataArray removeAllObjects];
-            [self.chooseArray removeAllObjects];
-            [self changePriceIsNull:YES];
-            self.chooseBtn.selected = NO;
-            [self.tableView reloadData];
-            self.emptyView.hidden =NO;
-            [self.view bringSubviewToFront:self.emptyView];
-
-        }
-        
-    }];
 }
 - (IBAction)didSettlement:(id)sender {
     

@@ -24,10 +24,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更多&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4MR-1N-ZbY">
-                                <rect key="frame" x="262.5" y="3" width="37.5" height="30"/>
+                                <rect key="frame" x="260" y="3" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="6ZH-PZ-Cni"/>
-                                    <constraint firstAttribute="width" constant="37.5" id="SDN-A2-04k"/>
+                                    <constraint firstAttribute="width" constant="40" id="SDN-A2-04k"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,7 +44,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSA-or-Uob">
-                                <rect key="frame" x="70" y="7" width="182.5" height="21"/>
+                                <rect key="frame" x="70" y="7" width="0.0" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="ctO-Qq-1yY"/>
                                 </constraints>
@@ -70,7 +70,6 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="DFS-YZ-Ylq" secondAttribute="bottom" id="29Q-EC-vgF"/>
                             <constraint firstAttribute="height" constant="36" id="Ehv-3S-1Ri"/>
-                            <constraint firstItem="4MR-1N-ZbY" firstAttribute="leading" secondItem="qSA-or-Uob" secondAttribute="trailing" constant="10" id="Rva-sw-Eai"/>
                             <constraint firstAttribute="trailing" secondItem="fyd-gz-2IF" secondAttribute="trailing" id="RxL-XN-B1g"/>
                             <constraint firstItem="qSA-or-Uob" firstAttribute="centerY" secondItem="CLo-7P-Ufu" secondAttribute="centerY" id="bwI-dw-aTz"/>
                             <constraint firstItem="qSA-or-Uob" firstAttribute="leading" secondItem="jU1-gM-vqz" secondAttribute="trailing" constant="10" id="cqZ-ou-98k"/>

@@ -100,7 +100,13 @@
     
     
     self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds configuration:configuration];
-    NSString  * urlss = [kMyBaseUrl stringByAppendingString:self.urlStr];
+    
+    NSString  * urlss =@"";
+    if ([_urlStr containsString:@"https://shouyin.yeepay.com"]) {
+        urlss =self.urlStr;
+    }else{
+        urlss = [kMyBaseUrl stringByAppendingString:self.urlStr];
+    }
     NSURL * url  =[NSURL URLWithString:urlss];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;

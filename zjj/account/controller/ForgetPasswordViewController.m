@@ -123,7 +123,13 @@
         [[UserModel shareInstance] showInfoWithStatus:@"两次密码不一致"];
         return;
     }
+    BOOL isPassword = [self.passwordtf.text checkPassWord];
     
+    if (isPassword !=YES) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入正确格式密码"];
+        return;
+    }
+
     
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     

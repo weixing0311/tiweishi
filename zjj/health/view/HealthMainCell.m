@@ -131,10 +131,10 @@
     self.bmrAgeLabel.text = [NSString stringWithFormat:@"身体年龄: %.0f",item.bodyAge];
     self.timeLabel.text = [item.createTime yyyymmdd];
     
-    self.title1Label.text = @"目标体重";
-    self.title2Label.text = @"目标体脂率";
-    self.title3Label.text = @"目标体脂";
-    self.title4Label.text = @"目标内脂";
+    self.title1Label.text = @"最佳体重";
+    self.title2Label.text = @"最佳体脂率";
+    self.title3Label.text = @"最佳体脂";
+    self.title4Label.text = @"最佳内脂";
     
     float fatWeightV =0.0;
     float visceral = 0.0;

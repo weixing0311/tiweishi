@@ -255,10 +255,10 @@
 -(void)setInfoInChooseArr:(NSDictionary *)dict add:(BOOL)isAdd
 {
     NSString * productNo = [dict objectForKey:@"productNo"];
-    
+    int chooseCount = [[dict safeObjectForKey:@"chooseCount"]intValue];
     NSMutableDictionary * test1dic = [NSMutableDictionary dictionary];
     [test1dic setObject:[dict objectForKey:@"productNo"] forKey:@"productNo"];
-    [test1dic setObject:@"1" forKey:@"quantity"];
+    [test1dic setObject:@(chooseCount) forKey:@"quantity"];
     [test1dic setObject:[dict objectForKey:@"unitPrice"] forKey:@"unitPrice"];
     if (_chooseArray.count>0) {
         

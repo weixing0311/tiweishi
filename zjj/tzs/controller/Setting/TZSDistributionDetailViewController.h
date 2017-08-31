@@ -7,8 +7,13 @@
 //
 
 #import "JFABaseTableViewController.h"
-
+@protocol distributionDetailDelegate;
 @interface TZSDistributionDetailViewController : JFABaseTableViewController
 @property (nonatomic,copy)NSString * orderNo;
+@property (nonatomic,assign)id<distributionDetailDelegate>delegate;
+@end
+@protocol  distributionDetailDelegate <NSObject>
+
+-(void)distributionOrderChange;
 
 @end

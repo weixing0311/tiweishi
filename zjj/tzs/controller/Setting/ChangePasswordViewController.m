@@ -29,6 +29,30 @@
 
 
 - (IBAction)updata:(id)sender {
+    
+    if (self.passwordtf.text.length<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请填写旧密码"];
+        return;
+    }
+    if (self.repasswordtf.text.length<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请填写新密码"];
+
+        return;
+    }
+    if (self.thenewPasswordtf.text.length<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请重复填写新密码"];
+
+        return;
+    }
+    
+    BOOL isPassword = [self.thenewPasswordtf.text checkPassWord];
+    
+    if (isPassword !=YES) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入正确格式密码"];
+        return;
+    }
+
+    
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param setObject:[NSString encryptString: self.passwordtf.text] forKey:@"oldPassword"];
     [param setObject:[NSString encryptString: self.thenewPasswordtf.text] forKey:@"password"];

@@ -116,6 +116,11 @@
 
 -(void)toBuy
 {
+    
+    if (self.delegate&& [self.delegate respondsToSelector:@selector(teamOrderChange)]) {
+        [self.delegate teamOrderChange];
+    }
+    
     TZSDingGouViewController * dg = [[TZSDingGouViewController alloc]init];
     
     [self.navigationController pushViewController:dg animated:YES];
@@ -188,6 +193,13 @@
             
         }else{
             cell.price2label.text = @"";
+        }
+        NSString * isgift = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"isGift"]];
+        
+        if ([isgift isEqualToString:@"1"]) {
+            cell.zengimageView.hidden =NO;
+        }else{
+            cell.zengimageView.hidden =YES;
         }
 
         return cell;

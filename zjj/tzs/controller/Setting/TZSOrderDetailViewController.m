@@ -222,7 +222,14 @@
         
         cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
-        
+         NSString * isgift = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"isGift"]];
+         
+         if ([isgift isEqualToString:@"1"]) {
+             cell.zengimageView.hidden =NO;
+         }else{
+             cell.zengimageView.hidden =YES;
+         }
+
         return cell;
     }
     else if (indexPath.section ==2)
@@ -309,6 +316,12 @@
 {
     //去支付
     
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tzsOrderChange)]) {
+        [self.delegate tzsOrderChange];
+    }
+    
+    
+    
     int status = [[_infoDict safeObjectForKey:@"status"]intValue];
     if (status==1) {
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
@@ -327,6 +340,11 @@
 }
 -(void)didClickSecondBtnWithView:(OrderFootBtnView*)view
 {
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tzsOrderChange)]) {
+        [self.delegate tzsOrderChange];
+    }
+
     //取消
     
     int status = [[_infoDict safeObjectForKey:@"status"]intValue];

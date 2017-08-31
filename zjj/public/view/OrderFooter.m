@@ -9,7 +9,11 @@
 #import "OrderFooter.h"
 
 @implementation OrderFooter
-
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.countLabel.adjustsFontSizeToFitWidth = YES;
+}
 -(void)setStatus:(PayStatus)status
 {
     switch (self.status) {

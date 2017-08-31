@@ -74,7 +74,7 @@
                 self.moreYhLabel.hidden = YES;
             }
         }else{
-            NSString * typeStr = [[item.promotTitle objectAtIndex:0]objectForKey:@"promotionType"];
+            NSString * typeStr = [NSString stringWithFormat:@"%@",[[item.promotTitle objectAtIndex:0]objectForKey:@"promotionType"]];
             NSString * message = [[item.promotTitle objectAtIndex:0]objectForKey:@"promotionDetail"];
             if ([typeStr isEqualToString:@"1"]) {
                 self.hdTitleLabel.text = @"满减";

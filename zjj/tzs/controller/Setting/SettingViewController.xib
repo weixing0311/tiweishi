@@ -16,6 +16,7 @@
                 <outlet property="LevelImageView" destination="z8w-ov-JnS" id="iWj-Yp-1ju"/>
                 <outlet property="assetsLabel" destination="ZyI-dO-Sv7" id="6cx-nM-IOR"/>
                 <outlet property="cerLabel" destination="6KF-TQ-8hu" id="mFN-QD-Omj"/>
+                <outlet property="czBtn" destination="vl4-6y-fzW" id="jJJ-Xc-sbP"/>
                 <outlet property="firstView" destination="IGq-Oa-825" id="2dd-mi-APa"/>
                 <outlet property="forthView" destination="mJT-nD-Srg" id="Sno-LB-LXw"/>
                 <outlet property="headImageView" destination="dUK-Je-hAo" id="hxn-Nd-9Bj"/>
@@ -525,7 +526,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="700" translatesAutoresizingMaskIntoConstraints="NO" id="gRy-11-lmU">
-                            <rect key="frame" x="15" y="518" width="345" height="104"/>
+                            <rect key="frame" x="15" y="534" width="345" height="120"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的资产" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l6d-EU-f7i">
                                     <rect key="frame" x="8" y="8" width="57.5" height="20"/>
@@ -545,10 +546,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxg-ox-CWE">
-                                    <rect key="frame" x="0.0" y="37" width="345" height="67"/>
+                                    <rect key="frame" x="0.0" y="37" width="345" height="83"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BdJ-xh-Gix">
-                                            <rect key="frame" x="0.0" y="0.0" width="115" height="67"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="115" height="73"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_wallet_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="TJg-Hv-eCc">
                                                     <rect key="frame" x="42.5" y="8" width="30" height="30"/>
@@ -558,13 +559,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交易记录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZ5-UM-G2D">
-                                                    <rect key="frame" x="0.0" y="42" width="115" height="24.5"/>
+                                                    <rect key="frame" x="0.0" y="42" width="115" height="30.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fed-wa-xdW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="72.5"/>
                                                     <connections>
                                                         <action selector="TransactionRecords:" destination="-1" eventType="touchUpInside" id="yxT-qd-gtE"/>
                                                     </connections>
@@ -584,7 +585,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jv-7k-OJq">
-                                            <rect key="frame" x="115" y="0.0" width="115" height="67"/>
+                                            <rect key="frame" x="115" y="0.0" width="115" height="73"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_wallet_3.png" translatesAutoresizingMaskIntoConstraints="NO" id="q4e-if-sLZ">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
@@ -594,13 +595,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="钱包管理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ibq-1p-Ioz">
-                                                    <rect key="frame" x="0.0" y="42" width="115" height="24.5"/>
+                                                    <rect key="frame" x="0.0" y="42" width="115" height="30.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6J-Sp-z8a">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="72.5"/>
                                                     <connections>
                                                         <action selector="walletManagement:" destination="-1" eventType="touchUpInside" id="jDs-UA-4HQ"/>
                                                     </connections>
@@ -620,7 +621,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u6J-ek-hkJ">
-                                            <rect key="frame" x="230" y="0.0" width="115" height="67"/>
+                                            <rect key="frame" x="230" y="0.0" width="115" height="73"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_wallet_4.png" translatesAutoresizingMaskIntoConstraints="NO" id="R5R-Dw-FKH">
                                                     <rect key="frame" x="42" y="8" width="30" height="30"/>
@@ -630,13 +631,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的收益" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Bb-bJ-Doa">
-                                                    <rect key="frame" x="0.0" y="42" width="115" height="24.5"/>
+                                                    <rect key="frame" x="0.0" y="42" width="115" height="30.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m55-W9-2Bo">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="72.5"/>
                                                     <connections>
                                                         <action selector="myIncome:" destination="-1" eventType="touchUpInside" id="TUI-nh-aS8"/>
                                                     </connections>
@@ -663,7 +664,7 @@
                                         <constraint firstItem="8jv-7k-OJq" firstAttribute="leading" secondItem="BdJ-xh-Gix" secondAttribute="trailing" id="7Kz-pM-6cf"/>
                                         <constraint firstItem="8jv-7k-OJq" firstAttribute="width" secondItem="BdJ-xh-Gix" secondAttribute="width" id="AMq-np-Hay"/>
                                         <constraint firstItem="u6J-ek-hkJ" firstAttribute="height" secondItem="BdJ-xh-Gix" secondAttribute="height" id="HdU-Mf-5QO"/>
-                                        <constraint firstAttribute="bottom" secondItem="BdJ-xh-Gix" secondAttribute="bottom" id="MFJ-4L-YDf"/>
+                                        <constraint firstAttribute="bottom" secondItem="BdJ-xh-Gix" secondAttribute="bottom" constant="10" id="MFJ-4L-YDf"/>
                                         <constraint firstItem="u6J-ek-hkJ" firstAttribute="width" secondItem="BdJ-xh-Gix" secondAttribute="width" id="TQ1-DG-aqF"/>
                                         <constraint firstItem="u6J-ek-hkJ" firstAttribute="leading" secondItem="8jv-7k-OJq" secondAttribute="trailing" id="at0-Aa-VDl"/>
                                         <constraint firstItem="8jv-7k-OJq" firstAttribute="top" secondItem="fxg-ox-CWE" secondAttribute="top" id="bMS-FI-AxF"/>
@@ -719,7 +720,7 @@
                                 <constraint firstAttribute="trailing" secondItem="vl4-6y-fzW" secondAttribute="trailing" constant="20" id="XqG-dE-8to"/>
                                 <constraint firstAttribute="trailing" secondItem="ueN-22-DgW" secondAttribute="trailing" id="cm3-A9-3Jg"/>
                                 <constraint firstItem="ZyI-dO-Sv7" firstAttribute="leading" secondItem="l6d-EU-f7i" secondAttribute="trailing" constant="5" id="g8X-1w-g96"/>
-                                <constraint firstAttribute="height" constant="104" id="owy-gL-gkG"/>
+                                <constraint firstAttribute="height" constant="120" id="owy-gL-gkG"/>
                                 <constraint firstAttribute="bottom" secondItem="fxg-ox-CWE" secondAttribute="bottom" id="wPa-Ne-wKy"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
@@ -730,7 +731,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJT-nD-Srg">
-                            <rect key="frame" x="15" y="404" width="345" height="104"/>
+                            <rect key="frame" x="15" y="404" width="345" height="120"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的团队" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="591-zc-MVy">
                                     <rect key="frame" x="8" y="8" width="57.5" height="20"/>
@@ -750,10 +751,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Yl-eJ-8ax">
-                                    <rect key="frame" x="0.0" y="37" width="345" height="67"/>
+                                    <rect key="frame" x="0.0" y="37" width="345" height="83"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xtl-wi-JxJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="115" height="67"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="115" height="73"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_1.png" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-QI-JU1">
                                                     <rect key="frame" x="42.5" y="10" width="30" height="30"/>
@@ -763,13 +764,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队订购" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-GV-r7G">
-                                                    <rect key="frame" x="0.0" y="40" width="115" height="26.5"/>
+                                                    <rect key="frame" x="0.0" y="40" width="115" height="32.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xy1-8c-PJO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="72.5"/>
                                                     <connections>
                                                         <action selector="teamOrder:" destination="-1" eventType="touchUpInside" id="3dQ-SG-RG1"/>
                                                     </connections>
@@ -789,7 +790,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cu7-7I-KOY">
-                                            <rect key="frame" x="115" y="0.0" width="115" height="67"/>
+                                            <rect key="frame" x="115" y="0.0" width="115" height="73"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="aHt-ee-Bzf">
                                                     <rect key="frame" x="42" y="10" width="30" height="30"/>
@@ -799,13 +800,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队管理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOe-vL-RRN">
-                                                    <rect key="frame" x="0.0" y="40" width="115" height="26.5"/>
+                                                    <rect key="frame" x="0.0" y="40" width="115" height="32.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRb-H5-17I">
-                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="66.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="72.5"/>
                                                     <connections>
                                                         <action selector="teamManagement:" destination="-1" eventType="touchUpInside" id="K1h-BC-bOT"/>
                                                     </connections>
@@ -825,13 +826,13 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3IR-xJ-yF3">
-                                            <rect key="frame" x="230" y="0.0" width="115" height="67"/>
+                                            <rect key="frame" x="230" y="0.0" width="115" height="83"/>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="Cu7-7I-KOY" secondAttribute="bottom" id="2VG-e8-XQN"/>
-                                        <constraint firstAttribute="bottom" secondItem="xtl-wi-JxJ" secondAttribute="bottom" id="Aaq-qc-25n"/>
+                                        <constraint firstAttribute="bottom" secondItem="Cu7-7I-KOY" secondAttribute="bottom" constant="10" id="2VG-e8-XQN"/>
+                                        <constraint firstAttribute="bottom" secondItem="xtl-wi-JxJ" secondAttribute="bottom" constant="10" id="Aaq-qc-25n"/>
                                         <constraint firstItem="Cu7-7I-KOY" firstAttribute="width" secondItem="xtl-wi-JxJ" secondAttribute="width" id="AfJ-RP-Xke"/>
                                         <constraint firstAttribute="bottom" secondItem="3IR-xJ-yF3" secondAttribute="bottom" id="Cvd-ll-r1l"/>
                                         <constraint firstItem="3IR-xJ-yF3" firstAttribute="top" secondItem="7Yl-eJ-8ax" secondAttribute="top" id="W93-cS-zm4"/>
@@ -856,7 +857,7 @@
                                 <constraint firstItem="7Yl-eJ-8ax" firstAttribute="top" secondItem="gHh-yV-DBM" secondAttribute="bottom" id="fT9-aN-6wb"/>
                                 <constraint firstAttribute="trailing" secondItem="7Yl-eJ-8ax" secondAttribute="trailing" id="qYm-Mc-wBf"/>
                                 <constraint firstAttribute="bottom" secondItem="7Yl-eJ-8ax" secondAttribute="bottom" id="wZT-Bf-dh7"/>
-                                <constraint firstAttribute="height" constant="104" id="xw0-2A-1KW"/>
+                                <constraint firstAttribute="height" constant="120" id="xw0-2A-1KW"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>

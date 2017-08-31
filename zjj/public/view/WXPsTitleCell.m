@@ -15,6 +15,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.paypriceLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 -(void)setTimeLabelText:(NSString *)text

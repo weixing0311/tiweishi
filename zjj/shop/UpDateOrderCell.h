@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *zengimageView;
 
 -(void)setUpCellWithGoodsDetailItem:(GoodsDetailItem *)item;
 -(void)setUpCellWithShopCarCellItem:(shopCarCellItem *)item;

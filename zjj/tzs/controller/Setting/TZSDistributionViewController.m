@@ -14,7 +14,7 @@
 #import "BaseWebViewController.h"
 #import "TZSDistributionDetailViewController.h"
 
-@interface TZSDistributionViewController ()<orderFootBtnViewDelegate>
+@interface TZSDistributionViewController ()<orderFootBtnViewDelegate,distributionDetailDelegate>
 
 @end
 
@@ -305,7 +305,14 @@
     
 //    cell.priceLabel .hidden = YES;
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
+    NSString * isgift = [NSString stringWithFormat:@"%@",[infoDic safeObjectForKey:@"isGift"]];
     
+    if ([isgift isEqualToString:@"1"]) {
+        cell.zengimageView.hidden =NO;
+    }else{
+        cell.zengimageView.hidden =YES;
+    }
+
     return cell;
 }
 
@@ -318,6 +325,7 @@
     
     TZSDistributionDetailViewController * dt = [[TZSDistributionDetailViewController alloc]init];
     dt.orderNo =[dic safeObjectForKey:@"orderNo"];
+    dt.delegate = self;
     [self.navigationController pushViewController:dt animated:YES];
 }
 -(void)getinfoWithStatus:(NSInteger)segmentIndex
@@ -432,6 +440,9 @@
 //    }
     
 }
-
+-(void)distributionOrderChange
+{
+    [self.tableview headerBeginRefreshing];
+}
 
 @end

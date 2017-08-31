@@ -11,6 +11,8 @@
 @interface SettingViewController : JFABaseTableViewController
 //头像
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
+@property (weak, nonatomic) IBOutlet UIButton *czBtn;
+
 //昵称
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 //金牌体脂师

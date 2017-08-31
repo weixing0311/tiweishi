@@ -106,6 +106,16 @@
         return;
     }
     
+    BOOL isPassword = [self.passwordtf.text checkPassWord];
+    
+    if (isPassword !=YES) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入正确格式密码"];
+        return;
+    }
+
+    
+    
+    
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param setObject:[NSString encryptString: self.mobiletf.text] forKey:@"mobilePhone"];
     [param setObject:self.cardTf.text forKey:@"parentId"];

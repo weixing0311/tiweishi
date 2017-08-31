@@ -217,6 +217,19 @@
 
 
 
+
+#define mark ----广告
+/**
+ *广告
+ */
+@property (nonatomic,strong)NSMutableDictionary * advertisingDict;
+
+
+#pragma mark --是否有推荐人 是否可以认证成为体脂师
+
+@property (nonatomic,copy  )NSString * parentId;//
+@property (nonatomic,copy  )NSString * partnerId;//
+
 #define mark  ---版本更新
 /**
  *是否需要更新
@@ -261,5 +274,7 @@
  */
 -(NSString*)changeTelephone:(NSString*)teleStr;
 
+///获取通知广告
+-(void)getNotiadvertising;
 
 @end

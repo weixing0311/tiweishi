@@ -18,7 +18,7 @@
 #import "TZSDeliveryViewController.h"
 #import "TZSDistributionViewController.h"
 #import "AddTradingPsController.h"
-
+#import "AdvertisingView.h"
 @interface SettingViewController ()<qrcodeDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
@@ -53,6 +53,17 @@
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
+    
+    if ([[UserModel shareInstance].phoneNum isEqualToString:@"15210642625"]) {
+        self.czBtn.hidden = YES;
+        self.thirdView.hidden = YES;
+    }else{
+        self.czBtn.hidden = NO;
+        self.thirdView.hidden = NO;
+    }
+    [self showAd];
+    
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -122,7 +133,7 @@
         UIAlertController * al =[UIAlertController alertControllerWithTitle:nil message:@"您还没有交易密码，是否确认添加？" preferredStyle:UIAlertControllerStyleAlert];
         
         
-        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+//        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         
         
         [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -139,6 +150,32 @@
     }
 
 }
+
+
+-(void)showAd
+{
+    NSArray * arr = [[UserModel shareInstance].advertisingDict safeObjectForKey:@"array"];
+    NSMutableDictionary * adDict = [NSMutableDictionary dictionary];
+    for (NSDictionary * dic in arr) {
+        NSString * grade = [dic safeObjectForKey:@"noticeRange"];
+        DLog(@"%@---grade%@",grade,[UserModel shareInstance].grade);
+        if ([grade isEqualToString: [UserModel shareInstance].grade]) {
+            [adDict setDictionary:dic];
+        }
+    }
+    
+    if (adDict&&[adDict allKeys].count>0) {
+        NSString * imageUrl = [adDict safeObjectForKey:@"imgUrl"];
+        AdvertisingView * adv = [self getXibCellWithTitle:@"AdvertisingView"];
+        adv.frame = self.view.bounds;
+        [self.view addSubview:adv];
+        [adv setImageWithUrl:imageUrl];
+    }
+    
+    
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

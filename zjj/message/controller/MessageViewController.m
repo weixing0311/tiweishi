@@ -30,9 +30,9 @@
     pageSize =30;
     self.dataArray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor grayColor];
-//    [self setExtraCellLineHiddenWithTb:self.tableview];
-//    [self setRefrshWithTableView:self.tableview];
-//    [self.tableview headerBeginRefreshing];
+    [self setExtraCellLineHiddenWithTb:self.tableview];
+    [self setRefrshWithTableView:self.tableview];
+    [self.tableview headerBeginRefreshing];
     self.tableview.tableFooterView.backgroundColor = [UIColor orangeColor];
     // Do any additional setup after loading the view from its nib.
 }
@@ -111,8 +111,6 @@
     if (!cell) {
         cell = [self getXibCellWithTitle:identifier];
     }
-    cell.backgroundColor = [UIColor redColor];
-    cell.contentView.backgroundColor = [UIColor blueColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary * dic =[self.dataArray objectAtIndex:indexPath.row];
     cell.tag = indexPath.row;

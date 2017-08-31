@@ -26,8 +26,8 @@
                             <constraint firstAttribute="width" secondItem="QEU-ii-jOl" secondAttribute="height" multiplier="1:1" id="zUB-3N-okY"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1231231231" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9h-jB-YM4">
-                        <rect key="frame" x="95" y="15" width="91" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9h-jB-YM4">
+                        <rect key="frame" x="95" y="15" width="0.0" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="GHa-eU-oeg"/>
                             <constraint firstAttribute="width" priority="10" constant="200" id="pvJ-EI-wPI"/>
@@ -36,8 +36,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123123123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1q-yI-RcR">
-                        <rect key="frame" x="95" y="60" width="83.5" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1q-yI-RcR">
+                        <rect key="frame" x="95" y="60" width="0.0" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="20" constant="150" id="B89-lH-6g3"/>
                             <constraint firstAttribute="height" constant="20" id="FRX-aT-gDB"/>
@@ -66,13 +66,22 @@
                         <color key="textColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zeng_.png" translatesAutoresizingMaskIntoConstraints="NO" id="vIs-7A-nPT">
+                        <rect key="frame" x="15" y="15" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="YgC-a7-cm2"/>
+                            <constraint firstAttribute="width" constant="20" id="Yny-iW-HPN"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="T9h-jB-YM4" firstAttribute="leading" secondItem="QEU-ii-jOl" secondAttribute="trailing" constant="10" id="6jh-fh-n5q"/>
                     <constraint firstItem="Y1q-yI-RcR" firstAttribute="top" secondItem="T9h-jB-YM4" secondAttribute="bottom" constant="25" id="9ad-pK-Uj2"/>
+                    <constraint firstItem="vIs-7A-nPT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="AH4-st-XeE"/>
                     <constraint firstItem="QEU-ii-jOl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Ss8-c7-qm1"/>
                     <constraint firstAttribute="trailingMargin" secondItem="g6V-U2-Fh9" secondAttribute="trailing" constant="15" id="XPX-gg-Rip"/>
                     <constraint firstItem="Y1q-yI-RcR" firstAttribute="leading" secondItem="QEU-ii-jOl" secondAttribute="trailing" constant="10" id="XrK-no-kbt"/>
+                    <constraint firstItem="vIs-7A-nPT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="fyi-Jr-OcV"/>
                     <constraint firstItem="g6V-U2-Fh9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gal-Nl-um4"/>
                     <constraint firstItem="YTq-gY-M7L" firstAttribute="top" secondItem="T9h-jB-YM4" secondAttribute="bottom" constant="2" id="gdz-Zz-Sjx"/>
                     <constraint firstItem="YTq-gY-M7L" firstAttribute="leading" secondItem="QEU-ii-jOl" secondAttribute="trailing" constant="10" id="kS2-Ni-W6M"/>
@@ -87,7 +96,11 @@
                 <outlet property="price2label" destination="YTq-gY-M7L" id="NrP-jw-hfs"/>
                 <outlet property="priceLabel" destination="Y1q-yI-RcR" id="NDc-rg-KjB"/>
                 <outlet property="titleLabel" destination="T9h-jB-YM4" id="lfG-jk-8lk"/>
+                <outlet property="zengimageView" destination="vIs-7A-nPT" id="2vj-iT-99N"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="zeng_.png" width="54" height="54"/>
+    </resources>
 </document>

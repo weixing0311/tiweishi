@@ -106,6 +106,13 @@
             
             TabbarViewController * tabbar = [[TabbarViewController alloc]init];
             [self.window setRootViewController:tabbar];
+            
+            if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {
+                [[UserModel shareInstance]getNotiadvertising];
+            }
+            
+            
+            
  
         }else{
             ChangeUserInfoViewController * cg =[[ChangeUserInfoViewController alloc]init];

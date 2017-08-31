@@ -14,7 +14,7 @@
 #import "UpdataOrderViewController.h"
 #import "OrderHeader.h"
 #import "BaseWebViewController.h"
-@interface OrderViewController ()<orderFootBtnViewDelegate>
+@interface OrderViewController ()<orderFootBtnViewDelegate,orderDetailViewDelegate>
 @end
 
 @implementation OrderViewController
@@ -210,7 +210,7 @@
     
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
-    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"totalPrice"]floatValue]];
+    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"payableAmount"]floatValue]];
     
     NSString * payStr =@"";
     if (status ==10||status ==3) {
@@ -298,7 +298,13 @@
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"normalPrice"]floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
-    
+    NSString * isgift = [NSString stringWithFormat:@"%@",[infoDic safeObjectForKey:@"isGift"]];
+    if ([isgift isEqualToString:@"1"]) {
+        cell.zengimageView.hidden =NO;
+    }else{
+        cell.zengimageView.hidden =YES;
+    }
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -308,7 +314,7 @@
     NSDictionary *dic = [_dataArray objectAtIndex:indexPath.section];
     OrderDetailViewController *or =[[OrderDetailViewController alloc]init];
     or.orderNo = [dic objectForKey:@"orderNo"];
-    
+    or.delegate =self;
     [self.navigationController pushViewController:or animated:YES];
     
 }
@@ -403,6 +409,11 @@
     }
 }
 
+#pragma  mark - --- 详情中订单状态修改
+-(void)orderChange
+{
+    [self.tableview headerBeginRefreshing];
+}
 
 
 @end

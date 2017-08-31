@@ -8,9 +8,15 @@
 
 #import "JFABaseTableViewController.h"
 
+@protocol teamOrderDetailDelegate;
 @interface TeamOrderDetailViewController : JFABaseTableViewController<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,copy)NSString * orderNo;
+@property (nonatomic,assign)id<teamOrderDetailDelegate>delegate;
 
+@end
+@protocol teamOrderDetailDelegate <NSObject>
+
+-(void)teamOrderChange;
 
 @end

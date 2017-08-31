@@ -215,6 +215,13 @@
         cell.priceLabel.text = @"";
 //        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"chooseCount"]];
+        NSString * isgift = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"isGift"]];
+        
+        if ([isgift isEqualToString:@"1"]) {
+            cell.zengimageView.hidden =NO;
+        }else{
+            cell.zengimageView.hidden =YES;
+        }
 
         
         return cell;

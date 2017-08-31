@@ -594,6 +594,10 @@
 		6CDE37FF1EF117B1001F10DE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CDE37FE1EF117B1001F10DE /* CoreText.framework */; };
 		6CDE38041EF11A86001F10DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CDE38031EF11A86001F10DE /* CoreGraphics.framework */; };
 		6CF778CC1F556BBB0002BDC7 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF778CB1F556BBB0002BDC7 /* map.png */; };
+		6CF778CF1F565DF60002BDC7 /* NSString+Password.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF778CE1F565DF60002BDC7 /* NSString+Password.m */; };
+		6CF778D21F5664370002BDC7 /* AdvertisingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF778D11F5664370002BDC7 /* AdvertisingView.m */; };
+		6CF778D41F5664500002BDC7 /* AdvertisingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF778D31F5664500002BDC7 /* AdvertisingView.xib */; };
+		6CF778D61F5694810002BDC7 /* zeng_.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF778D51F5694810002BDC7 /* zeng_.png */; };
 		6CFD992D1EF2355A00802AA4 /* LineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CFD992C1EF2355A00802AA4 /* LineChart.m */; };
 		6CFD992F1EF26CEA00802AA4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CFD992E1EF26CEA00802AA4 /* libz.tbd */; };
 		6CFD99341EF26DBB00802AA4 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CFD99331EF26DBB00802AA4 /* UserModel.m */; };
@@ -1417,6 +1421,12 @@
 		6CDE37FE1EF117B1001F10DE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		6CDE38031EF11A86001F10DE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6CF778CB1F556BBB0002BDC7 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
+		6CF778CD1F565DF60002BDC7 /* NSString+Password.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Password.h"; sourceTree = "<group>"; };
+		6CF778CE1F565DF60002BDC7 /* NSString+Password.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Password.m"; sourceTree = "<group>"; };
+		6CF778D01F5664370002BDC7 /* AdvertisingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertisingView.h; sourceTree = "<group>"; };
+		6CF778D11F5664370002BDC7 /* AdvertisingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertisingView.m; sourceTree = "<group>"; };
+		6CF778D31F5664500002BDC7 /* AdvertisingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdvertisingView.xib; sourceTree = "<group>"; };
+		6CF778D51F5694810002BDC7 /* zeng_.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zeng_.png; sourceTree = "<group>"; };
 		6CFD992B1EF2355A00802AA4 /* LineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineChart.h; sourceTree = "<group>"; };
 		6CFD992C1EF2355A00802AA4 /* LineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineChart.m; sourceTree = "<group>"; };
 		6CFD992E1EF26CEA00802AA4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1947,6 +1957,9 @@
 				6CDBC2331F4BE3AA0059A15E /* OrderPayFootCell.h */,
 				6CDBC2341F4BE3AA0059A15E /* OrderPayFootCell.m */,
 				6CDBC2351F4BE3AA0059A15E /* OrderPayFootCell.xib */,
+				6CF778D01F5664370002BDC7 /* AdvertisingView.h */,
+				6CF778D11F5664370002BDC7 /* AdvertisingView.m */,
+				6CF778D31F5664500002BDC7 /* AdvertisingView.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2791,6 +2804,8 @@
 				6CD92FEE1F0A85C600D7989E /* NSString+dateWithString.m */,
 				6C73AF751F2F04510042C1A2 /* UINavigationController+CustomNavigationCotroller.h */,
 				6C73AF761F2F04510042C1A2 /* UINavigationController+CustomNavigationCotroller.m */,
+				6CF778CD1F565DF60002BDC7 /* NSString+Password.h */,
+				6CF778CE1F565DF60002BDC7 /* NSString+Password.m */,
 			);
 			path = category;
 			sourceTree = "<group>";
@@ -3002,6 +3017,7 @@
 		6CD011331EF8CADA00FB9419 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6CF778D51F5694810002BDC7 /* zeng_.png */,
 				6CF778CB1F556BBB0002BDC7 /* map.png */,
 				6CDBC3F21F4FC7E30059A15E /* bodyfat_buy_1.png */,
 				6CDBC3F31F4FC7E30059A15E /* bodyfat_buy_2.png */,
@@ -3459,6 +3475,7 @@
 				6C43113F1F06527C0094EFF4 /* jzsSchoolWebViewController.xib in Resources */,
 				6CD010E21EF655D600FB9419 /* BDBankCardViewController.xib in Resources */,
 				6C3638B91EFCAF9400268851 /* record-deposit@3x.png in Resources */,
+				6CF778D61F5694810002BDC7 /* zeng_.png in Resources */,
 				6C3638181EFCAF5500268851 /* home-title-left@2x.png in Resources */,
 				6C36389A1EFCAF9400268851 /* footer-jianzhi-red@2x.png in Resources */,
 				6CD0111D1EF82A2A00FB9419 /* SettingViewController.xib in Resources */,
@@ -3514,6 +3531,7 @@
 				6C13C5DC1EFA5CC600435A27 /* DistributionView.xib in Resources */,
 				6C3638051EFCAF5500268851 /* help-icon03@3x.png in Resources */,
 				6CD92FE11F0A7FB600D7989E /* ShareListView.xib in Resources */,
+				6CF778D41F5664500002BDC7 /* AdvertisingView.xib in Resources */,
 				6CDBC2311F4BDF290059A15E /* addressLine@2x.png in Resources */,
 				6C3637FF1EFCAF5500268851 /* help-banner@3x.png in Resources */,
 				6C3638C91EFCAF9400268851 /* yin@3x.png in Resources */,
@@ -3940,6 +3958,7 @@
 				6CCEEB1D1EEE7EFE002E1618 /* ShopTabbbarController.m in Sources */,
 				6C8F53C51F11D38A00C7A275 /* UIImage+LocalImage.m in Sources */,
 				6C3639911EFE47E100268851 /* AAOptions3d.m in Sources */,
+				6CF778CF1F565DF60002BDC7 /* NSString+Password.m in Sources */,
 				6CD010F91EF7FBED00FB9419 /* DetailCxCell.m in Sources */,
 				6CFD992D1EF2355A00802AA4 /* LineChart.m in Sources */,
 				6C8F53C91F11D38A00C7A275 /* UIView+JFAViewAnimation.m in Sources */,
@@ -4049,6 +4068,7 @@
 				6CA024A61F14B32A00F54DF3 /* ForgetPasswordViewController.m in Sources */,
 				6CD0115A1EF8D30500FB9419 /* OrderViewController.m in Sources */,
 				6CCEEAB41EEE3D71002E1618 /* MeasurementInfoCell.m in Sources */,
+				6CF778D21F5664370002BDC7 /* AdvertisingView.m in Sources */,
 				6C1B2BC21EECDEFD0092AAF0 /* foundViewController.m in Sources */,
 				6C3639791EFE47E100268851 /* AAChartModel.m in Sources */,
 				6C3639281EFD682300268851 /* TZSMyDingGouViewController.m in Sources */,

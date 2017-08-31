@@ -129,6 +129,18 @@
         
         return;
     }
+    
+    
+    BOOL isPassword = [self.passWordTf.text checkPassWord];
+    
+    if (isPassword !=YES) {
+        [[UserModel shareInstance]showInfoWithStatus:@"请输入正确格式密码"];
+        return;
+    }
+    
+    
+    
+    
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     
     [param safeSetObject:[NSString encryptString:self.loignMobileTf.text] forKey:@"mobilePhone"];
@@ -152,8 +164,13 @@
         
         if ([UserModel shareInstance].nickName.length>0) {
             
+            if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {
+                [[UserModel shareInstance]getNotiadvertising];
+            }
+
             TabbarViewController *tab = [[TabbarViewController alloc]init];
             self.view.window.rootViewController = tab;
+            
             
         }else{
             ChangeUserInfoViewController *cg =[[ChangeUserInfoViewController alloc]init];

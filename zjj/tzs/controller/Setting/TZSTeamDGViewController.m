@@ -14,7 +14,7 @@
 #import "TZSDingGouViewController.h"
 #import "TeamOrderDetailViewController.h"
 #import "NSString+dateWithString.h"
-@interface TZSTeamDGViewController ()<orderFootBtnViewDelegate>
+@interface TZSTeamDGViewController ()<orderFootBtnViewDelegate,teamOrderDetailDelegate>
 
 @end
 
@@ -267,6 +267,15 @@ footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKe
     cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"] floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
+    
+    NSString * isgift = [NSString stringWithFormat:@"%@",[infoDic safeObjectForKey:@"isGift"]];
+    
+    if ([isgift isEqualToString:@"1"]) {
+        cell.zengimageView.hidden =NO;
+    }else{
+        cell.zengimageView.hidden =YES;
+    }
+
     return cell;
 
 }
@@ -277,7 +286,7 @@ footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKe
     
     TeamOrderDetailViewController * tmo = [[TeamOrderDetailViewController alloc]init];
     tmo.orderNo =[dic objectForKey:@"orderNo"];
-    
+    tmo.delegate = self;
     [self.navigationController pushViewController:tmo animated:YES];
 }
 
@@ -327,4 +336,8 @@ footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKe
     [self.navigationController pushViewController:dg animated:YES];
 }
 
+-(void)teamOrderChange
+{
+    [self.tableView headerBeginRefreshing];
+}
 @end
