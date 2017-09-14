@@ -94,15 +94,18 @@ static HealthDetailsItem *item;
     self . boneMuscleWeightMin   = [[dict safeObjectForKey:@"boneMuscleWeightMin"]floatValue];
     self . boneLevel             = [[dict safeObjectForKey:@"boneLevel"]intValue];
     
-    self.standardWeight             = [[dict safeObjectForKey:@"standardWeight"]floatValue];
-    self.weightControl              = [[dict safeObjectForKey:@"weightControl"]floatValue];
-    self.lbm                        = [[dict safeObjectForKey:@"lbm"]floatValue];
-    self.fatControl                 = [[dict safeObjectForKey:@"fatControl"]floatValue];
+    self.standardWeight          = [[dict safeObjectForKey:@"standardWeight"]floatValue];
+    self.weightControl           = [[dict safeObjectForKey:@"weightControl"]floatValue];
+    self.lbm                     = [[dict safeObjectForKey:@"lbm"]floatValue];
+    self.fatControl              = [[dict safeObjectForKey:@"fatControl"]floatValue];
 
     
     self . normal                = [[dict safeObjectForKey:@"normal"]intValue];
     self . warn                  = [[dict safeObjectForKey:@"warn"]intValue];
     self . serious               = [[dict safeObjectForKey:@"serious"]intValue];
+    
+    self.height                  = [[dict safeObjectForKey:@"height"]intValue];
+    self.age                     = [[dict safeObjectForKey:@"age"]intValue];
 
 }
 

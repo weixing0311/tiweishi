@@ -223,7 +223,8 @@
     
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 0.5, JFA_SCREEN_WIDTH, 40);
-footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"totalPrice"]floatValue]];
+    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"payableAmount"]floatValue]-[[dic safeObjectForKey:@"freight"]floatValue]];
+
     footer.countLabel.text = [NSString stringWithFormat:@"共计%@项服务，合计：",[dic objectForKey:@"quantitySum"]];
     [view addSubview:footer];
 
@@ -256,13 +257,13 @@ footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKe
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
     
-    int stockType = [[dic safeObjectForKey:@"stockType"]intValue];
-    if (stockType ==3) {
-        cell.price2label.text = [NSString stringWithFormat:@"成本单价:￥%.2f",[[infoDic safeObjectForKey:@"costPrice"] floatValue]];
-
-    }else{
-        cell.price2label.text = @"";
-    }
+//    int stockType = [[dic safeObjectForKey:@"stockType"]intValue];
+//    if (stockType ==3) {
+//        cell.price2label.text = [NSString stringWithFormat:@"成本单价:￥%.2f",[[infoDic safeObjectForKey:@"costPrice"] floatValue]];
+//
+//    }else{
+//        cell.price2label.text = @"";
+//    }
     
     cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"] floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
@@ -305,7 +306,7 @@ footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKe
     }else if(segmentIndex ==2){
         type =3;
     }
-    [self buildHeadView];
+//    [self buildHeadView];
     [_dataArray removeAllObjects];
     
     if (type==100) {

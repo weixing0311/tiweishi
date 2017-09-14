@@ -44,6 +44,8 @@
     self.weightControl              = [[dict safeObjectForKey:@"weightControl"]floatValue];
     self.lbm                        = [[dict safeObjectForKey:@"lbm"]floatValue];
     self.fatControl                 = [[dict safeObjectForKey:@"fatControl"]floatValue];
+    self.height                     = [[dict safeObjectForKey:@"height"]floatValue];
+    self.age                        = [[dict safeObjectForKey:@"age"]intValue];
 
 }
 

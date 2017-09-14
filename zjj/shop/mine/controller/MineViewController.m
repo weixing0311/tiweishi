@@ -14,7 +14,7 @@
 #import "OrderViewController.h"
 #import "ContactUsViewController.h"
 #import "QrCodeView.h"
-
+#import "SuperiorViewController.h"
 @interface MineViewController ()<qrcodeDelegate>
 
 @end
@@ -28,6 +28,7 @@
     [self getWaitPayCount];
     self.tableview.bounces = NO;
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.tableview reloadData];
 
 }
 - (void)viewDidLoad {
@@ -43,7 +44,6 @@
     self.tableview.dataSource = self;
     self.waitSendLabel.hidden = YES;
     self.waitpayCountLabel .hidden = YES;
-    [[UserModel shareInstance]getbalance];
 
 }
 -(void)refreshMyInfoView
@@ -91,7 +91,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -117,12 +117,25 @@
         cell.headImageView.image= [UIImage imageNamed:@"personal-lianxi"];
  
     }
-    else
+    else if(indexPath.row==2)
     {
         cell.titleLabel.text = @"邀请注册";
         cell.secondLabel .text = @"二维码注册";
         cell.secondLabel.textColor = HEXCOLOR(0x999999);
         cell.headImageView.image= [UIImage imageNamed:@"personal-recode"];
+ 
+    }
+    else
+    {
+        cell.titleLabel.text = @"我的推荐人";
+        if ([UserModel shareInstance].superiorDict&&[[UserModel shareInstance].superiorDict allKeys].count>0) {
+            NSString * username = [NSString stringWithFormat:@"%@",[[UserModel shareInstance].superiorDict safeObjectForKey:@"userName"]];
+            cell.secondLabel .text = username?username:@"";
+        }else{
+            cell.secondLabel .text = @"";
+        }
+        cell.secondLabel.textColor = HEXCOLOR(0x999999);
+        cell.headImageView.image= [UIImage imageNamed:@"personal-tui"];
 
     }
     return cell;
@@ -143,7 +156,9 @@
         ContactUsViewController * cc = [[ContactUsViewController alloc]init];
         cc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:cc animated:YES];
-    }else{
+    }
+    else if(indexPath.row ==2)
+    {
         NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"QrCodeView"owner:self options:nil];
         
         QrCodeView *rcodeView = [nib objectAtIndex:0];
@@ -151,7 +166,13 @@
         rcodeView.frame = self.view.frame;
         [rcodeView setInfoWithDict:nil];
         [self.view.window addSubview: rcodeView];
+  
+    }
+    else{
+        SuperiorViewController * sp =[[SuperiorViewController alloc]init];
+        sp.hidesBottomBarWhenPushed = YES;
 
+        [self.navigationController pushViewController:sp animated:YES];
     }
 //    self.navigationController.navigationBarHidden = NO;
 
@@ -228,19 +249,19 @@
     
 }
 #pragma mark -----分享
--(void)didShareWithUrl:(NSString * )urlStr
+-(void)didShareWithimage:(UIImage * )image
 {
-    urlStr =[UserModel shareInstance].qrcodeImageUrl;
+    
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"分享" message:@"选择要分享到的平台" preferredStyle:UIAlertControllerStyleActionSheet];
     [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self shareWithType:SSDKPlatformSubTypeWechatSession url:urlStr];
+        [self shareWithType:SSDKPlatformSubTypeWechatSession image:image];
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self shareWithType:SSDKPlatformSubTypeWechatTimeline url:urlStr];
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline image:image];
         
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"QQ" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self shareWithType:SSDKPlatformTypeQQ url:urlStr];
+        [self shareWithType:SSDKPlatformTypeQQ image:image];
         
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -249,25 +270,22 @@
     
 }
 #pragma mark ----share
--(void) shareWithType:(SSDKPlatformType)type url:(NSString * )url
+-(void) shareWithType:(SSDKPlatformType)type image:(UIImage * )image
 {
     
-    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    
-    if (type ==SSDKPlatformSubTypeWechatSession||type ==SSDKPlatformSubTypeWechatTimeline) {
-        
-        [shareParams SSDKSetupWeChatParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天" title:@"脂将军，互联网体脂管理领导者" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].qrcodeImageUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
-    }else{
-        
-        [shareParams SSDKSetupShareParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天"
-                                         images:[UserModel shareInstance].qrcodeImageUrl
-                                            url:[NSURL URLWithString:url]
-                                          title:@"脂将军，互联网体脂管理领导者"
-                                           type:SSDKContentTypeAuto];
-        
-        
-        
+    if (!image) {
+        return;
     }
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    NSArray* imageArray = @[image];
+    
+    [shareParams SSDKSetupShareParamsByText:nil
+                                     images:imageArray
+                                        url:nil
+                                      title:nil
+                                       type:SSDKContentTypeImage];
+    
     [shareParams SSDKEnableUseClientShare];
     [SVProgressHUD showWithStatus:@"开始分享"];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
@@ -302,7 +320,6 @@
                  break;
          }
      }];
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

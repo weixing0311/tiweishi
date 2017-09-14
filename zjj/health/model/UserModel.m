@@ -141,13 +141,15 @@ static UserModel *model;
     self.isAttest    = [dict safeObjectForKey:@"isAttest"];
     self.healthId    = [dict safeObjectForKey:@"id"];
     self.age         = [[dict safeObjectForKey:@"age"]intValue];
+    self.subId       = [dict safeObjectForKey:@"subId"];
     if (!self.subId) {
         self.subId   = [dict safeObjectForKey:@"id"];
-    }else{
-        self.subId   = [dict safeObjectForKey:@"subId"];
     }
     self.qrcodeImageData = [dict safeObjectForKey:@"qrcodeImageData"];
     self.qrcodeImageUrl = [dict safeObjectForKey:@"qrcodeImageUrl"];
+    
+    
+    [[SubUserItem shareInstance]setInfoWithHealthId:self.subId];
 }
 -(BOOL)isHaveUserInfo
 {
@@ -271,9 +273,9 @@ static UserModel *model;
     self.parentId       = [dict safeObjectForKey:@"parentId"];
     self.partnerId      = [dict safeObjectForKey:@"partnerId"];
     self.grade          = [dict safeObjectForKey:@"grade"];
-    
+    self.isHaveCard     = [dict safeObjectForKey:@"isHaveCard"];
     self.qrcodeImageData =[NSData dataWithContentsOfURL:[NSURL URLWithString:self.qrcodeImageUrl]];
-    
+    self.superiorDict  = [dict safeObjectForKey:@"parent"];
     [self writeToDoc];
 }
 
@@ -370,7 +372,7 @@ static UserModel *model;
 //未完成
 -(void)childUserChange
 {
-//    self.child
+//
     [self writeToDoc];
 }
 
@@ -475,6 +477,7 @@ static UserModel *model;
         
         
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         DLog(@"error--%@",error);
     }];
 

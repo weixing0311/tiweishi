@@ -187,13 +187,13 @@
         cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
-        int stockType = [[_infoDict safeObjectForKey:@"stockType"]intValue];
-        if (stockType ==3) {
-            cell.price2label.text = [NSString stringWithFormat:@"成本单价:￥%.2f",[[dic safeObjectForKey:@"costPrice"] floatValue]];
-            
-        }else{
-            cell.price2label.text = @"";
-        }
+//        int stockType = [[_infoDict safeObjectForKey:@"stockType"]intValue];
+//        if (stockType ==3) {
+//            cell.price2label.text = [NSString stringWithFormat:@"成本单价:￥%.2f",[[dic safeObjectForKey:@"costPrice"] floatValue]];
+//            
+//        }else{
+//            cell.price2label.text = @"";
+//        }
         NSString * isgift = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"isGift"]];
         
         if ([isgift isEqualToString:@"1"]) {
@@ -215,7 +215,7 @@
                 cell = [self getXibCellWithTitle:identifier];
             }
             cell.countLabel.text =[NSString stringWithFormat:@"共%@项 合计:",[_infoDict safeObjectForKey:@"quantitySum"]];
-            cell.priceLabel.text  =[NSString stringWithFormat:@"￥%.2f元",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]];
+            cell.priceLabel.text  =[NSString stringWithFormat:@"￥%.2f元",[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]-[[_infoDict safeObjectForKey:@"freight"]floatValue]];
             return cell;
         }
         

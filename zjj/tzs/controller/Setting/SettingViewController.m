@@ -19,6 +19,7 @@
 #import "TZSDistributionViewController.h"
 #import "AddTradingPsController.h"
 #import "AdvertisingView.h"
+#import "BusinessCardViewController.h"
 @interface SettingViewController ()<qrcodeDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
@@ -350,6 +351,14 @@
     //WEB
 }
 
+- (IBAction)myBussinessCard:(id)sender {
+    self.navigationController.navigationBarHidden =NO;
+
+    BusinessCardViewController * bs = [[BusinessCardViewController alloc]init];
+    bs.hidesBottomBarWhenPushed =YES;
+    [self.navigationController pushViewController:bs animated:YES];
+}
+
 - (IBAction)toViewRank:(id)sender {
 }
 #pragma mark--设置
@@ -364,19 +373,19 @@
 }
 
 #pragma mark -----分享
--(void)didShareWithUrl:(NSString * )urlStr
+-(void)didShareWithimage:(UIImage * )image
 {
     
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"分享" message:@"选择要分享到的平台" preferredStyle:UIAlertControllerStyleActionSheet];
     [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self shareWithType:SSDKPlatformSubTypeWechatSession url:urlStr];
+        [self shareWithType:SSDKPlatformSubTypeWechatSession image:image];
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self shareWithType:SSDKPlatformSubTypeWechatTimeline url:urlStr];
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline image:image];
 
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"QQ" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self shareWithType:SSDKPlatformTypeQQ url:urlStr];
+        [self shareWithType:SSDKPlatformTypeQQ image:image];
 
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -385,25 +394,22 @@
 
 }
 #pragma mark ----share
--(void) shareWithType:(SSDKPlatformType)type url:(NSString * )url
+-(void) shareWithType:(SSDKPlatformType)type image:(UIImage * )image
 {
     
-    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-
-    if (type ==SSDKPlatformSubTypeWechatSession||type ==SSDKPlatformSubTypeWechatTimeline) {
-        
-        [shareParams SSDKSetupWeChatParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天" title:@"脂将军，互联网体脂管理领导者" url:[NSURL URLWithString:url] thumbImage:[UserModel shareInstance].qrcodeImageUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
-    }else{
-        
-        [shareParams SSDKSetupShareParamsByText:@"脂将军，您的健康减脂专家，全面分析健康数据，伴您享受生活每一天"
-                                         images:[UserModel shareInstance].qrcodeImageUrl
-                                            url:[NSURL URLWithString:url]
-                                          title:@"脂将军，互联网体脂管理领导者"
-                                           type:SSDKContentTypeAuto];
-        
-        
-        
+    if (!image) {
+        return;
     }
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    NSArray* imageArray = @[image];
+    
+    [shareParams SSDKSetupShareParamsByText:nil
+                                     images:imageArray
+                                        url:nil
+                                      title:nil
+                                       type:SSDKContentTypeImage];
+    
     [shareParams SSDKEnableUseClientShare];
     [SVProgressHUD showWithStatus:@"开始分享"];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
@@ -425,9 +431,7 @@
              case SSDKResponseStateFail:
              {
                  [[UserModel shareInstance]dismiss];
-                 NSString * text  =[error.userInfo objectForKey:@"error_message"];
-                 
-                [[UserModel shareInstance] showErrorWithStatus:text];
+                 //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
                  break;
              }
              case SSDKResponseStateCancel:
@@ -440,7 +444,6 @@
                  break;
          }
      }];
-    
 }
 
 @end

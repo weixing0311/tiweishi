@@ -217,7 +217,7 @@
 //    蛋白质
     NSString *protein1 =[[ShareHealthItem shareInstance] getHeightWithLevel:item1.proteinLevel status:IS_SAME];
     NSString *protein2 =[[ShareHealthItem shareInstance] getHeightWithLevel:item2.proteinLevel status:IS_SAME];
-//骨骼肌
+//骨量
     NSString *boneMuscle1 =[[ShareHealthItem shareInstance] getHeightWithLevel:item1.boneMuscleLevel status:IS_SAME];
     NSString *boneMuscle2 =[[ShareHealthItem shareInstance] getHeightWithLevel:item2.boneMuscleLevel status:IS_SAME];
 //水分

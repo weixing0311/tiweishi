@@ -30,7 +30,7 @@ typedef enum
     /**
      *骨头
      */
-    IS_MODEL_BONE,//骨骼肌
+    IS_MODEL_BONE,//骨量
     /**
      *水分
      */

@@ -190,6 +190,7 @@
                 <outlet property="levelLabel" destination="gWk-bO-gJe" id="OGk-5a-cBV"/>
                 <outlet property="nameLabel" destination="KnH-40-mvo" id="tD9-n2-2xX"/>
                 <outlet property="qrcodeImage" destination="mQs-mx-xlH" id="TUl-YP-d6H"/>
+                <outlet property="shareView" destination="ksV-qE-oyi" id="SHW-gK-a0b"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="79.5"/>
         </view>

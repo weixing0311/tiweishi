@@ -10,7 +10,7 @@
 #import <WebKit/WebKit.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
-@interface HomePageWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler,UIScrollViewDelegate>
+@interface HomePageWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler,UIScrollViewDelegate,UIWebViewDelegate>
 @property (nonatomic,strong)UIWebView * webView;
 
 @end
@@ -169,17 +169,6 @@
     [_webView stringByEvaluatingJavaScriptFromString:js];
     [_webView stringByEvaluatingJavaScriptFromString:@"imgAutoFit()"];
     
-//    NSString * clientheight_str = [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
-//    float clientheight = [clientheight_str floatValue];
-//    //设置到WebView上
-//    _webView.frame = CGRectMake(0, 0, self.view.frame.size.width, clientheight);
-//    //获取WebView最佳尺寸（点）
-//    CGSize frame = [webView sizeThatFits:_webView.frame.size];
-//    //获取内容实际高度（像素）
-//    NSString * height_str= [_webView stringByEvaluatingJavaScriptFromString: @"document.getElementById('webview_content_wrapper').offsetHeight + parseInt(window.getComputedStyle(document.getElementsByTagName('body')[0]).getPropertyValue('margin-top'))  + parseInt(window.getComputedStyle(document.getElementsByTagName('body')[0]).getPropertyValue('margin-bottom'))"];
-//    float height = [height_str floatValue];
-//    //内容实际高度（像素）* 点和像素的比
-//    height = height * frame.height / clientheight;
     
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

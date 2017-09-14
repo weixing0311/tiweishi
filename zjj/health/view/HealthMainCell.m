@@ -10,7 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "HealthModel.h"
 #import "NSString+dateWithString.h"
-
+#import "SubUserItem.h"
 @implementation HealthMainCell
 {
     CBCentralManager *CM;
@@ -125,8 +125,8 @@
         [self.scaleButton setBackgroundImage:[UIImage imageNamed:@"health_button"] forState:UIControlStateNormal];
     }
     
-    self.heightLabel.text = [NSString stringWithFormat:@"身高：%.0fcm",[UserModel shareInstance].heigth];
-    self.agelabel.text = [NSString stringWithFormat:@"年龄：%d",[UserModel shareInstance].age];
+    self.heightLabel.text = [NSString stringWithFormat:@"身高：%.0fcm",item.height];
+    self.agelabel.text = [NSString stringWithFormat:@"年龄：%d",item.age];
     self.bmrLabel.text = [NSString stringWithFormat:@"基础代谢: %.0f",item.bmr];
     self.bmrAgeLabel.text = [NSString stringWithFormat:@"身体年龄: %.0f",item.bodyAge];
     self.timeLabel.text = [item.createTime yyyymmdd];

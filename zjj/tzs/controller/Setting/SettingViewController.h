@@ -33,33 +33,39 @@
 
 - (IBAction)seeNewMessage:(id)sender;
 
-//邀请
+////邀请
 - (IBAction)didInvitation:(id)sender;
 //
-//服务订购
+////服务订购
 - (IBAction)buy:(id)sender;
-//我的订购
+////我的订购
 - (IBAction)mybuy:(id)sender;
-//已购
+////已购
 - (IBAction)alsoBuy:(id)sender;
-//服务配送
+////服务配送
 - (IBAction)send:(id)sender;
-//我的配送
+////我的配送
 - (IBAction)mySend:(id)sender;
-//地址管理
+////地址管理
 - (IBAction)address:(id)sender;
-//充值
+////充值
 - (IBAction)topUp:(id)sender;
-//交易记录
+////交易记录
 - (IBAction)TransactionRecords:(id)sender;
-//钱包管理
+////钱包管理
 - (IBAction)walletManagement:(id)sender;
-//我的收益
+////我的收益
 - (IBAction)myIncome:(id)sender;
-//团队订购
+////团队订购
 - (IBAction)teamOrder:(id)sender;
-//团队管理
+////团队管理
 - (IBAction)teamManagement:(id)sender;
+/**
+ *我的名片
+ */
+- (IBAction)myBussinessCard:(id)sender;
+
+
 //查看排名
 - (IBAction)toViewRank:(id)sender;
 

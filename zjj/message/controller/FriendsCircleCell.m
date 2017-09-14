@@ -13,6 +13,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.loadedImage = [NSMutableArray array];
     // Initialization code
 }
 
@@ -22,32 +23,29 @@
     // Configure the view for the selected state
 }
 
--(void)setInfoWithDict:(NSDictionary *)dict
+-(void)setInfoWithDict:(LoadedImageModel *)item
 {
     self.headImageView.image = [UIImage imageNamed:@"logo"];
-    self.titleView.text = [dict safeObjectForKey:@"title"];
-    self.contentLabel.text = [dict safeObjectForKey:@"content"];
-    self.timeLabel.text = [dict safeObjectForKey:@"releaseTime"];
+    self.titleView.text = item.title;
+    self.contentLabel.text = item.content;
+    self.timeLabel.text = item.releaseTime;
     for (UIView * view in self.imagesView.subviews) {
         [view removeFromSuperview];
     }
-    NSMutableArray * imageArr =[dict safeObjectForKey:@"images"];
-    NSMutableArray * picArr = [dict safeObjectForKey:@"pictures"];
+    NSMutableArray * picArr = item.pictures;
     
-    if (imageArr.count == picArr.count) {
-        [self buildNineImagesWithArray:imageArr];
-
-    }else{
-//    NSString * cardUrl = [dict safeObjectForKey:@"cardUrl"];
-//    [imageArr addObject:cardUrl];
-
     [self buildNineImagesWithArray:picArr];
-    }
+    
 }
 
 -(void)buildNineImagesWithArray:(NSArray *)array
 {
-    int totalColumns = 3;
+    int totalColumns = 0;
+    if (array.count==2||array.count==4) {
+        totalColumns =2;
+    }else{
+        totalColumns =3;
+    }
     
     //       每一格的尺寸
     CGFloat cellW = (JFA_SCREEN_WIDTH-108)/3;
@@ -57,6 +55,8 @@
     CGFloat margin =10;
     
     //    根据格子个数创建对应的框框
+    
+    
     for(int index = 0; index< array.count; index++) {
         UIButton *cellView = [UIButton buttonWithType:UIButtonTypeCustom ];
         cellView.backgroundColor = HEXCOLOR(0xeeeeee);
@@ -70,9 +70,28 @@
             [cellView setBackgroundImage:imageCur forState:UIControlStateNormal];
 
         }else{
-        
-            [cellView sd_setImageWithURL:[NSURL URLWithString:array[index]] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                image = [self cutImage:image imgViewWidth:cellW imgViewHeight:cellH];
+            NSString *encodedString = (NSString *)
+            
+            CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                      
+                                                                      (CFStringRef)array[index],
+                                                                      
+                                                                      (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
+                                                                      
+                                                                      NULL,
+                                                                      
+                                                                      kCFStringEncodingUTF8));
+
+            [cellView sd_setImageWithURL:[NSURL URLWithString:encodedString] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                if (!error) {
+                    
+                    [self.loadedImage addObject:image];
+                    [cellView setImage:[self cutImage:image imgViewWidth:cellW imgViewHeight:cellH] forState:UIControlStateNormal];
+                    if (self.loadedImage.count ==array.count) {
+                        [self saveImages];
+                    }
+
+                }
             }];
             
             
@@ -91,9 +110,20 @@
         
         // 添加到view 中  
         [self.imagesView addSubview:cellView];
-    }  
+    }
+    
+    
+    
+    
 }
 
+-(void)saveImages
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(insertImage:cell:)]) {
+        [self.delegate insertImage:self.loadedImage cell:self];
+    }
+
+}
 -(void)didClickImages:(UIButton *)sender
 {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(didCheckImagesWithButton:cell:)]) {

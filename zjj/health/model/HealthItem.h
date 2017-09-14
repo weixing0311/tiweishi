@@ -73,6 +73,10 @@ typedef enum {
 ////脂肪控制量
 @property (nonatomic,assign) float              fatControl;
 
+@property (nonatomic,assign) float              height;
+@property (nonatomic,assign) int                age;
+
+
 -(void)setobjectWithDic:(NSDictionary *)dict ;//
 
 /*

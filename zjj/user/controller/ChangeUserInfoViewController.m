@@ -78,7 +78,17 @@
 {
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
     [[UserModel shareInstance]removeAllObject];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    for (UIViewController * vc  in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[LoignViewController class]]) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
+    }
+    LoignViewController * lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
+    self.view.window.rootViewController = lo;
+
+    
 }
 -(void)isChangeInfo
 {

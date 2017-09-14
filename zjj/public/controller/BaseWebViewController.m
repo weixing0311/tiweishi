@@ -179,13 +179,18 @@
     if ([url containsString:@"alipay://"]) {
         NSString* dataStr=[url substringFromIndex:23];
         NSLog(@"%@",dataStr);
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[dataStr dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
-        NSMutableString* mString=[[NSMutableString alloc] init];
-        [mString appendString:@"alipays://platformapi/startApp?appId=20000125&orderSuffix="];
-        //url进行编码
-        [mString appendString:[self encodeString:dict[@"dataString"]]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[ NSString stringWithFormat:@"alipay://alipayclient/?%@",[self encodeString:dataStr]]]];// 对参数进行urlencode，拼接上scheme。
         
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mString]];
+        
+        
+        
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[dataStr dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+//        NSMutableString* mString=[[NSMutableString alloc] init];
+//        [mString appendString:@"alipays://platformapi/startApp?appId=20000125&orderSuffix="];
+//        //url进行编码
+//        [mString appendString:[self encodeString:dict[@"dataString"]]];
+//        
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mString]];
         
         decisionHandler(WKNavigationActionPolicyAllow);
         return;
@@ -843,8 +848,6 @@
         NSString * cookiesFolderPath = [libraryPath stringByAppendingString:@"/Cookies"];
         [[NSFileManager defaultManager] removeItemAtPath:cookiesFolderPath error:nil];
     }
-    
-    
 }
 
 - (void)dealloc {

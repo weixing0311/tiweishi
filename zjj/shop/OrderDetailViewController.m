@@ -352,7 +352,9 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        cell.value1label.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]];
+        
+        //商品金额= totalprice-运费（freight）
+        cell.value1label.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"itemTotalPrice"]floatValue]-[[_infoDict safeObjectForKey:@"freight"]floatValue]];
         cell.value2label.text =[NSString stringWithFormat:@"+￥%.2f",[[_infoDict safeObjectForKey:@"freight"]floatValue]];
         cell.value4label.text =[NSString stringWithFormat:@"-￥%.2f",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]-[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];
         cell.value3label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];

@@ -9,6 +9,7 @@
 #import "FriendsCircleViewController.h"
 #import "FriendsCircleCell.h"
 #import "FcBigImgViewController.h"
+#import "LoadedImageModel.h"
 @interface FriendsCircleViewController ()<UITableViewDelegate,UITableViewDataSource,friendsCircleCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
@@ -41,9 +42,6 @@
 
 
 
-
-
-
 -(void)headerRereshing
 {
     page =1;
@@ -70,35 +68,21 @@
             [self.tableview setFooterHidden:NO];
 
         }
+        
+        
+        
+        
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
         if (infoArr.count<30) {
             [self.tableview setFooterHidden:YES];
         }
         for (NSMutableDictionary * infoDic in infoArr) {
+            LoadedImageModel * item = [[LoadedImageModel alloc]init];
+            [item setInfoWithDict:infoDic];
+            [self.dataArray addObject:item];
             
-            NSMutableArray * imageArr =[infoDic safeObjectForKey:@"pictures"];
-            float rowHeight = [self CalculateCellHieghtWithContent:[infoDic safeObjectForKey:@"content"] images:imageArr];
-            [infoDic safeSetObject:@(rowHeight) forKey:@"rowHeight"];
-            NSMutableArray * images = [NSMutableArray array];
-            NSMutableArray * shareImages = [NSMutableArray array];
-            for (NSString * imgUrl in imageArr) {
-                UIImage * image = [self getImageFromUrl:imgUrl imgViewWidth:(JFA_SCREEN_WIDTH-108)/3 imgViewHeight:(JFA_SCREEN_WIDTH-108)/3];
-                UIImage * shareImage = [self getShareImageFormUrl:imgUrl];
-                if (image) {
-                    [images addObject:image];
-                }
-                if (shareImage) {
-                    [shareImages addObject:shareImage];
-                }
-            }
-            [infoDic safeSetObject:images forKey:@"images"];
-            [infoDic safeSetObject:shareImages forKey:@"shareImages"];
         }
-
-        
-        [self.dataArray addObjectsFromArray:infoArr];
-        
         [self.tableview reloadData];
         
         DLog(@"%@",dic);
@@ -109,39 +93,6 @@
     
 
 }
--(float)CalculateCellHieghtWithContent:(NSString *)contentStr images:(NSArray * )images
-{
-    NSMutableParagraphStyle * paragraph = [[NSMutableParagraphStyle alloc] init];
-    paragraph.lineSpacing = 10;
-
-    UIFont *font = [UIFont systemFontOfSize:14];
-    NSDictionary * dict = @{NSFontAttributeName:font,
-                            NSParagraphStyleAttributeName:paragraph};
-
-    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-88, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
-    
-    float imageHeight = 0.0f;
-    CGFloat cellW = (JFA_SCREEN_WIDTH-108)/3;
-
-    if (images.count<1)
-    {
-        imageHeight = 0;
-    }
-    else if (images.count>0&& images.count<=3)
-    {
-        imageHeight =cellW;
-    }
-    else if (images.count>3&&images.count<=6)
-    {
-        imageHeight = cellW*2+10;
-    }
-    else{
-        imageHeight = cellW*3+20;
-    }
-    
-    return size.height+imageHeight+105;
-
-}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -149,8 +100,8 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * dic =[self.dataArray objectAtIndex:indexPath.row];
-    float rowheight = [[dic safeObjectForKey:@"rowHeight"]floatValue];
+    LoadedImageModel * item =[self.dataArray objectAtIndex:indexPath.row];
+    float rowheight = item.rowHieght;
     return rowheight;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -161,18 +112,18 @@
         cell = [self getXibCellWithTitle:identifier];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    NSDictionary * dic =[self.dataArray objectAtIndex:indexPath.row];
+    LoadedImageModel * item =[self.dataArray objectAtIndex:indexPath.row];
     cell.delegate = self;
     cell.tag = indexPath.row;
-    [cell setInfoWithDict:dic];
+    [cell setInfoWithDict:item];
     return cell;
 }
 
 #pragma mark ----celldelegate
 -(void)didCheckImagesWithButton:(UIButton *)button cell:(FriendsCircleCell *)cell;
 {
-    NSDictionary * dic = [self.dataArray objectAtIndex:cell.tag];
-    NSArray * images = [dic objectForKey:@"pictures"];
+    LoadedImageModel * item = [self.dataArray objectAtIndex:cell.tag];
+    NSArray * images = item.pictures;
     
     FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
     fc.images = [NSMutableArray arrayWithArray:images];
@@ -184,12 +135,19 @@
 }
 -(void)didClickShareWithCell:(FriendsCircleCell *)cell
 {
-    NSDictionary * dic = [_dataArray objectAtIndex:cell.tag];
+    LoadedImageModel * item = [_dataArray objectAtIndex:cell.tag];
 
+    NSArray * imageArray = cell.loadedImage;
+    
+    [self shareWithType:SSDKPlatformSubTypeWechatTimeline dict:item arr:imageArray];
+
+}
+-(void)insertImage:(NSMutableArray * )arr cell:(FriendsCircleCell*)cell
+{
+    LoadedImageModel * item =[self.dataArray objectAtIndex:cell.tag];
+    [item.loadedImageArray addObjectsFromArray:arr];
     
     
-    [self shareWithType:SSDKPlatformSubTypeWechatTimeline dict:dic];
-
 }
 -(void)didHiddenMe
 {
@@ -201,40 +159,23 @@
 
 }
 #pragma mark ----share
--(void) shareWithType:(SSDKPlatformType)type dict:(NSDictionary *)dict
+-(void) shareWithType:(SSDKPlatformType)type dict:(LoadedImageModel *)item arr:(NSArray*)arr
 {
-    if (!dict||[dict allKeys].count<1) {
-        return;
-    }
     
-    NSArray * imageArray = [dict safeObjectForKey:@"shareImages"];
-    NSArray * imageUrlArr = [dict safeObjectForKey:@"pictures"];
     NSMutableArray *array = [[NSMutableArray alloc]init];
 
-    
-    
-    if (![[imageArray lastObject] isKindOfClass:[UIImage class]]||imageArray.count<1||!imageArray) {
+    if (item.loadedImageArray&&item.loadedImageArray.count==item.pictures.count) {
         
-    
-    for (int i = 0; i <imageUrlArr.count; i++) {
-        NSString *URL = imageUrlArr[i];
-        NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:URL]];
-        UIImage *imagerang = [UIImage imageWithData:data];
+        array  = [NSMutableArray arrayWithArray:item.loadedImageArray];
+
+    }else{
         
-        NSString *path_sandox = NSHomeDirectory();
-        NSString *imagePath = [path_sandox stringByAppendingString:[NSString stringWithFormat:@"/Documents/ShareWX%d.jpg",i]];
-        [UIImagePNGRepresentation(imagerang) writeToFile:imagePath atomically:YES];
-        
-        
-        /** 这里做个解释 imagerang : UIimage 对象  shareobj:NSURL 对象 这个方法的实际作用就是 在吊起微信的分享的时候 传递给他 UIimage对象,在分享的时候 实际传递的是 NSURL对象 达到我们分享九宫格的目的 */
-        
-//        SharedItem *item = [[SharedItem alloc] initWithData:imagerang andFile:shareobj];
-        
-        [array addObject:imagerang];
+        array = [NSMutableArray arrayWithArray:arr];
     }
-    }
-    else{
-        array  = [NSMutableArray arrayWithArray:imageArray];
+    for (UIImage * image in array) {
+        if (![image isKindOfClass:[UIImage class]]) {
+            return;
+        }
     }
     
     if (array.count<1) {
@@ -244,7 +185,7 @@
     }
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params safeSetObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
+    [params safeSetObject:item.uid forKey:@"id"];
     
     
     
@@ -256,7 +197,7 @@
     
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [dict safeObjectForKey:@"content"];
+    pasteboard.string = item.content;
     [[UserModel shareInstance]showInfoWithStatus:@"文案已复制，请在分享时长按粘贴"];
     
     

@@ -756,14 +756,14 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xtl-wi-JxJ">
                                             <rect key="frame" x="0.0" y="0.0" width="115" height="73"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_1.png" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-QI-JU1">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personal-tzr.png" translatesAutoresizingMaskIntoConstraints="NO" id="XPz-QI-JU1">
                                                     <rect key="frame" x="42.5" y="10" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="LUg-eu-1J2"/>
                                                         <constraint firstAttribute="height" constant="30" id="Ue0-LE-G0o"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队订购" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-GV-r7G">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的名片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-GV-r7G">
                                                     <rect key="frame" x="0.0" y="40" width="115" height="32.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -772,7 +772,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xy1-8c-PJO">
                                                     <rect key="frame" x="0.0" y="0.0" width="115" height="72.5"/>
                                                     <connections>
-                                                        <action selector="teamOrder:" destination="-1" eventType="touchUpInside" id="3dQ-SG-RG1"/>
+                                                        <action selector="myBussinessCard:" destination="-1" eventType="touchUpInside" id="IIS-8h-yXy"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -792,14 +792,14 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cu7-7I-KOY">
                                             <rect key="frame" x="115" y="0.0" width="115" height="73"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="aHt-ee-Bzf">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_1.png" translatesAutoresizingMaskIntoConstraints="NO" id="aHt-ee-Bzf">
                                                     <rect key="frame" x="42" y="10" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="mkA-oI-Y8Y"/>
                                                         <constraint firstAttribute="width" constant="30" id="qzL-KK-CVb"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队管理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOe-vL-RRN">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队订购" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOe-vL-RRN" userLabel="团队订购">
                                                     <rect key="frame" x="0.0" y="40" width="115" height="32.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -808,7 +808,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRb-H5-17I">
                                                     <rect key="frame" x="0.0" y="0.0" width="115" height="72.5"/>
                                                     <connections>
-                                                        <action selector="teamManagement:" destination="-1" eventType="touchUpInside" id="K1h-BC-bOT"/>
+                                                        <action selector="teamOrder:" destination="-1" eventType="touchUpInside" id="sXq-Qs-U1y"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -826,7 +826,40 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3IR-xJ-yF3">
-                                            <rect key="frame" x="230" y="0.0" width="115" height="83"/>
+                                            <rect key="frame" x="230" y="0.0" width="115" height="73"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bodyfat_team_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="DxJ-Ha-5mh">
+                                                    <rect key="frame" x="42" y="10" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="EPW-vu-HGe"/>
+                                                        <constraint firstAttribute="width" constant="30" id="yyn-JG-gRS"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="团队管理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-4f-j1V">
+                                                    <rect key="frame" x="0.0" y="40" width="115" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJy-8u-v4W">
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="73"/>
+                                                    <connections>
+                                                        <action selector="teamManagement:" destination="-1" eventType="touchUpInside" id="zTG-Qp-PFb"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="DxJ-Ha-5mh" firstAttribute="centerX" secondItem="3IR-xJ-yF3" secondAttribute="centerX" id="4Ri-Hc-7hV"/>
+                                                <constraint firstItem="FJy-8u-v4W" firstAttribute="top" secondItem="3IR-xJ-yF3" secondAttribute="top" id="7R4-H1-uXT"/>
+                                                <constraint firstItem="FJy-8u-v4W" firstAttribute="leading" secondItem="3IR-xJ-yF3" secondAttribute="leading" id="QJl-14-fZ0"/>
+                                                <constraint firstAttribute="bottom" secondItem="FJy-8u-v4W" secondAttribute="bottom" id="T9T-wp-0bM"/>
+                                                <constraint firstAttribute="trailing" secondItem="FJy-8u-v4W" secondAttribute="trailing" id="Txn-cp-x6q"/>
+                                                <constraint firstItem="DxJ-Ha-5mh" firstAttribute="top" secondItem="3IR-xJ-yF3" secondAttribute="top" constant="10" id="cip-vp-bpm"/>
+                                                <constraint firstItem="8Fj-4f-j1V" firstAttribute="leading" secondItem="3IR-xJ-yF3" secondAttribute="leading" id="erf-A3-dE0"/>
+                                                <constraint firstItem="8Fj-4f-j1V" firstAttribute="top" secondItem="DxJ-Ha-5mh" secondAttribute="bottom" id="nAV-dj-Ess"/>
+                                                <constraint firstAttribute="trailing" secondItem="8Fj-4f-j1V" secondAttribute="trailing" id="nds-4V-FFg"/>
+                                                <constraint firstAttribute="bottom" secondItem="8Fj-4f-j1V" secondAttribute="bottom" id="z5E-w8-dXF"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -834,7 +867,7 @@
                                         <constraint firstAttribute="bottom" secondItem="Cu7-7I-KOY" secondAttribute="bottom" constant="10" id="2VG-e8-XQN"/>
                                         <constraint firstAttribute="bottom" secondItem="xtl-wi-JxJ" secondAttribute="bottom" constant="10" id="Aaq-qc-25n"/>
                                         <constraint firstItem="Cu7-7I-KOY" firstAttribute="width" secondItem="xtl-wi-JxJ" secondAttribute="width" id="AfJ-RP-Xke"/>
-                                        <constraint firstAttribute="bottom" secondItem="3IR-xJ-yF3" secondAttribute="bottom" id="Cvd-ll-r1l"/>
+                                        <constraint firstAttribute="bottom" secondItem="3IR-xJ-yF3" secondAttribute="bottom" constant="10" id="Cvd-ll-r1l"/>
                                         <constraint firstItem="3IR-xJ-yF3" firstAttribute="top" secondItem="7Yl-eJ-8ax" secondAttribute="top" id="W93-cS-zm4"/>
                                         <constraint firstItem="3IR-xJ-yF3" firstAttribute="width" secondItem="xtl-wi-JxJ" secondAttribute="width" id="dTT-D0-Met"/>
                                         <constraint firstItem="Cu7-7I-KOY" firstAttribute="leading" secondItem="xtl-wi-JxJ" secondAttribute="trailing" id="gNH-DC-oDX"/>
@@ -921,6 +954,7 @@
         <image name="invitation.png" width="67" height="27"/>
         <image name="jin.png" width="9" height="13"/>
         <image name="new-icon.png" width="20" height="20"/>
+        <image name="personal-tzr.png" width="74" height="74"/>
         <image name="setpage.png" width="31" height="31"/>
         <image name="tzs_bg.png" width="375" height="160"/>
     </resources>

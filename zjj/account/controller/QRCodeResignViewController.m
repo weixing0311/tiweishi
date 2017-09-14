@@ -61,7 +61,11 @@
 }
 -(void)didClickBack
 {
+    if (self.navigationController.viewControllers.count>1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
     [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 -(void)configView{
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:kScanRect];
@@ -126,6 +130,18 @@
         [self presentViewController:alert animated:YES completion:nil];
         return;
     }
+    
+    NSString *mediaType = AVMediaTypeVideo;//读取媒体类型
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];//读取设备授权状态
+    if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+        NSString *errorStr = @"应用相机权限受限,请在设置中启用";
+        [[UserModel shareInstance]showInfoWithStatus:errorStr];
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+
+    
+    
     // Device
     _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
@@ -209,8 +225,11 @@
         if (self.delegate &&[self.delegate respondsToSelector:@selector(getQrCodeInfo:)]) {
             [self.delegate getQrCodeInfo:stringValue];
         }
+        if (self.navigationController.viewControllers.count>1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
         [self dismissViewControllerAnimated:YES completion:nil];
-
+        }
         
         
     } else {

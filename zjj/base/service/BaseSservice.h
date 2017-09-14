@@ -40,7 +40,7 @@ typedef void (^requestFailureBlock)(NSError *error);
 -(NSURLSessionTask*)postImage:(NSString*)url
                     paramters:(NSMutableDictionary *)paramters
                     imageData:(NSData *)imageData
+                    imageName:(NSString *)imageName//@"headimgurl.png"
                       success:(requestSuccessBlock)success
                       failure:(requestFailureBlock)failure;
-
 @end

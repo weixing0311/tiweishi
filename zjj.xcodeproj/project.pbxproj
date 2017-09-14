@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C0185BF1F67E3A700ECC707 /* personal-tui.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C0185BE1F67E3A700ECC707 /* personal-tui.png */; };
+		6C0185C11F67E3D900ECC707 /* busnessCard_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C0185C01F67E3D900ECC707 /* busnessCard_default.png */; };
 		6C125DF61F32D0FD00B2323F /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C125DF51F32D0FD00B2323F /* default.png */; };
 		6C125DF91F33103800B2323F /* message_banner1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C125DF71F33103800B2323F /* message_banner1.jpg */; };
 		6C125DFA1F33103800B2323F /* message_banner3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C125DF81F33103800B2323F /* message_banner3.jpg */; };
@@ -56,6 +58,20 @@
 		6C1B2BFE1EED4FBF0092AAF0 /* HealthMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1B2BFC1EED4FBF0092AAF0 /* HealthMainCell.m */; };
 		6C1C8E1F1F444A0700B5FA74 /* reCodeS@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1C8E1D1F444A0700B5FA74 /* reCodeS@2x.png */; };
 		6C1C8E201F444A0700B5FA74 /* reCodeS@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1C8E1E1F444A0700B5FA74 /* reCodeS@3x.png */; };
+		6C1DBD751F6634BD00F5B975 /* LoadedImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DBD741F6634BD00F5B975 /* LoadedImageModel.m */; };
+		6C1DBD791F666B9900F5B975 /* AddressList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD781F666B9900F5B975 /* AddressList.plist */; };
+		6C1DBD811F67887100F5B975 /* personal-tzr.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD801F67887100F5B975 /* personal-tzr.png */; };
+		6C1DBD861F67AF1D00F5B975 /* SuperiorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DBD841F67AF1D00F5B975 /* SuperiorViewController.m */; };
+		6C1DBD871F67AF1D00F5B975 /* SuperiorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD851F67AF1D00F5B975 /* SuperiorViewController.xib */; };
+		6C1DBD8B1F67B2A600F5B975 /* SuperiorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DBD891F67B2A600F5B975 /* SuperiorCell.m */; };
+		6C1DBD8C1F67B2A600F5B975 /* SuperiorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD8A1F67B2A600F5B975 /* SuperiorCell.xib */; };
+		6C1DBD8F1F67BA5400F5B975 /* businessCardZ.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD8D1F67BA5400F5B975 /* businessCardZ.png */; };
+		6C1DBD901F67BA5400F5B975 /* businessCardF.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD8E1F67BA5400F5B975 /* businessCardF.png */; };
+		6C1DBD951F67BA7700F5B975 /* BusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DBD931F67BA7700F5B975 /* BusinessCardViewController.m */; };
+		6C1DBD961F67BA7700F5B975 /* BusinessCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD941F67BA7700F5B975 /* BusinessCardViewController.xib */; };
+		6C1DBD991F67BC3500F5B975 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1DBD981F67BC3500F5B975 /* CardView.m */; };
+		6C1DBD9B1F67BC3F00F5B975 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD9A1F67BC3F00F5B975 /* CardView.xib */; };
+		6C1DBD9D1F67D12000F5B975 /* businessCardTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C1DBD9C1F67D12000F5B975 /* businessCardTest.png */; };
 		6C2A0E001F46E7AB00C6D51D /* car_@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C2A0DFF1F46E7AB00C6D51D /* car_@3x.png */; };
 		6C3637D81EFCAF5500268851 /* Alipay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C3637721EFCAF5500268851 /* Alipay@2x.png */; };
 		6C3637D91EFCAF5500268851 /* Alipay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C3637731EFCAF5500268851 /* Alipay@3x.png */; };
@@ -614,6 +630,8 @@
 
 /* Begin PBXFileReference section */
 		3E77EF9400214F051E669A5A /* Pods-zjj.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zjj.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zjj/Pods-zjj.debug.xcconfig"; sourceTree = "<group>"; };
+		6C0185BE1F67E3A700ECC707 /* personal-tui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "personal-tui.png"; sourceTree = "<group>"; };
+		6C0185C01F67E3D900ECC707 /* busnessCard_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = busnessCard_default.png; sourceTree = "<group>"; };
 		6C125DF51F32D0FD00B2323F /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		6C125DF71F33103800B2323F /* message_banner1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = message_banner1.jpg; sourceTree = "<group>"; };
 		6C125DF81F33103800B2323F /* message_banner3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = message_banner3.jpg; sourceTree = "<group>"; };
@@ -692,6 +710,25 @@
 		6C1B2BFC1EED4FBF0092AAF0 /* HealthMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HealthMainCell.m; sourceTree = "<group>"; };
 		6C1C8E1D1F444A0700B5FA74 /* reCodeS@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reCodeS@2x.png"; sourceTree = "<group>"; };
 		6C1C8E1E1F444A0700B5FA74 /* reCodeS@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reCodeS@3x.png"; sourceTree = "<group>"; };
+		6C1DBD731F6634BD00F5B975 /* LoadedImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadedImageModel.h; sourceTree = "<group>"; };
+		6C1DBD741F6634BD00F5B975 /* LoadedImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadedImageModel.m; sourceTree = "<group>"; };
+		6C1DBD781F666B9900F5B975 /* AddressList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AddressList.plist; sourceTree = "<group>"; };
+		6C1DBD801F67887100F5B975 /* personal-tzr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "personal-tzr.png"; sourceTree = "<group>"; };
+		6C1DBD831F67AF1D00F5B975 /* SuperiorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperiorViewController.h; sourceTree = "<group>"; };
+		6C1DBD841F67AF1D00F5B975 /* SuperiorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperiorViewController.m; sourceTree = "<group>"; };
+		6C1DBD851F67AF1D00F5B975 /* SuperiorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuperiorViewController.xib; sourceTree = "<group>"; };
+		6C1DBD881F67B2A600F5B975 /* SuperiorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperiorCell.h; sourceTree = "<group>"; };
+		6C1DBD891F67B2A600F5B975 /* SuperiorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperiorCell.m; sourceTree = "<group>"; };
+		6C1DBD8A1F67B2A600F5B975 /* SuperiorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuperiorCell.xib; sourceTree = "<group>"; };
+		6C1DBD8D1F67BA5400F5B975 /* businessCardZ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = businessCardZ.png; sourceTree = "<group>"; };
+		6C1DBD8E1F67BA5400F5B975 /* businessCardF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = businessCardF.png; sourceTree = "<group>"; };
+		6C1DBD921F67BA7700F5B975 /* BusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessCardViewController.h; sourceTree = "<group>"; };
+		6C1DBD931F67BA7700F5B975 /* BusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessCardViewController.m; sourceTree = "<group>"; };
+		6C1DBD941F67BA7700F5B975 /* BusinessCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessCardViewController.xib; sourceTree = "<group>"; };
+		6C1DBD971F67BC3500F5B975 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
+		6C1DBD981F67BC3500F5B975 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
+		6C1DBD9A1F67BC3F00F5B975 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
+		6C1DBD9C1F67D12000F5B975 /* businessCardTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = businessCardTest.png; sourceTree = "<group>"; };
 		6C2A0DFF1F46E7AB00C6D51D /* car_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "car_@3x.png"; sourceTree = "<group>"; };
 		6C3637721EFCAF5500268851 /* Alipay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Alipay@2x.png"; sourceTree = "<group>"; };
 		6C3637731EFCAF5500268851 /* Alipay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Alipay@3x.png"; sourceTree = "<group>"; };
@@ -2101,6 +2138,32 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		6C1DBD821F67AEF700F5B975 /* MyUp(我的上级) */ = {
+			isa = PBXGroup;
+			children = (
+				6C1DBD831F67AF1D00F5B975 /* SuperiorViewController.h */,
+				6C1DBD841F67AF1D00F5B975 /* SuperiorViewController.m */,
+				6C1DBD851F67AF1D00F5B975 /* SuperiorViewController.xib */,
+				6C1DBD881F67B2A600F5B975 /* SuperiorCell.h */,
+				6C1DBD891F67B2A600F5B975 /* SuperiorCell.m */,
+				6C1DBD8A1F67B2A600F5B975 /* SuperiorCell.xib */,
+			);
+			name = "MyUp(我的上级)";
+			sourceTree = "<group>";
+		};
+		6C1DBD911F67BA5E00F5B975 /* BusinessCard */ = {
+			isa = PBXGroup;
+			children = (
+				6C1DBD921F67BA7700F5B975 /* BusinessCardViewController.h */,
+				6C1DBD931F67BA7700F5B975 /* BusinessCardViewController.m */,
+				6C1DBD941F67BA7700F5B975 /* BusinessCardViewController.xib */,
+				6C1DBD971F67BC3500F5B975 /* CardView.h */,
+				6C1DBD981F67BC3500F5B975 /* CardView.m */,
+				6C1DBD9A1F67BC3F00F5B975 /* CardView.xib */,
+			);
+			name = BusinessCard;
+			sourceTree = "<group>";
+		};
 		6C3638DA1EFCEB0B00268851 /* Edit(设置) */ = {
 			isa = PBXGroup;
 			children = (
@@ -2433,6 +2496,8 @@
 				6CDBC4081F501E6A0059A15E /* FcBigImgViewController.h */,
 				6CDBC4091F501E6A0059A15E /* FcBigImgViewController.m */,
 				6CDBC40A1F501E6A0059A15E /* FcBigImgViewController.xib */,
+				6C1DBD731F6634BD00F5B975 /* LoadedImageModel.h */,
+				6C1DBD741F6634BD00F5B975 /* LoadedImageModel.m */,
 			);
 			name = "pyq(朋友圈一键转发)";
 			sourceTree = "<group>";
@@ -2843,6 +2908,7 @@
 				6CD010D81EF62FA300FB9419 /* AddressDetailViewController.h */,
 				6CD010D91EF62FA300FB9419 /* AddressDetailViewController.m */,
 				6CD010DA1EF62FA300FB9419 /* AddressDetailViewController.xib */,
+				6C1DBD781F666B9900F5B975 /* AddressList.plist */,
 			);
 			path = address;
 			sourceTree = "<group>";
@@ -2952,6 +3018,7 @@
 		6CD0110E1EF829FC00FB9419 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				6C1DBD911F67BA5E00F5B975 /* BusinessCard */,
 				6CD930111F0C94F600D7989E /* Addtrading（添加交易密码） */,
 				6C363A141F05095A00268851 /* teamOrderDetail(团队订单详情) */,
 				6C363A131F05094300268851 /* tzsOrderDetail(体脂师订单详情) */,
@@ -3003,6 +3070,7 @@
 		6CD0112D1EF8BF5200FB9419 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				6C1DBD821F67AEF700F5B975 /* MyUp(我的上级) */,
 				6CD011741EF8FBE800FB9419 /* BodyFatDivision */,
 				6CCEEB2D1EEE7F91002E1618 /* MineViewController.h */,
 				6CCEEB2E1EEE7F91002E1618 /* MineViewController.m */,
@@ -3017,6 +3085,12 @@
 		6CD011331EF8CADA00FB9419 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6C0185C01F67E3D900ECC707 /* busnessCard_default.png */,
+				6C0185BE1F67E3A700ECC707 /* personal-tui.png */,
+				6C1DBD9C1F67D12000F5B975 /* businessCardTest.png */,
+				6C1DBD8D1F67BA5400F5B975 /* businessCardZ.png */,
+				6C1DBD8E1F67BA5400F5B975 /* businessCardF.png */,
+				6C1DBD801F67887100F5B975 /* personal-tzr.png */,
 				6CF778D51F5694810002BDC7 /* zeng_.png */,
 				6CF778CB1F556BBB0002BDC7 /* map.png */,
 				6CDBC3F21F4FC7E30059A15E /* bodyfat_buy_1.png */,
@@ -3509,8 +3583,10 @@
 				6C36380B1EFCAF5500268851 /* help-icon06@3x.png in Resources */,
 				6C3637E91EFCAF5500268851 /* contact-us-tel@3x.png in Resources */,
 				6C3639EA1F034BB600268851 /* TZSTeamHeaderView.xib in Resources */,
+				6C1DBD961F67BA7700F5B975 /* BusinessCardViewController.xib in Resources */,
 				6C3639AE1EFE603F00268851 /* TZSDGUPCell.xib in Resources */,
 				6C13C5D21EFA51A100435A27 /* UpdataOrderViewController.xib in Resources */,
+				6C1DBD9D1F67D12000F5B975 /* businessCardTest.png in Resources */,
 				6CD0113C1EF8CC8700FB9419 /* PublicOrderCell.xib in Resources */,
 				6C3637F21EFCAF5500268851 /* footer-PersonalCenter-red@2x.png in Resources */,
 				6C73AF5B1F2984500042C1A2 /* TZSDistributionDetailViewController.xib in Resources */,
@@ -3581,7 +3657,9 @@
 				6C3638271EFCAF5500268851 /* nonsupport@3x.png in Resources */,
 				6C3639191EFD0BE600268851 /* ChangePasswordViewController.xib in Resources */,
 				6CD010FF1EF7FD6E00FB9419 /* DetailReturnGoodsCell.xib in Resources */,
+				6C1DBD8F1F67BA5400F5B975 /* businessCardZ.png in Resources */,
 				6C125DFC1F3310C300B2323F /* message_banner2.jpg in Resources */,
+				6C1DBD8C1F67B2A600F5B975 /* SuperiorCell.xib in Resources */,
 				6CDBC4031F4FC7E30059A15E /* bodyfat_team_1.png in Resources */,
 				6C3638DF1EFCEB2A00268851 /* TZSEditViewController.xib in Resources */,
 				6C73B01C1F31C2320042C1A2 /* message_ol@2x.png in Resources */,
@@ -3627,6 +3705,7 @@
 				6C73B0151F31C2320042C1A2 /* message_fc@3x.png in Resources */,
 				6C3638B61EFCAF9400268851 /* record-chong@2x.png in Resources */,
 				6C3638081EFCAF5500268851 /* help-icon05@2x.png in Resources */,
+				6C1DBD9B1F67BC3F00F5B975 /* CardView.xib in Resources */,
 				6C3638331EFCAF5500268851 /* personal-payment@3x.png in Resources */,
 				6CDBC3ED1F4E67E90059A15E /* PaySuccessViewController.xib in Resources */,
 				6C3637FD1EFCAF5500268851 /* footer-ShoppingMall@3x.png in Resources */,
@@ -3641,6 +3720,7 @@
 				6C3637F41EFCAF5500268851 /* footer-PersonalCenter@2x.png in Resources */,
 				6C73B0131F31C2320042C1A2 /* message_kb@3x.png in Resources */,
 				6C125E561F441D2200B2323F /* delete2@3x.png in Resources */,
+				6C0185BF1F67E3A700ECC707 /* personal-tui.png in Resources */,
 				6C3638021EFCAF5500268851 /* help-icon02@2x.png in Resources */,
 				6CD9301D1F0C964F00D7989E /* passw_have@3x.png in Resources */,
 				6CCEEB271EEE7F65002E1618 /* InfomationViewController.xib in Resources */,
@@ -3658,6 +3738,7 @@
 				6C3637DC1EFCAF5500268851 /* balance@2x.png in Resources */,
 				6CC81FCE1F1E50B700EB470C /* CXdetailView.xib in Resources */,
 				6C125E521F43ED8800B2323F /* jian@3x.png in Resources */,
+				6C1DBD811F67887100F5B975 /* personal-tzr.png in Resources */,
 				6C73B01A1F31C2320042C1A2 /* message_wz@2x.png in Resources */,
 				6C3637F31EFCAF5500268851 /* footer-PersonalCenter-red@3x.png in Resources */,
 				6C125E4E1F43ED8800B2323F /* input@2x.png in Resources */,
@@ -3682,6 +3763,7 @@
 				6C73AF621F29C8070042C1A2 /* us1.png in Resources */,
 				6C3638161EFCAF5500268851 /* home-principles@2x.png in Resources */,
 				6C3637F01EFCAF5500268851 /* footer-knowledge@2x.png in Resources */,
+				6C0185C11F67E3D900ECC707 /* busnessCard_default.png in Resources */,
 				6C3637E31EFCAF5500268851 /* contact-us-email@3x.png in Resources */,
 				6CD92FE31F0A7FBF00D7989E /* ShareTrendListCell.xib in Resources */,
 				6C3638041EFCAF5500268851 /* help-icon03@2x.png in Resources */,
@@ -3691,6 +3773,7 @@
 				6C8F54B81F12065200C7A275 /* ShareSDKConfigFile.bundle in Resources */,
 				6CA024AA1F14BE1100F54DF3 /* me@2x.png in Resources */,
 				6C8F54DE1F12065200C7A275 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				6C1DBD901F67BA5400F5B975 /* businessCardF.png in Resources */,
 				6C3638E51EFCEB4800268851 /* TZSMessageViewController.xib in Resources */,
 				6C3639E51F02AAA100268851 /* TZSConfirmTheViewController.xib in Resources */,
 				6CD010CC1EF61C0600FB9419 /* GoodsDetailViewController.xib in Resources */,
@@ -3713,6 +3796,7 @@
 				6C36389B1EFCAF9400268851 /* footer-jianzhi-red@3x.png in Resources */,
 				6C73B0171F31C2320042C1A2 /* message_sp@3x.png in Resources */,
 				6C3639141EFD0BD300268851 /* ChangeJYpasswordViewController.xib in Resources */,
+				6C1DBD791F666B9900F5B975 /* AddressList.plist in Resources */,
 				6C3638191EFCAF5500268851 /* home-title-left@3x.png in Resources */,
 				6C3637DF1EFCAF5500268851 /* checked-false@3x.png in Resources */,
 				6C36389F1EFCAF9400268851 /* homepage-QR@3x.png in Resources */,
@@ -3725,6 +3809,7 @@
 				6C3638071EFCAF5500268851 /* help-icon04@3x.png in Resources */,
 				6CD9301E1F0C964F00D7989E /* passw_kong@2x.png in Resources */,
 				6C3638C01EFCAF9400268851 /* record-shui@2x.png in Resources */,
+				6C1DBD871F67AF1D00F5B975 /* SuperiorViewController.xib in Resources */,
 				6CA024B41F16132800F54DF3 /* pwd@3x.png in Resources */,
 				6C3637FB1EFCAF5500268851 /* footer-ShoppingMall-red@3x.png in Resources */,
 				6CCEEB311EEE7F91002E1618 /* MineViewController.xib in Resources */,
@@ -3891,6 +3976,7 @@
 				6C363A091F03940500268851 /* UIScrollView+MJExtension.m in Sources */,
 				6C3639921EFE47E100268851 /* AAPie.m in Sources */,
 				6CD92FE61F0A7FD000D7989E /* ShareListView.m in Sources */,
+				6C1DBD861F67AF1D00F5B975 /* SuperiorViewController.m in Sources */,
 				6CDE37E51EF0D813001F10DE /* ResignAgumentViewController.m in Sources */,
 				6CD930151F0C953500D7989E /* AddTradingPsController.m in Sources */,
 				6CD92FDF1F0A789400D7989E /* ShareDetailView.m in Sources */,
@@ -3900,6 +3986,7 @@
 				6CFD99341EF26DBB00802AA4 /* UserModel.m in Sources */,
 				6C3638E41EFCEB4800268851 /* TZSMessageViewController.m in Sources */,
 				6CD0110B1EF8293900FB9419 /* TzsTabbarViewController.m in Sources */,
+				6C1DBD751F6634BD00F5B975 /* LoadedImageModel.m in Sources */,
 				6CD010AF1EF5294F00FB9419 /* ADPageControlView.m in Sources */,
 				6C3639CA1F02532500268851 /* OrderFooter.m in Sources */,
 				6C8F53C41F11D38A00C7A275 /* UIImage+Extension.m in Sources */,
@@ -3998,6 +4085,7 @@
 				6CCEEB261EEE7F65002E1618 /* InfomationViewController.m in Sources */,
 				6CD0116A1EF8DA0100FB9419 /* EidtViewController.m in Sources */,
 				6C36399B1EFE47E100268851 /* AATooltip.m in Sources */,
+				6C1DBD991F67BC3500F5B975 /* CardView.m in Sources */,
 				6C73AF5A1F2984500042C1A2 /* TZSDistributionDetailViewController.m in Sources */,
 				6C363A051F03940500268851 /* MJRefreshBaseView.m in Sources */,
 				6CD0112A1EF8B8E900FB9419 /* ShopTestViewController.m in Sources */,
@@ -4020,6 +4108,7 @@
 				6C36399C1EFE47E100268851 /* AAXAxis.m in Sources */,
 				6C73AFFA1F31B6990042C1A2 /* FriendsCircleViewController.m in Sources */,
 				6C1B2BC51EECDEFD0092AAF0 /* NewsViewController.m in Sources */,
+				6C1DBD8B1F67B2A600F5B975 /* SuperiorCell.m in Sources */,
 				6C3639981EFE47E100268851 /* AAStyle.m in Sources */,
 				6C8F53C31F11D38A00C7A275 /* UIColor+JFAExtend.m in Sources */,
 				6CDBC2361F4BE3AA0059A15E /* OrderPayFootCell.m in Sources */,
@@ -4071,6 +4160,7 @@
 				6CF778D21F5664370002BDC7 /* AdvertisingView.m in Sources */,
 				6C1B2BC21EECDEFD0092AAF0 /* foundViewController.m in Sources */,
 				6C3639791EFE47E100268851 /* AAChartModel.m in Sources */,
+				6C1DBD951F67BA7700F5B975 /* BusinessCardViewController.m in Sources */,
 				6C3639281EFD682300268851 /* TZSMyDingGouViewController.m in Sources */,
 				6C8F53C71F11D38A00C7A275 /* UIImageView+Round.m in Sources */,
 				6CD010EA1EF7DFE700FB9419 /* shopCarCellItem.m in Sources */,

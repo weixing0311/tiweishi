@@ -63,10 +63,12 @@
     self.passWordTf.keyboardType = UIKeyboardTypeDefault;
     self.passWordTf.returnKeyType = UIReturnKeyDone;
     self.passWordTf.secureTextEntry = YES;
-    self.verLoignBtn.selected = YES;
-    self.psLoignBtn.selected = NO;
-    self.passWordView.hidden = YES;
-    self.verView.hidden = NO;
+    
+    
+    self.verLoignBtn.selected = NO;
+    self.psLoignBtn.selected = YES;
+    self.passWordView.hidden = NO;
+    self.verView.hidden = YES;
     
     // Do any additional setup after loading the view from its nib.
 }

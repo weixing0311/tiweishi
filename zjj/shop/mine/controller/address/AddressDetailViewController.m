@@ -12,9 +12,18 @@
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic,strong)NSMutableArray * secondArray;
 @property (nonatomic,strong)NSMutableArray * thirdArray;
-@property (nonatomic,strong)NSMutableDictionary * ProvincialDict;//省
+/**
+ *省
+ */
+@property (nonatomic,strong)NSMutableDictionary * ProvincialDict;
+/**
+ *市
+ */
 @property (nonatomic,strong)NSMutableDictionary * cityDict;//市
-@property (nonatomic,strong)NSMutableDictionary * districtDict;//区、县
+/**
+ *区、县
+ */
+@property (nonatomic,strong)NSMutableDictionary * districtDict;
 @property (nonatomic,strong)UIPickerView * cityPickerView;
 @end
 
@@ -22,18 +31,25 @@
 {
     NSString * pro;
     NSString * city ;
-    NSString *dis;
+    NSString * dis;
+    NSInteger   proIndex;
+    NSInteger   cityIndex;
+    NSInteger   disIndex;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNbColor];
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(updataAddress)];
     self.navigationItem.rightBarButtonItem = rightItem;
-    _dataArray = [NSMutableArray array];
-    _secondArray = [NSMutableArray array];
-    _thirdArray =[NSMutableArray array];
-    [self getCityInfo];
+//    _dataArray = [NSMutableArray array];
+//    _secondArray = [NSMutableArray array];
+//    _thirdArray =[NSMutableArray array];
+    proIndex = 0;
+    cityIndex = 0;
+    disIndex = 0;
+//    [self getCityInfo];
     
     self.mobileLabel.delegate = self;
     [self.mobileLabel addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -75,6 +91,15 @@
     self.addressTx.delegate = self;
     // Do any additional setup after loading the view from its nib.
 }
+-(NSMutableArray *)dataArray
+{
+    if(!_dataArray){
+        NSString * path = [[NSBundle mainBundle] pathForResource:@"AddressList" ofType:@"plist"];
+        _dataArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    }
+    return _dataArray;
+}
+
 -(NSMutableDictionary*)ProvincialDict
 {
     if (!_ProvincialDict) {
@@ -193,8 +218,16 @@
 {
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/area/queryArea.do" paramters:nil success:^(NSDictionary *dic) {
         
+
+        
         
         [self.dataArray addObjectsFromArray:[[dic safeObjectForKey:@"data"] objectForKey:@"array"]];
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+        NSString *filePath = [path stringByAppendingPathComponent:@"AddressList.plist"];
+        [self.dataArray writeToFile:filePath atomically:YES];
+
+        
+        
         [[NSUserDefaults standardUserDefaults]setObject:self.dataArray forKey:@"DATAINFOARRAY"];
         
         self.secondArray = [self.dataArray[0] safeObjectForKey:@"children"];
@@ -225,6 +258,12 @@
         
     }];
 }
+-(void)resetPickerSelectRow
+{
+    [self.cityPickerView selectRow:proIndex inComponent:0 animated:YES];
+    [self.cityPickerView selectRow:cityIndex inComponent:1 animated:YES];
+    [self.cityPickerView selectRow:disIndex inComponent:2 animated:YES];
+}
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -237,112 +276,62 @@
         return self.dataArray.count;
     }else if (component==1)
     {
-        return self.secondArray.count;
+        return [[self.dataArray[proIndex]objectForKey:@"children"] count];
     }
     else{
-        return self.thirdArray.count;
+        return [[[[[self.dataArray objectAtIndex:proIndex]safeObjectForKey:@"children"]objectAtIndex:cityIndex]safeObjectForKey:@"children"] count];
     }
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (component ==0) {
-        NSDictionary *dic = [self.dataArray objectAtIndex:row];
-        return [dic safeObjectForKey:@"text"];
+    
+    if(component == 0){
+        return self.dataArray[row][@"text"];
     }
-    else if (component ==1) {
-        NSDictionary *dic = [self.secondArray objectAtIndex:row];
-        return [dic safeObjectForKey:@"text"];
-    }else{
-        NSDictionary *dic = [self.thirdArray objectAtIndex:row];
-        return [dic safeObjectForKey:@"text"];
+    else if (component == 1){
+        return self.dataArray[proIndex][@"children"][row][@"text"];
     }
+    else{
+        return [[[[[[self.dataArray objectAtIndex:proIndex]safeObjectForKey:@"children"]objectAtIndex:cityIndex]safeObjectForKey:@"children"]objectAtIndex:row]safeObjectForKey:@"text"];
+    }
+
 
 }
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
     UILabel* pickerLabel = (UILabel*)view;
     if (!pickerLabel){
         pickerLabel = [[UILabel alloc] init];
-        // Setup label properties - frame, font, colors etc
-        //adjustsFontSizeToFitWidth property to YES
         pickerLabel.adjustsFontSizeToFitWidth = YES;
         [pickerLabel setTextAlignment:NSTextAlignmentCenter];
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
         [pickerLabel setFont:[UIFont boldSystemFontOfSize:15]];
     }
-    // Fill the label text here
     pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
     return pickerLabel;
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    DLog(@"%ld",(long)row);
-    if (component ==0) {
+    if(component == 0){
+        proIndex = row;
+        cityIndex = 0;
+        disIndex = 0;
         
-        if (row<self.dataArray.count) {
-            
-            self.dataArray = [[NSUserDefaults standardUserDefaults]objectForKey:@"DATAINFOARRAY"];
-            
-            self.secondArray =[NSMutableArray arrayWithCapacity:0];
-            self.secondArray = [[self.dataArray objectAtIndex:row]safeObjectForKey:@"children"];
-            NSDictionary *dic =[self.secondArray objectAtIndex:0];
-            self.thirdArray= [NSMutableArray arrayWithCapacity:0];
-            self.thirdArray = [dic safeObjectForKey:@"children"];
-            NSLog(@"%@",[dic safeObjectForKey:@"text"]);
-            [self.cityPickerView reloadComponent:1];
-            [self.cityPickerView reloadComponent:2];
-            
-            [self.ProvincialDict setObject:[[self.dataArray objectAtIndex:row]safeObjectForKey:@"text"] forKey:@"text"];
-            [self.ProvincialDict setObject:[[self.dataArray objectAtIndex:row]safeObjectForKey:@"value"] forKey:@"value"];
-            
-            if (self.secondArray.count>0) {
-                [self.cityDict setObject:[[self.secondArray objectAtIndex:0]safeObjectForKey:@"text"] forKey:@"text"];
-                [self.cityDict setObject:[[self.secondArray objectAtIndex:0]safeObjectForKey:@"value"] forKey:@"value"];
-                
-            }
-            if (self.thirdArray.count>0) {
-                self.districtDict =self.thirdArray[0];
-            }
-            pro = [self getString:[[self.dataArray objectAtIndex:row] safeObjectForKey:@"text"]];
-            city =[self getString:[[self.secondArray objectAtIndex:0] safeObjectForKey:@"text"]];
-            if (self.thirdArray.count>0) {
-                dis = [self getString:[[self.thirdArray objectAtIndex:0] safeObjectForKey:@"text"]];
-            }else{
-                dis = @"";
-            }
-
-        }
+        [pickerView reloadComponent:1];
+        [pickerView reloadComponent:2];
+    }
+    else if (component == 1){
+        cityIndex = row;
+        disIndex = 0;
         
+        [pickerView reloadComponent:2];
     }
-    else if (component ==1)
-    {
-        if (row<self.secondArray.count) {
-            self.thirdArray =[NSMutableArray arrayWithCapacity:0];
-            self.thirdArray = [[self.secondArray objectAtIndex:row]safeObjectForKey:@"children"];
-            [self.cityPickerView reloadComponent:2];
-            
-            [self.cityDict setObject:[[self.secondArray objectAtIndex:row]safeObjectForKey:@"text"] forKey:@"text"];
-            [self.cityDict setObject:[[self.secondArray objectAtIndex:row]safeObjectForKey:@"value"] forKey:@"value"];
-            
-            
-            city =[self getString:[[self.secondArray objectAtIndex:row ]safeObjectForKey:@"text"]];
-            if (self.thirdArray.count>0) {
-                dis = [self getString:[[self.thirdArray objectAtIndex:0 ] safeObjectForKey:@"text"]];
-
-            }else{
-                dis = @"";
-            }
-
-        }
+    else{
+        disIndex = row;
     }
-    else
-    {
-        if (row<self.thirdArray.count) {
-            self.districtDict =self.thirdArray[row];
-            dis = [self getString:[self.districtDict safeObjectForKey:@"text"]];
-
-        }
-    }
+    
+    // 重置当前选中项
+    [self resetPickerSelectRow];
 
 }
 
@@ -375,8 +364,18 @@
 }
 */
 - (void)didChooseCity {
+    NSMutableDictionary * proDict =[self.dataArray objectAtIndex:proIndex];
+    NSMutableDictionary * cityDict = [[proDict safeObjectForKey:@"children"]objectAtIndex:cityIndex];
+    NSArray * arr = [cityDict safeObjectForKey:@"children"];
+        if (arr.count>0) {
+            NSMutableDictionary * disDict = [[cityDict safeObjectForKey:@"children"]objectAtIndex:disIndex];
+            dis = [self getString:[disDict  safeObjectForKey:@"text"]];
+
+        }
     
-    self.cityTf.text = [NSString stringWithFormat:@"%@ %@ %@",pro,city,dis];
+    pro = [self getString:[proDict  safeObjectForKey:@"text"]];
+    city =[self getString:[cityDict safeObjectForKey:@"text"]];
+    self.cityTf.text = [NSString stringWithFormat:@"%@ %@ %@",pro,city,dis?dis:@""];
     [self.cityTf resignFirstResponder];
 }
 -(void)cancelChooseCity

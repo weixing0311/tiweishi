@@ -98,7 +98,6 @@
     if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
         [[UserModel shareInstance]readToDoc];
         
-        [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
         if ([UserModel shareInstance].birthday.length>2) {
             
 //            TzsTabbarViewController * tabbar = [[TzsTabbarViewController alloc]init];

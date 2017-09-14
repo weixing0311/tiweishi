@@ -298,10 +298,10 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="abI-Bb-fZr">
-                    <rect key="frame" x="0.0" y="291.5" width="375" height="132"/>
+                    <rect key="frame" x="0.0" y="291.5" width="375" height="176"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="132" id="yfe-9h-hhr"/>
+                        <constraint firstAttribute="height" constant="176" id="yfe-9h-hhr"/>
                     </constraints>
                 </tableView>
             </subviews>

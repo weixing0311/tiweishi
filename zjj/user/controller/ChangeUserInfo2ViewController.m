@@ -152,7 +152,7 @@
     [self.param safeSetObject:self.birTf.text forKey:@"birthday"];
 
     
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:_param imageData:self.imageData imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
@@ -168,12 +168,6 @@
         
     } failure:^(NSError *error) {
 
-        if (error.code ==-1001) {
-            [[UserModel shareInstance] showErrorWithStatus:@"连接超时，请检查网络"];
-        }else{
-            [[UserModel shareInstance] showErrorWithStatus:@"上传失败"];
- 
-        }
         
 
     }];
@@ -193,7 +187,7 @@
     [self.param safeSetObject:self.birTf.text forKey:@"birthday"];
 
     
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/addChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/addChild.do" paramters:_param imageData:self.imageData imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
@@ -213,12 +207,6 @@
         
         
     } failure:^(NSError *error) {
-        if (error.code ==-1001) {
-            [[UserModel shareInstance] showErrorWithStatus:@"连接超时，请检查网络"];
-        }else{
-            [[UserModel shareInstance] showErrorWithStatus:@"上传失败"];
-            
-        }
     }];
     
     
@@ -236,7 +224,7 @@
     [self.param safeSetObject:self.birTf.text forKey:@"birthday"];
     [self.param safeSetObject:[UserModel shareInstance].subId forKey:@"id"];
 
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         [[UserModel shareInstance]setMainUserInfoWithDic:[dic objectForKey:@"data"]];
         [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
         
@@ -245,12 +233,6 @@
         
         
     } failure:^(NSError *error) {
-        if (error.code ==-1001) {
-            [[UserModel shareInstance] showErrorWithStatus:@"连接超时，请检查网络"];
-        }else{
-            [[UserModel shareInstance] showErrorWithStatus:@"上传失败"];
-            
-        }
     }];
     
     
@@ -270,7 +252,7 @@
 
 
     
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"/app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"/app/evaluatUser/updateChild.do" paramters:_param imageData:self.imageData imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
@@ -286,12 +268,6 @@
         
         
     } failure:^(NSError *error) {
-        if (error.code ==-1001) {
-            [[UserModel shareInstance] showErrorWithStatus:@"连接超时，请检查网络"];
-        }else{
-            [[UserModel shareInstance] showErrorWithStatus:@"上传失败"];
-            
-        }
     }];
 }
 - (void)didReceiveMemoryWarning {

@@ -38,7 +38,7 @@
      IS_VISCERALFAT,//内脂
      IS_FAT,//脂肪
      IS_FATPERCENT,//体脂  fatPercentage
-     IS_SAME,//肌肉\骨骼肌\水分\蛋白质\骨重判定标准
+     IS_SAME,//肌肉\骨量\水分\蛋白质\骨重判定标准
      IS_BODYWEIGHT,//体重判定
      IS_SIZE,//体型
      */
@@ -151,7 +151,7 @@
             
             break;
         case IS_MODEL_BONEMUSCLE:
-            //            ("您的骨骼肌含量偏低，建议适当增肌。", "您的骨骼肌含量正常，请保持。", "您的骨骼肌发达，请保持。")
+            //            ("您的骨量偏低，建议适当增肌。", "您的骨量正常，请保持。", "您的骨量发达，请保持。")
             
             if ([HealthDetailsItem instance].boneMuscleWeight<[HealthDetailsItem instance].boneMuscleWeightMin) {
                 return @"您的骨骼肌含量偏低，建议适当增肌";
@@ -160,12 +160,30 @@
                 return @"您的骨骼肌含量正常，请保持。";
             }else
             {
-                return @"您的骨骼肌发达，请保持。";
+                return @"您的骨骼肌含量发达，请保持。";
             }
             
             
             
     
+            break;
+        case IS_MODEL_BONE:
+            //            ("您的骨量偏低，建议适当增肌。", "您的骨量正常，请保持。", "您的骨量发达，请保持。")
+            
+            
+            if ([HealthDetailsItem instance].boneWeight<[HealthDetailsItem instance].boneWeightMin) {
+                return @"您的骨量偏低";
+            }else if ([HealthDetailsItem instance].boneMuscleWeight>=[HealthDetailsItem instance].boneWeightMin&&[HealthDetailsItem instance].boneWeight<[HealthDetailsItem instance].boneWeightMax)
+            {
+                return @"您的骨量正常，请保持。";
+            }else
+            {
+                return @"您的骨量发达，请保持。";
+            }
+            
+            
+            
+            
             break;
        
 
@@ -292,7 +310,7 @@
             
             break;
         case IS_MODEL_BONEMUSCLE:
-            switch ([HealthDetailsItem instance].boneMuscleLevel) {
+            switch ([HealthDetailsItem instance].boneLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -321,6 +339,18 @@
                     break;
             }
              break;
+        case IS_MODEL_BONE:
+            switch ([HealthDetailsItem instance].boneLevel) {
+                case 1:
+                    return normalColor;
+                    break;
+                case 2:
+                    return warningColor;
+                    break;
+                default:
+                    break;
+            }
+            break;
             
         default:
             break;
@@ -638,7 +668,7 @@
  IS_VISCERALFAT,//内脂
  IS_FAT,//脂肪
  IS_FATPERCENT,//体脂  fatPercentage
- IS_SAME,//肌肉\骨骼肌\水分\蛋白质\骨重判定标准
+ IS_SAME,//肌肉\骨量\水分\蛋白质\骨重判定标准
  IS_BODYWEIGHT,//体重判定
  IS_SIZE,//体型
  

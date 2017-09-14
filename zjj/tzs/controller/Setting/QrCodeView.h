@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol qrcodeDelegate;
 @interface QrCodeView : UIView
+@property (weak, nonatomic) IBOutlet UIView *shareView;
 @property (weak, nonatomic) IBOutlet UIImageView *headimageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *levelImage;
@@ -23,6 +24,5 @@
 @end
 @protocol qrcodeDelegate <NSObject>
 
--(void)didShareWithUrl:(NSString * )urlStr;
-
+-(void)didShareWithimage:(UIImage * )image;
 @end

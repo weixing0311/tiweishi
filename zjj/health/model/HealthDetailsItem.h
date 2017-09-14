@@ -88,6 +88,11 @@
 @property (nonatomic,assign) int                normal;//正常
 @property (nonatomic,assign) int                warn;//警告
 @property (nonatomic,assign) int                serious;//严重
+
+@property (nonatomic,assign) int                age;//严重
+@property (nonatomic,assign) int                height;//严重
+
+
 -(void)getInfoWithDict:(NSDictionary *)dict;
 -(NSMutableDictionary *)setSliderInfoWithRow:(NSInteger)row btnTag:(NSInteger)btnTag;
 /*

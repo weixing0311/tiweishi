@@ -130,6 +130,15 @@
  * 分享链接
  */
 @property (nonatomic,copy  )NSString * linkerUrl;
+
+/**
+ *上级人员信息
+ */
+@property (nonatomic,strong)NSDictionary * superiorDict;
+
+@property (nonatomic,copy  )NSString * isHaveCard;
+
+
 /**
  *   获取修改个人信息Dict
  */
@@ -215,8 +224,10 @@
  */
 -(void)setTzsInfoWithDict:(NSDictionary *)dict;
 
-
-
+/**
+ * 切换用户保存subid
+ */
+-(void)childUserChange;
 
 #define mark ----广告
 /**
@@ -268,6 +279,8 @@
  *获取个人信息
  */
 -(void)getbalance;
+
+
 
 /**
  *手机号加密

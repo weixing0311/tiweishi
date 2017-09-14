@@ -100,24 +100,29 @@
         int  code =[[dic safeObjectForKey:@"code"]intValue];
         DLog(@"%@--%@--%@",dic ,[dic objectForKey:@"code"],[dic objectForKey:@"message"]);
        
-        //登录失效
-        if (code  ==601) {
+        
+        if (code  ==601) {//登录失效
             [SVProgressHUD dismiss];
-
+            
             [(AppDelegate *)[UIApplication sharedApplication].delegate loignOut];
         }else{
+            if (code==602) {//登录失效
+                [(AppDelegate *)[UIApplication sharedApplication].delegate loignOut];
+                
+            }else{
+                
+                if (statusStr&&[statusStr isEqualToString:@"success"]) {
+                    success(dic);
+                }else{
+                    [SVProgressHUD dismiss];
+                    [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
+                    NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
+                    
+                    failure(error);
+                }
+            }
+        }
 
-        
-        if (statusStr&&[statusStr isEqualToString:@"success"]) {
-            success(dic);
-        }else{
-            [SVProgressHUD dismiss];
-            [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
-            NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
-            
-            failure(error);
-        }
-        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //        [SVProgressHUD dismiss];
         
@@ -142,7 +147,8 @@
 
 -(NSURLSessionTask*)postImage:(NSString*)url
                 paramters:(NSMutableDictionary *)paramters
-                imageData:(NSData *)imageData
+                    imageData:(NSData *)imageData
+                    imageName:(NSString *)imageName//@"headimgurl.png"
                   success:(requestSuccessBlock)success
                   failure:(requestFailureBlock)failure
 {
@@ -158,7 +164,7 @@
     
     NSURLSessionTask * task =[manager POST:[NSString stringWithFormat:@"%@%@",[self JFADomin],url] parameters:paramters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         if (imageData&&imageData.length>1) {
-            [formData appendPartWithFileData:imageData name:@"headimgurl" fileName:@"headimgurl.png" mimeType:@"image/png"];
+            [formData appendPartWithFileData:imageData name:imageName fileName:[NSString stringWithFormat:@"%@.png",imageName] mimeType:@"image/png"];
         }
 
     } progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -173,15 +179,26 @@
         
         NSString * statusStr =[dic safeObjectForKey:@"status"];
         DLog(@"%@--%@",dic ,[dic objectForKey:@"message"]);
+        int  code =[[dic safeObjectForKey:@"code"]intValue];
+
         
-        if (statusStr&&[statusStr isEqualToString:@"success"]) {
-            success(dic);
+        if (code  ==601) {//登录失效
+            [SVProgressHUD dismiss];
+            [(AppDelegate *)[UIApplication sharedApplication].delegate loignOut];
         }else{
-            
-            NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
-            failure(error);
+            if (code==602) {//登录失效
+                [(AppDelegate *)[UIApplication sharedApplication].delegate loignOut];
+                
+            }else{
+                if (statusStr&&[statusStr isEqualToString:@"success"]) {
+                    success(dic);
+                }else{
+                    
+                    NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
+                    failure(error);
+                }
+            }
         }
-        
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];

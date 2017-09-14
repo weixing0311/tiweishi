@@ -128,8 +128,11 @@
     jzsSchoolWebViewController *web =[[jzsSchoolWebViewController alloc]init];
     web.urlStr = [dic safeObjectForKey:@"linkUrl"];
     web.iscollection = [dic safeObjectForKey:@"isCollection"];
-    web.islike = [dic safeObjectForKey:@"islike"];
+    web.islike = [dic safeObjectForKey:@"isLike"];
     web.informateId = [[dic safeObjectForKey:@"id"]intValue];
+    web.isLikeNum = [dic safeObjectForKey:@"likeNum"];
+    web.shareImage =[dic safeObjectForKey:@"imgUrl"];
+    web.shareTitle =[dic safeObjectForKey:@"title"];
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
 }
