@@ -31,9 +31,9 @@
 
 //domain
 //正式
-#define kMyBaseUrl @"https://mall.fitgeneral.com/"
+//#define kMyBaseUrl @"https://mall.fitgeneral.com/"
 //生产
-//#define kMyBaseUrl @"http://test123.fitgeneral.com/"
+#define kMyBaseUrl @"http://test123.fitgeneral.com/"
 //测试域名
 //#define kMyBaseUrl @"http://192.168.1.130:8101/"
 //x
@@ -79,6 +79,18 @@
 #define kgetGoodsListInfo        @"app/product/queryProductList.do"
 #define kBannerListUrl           @"app/homeRecommend/queryRecommend.do"
 #define kProductsDetail          @"app/product/queryProductsDetail.do"
+
+
+/*
+ @"app/isForce/judgeVersion.do"//获取更新信息
+ @"app/userAddress/updateAddress.do" //编辑收货地址
+ @"app/userAddress/addAddress.do"   //添加收货地址
+ @"app/area/queryArea.do"      //获取城市信息
+ @"app/userAddress/addressList.do" //获取收货地址列表
+ */
+
+
+
 //heathUrl
 
 

@@ -124,7 +124,7 @@
         }
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        [SVProgressHUD dismiss];
+        [SVProgressHUD dismiss];
         
         DLog(@"error--%ld-%@",(long)error.code,[error.userInfo safeObjectForKey:@"NSLocalizedDescription"]);
 
@@ -193,8 +193,10 @@
                 if (statusStr&&[statusStr isEqualToString:@"success"]) {
                     success(dic);
                 }else{
-                    
+                    [SVProgressHUD dismiss];
+                    [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
                     NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
+                    
                     failure(error);
                 }
             }

@@ -20,6 +20,8 @@
 #import "AddTradingPsController.h"
 #import "AdvertisingView.h"
 #import "BusinessCardViewController.h"
+#import "TabbarViewController.h"
+#import "BodyFatDivisionAgreementViewController.h"
 @interface SettingViewController ()<qrcodeDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
@@ -109,10 +111,37 @@
         [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
         [self refreshUserInfo];
         
+        [self userIsAttest];
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);
     }];
 }
+//判断是否认证，如果没有认证 跳转认证页面、、、、取消就返回体测页面
+-(void)userIsAttest
+{
+    if (![[UserModel shareInstance].isAttest isEqualToString:@"已认证"]) {
+        UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"您还未实名认证，请去实名认证" preferredStyle:UIAlertControllerStyleAlert];
+        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            TabbarViewController * tb= [[TabbarViewController alloc]init];
+            self.view.window.rootViewController = tb;
+            
+        }]];
+        
+        
+        [al addAction:[UIAlertAction actionWithTitle:@"去认证" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            BodyFatDivisionAgreementViewController * bf = [[BodyFatDivisionAgreementViewController alloc]init];
+            bf.hidesBottomBarWhenPushed =YES;
+            self.navigationController.navigationBarHidden =NO;
+            [self.navigationController pushViewController:bf animated:YES];
+            
+        }]];
+        
+        [self presentViewController:al animated:YES completion:nil];
+
+    }
+}
+
+
 -(void)getWaitPayCount
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];

@@ -138,10 +138,7 @@
         return;
     }
     
-    if ([self.ProvincialDict allKeys].count==0) {
-        return;
-    }
-    if ([self.cityDict allKeys].count==0) {
+    if ([self.ProvincialDict allKeys].count==0||[self.cityDict allKeys].count==0) {
         [[UserModel shareInstance]showInfoWithStatus:@"请选择省、市、县"];
 
         return;
@@ -203,6 +200,12 @@
     self.mobileLabel.text =[self.defaultDict objectForKey:@"phone"];
     self.cityTf.text = [NSString stringWithFormat:@"%@%@%@",[self.defaultDict safeObjectForKey:@"province"],[self.defaultDict safeObjectForKey:@"city"],[self.defaultDict safeObjectForKey:@"county"]];
     self.addressTx.text = [self.defaultDict safeObjectForKey:@"addr"];
+    
+    [self.ProvincialDict setObject:[self.defaultDict safeObjectForKey:@"provinceId"] forKey:@"value"];
+    [self.cityDict setObject:[self.defaultDict safeObjectForKey:@"cityId"] forKey:@"value"];
+    [self.districtDict setObject:[self.defaultDict safeObjectForKey:@"countyId"] forKey:@"value"];
+
+    
     if (self.addressTx.text.length>0) {
         self.tisLabel.text = @"";
     }
@@ -349,32 +352,38 @@
         return string;
     }
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (void)didChooseCity {
-    NSMutableDictionary * proDict =[self.dataArray objectAtIndex:proIndex];
-    NSMutableDictionary * cityDict = [[proDict safeObjectForKey:@"children"]objectAtIndex:cityIndex];
-    NSArray * arr = [cityDict safeObjectForKey:@"children"];
-        if (arr.count>0) {
-            NSMutableDictionary * disDict = [[cityDict safeObjectForKey:@"children"]objectAtIndex:disIndex];
-            dis = [self getString:[disDict  safeObjectForKey:@"text"]];
-
-        }
+//    NSMutableDictionary * proDict =[self.dataArray objectAtIndex:proIndex];
+//    NSMutableDictionary * cityDict = [[proDict safeObjectForKey:@"children"]objectAtIndex:cityIndex];
+//    NSArray * arr = [cityDict safeObjectForKey:@"children"];
+//        if (arr.count>0) {
+//            NSMutableDictionary * disDict = [[cityDict safeObjectForKey:@"children"]objectAtIndex:disIndex];
+//            dis = [self getString:[disDict  safeObjectForKey:@"text"]];
+//
+//        }
+//    
+//    pro = [self getString:[proDict  safeObjectForKey:@"text"]];
+//    city =[self getString:[cityDict safeObjectForKey:@"text"]];
     
-    pro = [self getString:[proDict  safeObjectForKey:@"text"]];
-    city =[self getString:[cityDict safeObjectForKey:@"text"]];
+    
+    self.ProvincialDict =[self.dataArray objectAtIndex:proIndex];
+    
+    self.cityDict = [[self.ProvincialDict safeObjectForKey:@"children"]objectAtIndex:cityIndex];
+    
+    
+    pro = [self getString:[self.ProvincialDict  safeObjectForKey:@"text"]];
+    city =[self getString:[self.cityDict safeObjectForKey:@"text"]];
+    
+    NSArray * arr = [self.cityDict safeObjectForKey:@"children"];
+    if (arr.count>0) {
+        self.districtDict = [[self.cityDict safeObjectForKey:@"children"]objectAtIndex:disIndex];
+        dis = [self getString:[self.districtDict  safeObjectForKey:@"text"]];
+        
+    }
+    
+    
+
     self.cityTf.text = [NSString stringWithFormat:@"%@ %@ %@",pro,city,dis?dis:@""];
     [self.cityTf resignFirstResponder];
 }
@@ -441,6 +450,10 @@
     DLog(@"rang-%@",NSStringFromRange(range));
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 
 @end

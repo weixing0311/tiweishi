@@ -7,6 +7,7 @@
 //
 
 #import "ShopTestViewController.h"
+#import "BodyFatDivisionAgreementViewController.h"
 @interface ShopTestViewController ()
 
 @end
@@ -15,8 +16,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

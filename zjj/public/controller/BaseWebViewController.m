@@ -39,6 +39,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [SVProgressHUD dismiss];
     [self.webView stopLoading];
 }
 - (void)viewDidLoad {

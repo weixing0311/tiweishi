@@ -94,7 +94,6 @@
     
     
     
-    
     if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
         [[UserModel shareInstance]readToDoc];
         
@@ -109,7 +108,6 @@
             if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {
                 [[UserModel shareInstance]getNotiadvertising];
             }
-            
             
             
  

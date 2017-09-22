@@ -18,6 +18,8 @@
 #import "HomePageWebViewController.h"
 #import "FriendsCircleViewController.h"
 #import "AppDelegate.h"
+#import "NewMineViewController.h"
+#import "CommunityViewController.h"
 @interface TabbarViewController ()<UITabBarControllerDelegate>
 
 @end
@@ -45,9 +47,9 @@
     
 //    found = [[foundViewController alloc]init];
 //    
-////    JzSchoolViewController *found = [[JzSchoolViewController alloc]init];
-//    UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:found];
-//    found.title = @"发现";
+    CommunityViewController *found = [[CommunityViewController alloc]init];
+    UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:found];
+    found.title = @"社区";
 
 //    ShopTabbbarController *shop = [[ShopTabbbarController alloc]init];
 //    shop.title = @"商城";
@@ -59,17 +61,21 @@
     UINavigationController * nav4 = [[UINavigationController alloc]initWithRootViewController:shop];
 
     shop.title = @"云服务";
-    UserViewController *user = [[UserViewController alloc]init];
+    
+    
+    
+    NewMineViewController * user = [[NewMineViewController alloc]init];
+//    UserViewController *user = [[UserViewController alloc]init];
     UINavigationController * nav5 = [[UINavigationController alloc]initWithRootViewController:user];
     user.title = @"我的";
 
-    self.viewControllers = @[nav1,nav2,nav4,nav5];
+    self.viewControllers = @[nav1,nav2,nav3,nav4,nav5];
     
     
     UITabBarItem * item1 =[self.tabBar.items objectAtIndex:0];
     UITabBarItem * item2 =[self.tabBar.items objectAtIndex:1];
-//    UITabBarItem * item3 =[self.tabBar.items objectAtIndex:2];
-    UITabBarItem * item4 =[self.tabBar.items objectAtIndex:2];
+    UITabBarItem * item3 =[self.tabBar.items objectAtIndex:2];
+    UITabBarItem * item4 =[self.tabBar.items objectAtIndex:3];
     UITabBarItem * item5 =[self.tabBar.items lastObject];
 
     item1.image = [UIImage imageNamed:@"health  gray_"];
@@ -78,14 +84,15 @@
     item2.image = [UIImage imageNamed:@"discuss  gray_"];
     item2.selectedImage = [UIImage imageNamed:@"discuss_"];
     
-//    item3.image = [UIImage imageNamed:@"find gray_"];
-//    item3.selectedImage = [UIImage imageNamed:@"find_"];
+    item3.image = [UIImage imageNamed:@"find gray_"];
+    item3.selectedImage = [UIImage imageNamed:@"find_"];
 
     item4.image = [UIImage imageNamed:@"store gray_"];
     item4.selectedImage = [UIImage imageNamed:@"store_"];
 
     item5.image = [UIImage imageNamed:@"mine  gray_"];
     item5.selectedImage = [UIImage imageNamed:@"mine_"];
+    self.tabBar.backgroundColor = [UIColor whiteColor];
     self.tabBar.tintColor = HEXCOLOR(0xfb0628);
    
     
@@ -161,7 +168,6 @@
         else{
             TzsTabbarViewController *tb =[[TzsTabbarViewController alloc]init];
             self.view.window.rootViewController = tb;
-
         }
     
     }

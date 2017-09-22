@@ -8,6 +8,7 @@
 
 #import "BusinessCardViewController.h"
 #import "CardView.h"
+#import <Photos/Photos.h>
 @interface BusinessCardViewController ()<UITextFieldDelegate>
 
 
@@ -179,9 +180,15 @@
 
 }
 - (IBAction)downLoadBusinessCard:(id)sender {
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusRestricted ||
+        status == PHAuthorizationStatusDenied) {
+        [[UserModel shareInstance]showInfoWithStatus:@"相册访问权限受限！请在设置中打开。"];
+        return;
+    }
+    
     //然后将该图片保存到图片图
     UIImageWriteToSavedPhotosAlbum(self.cardImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)self);
-//    UIImage * testImage = [UIImage imageNamed:@"businessCardF.png"];
     UIImageWriteToSavedPhotosAlbum(self.backCardImage, nil, nil, nil);//然后将该图片保存到图片图
     
 }
@@ -189,6 +196,8 @@
 {
     if (!error) {
         [[UserModel shareInstance]showSuccessWithStatus:@"保存成功"];
+    }else{
+        [[UserModel shareInstance]showInfoWithStatus:@"保存失败"];
     }
     
     NSLog(@"image = %@, error = %@, contextInfo = %@", image, error, contextInfo);

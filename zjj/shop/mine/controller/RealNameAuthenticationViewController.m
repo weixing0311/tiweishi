@@ -61,14 +61,21 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
     self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" paramters:param success:^(NSDictionary *dic) {
-        TzsTabbarViewController *tzs =[[TzsTabbarViewController alloc]init];
-//        [SVProgressHUD dismiss];
+        
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         [[UserModel shareInstance] didAttestSuccessWithDict:dataDict];
         [[UserModel shareInstance] showSuccessWithStatus:@"认证成功"];
+
+        for (UIViewController * vc in self.navigationController.viewControllers) {
+            if ([vc isKindOfClass:NSClassFromString(@"SettingViewController")]) {
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                return ;
+            }
+        }
+        
+        TzsTabbarViewController *tzs =[[TzsTabbarViewController alloc]init];
         self.view.window.rootViewController = tzs;
     } failure:^(NSError *error) {
-//         [SVProgressHUD dismiss];
     }];
 }
 - (IBAction)didRz:(id)sender {

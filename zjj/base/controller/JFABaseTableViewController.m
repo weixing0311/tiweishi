@@ -34,31 +34,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[UIBarButtonItem appearance]setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance]backButtonTitlePositionAdjustmentForBarMetrics: UIBarMetricsDefault];
     
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(doloign) name:kdidReLoign object:nil];
     // Do any additional setup after loading the view.
-    if(([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
-    {
-        self.edgesForExtendedLayout= UIRectEdgeNone;
-        [self.navigationController.navigationBar setBarTintColor:[UIColor colorForHex:@"ffffff"]];
-    }else{
-        
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_background"] forBarMetrics:UIBarMetricsDefault];
-    }
+//    if(([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0))
+//    {
+//        self.edgesForExtendedLayout= UIRectEdgeNone;
+//        [self.navigationController.navigationBar setBarTintColor:[UIColor colorForHex:@"ffffff"]];
+//    }else{
+//
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_background"] forBarMetrics:UIBarMetricsDefault];
+//    }
     
     if (!self.requestArray) {
         self.requestArray=[[NSMutableArray alloc] initWithCapacity:0];
     }
-    _errorView = [[ServiceResultErrorView alloc]initWithFrame:self.view.frame];
-//    
-//    _networkErrorView = [[JFASubNetWorkErrorView alloc]initWithFrame:[UIScreen mainScreen].bounds bgimage:[UIImage storeImageNamed:@"bg_network_error_new"]];
-//    _networkErrorView.delegate = self;
-//    _networkErrorView.hidden = YES;
-//    [self.view addSubview:_networkErrorView];
 
 }
 

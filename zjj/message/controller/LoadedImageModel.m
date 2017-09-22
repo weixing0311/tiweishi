@@ -47,7 +47,7 @@ static LoadedImageModel * imageModel;
     NSDictionary * dict = @{NSFontAttributeName:font,
                             NSParagraphStyleAttributeName:paragraph};
     
-    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-88, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
+    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-40, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
     
     float imageHeight = 0.0f;
     
@@ -60,7 +60,7 @@ static LoadedImageModel * imageModel;
     }
 
     
-    CGFloat cellW = (JFA_SCREEN_WIDTH-108)/3;
+    CGFloat cellW = (JFA_SCREEN_WIDTH-40)/3;
     
     if (images.count<1)
     {

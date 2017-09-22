@@ -17,7 +17,7 @@
     
     
     
-    [self.headImageView setImageWithURL:[NSURL URLWithString:[[UserModel shareInstance].superiorDict safeObjectForKey:@"headimgurl"]] placeholderImage:getImage(@"headDefault")];
+    [self.headImageView setImageWithURL:[NSURL URLWithString:[[UserModel shareInstance].superiorDict safeObjectForKey:@"headimgurl"]] placeholderImage:getImage(@"head_default")];
     self.nickNamelb.text =[[UserModel shareInstance].superiorDict safeObjectForKey:@"userName"];
     self.gradeNamelb.text =[[UserModel shareInstance].superiorDict safeObjectForKey:@"gradeName"];
     self.gradeNamelb.adjustsFontSizeToFitWidth = YES;
