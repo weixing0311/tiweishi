@@ -138,7 +138,18 @@
 
 @property (nonatomic,copy  )NSString * isHaveCard;
 
-
+/**
+ *减肥前图片
+ */
+@property (nonatomic,copy)NSString * fatBeforeImageUrl;
+/**
+ *减肥后图片
+ */
+@property (nonatomic,copy)NSString * fatAfterImageUrl;
+/**
+ *简介
+ */
+@property (nonatomic,copy)NSString * jjStr;
 /**
  *   获取修改个人信息Dict
  */

@@ -9,5 +9,7 @@
 #import "JFABaseTableViewController.h"
 
 @interface CommunityViewController : JFABaseTableViewController
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
+- (IBAction)didClickSegment:(UISegmentedControl *)sender;
 
 @end

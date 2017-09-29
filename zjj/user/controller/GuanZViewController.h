@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JFABaseTableViewController.h"
-@interface GuanZViewController : JFABaseTableViewController
 
+#import "JFABaseTableViewController.h"
+typedef enum {
+    IS_FUNS,
+    IS_GZ,
+    IS_SEARCH,
+}PAGETYPE;
+
+@interface GuanZViewController : JFABaseTableViewController
+@property (nonatomic,assign)PAGETYPE pageType;
+@property (nonatomic,strong)NSMutableDictionary * dict;
 @end

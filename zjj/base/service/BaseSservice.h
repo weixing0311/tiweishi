@@ -43,4 +43,25 @@ typedef void (^requestFailureBlock)(NSError *error);
                     imageName:(NSString *)imageName//@"headimgurl.png"
                       success:(requestSuccessBlock)success
                       failure:(requestFailureBlock)failure;
+- (NSURLSessionTask*)uploadImageWithPath:(NSString *)path
+                      image:(UIImage *)image
+                     params:(NSDictionary *)params
+                    success:(requestSuccessBlock)success
+                    failure:(requestFailureBlock)failure;
+- (NSURLSessionTask*)uploadImageWithPath:(NSString *)path
+                     photos:(NSArray *)photos
+                     params:(NSDictionary *)params
+                    success:(requestSuccessBlock)success
+                    failure:(requestFailureBlock)failure;
+
+-(NSURLSessionTask*)postMovie:(NSString*)url
+                    paramters:(NSMutableDictionary *)paramters
+                    movieData:(NSData *)movieData
+                     videoImg:(NSData*)videoData
+                    movieName:(NSString *)movieName//@"headimgurl.png"
+                      success:(requestSuccessBlock)success
+                      failure:(requestFailureBlock)failure;
+
+
+
 @end

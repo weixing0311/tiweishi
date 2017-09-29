@@ -32,10 +32,12 @@ static LoadedImageModel * imageModel;
     self.uid = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"id"]];
     self.title = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"title"]];
     self.pictures = [NSMutableArray arrayWithArray:[dict safeObjectForKey:@"pictures"]];
+    self.movieStr = [dict safeObjectForKey:@"videoPath"];
+    
     self.isRelease = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"isRelease"]];
     self.shareNum = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"shareNum"]];
+    
     self.rowHieght = [self CalculateCellHieghtWithContent:[dict safeObjectForKey:@"content"] images:self.pictures];
-
 }
 
 -(float)CalculateCellHieghtWithContent:(NSString *)contentStr images:(NSArray * )images

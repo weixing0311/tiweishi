@@ -47,12 +47,19 @@
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self getDefaultAddressFromNet];
     NSString * priceStr = [_infoDict safeObjectForKey:@"productPrice"];
+
     NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
-    if (integral.intValue>0) {
+    if (integral.intValue>0&&priceStr.intValue>0) {
         self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f+%@积分",[priceStr floatValue],integral];
+        
 
     }else{
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[priceStr floatValue]];
+        if (integral.intValue>0) {
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%@分",integral];
+
+        }else{
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[priceStr floatValue]];
+        }
 
     }
 
@@ -291,6 +298,7 @@
         //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值 5积分购买
         web.payType =5;
         web.opt =1;
+        web.integral = @"1";
         web.orderNo = [dataDict safeObjectForKey:@"orderNo"];
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];

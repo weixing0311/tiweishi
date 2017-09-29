@@ -13,5 +13,8 @@
 
 
 - (IBAction)didQd:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickQd)]) {
+        [self.delegate didClickQd];
+    }
 }
 @end

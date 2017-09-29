@@ -9,5 +9,5 @@
 #import "JFABaseTableViewController.h"
 
 @interface NewMineHomePageViewController : JFABaseTableViewController
-
+@property (nonatomic,copy)NSString * userId;
 @end

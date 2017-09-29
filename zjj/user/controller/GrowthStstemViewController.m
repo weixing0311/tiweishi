@@ -10,7 +10,7 @@
 #import "PublicCell.h"
 #import "GrowthHeader2View.h"
 #import "GrowthCell.h"
-@interface GrowthStstemViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface GrowthStstemViewController ()<UITableViewDelegate,UITableViewDataSource,growthHeaderDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSArray * dataArray;
 @end
@@ -36,10 +36,31 @@
 -(void)buildHeaderView
 {
     grView = [self getXibCellWithTitle:@"GrowthHeader2View"];
+    grView.delegate = self;
     grView.frame  = CGRectMake(0, 0, JFA_SCREEN_WIDTH, (JFA_SCREEN_WIDTH/375)*238);
     self.tableview.tableHeaderView = grView;
 }
 
+
+-(void)getQd
+{
+    NSMutableDictionary * params  = [NSMutableDictionary dictionary];
+    for (NSDictionary * dic in self.dataArray) {
+        if ([[dic safeObjectForKey:@"taskName"]isEqualToString:@"打卡签到"]) {
+            [params setObject:[dic safeObjectForKey:@"id"] forKey:@"taskId"];
+            [params setObject:[dic safeObjectForKey:@"integral"] forKey:@"integeral"];
+
+        }
+    }
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+        DLog(@"签到success-dic:%@",dic);
+    } failure:^(NSError *error) {
+        DLog(@"签到失败-error:%@",error);
+
+    }];
+}
 
 -(void)getInfo
 {
@@ -49,6 +70,9 @@
         
         self.dataArray = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"taskArry"];
         grView.todayIntegerallb.text = [NSString  stringWithFormat:@"今日获得积分：%@",[[dic safeObjectForKey:@"data"]safeObjectForKey:@"todayIntegeral"]];
+        grView.totalIntegerallb.text = [NSString  stringWithFormat:@"%@分",[[dic safeObjectForKey:@"data"]safeObjectForKey:@"currentIntegeral"]];
+        
+        
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
@@ -87,6 +111,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
+
+#pragma mark ---subView Delegate
+-(void)didClickQd
+{
+    [self getQd];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

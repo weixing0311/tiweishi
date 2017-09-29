@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IntegralOrderViewController">
             <connections>
-                <outlet property="tableview" destination="8I5-fI-A5r" id="c59-n1-fra"/>
+                <outlet property="segment" destination="D7u-10-JCK" id="ldw-he-4el"/>
+                <outlet property="tableview" destination="8I5-fI-A5r" id="YUD-HT-kJS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,17 +22,39 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8I5-fI-A5r">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="40" width="375" height="627"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-10-JCK">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="bWf-cT-tke"/>
+                    </constraints>
+                    <segments>
+                        <segment title="全部"/>
+                        <segment title="待付款"/>
+                        <segment title="待收货"/>
+                        <segment title="已完成"/>
+                        <segment title="已取消"/>
+                    </segments>
+                    <color key="tintColor" red="0.94572418930000002" green="0.51665598150000003" blue="0.31462016700000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <action selector="didChangeStatussegment:" destination="-1" eventType="valueChanged" id="rpJ-PR-nCe"/>
+                    </connections>
+                </segmentedControl>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="8I5-fI-A5r" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="V2g-Mr-SUH"/>
+                <constraint firstAttribute="trailing" secondItem="D7u-10-JCK" secondAttribute="trailing" id="OHk-N1-glO"/>
+                <constraint firstItem="8I5-fI-A5r" firstAttribute="top" secondItem="D7u-10-JCK" secondAttribute="bottom" id="aFC-7T-AgL"/>
+                <constraint firstItem="D7u-10-JCK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="c6r-io-6ZE"/>
                 <constraint firstItem="8I5-fI-A5r" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="h42-dd-5xc"/>
                 <constraint firstAttribute="bottom" secondItem="8I5-fI-A5r" secondAttribute="bottom" id="l9B-2U-psC"/>
                 <constraint firstAttribute="trailing" secondItem="8I5-fI-A5r" secondAttribute="trailing" id="tQC-cr-Vuc"/>
+                <constraint firstItem="D7u-10-JCK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yO1-pi-cmg"/>
             </constraints>
+            <point key="canvasLocation" x="35.5" y="53.5"/>
         </view>
     </objects>
 </document>

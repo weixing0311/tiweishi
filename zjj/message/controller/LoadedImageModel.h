@@ -18,6 +18,7 @@
 @property (nonatomic,copy)NSMutableArray * pictures;
 @property (nonatomic,copy)NSString * isRelease;
 @property (nonatomic,copy)NSString * shareNum;
+@property (nonatomic,copy)NSString * movieStr;
 @property (nonatomic,assign)float  rowHieght;
 -(void)setInfoWithDict:(NSDictionary *)dict;
 @end

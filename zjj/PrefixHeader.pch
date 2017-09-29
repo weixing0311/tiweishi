@@ -36,10 +36,14 @@
 #define kMyBaseUrl @"http://test123.fitgeneral.com/"
 //测试域名
 //#define kMyBaseUrl @"http://192.168.1.130:8101/"
-//x
+//鹏飞
 //#define kMyBaseUrl @"http://192.168.1.45:8080/"
 
+//皮皮刚
+//#define kMyBaseUrl @"http://192.168.1.74:8989/"
 
+//天龙
+//#define kMyBaseUrl @"http://192.168.1.85:8989/"
 
 
 

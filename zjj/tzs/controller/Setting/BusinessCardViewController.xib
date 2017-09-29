@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vjE-TR-fhb">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yzs-o2-Er2">
                             <rect key="frame" x="15" y="30" width="345" height="207"/>
@@ -98,7 +98,7 @@
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j1r-5p-0CE">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NeQ-yd-PTc">
                             <rect key="frame" x="0.0" y="20" width="375" height="60"/>
@@ -263,11 +263,11 @@
                 <constraint firstAttribute="bottom" secondItem="vjE-TR-fhb" secondAttribute="bottom" id="2qh-8w-ocW"/>
                 <constraint firstAttribute="trailing" secondItem="vjE-TR-fhb" secondAttribute="trailing" id="3eV-45-3Dy"/>
                 <constraint firstAttribute="bottom" secondItem="j1r-5p-0CE" secondAttribute="bottom" id="7RX-Aj-VuL"/>
-                <constraint firstItem="j1r-5p-0CE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Gn9-c0-1Dg"/>
+                <constraint firstItem="j1r-5p-0CE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="Gn9-c0-1Dg"/>
                 <constraint firstAttribute="trailing" secondItem="j1r-5p-0CE" secondAttribute="trailing" id="RQj-s2-QP5"/>
                 <constraint firstItem="vjE-TR-fhb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aMM-6Z-oAn"/>
                 <constraint firstItem="j1r-5p-0CE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="btv-ba-HCw"/>
-                <constraint firstItem="vjE-TR-fhb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ehB-LX-5bL"/>
+                <constraint firstItem="vjE-TR-fhb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ehB-LX-5bL"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>

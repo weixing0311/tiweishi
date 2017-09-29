@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LoadedImageModel.h"
+#import "CommunityModel.h"
+#import <MediaPlayer/MediaPlayer.h>
+@protocol PublicArticleCellDelegate;
 @interface PublicArticleCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleIb;
@@ -17,5 +19,22 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UIButton *plbtn;
 @property (weak, nonatomic) IBOutlet UIButton *zanbtn;
--(void)setInfoWithDict:(LoadedImageModel *)item;
+@property (weak, nonatomic) IBOutlet UIButton *playerBtn;
+@property (weak, nonatomic) IBOutlet UIButton *gzBtn;
+@property (nonatomic,strong)CommunityModel * currModel;
+
+@property (nonatomic,assign)id<PublicArticleCellDelegate>delegate;
+-(void)setInfoWithDict:(CommunityModel *)item;
+- (CGFloat)cellOffset;
+@end
+
+@protocol PublicArticleCellDelegate <NSObject>
+-(void)refreshCellRowHeightWithCell:(PublicArticleCell*)cell height:(double)height;
+-(void)didPlayWithCell:(PublicArticleCell *)cell;
+-(void)didGzWithCell:(PublicArticleCell*)cell;
+-(void)didZanWithCell:(PublicArticleCell*)cell;
+-(void)didPLWithCell:(PublicArticleCell*)cell;
+-(void)didShareWithCell:(PublicArticleCell*)cell;
+
+
 @end

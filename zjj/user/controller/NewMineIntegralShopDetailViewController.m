@@ -46,7 +46,20 @@
     self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/product/queryProductintegralDetail.do" paramters:param success:^(NSDictionary *dic) {
         self.infoDict = [[[dic objectForKey:@"data"] objectForKey:@"array"]objectAtIndex:0];
         [self.buyHeaderImageView sd_setImageWithURL:[NSURL URLWithString:[self.infoDict safeObjectForKey:@"picture"]] placeholderImage:getImage(@"")];
-        self.buyTitlelb.text =[self.infoDict safeObjectForKey:@"productPrice"];
+        NSString * price = [self.infoDict safeObjectForKey:@"productPrice"];
+        NSString * integral = [self.infoDict safeObjectForKey:@"productIntegral"];
+        
+        if (price.intValue>0&&integral.intValue>0) {
+            self.buyTitlelb.text = [NSString stringWithFormat:@"￥%.2f+%@分",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue],integral];
+            
+        }else{
+            if (price.intValue>0) {
+                self.buyTitlelb.text = [NSString stringWithFormat:@"￥%.2f",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue]];
+            }else{
+                self.buyTitlelb.text = [NSString stringWithFormat:@"%@分",integral];
+            }
+        }
+
         
         [self.tableview reloadData];
     } failure:^(NSError *error) {
@@ -147,14 +160,18 @@
         }else{
             cell.secondlb.text = [NSString stringWithFormat:@"%@级以上",[self.infoDict safeObjectForKey:@"grade"]];
         }
-        NSString * priceStr = [self.infoDict safeObjectForKey:@"productPrice"];
+        NSString * price = [self.infoDict safeObjectForKey:@"productPrice"];
         NSString * integral = [self.infoDict safeObjectForKey:@"productIntegral"];
-        if (integral.intValue>0) {
-            cell.integrallb.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+        
+        if (price.intValue>0&&integral.intValue>0) {
+            cell.integrallb.text = [NSString stringWithFormat:@"￥%.2f+%@分",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue],integral];
             
         }else{
-            cell.integrallb.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
-            
+            if (price.intValue>0) {
+                cell.integrallb.text = [NSString stringWithFormat:@"￥%.2f",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue]];
+            }else{
+                cell.integrallb.text = [NSString stringWithFormat:@"%@分",integral];
+            }
         }
         cell.integrallb.adjustsFontSizeToFitWidth = YES;
 //        cell.integrallb.text = [NSString stringWithFormat:@"%@积分",[self.infoDict safeObjectForKey:@"productIntegral"]];

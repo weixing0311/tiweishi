@@ -139,6 +139,8 @@
 	<string>亲,我们要用蓝牙功能了,同意吧!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>亲,我们要用摄像头了,同意吧!</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>亲,我们要用麦克风了，</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>亲,我们要用照片库了,同意吧!</string>
 	<key>UIRequiredDeviceCapabilities</key>

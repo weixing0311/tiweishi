@@ -576,7 +576,12 @@
     [dic safeSetObject:[NSString stringWithFormat:@"%.2f",[self.payableAmount floatValue]] forKey:@"payableAmount"];
     [dic safeSetObject:@(self.payType) forKey:@"orderType"];
     [dic safeSetObject:@(self.opt) forKey:@"opt"];
-    
+    if ([self.integral isEqualToString:@"1"]) {
+        [dic safeSetObject:self.integral forKey:@"integral"];
+    }
+    else{
+        [dic safeSetObject:@"0" forKey:@"integral"];
+    }
     
     NSString * jsonValue = [self DataTOjsonString:dic];
     NSString * JSResult = [NSString stringWithFormat:@"getOrderInfo('%@')",jsonValue];

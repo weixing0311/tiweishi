@@ -14,6 +14,17 @@
     [super awakeFromNib];
     // Initialization code
 }
+- (IBAction)editUserInfo:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didShowChangeUserInfoPage)]) {
+        [self.delegate didShowChangeUserInfoPage];
+    }
+}
+- (IBAction)editHeaderImage:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didChangeHeaderImage)]) {
+        [self.delegate didChangeHeaderImage];
+    }
+
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

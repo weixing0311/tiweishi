@@ -7,34 +7,71 @@
 //
 
 #import "PublicArticleCell.h"
-
+#import "PublicCollImageCell.h"
 @implementation PublicArticleCell
-
+{
+    float cellHeight ;
+}
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+
+}
+- (IBAction)didClickPlay:(id)sender {
+    self.playerBtn.hidden = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didPlayWithCell:)]) {
+        [self.delegate didPlayWithCell:self];
+    }
 }
 
+#pragma mark --button SEL
 - (IBAction)didShare:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didShareWithCell:)]) {
+        [self.delegate didGzWithCell:self];
+    }
 }
 - (IBAction)didpl:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didPLWithCell:)]) {
+        [self.delegate didPLWithCell:self];
+    }
 }
 - (IBAction)didZan:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didZanWithCell:)]) {
+        [self.delegate didGzWithCell:self];
+    }
+}
+- (IBAction)didGz:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didGzWithCell:)]) {
+        [self.delegate didGzWithCell:self];
+    }
 }
 
--(void)setInfoWithDict:(LoadedImageModel *)item
+-(void)setInfoWithDict:(CommunityModel *)item
 {
-    [self.headImageView setImage:getImage(@"logo") forState:UIControlStateNormal];
+    cellHeight = item.rowHieght;
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"logo")];
+    
     self.titleIb.text = item.title;
     self.contentlb.text = item.content;
     self.timelb.text = item.releaseTime;
     for (UIView * view in self.imagesView.subviews) {
-        [view removeFromSuperview];
+        if (![view isKindOfClass:[self.playerBtn class]]) {
+            [view removeFromSuperview];
+        }
     }
+    if (item.movieStr.length>5) {
+        self.playerBtn.hidden = NO;
+        [self.playerBtn sd_setImageWithURL:[NSURL URLWithString:item.movieImageStr] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if (!error) {
+                [self.playerBtn setImage:[self cutImage:image imgViewWidth:JFA_SCREEN_WIDTH-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)*0.7] forState:UIControlStateNormal];
+            }
+        }];
+
+    }else{
+        self.playerBtn.hidden = YES;
     NSMutableArray * picArr = item.pictures;
-    
     [self buildNineImagesWithArray:picArr];
-    
+    }
 }
 
 
@@ -49,8 +86,17 @@
     }
     
     //       每一格的尺寸
-    CGFloat cellW = (JFA_SCREEN_WIDTH-40)/3;
-    CGFloat cellH = (JFA_SCREEN_WIDTH-40)/3;
+    CGFloat cellW = 0.0;
+    CGFloat cellH = 0.0;
+    if (array.count<3) {
+        cellW = (JFA_SCREEN_WIDTH-40)/array.count;
+        cellH = (JFA_SCREEN_WIDTH-40)/3;
+
+    }else{
+        cellW = (JFA_SCREEN_WIDTH-40)/3;
+        cellH = (JFA_SCREEN_WIDTH-40)/3;
+
+    }
     
     //    间隙
     CGFloat margin =10;
@@ -85,9 +131,7 @@
             
             [cellView sd_setImageWithURL:[NSURL URLWithString:encodedString] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                 if (!error) {
-                    
                     [cellView setImage:[self cutImage:image imgViewWidth:cellW imgViewHeight:cellH] forState:UIControlStateNormal];
-                    
                 }
             }];
             
@@ -124,7 +168,6 @@
     
 }
 
-//对象方法
 
 -(UIImage *)getImageWithUrl:(NSURL *)imgUrl imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height{
     
@@ -154,6 +197,8 @@
     
     //压缩图片
     
+    
+    
     CGSize newSize;
     
     CGImageRef imageRef = nil;
@@ -179,6 +224,28 @@
     return [UIImage imageWithCGImage:imageRef];
     
 }
+- (CGFloat)cellOffset{
+    /*
+     - (CGRect)convertRect:(CGRect)rect toView:(nullable UIView *)view;
+     将rect由rect所在视图转换到目标视图view中，返回在目标视图view中的rect
+     这里用来获取self在window上的位置
+     */
+    CGRect toWindow      = [self convertRect:self.bounds toView:self.window];
+    //获取父视图的中心
+    CGPoint windowCenter = self.superview.center;
+    //cell在y轴上的位移
+    CGFloat cellOffsetY  = CGRectGetMidY(toWindow) - windowCenter.y;
+    //位移比例
+    CGFloat offsetDig    = 2 * cellOffsetY / self.superview.frame.size.height ;
+    //要补偿的位移,self.superview.frame.origin.y是tableView的Y值，这里加上是为了让图片从最上面开始显示
+    CGFloat offset       = - offsetDig * (JFA_SCREEN_WIDTH-20 - cellHeight) / 2;
+    //让pictureViewY轴方向位移offset
+    CGAffineTransform transY = CGAffineTransformMakeTranslation(0,offset);
+    self.imagesView.transform   = transY;
+    return offset;
+}
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

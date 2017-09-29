@@ -27,7 +27,22 @@
 {
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]]];
     self.titleLabel.text = [dic safeObjectForKey:@"productName"];
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"productPrice"]floatValue]];
+    
+    
+    NSString * price = [dic safeObjectForKey:@"productPrice"];
+    NSString * integral = [dic safeObjectForKey:@"productIntegral"];
+    
+    if (price.intValue>0&&integral.intValue>0) {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f+%@",[[dic safeObjectForKey:@"productPrice"]floatValue],integral];
+
+    }else{
+        if (price.intValue>0) {
+            self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"productPrice"]floatValue]];
+        }else{
+            self.priceLabel.text = [NSString stringWithFormat:@"%@",integral];
+        }
+    }
+    
 }
 -(void)setUpCellWithShopCarCellItem:(shopCarCellItem *)item
 {

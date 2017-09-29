@@ -16,7 +16,8 @@
 #import "GrowthStstemViewController.h"
 #import "GuanZViewController.h"
 #import "NewMineHomePageViewController.h"
-@interface NewMineViewController ()<UITableViewDelegate,UITableViewDataSource,mineRelationsCellDelegate>
+#import "IntegralOrderViewController.h"
+@interface NewMineViewController ()<UITableViewDelegate,UITableViewDataSource,mineRelationsCellDelegate,mineRelationsCellDelegate>
 
 @end
 
@@ -94,6 +95,7 @@
         if (!cell) {
             cell = [self  getXibCellWithTitle:identifier];
         }
+        cell.delegate = self;
         return cell;
 
     }
@@ -164,6 +166,9 @@
     else
     {
         DLog(@"购买记录");
+        IntegralOrderViewController * ord = [[IntegralOrderViewController alloc]init];
+        ord.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:ord animated:YES];
     }
 
 }
@@ -193,12 +198,18 @@
 {
     GuanZViewController * gz =[[GuanZViewController alloc]init];
     gz.title = @"关注";
+    gz.pageType = IS_GZ;
+    gz.hidesBottomBarWhenPushed=YES;
+
     [self.navigationController pushViewController:gz animated:YES];
 }
 -(void)showFuns
 {
     GuanZViewController * gz =[[GuanZViewController alloc]init];
     gz.title = @"粉丝";
+    gz.pageType = IS_FUNS;
+    gz.hidesBottomBarWhenPushed=YES;
+
     [self.navigationController pushViewController:gz animated:YES];
 
 }
