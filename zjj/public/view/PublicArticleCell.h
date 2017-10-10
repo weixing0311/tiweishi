@@ -10,18 +10,38 @@
 #import "CommunityModel.h"
 #import <MediaPlayer/MediaPlayer.h>
 @protocol PublicArticleCellDelegate;
-@interface PublicArticleCell : UITableViewCell
+@interface PublicArticleCell : UITableViewCell<UICollectionViewDelegate,UICollectionViewDataSource>
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleIb;
 @property (weak, nonatomic) IBOutlet UILabel *timelb;
 @property (weak, nonatomic) IBOutlet UILabel *contentlb;
-@property (weak, nonatomic) IBOutlet UIView *imagesView;
 @property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UIButton *plbtn;
+
+@property (weak, nonatomic) IBOutlet UIImageView *zanImageView;
+
 @property (weak, nonatomic) IBOutlet UIButton *zanbtn;
-@property (weak, nonatomic) IBOutlet UIButton *playerBtn;
+@property (weak, nonatomic) IBOutlet UIButton *jbBtn;
+
 @property (weak, nonatomic) IBOutlet UIButton *gzBtn;
+
+- (IBAction)didClickJB:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *zanCountlb;
+@property (weak, nonatomic) IBOutlet UILabel *commentCountlb;
+
+
 @property (nonatomic,strong)CommunityModel * currModel;
+@property (weak, nonatomic) IBOutlet UILabel *shareCountlb;
+
+
+
+
+
+@property (nonatomic,strong)NSMutableArray * imagesArray;
 
 @property (nonatomic,assign)id<PublicArticleCellDelegate>delegate;
 -(void)setInfoWithDict:(CommunityModel *)item;
@@ -35,6 +55,6 @@
 -(void)didZanWithCell:(PublicArticleCell*)cell;
 -(void)didPLWithCell:(PublicArticleCell*)cell;
 -(void)didShareWithCell:(PublicArticleCell*)cell;
-
-
+-(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(int)index;
+-(void)didJBWithCell:(PublicArticleCell *)cell;
 @end

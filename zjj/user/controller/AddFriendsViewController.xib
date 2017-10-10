@@ -24,7 +24,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8VP-LA-rkt">
                     <rect key="frame" x="0.0" y="64" width="375" height="80"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入。。。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
                             <rect key="frame" x="10" y="17.5" width="355" height="45"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="45" id="Hv6-HO-46Y"/>
@@ -45,7 +45,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdz-yf-R7S">
                     <rect key="frame" x="0.0" y="144" width="375" height="55"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yal-BT-oC4">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reCodeS.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yal-BT-oC4">
                             <rect key="frame" x="20" y="10" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Yal-BT-oC4" secondAttribute="height" multiplier="1:1" id="3gW-fR-OmR"/>
@@ -98,7 +98,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIF-aj-069">
                     <rect key="frame" x="0.0" y="199" width="375" height="55"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JfN-A8-5rA">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personal-recode.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfN-A8-5rA">
                             <rect key="frame" x="20" y="10" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="JfN-A8-5rA" secondAttribute="height" multiplier="1:1" id="afH-ga-Iyi"/>
@@ -180,4 +180,8 @@
             <point key="canvasLocation" x="34.5" y="56.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="personal-recode.png" width="27" height="30"/>
+        <image name="reCodeS.png" width="20" height="20"/>
+    </resources>
 </document>

@@ -10,5 +10,6 @@
 
 @interface PublicCollImageCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *playImageView;
 
 @end

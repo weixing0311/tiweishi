@@ -13,6 +13,9 @@
 
 
 - (IBAction)didQd:(id)sender {
+    if ([self.qdBtn.titleLabel.text isEqualToString:@"已签到"]) {
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(didClickQd)]) {
         [self.delegate didClickQd];
     }

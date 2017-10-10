@@ -18,7 +18,7 @@
 #import "NewMineHomePageViewController.h"
 #import "IntegralOrderViewController.h"
 @interface NewMineViewController ()<UITableViewDelegate,UITableViewDataSource,mineRelationsCellDelegate,mineRelationsCellDelegate>
-
+@property (nonatomic,strong)NSMutableDictionary * infoDict;
 @end
 
 @implementation NewMineViewController
@@ -37,14 +37,15 @@
     
     
     
-    
+    _infoDict = [NSMutableDictionary dictionary];
     
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
-    
+    [self getUserInfo];
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)setNavi
 {
     UIBarButtonItem * leftItem =[[UIBarButtonItem alloc]initWithTitle:@"添加好友" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
@@ -57,6 +58,24 @@
         
 
 }
+
+-(void)getUserInfo
+{
+//    app/user/getUserHome.do
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserHome.do" paramters:params success:^(NSDictionary *dic) {
+        
+        _infoDict = [dic safeObjectForKey:@"data"];
+        [self.tableview reloadData];
+        DLog(@"%@",dic);
+    } failure:^(NSError *error) {
+    }];
+    
+
+}
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row ==0) {
@@ -82,9 +101,17 @@
         if (!cell) {
             cell = [self  getXibCellWithTitle:identifier];
         }
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl]];
-        cell.nickNamelb.text  = [UserModel shareInstance].nickName;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]]placeholderImage:getImage(@"defaultHead")];
+        cell.nickNamelb.text  = [_infoDict safeObjectForKey:@"nickName"];
+        NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
+        if (introduction.length<1) {
+            cell.secondlb.text = @"您还没有编辑简介~";
+        }else{
+            cell.secondlb.text = [NSString stringWithFormat:@"简介：%@",introduction];
+        }
+
 
         return cell;
     }
@@ -96,6 +123,9 @@
             cell = [self  getXibCellWithTitle:identifier];
         }
         cell.delegate = self;
+        cell.value2lb.text = [_infoDict safeObjectForKey:@"followNum"];
+        cell.value3lb.text = [_infoDict safeObjectForKey:@"fansNum"];
+
         return cell;
 
     }
@@ -137,6 +167,7 @@
         DLog(@"个人信息");
         NewMineHomePageViewController * mb= [[NewMineHomePageViewController alloc]init];
         mb.hidesBottomBarWhenPushed=YES;
+        mb.userId = [UserModel shareInstance].userId;
         [self.navigationController pushViewController:mb animated:YES];
 
     }

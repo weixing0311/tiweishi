@@ -44,8 +44,7 @@ static CommunityModel * imageModel;
     self.greatnum = [dict safeObjectForKey:@"greatnum"];
     self.forwardingnum = [dict safeObjectForKey:@"forwardingnum"];
     self.commentnum = [dict safeObjectForKey:@"commentnum"];
-
-    
+    self.isFabulous = [dict safeObjectForKey:@"isFabulous"];
     self.rowHieght = [self CalculateCellHieghtWithContent:[dict safeObjectForKey:@"content"] images:self.pictures];
 }
 -(NSMutableArray *)thumbArray
@@ -74,37 +73,38 @@ static CommunityModel * imageModel;
     NSDictionary * dict = @{NSFontAttributeName:font,
                             NSParagraphStyleAttributeName:paragraph};
     
-    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-40, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
+    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-40, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
     
     float imageHeight = 0.0f;
     
     if (self.movieStr.length>5) {
         imageHeight = (JFA_SCREEN_WIDTH-20)*0.7;
     }else{
-        int totalColumns = 0;
-        if (images.count==2||images.count==4) {
-            totalColumns =2;
-        }else{
-            totalColumns =3;
-        }
-        
-        
-        CGFloat cellW = (JFA_SCREEN_WIDTH-40)/3;
         
         if (images.count<1)
         {
             imageHeight = 0;
         }
-        else if (images.count>0&& images.count<=3)
+        if (images.count==1) {
+            imageHeight = JFA_SCREEN_WIDTH/2-10;
+        }
+        else if (images.count>1&& images.count<=3)
         {
-            imageHeight =cellW;
+            imageHeight =(JFA_SCREEN_WIDTH-20)/3;
         }
         else if (images.count>3&&images.count<=6)
         {
-            imageHeight = cellW*2+10;
+            if (images.count ==4)
+            {
+                imageHeight = (JFA_SCREEN_WIDTH-20);
+            }
+            else
+            {
+                imageHeight = ((JFA_SCREEN_WIDTH-20)/3-10)*2;
+            }
         }
         else{
-            imageHeight = cellW*3+20;
+            imageHeight = ((JFA_SCREEN_WIDTH-20)/3-10)*3;
         }
     }
     return size.height+imageHeight+105;

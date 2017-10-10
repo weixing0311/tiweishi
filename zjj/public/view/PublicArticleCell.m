@@ -11,14 +11,25 @@
 @implementation PublicArticleCell
 {
     float cellHeight ;
+    CGSize  videoSize;
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.imagesArray = [NSMutableArray array];
+    self.collectionView.delegate = self;
+    self.collectionView.alwaysBounceVertical = YES;//实现代理
+    self.collectionView.dataSource = self;//实现数据源方法
+    self.collectionView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH-40, (JFA_SCREEN_WIDTH-40)*0.7);
+    self.collectionView.bounces = NO;
+        self.collectionView.backgroundColor= HEXCOLOR(0xf8f8f8);
+    [self.collectionView registerNib:[UINib nibWithNibName:@"PublicCollImageCell"bundle:nil]forCellWithReuseIdentifier:@"PublicCollImageCell"];
+    
+
 
 }
 - (IBAction)didClickPlay:(id)sender {
-    self.playerBtn.hidden = YES;
     if (self.delegate && [self.delegate respondsToSelector:@selector(didPlayWithCell:)]) {
         [self.delegate didPlayWithCell:self];
     }
@@ -27,7 +38,7 @@
 #pragma mark --button SEL
 - (IBAction)didShare:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(didShareWithCell:)]) {
-        [self.delegate didGzWithCell:self];
+        [self.delegate didShareWithCell:self];
     }
 }
 - (IBAction)didpl:(id)sender {
@@ -37,7 +48,7 @@
 }
 - (IBAction)didZan:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(didZanWithCell:)]) {
-        [self.delegate didGzWithCell:self];
+        [self.delegate didZanWithCell:self];
     }
 }
 - (IBAction)didGz:(id)sender {
@@ -49,113 +60,77 @@
 -(void)setInfoWithDict:(CommunityModel *)item
 {
     cellHeight = item.rowHieght;
+    self.currModel = item;
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"logo")];
     
     self.titleIb.text = item.title;
-    self.contentlb.text = item.content;
+    
+    NSString * str = item.content;
+    
+    str = [str stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+
+    
+    self.contentlb.text = str;
     self.timelb.text = item.releaseTime;
-    for (UIView * view in self.imagesView.subviews) {
-        if (![view isKindOfClass:[self.playerBtn class]]) {
-            [view removeFromSuperview];
-        }
+    self.zanCountlb.text = item.greatnum;
+    self.commentCountlb.text = item.commentnum;
+    
+    if (item.isFabulous&&[item.isFabulous isEqualToString:@"1"]) {
+        
+        self.zanImageView.image = getImage(@"praise_Selected");
+        
+    }else{
+        self.zanImageView.image = getImage(@"praise");
     }
+    
+    
+    
     if (item.movieStr.length>5) {
-        self.playerBtn.hidden = NO;
-        [self.playerBtn sd_setImageWithURL:[NSURL URLWithString:item.movieImageStr] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-            if (!error) {
-                [self.playerBtn setImage:[self cutImage:image imgViewWidth:JFA_SCREEN_WIDTH-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)*0.7] forState:UIControlStateNormal];
-            }
-        }];
-
-    }else{
-        self.playerBtn.hidden = YES;
-    NSMutableArray * picArr = item.pictures;
-    [self buildNineImagesWithArray:picArr];
-    }
-}
-
-
-
--(void)buildNineImagesWithArray:(NSArray *)array
-{
-    int totalColumns = 0;
-    if (array.count==2||array.count==4) {
-        totalColumns =2;
-    }else{
-        totalColumns =3;
-    }
-    
-    //       每一格的尺寸
-    CGFloat cellW = 0.0;
-    CGFloat cellH = 0.0;
-    if (array.count<3) {
-        cellW = (JFA_SCREEN_WIDTH-40)/array.count;
-        cellH = (JFA_SCREEN_WIDTH-40)/3;
-
-    }else{
-        cellW = (JFA_SCREEN_WIDTH-40)/3;
-        cellH = (JFA_SCREEN_WIDTH-40)/3;
-
-    }
-    
-    //    间隙
-    CGFloat margin =10;
-    
-    //    根据格子个数创建对应的框框
-    
-    
-    for(int index = 0; index< array.count; index++) {
-        UIButton *cellView = [UIButton buttonWithType:UIButtonTypeCustom ];
-        cellView.backgroundColor = HEXCOLOR(0xeeeeee);
-        cellView.layer.borderWidth = 1;
-        cellView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
+        //        self.playerBtn.hidden = NO;
+        [self.imagesArray removeAllObjects];
+        NSMutableDictionary * dict =[NSMutableDictionary dictionary];
+        [dict safeSetObject:item.movieImageStr forKey:@"videoImageStr"];
+        [dict safeSetObject:@(JFA_SCREEN_WIDTH-20) forKey:@"videoSizeWidht"];
+        [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)*0.7) forKey:@"videoSizeHeight"];
         
-        //        [cellView setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:array[index]] placeholderImage:[UIImage imageNamed:@"default"]];
-        
-        id imageCur = [array objectAtIndex:index];
-        if ([imageCur isKindOfClass:[UIImage class]]) {
-            [cellView setBackgroundImage:imageCur forState:UIControlStateNormal];
-            
-        }else{
-            NSString *encodedString = (NSString *)
-            
-            CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                      
-                                                                      (CFStringRef)array[index],
-                                                                      
-                                                                      (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
-                                                                      
-                                                                      NULL,
-                                                                      
-                                                                      kCFStringEncodingUTF8));
-            
-            [cellView sd_setImageWithURL:[NSURL URLWithString:encodedString] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                if (!error) {
-                    [cellView setImage:[self cutImage:image imgViewWidth:cellW imgViewHeight:cellH] forState:UIControlStateNormal];
+        [self.imagesArray addObject:dict];
+    }else{
+        [self.imagesArray removeAllObjects];
+        //        self.playerBtn.hidden = YES;
+        //        self.imagesArray = item.pictures;
+        for (NSString * imageStr in item.pictures) {
+            NSMutableDictionary * dict =[NSMutableDictionary dictionary];
+            [dict safeSetObject:imageStr forKey:@"videoImageStr"];
+            if (item.pictures.count==1) {
+                [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-10) forKey:@"videoSizeWidht"];
+                [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-10) forKey:@"videoSizeHeight"];
+                
+            }else{
+                if (item.pictures.count ==4) {
+                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-20) forKey:@"videoSizeWidht"];
+                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-20) forKey:@"videoSizeHeight"];
+                    
                 }
-            }];
+                else
+                {
+                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/3-10) forKey:@"videoSizeWidht"];
+                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/3-10) forKey:@"videoSizeHeight"];
+                }
+            }
+            [self.imagesArray addObject:dict];
             
         }
-        cellView.tag = index+1;
-        // 计算行号  和   列号
-        int row = index / totalColumns;
-        int col = index % totalColumns;
-        //根据行号和列号来确定 子控件的坐标
-        CGFloat cellX = col * (cellW + margin);
-        CGFloat cellY = row * (cellH + margin);
-        cellView.frame = CGRectMake(cellX, cellY, cellW, cellH);
-        
-        // 添加到view 中
-        [self.imagesView addSubview:cellView];
     }
-    
+    [self.collectionView reloadData];
     
     
     
 }
--(void)saveImages
-{
-}
+
+
+
 
 #pragma mark-------根据imgView的宽高获得图片的比例
 
@@ -241,11 +216,113 @@
     CGFloat offset       = - offsetDig * (JFA_SCREEN_WIDTH-20 - cellHeight) / 2;
     //让pictureViewY轴方向位移offset
     CGAffineTransform transY = CGAffineTransformMakeTranslation(0,offset);
-    self.imagesView.transform   = transY;
+//    self.imagesView.transform   = transY;
     return offset;
 }
 
 
+#pragma mark ----collectionView Delegate
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+//    DLog(@"%d",self.imagesArray.count);
+    return self.imagesArray.count;
+}
+////定义每个Section的四边间距
+
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    
+    return UIEdgeInsetsMake(5,10, 5, 10);//分别为上、左、下、右
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    PublicCollImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PublicCollImageCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    
+    if (self.currModel.movieStr.length>5) {
+        cell.playImageView.hidden = NO;
+    }else{
+        cell.playImageView.hidden = YES;
+ 
+    }
+    
+    
+    NSMutableDictionary * dict = [_imagesArray objectAtIndex:indexPath.row];
+    
+    [cell.headerImageView sd_setImageWithURL:[dict safeObjectForKey:@"videoImageStr"] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
+        
+        
+        if (self.imagesArray.count ==1) {
+            cell.headerImageView.image = [self cutImage:image imgViewWidth:JFA_SCREEN_WIDTH/2 imgViewHeight:JFA_SCREEN_WIDTH/2/image.size.width*image.size.height];
+            
+        }
+        else
+        {
+            cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
+
+        }
+    }];
+    
+    return cell;
+}
+
+//设置item大小
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary * dic = [_imagesArray objectAtIndex:indexPath.row];
+    
+    return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
+
+//    if (self.currModel.movieStr.length>5) {
+//        return CGSizeMake([[dic safeObjectForKey:@"video"]doubleValue], [[dic safeObjectForKey:@"video"]doubleValue]);
+//        
+//        //        return CGSizeMake((JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)/2*0.7);
+//        
+//    }else{
+//        if (self.currModel.pictures.count==1) {
+//            return videoSize;
+//        }else{
+//            return CGSizeMake((JFA_SCREEN_WIDTH-20)/3-20, (JFA_SCREEN_WIDTH-20)/3-20);
+//        }
+//    }
+}
+//这个是两行cell之间的间距（上下行cell的间距）
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5;
+}
+//两个cell之间的间距（同一行的cell的间距）
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5;
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    if (self.currModel.movieStr.length>5) {
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(didPlayWithCell:)]) {
+            [self.delegate didPlayWithCell:self];
+        }
+
+    }else
+    {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(didShowBigImageWithCell:index:)]) {
+            [self.delegate didShowBigImageWithCell:self index:indexPath.row];
+        }
+    }
+        
+    
+    
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -253,4 +330,12 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)didClickJB:(id)sender {
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didJBWithCell:)]) {
+        [self.delegate didJBWithCell:self];
+    }
+    
+    
+}
 @end

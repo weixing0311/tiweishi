@@ -17,10 +17,17 @@
 @property (nonatomic,assign)int   page;
 @property (nonatomic,assign)int   count;
 @property (nonatomic,strong)NSMutableArray * dataArray;
+@property (weak, nonatomic) IBOutlet UILabel *jifenlb;
 
 @end
 
 @implementation IntegralShopViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self getJiFen];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -81,10 +88,25 @@
     } failure:^(NSError *error) {
         [self.collectionView headerEndRefreshing];
         [self.collectionView footerEndRefreshing];
-
     }];
 }
+
+-(void)getJiFen
+{
+    NSMutableDictionary *param =[NSMutableDictionary dictionary];
+    [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryIntegeralAndSucc.do" paramters:param success:^(NSDictionary *dic) {
+        
+        NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
+        self.jifenlb.text = [NSString stringWithFormat:@"积分 %@",[dataDict safeObjectForKey:@"currentIntegeral"]];
+        
+    } failure:^(NSError *error) {
+    }];
+
+}
 - (IBAction)showjifen:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)showOrder:(id)sender {
     IntegralOrderViewController * orderVC = [[IntegralOrderViewController alloc]init];

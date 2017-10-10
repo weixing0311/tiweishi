@@ -43,6 +43,24 @@
     [self setExtraCellLineHiddenWithTb:self.tableview];
     // Do any additional setup after loading the view from its nib.
 }
+#pragma  mark --cellDidSelected
+-(void)showChooseSex
+{
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"" message:@"请选择性别" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        
+    }]];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark ----接口 ----各种接口
 -(void)upDataImageWithImage:(NSData *)imageData
 {
@@ -131,6 +149,8 @@
     } failure:^(NSError *error) {
     }];
 }
+
+#pragma  mark ---tableview delegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -222,6 +242,11 @@
             break;
     }
 }
+
+
+
+#pragma  mark --
+
 -(void)showAlertWithType:(NSInteger)indexPathRow
 {
     NSString * title1 = @"修改昵称";
@@ -233,7 +258,25 @@
         
     }];
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        if (al.textFields.firstObject.text.length<4) {
+            return ;
+        }
+        NSMutableDictionary * params = [NSMutableDictionary dictionary];
+        [params safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
+            [_infoDict safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
+            [self.tableview reloadData];
+        } failure:^(NSError *error) {
+            
+        }];
+
+            //    app/user/addIntroduction.do
+            //userId
+            //introduction
+        //修改简介
+
     }]];
     
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];

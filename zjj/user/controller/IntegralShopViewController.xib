@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IntegralShopViewController">
             <connections>
                 <outlet property="collectionView" destination="wBv-IZ-qhM" id="tns-hY-Oia"/>
+                <outlet property="jifenlb" destination="Ntp-JB-bVj" id="oj3-gl-oYj"/>
                 <outlet property="layout" destination="jD0-Ii-UIw" id="HFS-ff-rew"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -22,17 +23,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ORa-cr-NVv">
-                    <rect key="frame" x="0.0" y="0.0" width="187.5" height="40"/>
+                    <rect key="frame" x="0.0" y="20" width="187.5" height="40"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="msO-kJ-k8K">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_" translatesAutoresizingMaskIntoConstraints="NO" id="msO-kJ-k8K">
                             <rect key="frame" x="30" y="5" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="T2a-45-BHN"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分 200" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohB-WK-Wbd">
-                            <rect key="frame" x="70" y="10" width="107.5" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分商城" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohB-WK-Wbd">
+                            <rect key="frame" x="70" y="12" width="107.5" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -59,17 +60,17 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PIS-e2-evH">
-                    <rect key="frame" x="187.5" y="0.0" width="187.5" height="40"/>
+                    <rect key="frame" x="187.5" y="20" width="187.5" height="40"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qNn-1N-pFj">
-                            <rect key="frame" x="30" y="5" width="30" height="30"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="integral.png" translatesAutoresizingMaskIntoConstraints="NO" id="qNn-1N-pFj">
+                            <rect key="frame" x="23" y="10" width="27" height="23"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="eyj-tH-RC0"/>
+                                <constraint firstAttribute="width" constant="27" id="eyj-tH-RC0"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单详情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntp-JB-bVj">
-                            <rect key="frame" x="70" y="9.5" width="107.5" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntp-JB-bVj">
+                            <rect key="frame" x="60" y="11.5" width="117.5" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -83,23 +84,23 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="n7A-Dm-R6B" firstAttribute="leading" secondItem="PIS-e2-evH" secondAttribute="leading" id="495-Z9-Mr8"/>
-                        <constraint firstAttribute="bottom" secondItem="qNn-1N-pFj" secondAttribute="bottom" constant="5" id="GVT-RK-L0G"/>
+                        <constraint firstAttribute="bottom" secondItem="qNn-1N-pFj" secondAttribute="bottom" constant="7" id="GVT-RK-L0G"/>
                         <constraint firstAttribute="bottom" secondItem="n7A-Dm-R6B" secondAttribute="bottom" id="H4J-8P-Iox"/>
                         <constraint firstItem="n7A-Dm-R6B" firstAttribute="top" secondItem="PIS-e2-evH" secondAttribute="top" id="HHQ-3Y-lnq"/>
                         <constraint firstAttribute="trailing" secondItem="n7A-Dm-R6B" secondAttribute="trailing" id="RBo-4k-NEz"/>
                         <constraint firstAttribute="trailing" secondItem="Ntp-JB-bVj" secondAttribute="trailing" constant="10" id="RaZ-wt-sgr"/>
                         <constraint firstItem="Ntp-JB-bVj" firstAttribute="centerY" secondItem="PIS-e2-evH" secondAttribute="centerY" id="lOm-Vt-O8f"/>
                         <constraint firstAttribute="height" constant="40" id="li6-z3-5Vn"/>
-                        <constraint firstItem="qNn-1N-pFj" firstAttribute="leading" secondItem="PIS-e2-evH" secondAttribute="leading" constant="30" id="qEN-UD-4B3"/>
+                        <constraint firstItem="qNn-1N-pFj" firstAttribute="leading" secondItem="PIS-e2-evH" secondAttribute="leading" constant="23" id="qEN-UD-4B3"/>
                         <constraint firstItem="Ntp-JB-bVj" firstAttribute="leading" secondItem="qNn-1N-pFj" secondAttribute="trailing" constant="10" id="waY-Jb-Whw"/>
-                        <constraint firstItem="qNn-1N-pFj" firstAttribute="top" secondItem="PIS-e2-evH" secondAttribute="top" constant="5" id="yCa-2E-VUO"/>
+                        <constraint firstItem="qNn-1N-pFj" firstAttribute="top" secondItem="PIS-e2-evH" secondAttribute="top" constant="10" id="yCa-2E-VUO"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="km6-s8-nYQ">
-                    <rect key="frame" x="0.0" y="40" width="375" height="627"/>
+                    <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wBv-IZ-qhM">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="627"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jD0-Ii-UIw">
                                 <size key="itemSize" width="50" height="50"/>
@@ -122,16 +123,20 @@
             <constraints>
                 <constraint firstItem="PIS-e2-evH" firstAttribute="leading" secondItem="ORa-cr-NVv" secondAttribute="trailing" id="6bf-c8-oyh"/>
                 <constraint firstAttribute="bottom" secondItem="km6-s8-nYQ" secondAttribute="bottom" id="Ewt-Kc-zFn"/>
-                <constraint firstItem="PIS-e2-evH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Fdg-94-f5i"/>
+                <constraint firstItem="PIS-e2-evH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="Fdg-94-f5i"/>
                 <constraint firstAttribute="trailing" secondItem="PIS-e2-evH" secondAttribute="trailing" id="MXs-NG-H59"/>
                 <constraint firstItem="km6-s8-nYQ" firstAttribute="top" secondItem="PIS-e2-evH" secondAttribute="bottom" id="SuR-zz-JjG"/>
                 <constraint firstItem="km6-s8-nYQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eej-u3-hAv"/>
                 <constraint firstAttribute="trailing" secondItem="km6-s8-nYQ" secondAttribute="trailing" id="hJM-YQ-thM"/>
                 <constraint firstItem="PIS-e2-evH" firstAttribute="width" secondItem="ORa-cr-NVv" secondAttribute="width" id="ksd-SJ-KOY"/>
-                <constraint firstItem="ORa-cr-NVv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oMX-uf-yqX"/>
+                <constraint firstItem="ORa-cr-NVv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="oMX-uf-yqX"/>
                 <constraint firstItem="ORa-cr-NVv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zxR-nh-br4"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="56.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="back_" width="10" height="18"/>
+        <image name="integral.png" width="13" height="11"/>
+    </resources>
 </document>

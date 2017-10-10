@@ -80,6 +80,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="dayslb" destination="xLq-5B-QgW" id="Z0n-Qf-eUw"/>
+                <outlet property="qdBtn" destination="xVW-jk-r3P" id="Uun-oB-eIW"/>
                 <outlet property="todayIntegerallb" destination="eIY-sn-PjZ" id="vJt-b2-JXa"/>
                 <outlet property="totalIntegerallb" destination="R5v-sx-XeA" id="AzE-nI-OOe"/>
             </connections>

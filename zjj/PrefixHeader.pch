@@ -28,6 +28,10 @@
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
 #import "NSString+Password.h"
+#import "CLPlayerView.h"
+#import "UIView+CLSetRect.h"
+#import "Masonry.h"
+#import "SDImageCache.h"
 
 //domain
 //正式

@@ -18,10 +18,12 @@
 #import "EditUserInfoImageCell.h"
 #import "ArticleDetailViewController.h"
 #import "EditUserInfoViewController.h"
+#import "BeforeAfterContrastCell.h"
 @interface NewMineHomePageViewController ()<UITableViewDataSource,UITableViewDelegate,PublicArticleCellDelegate,NewMineHomePageHeaderCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic, weak) CLPlayerView *playerView;
+@property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (nonatomic,strong)NSMutableDictionary * infoDict;
 @end
 
@@ -39,6 +41,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (![self.userId isEqualToString:[UserModel shareInstance].userId]) {
+        self.shareBtn.hidden = YES;
+    }else{
+        self.shareBtn.hidden = NO;
+    }
     self.tableview.delegate=self;
     self.tableview.dataSource= self;
     pageSize = 30;
@@ -62,7 +70,7 @@
 -(void)getinfo
 {
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [params safeSetObject:self.userId forKey:@"userId"];
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/queryUserHome.do" paramters:params success:^(NSDictionary *dic) {
@@ -104,9 +112,13 @@
     NSString * fatBefore =[_infoDict safeObjectForKey:@"fatBefore"];
 
     if (indexPath.section ==0) {
-        return 330;
+        return JFA_SCREEN_WIDTH/320*199;
     }
-    else if(indexPath.section==1)
+    else if(indexPath.section ==1)
+    {
+        return 130;
+    }
+    else if(indexPath.section==2)
     {
         if (fatBefore.length>0)
         {
@@ -127,7 +139,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -136,7 +148,11 @@
     if (section ==0) {
         return 1;
     }
-    else if(section==1)
+    else if(section ==1)
+    {
+        return 1;
+    }
+    else if(section==2)
     {
         if (fatBefore.length>0)
         {
@@ -151,6 +167,17 @@
 
     }
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section ==0||section ==1) {
+        return 1;
+    }
+    return 25;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 1;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==0) {
@@ -160,25 +187,47 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.delegate = self;
-        [cell.headImageView sd_setBackgroundImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")
+        [cell.headImageView sd_setBackgroundImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"defaultHead")
          ];
         cell.nicknamelb.text = [_infoDict safeObjectForKey:@"nickName"];
-        cell.jjlb.text = @"简介：凤兮凤兮求其凰~";
+        NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
+        if (introduction.length<1) {
+            cell.jjlb.text = @"还没有编辑简介~";
+        }else{
+            cell.jjlb.text = [NSString stringWithFormat:@"简介：%@",introduction];
+        }
         int  sex = [UserModel shareInstance].gender;
         if (sex ==1) {
             cell.sexImageView.image = getImage(@"man");
             
         }else{
-            cell.sexImageView.image =getImage(@"women_");
+            cell.sexImageView.image =getImage(@"woman_");
         }
         
-        cell.beforeWeightlb.text = [NSString stringWithFormat:@"%.1fkg",[[_infoDict safeObjectForKey:@"beforeWeight"] floatValue]];
-        cell.afterweightlb.text = [NSString stringWithFormat:@"%.1fkg",[[_infoDict safeObjectForKey:@"afterWeight"] floatValue]];
-        cell.continuousDatelb.text = [NSString stringWithFormat:@"使用脂将军第%@天",[_infoDict safeObjectForKey:@"registerDate"]];
-        cell.lossWeightlb.text = [NSString stringWithFormat:@"%.1fkg",[[_infoDict safeObjectForKey:@"beforeWeight"]floatValue]-[[_infoDict safeObjectForKey:@"afterWeight"]floatValue]];
+        if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
+            cell.gzBtn.hidden = YES;
+        }else{
+            cell.gzBtn.hidden = NO;
+        }
+        
         return cell;
     }
+    
     else if(indexPath.section ==1)
+    {
+        static NSString * identifier = @"BeforeAfterContrastCell";
+        BeforeAfterContrastCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [self getXibCellWithTitle:identifier];
+        }
+        cell.beforeWeightlb.text = [NSString stringWithFormat:@"%.0fkg",[[_infoDict safeObjectForKey:@"beforeWeight"] floatValue]];
+        cell.afterweightlb.text = [NSString stringWithFormat:@"%.0fkg",[[_infoDict safeObjectForKey:@"afterWeight"] floatValue]];
+        cell.continuousDatelb.text = [NSString stringWithFormat:@"%@",[_infoDict safeObjectForKey:@"registerDate"]?[_infoDict safeObjectForKey:@"registerDate"]:@"0"];
+        cell.lossWeightlb.text = [NSString stringWithFormat:@"%.0f",[[_infoDict safeObjectForKey:@"beforeWeight"]floatValue]-[[_infoDict safeObjectForKey:@"afterWeight"]floatValue]];
+
+        return cell;
+    }
+    else if(indexPath.section ==2)
     {
         static NSString * identifier = @"EditUserInfoImageCell";
         EditUserInfoImageCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -186,8 +235,8 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"default")];
-        [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"default")];
+        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"before")];
+        [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"last")];
         
         return cell;
         
@@ -200,6 +249,15 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        
+        if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
+            cell.gzBtn.hidden = YES;
+            cell.jbBtn.hidden = YES;
+        }else{
+            cell.gzBtn.hidden = NO;
+            cell.jbBtn.hidden = NO;
+        }
+        
         cell.delegate = self;
         cell.tag = indexPath.row;
         [cell setInfoWithDict:item];
@@ -227,9 +285,12 @@
     }
     else if (section==1)
     {
+        return @"";
+    }else if(section ==2){
         return @"减脂前后";
     }else{
         return @"最新动态";
+
     }
 
 }
@@ -242,21 +303,10 @@
         //        [obj cellOffset];
     }];
 }
-//#pragma mark - 布局
-//-(void)viewDidLayoutSubviews{
-//    [super viewDidLayoutSubviews];
-//    [self.tableview mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.navigationController.navigationBar.mas_bottom);
-//        make.bottom.equalTo(self.view.mas_bottom).offset(-49);
-//        make.width.equalTo(self.view);
-//    }];
-//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section ==0) {
-        
-    }else{
+    if(indexPath.section ==3){
     CommunityModel * model = [_dataArray objectAtIndex:indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ArticleDetailViewController * ard =[[ArticleDetailViewController alloc]init];
@@ -278,7 +328,7 @@
     [_playerView destroyPlayer];
     CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.7)];
     _playerView = playerView;
-    [cell.imagesView addSubview:_playerView];
+    [cell.collectionView addSubview:_playerView];
     //    _playerView.fillMode = ResizeAspectFill;
     
     //视频地址
@@ -293,7 +343,7 @@
     [_playerView endPlay:^{
         //销毁播放器
         [_playerView destroyPlayer];
-        PlayingCell.playerBtn.hidden = NO;
+//        PlayingCell.playerBtn.hidden = NO;
         _playerView = nil;
         PlayingCell = nil;
         
@@ -311,21 +361,23 @@
 #pragma  mark ---cell delegate
 -(void)didShowChangeUserInfoPage
 {
-    EditUserInfoViewController * edit =[[EditUserInfoViewController alloc]init];
-    edit.infoDict = self.infoDict;
-    [self.navigationController pushViewController:edit animated:YES];
+    
+    if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
+        EditUserInfoViewController * edit =[[EditUserInfoViewController alloc]init];
+        edit.infoDict = self.infoDict;
+        [self.navigationController pushViewController:edit animated:YES];
+    }
 }
 -(void)didChangeHeaderImage
 {
-    
+    if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
+
+    }
 }
 -(void)didShareMyInfo
 {
     
 }
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

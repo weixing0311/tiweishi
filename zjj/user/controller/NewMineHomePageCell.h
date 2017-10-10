@@ -16,10 +16,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *jjlb;
 @property (weak, nonatomic) IBOutlet UIImageView *editjjimageview;
 @property (weak, nonatomic) IBOutlet UIImageView *sexImageView;
-@property (weak, nonatomic) IBOutlet UILabel *continuousDatelb;//连续多少天
-@property (weak, nonatomic) IBOutlet UILabel *beforeWeightlb;
-@property (weak, nonatomic) IBOutlet UILabel *afterweightlb;
-@property (weak, nonatomic) IBOutlet UILabel *lossWeightlb;
+@property (weak, nonatomic) IBOutlet UIButton *gzBtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *didClickGz;
+
 @property (nonatomic,assign)id<NewMineHomePageHeaderCellDelegate>delegate;
 @end
 

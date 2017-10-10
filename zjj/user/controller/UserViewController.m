@@ -57,6 +57,10 @@
     }
     
 }
+-(void)getInfo
+{
+//    app/community/usertArticleDetail/queryUserHome.do
+}
 -(void)refreshMyUserInfoView
 {
     [self .headerImage sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];

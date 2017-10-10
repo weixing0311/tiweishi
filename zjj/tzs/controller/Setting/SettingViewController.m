@@ -65,8 +65,6 @@
         self.thirdView.hidden = NO;
     }
     [self showAd];
-    
-    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -102,6 +100,17 @@
     [self.thirdView  setViewShadow];
     [self.forthView  setViewShadow];
 }
+
+-(void)tj//统计
+{
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/wapactive.do" paramters:nil success:^(NSDictionary *dic) {
+    } failure:^(NSError *error) {
+        DLog(@"error--%@",error);
+    }];
+}
+
 //获取个人信息
 -(void)getbalance
 {
@@ -162,10 +171,6 @@
     if (!tradePasswordStr||tradePasswordStr.length<1) {
         UIAlertController * al =[UIAlertController alertControllerWithTitle:nil message:@"您还没有交易密码，是否确认添加？" preferredStyle:UIAlertControllerStyleAlert];
         
-        
-//        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-        
-        
         [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.navigationController.navigationBarHidden =NO;
             AddTradingPsController * at =[[AddTradingPsController alloc]init];
@@ -173,8 +178,6 @@
             self.navigationController.navigationBarHidden =NO;
             [self.navigationController pushViewController:at animated:YES];
         }]];
-        
-        
         
         [self presentViewController:al animated:YES completion:nil];
     }

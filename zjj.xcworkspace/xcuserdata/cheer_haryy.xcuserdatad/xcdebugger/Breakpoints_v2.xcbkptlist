@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/community(&#x793e;&#x533a;)/postArticle()&#x5199;&#x6587;&#x7ae0;/PostArticleViewController.m"
-            timestampString = "528362916.556565"
+            timestampString = "529210315.758038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
+            startingLineNumber = "522"
+            endingLineNumber = "522"
             landmarkName = "-convertVideoWithModel:"
             landmarkType = "7">
          </BreakpointContent>
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/community(&#x793e;&#x533a;)/postArticle()&#x5199;&#x6587;&#x7ae0;/PostArticleViewController.m"
-            timestampString = "528362916.556642"
+            timestampString = "529210315.758038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "528"
-            endingLineNumber = "528"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "-convertVideoWithModel:"
             landmarkType = "7">
             <Locations>
@@ -84,41 +84,41 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/PostArticleViewController.m"
-                  timestampString = "528362916.742795"
+                  timestampString = "529328136.970426"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "532"
-                  endingLineNumber = "532"
+                  startingLineNumber = "538"
+                  endingLineNumber = "538"
                   offsetFromSymbolStart = "388">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_.423"
+                  symbolName = "__copy_helper_block_.427"
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/PostArticleViewController.m"
-                  timestampString = "528362916.744856"
+                  timestampString = "529328136.973082"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "532"
-                  endingLineNumber = "532"
+                  startingLineNumber = "538"
+                  endingLineNumber = "538"
                   offsetFromSymbolStart = "64">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.424"
+                  symbolName = "__destroy_helper_block_.428"
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/PostArticleViewController.m"
-                  timestampString = "528362916.746766"
+                  timestampString = "529328136.975787"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "532"
-                  endingLineNumber = "532"
+                  startingLineNumber = "538"
+                  endingLineNumber = "538"
                   offsetFromSymbolStart = "36">
                </Location>
             </Locations>
@@ -131,11 +131,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/community(&#x793e;&#x533a;)/postArticle()&#x5199;&#x6587;&#x7ae0;/PostArticleViewController.m"
-            timestampString = "528362916.556701"
+            timestampString = "529210315.758038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "514"
-            endingLineNumber = "514"
+            startingLineNumber = "520"
+            endingLineNumber = "520"
             landmarkName = "-convertVideoWithModel:"
             landmarkType = "7">
          </BreakpointContent>
@@ -143,96 +143,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "zjj/community(&#x793e;&#x533a;)/CommunityViewController.m"
-            timestampString = "528362916.556762"
+            filePath = "zjj/public/view/PublicArticleCell.m"
+            timestampString = "529328136.712801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "-didGzWithID:articleId:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CommunityViewController didGzWithID:articleId:]"
-                  moduleName = "zjj"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/CommunityViewController.m"
-                  timestampString = "528362916.755554"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "388">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__49-[CommunityViewController didGzWithID:articleId:]_block_invoke"
-                  moduleName = "zjj"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/CommunityViewController.m"
-                  timestampString = "528362916.757415"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "149"
-                  endingLineNumber = "149"
-                  offsetFromSymbolStart = "64">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/community(&#x793e;&#x533a;)/CommunityCell.m"
-            timestampString = "528362916.556833"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/community(&#x793e;&#x533a;)/CommunityCell.m"
-            timestampString = "528362916.557336"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "-collectionView:layout:insetForSectionAtIndex:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/community(&#x793e;&#x533a;)/CommunityCell.m"
-            timestampString = "528362916.557725"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "-collectionView:numberOfItemsInSection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

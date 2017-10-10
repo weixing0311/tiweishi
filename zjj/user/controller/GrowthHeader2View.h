@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *todayIntegerallb;
 @property (weak, nonatomic) IBOutlet UILabel *totalIntegerallb;
 @property (weak, nonatomic) IBOutlet UILabel *dayslb;
+@property (weak, nonatomic) IBOutlet UIButton *qdBtn;
 @property (nonatomic,assign)id<growthHeaderDelegate>delegate;
 - (IBAction)didQd:(id)sender;
 

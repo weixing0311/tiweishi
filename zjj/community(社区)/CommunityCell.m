@@ -19,12 +19,12 @@
     videoSize = CGSizeMake((JFA_SCREEN_WIDTH-20)/4-20, (JFA_SCREEN_WIDTH-20)/4-20);
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;//实现代理
-    self.collectionView.dataSource = self;                  //实现数据源方法
-    self.collectionView.backgroundColor= HEXCOLOR(0xf8f8f8);
-    self.collectionView.allowsMultipleSelection = YES;      //实现多选，默认是NO
-    self.collectionView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH-20, JFA_SCREEN_WIDTH*0.7);
-
+    self.collectionView.dataSource = self;//实现数据源方法
+    self.collectionView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH-40, (JFA_SCREEN_WIDTH-40)*0.7);
+//    self.collectionView.backgroundColor= HEXCOLOR(0xf8f8f8);
+    [self.imagesView addSubview:self.collectionView];
     [self.collectionView registerNib:[UINib nibWithNibName:@"PublicCollImageCell"bundle:nil]forCellWithReuseIdentifier:@"PublicCollImageCell"];
+
 
 }
 -(void)setInfoWithDict:(CommunityModel *)item
@@ -73,8 +73,6 @@
     PublicCollImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PublicCollImageCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     
-    cell.headerImageView.image = [_imagesArray objectAtIndex:indexPath.row];
-    [cell.headerImageView sd_setImageWithURL:[_imagesArray objectAtIndex:indexPath.row] placeholderImage:getImage(@"default")];
     
     [cell.headerImageView sd_setImageWithURL:[_imagesArray objectAtIndex:indexPath.row] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         cell.headerImageView.image = image;
@@ -93,14 +91,15 @@
     
     
     if (self.currModel.movieStr.length>5) {
-        
-        return CGSizeMake((JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)/2*0.7);
+        return videoSize;
+
+//        return CGSizeMake((JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)/2*0.7);
         
     }else{
         if (self.currModel.pictures.count==1) {
             return videoSize;
         }else{
-        return CGSizeMake((JFA_SCREEN_WIDTH-20)/4-20, (JFA_SCREEN_WIDTH-20)/4-20);
+        return CGSizeMake((JFA_SCREEN_WIDTH-20)/3-20, (JFA_SCREEN_WIDTH-20)/3-20);
         }
     }
 }
@@ -119,6 +118,11 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    if (self.currModel.movieStr.length>5) {
+        
+        
+    }
+    
     
 }
 

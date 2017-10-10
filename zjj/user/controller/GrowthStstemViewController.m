@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"购买体系";
+    self.title = @"成长体系";
     [self setTBRedColor];
     
     self.tableview.delegate = self;
@@ -49,13 +49,14 @@
         if ([[dic safeObjectForKey:@"taskName"]isEqualToString:@"打卡签到"]) {
             [params setObject:[dic safeObjectForKey:@"id"] forKey:@"taskId"];
             [params setObject:[dic safeObjectForKey:@"integral"] forKey:@"integeral"];
-
         }
     }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
         DLog(@"签到success-dic:%@",dic);
+        [[UserModel shareInstance]showSuccessWithStatus:@"签到成功！"];
+        [grView.qdBtn setTitle:@"已签到" forState:UIControlStateNormal];
     } failure:^(NSError *error) {
         DLog(@"签到失败-error:%@",error);
 
