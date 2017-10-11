@@ -208,6 +208,12 @@
             cell.gzBtn.hidden = YES;
         }else{
             cell.gzBtn.hidden = NO;
+            
+            if ([[_infoDict safeObjectForKey:@"isFollow"]isEqualToString:@"1"]) {
+                cell.gzBtn.selected = YES;
+            }else{
+                cell.gzBtn.selected = NO;
+            }            
         }
         
         return cell;
@@ -326,7 +332,7 @@
     PlayingCell = cell;
     //销毁播放器
     [_playerView destroyPlayer];
-    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.7)];
+    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.6)];
     _playerView = playerView;
     [cell.collectionView addSubview:_playerView];
     //    _playerView.fillMode = ResizeAspectFill;
@@ -365,6 +371,12 @@
     if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
         EditUserInfoViewController * edit =[[EditUserInfoViewController alloc]init];
         edit.infoDict = self.infoDict;
+
+         [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"userId"] forKey:@"userId"];
+         [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"nickName"] forKey:@"nickName"];
+         [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"sex"] forKey:@"sex"];
+         [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"height"] forKey:@"height"];
+         [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"birthday"] forKey:@"birthday"];
         [self.navigationController pushViewController:edit animated:YES];
     }
 }
@@ -376,6 +388,48 @@
 }
 -(void)didShareMyInfo
 {
+    
+}
+-(void)didGzUserWithCell:(NewMineHomePageCell *)cell
+{
+    if (cell.gzBtn.selected ==YES) {
+        [self cancelGzWithId:[_infoDict safeObjectForKey:@"userId"] cell:cell];
+    }else{
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:[_infoDict safeObjectForKey:@"userId"] forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+            DLog(@"dic-关注成功--%@",dic);
+            cell.gzBtn.selected = YES;
+            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        } failure:^(NSError *error) {
+            
+        }];
+
+    }
+}
+
+-(void)cancelGzWithId:(NSString * )followId cell:(NewMineHomePageCell*)cell
+{
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"确定不在关注此人吗？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [al addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:followId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
+            DLog(@"dic-取消关注成功--%@",dic);
+            cell.gzBtn.selected = YES;
+            [[UserModel shareInstance]showSuccessWithStatus: @"关注成功"];
+        } failure:^(NSError *error) {
+            
+        }];
+        
+    }]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+    
+    
     
 }
 

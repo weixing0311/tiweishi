@@ -139,17 +139,17 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
         if (indexPath.row==2) {
-            cell.textLabel.text = @"成长体系";
-            cell.headImageView.image = getImage(@"");
+            cell.titleLabel.text = @"成长体系";
+            cell.headImageView.image = getImage(@"todayTask");
         }
         else if (indexPath.row==3) {
-            cell.textLabel.text = @"积分商城";
-            cell.headImageView.image = getImage(@"");
+            cell.titleLabel.text = @"积分商城";
+            cell.headImageView.image = getImage(@"employ");
             
         }
         else {
-            cell.textLabel.text = @"购买记录";
-            cell.headImageView.image = getImage(@"");
+            cell.titleLabel.text = @"我的订单";
+            cell.headImageView.image = getImage(@"issue");
             
         }
 

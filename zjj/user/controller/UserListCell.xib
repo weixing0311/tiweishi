@@ -23,6 +23,12 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="cfk-Ly-12j"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="40"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这是逗比" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kX5-Ug-p88">
                         <rect key="frame" x="100" y="39" width="130" height="21"/>
@@ -41,6 +47,7 @@
                         <state key="normal" title="关注">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <state key="selected" title="取消关注"/>
                         <connections>
                             <action selector="didClickGz:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="laE-PZ-S3x"/>
                         </connections>

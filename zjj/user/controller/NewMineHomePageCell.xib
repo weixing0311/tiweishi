@@ -101,6 +101,9 @@
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="didClickGz:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bFm-44-hod"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -128,7 +131,6 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="didClickGz" destination="WjA-GG-uCv" id="nmu-Kt-Z89"/>
                 <outlet property="editjjimageview" destination="XWp-zp-Rj5" id="qGf-hL-pGD"/>
                 <outlet property="gzBtn" destination="WjA-GG-uCv" id="ZEW-JZ-5cE"/>
                 <outlet property="headImageView" destination="8x4-aH-K3l" id="LjC-cG-XDa"/>

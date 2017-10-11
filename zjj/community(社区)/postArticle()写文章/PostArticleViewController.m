@@ -52,12 +52,6 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"AddImageCell"bundle:nil]forCellWithReuseIdentifier:@"AddImageCell"];
     _imagesArray  =[NSMutableArray array];
 
-//    [_imagesArray addObject:getImage(@"demoimage_.jpg")];
-//    [_imagesArray addObject:getImage(@"demoimage_.jpg")];
-//    [_imagesArray addObject:getImage(@"demoimage_.jpg")];
-//    [_imagesArray addObject:getImage(@"demoimage_.jpg")];
-//    [_imagesArray addObject:getImage(@"demoimage_.jpg")];
-//    [_imagesArray addObject:getImage(@"demoimage_.jpg")];
     [_imagesArray addObject:getImage(@"蓝牙秤_")];
 
     [self.imageView addSubview:self.collectionView];

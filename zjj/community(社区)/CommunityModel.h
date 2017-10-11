@@ -27,6 +27,7 @@
 @property (nonatomic,copy)NSString * commentnum;//评论数量
 @property (nonatomic,copy)NSString * greatnum;//赞数
 @property (nonatomic,copy)NSString * isFabulous;//是否赞过
+@property (nonatomic,copy)NSString * isFollow; //是否关注
 @property (nonatomic,strong)NSMutableArray * thumbArray;//图片数组
 -(void)setInfoWithDict:(NSDictionary *)dict;
 

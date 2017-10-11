@@ -14,4 +14,5 @@
 @property (nonatomic,assign)BOOL     isFollow;
 @property (nonatomic,copy)NSString * userId;
 -(void)setSearchInfoFromDict:(NSDictionary *)dict;
+-(void)setGzInfoWithDict:(NSDictionary *)dict;
 @end

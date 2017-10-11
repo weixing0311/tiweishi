@@ -300,5 +300,9 @@
 
 ///获取通知广告
 -(void)getNotiadvertising;
+/**
+ *验证昵称的可行性
+ */
 
+-(BOOL)valiNickName:(NSString * )nickName;
 @end

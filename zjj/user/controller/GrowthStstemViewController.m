@@ -10,9 +10,11 @@
 #import "PublicCell.h"
 #import "GrowthHeader2View.h"
 #import "GrowthCell.h"
+#import "LevelSnstructionsViewController.h"
 @interface GrowthStstemViewController ()<UITableViewDelegate,UITableViewDataSource,growthHeaderDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSArray * dataArray;
+@property (nonatomic,strong)NSDictionary * infoDict;
 @end
 
 @implementation GrowthStstemViewController
@@ -22,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"成长体系";
+    self.title = @"我的等级";
     [self setTBRedColor];
     
     self.tableview.delegate = self;
@@ -73,7 +75,7 @@
         grView.todayIntegerallb.text = [NSString  stringWithFormat:@"今日获得积分：%@",[[dic safeObjectForKey:@"data"]safeObjectForKey:@"todayIntegeral"]];
         grView.totalIntegerallb.text = [NSString  stringWithFormat:@"%@分",[[dic safeObjectForKey:@"data"]safeObjectForKey:@"currentIntegeral"]];
         
-        
+        self.infoDict = [NSDictionary dictionaryWithDictionary:[dic objectForKey:@"data"]];
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
@@ -118,7 +120,12 @@
 {
     [self getQd];
 }
-
+-(void)didShowInstructions
+{
+    LevelSnstructionsViewController * lev = [[LevelSnstructionsViewController alloc]init];
+    lev.infoDict =_infoDict;
+    [self.navigationController pushViewController:lev animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

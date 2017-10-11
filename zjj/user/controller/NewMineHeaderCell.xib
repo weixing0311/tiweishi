@@ -21,13 +21,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCv-6m-6en">
-                        <rect key="frame" x="10" y="10" width="99.5" height="99.5"/>
+                        <rect key="frame" x="10" y="20" width="79.5" height="80"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="80" id="93U-ge-SO8"/>
                             <constraint firstAttribute="width" secondItem="jCv-6m-6en" secondAttribute="height" multiplier="1:1" id="emh-b1-MXx"/>
+                            <constraint firstAttribute="height" constant="80" id="lyJ-eL-BdK"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="40"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPH-ds-eJr">
-                        <rect key="frame" x="124.5" y="23" width="172.5" height="20"/>
+                        <rect key="frame" x="104.5" y="23" width="192.5" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="XAR-bi-05I"/>
                         </constraints>
@@ -36,7 +44,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="简介：你是大萨比" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2L-Hq-1lh">
-                        <rect key="frame" x="124.5" y="68" width="177.5" height="20"/>
+                        <rect key="frame" x="104.5" y="68" width="197.5" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="1eA-vJ-sOa"/>
                         </constraints>
@@ -49,10 +57,9 @@
                     <constraint firstItem="v2L-Hq-1lh" firstAttribute="top" secondItem="gPH-ds-eJr" secondAttribute="bottom" constant="25" id="2KV-XD-Tmu"/>
                     <constraint firstItem="gPH-ds-eJr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="6ms-nR-RML"/>
                     <constraint firstAttribute="trailingMargin" secondItem="gPH-ds-eJr" secondAttribute="trailing" constant="15" id="HNB-ua-aue"/>
-                    <constraint firstItem="jCv-6m-6en" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="M3V-U4-Hqg"/>
                     <constraint firstItem="v2L-Hq-1lh" firstAttribute="leading" secondItem="jCv-6m-6en" secondAttribute="trailing" constant="15" id="Xq4-hh-ltF"/>
-                    <constraint firstAttribute="bottom" secondItem="jCv-6m-6en" secondAttribute="bottom" constant="10" id="c0M-ts-K7U"/>
                     <constraint firstItem="gPH-ds-eJr" firstAttribute="leading" secondItem="jCv-6m-6en" secondAttribute="trailing" constant="15" id="fZz-92-Ixl"/>
+                    <constraint firstItem="jCv-6m-6en" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jFb-yq-ahq"/>
                     <constraint firstItem="jCv-6m-6en" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="von-jS-baz"/>
                     <constraint firstAttribute="trailingMargin" secondItem="v2L-Hq-1lh" secondAttribute="trailing" constant="10" id="wcU-uN-pdx"/>
                 </constraints>

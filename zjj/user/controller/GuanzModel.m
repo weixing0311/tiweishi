@@ -16,4 +16,12 @@
     self.isFollow = [[dict safeObjectForKey:@"isFollow"]boolValue];
     self.userId = [dict safeObjectForKey:@"userId"];
 }
+-(void)setGzInfoWithDict:(NSDictionary *)dict
+{
+    self.headImgUrl = [dict safeObjectForKey:@"headimgurl"];
+    self.nickname = [dict safeObjectForKey:@"nickName"];
+    self.isFollow = [[dict safeObjectForKey:@"isFollow"]boolValue];
+    self.userId = [dict safeObjectForKey:@"followId"];
+
+}
 @end

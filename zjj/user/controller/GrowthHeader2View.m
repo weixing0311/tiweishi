@@ -10,7 +10,14 @@
 
 @implementation GrowthHeader2View
 
-
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.headerImageView.layer.borderWidth= 2;
+    self.headerImageView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+    self.totalIntegerallb.adjustsFontSizeToFitWidth = YES;
+    self.levellb.adjustsFontSizeToFitWidth = YES;
+}
 
 - (IBAction)didQd:(id)sender {
     if ([self.qdBtn.titleLabel.text isEqualToString:@"已签到"]) {
@@ -18,6 +25,11 @@
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(didClickQd)]) {
         [self.delegate didClickQd];
+    }
+}
+- (IBAction)didClickRightBtn:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didShowInstructions)]) {
+        [self.delegate didShowInstructions];
     }
 }
 @end

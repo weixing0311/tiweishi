@@ -10,9 +10,10 @@
 #import "EditUserInfoImageCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
-@interface EditUserInfoViewController ()<UITableViewDelegate,UITableViewDataSource,EditUserInfoCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface EditUserInfoViewController ()<UITableViewDelegate,UITableViewDataSource,EditUserInfoCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-
+@property (nonatomic,strong) UIPickerView * pickView;
+@property (weak, nonatomic) IBOutlet UITextField *hiddentf;
 @end
 
 @implementation EditUserInfoViewController
@@ -20,6 +21,7 @@
     UIImage * beforeImage;
     UIImage * afterImage;
     int  imageType;
+    int pickRow;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -31,6 +33,7 @@
     self = [super init];
     if (self) {
         self.infoDict =[NSMutableDictionary dictionary];
+        self.upDataDict = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -38,10 +41,65 @@
     [super viewDidLoad];
     self.title = @"基本信息";
     [self setTBRedColor];
+    
+    
+    
+    
     self.tableview.delegate = self;
     self.tableview.dataSource= self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
+    
+    
+    [self setPickView];
+    
     // Do any additional setup after loading the view from its nib.
+}
+-(void)setPickView
+{
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,0, 375, 49)];
+    
+    UIBarButtonItem * barFit =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc]
+                             initWithTitle:@"完成"style:UIBarButtonItemStylePlain target:self action:@selector(didChoose)];
+    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]
+                             initWithTitle:@"取消"style:UIBarButtonItemStylePlain target:self action:@selector(cancelChoose)];
+    
+    //    4.加一个固定的长度作为弹簧效果
+    //    5.将设置的按钮加到toolBar上
+    toolBar.items =@[bar1,barFit,bar2];
+    //    6.将toolBar加到text的输入框也就是UiDatePicker上
+    
+    
+    self.pickView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 200)];
+    
+    // 代理
+    self.pickView.delegate = self;
+    self.pickView.dataSource = self;
+    
+    self.hiddentf.inputView = self.pickView;
+    self.hiddentf.inputAccessoryView = toolBar;
+//    self.hiddenTf.delegate = self;
+
+}
+-(void)didChoose
+{
+    [self.hiddentf resignFirstResponder];
+    if (self.hiddentf.tag==1) {
+        [self.upDataDict safeSetObject:pickRow==1?@"2":@"1" forKey:@"sex"];
+    }else if (self.hiddentf.tag==3)
+    {
+        [self.upDataDict safeSetObject:@(pickRow) forKey:@"age"];
+    }
+    else if(self.hiddentf.tag==4)
+    {
+        [self.upDataDict safeSetObject:@(pickRow+80) forKey:@"height"];
+    }
+    [self.tableview reloadData];
+}
+-(void)cancelChoose
+{
+    [self.hiddentf resignFirstResponder];
 }
 #pragma  mark --cellDidSelected
 -(void)showChooseSex
@@ -197,36 +255,41 @@
         switch (indexPath.row) {
             case 0:
                 cell.textLabel.text = @"昵称";
-                cell.detailTextLabel.text = [UserModel shareInstance].nickName;
+                cell.detailTextLabel.text = [_upDataDict safeObjectForKey:@"nickName"];
                 break;
             case 1:
                 cell.textLabel.text = @"性别";
-                cell.detailTextLabel.text = [UserModel shareInstance].gender==1?@"男":@"女";
+                cell.detailTextLabel.text = [[_upDataDict safeObjectForKey:@"sex"]isEqualToString:@"1"]?@"男":@"女";
                 break;
             case 2:
                 cell.textLabel.text = @"简介";
-                cell.detailTextLabel.text = @"文能提笔控萝莉";
+                
+                
+                cell.detailTextLabel.text = [_infoDict safeObjectForKey:@"introduction"];
                 break;
             case 3:
                 cell.textLabel.text = @"年龄";
                 cell.detailTextLabel.text =[NSString stringWithFormat:@"%d",[UserModel shareInstance].age];
                 break;
             case 4:
-                cell.textLabel.text = @"身高";
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0f",[UserModel shareInstance].heigth];
+                cell.textLabel.text = @"身高(cm)";
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[_upDataDict safeObjectForKey:@"height"]];
                 break;
             case 6:
                 cell.textLabel.text = @"等级";
-                cell.detailTextLabel.text = @"lv2";
+                cell.detailTextLabel.text =[_infoDict safeObjectForKey:@"gradeName"];
                 break;
             case 7:
                 cell.textLabel.text = @"积分";
-                cell.detailTextLabel.text = @"900000";
+                cell.detailTextLabel.text = [_infoDict safeObjectForKey:@"integral"];
                 break;
 
             default:
                 break;
         }
+        
+        
+
     return cell;
     }
 }
@@ -237,7 +300,24 @@
         case 0:
             [self showAlertWithType:indexPath.row];
             break;
-            
+        case 1:
+            [self.hiddentf becomeFirstResponder];
+            self.hiddentf.tag = indexPath.row;
+            break;
+        case 2:
+            [self showAlertWithType:indexPath.row];
+            break;
+        case 3:
+            [self.hiddentf becomeFirstResponder];
+            self.hiddentf.tag = indexPath.row;
+
+            break;
+        case 4:
+            [self.hiddentf becomeFirstResponder];
+            self.hiddentf.tag = indexPath.row;
+
+            break;
+
         default:
             break;
     }
@@ -255,27 +335,36 @@
     UIAlertController * al = [UIAlertController alertControllerWithTitle:indexPathRow==0?title1:title2 message:@"" preferredStyle:UIAlertControllerStyleAlert];
     
     [al addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        
+        textField.text = indexPathRow==0?[_infoDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
     }];
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (al.textFields.firstObject.text.length<4) {
             return ;
         }
-        NSMutableDictionary * params = [NSMutableDictionary dictionary];
-        [params safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
-        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-        self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
-            [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
-            [_infoDict safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
-            [self.tableview reloadData];
-        } failure:^(NSError *error) {
+        if (indexPathRow==0) {
             
-        }];
-
+        }else{
             //    app/user/addIntroduction.do
             //userId
             //introduction
-        //修改简介
+            //修改简介
+
+            NSMutableDictionary * params = [NSMutableDictionary dictionary];
+            [params safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
+            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+            
+            
+            
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/user/addIntroduction.do" paramters:params success:^(NSDictionary *dic) {
+                [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
+                [_infoDict safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
+                [self.tableview reloadData];
+            } failure:^(NSError *error) {
+                
+            }];
+
+        }
+
 
     }]];
     
@@ -362,6 +451,62 @@
 }
 
 
+#pragma mark --pickView DELEGATE
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    if (self.hiddentf.tag==1) {
+        return 2;
+    }else if (self.hiddentf.tag==3)
+    {
+        return 130;
+    }
+    else if(self.hiddentf.tag==4)
+    {
+        return 200;
+    }
+    else{
+        return 0;
+    }
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    
+    if (self.hiddentf.tag==1) {
+        switch (row) {
+            case 0:
+                return @"男";
+                break;
+                
+            default:
+                return @"女";
+                break;
+        }
+    }else if (self.hiddentf.tag==3)
+    {
+        return [NSString  stringWithFormat:@"%ld",row+1];
+    }
+    else if(self.hiddentf.tag==4)
+    {
+        return [NSString  stringWithFormat:@"%ld",row+80];
+    }
+    else{
+        return nil;
+    }
+
+    
+    
+    
+}
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    pickRow = row;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

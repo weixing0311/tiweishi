@@ -10,6 +10,7 @@
 #import "NewMineEditViewController.h"
 #import "AboutUsViewController.h"
 #import "ChangePasswordViewController.h"
+#import "LoignViewController.h"
 @interface NewMineEditViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 
@@ -74,6 +75,18 @@
 
 }
 - (IBAction)loignOut:(id)sender {
+    UIAlertController * la =[UIAlertController alertControllerWithTitle:@"是否确认退出登录？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [la addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
+        [[UserModel shareInstance]removeAllObject];
+        LoignViewController *lo = [[LoignViewController alloc]init];
+        self.view.window.rootViewController = lo;
+    }]];
+    [la addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    
+    [self presentViewController:la animated:YES completion:nil];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

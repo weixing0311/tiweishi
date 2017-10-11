@@ -17,8 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *editjjimageview;
 @property (weak, nonatomic) IBOutlet UIImageView *sexImageView;
 @property (weak, nonatomic) IBOutlet UIButton *gzBtn;
+- (IBAction)didClickGz:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIButton *didClickGz;
 
 @property (nonatomic,assign)id<NewMineHomePageHeaderCellDelegate>delegate;
 @end
@@ -27,4 +27,5 @@
 -(void)didShowChangeUserInfoPage;
 -(void)didChangeHeaderImage;
 -(void)didShareMyInfo;
+-(void)didGzUserWithCell:(NewMineHomePageCell *)cell;
 @end

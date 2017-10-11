@@ -44,7 +44,7 @@
 //#define kMyBaseUrl @"http://192.168.1.45:8080/"
 
 //皮皮刚
-//#define kMyBaseUrl @"http://192.168.1.74:8989/"
+//#define kMyBaseUrl @"http://192.168.1.74:9099/"
 
 //天龙
 //#define kMyBaseUrl @"http://192.168.1.85:8989/"
@@ -95,6 +95,62 @@
  @"app/userAddress/addAddress.do"   //添加收货地址
  @"app/area/queryArea.do"      //获取城市信息
  @"app/userAddress/addressList.do" //获取收货地址列表
+ #成长体系
+ #查询积分等级
+ appgrowthsystemqueryAll=app/integral/growthsystem/queryAll.do
+ #完成任务获得积分
+ appgrowthsystemgainPoints=app/integral/growthsystem/gainPoints.do
+ #首页积分商品列表
+ appqueryProductintegral=app/integral/product/queryProductintegral.do
+ #积分商品详情
+ appqueryProductintegralDetail=app/integral/product/queryProductintegralDetail.do
+ #积分商品创建订单
+ appintegralorderveOrderInfo=app/integral/order/saveOrderInfo.do
+ #订单列表
+ appintegralqueryIntegrationOrderInfo=app/integral/orderInfo/queryIntegrationOrderInfo.do
+ #订单详情
+ appintegralqueryIntegrationOrderItem=app/integral/orderInfo/queryIntegrationOrderItem.do
+ #取消订单
+ appintegralcancelOrderDelivery=app/integral/order/cancelOrderDelivery.do
+ #我的好友
+ appintegralqueryUserFollow=app/community/userfollow/queryUserFollow.do
+ #取消关注
+ appintegralremoveUserFollow=app/community/userfollow/removeUserFollow.do
+ #发布
+ appintegralsaveArticle=app/community/article/saveArticle.do
+ #文章列表接口
+ appintegralqueryAllArticle=app/community/articlepage/queryAllArticle.do
+ #我的关注文章列表接口
+ appintegralqueryAllArticleByUserId=app/community/articlepage/queryAllArticleByUserId.do
+ #关注保存接口
+ appintegralattentUser=app/community/articlepage/attentUser.do
+ #搜索用户
+ appintegralsearchUserFollow=app/community/userfollow/searchUserFollow.do
+ #好友关注
+ appintegralfollowUser=app/community/userfollow/followUser.do
+ #我的粉丝列表
+ appintegralfollowqueryFans=app/community/userfollow/queryFans.do
+ #评论
+ appintegralfollowqueryArticlecomment=app/community/articlecomment/queryArticlecomment.do
+ #保存评论
+ appintegralfollowsaveArticlecomment=app/community/articlecomment/saveArticlecomment.do
+ #点赞和点赞次数记录接口
+ appintegralupdateIsFabulous=app/userGreat/updateIsFabulous.do
+ #分享次数记录接口
+ appintegralupdateForwardingnum=app/community/article/updateForwardingnum.do
+ #举报接口
+ appintegralupdateIsreported=app/reportArticle/updateIsreported.do
+ #上传减肥前后照片
+ appintegraluploadFatBeforeImg=app/evaluatUser/uploadFatBeforeImg.do
+ appintegraluploadFatAfterImg=app/evaluatUser/uploadFatAfterImg.do
+ #个人首页
+ appintegralqueryUserHome=app/community/usertArticleDetail/queryUserHome.do
+ #获取个人首页信息
+ appintegralgetUserHome=app/user/getUserHome.do
+ #添加个人简介
+ appintegraladdIntroduction=app/user/addIntroduction.do
+ #统计点击云服务的活跃
+ appintegralwapactive=app/user/wapactive.do
  */
 
 

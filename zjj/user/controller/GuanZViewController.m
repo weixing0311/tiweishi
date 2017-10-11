@@ -80,7 +80,7 @@
             
             for (NSDictionary *dic in infoArr) {
                 GuanzModel * model = [[GuanzModel alloc]init];
-                [model setSearchInfoFromDict:dic];
+                [model setGzInfoWithDict:dic];
                 [_dataArray addObject:model];
             }
             [self.tableview reloadData];
@@ -111,7 +111,7 @@
         }
         for (NSDictionary *dic in infoArr) {
             GuanzModel * model = [[GuanzModel alloc]init];
-            [model setSearchInfoFromDict:dic];
+            [model setGzInfoWithDict:dic];
             [_dataArray addObject:model];
         }
 
@@ -138,31 +138,7 @@
         [self.tableview reloadData];
     }
 }
-//取消关注
--(void)cancelGzWithId:(NSString * )followId
-{
-    NSMutableDictionary * params =[NSMutableDictionary dictionary];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [params setObject:followId forKey:@"followId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
-        DLog(@"dic-取消关注成功--%@",dic);
 
-    } failure:^(NSError *error) {
-        
-    }];
-}
-
--(void)GzWithId:(NSString * )followId
-{
-    NSMutableDictionary * params =[NSMutableDictionary dictionary];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [params setObject:followId forKey:@"followId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
-        DLog(@"dic-关注成功--%@",dic);
-    } failure:^(NSError *error) {
-        
-    }];
-}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -189,10 +165,10 @@
     
     
     if (model.isFollow||self.pageType ==IS_GZ) {
-        [cell.gzbtn setTitle:@"取消关注" forState:UIControlStateNormal];
+        cell.gzbtn.selected =YES;
     }else
     {
-        [cell.gzbtn setTitle:@"关注" forState:UIControlStateNormal];
+        cell.gzbtn.selected = NO;
     }
     return cell;
 }
@@ -210,10 +186,36 @@
 -(void)didClickGzBtnWithCell:(UserListCell*)cell;
 {
     GuanzModel * model =[_dataArray objectAtIndex:cell.tag];
-    if (model.isFollow==YES||self.pageType ==IS_GZ) {
-        [self cancelGzWithId:model.userId];
+    if (cell.gzbtn.selected==YES||self.pageType ==IS_GZ) {
+        UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"确定不在关注此人吗？" preferredStyle:UIAlertControllerStyleAlert];
+        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [al addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSMutableDictionary * params =[NSMutableDictionary dictionary];
+            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+            [params setObject:model.userId forKey:@"followId"];
+            self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
+                DLog(@"dic-取消关注成功--%@",dic);
+                cell.gzbtn.selected = NO;
+                [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
+            } failure:^(NSError *error) {
+                
+            }];
+            
+        }]];
+        
+        [self presentViewController:al animated:YES completion:nil];
+
     }else{
-        [self GzWithId:model.userId];
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+            DLog(@"dic-关注成功--%@",dic);
+            cell.gzbtn.selected =YES;
+            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        } failure:^(NSError *error) {
+            
+        }];
     }
 }
 

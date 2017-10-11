@@ -79,19 +79,22 @@
 -(void)getQrCodeInfo:(NSString * )infoStr
 {
     NSDictionary * dic = [self getURLParameters:infoStr];
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params safeSetObject:[dic safeObjectForKey:@"recid"] forKey:@"recid"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/appuser/getPhoneByUserId.do" paramters:params success:^(NSDictionary *dic) {
-        
-        [[UserModel shareInstance]showSuccessWithStatus:@"获取推荐人手机号成功"];
-        NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
-        NSString * phone = [dataDic safeObjectForKey:@"phone"];
-        [self getInfoWithText:phone];
-        DLog(@"%@",dic);
-    } failure:^(NSError *error) {
-        
-    }];
+    [self getInfoWithText:[dic safeObjectForKey:@"recid"]];
+
+//    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+//    [params safeSetObject:[dic safeObjectForKey:@"recid"] forKey:@"recid"];
+//
+//    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/appuser/getPhoneByUserId.do" paramters:params success:^(NSDictionary *dic) {
+//
+//        [[UserModel shareInstance]showSuccessWithStatus:@"获取推荐人手机号成功"];
+//        NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
+//        NSString * phone = [dataDic safeObjectForKey:@"phone"];
+//        [self getInfoWithText:phone];
+//        DLog(@"%@",dic);
+//    } failure:^(NSError *error) {
+//
+//    }];
 
 }
 #pragma mark  -----SubviewDelegate

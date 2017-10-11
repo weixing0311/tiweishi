@@ -40,12 +40,13 @@ static CommunityModel * imageModel;
     self.movieImageStr = [dict safeObjectForKey:@"videoImg"];
     self.isRelease = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"isRelease"]];
     self.shareNum = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"shareNum"]];
-    
+    self.isFollow  =[dict safeObjectForKey:@"isFollow"];
     self.greatnum = [dict safeObjectForKey:@"greatnum"];
     self.forwardingnum = [dict safeObjectForKey:@"forwardingnum"];
     self.commentnum = [dict safeObjectForKey:@"commentnum"];
     self.isFabulous = [dict safeObjectForKey:@"isFabulous"];
     self.rowHieght = [self CalculateCellHieghtWithContent:[dict safeObjectForKey:@"content"] images:self.pictures];
+    
 }
 -(NSMutableArray *)thumbArray
 {
@@ -78,7 +79,7 @@ static CommunityModel * imageModel;
     float imageHeight = 0.0f;
     
     if (self.movieStr.length>5) {
-        imageHeight = (JFA_SCREEN_WIDTH-20)*0.7;
+        imageHeight = (JFA_SCREEN_WIDTH-20)*0.6+20;
     }else{
         
         if (images.count<1)
@@ -86,7 +87,7 @@ static CommunityModel * imageModel;
             imageHeight = 0;
         }
         if (images.count==1) {
-            imageHeight = JFA_SCREEN_WIDTH/2-10;
+            imageHeight = (JFA_SCREEN_WIDTH-20)*0.8;
         }
         else if (images.count>1&& images.count<=3)
         {

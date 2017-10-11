@@ -10,4 +10,5 @@
 
 @interface EditUserInfoViewController : JFABaseTableViewController
 @property (nonatomic,strong)NSMutableDictionary * infoDict;
+@property (nonatomic,strong)NSMutableDictionary * upDataDict;
 @end

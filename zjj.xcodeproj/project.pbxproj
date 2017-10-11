@@ -221,6 +221,10 @@
 		6C47123F1F25CE0000E5E750 /* WebViewCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C47123E1F25CE0000E5E750 /* WebViewCall.m */; };
 		6C47124D1F27391700E5E750 /* WXPsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C47124B1F27391700E5E750 /* WXPsTitleCell.m */; };
 		6C47124E1F27391700E5E750 /* WXPsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */; };
+		6C6CFE5F1F8DFED9005C2738 /* LevelSnstructionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE5D1F8DFED9005C2738 /* LevelSnstructionsViewController.m */; };
+		6C6CFE601F8DFED9005C2738 /* LevelSnstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE5E1F8DFED9005C2738 /* LevelSnstructionsViewController.xib */; };
+		6C6CFE651F8E3408005C2738 /* ADDChengUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE631F8E3408005C2738 /* ADDChengUserViewController.m */; };
+		6C6CFE661F8E3408005C2738 /* ADDChengUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE641F8E3408005C2738 /* ADDChengUserViewController.xib */; };
 		6C73AF5A1F2984500042C1A2 /* TZSDistributionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AF581F2984500042C1A2 /* TZSDistributionDetailViewController.m */; };
 		6C73AF5B1F2984500042C1A2 /* TZSDistributionDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73AF591F2984500042C1A2 /* TZSDistributionDetailViewController.xib */; };
 		6C73AF5F1F29C7BF0042C1A2 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AF5D1F29C7BF0042C1A2 /* ContactUsViewController.m */; };
@@ -1146,6 +1150,12 @@
 		6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXPsTitleCell.xib; sourceTree = "<group>"; };
 		6C6CFE581F8CAF9D005C2738 /* praise_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "praise_selected@3x.png"; sourceTree = "<group>"; };
 		6C6CFE591F8CAF9E005C2738 /* praise_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "praise_selected@2x.png"; sourceTree = "<group>"; };
+		6C6CFE5C1F8DFED9005C2738 /* LevelSnstructionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelSnstructionsViewController.h; sourceTree = "<group>"; };
+		6C6CFE5D1F8DFED9005C2738 /* LevelSnstructionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LevelSnstructionsViewController.m; sourceTree = "<group>"; };
+		6C6CFE5E1F8DFED9005C2738 /* LevelSnstructionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LevelSnstructionsViewController.xib; sourceTree = "<group>"; };
+		6C6CFE621F8E3408005C2738 /* ADDChengUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADDChengUserViewController.h; sourceTree = "<group>"; };
+		6C6CFE631F8E3408005C2738 /* ADDChengUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADDChengUserViewController.m; sourceTree = "<group>"; };
+		6C6CFE641F8E3408005C2738 /* ADDChengUserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ADDChengUserViewController.xib; sourceTree = "<group>"; };
 		6C73AF571F2984500042C1A2 /* TZSDistributionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZSDistributionDetailViewController.h; sourceTree = "<group>"; };
 		6C73AF581F2984500042C1A2 /* TZSDistributionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZSDistributionDetailViewController.m; sourceTree = "<group>"; };
 		6C73AF591F2984500042C1A2 /* TZSDistributionDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TZSDistributionDetailViewController.xib; sourceTree = "<group>"; };
@@ -2418,6 +2428,7 @@
 		6C1B2BBB1EECDEFD0092AAF0 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				6C6CFE611F8E33DF005C2738 /* ADDChengUser(添加用秤用户) */,
 				6C2241A51F7CF753001BB2FD /* infoEdit(修改个人信息) */,
 				6CD19FA81F74FB2D00DF1289 /* Gz(关注) */,
 				6C2AF26E1F7206D800C00F2A /* HomePage */,
@@ -2704,6 +2715,7 @@
 		6C2AF2581F71F9C700C00F2A /* Growth system（成长体系） */ = {
 			isa = PBXGroup;
 			children = (
+				6C6CFE5B1F8DFEAA005C2738 /* Levelinstructions(等级说明) */,
 				6C2AF2591F71F9FC00C00F2A /* GrowthStstemViewController.h */,
 				6C2AF25A1F71F9FC00C00F2A /* GrowthStstemViewController.m */,
 				6C2AF25B1F71F9FC00C00F2A /* GrowthStstemViewController.xib */,
@@ -3064,6 +3076,26 @@
 				6C363A171F05097700268851 /* TeamOrderDetailViewController.xib */,
 			);
 			name = "teamOrderDetail(团队订单详情)";
+			sourceTree = "<group>";
+		};
+		6C6CFE5B1F8DFEAA005C2738 /* Levelinstructions(等级说明) */ = {
+			isa = PBXGroup;
+			children = (
+				6C6CFE5C1F8DFED9005C2738 /* LevelSnstructionsViewController.h */,
+				6C6CFE5D1F8DFED9005C2738 /* LevelSnstructionsViewController.m */,
+				6C6CFE5E1F8DFED9005C2738 /* LevelSnstructionsViewController.xib */,
+			);
+			name = "Levelinstructions(等级说明)";
+			sourceTree = "<group>";
+		};
+		6C6CFE611F8E33DF005C2738 /* ADDChengUser(添加用秤用户) */ = {
+			isa = PBXGroup;
+			children = (
+				6C6CFE621F8E3408005C2738 /* ADDChengUserViewController.h */,
+				6C6CFE631F8E3408005C2738 /* ADDChengUserViewController.m */,
+				6C6CFE641F8E3408005C2738 /* ADDChengUserViewController.xib */,
+			);
+			name = "ADDChengUser(添加用秤用户)";
 			sourceTree = "<group>";
 		};
 		6C73AFF61F31B6680042C1A2 /* pyq(朋友圈一键转发) */ = {
@@ -4459,6 +4491,7 @@
 				6C13C5E11EFA747900435A27 /* UpdataAddressCell.xib in Resources */,
 				6CFDEC061F8B7DE7005D3971 /* defaultHead@2x.png in Resources */,
 				6CFDEBBC1F8B7DE7005D3971 /* addressLine@3x.png in Resources */,
+				6C6CFE661F8E3408005C2738 /* ADDChengUserViewController.xib in Resources */,
 				6CFDECE31F8B7DE8005D3971 /* VS@2x.png in Resources */,
 				6C2AF2731F7206EF00C00F2A /* NewMineHomePageViewController.xib in Resources */,
 				6C2AF24B1F71108B00C00F2A /* IntegralShopViewController.xib in Resources */,
@@ -4563,6 +4596,7 @@
 				6CFDEC7B1F8B7DE8005D3971 /* message_banner1.jpg in Resources */,
 				6CD011791EF8FC2E00FB9419 /* BodyFatDivisionAgreementViewController.xib in Resources */,
 				6C0F287F1F7267BF00FD27FF /* GrowthCell.xib in Resources */,
+				6C6CFE601F8DFED9005C2738 /* LevelSnstructionsViewController.xib in Resources */,
 				6CFDECD01F8B7DE8005D3971 /* setpage@3x.png in Resources */,
 				6CFDECE21F8B7DE8005D3971 /* videoPlay@3x.png in Resources */,
 				6CD92FE31F0A7FBF00D7989E /* ShareTrendListCell.xib in Resources */,
@@ -4822,6 +4856,7 @@
 				6C2241B31F7DE43C001BB2FD /* CommunityCell.m in Sources */,
 				6CA9C8391F78B49300E0941B /* IntegralOrderDetailViewController.m in Sources */,
 				6C2AF2381F71081E00C00F2A /* NewMineRelationsCell.m in Sources */,
+				6C6CFE651F8E3408005C2738 /* ADDChengUserViewController.m in Sources */,
 				6C8F53C11F11D38A00C7A275 /* NSString+JFAExtend.m in Sources */,
 				6C363A091F03940500268851 /* UIScrollView+MJExtension.m in Sources */,
 				6C3639921EFE47E100268851 /* AAPie.m in Sources */,
@@ -4832,6 +4867,7 @@
 				6CD92FDF1F0A789400D7989E /* ShareDetailView.m in Sources */,
 				6C3639941EFE47E100268851 /* AAPlotOptions.m in Sources */,
 				6CCEEB301EEE7F91002E1618 /* MineViewController.m in Sources */,
+				6C6CFE5F1F8DFED9005C2738 /* LevelSnstructionsViewController.m in Sources */,
 				6CD010E71EF7DB4300FB9419 /* GoodsDetailItem.m in Sources */,
 				6CFD99341EF26DBB00802AA4 /* UserModel.m in Sources */,
 				6C3638E41EFCEB4800268851 /* TZSMessageViewController.m in Sources */,

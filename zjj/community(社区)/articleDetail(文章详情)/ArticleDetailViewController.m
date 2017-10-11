@@ -12,13 +12,12 @@
 #import "ArtcleDetailCommentCell.h"
 #import "CommentView.h"
 #import "SDImageCache.h"
-@interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate>
+@interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @property (nonatomic,strong) NSMutableArray * commentArray;
 @property (nonatomic,strong) NSMutableDictionary * infoDict;;
 @property (nonatomic, weak) CLPlayerView *playerView;
-
 @end
 
 @implementation ArticleDetailViewController
@@ -52,6 +51,11 @@
 
     // Do any additional setup after loading the view from its nib.
 }
+
+
+
+
+
 -(void)buildCommentView
 {
     
@@ -225,6 +229,8 @@
         // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
         if (!image) {
             image = getImage(@"default");
+            return (JFA_SCREEN_WIDTH-20)*0.6;
+
         }
         
         //手动计算cell
@@ -253,6 +259,8 @@
         cell.nickNamelb.text = [_infoDict safeObjectForKey:@"nickName"];
         cell.contentlb.text = [_infoDict safeObjectForKey:@"content"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+        
         return cell;
    
     }
@@ -292,7 +300,7 @@
         cell.nicknamelb.text = [dict safeObjectForKey:@"nickName"];
         cell.timelb.text = [dict safeObjectForKey:@"createTime"];
         cell.contentlb.text = [dict safeObjectForKey:@"content"];
-        
+        cell.zanCountlb.text = [dict safeObjectForKey:@"greatnum"];
         return cell;
   
     }
@@ -424,6 +432,16 @@
     }
 
 }
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [_playerView destroyPlayer];
+    _playerView = nil;
+
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

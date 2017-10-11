@@ -137,18 +137,6 @@
 }
 
 //关注接口
--(void)didGzWithID:(NSString *)uid articleId:(NSString *)articleId
-{
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params safeSetObject:uid forKey:@"followId"];
-    [params safeSetObject:articleId forKey:@"articleId"];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
-        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
-    } failure:^(NSError *error) {
-        
-    }];
-}
 
 
 #pragma mark ---tableview delegate dataSource
@@ -160,6 +148,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CommunityModel * item =[self.dataArray objectAtIndex:indexPath.row];
+    
     float rowheight = item.rowHieght;
     return rowheight;
 }
@@ -193,6 +182,14 @@
         PlayingCell = nil;
     }
 }
+
+
+
+
+
+
+
+
 #pragma mark - 滑动代理
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     // visibleCells 获取界面上能显示出来了cell
@@ -233,7 +230,7 @@
     PlayingCell = cell;
     //销毁播放器
     [_playerView destroyPlayer];
-    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.7)];
+    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.6)];
     _playerView = playerView;
     [cell.collectionView addSubview:_playerView];
 //    _playerView.fillMode = ResizeAspectFill;
@@ -260,8 +257,18 @@
 -(void)didGzWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    
-    [self didGzWithID:model.userId articleId:model.uid];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:model.userId forKey:@"followId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        model.isFollow = @"1";
+        [self.tableview reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
+
 
 }
 -(void)didZanWithCell:(PublicArticleCell*)cell

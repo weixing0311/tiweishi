@@ -8,6 +8,8 @@
 
 #import "PublicArticleCell.h"
 #import "PublicCollImageCell.h"
+#define BigImageWidth JFA_SCREEN_WIDTH-20
+#define BigImageHeight (JFA_SCREEN_WIDTH-20)*0.6-20
 @implementation PublicArticleCell
 {
     float cellHeight ;
@@ -17,7 +19,13 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.gzBtn.layer.borderWidth= 1;
+    self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
+
+    
+    
     self.imagesArray = [NSMutableArray array];
+//    self.layout.itemSize = CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;//实现代理
     self.collectionView.dataSource = self;//实现数据源方法
@@ -52,6 +60,9 @@
     }
 }
 - (IBAction)didGz:(id)sender {
+    if (self.gzBtn.selected == YES) {
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(didGzWithCell:)]) {
         [self.delegate didGzWithCell:self];
     }
@@ -85,15 +96,19 @@
         self.zanImageView.image = getImage(@"praise");
     }
     
-    
+    if ( item.isFollow&&[item.isFollow isEqualToString:@"1"]) {
+        self.gzBtn.selected = YES;
+    }else{
+        self.gzBtn.selected = NO;
+    }
     
     if (item.movieStr.length>5) {
         //        self.playerBtn.hidden = NO;
         [self.imagesArray removeAllObjects];
         NSMutableDictionary * dict =[NSMutableDictionary dictionary];
         [dict safeSetObject:item.movieImageStr forKey:@"videoImageStr"];
-        [dict safeSetObject:@(JFA_SCREEN_WIDTH-20) forKey:@"videoSizeWidht"];
-        [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)*0.7) forKey:@"videoSizeHeight"];
+        [dict safeSetObject:@(BigImageWidth) forKey:@"videoSizeWidht"];
+        [dict safeSetObject:@(BigImageHeight) forKey:@"videoSizeHeight"];
         
         [self.imagesArray addObject:dict];
     }else{
@@ -104,8 +119,8 @@
             NSMutableDictionary * dict =[NSMutableDictionary dictionary];
             [dict safeSetObject:imageStr forKey:@"videoImageStr"];
             if (item.pictures.count==1) {
-                [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-10) forKey:@"videoSizeWidht"];
-                [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-10) forKey:@"videoSizeHeight"];
+                [dict safeSetObject:@(BigImageWidth ) forKey:@"videoSizeWidht"];
+                [dict safeSetObject:@(BigImageHeight) forKey:@"videoSizeHeight"];
                 
             }else{
                 if (item.pictures.count ==4) {
@@ -251,46 +266,77 @@
  
     }
     
-    
     NSMutableDictionary * dict = [_imagesArray objectAtIndex:indexPath.row];
+    
+    if (self.imagesArray.count ==1) {
+        [self configureCell:cell atIndexPath:indexPath];
+    }else{
     
     [cell.headerImageView sd_setImageWithURL:[dict safeObjectForKey:@"videoImageStr"] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         
-        
-        
-        if (self.imagesArray.count ==1) {
-            cell.headerImageView.image = [self cutImage:image imgViewWidth:JFA_SCREEN_WIDTH/2 imgViewHeight:JFA_SCREEN_WIDTH/2/image.size.width*image.size.height];
-            
-        }
-        else
-        {
-            cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
-
-        }
+    cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
     }];
-    
+    }
     return cell;
+}
+
+- (void)configureCell:(PublicCollImageCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSString *imgURL = [self.imagesArray[indexPath.row]safeObjectForKey:@"videoImageStr"];
+    UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imgURL];
+    
+    if ( !cachedImage ) {
+        [self downloadImage:[self.imagesArray[indexPath.row]safeObjectForKey:@"videoImageStr"] forIndexPath:indexPath];
+        cell.headerImageView.image = getImage(@"default");
+    } else {
+        cell.headerImageView.image =cachedImage;
+    }
+}
+
+- (void)downloadImage:(NSString *)imageURL forIndexPath:(NSIndexPath *)indexPath {
+    // 利用 SDWebImage 框架提供的功能下载图片
+    
+    
+    NSMutableDictionary * dic = [self.imagesArray objectAtIndex:indexPath.row];
+    [[SDWebImageDownloader sharedDownloader]downloadImageWithURL:[NSURL URLWithString:imageURL] options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+        
+        [dic safeSetObject:@(BigImageHeight/image.size.height*image.size.width) forKey:@"videoSizeWidht"];
+        [dic safeSetObject:@(BigImageHeight) forKey:@"videoSizeHeight"];
+        
+        [[SDImageCache sharedImageCache]storeImage:image forKey:imageURL completion:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }];
 }
 
 //设置item大小
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary * dic = [_imagesArray objectAtIndex:indexPath.row];
-    
-    return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
+    if (_imagesArray.count ==1) {
+        // 先从缓存中查找图片
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
+        
+        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
+        if (!image) {
+            return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
+        }else{
+            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
 
-//    if (self.currModel.movieStr.length>5) {
-//        return CGSizeMake([[dic safeObjectForKey:@"video"]doubleValue], [[dic safeObjectForKey:@"video"]doubleValue]);
-//        
-//        //        return CGSizeMake((JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)/2*0.7);
-//        
-//    }else{
-//        if (self.currModel.pictures.count==1) {
-//            return videoSize;
-//        }else{
-//            return CGSizeMake((JFA_SCREEN_WIDTH-20)/3-20, (JFA_SCREEN_WIDTH-20)/3-20);
-//        }
-//    }
+            CGFloat imageW = image.size.width;
+            CGFloat imageH = image.size.height;
+            
+            CGFloat imageWH = imageW/imageH;
+            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.8-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
+            CGFloat bigImageW = bigImageH* imageWH;
+            
+            //手动计算cell
+            return CGSizeMake(bigImageW, bigImageH);
+        }
+    }else{
+        return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
+
+    }
 }
 //这个是两行cell之间的间距（上下行cell的间距）
 

@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Qx-N2Q">
@@ -26,6 +26,12 @@
                             <constraint firstAttribute="height" constant="40" id="cRX-YP-Org"/>
                             <constraint firstAttribute="width" constant="40" id="mSB-Py-Y2f"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="减肥小王子" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKv-EL-2zU">
                         <rect key="frame" x="60" y="10" width="87" height="21"/>
@@ -200,26 +206,37 @@
                             <constraint firstItem="ko9-xM-D6H" firstAttribute="leading" secondItem="mka-FZ-2vR" secondAttribute="trailing" id="p9x-EQ-mEj"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYs-3G-0Nk">
-                        <rect key="frame" x="270" y="10" width="40" height="40"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYs-3G-0Nk">
+                        <rect key="frame" x="270" y="5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Jj8-ri-bV3"/>
                             <constraint firstAttribute="height" constant="40" id="Www-Hg-9TS"/>
                         </constraints>
-                        <state key="normal" title="举报"/>
+                        <state key="normal" image="report.png"/>
                         <connections>
                             <action selector="didClickJB:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qZA-jE-jmy"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bxO-Wq-cBJ">
-                        <rect key="frame" x="220" y="10" width="40" height="24"/>
-                        <color key="backgroundColor" red="0.91859266490000002" green="0.49601236980000002" blue="0.1154242622" alpha="1" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="200" y="10" width="60" height="27"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="SKM-IU-Tlg"/>
-                            <constraint firstAttribute="height" constant="24" id="wAx-Ww-gOU"/>
+                            <constraint firstAttribute="width" constant="60" id="SKM-IU-Tlg"/>
+                            <constraint firstAttribute="height" constant="27" id="wAx-Ww-gOU"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <state key="normal" title="+关注"/>
+                        <state key="normal" title="+关注">
+                            <color key="titleColor" red="1" green="0.040391710069444448" blue="0.059190538194444448" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <state key="selected" title="已关注">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <real key="value" value="13.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="didGz:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xHg-Ip-lSF"/>
                         </connections>
@@ -251,7 +268,7 @@
                     <constraint firstItem="uKv-EL-2zU" firstAttribute="leading" secondItem="lsp-Qx-N2Q" secondAttribute="trailing" constant="10" id="hfK-XY-25g"/>
                     <constraint firstAttribute="trailing" secondItem="q8y-Xo-NuN" secondAttribute="trailing" constant="10" id="liX-LD-YsE"/>
                     <constraint firstItem="uKv-EL-2zU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="m3y-IE-BVs"/>
-                    <constraint firstItem="vYs-3G-0Nk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="m5x-1v-JVH"/>
+                    <constraint firstItem="vYs-3G-0Nk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="m5x-1v-JVH"/>
                     <constraint firstItem="a0c-0o-aO4" firstAttribute="top" secondItem="q8y-Xo-NuN" secondAttribute="bottom" constant="10" id="oBH-vT-lHT"/>
                     <constraint firstAttribute="trailing" secondItem="JOg-Wq-fna" secondAttribute="trailing" constant="20" id="qbT-5m-egC"/>
                     <constraint firstItem="JOg-Wq-fna" firstAttribute="top" secondItem="lsp-Qx-N2Q" secondAttribute="bottom" constant="10" id="rRG-Lg-n5N"/>
@@ -281,6 +298,7 @@
     <resources>
         <image name="discuss.png" width="12" height="11"/>
         <image name="praise.png" width="11" height="11"/>
+        <image name="report.png" width="2" height="12"/>
         <image name="transmit.png" width="11" height="11"/>
     </resources>
 </document>
