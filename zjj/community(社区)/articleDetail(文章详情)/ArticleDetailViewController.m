@@ -216,13 +216,17 @@
 {
     if (indexPath.section ==0) {
         NSString * contentStr = [_infoDict safeObjectForKey:@"content"];
-        return 40+[self getContentHeightWithContent:contentStr Font:14];
+        return 65+([self getContentHeightWithContent:contentStr Font:15]<20?20:[self getContentHeightWithContent:contentStr Font:15]);
       
     }
     else if(indexPath.section ==1)
     {
+        
         NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-
+        NSString * videoPath =[_infoDict objectForKey:@"videoPath"];
+        if (videoPath.length>5) {
+            return JFA_SCREEN_WIDTH*0.8;
+        }else{
         // 先从缓存中查找图片
         UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"imgUrl"]];
         
@@ -236,7 +240,7 @@
         //手动计算cell
         CGFloat imgHeight = image.size.height * [UIScreen mainScreen].bounds.size.width / image.size.width;
         return imgHeight;  
-
+        }
     }else
     {
         NSDictionary *dic =[_commentArray objectAtIndex:indexPath.row];
@@ -309,11 +313,13 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
+    NSString * contentStr = [_infoDict safeObjectForKey:@"content"];
+    float height = 65+([self getContentHeightWithContent:contentStr Font:15]<20?20:[self getContentHeightWithContent:contentStr Font:15]);
     if (videoPath.length>5) {
         //记录被点击的Cell
         //销毁播放器
         [_playerView destroyPlayer];
-        CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.7)];
+        CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(10,height+10, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
         _playerView = playerView;
         [self.tableview addSubview:_playerView];
         //视频地址
@@ -344,7 +350,7 @@
     NSDictionary * dict = @{NSFontAttributeName:font,
                             NSParagraphStyleAttributeName:paragraph};
     
-    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-40, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
+    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-20, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
     return size.height;
 
 }
@@ -382,7 +388,7 @@
 #pragma mark ---上传评论
 -(void)didSendCommentWithText:(NSString *)textStr
 {
-    if (textStr.length>5) {
+    if (textStr.length>1) {
         [self getCommentInfoWithComment:textStr];
   
     }else{

@@ -440,7 +440,7 @@ typedef NS_ENUM(NSInteger, CLPlayerState) {
                                                 userInfo:nil
                                                  repeats:NO];
         [UIView animateWithDuration:0.5 animations:^{
-            self.maskView.topToolBar.alpha    = 1.0;
+            self.maskView.topToolBar.alpha    = 0.0;
             self.maskView.bottomToolBar.alpha = 1.0;
         }];
     }
@@ -530,7 +530,7 @@ typedef NS_ENUM(NSInteger, CLPlayerState) {
     self.maskView.totalTimeLabel.text   = @"00:00";
     //重置工具条
     [UIView animateWithDuration:0.5 animations:^{
-        self.maskView.topToolBar.alpha    = 1.0;
+        self.maskView.topToolBar.alpha    = 0.0;
         self.maskView.bottomToolBar.alpha = 1.0;
     }];
     [self destroyTimer];

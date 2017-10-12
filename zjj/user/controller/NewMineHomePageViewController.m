@@ -38,6 +38,8 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self.tableview headerBeginRefreshing];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -332,7 +334,7 @@
     PlayingCell = cell;
     //销毁播放器
     [_playerView destroyPlayer];
-    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.6)];
+    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
     _playerView = playerView;
     [cell.collectionView addSubview:_playerView];
     //    _playerView.fillMode = ResizeAspectFill;
@@ -375,7 +377,7 @@
          [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"userId"] forKey:@"userId"];
          [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"nickName"] forKey:@"nickName"];
          [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"sex"] forKey:@"sex"];
-         [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"height"] forKey:@"height"];
+         [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"heigth"] forKey:@"heigth"];
          [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"birthday"] forKey:@"birthday"];
         [self.navigationController pushViewController:edit animated:YES];
     }
@@ -386,10 +388,84 @@
 
     }
 }
+-(void)changeBgImageView
+{
+    if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
+        
+    }
+//    app/user/uploadBackGroundImg.do   userId   imgurl
+}
 -(void)didShareMyInfo
 {
     
 }
+
+-(void)didZanWithCell:(PublicArticleCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:@"" forKey:@"commentId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    [params safeSetObject:@"1" forKey:@"isFabulous"];//1是点赞 0取消
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@""];
+        [self refreshZanInfoWithCell:cell];
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+-(void)refreshZanInfoWithCell:(PublicArticleCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    
+    if ([model.isFabulous isEqualToString:@"1"]) {
+        model.isFabulous = @"0";//1是点赞 0取消
+        int zanCount = [cell.zanCountlb.text intValue];
+        cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
+        cell.zanImageView.image = getImage(@"praise");
+        
+    }else{
+        model.isFabulous = @"1";
+        int zanCount = [cell.zanCountlb.text intValue];
+        cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
+        cell.zanImageView.image = getImage(@"praise_Selected");
+    }
+    
+}
+
+-(void)didPLWithCell:(PublicArticleCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    ArticleDetailViewController * ard =[[ArticleDetailViewController alloc]init];
+    ard.infoModel = model;
+    ard.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ard animated:YES];
+    
+    //
+}
+-(void)didShareWithCell:(PublicArticleCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:model.uid forKey:@"id"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/article/updateForwardingnum.do" paramters:params success:^(NSDictionary *dic) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
+    //    /app/community/article/updateForwardingnum.do
+    //        参数：    id //文章Id
+}
+
+
 -(void)didGzUserWithCell:(NewMineHomePageCell *)cell
 {
     if (cell.gzBtn.selected ==YES) {

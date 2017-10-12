@@ -14,6 +14,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong) UIPickerView * pickView;
 @property (weak, nonatomic) IBOutlet UITextField *hiddentf;
+@property (weak, nonatomic) IBOutlet UITextField *datePickTf;
+
+@property (nonatomic,strong) UIDatePicker * datePicker;
 @end
 
 @implementation EditUserInfoViewController
@@ -22,11 +25,17 @@
     UIImage * afterImage;
     int  imageType;
     int pickRow;
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self changeMainUserInfo];
 }
 - (id)init
 {
@@ -42,16 +51,13 @@
     self.title = @"基本信息";
     [self setTBRedColor];
     
-    
-    
-    
     self.tableview.delegate = self;
     self.tableview.dataSource= self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
     
     
     [self setPickView];
-    
+    [self setDatePickerView];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)setPickView
@@ -87,19 +93,74 @@
     [self.hiddentf resignFirstResponder];
     if (self.hiddentf.tag==1) {
         [self.upDataDict safeSetObject:pickRow==1?@"2":@"1" forKey:@"sex"];
-    }else if (self.hiddentf.tag==3)
-    {
-        [self.upDataDict safeSetObject:@(pickRow) forKey:@"age"];
     }
     else if(self.hiddentf.tag==4)
     {
-        [self.upDataDict safeSetObject:@(pickRow+80) forKey:@"height"];
+        [self.upDataDict safeSetObject:@(pickRow+80) forKey:@"heigth"];
     }
     [self.tableview reloadData];
 }
 -(void)cancelChoose
 {
     [self.hiddentf resignFirstResponder];
+    [self.datePickTf resignFirstResponder];
+}
+
+-(void)setDatePickerView
+{
+    self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 200)];
+    
+    self.datePicker.datePickerMode = UIDatePickerModeDate;
+    NSDate * maxDate = [NSDate date];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString * mindateStr = @"1900-01-01 00:00:00";
+    NSDate * minDate = [formatter dateFromString:mindateStr];
+    
+    NSString * defaultDateStr = @"1990-01-01 00:00:00";
+    NSDate * defaultDate = [formatter dateFromString:defaultDateStr];
+    
+    self.datePicker.minimumDate = minDate;
+    self.datePicker.maximumDate = maxDate;
+    
+    //    if (self.changeType==1||self.changeType ==3) {
+    self.datePicker.date = defaultDate;
+    
+    //    }else{
+    //        self.pickView.date =   [[SubUserItem shareInstance].birthday dateyyyymmddhhmmss];
+    //
+    //    }
+    
+
+    
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,0, 375, 49)];
+    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]
+                             initWithTitle:@"取消"style:UIBarButtonItemStylePlain target:self action:@selector(cancelChoose)];
+    UIBarButtonItem * barFit2 =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+    
+    UIBarButtonItem *bar = [[UIBarButtonItem alloc]
+                            initWithTitle:@"完成"style:UIBarButtonItemStylePlain target:self action:@selector(didhiddenPickView)];
+    //    4.加一个固定的长度作为弹簧效果
+    //    5.将设置的按钮加到toolBar上
+    NSArray
+    * buttonsArray = [NSArray arrayWithObjects:bar1,barFit2,bar,nil];
+    [toolBar setItems:buttonsArray];
+    //    6.将toolBar加到text的输入框也就是UiDatePicker上
+    self.datePickTf.inputAccessoryView =toolBar;
+    self.datePickTf.inputView = self.datePicker;
+
+}
+-(void)didhiddenPickView
+{
+    NSDate* _date = self.datePicker.date;
+    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+    
+    [formater setDateFormat:@"yyyy-MM-dd"];//设置时间显示的格式，此处使用的formater格式要与字符串格式完全一致，否则转换失败
+    
+    NSString *dateStr = [formater stringFromDate:_date];//将日期转换成字符串
+    [self.upDataDict safeSetObject:dateStr forKey:@"birthday"];
+    [self.upDataDict safeSetObject:[self dateToOld:_date] forKey:@"age"];
+
 }
 #pragma  mark --cellDidSelected
 -(void)showChooseSex
@@ -137,6 +198,15 @@
     
     self.currentTasks = [[BaseSservice sharedManager]postImage:urlStr paramters:param imageData:imageData imageName:@"headimgurl" success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
+        NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
+        if (imageType ==1) {
+            [_infoDict safeSetObject:[dataDict safeObjectForKey:@"imgUrl"] forKey:@"fatBefore"];
+        }else{
+            [_infoDict safeSetObject:[dataDict safeObjectForKey:@"imgUrl"] forKey:@"fatAfter"];
+
+        }
+        
+        
         [self.tableview reloadData];
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
         
@@ -147,60 +217,14 @@
     }];
 
 }
--(void)changeMainUserInfoWithType:(int)textType content:(NSString *)content
+-(void)changeMainUserInfo
 {
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
 
-    params = [[UserModel shareInstance]getChangeUserInfoDict];
-    
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [params safeSetObject:textType==1?content:[UserModel shareInstance].nickName forKey:@"nickName"];
-    [params safeSetObject:@([UserModel shareInstance].gender) forKey:@"sex"];
-    [params safeSetObject:@([UserModel shareInstance].heigth) forKey:@"heigth"];
-    [params safeSetObject:[UserModel shareInstance].birthday forKey:@"birthday"];
-    [params safeSetObject:[UserModel shareInstance].subId forKey:@"id"];
-
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:params imageData:nil imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:self.upDataDict imageData:nil imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         [[UserModel shareInstance]setMainUserInfoWithDic:[dic objectForKey:@"data"]];
         [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        
-        
-        
-    } failure:^(NSError *error) {
-    }];
-    
-    
-    
-    
-}
--(void)changeSubUserInfoWithType:(int)textType content:(NSString *)content
-{
-    
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    params = [[UserModel shareInstance]getChangeUserInfoDict];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [params safeSetObject:textType==1?content:[UserModel shareInstance].nickName forKey:@"nickName"];
-    [params safeSetObject:@([UserModel shareInstance].gender) forKey:@"sex"];
-    [params safeSetObject:@([UserModel shareInstance].heigth) forKey:@"heigth"];
-    [params safeSetObject:[UserModel shareInstance].birthday forKey:@"birthday"];
-    [params safeSetObject:[UserModel shareInstance].subId forKey:@"id"];
-    
-    
-    
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"/app/evaluatUser/updateChild.do" paramters:params imageData:nil imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
-        
-        
-        NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
-        NSString * subId =[NSString stringWithFormat:@"%@",[dataDic safeObjectForKey:@"id"]];
-        
-        [[UserModel shareInstance]setChildArrWithDict:dataDic];
-        
-        [[SubUserItem shareInstance]setInfoWithHealthId:subId];
-        
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
+        [self.navigationController popViewControllerAnimated:YES];
         
         
         
@@ -273,7 +297,7 @@
                 break;
             case 4:
                 cell.textLabel.text = @"身高(cm)";
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[_upDataDict safeObjectForKey:@"height"]];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[_upDataDict safeObjectForKey:@"heigth"]];
                 break;
             case 6:
                 cell.textLabel.text = @"等级";
@@ -308,8 +332,7 @@
             [self showAlertWithType:indexPath.row];
             break;
         case 3:
-            [self.hiddentf becomeFirstResponder];
-            self.hiddentf.tag = indexPath.row;
+            [self.datePickTf becomeFirstResponder];
 
             break;
         case 4:
@@ -332,7 +355,7 @@
     NSString * title1 = @"修改昵称";
     NSString * title2 = @"编辑简介";
     
-    UIAlertController * al = [UIAlertController alertControllerWithTitle:indexPathRow==0?title1:title2 message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:indexPathRow==0?title1:title2 message:@"不能少于四个字符" preferredStyle:UIAlertControllerStyleAlert];
     
     [al addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.text = indexPathRow==0?[_infoDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
@@ -443,7 +466,8 @@
         }
         
     }
-}//点击cancel 调用的方法
+}
+//点击cancel 调用的方法
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -461,9 +485,6 @@
     
     if (self.hiddentf.tag==1) {
         return 2;
-    }else if (self.hiddentf.tag==3)
-    {
-        return 130;
     }
     else if(self.hiddentf.tag==4)
     {
@@ -487,9 +508,6 @@
                 return @"女";
                 break;
         }
-    }else if (self.hiddentf.tag==3)
-    {
-        return [NSString  stringWithFormat:@"%ld",row+1];
     }
     else if(self.hiddentf.tag==4)
     {
@@ -507,6 +525,18 @@
 {
     pickRow = row;
 }
+
+//根据生日计算年龄
+-(NSString *)dateToOld:(NSDate *)bornDate{
+    //获得当前系统时间
+    NSDate *currentDate = [NSDate date];
+    //获得当前系统时间与出生日期之间的时间间隔
+    NSTimeInterval time = [currentDate timeIntervalSinceDate:bornDate];
+    //时间间隔以秒作为单位,求年的话除以60*60*24*356
+    int age = ((int)time)/(3600*24*365);
+    return [NSString stringWithFormat:@"%d",age];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

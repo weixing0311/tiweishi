@@ -12,7 +12,7 @@
 //间隙
 #define Padding        10
 //顶部底部工具条高度
-#define ToolBarHeight     50
+#define ToolBarHeight     40
 
 @interface CLPlayerMaskView ()
 

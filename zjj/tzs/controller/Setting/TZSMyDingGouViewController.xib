@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="waU-hD-amW">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="41"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="brd-zk-37F"/>
@@ -39,7 +39,7 @@
                     </connections>
                 </segmentedControl>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="T26-aa-msL">
-                    <rect key="frame" x="0.0" y="40" width="375" height="627"/>
+                    <rect key="frame" x="0.0" y="104" width="375" height="563"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
             </subviews>
@@ -47,7 +47,7 @@
             <constraints>
                 <constraint firstItem="T26-aa-msL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="07S-ER-PH0"/>
                 <constraint firstAttribute="trailing" secondItem="waU-hD-amW" secondAttribute="trailing" id="0bn-SC-g46"/>
-                <constraint firstItem="waU-hD-amW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6Uw-PQ-dky"/>
+                <constraint firstItem="waU-hD-amW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="6Uw-PQ-dky"/>
                 <constraint firstItem="T26-aa-msL" firstAttribute="top" secondItem="waU-hD-amW" secondAttribute="bottom" id="CK6-ZO-9Uk"/>
                 <constraint firstAttribute="bottom" secondItem="T26-aa-msL" secondAttribute="bottom" id="PJ6-F1-Hoz"/>
                 <constraint firstAttribute="trailing" secondItem="T26-aa-msL" secondAttribute="trailing" id="gbp-Wy-0JV"/>

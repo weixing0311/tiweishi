@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,11 +26,11 @@
                     <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="TPS-XG-EXu">
-                    <rect key="frame" x="0.0" y="42" width="375" height="625"/>
+                    <rect key="frame" x="0.0" y="106" width="375" height="561"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="wrT-PJ-vFw">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="41"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="b0y-TR-hKb"/>
@@ -56,7 +56,7 @@
                 <constraint firstAttribute="trailing" secondItem="wrT-PJ-vFw" secondAttribute="trailing" id="A1W-oP-IbP"/>
                 <constraint firstItem="TPS-XG-EXu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Md1-dL-yEL"/>
                 <constraint firstItem="TPS-XG-EXu" firstAttribute="top" secondItem="wrT-PJ-vFw" secondAttribute="bottom" constant="2" id="Yy1-6f-DPu"/>
-                <constraint firstItem="wrT-PJ-vFw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bFn-TK-cMn"/>
+                <constraint firstItem="wrT-PJ-vFw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="bFn-TK-cMn"/>
                 <constraint firstItem="pEQ-Zr-cad" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="g8E-SD-7Wo"/>
                 <constraint firstAttribute="trailing" secondItem="pEQ-Zr-cad" secondAttribute="trailing" id="guc-2e-4to"/>
                 <constraint firstItem="wrT-PJ-vFw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="o8N-HU-m6q"/>

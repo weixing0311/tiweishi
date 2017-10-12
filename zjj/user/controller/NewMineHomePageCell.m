@@ -12,8 +12,18 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(changeBGiamgeViewImage)];
+    tap.delegate= self;
+    [self.bgImageView addGestureRecognizer:tap];
     // Initialization code
 }
+-(void)changeBGiamgeViewImage
+{
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(changeBgImageView)]) {
+        [self.delegate changeBgImageView];
+    }
+}
+
 - (IBAction)editUserInfo:(id)sender {
     if (self.delegate &&[self.delegate respondsToSelector:@selector(didShowChangeUserInfoPage)]) {
         [self.delegate didShowChangeUserInfoPage];

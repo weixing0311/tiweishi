@@ -252,7 +252,7 @@
 
             NSString *fileName=[NSString stringWithFormat:@"picture_t%d.png",i+1];
             UIImage *image = photos[i];
-            NSData *imageData = UIImageJPEGRepresentation(image, 0.01);
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
             [formData appendPartWithFileData:imageData name:[NSString stringWithFormat:@"picture_t%d",i+1] fileName:fileName mimeType:@"image/png"];
         }
     } progress:^(NSProgress * _Nonnull uploadProgress) {

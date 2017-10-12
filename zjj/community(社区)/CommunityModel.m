@@ -35,7 +35,6 @@ static CommunityModel * imageModel;
     self.userId = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"userId"]];
     self.uid = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"id"]];
     self.title = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"nickName"]];
-    [self setInPictureWithDict:dict];
     self.movieStr = [dict safeObjectForKey:@"videoPath"];
     self.movieImageStr = [dict safeObjectForKey:@"videoImg"];
     self.isRelease = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"isRelease"]];
@@ -45,8 +44,10 @@ static CommunityModel * imageModel;
     self.forwardingnum = [dict safeObjectForKey:@"forwardingnum"];
     self.commentnum = [dict safeObjectForKey:@"commentnum"];
     self.isFabulous = [dict safeObjectForKey:@"isFabulous"];
+    [self setInPictureWithDict:dict];
+
     self.rowHieght = [self CalculateCellHieghtWithContent:[dict safeObjectForKey:@"content"] images:self.pictures];
-    
+
 }
 -(NSMutableArray *)thumbArray
 {
@@ -57,7 +58,10 @@ static CommunityModel * imageModel;
 }
 -(void)setInPictureWithDict:(NSDictionary *)dict
 {
-    self.pictures = [NSMutableArray array];
+    if (!self.pictures) {
+        self.pictures = [NSMutableArray array];
+    }
+    [self.pictures removeAllObjects];
     for ( int i =1; i<10; i++) {
         NSString * url  =[dict safeObjectForKey:[NSString stringWithFormat:@"picture%d",i]];
         if (url&&url.length>5) {
@@ -68,9 +72,9 @@ static CommunityModel * imageModel;
 -(float)CalculateCellHieghtWithContent:(NSString *)contentStr images:(NSArray * )images
 {
     NSMutableParagraphStyle * paragraph = [[NSMutableParagraphStyle alloc] init];
-    paragraph.lineSpacing = 10;
+    paragraph.lineSpacing = 15;
     
-    UIFont *font = [UIFont systemFontOfSize:14];
+    UIFont *font = [UIFont systemFontOfSize:15];
     NSDictionary * dict = @{NSFontAttributeName:font,
                             NSParagraphStyleAttributeName:paragraph};
     
@@ -79,7 +83,7 @@ static CommunityModel * imageModel;
     float imageHeight = 0.0f;
     
     if (self.movieStr.length>5) {
-        imageHeight = (JFA_SCREEN_WIDTH-20)*0.6+20;
+        imageHeight = (JFA_SCREEN_WIDTH-20)*0.8;
     }else{
         
         if (images.count<1)
@@ -105,10 +109,10 @@ static CommunityModel * imageModel;
             }
         }
         else{
-            imageHeight = ((JFA_SCREEN_WIDTH-20)/3-10)*3;
+            imageHeight = ((JFA_SCREEN_WIDTH-20)/3)*3;
         }
     }
-    return size.height+imageHeight+105;
+    return size.height+imageHeight+125;
     
 }
 @end

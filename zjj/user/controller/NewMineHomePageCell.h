@@ -11,6 +11,9 @@
 @protocol NewMineHomePageHeaderCellDelegate;
 
 @interface NewMineHomePageCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
+
 @property (weak, nonatomic) IBOutlet UIButton *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknamelb;
 @property (weak, nonatomic) IBOutlet UILabel *jjlb;
@@ -28,4 +31,5 @@
 -(void)didChangeHeaderImage;
 -(void)didShareMyInfo;
 -(void)didGzUserWithCell:(NewMineHomePageCell *)cell;
+-(void)changeBgImageView;
 @end

@@ -39,7 +39,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"";
+    self.title = @"写文章";
     
     [self buildRightNaviBarItem];
     self.collectionView.delegate = self;
@@ -52,7 +52,7 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"AddImageCell"bundle:nil]forCellWithReuseIdentifier:@"AddImageCell"];
     _imagesArray  =[NSMutableArray array];
 
-    [_imagesArray addObject:getImage(@"蓝牙秤_")];
+    [_imagesArray addObject:getImage(@"camera")];
 
     [self.imageView addSubview:self.collectionView];
     [self.collectionView reloadData];
@@ -62,6 +62,14 @@
 {
 //    [self convertMovSourceURL:self.movieUrl];
 
+    if (self.textView.text.length<1&&!self.movieUrl&&_imagesArray.count<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"文章不能为空"];
+    }
+    if (self.textView.text.length>100) {
+        [[UserModel shareInstance]showInfoWithStatus:@"文章最长100字"];
+        return;
+    }
+    
     [self getVideoInfoWithSourcePath:nil];
     NSMutableDictionary * params =[NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
@@ -73,7 +81,7 @@
 //      long lsog =   [self fileSizeAtPath:self.movieUrl];
         
         NSData * data = [NSData dataWithContentsOfURL:self.movieUrl];
-        NSData *videoImgData = UIImageJPEGRepresentation(self.videoImg, 0.001);
+        NSData *videoImgData = UIImageJPEGRepresentation(self.videoImg, 1);
         
         self.currentTasks = [[BaseSservice sharedManager]
                              postMovie:@"app/community/article/saveArticle.do"
@@ -541,7 +549,7 @@
         // 如果不设定，可能会在视频旋转90/180/270°时，获取到的缩略图是被旋转过的，而不是正向的
         gen.appliesPreferredTrackTransform = YES;
         // 设置图片的最大size(分辨率)
-        gen.maximumSize = CGSizeMake(300, 169);
+        gen.maximumSize = CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
         CMTime time = CMTimeMakeWithSeconds(5.0, 600); //取第5秒，一秒钟600帧
         NSError *error = nil;
         CMTime actualTime;

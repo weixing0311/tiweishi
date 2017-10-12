@@ -20,6 +20,7 @@
 #import "WWXBlueToothManager.h"
 #import "HealthModel.h"
 #import "JPUSHService.h"
+#import "ADDChengUserViewController.h"
 @interface HealthViewController ()<userListDelegate,userViewDelegate,healthMainDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
@@ -366,11 +367,18 @@
 -(void)changeShowUserWithSubId:(NSString *)subId isAdd:(BOOL)isAdd
 {
     if (isAdd) {
-        ChangeUserInfoViewController * cu = [[ChangeUserInfoViewController alloc]init];
-        cu.changeType = 3;
-//        self.navigationController.navigationBarHidden = NO;
-        cu.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:cu animated:YES];
+        
+        ADDChengUserViewController * addc = [[ADDChengUserViewController alloc]init];
+        addc.isResignUser = NO;
+        addc.hidesBottomBarWhenPushed = YES;
+
+        [self.navigationController pushViewController:addc animated:YES];
+        
+//        ChangeUserInfoViewController * cu = [[ChangeUserInfoViewController alloc]init];
+//        cu.changeType = 3;
+////        self.navigationController.navigationBarHidden = NO;
+//        cu.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:cu animated:YES];
     }else{
         
         if ([subId isEqualToString:[UserModel shareInstance].subId]) {

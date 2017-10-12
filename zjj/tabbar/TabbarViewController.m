@@ -20,13 +20,15 @@
 #import "AppDelegate.h"
 #import "NewMineViewController.h"
 #import "CommunityViewController.h"
+#import "NewHealthViewController.h"
 @interface TabbarViewController ()<UITabBarControllerDelegate>
 
 @end
 
 @implementation TabbarViewController
 {
-    HealthViewController *health;
+//    HealthViewController *health;
+    NewHealthViewController *health;
     MessageViewController *news;
     foundViewController * found;
 }
@@ -36,7 +38,9 @@
     
     self.delegate = self;
     
-    health = [[HealthViewController alloc]init];
+    health = [[NewHealthViewController alloc]init];
+
+//    health = [[HealthViewController alloc]init];
     UINavigationController * nav1 = [[UINavigationController alloc]initWithRootViewController:health];
     health.title = @"健康";
 

@@ -10,10 +10,11 @@
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+Extension.h"
 #import "TabbarViewController.h"
-@interface ADDChengUserViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *headImageView;
+@interface ADDChengUserViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 - (IBAction)didChangeHeaderImage:(id)sender;
 
+- (IBAction)didSaveUserInfo:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *manBtn;
 @property (weak, nonatomic) IBOutlet UIButton *womanBtn;
@@ -23,17 +24,25 @@
 @property (weak, nonatomic) IBOutlet UITextField *agetf;
 @property (weak, nonatomic) IBOutlet UITextField *heighttf;
 @property (nonatomic,strong) UIPickerView * pickView;
+@property (nonatomic,strong) UIDatePicker * datePicker;
 
 @end
 
 @implementation ADDChengUserViewController
 {
-    int pickRow;
+    NSInteger pickRow;
+    NSString * birthdayStr;
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setPickView];
+    [self setDatePickerView];
+    self.nicknametf.delegate = self;
     // Do any additional setup after loading the view from its nib.
+}
+- (IBAction)didClickBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //上传数据
@@ -53,12 +62,10 @@
 -(void)addSubUserInfo
 {
     
-    
     if ([[UserModel shareInstance] valiNickName:self.nicknametf.text]!=YES) {
         [[UserModel shareInstance]showInfoWithStatus:@"昵称只能由中文、字母或数字组成"];
         return;
     }
-    
     
     if (self.nicknametf.text.length>6) {
         [[UserModel shareInstance] showInfoWithStatus:@"昵称最长为6字符"];
@@ -78,7 +85,7 @@
 
     
     
-    NSData *fileData = UIImageJPEGRepresentation(self.headImageView.imageView.image,0.001);
+    NSData *fileData = UIImageJPEGRepresentation(self.headImageView.image,0.01);
 
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     params = [[UserModel shareInstance]getChangeUserInfoDict];
@@ -87,10 +94,10 @@
     [params safeSetObject:self.nicknametf.text forKey:@"nickName"];
     [params safeSetObject:[NSString stringWithFormat:@"%d",self.manBtn.selected==YES?1:2] forKey:@"sex"];
     [params safeSetObject:self.heighttf.text forKey:@"heigth"];
-    [params safeSetObject:self.agetf.text forKey:@"birthday"];
+    [params safeSetObject:birthdayStr forKey:@"birthday"];
     
     
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/addChild.do" paramters:params imageData:fileData imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/addChild.do" paramters:params imageData:fileData imageName:@"headimgurl" success:^(NSDictionary *dic) {
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
         
@@ -106,7 +113,7 @@
 }
 -(void)addMainUserInfo
 {
-    NSData *fileData = UIImageJPEGRepresentation(self.headImageView.imageView.image,0.001);
+    NSData *fileData = UIImageJPEGRepresentation(self.headImageView.image,0.001);
 
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
 
@@ -117,7 +124,7 @@
     [params safeSetObject:self.agetf.text forKey:@"birthday"];
 
     
-    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:params imageData:fileData imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:params imageData:fileData imageName:@"headimgurl" success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
@@ -198,6 +205,11 @@
 
 }
 
+- (IBAction)didSaveUserInfo:(id)sender {
+    
+    [self addSubUserInfo];
+}
+
 
 
 -(void)setPickView
@@ -223,8 +235,6 @@
     self.pickView.delegate = self;
     self.pickView.dataSource = self;
     
-    self.agetf.inputView = self.pickView;
-    self.agetf.inputAccessoryView = toolBar;
     self.heighttf.inputView = self.pickView;
     self.heighttf.inputAccessoryView = toolBar;
 
@@ -236,12 +246,12 @@
     if ([self.agetf isFirstResponder]) {
         [self.agetf resignFirstResponder];
 
-        self.agetf.text = [NSString stringWithFormat:@"%d",pickRow];
+        self.agetf.text = [NSString stringWithFormat:@"%ld",pickRow];
     }
     else if ([self.heighttf isFirstResponder])
     {
         [self.heighttf resignFirstResponder];
-        self.heighttf.text = [NSString stringWithFormat:@"%d",pickRow+80];
+        self.heighttf.text = [NSString stringWithFormat:@"%ld",pickRow+80];
     }
 }
 -(void)cancelChoose
@@ -250,6 +260,63 @@
     [self.heighttf resignFirstResponder];
 
 }
+
+-(void)setDatePickerView
+{
+    self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 200)];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
+    self.datePicker.locale = locale;
+
+    self.datePicker.datePickerMode = UIDatePickerModeDate;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString * mindateStr = @"1900-01-01 00:00:00";
+    NSString * defaultDateStr = @"1990-01-01 00:00:00";
+    
+    NSDate * defaultDate = [formatter dateFromString:defaultDateStr];
+
+    NSDate * minDate = [formatter dateFromString:mindateStr];
+    NSDate * maxDate = [NSDate date];
+
+    
+    self.datePicker.minimumDate = minDate;
+    self.datePicker.maximumDate = maxDate;
+    
+    self.datePicker.date = defaultDate;
+    
+    
+    
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,0, 375, 49)];
+    UIBarButtonItem * barFit =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+
+    UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]
+                             initWithTitle:@"取消"style:UIBarButtonItemStylePlain target:self action:@selector(cancelChoose)];
+
+    UIBarButtonItem *bar2 = [[UIBarButtonItem alloc]
+                            initWithTitle:@"完成"style:UIBarButtonItemStylePlain target:self action:@selector(didhiddenPickView)];
+    //    4.加一个固定的长度作为弹簧效果
+    //    5.将设置的按钮加到toolBar上
+    toolBar.items =@[bar1,barFit,bar2];
+    //    6.将toolBar加到text的输入框也就是UiDatePicker上
+    self.agetf.inputAccessoryView =toolBar;
+    self.agetf.inputView = self.datePicker;
+    
+}
+-(void)didhiddenPickView
+{
+    NSDate* _date = self.datePicker.date;
+    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+    
+    [formater setDateFormat:@"yyyy-MM-dd"];//设置时间显示的格式，此处使用的formater格式要与字符串格式完全一致，否则转换失败
+    
+    NSString *dateStr = [formater stringFromDate:_date];//将日期转换成字符串
+    self.agetf.text = [self dateToOld:_date];
+    birthdayStr = dateStr;
+    [self.agetf resignFirstResponder];
+    
+}
+
+
 
 #define imagepick
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
@@ -260,7 +327,7 @@
         UIImage *image =info[UIImagePickerControllerEditedImage];
         [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
         
-        [self.headImageView setImage:image forState:UIControlStateNormal];
+        self.headImageView.image = image;
         
     }
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -299,37 +366,12 @@
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     
-    if ([self.agetf isFirstResponder])
-    {
-        return 130;
-    }
-    else if([self.heighttf isFirstResponder])
-    {
-        return 200;
-    }
-    else{
-        return 0;
-    }
+    return 200;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    
-    if ([self.agetf isFirstResponder])
-    {
-        return [NSString  stringWithFormat:@"%ld",row+1];
-    }
-    else if([self.heighttf isFirstResponder])
-    {
-        return [NSString  stringWithFormat:@"%ld",row+80];
-    }
-    else{
-        return nil;
-    }
-    
-    
-    
-    
+    return [NSString  stringWithFormat:@"%ld",row+80];
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -338,6 +380,24 @@
 
 
 
+//根据生日计算年龄
+-(NSString *)dateToOld:(NSDate *)bornDate{
+    //获得当前系统时间
+    NSDate *currentDate = [NSDate date];
+    //获得当前系统时间与出生日期之间的时间间隔
+    NSTimeInterval time = [currentDate timeIntervalSinceDate:bornDate];
+    //时间间隔以秒作为单位,求年的话除以60*60*24*356
+    int age = ((int)time)/(3600*24*365);
+    return [NSString stringWithFormat:@"%d",age];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField ==self.nicknametf) {
+        [self.nicknametf resignFirstResponder];
+    }
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

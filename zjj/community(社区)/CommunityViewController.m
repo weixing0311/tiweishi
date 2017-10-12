@@ -48,6 +48,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    [self ChangeMySegmentStyle:self.segment];
+
+    
+    
     [self buildRightNaviBarItem];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
@@ -98,11 +103,9 @@
 {
     NSString * urlStr = @"";
     if (self.segment.selectedSegmentIndex ==0) {
-        urlStr =@"app/community/articlepage/queryAllArticle.do";
-
-    }else{
         urlStr =@"app/community/articlepage/queryAllArticleByUserId.do";
-
+    }else{
+        urlStr =@"app/community/articlepage/queryAllArticle.do";
     }
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
@@ -133,6 +136,10 @@
     } failure:^(NSError *error) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
+        if (page ==1) {
+            [_dataArray removeAllObjects];
+            [self.tableview reloadData];
+        }
     }];
 }
 
@@ -164,7 +171,7 @@
     cell.delegate = self;
     cell.tag = indexPath.row;
     [cell setInfoWithDict:item];
-    if (self.segment.selectedSegmentIndex ==1) {
+    if (self.segment.selectedSegmentIndex ==0) {
         cell.gzBtn.hidden = YES;
     }else{
         cell.gzBtn.hidden = NO;
@@ -230,7 +237,7 @@
     PlayingCell = cell;
     //销毁播放器
     [_playerView destroyPlayer];
-    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.6)];
+    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
     _playerView = playerView;
     [cell.collectionView addSubview:_playerView];
 //    _playerView.fillMode = ResizeAspectFill;
@@ -396,6 +403,5 @@
 - (IBAction)didClickSegment:(UISegmentedControl *)sender {
     
     [self.tableview headerBeginRefreshing];
-    
 }
 @end

@@ -138,6 +138,7 @@
             
         }
     }
+    
     [self.collectionView reloadData];
     
     
@@ -250,8 +251,35 @@
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    
-    return UIEdgeInsetsMake(5,10, 5, 10);//分别为上、左、下、右
+    if (_imagesArray.count ==1) {
+        // 先从缓存中查找图片
+        NSDictionary * dic = [_imagesArray objectAtIndex:0];
+
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
+        
+        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
+        if (!image) {
+            return UIEdgeInsetsMake(5,([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2, 5, ([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2);//分别为上、左、下、右
+        }else{
+            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
+            
+            CGFloat imageW = image.size.width;
+            CGFloat imageH = image.size.height;
+            
+            CGFloat imageWH = imageW/imageH;
+            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.8-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
+            CGFloat bigImageW = bigImageH* imageWH;
+            
+            //手动计算cell
+            return UIEdgeInsetsMake(5,(JFA_SCREEN_WIDTH-bigImageW)/2, 5, (JFA_SCREEN_WIDTH-bigImageW)/2);//分别为上、左、下、右
+
+        }
+    }else{
+        return UIEdgeInsetsMake(5,10, 5, 10);//分别为上、左、下、右
+
+        
+    }
+
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -327,7 +355,7 @@
             CGFloat imageH = image.size.height;
             
             CGFloat imageWH = imageW/imageH;
-            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.8-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
+            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.7-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
             CGFloat bigImageW = bigImageH* imageWH;
             
             //手动计算cell
@@ -369,6 +397,7 @@
     
     
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

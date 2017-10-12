@@ -20,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="229.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newMineBg_" translatesAutoresizingMaskIntoConstraints="NO" id="5Jr-jg-HLR">
+                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newMineBg_" translatesAutoresizingMaskIntoConstraints="NO" id="5Jr-jg-HLR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="233"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="5Jr-jg-HLR" secondAttribute="height" multiplier="320:199" id="eCK-Wd-EHM"/>
@@ -131,6 +131,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="bgImageView" destination="5Jr-jg-HLR" id="yvI-5c-FZ7"/>
                 <outlet property="editjjimageview" destination="XWp-zp-Rj5" id="qGf-hL-pGD"/>
                 <outlet property="gzBtn" destination="WjA-GG-uCv" id="ZEW-JZ-5cE"/>
                 <outlet property="headImageView" destination="8x4-aH-K3l" id="LjC-cG-XDa"/>

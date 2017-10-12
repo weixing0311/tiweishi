@@ -26,6 +26,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self getUserInfo];
 
 }
 - (void)viewDidLoad {
@@ -42,7 +43,7 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
-    [self getUserInfo];
+//    [self getUserInfo];
     // Do any additional setup after loading the view from its nib.
 }
 
