@@ -40,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"写文章";
-    
+    [self setTBWhiteColor];
     [self buildRightNaviBarItem];
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;//实现代理
@@ -91,6 +91,9 @@
                                  
                                  [[UserModel shareInstance]showSuccessWithStatus:@"发表成功"];
                                  DLog(@"dic---%@",dic);
+                                 
+                                 
+                                 [[NSNotificationCenter defaultCenter]postNotificationName:@"SENDARTICLESUCCESS" object:nil];
                                  [self.navigationController popViewControllerAnimated:YES];
                                  
                              }
@@ -108,6 +111,8 @@
             DLog(@"dic---%@",dic);
             [[UserModel shareInstance]showSuccessWithStatus:@"发表成功"];
             DLog(@"dic---%@",dic);
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SENDARTICLESUCCESS" object:nil];
+
             [self.navigationController popViewControllerAnimated:YES];
 
         } failure:^(NSError *error) {
@@ -171,7 +176,7 @@
     }
     
     if (indexPath.row ==infoArr.count-1) {
-        cell.backgroundColor = [UIColor redColor];
+        cell.backgroundColor = [UIColor clearColor];
     }
     cell.headImageView.image = [infoArr objectAtIndex:indexPath.row];
     UILongPressGestureRecognizer* longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
@@ -350,6 +355,8 @@
         [self presentViewController:picker animated:YES completion:nil];
     }]];
     
+    if (_imagesArray.count==1) {
+        
     
     [al addAction:[UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -377,7 +384,7 @@
             return;
         }
         
-        
+    
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
         picker.delegate = self;
@@ -393,7 +400,7 @@
         
         [self presentViewController:picker animated:YES completion:nil];
     }]];
-
+    }
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:al animated:YES completion:nil];
 }

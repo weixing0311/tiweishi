@@ -88,8 +88,8 @@
     item2.image = [UIImage imageNamed:@"discuss  gray_"];
     item2.selectedImage = [UIImage imageNamed:@"discuss_"];
     
-    item3.image = [UIImage imageNamed:@"find gray_"];
-    item3.selectedImage = [UIImage imageNamed:@"find_"];
+    item3.image = [UIImage imageNamed:@"tab_comm_"];
+    item3.selectedImage = [UIImage imageNamed:@"tab_comm1_"];
 
     item4.image = [UIImage imageNamed:@"store gray_"];
     item4.selectedImage = [UIImage imageNamed:@"store_"];

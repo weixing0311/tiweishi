@@ -18,5 +18,5 @@
 + (NSString *)suffixForSize:(double)size;
 
 - (NSTimeInterval)getTimeInterval;
-
+-(NSString *)getAge;
 @end

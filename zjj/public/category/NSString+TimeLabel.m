@@ -124,4 +124,24 @@ typedef struct StepInfo{
     return [date timeIntervalSince1970];
 
 }
+
+//根据生日获取年龄
+-(NSString *)getAge{
+    
+    NSTimeZone *timeZone=[NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    
+    NSDateFormatter *fmt=[[NSDateFormatter alloc]init];
+    fmt.dateFormat = @"yyyy-MM-dd";
+    fmt.timeZone = timeZone;
+    
+    NSDate *srcDate=[fmt dateFromString:self];
+    //获得当前系统时间
+    NSDate *currentDate = [NSDate date];
+    //获得当前系统时间与出生日期之间的时间间隔
+    NSTimeInterval time = [currentDate timeIntervalSinceDate:srcDate];
+    //时间间隔以秒作为单位,求年的话除以60*60*24*356
+    int age = ((int)time)/(3600*24*365);
+    return [NSString stringWithFormat:@"%d",age ];
+}
+
 @end

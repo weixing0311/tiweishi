@@ -32,7 +32,7 @@
 #import "UIView+CLSetRect.h"
 #import "Masonry.h"
 #import "SDImageCache.h"
-
+#import "NSDate+CustomDate.h"
 //domain
 //正式
 //#define kMyBaseUrl @"https://mall.fitgeneral.com/"

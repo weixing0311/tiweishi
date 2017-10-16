@@ -21,16 +21,44 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sBv-3T-nHN">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hg2-BA-8Sh">
+                    <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwR-aG-phE">
+                            <rect key="frame" x="0.0" y="0.0" width="187.5" height="60"/>
+                            <state key="normal" title="日历模式"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8M-Fw-VdX">
+                            <rect key="frame" x="187.5" y="0.0" width="187.5" height="60"/>
+                            <state key="normal" title="列表模式"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="nwR-aG-phE" firstAttribute="leading" secondItem="hg2-BA-8Sh" secondAttribute="leading" id="8gA-xZ-B3Q"/>
+                        <constraint firstAttribute="bottom" secondItem="nwR-aG-phE" secondAttribute="bottom" id="9DG-If-8z8"/>
+                        <constraint firstItem="r8M-Fw-VdX" firstAttribute="leading" secondItem="nwR-aG-phE" secondAttribute="trailing" id="Gwo-iy-wRO"/>
+                        <constraint firstAttribute="trailing" secondItem="r8M-Fw-VdX" secondAttribute="trailing" id="RHi-uP-fFS"/>
+                        <constraint firstAttribute="bottom" secondItem="r8M-Fw-VdX" secondAttribute="bottom" id="ZM2-4P-zHl"/>
+                        <constraint firstItem="nwR-aG-phE" firstAttribute="top" secondItem="hg2-BA-8Sh" secondAttribute="top" id="kLG-dQ-mbf"/>
+                        <constraint firstAttribute="height" constant="60" id="lEx-0b-wmy"/>
+                        <constraint firstItem="r8M-Fw-VdX" firstAttribute="top" secondItem="hg2-BA-8Sh" secondAttribute="top" id="sZB-yO-rPQ"/>
+                        <constraint firstItem="r8M-Fw-VdX" firstAttribute="width" secondItem="nwR-aG-phE" secondAttribute="width" id="tgx-lN-AM7"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="sBv-3T-nHN" secondAttribute="bottom" id="GsP-rS-CNd"/>
-                <constraint firstItem="sBv-3T-nHN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="W2c-CP-3kP"/>
+                <constraint firstItem="hg2-BA-8Sh" firstAttribute="top" secondItem="sBv-3T-nHN" secondAttribute="bottom" id="0Cg-le-HhY"/>
                 <constraint firstItem="sBv-3T-nHN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YcS-6n-L3c"/>
+                <constraint firstItem="hg2-BA-8Sh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mrg-rU-5dJ"/>
                 <constraint firstAttribute="trailing" secondItem="sBv-3T-nHN" secondAttribute="trailing" id="noB-kH-d1v"/>
+                <constraint firstAttribute="trailing" secondItem="hg2-BA-8Sh" secondAttribute="trailing" id="sRk-gd-4Rz"/>
+                <constraint firstAttribute="bottom" secondItem="hg2-BA-8Sh" secondAttribute="bottom" id="uFq-P9-kZa"/>
+                <constraint firstItem="sBv-3T-nHN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zhD-Cl-QOo"/>
             </constraints>
             <point key="canvasLocation" x="35.5" y="53.5"/>
         </view>

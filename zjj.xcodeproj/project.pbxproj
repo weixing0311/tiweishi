@@ -221,6 +221,8 @@
 		6C47123F1F25CE0000E5E750 /* WebViewCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C47123E1F25CE0000E5E750 /* WebViewCall.m */; };
 		6C47124D1F27391700E5E750 /* WXPsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C47124B1F27391700E5E750 /* WXPsTitleCell.m */; };
 		6C47124E1F27391700E5E750 /* WXPsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */; };
+		6C6773731F90AE470007CB2D /* WeighingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6773711F90AE470007CB2D /* WeighingViewController.m */; };
+		6C6773741F90AE470007CB2D /* WeighingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6773721F90AE470007CB2D /* WeighingViewController.xib */; };
 		6C6CFE5F1F8DFED9005C2738 /* LevelSnstructionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE5D1F8DFED9005C2738 /* LevelSnstructionsViewController.m */; };
 		6C6CFE601F8DFED9005C2738 /* LevelSnstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE5E1F8DFED9005C2738 /* LevelSnstructionsViewController.xib */; };
 		6C6CFE651F8E3408005C2738 /* ADDChengUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE631F8E3408005C2738 /* ADDChengUserViewController.m */; };
@@ -242,8 +244,21 @@
 		6C6CFE9B1F8F771E005C2738 /* HistoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE9A1F8F771E005C2738 /* HistoryHeaderView.xib */; };
 		6C6CFE9F1F8F7AC7005C2738 /* HistoryInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE9D1F8F7AC7005C2738 /* HistoryInfoCell.m */; };
 		6C6CFEA01F8F7AC7005C2738 /* HistoryInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE9E1F8F7AC7005C2738 /* HistoryInfoCell.xib */; };
-		6C6CFEA31F8F8FA9005C2738 /* HistorySectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEA21F8F8FA9005C2738 /* HistorySectionView.m */; };
-		6C6CFEA51F8F8FB6005C2738 /* HistorySectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFEA41F8F8FB6005C2738 /* HistorySectionView.xib */; };
+		6C6CFEAB1F904E60005C2738 /* HistoryBigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEA91F904E60005C2738 /* HistoryBigCell.m */; };
+		6C6CFEAC1F904E60005C2738 /* HistoryBigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFEAA1F904E60005C2738 /* HistoryBigCell.xib */; };
+		6C6CFEB61F908C5A005C2738 /* HealthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEB41F908C5A005C2738 /* HealthDetailViewController.m */; };
+		6C6CFEBC1F908D10005C2738 /* NewHealthDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEBA1F908D10005C2738 /* NewHealthDetailHeaderCell.m */; };
+		6C6CFEBD1F908D10005C2738 /* NewHealthDetailHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFEBB1F908D10005C2738 /* NewHealthDetailHeaderCell.xib */; };
+		6C6CFEC11F908EF9005C2738 /* NewHealthDetailSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEBF1F908EF9005C2738 /* NewHealthDetailSecondCell.m */; };
+		6C6CFEC21F908EF9005C2738 /* NewHealthDetailSecondCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFEC01F908EF9005C2738 /* NewHealthDetailSecondCell.xib */; };
+		6C6CFEC61F909150005C2738 /* NewHealthDetailThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEC41F909150005C2738 /* NewHealthDetailThirdCell.m */; };
+		6C6CFEC71F909150005C2738 /* NewHealthDetailThirdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFEC51F909150005C2738 /* NewHealthDetailThirdCell.xib */; };
+		6C6CFECB1F90945C005C2738 /* NewHealthDetailForthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEC91F90945C005C2738 /* NewHealthDetailForthCell.m */; };
+		6C6CFECC1F90945C005C2738 /* NewHealthDetailForthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFECA1F90945C005C2738 /* NewHealthDetailForthCell.xib */; };
+		6C6CFED01F90972B005C2738 /* NewHealthDetailFivthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFECE1F90972B005C2738 /* NewHealthDetailFivthCell.m */; };
+		6C6CFED11F90972B005C2738 /* NewHealthDetailFivthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFECF1F90972B005C2738 /* NewHealthDetailFivthCell.xib */; };
+		6C6CFED51F909E32005C2738 /* NewHealthDetailSixCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFED31F909E32005C2738 /* NewHealthDetailSixCell.m */; };
+		6C6CFED61F909E32005C2738 /* NewHealthDetailSixCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFED41F909E32005C2738 /* NewHealthDetailSixCell.xib */; };
 		6C73AF5A1F2984500042C1A2 /* TZSDistributionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AF581F2984500042C1A2 /* TZSDistributionDetailViewController.m */; };
 		6C73AF5B1F2984500042C1A2 /* TZSDistributionDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73AF591F2984500042C1A2 /* TZSDistributionDetailViewController.xib */; };
 		6C73AF5F1F29C7BF0042C1A2 /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AF5D1F29C7BF0042C1A2 /* ContactUsViewController.m */; };
@@ -1167,6 +1182,9 @@
 		6C47124A1F27391700E5E750 /* WXPsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXPsTitleCell.h; sourceTree = "<group>"; };
 		6C47124B1F27391700E5E750 /* WXPsTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXPsTitleCell.m; sourceTree = "<group>"; };
 		6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXPsTitleCell.xib; sourceTree = "<group>"; };
+		6C6773701F90AE470007CB2D /* WeighingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeighingViewController.h; sourceTree = "<group>"; };
+		6C6773711F90AE470007CB2D /* WeighingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeighingViewController.m; sourceTree = "<group>"; };
+		6C6773721F90AE470007CB2D /* WeighingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeighingViewController.xib; sourceTree = "<group>"; };
 		6C6CFE581F8CAF9D005C2738 /* praise_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "praise_selected@3x.png"; sourceTree = "<group>"; };
 		6C6CFE591F8CAF9E005C2738 /* praise_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "praise_selected@2x.png"; sourceTree = "<group>"; };
 		6C6CFE5C1F8DFED9005C2738 /* LevelSnstructionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelSnstructionsViewController.h; sourceTree = "<group>"; };
@@ -1204,9 +1222,31 @@
 		6C6CFE9C1F8F7AC7005C2738 /* HistoryInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryInfoCell.h; sourceTree = "<group>"; };
 		6C6CFE9D1F8F7AC7005C2738 /* HistoryInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryInfoCell.m; sourceTree = "<group>"; };
 		6C6CFE9E1F8F7AC7005C2738 /* HistoryInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryInfoCell.xib; sourceTree = "<group>"; };
-		6C6CFEA11F8F8FA9005C2738 /* HistorySectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistorySectionView.h; sourceTree = "<group>"; };
-		6C6CFEA21F8F8FA9005C2738 /* HistorySectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistorySectionView.m; sourceTree = "<group>"; };
-		6C6CFEA41F8F8FB6005C2738 /* HistorySectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistorySectionView.xib; sourceTree = "<group>"; };
+		6C6CFEA61F904B2A005C2738 /* blackback_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackback_@2x.png"; sourceTree = "<group>"; };
+		6C6CFEA71F904B2A005C2738 /* blackback_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackback_@3x.png"; sourceTree = "<group>"; };
+		6C6CFEA81F904E60005C2738 /* HistoryBigCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryBigCell.h; sourceTree = "<group>"; };
+		6C6CFEA91F904E60005C2738 /* HistoryBigCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryBigCell.m; sourceTree = "<group>"; };
+		6C6CFEAA1F904E60005C2738 /* HistoryBigCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryBigCell.xib; sourceTree = "<group>"; };
+		6C6CFEB31F908C5A005C2738 /* HealthDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HealthDetailViewController.h; sourceTree = "<group>"; };
+		6C6CFEB41F908C5A005C2738 /* HealthDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthDetailViewController.m; sourceTree = "<group>"; };
+		6C6CFEB91F908D10005C2738 /* NewHealthDetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthDetailHeaderCell.h; sourceTree = "<group>"; };
+		6C6CFEBA1F908D10005C2738 /* NewHealthDetailHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewHealthDetailHeaderCell.m; sourceTree = "<group>"; };
+		6C6CFEBB1F908D10005C2738 /* NewHealthDetailHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHealthDetailHeaderCell.xib; sourceTree = "<group>"; };
+		6C6CFEBE1F908EF9005C2738 /* NewHealthDetailSecondCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthDetailSecondCell.h; sourceTree = "<group>"; };
+		6C6CFEBF1F908EF9005C2738 /* NewHealthDetailSecondCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewHealthDetailSecondCell.m; sourceTree = "<group>"; };
+		6C6CFEC01F908EF9005C2738 /* NewHealthDetailSecondCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHealthDetailSecondCell.xib; sourceTree = "<group>"; };
+		6C6CFEC31F909150005C2738 /* NewHealthDetailThirdCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthDetailThirdCell.h; sourceTree = "<group>"; };
+		6C6CFEC41F909150005C2738 /* NewHealthDetailThirdCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewHealthDetailThirdCell.m; sourceTree = "<group>"; };
+		6C6CFEC51F909150005C2738 /* NewHealthDetailThirdCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHealthDetailThirdCell.xib; sourceTree = "<group>"; };
+		6C6CFEC81F90945C005C2738 /* NewHealthDetailForthCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthDetailForthCell.h; sourceTree = "<group>"; };
+		6C6CFEC91F90945C005C2738 /* NewHealthDetailForthCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewHealthDetailForthCell.m; sourceTree = "<group>"; };
+		6C6CFECA1F90945C005C2738 /* NewHealthDetailForthCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHealthDetailForthCell.xib; sourceTree = "<group>"; };
+		6C6CFECD1F90972B005C2738 /* NewHealthDetailFivthCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthDetailFivthCell.h; sourceTree = "<group>"; };
+		6C6CFECE1F90972B005C2738 /* NewHealthDetailFivthCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewHealthDetailFivthCell.m; sourceTree = "<group>"; };
+		6C6CFECF1F90972B005C2738 /* NewHealthDetailFivthCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHealthDetailFivthCell.xib; sourceTree = "<group>"; };
+		6C6CFED21F909E32005C2738 /* NewHealthDetailSixCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthDetailSixCell.h; sourceTree = "<group>"; };
+		6C6CFED31F909E32005C2738 /* NewHealthDetailSixCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewHealthDetailSixCell.m; sourceTree = "<group>"; };
+		6C6CFED41F909E32005C2738 /* NewHealthDetailSixCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewHealthDetailSixCell.xib; sourceTree = "<group>"; };
 		6C73AF571F2984500042C1A2 /* TZSDistributionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZSDistributionDetailViewController.h; sourceTree = "<group>"; };
 		6C73AF581F2984500042C1A2 /* TZSDistributionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZSDistributionDetailViewController.m; sourceTree = "<group>"; };
 		6C73AF591F2984500042C1A2 /* TZSDistributionDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TZSDistributionDetailViewController.xib; sourceTree = "<group>"; };
@@ -2176,6 +2216,8 @@
 		6C1B2B841EECDEFD0092AAF0 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				6C67736F1F90AE300007CB2D /* weighing(称重) */,
+				6C6CFEB81F908C75005C2738 /* HealthDetail */,
 				6C6CFE7D1F8F66F9005C2738 /* historyInfo */,
 				6C6CFE771F8F5F27005C2738 /* UserDirections(使用说明) */,
 				6C6CFE711F8F3D24005C2738 /* NewHealth */,
@@ -3137,6 +3179,16 @@
 			name = "teamOrderDetail(团队订单详情)";
 			sourceTree = "<group>";
 		};
+		6C67736F1F90AE300007CB2D /* weighing(称重) */ = {
+			isa = PBXGroup;
+			children = (
+				6C6773701F90AE470007CB2D /* WeighingViewController.h */,
+				6C6773711F90AE470007CB2D /* WeighingViewController.m */,
+				6C6773721F90AE470007CB2D /* WeighingViewController.xib */,
+			);
+			name = "weighing(称重)";
+			sourceTree = "<group>";
+		};
 		6C6CFE5B1F8DFEAA005C2738 /* Levelinstructions(等级说明) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3188,9 +3240,9 @@
 				6C6CFE9C1F8F7AC7005C2738 /* HistoryInfoCell.h */,
 				6C6CFE9D1F8F7AC7005C2738 /* HistoryInfoCell.m */,
 				6C6CFE9E1F8F7AC7005C2738 /* HistoryInfoCell.xib */,
-				6C6CFEA11F8F8FA9005C2738 /* HistorySectionView.h */,
-				6C6CFEA21F8F8FA9005C2738 /* HistorySectionView.m */,
-				6C6CFEA41F8F8FB6005C2738 /* HistorySectionView.xib */,
+				6C6CFEA81F904E60005C2738 /* HistoryBigCell.h */,
+				6C6CFEA91F904E60005C2738 /* HistoryBigCell.m */,
+				6C6CFEAA1F904E60005C2738 /* HistoryBigCell.xib */,
 			);
 			name = historyInfo;
 			sourceTree = "<group>";
@@ -3219,6 +3271,33 @@
 				6C6CFE8F1F8F6716005C2738 /* DAYUtils.m */,
 			);
 			path = Internal;
+			sourceTree = "<group>";
+		};
+		6C6CFEB81F908C75005C2738 /* HealthDetail */ = {
+			isa = PBXGroup;
+			children = (
+				6C6CFEB31F908C5A005C2738 /* HealthDetailViewController.h */,
+				6C6CFEB41F908C5A005C2738 /* HealthDetailViewController.m */,
+				6C6CFEB91F908D10005C2738 /* NewHealthDetailHeaderCell.h */,
+				6C6CFEBA1F908D10005C2738 /* NewHealthDetailHeaderCell.m */,
+				6C6CFEBB1F908D10005C2738 /* NewHealthDetailHeaderCell.xib */,
+				6C6CFEBE1F908EF9005C2738 /* NewHealthDetailSecondCell.h */,
+				6C6CFEBF1F908EF9005C2738 /* NewHealthDetailSecondCell.m */,
+				6C6CFEC01F908EF9005C2738 /* NewHealthDetailSecondCell.xib */,
+				6C6CFEC31F909150005C2738 /* NewHealthDetailThirdCell.h */,
+				6C6CFEC41F909150005C2738 /* NewHealthDetailThirdCell.m */,
+				6C6CFEC51F909150005C2738 /* NewHealthDetailThirdCell.xib */,
+				6C6CFEC81F90945C005C2738 /* NewHealthDetailForthCell.h */,
+				6C6CFEC91F90945C005C2738 /* NewHealthDetailForthCell.m */,
+				6C6CFECA1F90945C005C2738 /* NewHealthDetailForthCell.xib */,
+				6C6CFECD1F90972B005C2738 /* NewHealthDetailFivthCell.h */,
+				6C6CFECE1F90972B005C2738 /* NewHealthDetailFivthCell.m */,
+				6C6CFECF1F90972B005C2738 /* NewHealthDetailFivthCell.xib */,
+				6C6CFED21F909E32005C2738 /* NewHealthDetailSixCell.h */,
+				6C6CFED31F909E32005C2738 /* NewHealthDetailSixCell.m */,
+				6C6CFED41F909E32005C2738 /* NewHealthDetailSixCell.xib */,
+			);
+			name = HealthDetail;
 			sourceTree = "<group>";
 		};
 		6C73AFF61F31B6680042C1A2 /* pyq(朋友圈一键转发) */ = {
@@ -3880,6 +3959,8 @@
 		6CD011331EF8CADA00FB9419 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6C6CFEA61F904B2A005C2738 /* blackback_@2x.png */,
+				6C6CFEA71F904B2A005C2738 /* blackback_@3x.png */,
 				6C6CFE591F8CAF9E005C2738 /* praise_selected@2x.png */,
 				6C6CFE581F8CAF9D005C2738 /* praise_selected@3x.png */,
 				6CFDEA7F1F8B7DE6005D3971 /* aboutUs@2x.png */,
@@ -4442,6 +4523,7 @@
 				6CD0116B1EF8DA0100FB9419 /* EidtViewController.xib in Resources */,
 				6CFDEC181F8B7DE7005D3971 /* fonter-help@2x.png in Resources */,
 				6C43113F1F06527C0094EFF4 /* jzsSchoolWebViewController.xib in Resources */,
+				6C6CFED61F909E32005C2738 /* NewHealthDetailSixCell.xib in Resources */,
 				6CFDEC561F8B7DE8005D3971 /* home-weight01@3x.png in Resources */,
 				6CFDECE01F8B7DE8005D3971 /* us1.png in Resources */,
 				6CFDECBC1F8B7DE8005D3971 /* record-freight@3x.png in Resources */,
@@ -4472,6 +4554,7 @@
 				6CFDEBF41F8B7DE7005D3971 /* code@2x.png in Resources */,
 				6C2AF23F1F710B7900C00F2A /* NewMineEditViewController.xib in Resources */,
 				6CFDECB41F8B7DE8005D3971 /* pwd@3x.png in Resources */,
+				6C6CFEBD1F908D10005C2738 /* NewHealthDetailHeaderCell.xib in Resources */,
 				6CFDECD31F8B7DE8005D3971 /* tel.png in Resources */,
 				6CD011471EF8CE5000FB9419 /* OrderHeader.xib in Resources */,
 				6CFDEC1B1F8B7DE7005D3971 /* footer-jianzhi-red@3x.png in Resources */,
@@ -4485,7 +4568,6 @@
 				6CA024A01F12544F00F54DF3 /* HealthDetailSelectedCell.xib in Resources */,
 				6C3639EA1F034BB600268851 /* TZSTeamHeaderView.xib in Resources */,
 				6CFDECC51F8B7DE8005D3971 /* Reduced@2x.png in Resources */,
-				6C6CFEA51F8F8FB6005C2738 /* HistorySectionView.xib in Resources */,
 				6C1DBD961F67BA7700F5B975 /* BusinessCardViewController.xib in Resources */,
 				6CFDEC2D1F8B7DE7005D3971 /* footer-ShoppingMall@3x.png in Resources */,
 				6CFDECE61F8B7DE8005D3971 /* WeChat@3x.png in Resources */,
@@ -4586,6 +4668,7 @@
 				6CFDEC551F8B7DE8005D3971 /* home-weight01@2x.png in Resources */,
 				6CFDECCC1F8B7DE8005D3971 /* scan@3x.png in Resources */,
 				6CFDEC241F8B7DE7005D3971 /* footer-PersonalCenter@2x.png in Resources */,
+				6C6CFEAC1F904E60005C2738 /* HistoryBigCell.xib in Resources */,
 				6CFDEC471F8B7DE8005D3971 /* help-icon09@3x.png in Resources */,
 				6CFDEC151F8B7DE7005D3971 /* fang-7@3x.png in Resources */,
 				6CC81FD31F1FA0E200EB470C /* DistributionBottomCell.xib in Resources */,
@@ -4696,6 +4779,7 @@
 				6CFDEBE41F8B7DE7005D3971 /* businessCardTest.png in Resources */,
 				6CFDEBEE1F8B7DE7005D3971 /* checked-false@3x.png in Resources */,
 				6C3638EB1EFCEB8100268851 /* TZSDingGouViewController.xib in Resources */,
+				6C6CFECC1F90945C005C2738 /* NewHealthDetailForthCell.xib in Resources */,
 				6CFDEC011F8B7DE7005D3971 /* contact-us-weixin@3x.png in Resources */,
 				6CFDEBCE1F8B7DE7005D3971 /* balance@3x.png in Resources */,
 				6CFDECEF1F8B7DE8005D3971 /* yinpai@2x.png in Resources */,
@@ -4743,10 +4827,12 @@
 				6CFDECC21F8B7DE8005D3971 /* record-shui@3x.png in Resources */,
 				6CFDEBC51F8B7DE7005D3971 /* android@2x.png in Resources */,
 				6CFDEC101F8B7DE7005D3971 /* discuss@3x.png in Resources */,
+				6C6CFED11F90972B005C2738 /* NewHealthDetailFivthCell.xib in Resources */,
 				6CFDEC651F8B7DE8005D3971 /* issue@2x.png in Resources */,
 				6C3639E51F02AAA100268851 /* TZSConfirmTheViewController.xib in Resources */,
 				6CFDECAD1F8B7DE8005D3971 /* praise@3x_65.png in Resources */,
 				6CFDEC801F8B7DE8005D3971 /* message_kb@2x.png in Resources */,
+				6C6773741F90AE470007CB2D /* WeighingViewController.xib in Resources */,
 				6CFDEC781F8B7DE8005D3971 /* me@3x.png in Resources */,
 				6CD010CC1EF61C0600FB9419 /* GoodsDetailViewController.xib in Resources */,
 				6C6CFE701F8F165C005C2738 /* GrowthStstemHeaderCell.xib in Resources */,
@@ -4857,6 +4943,7 @@
 				6CFDECB21F8B7DE8005D3971 /* putong@3x.png in Resources */,
 				6C3639291EFD682300268851 /* TZSMyDingGouViewController.xib in Resources */,
 				6CFDEC251F8B7DE7005D3971 /* footer-PersonalCenter@3x.png in Resources */,
+				6C6CFEC71F909150005C2738 /* NewHealthDetailThirdCell.xib in Resources */,
 				6CD930081F0B483B00D7989E /* TZdetaolViewController.xib in Resources */,
 				6CFDEC371F8B7DE7005D3971 /* help-icon1@3x.png in Resources */,
 				6CD010BD1EF5489800FB9419 /* FootView.xib in Resources */,
@@ -4892,6 +4979,7 @@
 				6CFDEBD91F8B7DE7005D3971 /* bodyfat_buy_6.png in Resources */,
 				6C43113A1F064DE90094EFF4 /* JZSchoolCell.xib in Resources */,
 				6CFDECB01F8B7DE8005D3971 /* Prompt@3x.png in Resources */,
+				6C6CFEC21F908EF9005C2738 /* NewHealthDetailSecondCell.xib in Resources */,
 				6CD010F51EF7FB0C00FB9419 /* DetailWeigthCell.xib in Resources */,
 				6CFDEC2B1F8B7DE7005D3971 /* footer-ShoppingMall-red@3x.png in Resources */,
 				6CFDECA71F8B7DE8005D3971 /* personal-tou@2x.png in Resources */,
@@ -4979,6 +5067,7 @@
 				6C6CFE941F8F69CA005C2738 /* DAYIndicatorView.m in Sources */,
 				6C6CFE951F8F69CA005C2738 /* DAYNavigationBar.m in Sources */,
 				6C6CFE961F8F69CA005C2738 /* DAYUtils.m in Sources */,
+				6C6CFEC11F908EF9005C2738 /* NewHealthDetailSecondCell.m in Sources */,
 				6C22419A1F7C9482001BB2FD /* AILoadingView.m in Sources */,
 				6C2241991F7C9479001BB2FD /* CLSlider.m in Sources */,
 				6C2241941F7C946E001BB2FD /* CLPlayerMaskView.m in Sources */,
@@ -5031,6 +5120,7 @@
 				6C8F53C01F11D38A00C7A275 /* NSMutableDictionary+JFASafeObject.m in Sources */,
 				6C8F53C81F11D38A00C7A275 /* UITableView+MJRefresh.m in Sources */,
 				6C1B2BEC1EED25F00092AAF0 /* LoignViewController.m in Sources */,
+				6C6773731F90AE470007CB2D /* WeighingViewController.m in Sources */,
 				6C36399A1EFE47E100268851 /* AATitle.m in Sources */,
 				6CD0106E1EF3B9DE00FB9419 /* NSString+RSA.m in Sources */,
 				6CD010F41EF7FB0C00FB9419 /* DetailWeigthCell.m in Sources */,
@@ -5063,6 +5153,7 @@
 				6C2AF25C1F71F9FC00C00F2A /* GrowthStstemViewController.m in Sources */,
 				6C3639961EFE47E100268851 /* AASeriesElement.m in Sources */,
 				6C36398F1EFE47E100268851 /* AAMarker.m in Sources */,
+				6C6CFED01F90972B005C2738 /* NewHealthDetailFivthCell.m in Sources */,
 				6C3639A11EFE483800268851 /* CharViewController.m in Sources */,
 				6CD92FD61F0A300A00D7989E /* SubUserItem.m in Sources */,
 				6C1B2BC11EECDEFD0092AAF0 /* JFABaseTableViewController.m in Sources */,
@@ -5085,6 +5176,7 @@
 				6C3639061EFD099500268851 /* TZSChangeMobileViewController.m in Sources */,
 				6C125E0D1F39AA6F00B2323F /* NSArray+Extension.m in Sources */,
 				6C3639EE1F035A5B00268851 /* TZSSendCell.m in Sources */,
+				6C6CFEAB1F904E60005C2738 /* HistoryBigCell.m in Sources */,
 				6C125E0E1F39AA6F00B2323F /* NSDictionary+Extension.m in Sources */,
 				6C3639D31F029B7C00268851 /* OrderFootBtnView.m in Sources */,
 				6C3639991EFE47E100268851 /* AASubtitle.m in Sources */,
@@ -5125,6 +5217,7 @@
 				6C36399B1EFE47E100268851 /* AATooltip.m in Sources */,
 				6C1DBD991F67BC3500F5B975 /* CardView.m in Sources */,
 				6C73AF5A1F2984500042C1A2 /* TZSDistributionDetailViewController.m in Sources */,
+				6C6CFECB1F90945C005C2738 /* NewHealthDetailForthCell.m in Sources */,
 				6C363A051F03940500268851 /* MJRefreshBaseView.m in Sources */,
 				6CFDE8041F8B5452005D3971 /* ArtcleDetailCommentCell.m in Sources */,
 				6CD0112A1EF8B8E900FB9419 /* ShopTestViewController.m in Sources */,
@@ -5158,6 +5251,7 @@
 				6C8F53C31F11D38A00C7A275 /* UIColor+JFAExtend.m in Sources */,
 				6CDBC2361F4BE3AA0059A15E /* OrderPayFootCell.m in Sources */,
 				6C36391E1EFD4C1200268851 /* WalletManagementViewController.m in Sources */,
+				6C6CFEC61F909150005C2738 /* NewHealthDetailThirdCell.m in Sources */,
 				6CD010DB1EF62FA400FB9419 /* AddressDetailViewController.m in Sources */,
 				6C36399D1EFE47E100268851 /* AAYAxis.m in Sources */,
 				6C73AFF51F31AC550042C1A2 /* WXAlipayController.m in Sources */,
@@ -5178,6 +5272,7 @@
 				6C3638DE1EFCEB2A00268851 /* TZSEditViewController.m in Sources */,
 				6C1B2BD81EECEAFA0092AAF0 /* JFASubNetWorkErrorView.m in Sources */,
 				6C36390E1EFD0BC500268851 /* ForgetJYpasswordViewController.m in Sources */,
+				6C6CFEB61F908C5A005C2738 /* HealthDetailViewController.m in Sources */,
 				6CD930071F0B483B00D7989E /* TZdetaolViewController.m in Sources */,
 				6C2AF26C1F71FFC200C00F2A /* IntegralOrderCell.m in Sources */,
 				6CD010C61EF5547F00FB9419 /* ShopCarCell.m in Sources */,
@@ -5229,15 +5324,16 @@
 				6CB750981F749C80007BAE04 /* PostArticleViewController.m in Sources */,
 				6C363A081F03940500268851 /* MJRefreshHeaderView.m in Sources */,
 				6C3639181EFD0BE600268851 /* ChangePasswordViewController.m in Sources */,
-				6C6CFEA31F8F8FA9005C2738 /* HistorySectionView.m in Sources */,
 				6C3639D81F02A1CF00268851 /* TZSTeamDGViewController.m in Sources */,
 				6CD010C21EF5520800FB9419 /* ShopCarbottomView.m in Sources */,
+				6C6CFEBC1F908D10005C2738 /* NewHealthDetailHeaderCell.m in Sources */,
 				6C8F53BE1F11D38A00C7A275 /* NSDate+Utilities.m in Sources */,
 				6CD010781EF3C77900FB9419 /* ChangeUserInfo2ViewController.m in Sources */,
 				6CD92FCF1F0A223200D7989E /* UserCellCell.m in Sources */,
 				6CA024AF1F14C01700F54DF3 /* ChangPasswordViewController.m in Sources */,
 				6C73AF6E1F29D7610042C1A2 /* PayPriceCell.m in Sources */,
 				6C0F28881F734E4D00FD27FF /* IntegralDetailTextCell.m in Sources */,
+				6C6CFED51F909E32005C2738 /* NewHealthDetailSixCell.m in Sources */,
 				6CFDE8081F8B547B005D3971 /* CommentView.m in Sources */,
 				6CD9300B1F0B984100D7989E /* ShareBottomView.m in Sources */,
 				6C2241A91F7CF782001BB2FD /* EditUserInfoViewController.m in Sources */,

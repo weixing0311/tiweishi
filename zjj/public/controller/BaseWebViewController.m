@@ -26,6 +26,8 @@
 #import "WXAlipayController.h"
 #import "GoodsDetailViewController.h"
 #import "PaySuccessViewController.h"
+#import "IntegralOrderViewController.h"
+#import "IntegralOrderDetailViewController.h"
 @interface BaseWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler,UIGestureRecognizerDelegate,UIScrollViewDelegate>
 @end
 
@@ -698,6 +700,30 @@
         [arr removeLastObject];
         [arr addObject:mdVC];
         [self.navigationController setViewControllers:arr];
+    }else if (self.payType ==5)
+    {
+        for (UIViewController * controller in self.navigationController.viewControllers) {
+            
+            if ([controller isKindOfClass:[IntegralOrderDetailViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+                //                DLog(@"我曹草草草");
+                return ;
+            }
+            else if ([controller isKindOfClass:[IntegralOrderViewController class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+                return;
+            }
+        }
+        IntegralOrderViewController * mdVC = [[IntegralOrderViewController alloc]init];
+        mdVC.hidesBottomBarWhenPushed = YES;
+        
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [arr removeLastObject];
+        [arr removeLastObject];
+        [arr addObject:mdVC];
+        [self.navigationController setViewControllers:arr];
+
     }
     else{
         [self.navigationController popToRootViewControllerAnimated:YES];

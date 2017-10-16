@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LevelSnstructionsViewController">
             <connections>
                 <outlet property="bgTiaolb" destination="jiL-fs-LMd" id="LK1-6t-SeR"/>
+                <outlet property="cbgView" destination="itL-fp-cmB" id="cmK-9d-aXA"/>
                 <outlet property="headImageView" destination="FJt-Sl-v7z" id="zde-f7-YGF"/>
                 <outlet property="titleLabel" destination="EfH-QV-Xgv" id="0i3-Jp-aH8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -50,7 +51,7 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9r-cR-sHA">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9r-cR-sHA">
                                     <rect key="frame" x="12" y="0.0" width="34" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="479-6G-MXc">
@@ -82,7 +83,7 @@
                                         <constraint firstItem="aO0-qp-irw" firstAttribute="centerX" secondItem="479-6G-MXc" secondAttribute="centerX" id="lmz-El-lGP"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4a-Jn-dNN">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4a-Jn-dNN">
                                     <rect key="frame" x="46" y="0.0" width="34.5" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="byk-zi-zs7">
@@ -114,7 +115,7 @@
                                         <constraint firstItem="xGp-jb-Yek" firstAttribute="centerX" secondItem="byk-zi-zs7" secondAttribute="centerX" id="xre-d2-rzV"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sno-sh-i3l">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sno-sh-i3l">
                                     <rect key="frame" x="80.5" y="0.0" width="34.5" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XOP-24-Fiz">
@@ -146,7 +147,7 @@
                                         <constraint firstItem="1Pe-na-7yQ" firstAttribute="top" secondItem="XOP-24-Fiz" secondAttribute="bottom" constant="10" id="oI9-Si-vd4"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oox-y0-eGD">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oox-y0-eGD">
                                     <rect key="frame" x="115" y="0.0" width="34.5" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Rc-pH-NzV">
@@ -178,7 +179,7 @@
                                         <constraint firstItem="0Rc-pH-NzV" firstAttribute="centerY" secondItem="oox-y0-eGD" secondAttribute="centerY" id="tmC-54-Rvd"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQc-4h-Yig">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQc-4h-Yig">
                                     <rect key="frame" x="149.5" y="0.0" width="34" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bhg-Qg-Xvu">
@@ -210,7 +211,7 @@
                                         <constraint firstItem="Bhg-Qg-Xvu" firstAttribute="centerY" secondItem="QQc-4h-Yig" secondAttribute="centerY" id="q9y-Lg-q4u"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQK-dd-f6t">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vQK-dd-f6t">
                                     <rect key="frame" x="183.5" y="0.0" width="34.5" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="do8-e1-EJh">
@@ -242,7 +243,7 @@
                                         <constraint firstItem="do8-e1-EJh" firstAttribute="trailing" secondItem="vQK-dd-f6t" secondAttribute="trailingMargin" id="zm2-dm-eOd"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dX0-nt-Vi5">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dX0-nt-Vi5">
                                     <rect key="frame" x="218" y="0.0" width="34.5" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cy-i1-FnL">
@@ -274,7 +275,7 @@
                                         <constraint firstItem="qBn-aF-Gf6" firstAttribute="top" secondItem="7cy-i1-FnL" secondAttribute="bottom" constant="10" id="nBb-0D-Pws"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ul-5e-hrJ">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ul-5e-hrJ">
                                     <rect key="frame" x="252.5" y="0.0" width="34.5" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxh-u8-szv">
@@ -306,7 +307,7 @@
                                         <constraint firstItem="Bxh-u8-szv" firstAttribute="trailing" secondItem="2ul-5e-hrJ" secondAttribute="trailingMargin" id="mXt-JK-XQa"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f6A-08-qHC">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f6A-08-qHC">
                                     <rect key="frame" x="287" y="0.0" width="34" height="84"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0e2-Ci-XxP">

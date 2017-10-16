@@ -145,11 +145,17 @@
     }
     NSString * priceStr = [dict safeObjectForKey:@"productPrice"];
     NSString * integral = [dict safeObjectForKey:@"productIntegral"];
-    if (integral.intValue>0) {
+    if (integral.intValue>0&&priceStr.intValue>0) {
         cell.pricelb.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
         
+        
     }else{
-        cell.pricelb.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+        if (integral.intValue>0) {
+            cell.pricelb.text =[NSString stringWithFormat:@"%@积分",integral];
+            
+        }else{
+            cell.pricelb.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+        }
         
     }
     cell.pricelb.adjustsFontSizeToFitWidth = YES;

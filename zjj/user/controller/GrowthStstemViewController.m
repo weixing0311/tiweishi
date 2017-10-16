@@ -26,6 +26,14 @@
     
     self.title = @"我的等级";
     [self setTBRedColor];
+    
+    UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"Prompt.png") style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
+    self.navigationItem.rightBarButtonItem = rightitem;
+
+    
+    
+    
+    
     _dataArray = [NSArray array];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
@@ -33,6 +41,10 @@
 //    [self buildHeaderView];
     
     [self getInfo];
+    
+    
+    
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -82,10 +94,68 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
         cell.todayIntegerallb.text = [NSString  stringWithFormat:@"今日获得积分：%d",[[_infoDict safeObjectForKey:@"todayIntegeral"]intValue]];
         cell.totalIntegerallb.text = [NSString  stringWithFormat:@"%@分",[_infoDict safeObjectForKey:@"currentIntegeral"]];
+        cell.dayslb.text = [NSString stringWithFormat:@"连续签到%@天",[_infoDict safeObjectForKey:@"cumulDays"]];
+        
+        
+        int  countIntegral = [[self.infoDict objectForKey:@"countIntegral"]intValue];
+        int  CurrentInegral = 0;
+        NSString * currentLevel;
+        NSArray * arr = [self.infoDict objectForKey:@"integeralGrade"];
+        for (int i =0; i<arr.count; i++) {
+            NSDictionary * dic = [arr objectAtIndex:i];
+            int  integral = [[dic objectForKey:@"integral"]intValue];
+            DLog(@"i =%d integral=%d",i,integral);
 
+            if (i-1<0) {
+                if (countIntegral<integral) {
+                    CurrentInegral = integral-countIntegral;
+                    currentLevel = [dic objectForKey:@"gradeName"];
+                }
+            }
+            else{
+                NSDictionary * dic1 = [arr objectAtIndex:i];
+                int  integral1 = [[dic1 objectForKey:@"integral"]intValue];
+                NSDictionary * dic2 = [arr objectAtIndex:i-1];
+                int  integral2 = [[dic2 objectForKey:@"integral"]intValue];
+                
+                if (i==arr.count-1)
+                {
+                    if (countIntegral>=integral) {
+                        CurrentInegral = 0;
+                        currentLevel = [dic1 objectForKey:@"gradeName"];
+                    }else{
+                        currentLevel = [dic2 objectForKey:@"gradeName"];
+                    }
+                }else{
+                
+                if (countIntegral<integral1&&countIntegral>integral2) {
+                    CurrentInegral = integral1-countIntegral;
+                    currentLevel = [dic1 objectForKey:@"gradeName"];
+                    
+                }
+                
+                }
+            }
+            
+        }
+        cell.levellb.text = currentLevel;
+        
+        //判断是否签到
+        
+        NSArray * qdArr = [_infoDict safeObjectForKey:@"taskArry"];
+        for (NSDictionary *QDdict in qdArr) {
+            NSString * taskName = [QDdict safeObjectForKey:@"taskName"];
+            if ([taskName isEqualToString:@"签到"]) {
+                if ([[QDdict allKeys]containsObject:@"success"]) {
+                    cell.qdBtn.selected =YES;
+                    cell.qdBtn.userInteractionEnabled =NO;
+                }
+            }
+        }
         return cell;
 
     }else
@@ -96,7 +166,8 @@
     if (!cell) {
         cell = [self getXibCellWithTitle:identifier];
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     NSDictionary * dic = [self.dataArray objectAtIndex:indexPath.row];
     cell.titlelb.text = [dic safeObjectForKey:@"taskName"];
     [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:getImage(@"")];
@@ -126,14 +197,14 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
         DLog(@"签到success-dic:%@",dic);
         [[UserModel shareInstance]showSuccessWithStatus:@"签到成功！"];
-        [cell.qdBtn setTitle:@"已签到" forState:UIControlStateNormal];
+        [self getInfo];
     } failure:^(NSError *error) {
         DLog(@"签到失败-error:%@",error);
         
     }];
 
 }
--(void)didShowInstructions
+-(void)enterRightPage
 {
     LevelSnstructionsViewController * lev = [[LevelSnstructionsViewController alloc]init];
     lev.infoDict =_infoDict;

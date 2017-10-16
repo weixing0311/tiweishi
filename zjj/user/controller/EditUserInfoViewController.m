@@ -25,6 +25,7 @@
     UIImage * afterImage;
     int  imageType;
     int pickRow;
+    BOOL haveChangeImage;
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -111,13 +112,16 @@
     self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 200)];
     
     self.datePicker.datePickerMode = UIDatePickerModeDate;
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
+    self.datePicker.locale = locale;
+
     NSDate * maxDate = [NSDate date];
     NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString * mindateStr = @"1900-01-01 00:00:00";
+    NSString * mindateStr = @"1995-01-01 00:00:00";
     NSDate * minDate = [formatter dateFromString:mindateStr];
     
-    NSString * defaultDateStr = @"1990-01-01 00:00:00";
+    NSString * defaultDateStr = mindateStr;
     NSDate * defaultDate = [formatter dateFromString:defaultDateStr];
     
     self.datePicker.minimumDate = minDate;
@@ -159,7 +163,8 @@
     
     NSString *dateStr = [formater stringFromDate:_date];//将日期转换成字符串
     [self.upDataDict safeSetObject:dateStr forKey:@"birthday"];
-    [self.upDataDict safeSetObject:[self dateToOld:_date] forKey:@"age"];
+    [self.datePickTf resignFirstResponder];
+    [self.tableview reloadData];
 
 }
 #pragma  mark --cellDidSelected
@@ -167,13 +172,12 @@
 {
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"" message:@"请选择性别" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        [self.upDataDict safeSetObject:@"1" forKey:@"sex"];
         
         
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        
+        [self.upDataDict safeSetObject:@"2" forKey:@"sex"];
         
     }]];
 
@@ -219,14 +223,12 @@
 }
 -(void)changeMainUserInfo
 {
-
+    [self.upDataDict safeSetObject:[UserModel shareInstance].healthId forKey:@"id"];
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:self.upDataDict imageData:nil imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         [[UserModel shareInstance]setMainUserInfoWithDic:[dic objectForKey:@"data"]];
-        [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
+        [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].healthId];
         [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
-        
-        
         
     } failure:^(NSError *error) {
     }];
@@ -293,7 +295,7 @@
                 break;
             case 3:
                 cell.textLabel.text = @"年龄";
-                cell.detailTextLabel.text =[NSString stringWithFormat:@"%d",[UserModel shareInstance].age];
+                cell.detailTextLabel.text =[NSString stringWithFormat:@"%@",[[_upDataDict safeObjectForKey:@"birthday"]getAge]];
                 break;
             case 4:
                 cell.textLabel.text = @"身高(cm)";
@@ -466,6 +468,7 @@
         }
         
     }
+    haveChangeImage = YES;
 }
 //点击cancel 调用的方法
 
@@ -526,16 +529,6 @@
     pickRow = row;
 }
 
-//根据生日计算年龄
--(NSString *)dateToOld:(NSDate *)bornDate{
-    //获得当前系统时间
-    NSDate *currentDate = [NSDate date];
-    //获得当前系统时间与出生日期之间的时间间隔
-    NSTimeInterval time = [currentDate timeIntervalSinceDate:bornDate];
-    //时间间隔以秒作为单位,求年的话除以60*60*24*356
-    int age = ((int)time)/(3600*24*365);
-    return [NSString stringWithFormat:@"%d",age];
-}
 
 
 - (void)didReceiveMemoryWarning {

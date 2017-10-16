@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"商品详情";
-    [self setTBRedColor];
+    [self setTBWhiteColor];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     _infoDict = [NSMutableDictionary dictionary];

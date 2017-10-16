@@ -25,14 +25,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ORa-cr-NVv">
                     <rect key="frame" x="0.0" y="20" width="187.5" height="40"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_" translatesAutoresizingMaskIntoConstraints="NO" id="msO-kJ-k8K">
-                            <rect key="frame" x="30" y="5" width="30" height="30"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="left_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="msO-kJ-k8K">
+                            <rect key="frame" x="30" y="8" width="15" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="T2a-45-BHN"/>
+                                <constraint firstAttribute="width" constant="15" id="T2a-45-BHN"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分商城" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohB-WK-Wbd">
-                            <rect key="frame" x="70" y="11" width="107.5" height="18"/>
+                            <rect key="frame" x="55" y="11" width="122.5" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -47,7 +47,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="TdZ-mH-Hzx" firstAttribute="top" secondItem="ORa-cr-NVv" secondAttribute="top" id="2O6-xP-Aai"/>
-                        <constraint firstAttribute="bottom" secondItem="msO-kJ-k8K" secondAttribute="bottom" constant="5" id="36O-N2-5Np"/>
+                        <constraint firstAttribute="bottom" secondItem="msO-kJ-k8K" secondAttribute="bottom" constant="7" id="36O-N2-5Np"/>
                         <constraint firstItem="TdZ-mH-Hzx" firstAttribute="leading" secondItem="ORa-cr-NVv" secondAttribute="leading" id="Es0-I1-4pY"/>
                         <constraint firstAttribute="height" constant="40" id="JPd-Hb-Y3R"/>
                         <constraint firstAttribute="bottom" secondItem="TdZ-mH-Hzx" secondAttribute="bottom" id="YZk-DX-Qgo"/>
@@ -56,20 +56,20 @@
                         <constraint firstItem="ohB-WK-Wbd" firstAttribute="centerY" secondItem="ORa-cr-NVv" secondAttribute="centerY" id="lQ3-3c-6Jb"/>
                         <constraint firstAttribute="trailing" secondItem="TdZ-mH-Hzx" secondAttribute="trailing" id="mHE-fI-0dn"/>
                         <constraint firstItem="ohB-WK-Wbd" firstAttribute="leading" secondItem="msO-kJ-k8K" secondAttribute="trailing" constant="10" id="oWy-a7-uJy"/>
-                        <constraint firstItem="msO-kJ-k8K" firstAttribute="top" secondItem="ORa-cr-NVv" secondAttribute="top" constant="5" id="yef-Y8-S2W"/>
+                        <constraint firstItem="msO-kJ-k8K" firstAttribute="top" secondItem="ORa-cr-NVv" secondAttribute="top" constant="8" id="yef-Y8-S2W"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PIS-e2-evH">
                     <rect key="frame" x="187.5" y="20" width="187.5" height="40"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="integral.png" translatesAutoresizingMaskIntoConstraints="NO" id="qNn-1N-pFj">
-                            <rect key="frame" x="23" y="10" width="27" height="23"/>
+                            <rect key="frame" x="50" y="10" width="27" height="23"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="27" id="eyj-tH-RC0"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntp-JB-bVj">
-                            <rect key="frame" x="60" y="11.5" width="117.5" height="18"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="积分 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntp-JB-bVj">
+                            <rect key="frame" x="87" y="11.5" width="90.5" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -91,7 +91,7 @@
                         <constraint firstAttribute="trailing" secondItem="Ntp-JB-bVj" secondAttribute="trailing" constant="10" id="RaZ-wt-sgr"/>
                         <constraint firstItem="Ntp-JB-bVj" firstAttribute="centerY" secondItem="PIS-e2-evH" secondAttribute="centerY" id="lOm-Vt-O8f"/>
                         <constraint firstAttribute="height" constant="40" id="li6-z3-5Vn"/>
-                        <constraint firstItem="qNn-1N-pFj" firstAttribute="leading" secondItem="PIS-e2-evH" secondAttribute="leading" constant="23" id="qEN-UD-4B3"/>
+                        <constraint firstItem="qNn-1N-pFj" firstAttribute="leading" secondItem="PIS-e2-evH" secondAttribute="leading" constant="50" id="qEN-UD-4B3"/>
                         <constraint firstItem="Ntp-JB-bVj" firstAttribute="leading" secondItem="qNn-1N-pFj" secondAttribute="trailing" constant="10" id="waY-Jb-Whw"/>
                         <constraint firstItem="qNn-1N-pFj" firstAttribute="top" secondItem="PIS-e2-evH" secondAttribute="top" constant="10" id="yCa-2E-VUO"/>
                     </constraints>
@@ -136,7 +136,7 @@
         </view>
     </objects>
     <resources>
-        <image name="back_" width="10" height="18"/>
         <image name="integral.png" width="13" height="11"/>
+        <image name="left_arrow" width="7" height="12"/>
     </resources>
 </document>

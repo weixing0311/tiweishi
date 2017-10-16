@@ -39,6 +39,8 @@
     [super viewDidLoad];
     self.title = @"提交订单";
     [self setTBRedColor];
+    
+    addressDict  = [NSMutableDictionary dictionary];
     self.priceLabel.adjustsFontSizeToFitWidth = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getAddress:) name:kSendAddress object:nil];
 
@@ -83,8 +85,7 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/getDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"success --%@",dic);
-        
-        addressDict =[NSMutableDictionary dictionaryWithDictionary:[dic objectForKey:@"data"]];
+        [addressDict setDictionary:[dic objectForKey:@"data"]];
         [self.tableview reloadData];
         
         NSString * isWarehouseSend = [self.infoDict safeObjectForKey:@"isWarehouseSend"];

@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/community(&#x793e;&#x533a;)/postArticle()&#x5199;&#x6587;&#x7ae0;/PostArticleViewController.m"
-            timestampString = "529504293.133089"
+            timestampString = "529838210.471726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
+            startingLineNumber = "531"
+            endingLineNumber = "531"
             landmarkName = "-convertVideoWithModel:"
             landmarkType = "7">
          </BreakpointContent>
@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/community(&#x793e;&#x533a;)/postArticle()&#x5199;&#x6587;&#x7ae0;/PostArticleViewController.m"
-            timestampString = "529504293.133188"
+            timestampString = "529838210.471802"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "536"
-            endingLineNumber = "536"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
             landmarkName = "-convertVideoWithModel:"
             landmarkType = "7">
             <Locations>
@@ -68,41 +68,41 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/PostArticleViewController.m"
-                  timestampString = "529504293.319371"
+                  timestampString = "529838210.643305"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "540"
-                  endingLineNumber = "540"
+                  startingLineNumber = "547"
+                  endingLineNumber = "547"
                   offsetFromSymbolStart = "388">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_.433"
+                  symbolName = "__copy_helper_block_.442"
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/PostArticleViewController.m"
-                  timestampString = "529504293.322206"
+                  timestampString = "529838210.645552"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "540"
-                  endingLineNumber = "540"
+                  startingLineNumber = "547"
+                  endingLineNumber = "547"
                   offsetFromSymbolStart = "64">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.434"
+                  symbolName = "__destroy_helper_block_.443"
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/PostArticleViewController.m"
-                  timestampString = "529504293.325281"
+                  timestampString = "529838210.647647"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "540"
-                  endingLineNumber = "540"
+                  startingLineNumber = "547"
+                  endingLineNumber = "547"
                   offsetFromSymbolStart = "36">
                </Location>
             </Locations>
@@ -115,13 +115,109 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/community(&#x793e;&#x533a;)/postArticle()&#x5199;&#x6587;&#x7ae0;/PostArticleViewController.m"
-            timestampString = "529504293.133261"
+            timestampString = "529838210.47186"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "522"
-            endingLineNumber = "522"
+            startingLineNumber = "529"
+            endingLineNumber = "529"
             landmarkName = "-convertVideoWithModel:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zjj/public/controller/BaseWebViewController.m"
+            timestampString = "529838210.471914"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "669"
+            endingLineNumber = "669"
+            landmarkName = "-backWithPayType"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BaseWebViewController backWithPayType]"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
+                  timestampString = "529838210.656734"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "669"
+                  endingLineNumber = "669"
+                  offsetFromSymbolStart = "1164">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BaseWebViewController backWithPayType]"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
+                  timestampString = "529838210.658655"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "669"
+                  endingLineNumber = "669"
+                  offsetFromSymbolStart = "1180">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zjj/public/controller/BaseWebViewController.m"
+            timestampString = "529838210.471967"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "687"
+            endingLineNumber = "687"
+            landmarkName = "-backWithPayType"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BaseWebViewController backWithPayType]"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
+                  timestampString = "529838210.66329"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "687"
+                  endingLineNumber = "687"
+                  offsetFromSymbolStart = "2220">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BaseWebViewController backWithPayType]"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
+                  timestampString = "529838210.665173"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "687"
+                  endingLineNumber = "687"
+                  offsetFromSymbolStart = "2236">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

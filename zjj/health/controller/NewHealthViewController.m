@@ -23,6 +23,7 @@
 #import "ADDChengUserViewController.h"
 #import "UserDirectionsViewController.h"
 #import "HistoryInfoViewController.h"
+#import "HealthDetailViewController.h"
 @interface NewHealthViewController ()<userListDelegate,userViewDelegate,healthMainDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
@@ -34,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *weightlb;
 @property (weak, nonatomic) IBOutlet UILabel *lessWeightLb;
 @property (weak, nonatomic) IBOutlet UIImageView *trendArrowImageView;
+@property (weak, nonatomic) IBOutlet UIView *minView;
 
 
 
@@ -69,7 +71,9 @@
     
     headerArr = [NSMutableArray array];
     [self setJpush];
-    
+    self.minView.layer.borderWidth= 2;
+    self.minView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+
     //删除评测数据返回后刷新
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshPcInfo) name:@"deletePCINFO" object:nil];
     [self getHeaderInfo];
@@ -138,27 +142,27 @@
     switch (item.weightLevel) {
         case 1:
             self.fatStatuslb.text = [NSString stringWithFormat:@"偏瘦"];
-            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
+//            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
             break;
         case 2:
             self.fatStatuslb.text = [NSString stringWithFormat:@"正常"];
-            self.fatStatuslb.textColor = HEXCOLOR(0x41bf7c);
+//            self.fatStatuslb.textColor = HEXCOLOR(0x41bf7c);
             break;
         case 3:
             self.fatStatuslb.text = [NSString stringWithFormat:@"轻度肥胖"];
-            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
+//            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
             break;
         case 4:
             self.fatStatuslb.text = [NSString stringWithFormat:@"中度肥胖"];
-            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
+//            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
             break;
         case 5:
             self.fatStatuslb.text = [NSString stringWithFormat:@"重度肥胖"];
-            self.fatStatuslb.textColor = HEXCOLOR(0xe84849);
+//            self.fatStatuslb.textColor = HEXCOLOR(0xe84849);
             break;
         case 6:
             self.fatStatuslb.text = [NSString stringWithFormat:@"极度肥胖"];
-            self.fatStatuslb.textColor = HEXCOLOR(0xe84849);
+//            self.fatStatuslb.textColor = HEXCOLOR(0xe84849);
             break;
             
         default:
@@ -211,7 +215,6 @@
     }else{
         self.userListView.hidden = YES;
     }
-    
 }
 -(void)changeShowUserWithSubId:(NSString *)subId isAdd:(BOOL)isAdd
 {
@@ -258,8 +261,18 @@
 - (IBAction)didClickPC:(id)sender {
 }
 - (IBAction)didClickEnterDetail:(id)sender {
+    HealthItem * item = [headerArr objectAtIndex:0];
+    HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
+    hd.hidesBottomBarWhenPushed=YES;
+    hd.dataId =[NSString stringWithFormat:@"%d",item.DataId];
+
+    [self.navigationController pushViewController:hd animated:YES];
+    
+    
+    
 }
 - (IBAction)didClickShowhistoryInfo:(id)sender {
+    
     HealthItem * item = [headerArr objectAtIndex:0];
 
     HistoryInfoViewController * hist = [[HistoryInfoViewController alloc]init];

@@ -51,6 +51,8 @@
 /*! 设置navigaionbar 和title的颜色 */
 -(void)setNbColor;
 -(void)setTBRedColor;
+-(void)setTBWhiteColor;
+
 -(void)showError:(NSString *)text;
 
 /**

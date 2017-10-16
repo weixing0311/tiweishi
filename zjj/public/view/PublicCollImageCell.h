@@ -11,5 +11,7 @@
 @interface PublicCollImageCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *playImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *midImageView;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *visualView;
 
 @end

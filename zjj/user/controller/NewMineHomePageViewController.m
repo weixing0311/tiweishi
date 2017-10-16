@@ -41,6 +41,16 @@
     [self.tableview headerBeginRefreshing];
 
 }
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [_playerView destroyPlayer];
+    _playerView = nil;
+    PlayingCell = nil;
+    
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -189,6 +199,7 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.headImageView sd_setBackgroundImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"defaultHead")
          ];
         cell.nicknamelb.text = [_infoDict safeObjectForKey:@"nickName"];
@@ -228,6 +239,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.beforeWeightlb.text = [NSString stringWithFormat:@"%.0fkg",[[_infoDict safeObjectForKey:@"beforeWeight"] floatValue]];
         cell.afterweightlb.text = [NSString stringWithFormat:@"%.0fkg",[[_infoDict safeObjectForKey:@"afterWeight"] floatValue]];
         cell.continuousDatelb.text = [NSString stringWithFormat:@"%@",[_infoDict safeObjectForKey:@"registerDate"]?[_infoDict safeObjectForKey:@"registerDate"]:@"0"];
@@ -242,7 +254,8 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"before")];
         [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"last")];
         
@@ -257,7 +270,8 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
             cell.gzBtn.hidden = YES;
             cell.jbBtn.hidden = YES;

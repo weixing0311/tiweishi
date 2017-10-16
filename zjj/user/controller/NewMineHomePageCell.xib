@@ -82,18 +82,19 @@
                             <action selector="editUserInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="r6J-cq-Ib7"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjA-GG-uCv">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjA-GG-uCv">
                         <rect key="frame" x="266" y="150" width="55" height="25"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="N6a-IL-e9f"/>
                             <constraint firstAttribute="width" constant="55" id="Ytd-yu-2rv"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <state key="normal" title="+关注">
                             <color key="titleColor" red="0.93333333330000001" green="0.039215686270000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <state key="selected" title="已关注">
-                            <color key="titleColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">

@@ -37,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"订单详情";
+    self.title = @"我的订单";
     [self setTBRedColor];
     self.tableview.delegate =self;
     self.tableview.dataSource = self;
@@ -211,6 +211,26 @@
     
     OrderFooter *footer = [self getXibCellWithTitle:@"OrderFooter"];
     footer.frame = CGRectMake(0, 1, JFA_SCREEN_WIDTH, 30);
+    
+    NSString * priceStr = [dic safeObjectForKey:@"payableAmount"];
+    
+    NSString * integral = [dic safeObjectForKey:@"integral"];
+    if (integral.intValue>0&&priceStr.intValue>0) {
+        footer.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f+%@积分",[priceStr floatValue],integral];
+        
+        
+    }else{
+        if (integral.intValue>0) {
+            footer.priceLabel.text =[NSString stringWithFormat:@"实付款：%@积分",integral];
+            
+        }else{
+            footer.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[priceStr floatValue]];
+        }
+        
+    }
+
+    
+    
     footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"payableAmount"]floatValue]];
     
     NSString * payStr =@"";
@@ -298,22 +318,6 @@
     cell.titleLabel.text = [infoDic safeObjectForKey:@"productName"];
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
-    NSString * priceStr = [infoDic safeObjectForKey:@"payableAmount"];
-    
-    NSString * integral = [infoDic safeObjectForKey:@"integral"];
-    if (integral.intValue>0&&priceStr.intValue>0) {
-        cell.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f+%@积分",[priceStr floatValue],integral];
-        
-        
-    }else{
-        if (integral.intValue>0) {
-            cell.priceLabel.text =[NSString stringWithFormat:@"实付款：%@分",integral];
-            
-        }else{
-            cell.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[priceStr floatValue]];
-        }
-        
-    }
 
     
     cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"normalPrice"]floatValue]];
@@ -369,6 +373,52 @@
         }
     }
     
+}
+-(void)didClickFirstBtnWithView:(OrderFootBtnView*)view
+{
+    NSDictionary * dic =[_dataArray objectAtIndex:view.tag];
+    int status = [[dic safeObjectForKey:@"status"]intValue];
+    if (status==3)
+    {
+        [self ConfirmTheGoodsWithOrderNo:[dic safeObjectForKey:@"orderNo"]];
+    }
+    else if (status ==1)
+    {
+        //去付款
+        BaseWebViewController *web = [[BaseWebViewController alloc]init];
+        web.urlStr = @"app/checkstand.html";
+        web.payableAmount = [dic safeObjectForKey:@"payableAmount"];
+        //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+        web.payType =5;
+        web.opt =1;
+        web.orderNo = [dic safeObjectForKey:@"orderNo"];
+        web.title  =@"收银台";
+        [self.navigationController pushViewController:web animated:YES];
+        
+    }
+}
+-(void)didClickSecondBtnWithView:(OrderFootBtnView*)view
+{
+    NSDictionary * dic = [_dataArray objectAtIndex:view.tag];
+
+    int status = [[dic safeObjectForKey:@"status"]intValue];
+    NSString * orderNo =[dic safeObjectForKey:@"orderNo"];
+    
+    if (status==3)
+    {
+        
+    }
+    else if (status ==1)
+    {
+        //取消订单
+        [self cancelOrderWithOrderId:orderNo];
+    }
+}
+- (IBAction)didChangeStatussegment:(UISegmentedControl *)sender {
+    
+    [self getinfoWithStatus:sender.selectedSegmentIndex];
+    
+    [self.tableview reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

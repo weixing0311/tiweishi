@@ -22,6 +22,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"使用说明";
+    [self setTBWhiteColor];
     [self buildScrol];
     // Do any additional setup after loading the view from its nib.
 }

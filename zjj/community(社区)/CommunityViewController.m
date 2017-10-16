@@ -43,12 +43,16 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [_playerView destroyPlayer];
+    _playerView = nil;
+    PlayingCell = nil;
+
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableView) name:@"SENDARTICLESUCCESS" object:nil];
     [self ChangeMySegmentStyle:self.segment];
 
     
@@ -60,6 +64,10 @@
     [self setRefrshWithTableView:self.tableview];
     pageSize= 30;
     self.segment.selectedSegmentIndex = 0;
+    [self.tableview headerBeginRefreshing];
+}
+-(void)refreshTableView
+{
     [self.tableview headerBeginRefreshing];
 }
 -(void)buildRightNaviBarItem
@@ -367,6 +375,10 @@
     }];
     [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (alert.textFields.firstObject.text.length<5) {
+            [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
+            return ;
+        }
         NSMutableDictionary * params = [NSMutableDictionary dictionary];
         [params safeSetObject:model.uid forKey:@"articleId"];
         [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];

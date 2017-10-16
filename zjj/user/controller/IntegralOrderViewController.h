@@ -9,19 +9,19 @@
 #import "JFABaseTableViewController.h"
 typedef enum
 {
-    IS_ALL=0,//全部
-    IS_WATE_PAY=1,//待付款
+    IS_INTEGRAL_ALL=0,//全部
+    IS_INTEGRAL_WATE_PAY=1,//待付款
     
-    IS_WAIT_GETGOOD=2,//待收货
-    IS_HAVE_SUCCESS=3,//已完成
+    IS_INTEGRAL_WAIT_GETGOOD=2,//待收货
+    IS_INTEGRAL_HAVE_SUCCESS=3,//已完成
     
-    IS_CANCEL=4,//已取消
-}OrderType;
+    IS_INTEGRAL_CANCEL=4,//已取消
+}IntegralOrderType;
 
 @interface IntegralOrderViewController : JFABaseTableViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
-@property (nonatomic,assign)OrderType getOrderType;
+@property (nonatomic,assign)IntegralOrderType getOrderType;
 - (IBAction)didChangeStatussegment:(id)sender;
 
 @end

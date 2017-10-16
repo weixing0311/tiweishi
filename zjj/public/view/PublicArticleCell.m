@@ -8,8 +8,9 @@
 
 #import "PublicArticleCell.h"
 #import "PublicCollImageCell.h"
+#import <CoreImage/CoreImage.h>
 #define BigImageWidth JFA_SCREEN_WIDTH-20
-#define BigImageHeight (JFA_SCREEN_WIDTH-20)*0.6-20
+#define BigImageHeight (JFA_SCREEN_WIDTH-20)*0.8
 @implementation PublicArticleCell
 {
     float cellHeight ;
@@ -251,34 +252,34 @@
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    if (_imagesArray.count ==1) {
-        // 先从缓存中查找图片
-        NSDictionary * dic = [_imagesArray objectAtIndex:0];
-
-        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
-        
-        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
-        if (!image) {
-            return UIEdgeInsetsMake(5,([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2, 5, ([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2);//分别为上、左、下、右
-        }else{
-            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
-            
-            CGFloat imageW = image.size.width;
-            CGFloat imageH = image.size.height;
-            
-            CGFloat imageWH = imageW/imageH;
-            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.8-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
-            CGFloat bigImageW = bigImageH* imageWH;
-            
-            //手动计算cell
-            return UIEdgeInsetsMake(5,(JFA_SCREEN_WIDTH-bigImageW)/2, 5, (JFA_SCREEN_WIDTH-bigImageW)/2);//分别为上、左、下、右
-
-        }
-    }else{
+//    if (_imagesArray.count ==1) {
+//        // 先从缓存中查找图片
+//        NSDictionary * dic = [_imagesArray objectAtIndex:0];
+//
+//        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
+//
+//        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
+//        if (!image) {
+//            return UIEdgeInsetsMake(5,([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2, 5, ([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2);//分别为上、左、下、右
+//        }else{
+//            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
+//
+//            CGFloat imageW = image.size.width;
+//            CGFloat imageH = image.size.height;
+//
+//            CGFloat imageWH = imageW/imageH;
+//            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.8-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
+//            CGFloat bigImageW = bigImageH* imageWH;
+//
+//            //手动计算cell
+//            return UIEdgeInsetsMake(5,(JFA_SCREEN_WIDTH-bigImageW)/2, 5, (JFA_SCREEN_WIDTH-bigImageW)/2);//分别为上、左、下、右
+//
+//        }
+//    }else{
         return UIEdgeInsetsMake(5,10, 5, 10);//分别为上、左、下、右
 
         
-    }
+//    }
 
 }
 
@@ -288,23 +289,51 @@
     cell.backgroundColor = [UIColor whiteColor];
     
     if (self.currModel.movieStr.length>5) {
+        cell.headerImageView.hidden =NO;
         cell.playImageView.hidden = NO;
+        cell.midImageView.hidden = NO;
+        cell.visualView.hidden =NO;
+        [cell bringSubviewToFront:cell.playImageView];
     }else{
+        if (_imagesArray.count==1) {
+            cell.headerImageView.hidden = YES;
+            cell.midImageView.hidden =NO;
+        }else{
+            cell.midImageView.hidden = YES;
+            cell.headerImageView.hidden =NO;
+        }
         cell.playImageView.hidden = YES;
+        cell.visualView.hidden = YES;
  
     }
     
     NSMutableDictionary * dict = [_imagesArray objectAtIndex:indexPath.row];
     
-    if (self.imagesArray.count ==1) {
-        [self configureCell:cell atIndexPath:indexPath];
-    }else{
+//    if (self.imagesArray.count ==1) {
+//        [self configureCell:cell atIndexPath:indexPath];
+//    }else{
     
     [cell.headerImageView sd_setImageWithURL:[dict safeObjectForKey:@"videoImageStr"] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        
-    cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
-    }];
+        if (_imagesArray.count==1) {
+          
+            cell.midImageView.image = [self cutImage:image imgViewWidth:BigImageHeight/image.size.height*image.size.width imgViewHeight:BigImageHeight];
+            
+            cell.midImageView.frame = CGRectMake(0, 0, BigImageHeight/image.size.height*image.size.width, BigImageHeight);
+            
+            cell.headerImageView.image = [self cutImage:image imgViewWidth:BigImageWidth imgViewHeight:BigImageHeight];
+//            UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+//            UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
+//            effectview.frame = CGRectMake(0, 0, BigImageWidth, BigImageHeight);
+//
+//            [cell.headerImageView addSubview:effectview];
+
+            cell.midImageView.center = cell.center;
+    }else{
+        cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
     }
+    }];
+
+//    }
     return cell;
 }
 
@@ -342,29 +371,31 @@
 {
     NSDictionary * dic = [_imagesArray objectAtIndex:indexPath.row];
     if (_imagesArray.count ==1) {
-        // 先从缓存中查找图片
-        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
-        
-        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
-        if (!image) {
-            return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
-        }else{
-            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
-
-            CGFloat imageW = image.size.width;
-            CGFloat imageH = image.size.height;
-            
-            CGFloat imageWH = imageW/imageH;
-            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.7-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
-            CGFloat bigImageW = bigImageH* imageWH;
-            
-            //手动计算cell
-            return CGSizeMake(bigImageW, bigImageH);
-        }
-    }else{
+        return CGSizeMake(BigImageWidth, BigImageHeight);
+    }
+//        // 先从缓存中查找图片
+//        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
+//
+//        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
+//        if (!image) {
+//            return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
+//        }else{
+//            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
+//
+//            CGFloat imageW = image.size.width;
+//            CGFloat imageH = image.size.height;
+//
+//            CGFloat imageWH = imageW/imageH;
+//            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.7-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
+//            CGFloat bigImageW = bigImageH* imageWH;
+//
+//            //手动计算cell
+//            return CGSizeMake(bigImageW, bigImageH);
+//        }
+//    }else{
         return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
 
-    }
+//    }
 }
 //这个是两行cell之间的间距（上下行cell的间距）
 
@@ -393,9 +424,6 @@
             [self.delegate didShowBigImageWithCell:self index:indexPath.row];
         }
     }
-        
-    
-    
 }
 
 
@@ -404,6 +432,8 @@
 
     // Configure the view for the selected state
 }
+
+
 
 - (IBAction)didClickJB:(id)sender {
     

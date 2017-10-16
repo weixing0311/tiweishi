@@ -52,9 +52,6 @@ static TimeModel * model;
     NSDateFormatter *fmt=[[NSDateFormatter alloc]init];
     fmt.dateFormat = @"yyyy-MM-dd";
     fmt.timeZone = timeZone;
-    NSDateFormatter *dstFmt=[[NSDateFormatter alloc]init];
-    dstFmt.dateFormat = @"yyyy-MM-dd";
-    dstFmt.timeZone = timeZone;
     
     NSDate *srcDate=[fmt dateFromString:dateStr];
     //获得当前系统时间

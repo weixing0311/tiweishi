@@ -31,9 +31,19 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 
 }
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [_playerView destroyPlayer];
+    _playerView = nil;
+    
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"文章详情";
+    [self setTBWhiteColor];
     [self setNotification];
     
     _dataArray = [NSMutableArray array];
@@ -436,15 +446,6 @@
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
 
     }
-
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    [_playerView destroyPlayer];
-    _playerView = nil;
 
 }
 

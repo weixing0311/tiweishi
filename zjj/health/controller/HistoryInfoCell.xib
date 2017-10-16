@@ -18,15 +18,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default.png" translatesAutoresizingMaskIntoConstraints="NO" id="dzq-AK-qKc">
-                        <rect key="frame" x="10" y="7" width="30" height="30"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dzq-AK-qKc">
+                        <rect key="frame" x="20" y="6.5" width="33" height="31"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="9wE-62-cnX"/>
-                            <constraint firstAttribute="height" constant="30" id="P5i-6V-yhb"/>
+                            <constraint firstAttribute="width" constant="33" id="9wE-62-cnX"/>
+                            <constraint firstAttribute="height" constant="31" id="P5i-6V-yhb"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxx-j5-0jq">
-                        <rect key="frame" x="50" y="13.5" width="80" height="18"/>
+                        <rect key="frame" x="63" y="13.5" width="80" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="rPf-O8-lmE"/>
                         </constraints>
@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYZ-Gw-Daz">
-                        <rect key="frame" x="230" y="13" width="70" height="18"/>
+                        <rect key="frame" x="180" y="13" width="70" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="1Ou-WQ-2j2"/>
                         </constraints>
@@ -44,10 +44,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xj6-NA-VMp">
-                        <rect key="frame" x="310" y="22.5" width="0.0" height="0.0"/>
+                        <rect key="frame" x="260" y="22.5" width="50" height="0.0"/>
                         <color key="backgroundColor" red="0.25545247395833331" green="0.66438802083333337" blue="0.076768663194444448" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" priority="10" constant="100" id="1qf-FP-qcB"/>
+                            <constraint firstAttribute="width" constant="50" id="wEe-eM-o40"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -59,7 +59,7 @@
                     <constraint firstAttribute="trailing" secondItem="Xj6-NA-VMp" secondAttribute="trailing" constant="10" id="BIq-6p-x4c"/>
                     <constraint firstItem="Xj6-NA-VMp" firstAttribute="leading" secondItem="TYZ-Gw-Daz" secondAttribute="trailing" constant="10" id="DHp-Kp-wst"/>
                     <constraint firstItem="dzq-AK-qKc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IIC-F2-qfO"/>
-                    <constraint firstItem="dzq-AK-qKc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="T3n-Kt-SQz"/>
+                    <constraint firstItem="dzq-AK-qKc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="T3n-Kt-SQz"/>
                     <constraint firstItem="nxx-j5-0jq" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="acw-Iv-bE1"/>
                     <constraint firstItem="Xj6-NA-VMp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="bGH-yB-aXt"/>
                     <constraint firstItem="nxx-j5-0jq" firstAttribute="leading" secondItem="dzq-AK-qKc" secondAttribute="trailing" constant="10" id="zzR-W7-PHh"/>
@@ -73,7 +73,4 @@
             </connections>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="default.png" width="200" height="200"/>
-    </resources>
 </document>

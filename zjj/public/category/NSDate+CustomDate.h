@@ -13,4 +13,5 @@
 -(NSString *)yyyymmdd;
 -(NSString*)mmddhhmm;
 -(NSString*)mmdd;
+-(NSString *)getAge;
 @end

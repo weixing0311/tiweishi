@@ -162,7 +162,11 @@
     [cell.headerimageView sd_setImageWithURL:[NSURL URLWithString:model.headImgUrl]placeholderImage:getImage(@"default")];
     cell.nicknamelb.text = model.nickname;
     
-    
+    if ([model.userId isEqualToString:[UserModel shareInstance].userId]) {
+        cell.gzbtn.hidden = YES;
+    }else{
+        cell.gzbtn.hidden =NO;
+    }
     
     if (model.isFollow||self.pageType ==IS_GZ) {
         cell.gzbtn.selected =YES;

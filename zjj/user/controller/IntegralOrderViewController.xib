@@ -21,12 +21,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8I5-fI-A5r">
-                    <rect key="frame" x="0.0" y="40" width="375" height="627"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-10-JCK">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="41"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="bWf-cT-tke"/>
@@ -43,6 +39,10 @@
                         <action selector="didChangeStatussegment:" destination="-1" eventType="valueChanged" id="rpJ-PR-nCe"/>
                     </connections>
                 </segmentedControl>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8I5-fI-A5r">
+                    <rect key="frame" x="0.0" y="104" width="375" height="563"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -52,7 +52,7 @@
                 <constraint firstItem="8I5-fI-A5r" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="h42-dd-5xc"/>
                 <constraint firstAttribute="bottom" secondItem="8I5-fI-A5r" secondAttribute="bottom" id="l9B-2U-psC"/>
                 <constraint firstAttribute="trailing" secondItem="8I5-fI-A5r" secondAttribute="trailing" id="tQC-cr-Vuc"/>
-                <constraint firstItem="D7u-10-JCK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yO1-pi-cmg"/>
+                <constraint firstItem="D7u-10-JCK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="yO1-pi-cmg"/>
             </constraints>
             <point key="canvasLocation" x="35.5" y="53.5"/>
         </view>

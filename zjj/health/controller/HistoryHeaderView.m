@@ -12,7 +12,7 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    self.calendarView = [[DAYCalendarView alloc]initWithFrame:self.riView.bounds];
+    self.calendarView = [[DAYCalendarView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-20, (JFA_SCREEN_WIDTH-20)*0.7-10)];
     [self.riView addSubview:self.calendarView];
 
 }

@@ -148,14 +148,14 @@
                                 <rect key="frame" x="213.5" y="1" width="106.5" height="39"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="praise.png" translatesAutoresizingMaskIntoConstraints="NO" id="5wO-fb-rtU">
-                                        <rect key="frame" x="20" y="8" width="22" height="22"/>
+                                        <rect key="frame" x="20" y="8" width="24" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="13U-gB-a4A"/>
-                                            <constraint firstAttribute="width" constant="22" id="UZR-MU-i6C"/>
+                                            <constraint firstAttribute="width" constant="24" id="UZR-MU-i6C"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jde-rx-Sb0">
-                                        <rect key="frame" x="49.5" y="9" width="46.5" height="20"/>
+                                        <rect key="frame" x="54" y="9" width="42" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="UD8-1R-Ep9"/>
                                         </constraints>
@@ -178,7 +178,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="5wO-fb-rtU" firstAttribute="centerY" secondItem="ko9-xM-D6H" secondAttribute="centerY" id="1fh-7L-9Ss"/>
-                                    <constraint firstItem="jde-rx-Sb0" firstAttribute="leading" secondItem="5wO-fb-rtU" secondAttribute="trailing" constant="8" id="3h6-45-HRq"/>
+                                    <constraint firstItem="jde-rx-Sb0" firstAttribute="leading" secondItem="5wO-fb-rtU" secondAttribute="trailing" constant="10" id="3h6-45-HRq"/>
                                     <constraint firstItem="HrC-qH-vH3" firstAttribute="top" secondItem="ko9-xM-D6H" secondAttribute="top" id="CYP-1N-arK"/>
                                     <constraint firstItem="HrC-qH-vH3" firstAttribute="leading" secondItem="ko9-xM-D6H" secondAttribute="leading" id="JXu-rv-Wyh"/>
                                     <constraint firstAttribute="bottom" secondItem="HrC-qH-vH3" secondAttribute="bottom" id="MQh-xi-263"/>
@@ -244,6 +244,7 @@
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="q8y-Xo-NuN">
                         <rect key="frame" x="10" y="106.5" width="300" height="43.5"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yEI-nl-xKe">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
