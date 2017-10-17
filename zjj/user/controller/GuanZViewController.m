@@ -29,6 +29,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTBWhiteColor];
+
     self.tableview.delegate =self;
     self.tableview.dataSource =self;
     [self setExtraCellLineHiddenWithTb:self.tableview];

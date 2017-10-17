@@ -25,7 +25,8 @@
     UIImage * afterImage;
     int  imageType;
     int pickRow;
-    BOOL haveChangeImage;
+    BOOL haveChangeInfo;
+    
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -50,7 +51,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"基本信息";
-    [self setTBRedColor];
+    [self setTBWhiteColor];
+;
     
     self.tableview.delegate = self;
     self.tableview.dataSource= self;
@@ -99,6 +101,8 @@
     {
         [self.upDataDict safeSetObject:@(pickRow+80) forKey:@"heigth"];
     }
+    haveChangeInfo = YES;
+
     [self.tableview reloadData];
 }
 -(void)cancelChoose
@@ -164,6 +168,8 @@
     NSString *dateStr = [formater stringFromDate:_date];//将日期转换成字符串
     [self.upDataDict safeSetObject:dateStr forKey:@"birthday"];
     [self.datePickTf resignFirstResponder];
+    haveChangeInfo = YES;
+
     [self.tableview reloadData];
 
 }
@@ -210,7 +216,8 @@
 
         }
         
-        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshHomePageInfo" object:nil];
+
         [self.tableview reloadData];
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
         
@@ -223,11 +230,17 @@
 }
 -(void)changeMainUserInfo
 {
+    
+    if (haveChangeInfo !=YES) {
+        return;
+    }
+    
     [self.upDataDict safeSetObject:[UserModel shareInstance].healthId forKey:@"id"];
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:self.upDataDict imageData:nil imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         [[UserModel shareInstance]setMainUserInfoWithDic:[dic objectForKey:@"data"]];
         [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].healthId];
         [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshHomePageInfo" object:nil];
         [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(NSError *error) {
@@ -367,7 +380,9 @@
             return ;
         }
         if (indexPathRow==0) {
-            
+            [self.upDataDict safeSetObject:al.textFields.firstObject.text forKey:@"nickName"];
+            haveChangeInfo = YES;
+            [self.tableview reloadData];
         }else{
             //    app/user/addIntroduction.do
             //userId
@@ -468,7 +483,6 @@
         }
         
     }
-    haveChangeImage = YES;
 }
 //点击cancel 调用的方法
 

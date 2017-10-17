@@ -29,12 +29,22 @@
 @property (weak, nonatomic) IBOutlet UILabel *sliderLislb;
 @property (weak, nonatomic) IBOutlet UILabel *sliderMorlb;
 
-@property (weak, nonatomic) IBOutlet UISlider *slider;
+@property (weak, nonatomic) IBOutlet UIImageView *sliderIconImage;
 
 @property (weak, nonatomic) IBOutlet UIView *detailView;
 @property (nonatomic,strong)HealthDetailsItem * currItem;
 @property (nonatomic,assign)id<NewHealthDetileFiveDelegate>delegate;
 -(void)setInfoWithDict:(HealthDetailsItem *)item;
+
+@property (weak, nonatomic) IBOutlet UIView *sliderBgView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *secondHeadImage;
+@property (weak, nonatomic) IBOutlet UILabel *secondTitle;
+@property (weak, nonatomic) IBOutlet UILabel *secondContent;
+
+
+
+
 -(void)setDetailViewContentWithButtonIndex:(NSInteger)index;
 @end
 

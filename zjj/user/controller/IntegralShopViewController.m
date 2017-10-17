@@ -32,8 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"积分商城";
-    [self setTBRedColor];
-    
+    [self setTBWhiteColor];
+    self.jifenlb.adjustsFontSizeToFitWidth = YES;
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;//实现代理
     self.collectionView.dataSource = self;                  //实现数据源方法

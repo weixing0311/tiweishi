@@ -24,7 +24,8 @@
 #import "UserDirectionsViewController.h"
 #import "HistoryInfoViewController.h"
 #import "HealthDetailViewController.h"
-@interface NewHealthViewController ()<userListDelegate,userViewDelegate,healthMainDelegate>
+#import "WeighingViewController.h"
+@interface NewHealthViewController ()<userListDelegate,userViewDelegate,healthMainDelegate,weightingDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
 @property (weak, nonatomic) IBOutlet UIButton *userHeaderView;
@@ -98,6 +99,10 @@
     
     [self.view addSubview:self.userListView];
     
+}
+-(void)weightingSuccess
+{
+    [self getHeaderInfo];
 }
 -(void)getHeaderInfo
 {
@@ -259,6 +264,9 @@
 
 
 - (IBAction)didClickPC:(id)sender {
+    WeighingViewController * we = [[WeighingViewController alloc]init];
+    we.delegate = self;
+    [self presentViewController:we animated:YES completion:nil];
 }
 - (IBAction)didClickEnterDetail:(id)sender {
     HealthItem * item = [headerArr objectAtIndex:0];

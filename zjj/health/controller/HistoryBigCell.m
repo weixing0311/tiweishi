@@ -163,10 +163,6 @@
             cell.secondLb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"visceralFatPercentageLevel"]intValue] status:IS_VISCERALFAT];
             cell.secondLb.hidden = NO;
 
-//            cell.headImageView.image  = getImage(@"fatBody_");
-//            cell.titlelb.text = @"体型";
-//            cell.valuelb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@""]floatValue]];
-//            cell.secondLb.hidden = YES;
             break;
         case 12:
             cell.headImageView.image  = getImage(@"weight_");
@@ -224,6 +220,11 @@
     NSString *string= [outputFormatter stringFromDate:inputDate];
     return string;
     
+}
+- (IBAction)didClickChoose:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didChooseWithCell:)]) {
+        [self.delegate didChooseWithCell:self];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

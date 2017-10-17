@@ -104,9 +104,7 @@
 
     }else{
         NSMutableArray * arr =[NSMutableArray arrayWithArray:_imagesArray];
-        if (arr.count!=10) {
-            [arr removeLastObject];
-        }
+        [arr removeLastObject];
         self.currentTasks = [[BaseSservice sharedManager]uploadImageWithPath:@"app/community/article/saveArticle.do" photos:arr params:params success:^(NSDictionary *dic) {
             DLog(@"dic---%@",dic);
             [[UserModel shareInstance]showSuccessWithStatus:@"发表成功"];

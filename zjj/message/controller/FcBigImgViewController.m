@@ -24,7 +24,10 @@
     self.pageLabel.text = [NSString stringWithFormat:@"%d/%lu",self.page+1,(unsigned long)self.images.count];
     for (int i =0; i<self.images.count; i++) {
         
-        
+        id currImage = self.images[i];
+        if (![currImage isKindOfClass:[NSString class]]) {
+            currImage = [currImage objectForKey:@"imgUrl"];
+        }
         UIImageView * imageView =[[UIImageView alloc]initWithFrame:CGRectMake(i*JFA_SCREEN_WIDTH+5, 0, 0, 0)];
 
         
@@ -34,7 +37,7 @@
 
         CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
                                                                   
-                                                                  (CFStringRef)self.images[i],
+                                                                  (CFStringRef)currImage,
                                                                   
                                                                   (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
                                                                   

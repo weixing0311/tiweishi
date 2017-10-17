@@ -12,6 +12,7 @@
 #import "ArtcleDetailCommentCell.h"
 #import "CommentView.h"
 #import "SDImageCache.h"
+#import "FcBigImgViewController.h"
 @interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic,strong) NSMutableArray * dataArray;
@@ -36,7 +37,7 @@
     [super viewDidDisappear:animated];
     [_playerView destroyPlayer];
     _playerView = nil;
-    
+    [self clearSDCeche];
     
 }
 
@@ -322,32 +323,42 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
-    NSString * contentStr = [_infoDict safeObjectForKey:@"content"];
-    float height = 65+([self getContentHeightWithContent:contentStr Font:15]<20?20:[self getContentHeightWithContent:contentStr Font:15]);
-    if (videoPath.length>5) {
-        //记录被点击的Cell
-        //销毁播放器
-        [_playerView destroyPlayer];
-        CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(10,height+10, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
-        _playerView = playerView;
-        [self.tableview addSubview:_playerView];
-        //视频地址
-        _playerView.url = [NSURL URLWithString:videoPath];
-        //播放
-        [_playerView playVideo];
-        //返回按钮点击事件回调
-        [_playerView backButton:^(UIButton *button) {
-            NSLog(@"返回按钮被点击");
-        }];
-        //播放完成回调
-        [_playerView endPlay:^{
+    if (indexPath.section ==1) {
+        NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
+        NSString * contentStr = [_infoDict safeObjectForKey:@"content"];
+        float height = 65+([self getContentHeightWithContent:contentStr Font:15]<20?20:[self getContentHeightWithContent:contentStr Font:15]);
+        if (videoPath.length>5) {
+            //记录被点击的Cell
             //销毁播放器
             [_playerView destroyPlayer];
-            _playerView = nil;
+            CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(10,height+10, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
+            _playerView = playerView;
+            [self.tableview addSubview:_playerView];
+            //视频地址
+            _playerView.url = [NSURL URLWithString:videoPath];
+            //播放
+            [_playerView playVideo];
+            //返回按钮点击事件回调
+            [_playerView backButton:^(UIButton *button) {
+                NSLog(@"返回按钮被点击");
+            }];
+            //播放完成回调
+            [_playerView endPlay:^{
+                //销毁播放器
+                [_playerView destroyPlayer];
+                _playerView = nil;
+                
+                NSLog(@"播放完成");
+            }];
             
-            NSLog(@"播放完成");
-        }];
+        }else{
+            FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
+            fc.images = _dataArray;
+            fc.page = indexPath.row;
+            
+            [self presentViewController:fc animated:YES completion:nil];
+
+        }
 
     }
 }
@@ -448,9 +459,17 @@
     }
 
 }
+-(void)clearSDCeche
+{
+    [[SDWebImageManager sharedManager] cancelAll];
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
+    [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    [self clearSDCeche];
     // Dispose of any resources that can be recreated.
 }
 

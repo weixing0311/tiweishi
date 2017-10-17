@@ -38,7 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"提交订单";
-    [self setTBRedColor];
+    [self setTBWhiteColor];
+;
     
     addressDict  = [NSMutableDictionary dictionary];
     self.priceLabel.adjustsFontSizeToFitWidth = YES;

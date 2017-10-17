@@ -121,6 +121,8 @@ static HealthDetailsItem *item;
         
     }
     float x =0.0f;
+    
+    
     switch (row) {
         case 0:
             switch (btnTag) {
@@ -323,5 +325,208 @@ static HealthDetailsItem *item;
     }
     return nil;
 }
+
+-(NSString *)getinstructionsWithType:(NSInteger)index
+{
+    switch (index) {
+        case 1:
+            return @"BMI是Body Mass Index 的缩写，BMI中文是“体质指数”的意思，是以您的身高体重计算出来的。BMI是世界公认的一种评定肥胖程度的分级方法，主要用于统计，当需要比较及分析一个人的体重对于不同高度的人所带来的健康影响时，BMI值是一个中立而可靠的指标，是国际上常用的衡量人体胖瘦程度以及是否健康的一个标准。";
+            break;
+        case 2:
+            return @"骨骼肌又称横纹肌，肌肉中的一种。骨骼肌是由数以千计，具有收缩能力的肌细胞所组成。任何的体育活动，都是骨骼肌收缩的成果，人体共有600多条骨骼肌，约占全身重量的40%。";
+            
+            break;
+        case 3:
+            return @"体脂率是指人体内脂肪重量在人体总体重中所占的比例，又称体脂百分数，它反映人体内脂肪含量的多少。";
+            
+            break;
+
+        case 4:
+            return @"蛋白质是组成人体一切细胞、组织的重要成分。机体所有重要的组成部分都需要有蛋白质的参与，蛋白质是生命的物质基础，是构成细胞的基本有机物，是生命活动的主要承担者。没有蛋白质就没有生命。";
+            
+            break;
+
+        case 5:
+            return @"水分是指组成身体的各项物质所包含的水分。";
+            
+            break;
+
+        case 6:
+            return @"脂肪量是指身体成分中，脂肪组织所占的重量。测量脂肪量比单纯的只测量体重更能反映我们身体的脂肪水平。";
+            
+            break;
+
+        case 7:
+            return @"肌肉，主要由肌肉组织构成。 肌肉细胞的形状细长，呈纤维状，故肌肉细胞通常称为肌纤维。中医理论中，肌肉指身体肌肉组织和皮下脂肪组织的总称。";
+            
+            break;
+
+        case 8:
+            return @"基础代谢是指人体维持生命的所有器官所需要的最低能量需要。测定方法是在人体在清醒而又安静的状态下，不受肌肉活动、环境温度、食物及精神紧张等影响时的能量代谢率。基础代谢率越高消耗的热量就越多，越不容易发胖。";
+            
+            break;
+
+        case 9:
+            return @"内脏脂肪是人体脂肪中的一种。它与皮下脂肪（也就是我们平时所了解的身体上可以摸得到的“肥肉”） 不同，它围绕着人的脏器，主要存在于腹腔内。一定量的内脏脂肪其实是人体必需的，因为内脏脂肪围绕着人的脏器，对人的内脏起着支撑、稳定和保护的作用。";
+            
+            break;
+
+        default:
+            break;
+    }
+    return nil;
+}
+
+-(NSString *)getHealthDetailShuoMingWithStatus:(NSInteger)myType item:(HealthDetailsItem*)item
+{
+    //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
+    switch (myType) {
+        case 1:
+            switch (item.bmiLevel) {
+                case 1:
+                    return @"您目前BMI值过低，属于偏瘦人群，建议您多补充营养并进行适当的锻炼，进行适当的力量训练可以使身体更加健康。";
+                    break;
+                case 2:
+                    return @"您目前的BMI值处于正常状态，属于标准身材，建议您保持目前的饮食习惯与作息时间，可以根据自己的状况进行适当的微调，以便更好的保持状况。";
+                    break;
+                case 3:
+                    return @"您目前的BMI值处于过高的状态，建议您控制饮食，少吃高脂肪食物与含糖量高的食物，少喝酒，多吃蔬菜水果类食物，建议您每天锻炼半小时，促进脂肪的燃烧。";
+                    break;
+                case 4:
+                    return @"您目前的BMI值处于过高的状态，建议您控制饮食，少吃高脂肪食物与含糖量高的食物，少喝酒，多吃蔬菜水果类食物，建议您每天锻炼半小时，促进脂肪的燃烧。";
+                    break;
+                    
+                default:
+                    break;
+            }
+        case 2:
+            switch (item.boneMuscleLevel) {
+                case 1:
+                    return @"您的骨骼肌含量属于标准状态，这代表您在运动或高强度劳动时会比其他人拥有更强的耐力，如果您想要拥有更好的耐力与力量，建议您保持锻炼。";
+                    break;
+                case 2:
+                    return @"您的骨骼肌含量过低，这可能会造成您身体部分部位酸痛、无力等情况，建议您加强锻炼，增强骨骼肌的耐力与强度。";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case 3:
+            switch (item.fatPercentageLevel) {
+                case 1:
+                    return @"您身体的体脂率处于标准状态，建议您继续保持，不要刻意减脂与增重，要注重均衡发展，在锻炼时要注意补充身体所需要的营养。";
+                    break;
+                case 2:
+                    return @"您身体的体脂率偏低，当前身体状况比较健康，但是可能会引起身体某些功能的失调，体脂率过低对人体也是无益处的，如果您不是专业运动员或喜欢健身的话，还是建议您进行适当的增肌，增加自身体脂率。";
+                    break;
+                case 3:
+                    return @"您目前的体脂率处于偏高的状态，建议您在饮食时减少油脂与糖类的摄入，并且每天进行半小时的有氧运动以促进脂肪的消耗。";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+
+        case 4:
+            switch (item.proteinLevel) {
+                case 1:
+                    return @"您身体内所含的蛋白质处于标准状态，这代表您身体的各方面机能都属于良好状态，保持住当前的饮食习惯与睡眠时间奥。";
+                    break;
+                case 2:
+                    return @"您身体所含的蛋白质较低，如果人体所含蛋白质过低的话会引发免疫力低下，脱发、记忆力衰弱、肌肉无力、容易疲惫等，建议您多吃鸡蛋白、牛奶和豆类制品，这些都富含优秀的蛋白质营养，且脂肪含量较低奥。";
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            break;
+
+            
+            
+        case 5:
+            switch (item.waterLevel) {
+                case 1:
+                    return @"您身体内的水分含量较低，建议您多补充水分，一般而言，成年人每一千克体重需饮水40毫升，您可以根据自身的体重来补充自身每天所需要的水分。";
+                    break;
+                case 2:
+                    return @"您身体的水分含量处于标准状态，请保持这种状态，这代表您的身体循环系统比较正常，身体比较健康。";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+
+        case 6:
+            switch (item.fatWeightLevel) {
+                case 1:
+                    return @"您身体的脂肪量处于标准状态，表示您的身体状况处于比较好的阶段，但是还是要未雨绸缪奥，在饮食上不要太放肆奥，多锻炼总是没有坏处的。";
+                    break;
+                case 2:
+                    return @"您的脂肪量比较低，这代表着您身体比较健康，肥胖人群可能会患的各种疾病都与你没有关系，继续保持奥~";
+                    break;
+                case 3:
+                    return @"您目前身体的脂肪量偏高，建议您少吃高油脂类的食物，多吃蔬菜水果，每天进行半小时的有氧运动会使您的身体状况更好。";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case 7:
+            switch (item.muscleLevel) {
+                case 1:
+                    return @"您身体内所含的肌肉量处于标准状态，肌肉是身体消耗能量的主力军，充足的肌肉量能让您更快的消耗热量，以健康的方式减掉多余的脂肪。";
+                    break;
+                case 2:
+                    return @"您身体内所含的肌肉量较低，肌肉量过低会引发基础代谢降低，热量消耗随之降低，摄入的过多热量就会在身体内转化成脂肪，形成肥胖，建议您每天进行适当的锻炼，增加肌肉量。";
+                    break;
+                    
+                    
+                default:
+                    break;
+            }
+            
+            
+            break;
+            
+        case 8:
+            switch (item.boneLevel) {
+                case 1:
+                    return @""  ;
+                    break;
+                case 2:
+                    return @"";
+                    break;
+                default:
+                    break;
+            }
+            break;
+            
+
+        case 9:
+            switch (item.visceralFatPercentageLevel) {
+                case 1:
+                    return @"您目前的内脏脂肪属于标准状态，建议您继续保持当前的饮食习惯与运动习惯，不要因为现在的状态比较好就心生懈怠奥，内脏脂肪过低或过高都会对身体造成很大的危害呢！";
+                    break;
+                case 2:
+                    return @"您目前的内脏脂肪偏低，可能会造成免疫力下降，体力耐力不足等现象，这是因为胃和小肠的吸收能力不好照成的，建议您多运动改变能量的吸收与输出状态，多吃主食补充营养，保证充足睡眠来进行调整。";
+                    break;
+                case 3:
+                    return @"您目前的内脏脂肪偏高，内脏脂肪过高容易引起各种心血管疾病，建议您多做运动，游泳、慢跑、快步走都是降低内脏脂肪的好方法。";
+                    break;
+                default:
+                    break;
+            }
+            break;
+        default:
+            break;
+    }
+    return nil;
+}
+
 
 @end

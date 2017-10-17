@@ -36,7 +36,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setTBWhiteColor];
+
     self.title = @"我的订单";
     [self setTBRedColor];
     self.tableview.delegate =self;

@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"订单详情";
-    [self setNbColor];
+    [self setTBWhiteColor];
     self.tableview .delegate =self;
     self.tableview.dataSource = self;
     self.view.backgroundColor =HEXCOLOR(0xeeeeee);

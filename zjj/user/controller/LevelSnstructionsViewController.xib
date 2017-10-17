@@ -415,7 +415,7 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </imageView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-cY-H9E">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-cY-H9E">
                     <rect key="frame" x="20" y="366" width="335" height="187"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="187" id="wjr-jf-cSx"/>

@@ -19,7 +19,8 @@
 #import "ArticleDetailViewController.h"
 #import "EditUserInfoViewController.h"
 #import "BeforeAfterContrastCell.h"
-@interface NewMineHomePageViewController ()<UITableViewDataSource,UITableViewDelegate,PublicArticleCellDelegate,NewMineHomePageHeaderCellDelegate>
+#import "FcBigImgViewController.h"
+@interface NewMineHomePageViewController ()<UITableViewDataSource,UITableViewDelegate,PublicArticleCellDelegate,NewMineHomePageHeaderCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic, weak) CLPlayerView *playerView;
@@ -32,13 +33,14 @@
     int page;
     int pageSize;
     PublicArticleCell * PlayingCell;
+    int changeImageNum;
 
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    [self.tableview headerBeginRefreshing];
+//    [self.tableview headerBeginRefreshing];
 
 }
 -(void)viewDidDisappear:(BOOL)animated
@@ -47,13 +49,16 @@
     [_playerView destroyPlayer];
     _playerView = nil;
     PlayingCell = nil;
+    [self clearSDCeche];
+
     
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setTBWhiteColor];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshMyInfo) name:@"refreshHomePageInfo" object:nil];
     if (![self.userId isEqualToString:[UserModel shareInstance].userId]) {
         self.shareBtn.hidden = YES;
     }else{
@@ -66,6 +71,9 @@
     self.infoDict = [NSMutableDictionary dictionary];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self setRefrshWithTableView:self.tableview];
+}
+-(void)refreshMyInfo
+{
     [self.tableview headerBeginRefreshing];
 }
 -(void)headerRereshing
@@ -202,6 +210,9 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.headImageView sd_setBackgroundImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"defaultHead")
          ];
+        [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_")];
+        
+        
         cell.nicknamelb.text = [_infoDict safeObjectForKey:@"nickName"];
         NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
         if (introduction.length<1) {
@@ -270,20 +281,18 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        cell.tag = indexPath.row;
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.gzBtn.hidden = YES;
 
         if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
-            cell.gzBtn.hidden = YES;
             cell.jbBtn.hidden = YES;
         }else{
-            cell.gzBtn.hidden = NO;
             cell.jbBtn.hidden = NO;
         }
         
-        cell.delegate = self;
-        cell.tag = indexPath.row;
         [cell setInfoWithDict:item];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
     }
@@ -399,13 +408,16 @@
 -(void)didChangeHeaderImage
 {
     if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
-
+        changeImageNum =1;
+        [self ChangeHeadImage];
     }
 }
 -(void)changeBgImageView
 {
     if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
-        
+        changeImageNum =2;
+        [self ChangeHeadImage];
+
     }
 //    app/user/uploadBackGroundImg.do   userId   imgurl
 }
@@ -413,7 +425,37 @@
 {
     
 }
+-(void)didGzWithCell:(PublicArticleCell*)cell
+{
+    if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
+        return;
+    }
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    if (cell.gzBtn.selected ==YES) {
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+            DLog(@"dic-关注成功--%@",dic);
+            cell.gzBtn.selected = YES;
+            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        } failure:^(NSError *error) {
+            
+        }];
+    }else{
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+            DLog(@"dic-关注成功--%@",dic);
+            cell.gzBtn.selected = YES;
+            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 
+}
 -(void)didZanWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
@@ -431,6 +473,38 @@
     }];
     
 }
+
+-(void)didJBWithCell:(PublicArticleCell *)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        
+    }];
+    [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (alert.textFields.firstObject.text.length<5) {
+            [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
+            return ;
+        }
+        NSMutableDictionary * params = [NSMutableDictionary dictionary];
+        [params safeSetObject:model.uid forKey:@"articleId"];
+        [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
+        } failure:^(NSError *error) {
+            
+        }];
+        
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+    
+}
+
 -(void)refreshZanInfoWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
@@ -474,7 +548,6 @@
         
     }];
     
-    
     //    /app/community/article/updateForwardingnum.do
     //        参数：    id //文章Id
 }
@@ -495,7 +568,6 @@
         } failure:^(NSError *error) {
             
         }];
-
     }
 }
 
@@ -523,8 +595,141 @@
     
 }
 
+-(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(int)index
+{
+    CommunityModel * item = [_dataArray objectAtIndex:cell.tag];
+    FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
+    fc.images = [NSMutableArray arrayWithArray:item.pictures];
+    fc.page = index;
+    
+    [self presentViewController:fc animated:YES completion:nil];
+
+}
+
+- (void)ChangeHeadImage{
+    
+    
+    
+    UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:@"修改头像" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
+        picker.delegate = self;
+        picker.allowsEditing = YES;//设置可编辑
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:nil];
+        
+    }]];
+    
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+            
+        }
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self presentViewController:pickerImage animated:YES completion:nil];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+    
+}
+#pragma mark ----imagepickerdelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    NSString *mediaType=[info objectForKey:UIImagePickerControllerMediaType];
+    //判断资源类型
+    if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
+        //如果是图片
+        UIImage *image =info[UIImagePickerControllerEditedImage];
+        [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+
+        if (changeImageNum ==1) {
+            NSData *  fileDate = UIImageJPEGRepresentation(image, 0.001);
+            [self updateImageWithImage:fileDate];
+            
+        }else if(changeImageNum ==2){
+            NSData *  fileDate = UIImageJPEGRepresentation(image, 0.1);
+
+            [self updateBGImageWithImage:fileDate];
+            
+        }
+        
+    }
+}//点击cancel 调用的方法
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)updateImageWithImage:(NSData *)fileData
+{
+    
+    
+    NSMutableDictionary *param =[NSMutableDictionary dictionary];
+    [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [SVProgressHUD showWithStatus:@"上传中.."];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadHeadImg.do" paramters:param imageData:fileData imageName:@"headimgurl" success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
+        [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
+        [self.tableview reloadData];
+        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
+    } failure:^(NSError *error) {
+        
+        DLog(@"faile-error-%@",error);
+    }];
+}
+
+
+#pragma  mark --上传背景图
+-(void)updateBGImageWithImage:(NSData *)fileData
+{
+    NSMutableDictionary *param =[NSMutableDictionary dictionary];
+    [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [SVProgressHUD showWithStatus:@"上传中.."];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadBackGroundImg.do" paramters:param imageData:fileData imageName:@"imgurl" success:^(NSDictionary *dic) {
+        [SVProgressHUD dismiss];
+        [self.tableview headerBeginRefreshing];
+        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
+    } failure:^(NSError *error) {
+        
+        DLog(@"faile-error-%@",error);
+    }];
+}
+-(void)clearSDCeche
+{
+    [[SDWebImageManager sharedManager] cancelAll];
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
+    [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
+    
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    [self clearSDCeche];
     // Dispose of any resources that can be recreated.
 }
 @end

@@ -88,7 +88,8 @@
     
 }
 - (IBAction)didShowBuyView:(id)sender {
-    self.buyView.hidden = NO;
+    [self didBuy:nil];
+//    self.buyView.hidden = NO;
 }
 - (IBAction)didRed:(id)sender {
     if ([self.countlb.text intValue]==1) {

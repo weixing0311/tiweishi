@@ -93,6 +93,8 @@
 @property (nonatomic,assign) int                height;//严重
 
 
+-(NSString *)getHealthDetailShuoMingWithStatus:(NSInteger)myType item:(HealthDetailsItem*)item;//获取等级说明
+-(NSString *)getinstructionsWithType:(NSInteger)index;
 -(void)getInfoWithDict:(NSDictionary *)dict;
 -(NSMutableDictionary *)setSliderInfoWithRow:(NSInteger)row btnTag:(NSInteger)btnTag;
 /*

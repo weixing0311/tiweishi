@@ -23,7 +23,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBRedColor];
+    [self setTBWhiteColor];
+;
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;

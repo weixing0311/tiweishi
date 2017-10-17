@@ -223,6 +223,7 @@
 		6C47124E1F27391700E5E750 /* WXPsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */; };
 		6C6773731F90AE470007CB2D /* WeighingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6773711F90AE470007CB2D /* WeighingViewController.m */; };
 		6C6773741F90AE470007CB2D /* WeighingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6773721F90AE470007CB2D /* WeighingViewController.xib */; };
+		6C6773791F9596520007CB2D /* NewHealthHistoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6773771F9596520007CB2D /* NewHealthHistoryListViewController.m */; };
 		6C6CFE5F1F8DFED9005C2738 /* LevelSnstructionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE5D1F8DFED9005C2738 /* LevelSnstructionsViewController.m */; };
 		6C6CFE601F8DFED9005C2738 /* LevelSnstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE5E1F8DFED9005C2738 /* LevelSnstructionsViewController.xib */; };
 		6C6CFE651F8E3408005C2738 /* ADDChengUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE631F8E3408005C2738 /* ADDChengUserViewController.m */; };
@@ -1185,6 +1186,8 @@
 		6C6773701F90AE470007CB2D /* WeighingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeighingViewController.h; sourceTree = "<group>"; };
 		6C6773711F90AE470007CB2D /* WeighingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeighingViewController.m; sourceTree = "<group>"; };
 		6C6773721F90AE470007CB2D /* WeighingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeighingViewController.xib; sourceTree = "<group>"; };
+		6C6773761F9596520007CB2D /* NewHealthHistoryListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthHistoryListViewController.h; sourceTree = "<group>"; };
+		6C6773771F9596520007CB2D /* NewHealthHistoryListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewHealthHistoryListViewController.m; sourceTree = "<group>"; };
 		6C6CFE581F8CAF9D005C2738 /* praise_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "praise_selected@3x.png"; sourceTree = "<group>"; };
 		6C6CFE591F8CAF9E005C2738 /* praise_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "praise_selected@2x.png"; sourceTree = "<group>"; };
 		6C6CFE5C1F8DFED9005C2738 /* LevelSnstructionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelSnstructionsViewController.h; sourceTree = "<group>"; };
@@ -2216,6 +2219,7 @@
 		6C1B2B841EECDEFD0092AAF0 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				6C6773751F95962A0007CB2D /* HistoryList */,
 				6C67736F1F90AE300007CB2D /* weighing(称重) */,
 				6C6CFEB81F908C75005C2738 /* HealthDetail */,
 				6C6CFE7D1F8F66F9005C2738 /* historyInfo */,
@@ -3187,6 +3191,15 @@
 				6C6773721F90AE470007CB2D /* WeighingViewController.xib */,
 			);
 			name = "weighing(称重)";
+			sourceTree = "<group>";
+		};
+		6C6773751F95962A0007CB2D /* HistoryList */ = {
+			isa = PBXGroup;
+			children = (
+				6C6773761F9596520007CB2D /* NewHealthHistoryListViewController.h */,
+				6C6773771F9596520007CB2D /* NewHealthHistoryListViewController.m */,
+			);
+			name = HistoryList;
 			sourceTree = "<group>";
 		};
 		6C6CFE5B1F8DFEAA005C2738 /* Levelinstructions(等级说明) */ = {
@@ -5140,6 +5153,7 @@
 				6C1B2B5B1EECDE350092AAF0 /* AppDelegate.m in Sources */,
 				6C36397C1EFE47E100268851 /* AAOptionsConstructor.m in Sources */,
 				6C363A101F04FD1000268851 /* OrderDetailViewController.m in Sources */,
+				6C6773791F9596520007CB2D /* NewHealthHistoryListViewController.m in Sources */,
 				6C3639C01F023F6600268851 /* HDCell.m in Sources */,
 				6CD010651EF29A4A00FB9419 /* BaseNetWorkService.m in Sources */,
 				6C3639881EFE47E100268851 /* AAChart.m in Sources */,

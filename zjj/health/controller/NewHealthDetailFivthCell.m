@@ -30,9 +30,9 @@
         self.value1Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_BMI];
 
 
-        self.title2Label.text = @"体重";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.weight];
-        self.value2Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_BODYWEIGHT];
+        self.title2Label.text = @"骨骼肌";
+        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneMuscleWeight];
+        self.value2Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE];
 
         
         self.title3Label.text = @"体脂率";
@@ -76,71 +76,148 @@
         self.value3Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT];
 
     }
-
 }
 -(void)setDetailViewContentWithButtonIndex:(NSInteger)index
 {
-    
+    float currX;
     switch (index) {
         case 1:
             self.headerImageView.image = getImage(@"BMI1_");
             self.headerNamelb.text = @"BMI";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmi];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+            
+            self.sliderLislb.text = @"18.5";
+            self.sliderMorlb.text = @"24";
+            
+            currX = [self getlocationDianL:self.currItem.bmi  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 2:
-            self.headerImageView.image = getImage(@"BMI1_");
-            self.headerNamelb.text = @"体重";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.weight];
+            
+            self.headerImageView.image = getImage(@"bone1_");
+            self.headerNamelb.text = @"骨骼肌";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            self.sliderLislb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.boneMuscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 3:
             self.headerImageView.image = getImage(@"fat%1_");
             self.headerNamelb.text = @"体脂率";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.visceralFatPercentage];
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.fatWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 4:
             self.headerImageView.image = getImage(@"danBZ1_");
             self.headerNamelb.text = @"蛋白质";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.proteinWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.proteinWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.proteinWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.proteinWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 5:
             self.headerImageView.image = getImage(@"water1_");
             self.headerNamelb.text = @"水分";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.waterWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.waterWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.waterWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.waterWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 6:
             self.headerImageView.image = getImage(@"fat1_");
             self.headerNamelb.text = @"脂肪量";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.fatWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+
 
             break;
         case 7:
             self.headerImageView.image = getImage(@"jirou1_");
             self.headerNamelb.text = @"肌肉";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.muscleWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.muscleWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.muscleWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.muscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 8:
             self.headerImageView.image = getImage(@"daiX1_");
             self.headerNamelb.text = @"基础代谢";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmr];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            currX = [self getlocationDianL:self.currItem.visceralFatPercentage  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 9:
             self.headerImageView.image = getImage(@"fei_");
             self.headerNamelb.text = @"内脏脂肪";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.visceralFatPercentage];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            self.sliderLislb.text =@"10";
+            self.sliderMorlb.text = @"14";
+            
+            currX = [self getlocationDianL:self.currItem.visceralFatPercentage Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
 
         default:
+            self.headerImageView.image = getImage(@"");
+            self.headerNamelb.text = @"";
+            self.secondTitle.text = @"";
+            self.secondHeadImage.image = self.headerImageView.image;
+            
+            self.sliderLislb.text =@"";
+            self.sliderMorlb.text = @"";
+            
+            currX = 30;
+
             break;
     }
-    
+    self.headerContentlb.text = [[HealthDetailsItem instance]getinstructionsWithType:index];
+    self.headerContentlb.adjustsFontSizeToFitWidth =YES;
+    NSString * contentStr =[[HealthDetailsItem instance]getHealthDetailShuoMingWithStatus:index item:self.currItem];
+    self.secondContent.text = contentStr;
+    self.sliderIconImage.frame = CGRectMake(currX, self.sliderBgView.bounds.size.height/2-10, 20, 20);
+
 }
 
 - (IBAction)didClickFirst:(id)sender {
@@ -185,7 +262,9 @@
 }
 
 
--(float)getlocationDianL:(float)dian WithDian:(float)left right:(float)right
+
+
+-(float)getlocationDianL:(float)dian Withleft:(float)left right:(float)right
 {
     float width = (JFA_SCREEN_WIDTH -60)/3;
 

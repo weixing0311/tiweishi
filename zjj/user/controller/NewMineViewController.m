@@ -32,7 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的";
-    [self setTBRedColor];
+    [self setTBWhiteColor];
+;
     
     [self setNavi];
     

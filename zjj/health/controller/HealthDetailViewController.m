@@ -37,6 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"健康报告";
     [self setTBWhiteColor];
     self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableview.delegate = self;
@@ -103,7 +104,7 @@
             ((ClickItemNo >3&&ClickItemNo<7)&&indexPath.row==1)||
             (ClickItemNo>6&&indexPath.row==2))
         {
-            return (JFA_SCREEN_WIDTH-20)/3+200;
+            return (JFA_SCREEN_WIDTH-20)/3+340;
         }
         else
         {
@@ -113,7 +114,7 @@
 
     else
     {
-        return 140;
+        return 0;
     }
 
 }
@@ -121,7 +122,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 6;
+    return 5;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -185,7 +186,7 @@
         return cell;
         
     }
-    else if (indexPath.section ==4)
+    else /*if (indexPath.section ==4)*/
     {
         static NSString * identifier = @"NewHealthDetailFivthCell";
         NewHealthDetailFivthCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -195,7 +196,7 @@
         cell.delegate = self;
         cell.tag = indexPath.row+1;
         [cell setInfoWithDict:self.infoItem];
-        
+
         if (!ClickItemNo|| ClickItemNo ==0) {
             cell.detailView.hidden = YES;
         }else if (((ClickItemNo>0&&ClickItemNo<4)&&indexPath.row==0)||
@@ -210,18 +211,19 @@
 
         return cell;
         
-    }else
-    {
-        static NSString * identifier = @"NewHealthDetailSixCell";
-        NewHealthDetailSixCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [self getXibCellWithTitle:identifier];
-        }
-        [cell setInfoWithDict:self.infoItem];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-        return cell;
     }
+//    else
+//    {
+//        static NSString * identifier = @"NewHealthDetailSixCell";
+//        NewHealthDetailSixCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//        if (!cell) {
+//            cell = [self getXibCellWithTitle:identifier];
+//        }
+//        [cell setInfoWithDict:self.infoItem];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//        return cell;
+//    }
 
 }
 

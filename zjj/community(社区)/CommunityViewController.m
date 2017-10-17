@@ -46,6 +46,8 @@
     [_playerView destroyPlayer];
     _playerView = nil;
     PlayingCell = nil;
+    [self clearSDCeche];
+
 
 
 }
@@ -395,10 +397,17 @@
     
 
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+-(void)clearSDCeche
+{
     [[SDWebImageManager sharedManager] cancelAll];
     [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
+    [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
+
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [self clearSDCeche];
+
     // Dispose of any resources that can be recreated.
 }
 

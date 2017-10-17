@@ -36,6 +36,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTBWhiteColor];
+
     [self setPickView];
     [self setDatePickerView];
     self.nicknametf.delegate = self;

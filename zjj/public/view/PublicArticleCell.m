@@ -66,6 +66,8 @@
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(didGzWithCell:)]) {
         [self.delegate didGzWithCell:self];
+    }else{
+        NSLog(@"关注代理没走通");
     }
 }
 
@@ -314,6 +316,15 @@
 //    }else{
     
     [cell.headerImageView sd_setImageWithURL:[dict safeObjectForKey:@"videoImageStr"] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (error) {
+            cell.headerImageView.image = getImage(@"bigDefalut_");
+            return ;
+        }
+//        if (!image) {
+//            cell.headerImageView.image = getImage(@"");
+//
+//            return ;
+//        }
         if (_imagesArray.count==1) {
           
             cell.midImageView.image = [self cutImage:image imgViewWidth:BigImageHeight/image.size.height*image.size.width imgViewHeight:BigImageHeight];
@@ -321,11 +332,6 @@
             cell.midImageView.frame = CGRectMake(0, 0, BigImageHeight/image.size.height*image.size.width, BigImageHeight);
             
             cell.headerImageView.image = [self cutImage:image imgViewWidth:BigImageWidth imgViewHeight:BigImageHeight];
-//            UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-//            UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
-//            effectview.frame = CGRectMake(0, 0, BigImageWidth, BigImageHeight);
-//
-//            [cell.headerImageView addSubview:effectview];
 
             cell.midImageView.center = cell.center;
     }else{

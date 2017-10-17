@@ -23,7 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"设置";
-    [self setTBRedColor];
+    [self setTBWhiteColor];
+
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];

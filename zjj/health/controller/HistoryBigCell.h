@@ -18,8 +18,13 @@
 - (IBAction)didShowDetailInfo:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *listTableview;
 -(void)setInfoWithDict:(NSDictionary *)dict;
+@property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
+
+
+
 @end
 @protocol historySectionCellDelegate <NSObject>
 -(void)showCellTabWithCell:(HistoryBigCell*)cell;
+-(void)didChooseWithCell:(HistoryBigCell *)cell;
 @end
 

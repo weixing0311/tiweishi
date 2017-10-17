@@ -12,6 +12,7 @@
 #import "Daysquare.h"
 #import "ShareHealthItem.h"
 #import "HistoryBigCell.h"
+#import "NewHealthHistoryListViewController.h"
 @interface HistoryInfoViewController ()<UITableViewDelegate,UITableViewDataSource,historySectionCellDelegate>
 @property (weak,  nonatomic) IBOutlet UIView *rlView;
 @property (nonatomic,strong) HistoryHeaderView * headerView;
@@ -50,6 +51,8 @@
     [self setExtraCellLineHiddenWithTb:self.tableview];
     
     [self.headerView.calendarView addTarget:self action:@selector(calendarViewDidChange:) forControlEvents:UIControlEventValueChanged];
+    
+    [self getInfoWithDate:[[NSDate date]yyyymmdd]];
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -60,20 +63,20 @@
     formatter.dateFormat = @"YYYY-MM-dd";
     NSLog(@"%@", [formatter stringFromDate:self.headerView.calendarView.selectedDate]);
     
-    [self getInfoWithDate:[self.headerView.calendarView.selectedDate yyyymmddhhmmss]];
+    [self getInfoWithDate:[self.headerView.calendarView.selectedDate yyyymmdd]];
 }
 
 -(void)getInfoWithDate:(NSString *)dateStr
 {
     
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
-    [param safeSetObject:self.dataId forKey:@"dataId"];
+    [param safeSetObject:dateStr forKey:@"nowDate"];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatOneDay.do" paramters:param success:^(NSDictionary *dic) {
         DLog(@"%@",dic);
         _infoDict = [dic safeObjectForKey:@"data"];
-        [_dataArray addObject:_infoDict];
+        _dataArray = [NSMutableArray arrayWithArray:[_infoDict safeObjectForKey:@"array"]];
         [self.tableview reloadData];
     } failure:^(NSError *error) {
         DLog(@"%@",error);
@@ -125,8 +128,9 @@
     if (!cell) {
         cell = [self getXibCellWithTitle:identifier];
     }
+    NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
     cell.delegate = self;
-    [cell setInfoWithDict:_infoDict];
+    [cell setInfoWithDict:dic];
     
     return cell;
 }
@@ -153,6 +157,10 @@
     [self.tableview reloadData];
 }
 
+- (IBAction)didEnterShareListView:(id)sender {
+    NewHealthHistoryListViewController * nhl = [[NewHealthHistoryListViewController alloc]init];
+    [self.navigationController pushViewController:nhl animated:YES];
+}
 
 
 - (void)didReceiveMemoryWarning {

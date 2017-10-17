@@ -25,7 +25,8 @@
     [super viewDidLoad];
     
     self.title = @"我的等级";
-    [self setTBRedColor];
+    [self setTBWhiteColor];
+;
     
     UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"Prompt.png") style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
     self.navigationItem.rightBarButtonItem = rightitem;
@@ -102,47 +103,19 @@
         
         
         int  countIntegral = [[self.infoDict objectForKey:@"countIntegral"]intValue];
-        int  CurrentInegral = 0;
-        NSString * currentLevel;
+        NSMutableArray * bigArr =[NSMutableArray array];
         NSArray * arr = [self.infoDict objectForKey:@"integeralGrade"];
         for (int i =0; i<arr.count; i++) {
             NSDictionary * dic = [arr objectAtIndex:i];
             int  integral = [[dic objectForKey:@"integral"]intValue];
-            DLog(@"i =%d integral=%d",i,integral);
-
-            if (i-1<0) {
-                if (countIntegral<integral) {
-                    CurrentInegral = integral-countIntegral;
-                    currentLevel = [dic objectForKey:@"gradeName"];
-                }
+            if (countIntegral<integral) {
+                [bigArr addObject:dic];
             }
-            else{
-                NSDictionary * dic1 = [arr objectAtIndex:i];
-                int  integral1 = [[dic1 objectForKey:@"integral"]intValue];
-                NSDictionary * dic2 = [arr objectAtIndex:i-1];
-                int  integral2 = [[dic2 objectForKey:@"integral"]intValue];
-                
-                if (i==arr.count-1)
-                {
-                    if (countIntegral>=integral) {
-                        CurrentInegral = 0;
-                        currentLevel = [dic1 objectForKey:@"gradeName"];
-                    }else{
-                        currentLevel = [dic2 objectForKey:@"gradeName"];
-                    }
-                }else{
-                
-                if (countIntegral<integral1&&countIntegral>integral2) {
-                    CurrentInegral = integral1-countIntegral;
-                    currentLevel = [dic1 objectForKey:@"gradeName"];
-                    
-                }
-                
-                }
-            }
-            
         }
-        cell.levellb.text = currentLevel;
+        DLog(@"bigArr--%@",bigArr);
+        NSDictionary * currDic = [arr objectAtIndex:(arr.count-1-bigArr.count)];
+        
+        cell.levellb.text = [currDic objectForKey:@"gradeName"];;
         
         //判断是否签到
         
