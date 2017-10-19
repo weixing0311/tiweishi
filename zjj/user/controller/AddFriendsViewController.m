@@ -17,11 +17,15 @@
 @end
 
 @implementation AddFriendsViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBWhiteColor];
-    self.title = @"添加好友g";
+    self.title = @"添加好友";
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     
     self.navigationItem.leftBarButtonItem = rightItem;
@@ -53,6 +57,9 @@
     [self.navigationController popViewControllerAnimated: YES];
 }
 - (IBAction)didGetqrcode:(id)sender {
+    if ([self.searchtf isFirstResponder]) {
+        [self.searchtf resignFirstResponder];
+    }
     QRCodeResignViewController * qr = [[QRCodeResignViewController alloc]init];
     UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:qr];
     qr.delegate = self;
@@ -61,6 +68,10 @@
     
 }
 - (IBAction)showmyQRcode:(id)sender {
+    if ([self.searchtf isFirstResponder]) {
+        [self.searchtf resignFirstResponder];
+    }
+
     NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"QrCodeView"owner:self options:nil];
     
     QrCodeView *rcodeView = [nib objectAtIndex:0];
@@ -73,7 +84,12 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    
     [self getInfoWithText:self.searchtf.text];
+    if ([self.searchtf isFirstResponder]) {
+        [self.searchtf resignFirstResponder];
+    }
+
     return YES;
     
 }
@@ -81,21 +97,17 @@
 {
     NSDictionary * dic = [self getURLParameters:infoStr];
     
-    [self getInfoWithText:[dic safeObjectForKey:@"recid"]];
+//    [self getInfoWithText:[dic safeObjectForKey:@"recid"]];
 
-//    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-//    [params safeSetObject:[dic safeObjectForKey:@"recid"] forKey:@"recid"];
-//
-//    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/appuser/getPhoneByUserId.do" paramters:params success:^(NSDictionary *dic) {
-//
-//        [[UserModel shareInstance]showSuccessWithStatus:@"获取推荐人手机号成功"];
-//        NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
-//        NSString * phone = [dataDic safeObjectForKey:@"phone"];
-//        [self getInfoWithText:phone];
-//        DLog(@"%@",dic);
-//    } failure:^(NSError *error) {
-//
-//    }];
+    NSMutableDictionary * params =[NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [params setObject:[dic safeObjectForKey:@"recid"] forKey:@"followId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+        DLog(@"dic-关注成功--%@",dic);
+        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+    } failure:^(NSError *error) {
+        
+    }];
 
 }
 #pragma mark  -----SubviewDelegate

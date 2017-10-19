@@ -25,11 +25,11 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self setTBWhiteColor];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBWhiteColor];
 
     self.tableview.delegate =self;
     self.tableview.dataSource =self;
@@ -90,6 +90,11 @@
         } failure:^(NSError *error) {
             [self.tableview footerEndRefreshing];
             [self.tableview headerEndRefreshing];
+
+            if ([error code] ==402) {
+                [_dataArray removeAllObjects];
+                [self.tableview reloadData];
+            }
             
         }];
 
@@ -122,6 +127,10 @@
     } failure:^(NSError *error) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
+        if ([error code] ==402) {
+            [_dataArray removeAllObjects];
+            [self.tableview reloadData];
+        }
 
     }];
     }
@@ -201,7 +210,7 @@
             [params setObject:model.userId forKey:@"followId"];
             self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
                 DLog(@"dic-取消关注成功--%@",dic);
-                cell.gzbtn.selected = NO;
+                [self getInfo];
                 [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
             } failure:^(NSError *error) {
                 

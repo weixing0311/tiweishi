@@ -133,6 +133,9 @@
 }
 -(void)ConfirmTheGoodsWithOrderNo:(NSString *)orderNo
 {
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"是否确认收货？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"确认收货" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
@@ -153,7 +156,11 @@
         
         
     }];
-    
+    }]];
+        [al addAction:[UIAlertAction actionWithTitle:@"再等等" style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:al animated:YES completion:nil];
+
     
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

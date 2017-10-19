@@ -32,14 +32,14 @@
     NSString * price = [dic safeObjectForKey:@"productPrice"];
     NSString * integral = [dic safeObjectForKey:@"productIntegral"];
     
-    if (price.intValue>0&&integral.intValue>0) {
-        self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f+%@",[[dic safeObjectForKey:@"productPrice"]floatValue],integral];
+    if (price.floatValue>0&&integral.intValue>0) {
+        self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f+%@积分",[[dic safeObjectForKey:@"productPrice"]floatValue],integral];
 
     }else{
-        if (price.intValue>0) {
+        if (price.floatValue>0) {
             self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"productPrice"]floatValue]];
         }else{
-            self.priceLabel.text = [NSString stringWithFormat:@"%@",integral];
+            self.priceLabel.text = [NSString stringWithFormat:@"%@积分",integral];
         }
     }
     

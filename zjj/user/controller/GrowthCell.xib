@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -44,6 +44,16 @@
                         <color key="textColor" red="0.91859266490000002" green="0.49601236980000002" blue="0.1154242622" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veT-lY-nPW">
+                        <rect key="frame" x="220" y="19.5" width="80" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="siW-Q5-6Ha"/>
+                            <constraint firstAttribute="width" constant="80" id="tr7-ZJ-O4k"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="sUn-cw-HbQ" secondAttribute="bottom" constant="10" id="AxK-06-MUp"/>
@@ -51,13 +61,16 @@
                     <constraint firstItem="qIm-3q-ZFA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="MDl-hs-jIW"/>
                     <constraint firstItem="Vhh-tU-nPI" firstAttribute="leading" secondItem="sUn-cw-HbQ" secondAttribute="trailing" constant="10" id="UQC-fu-wqB"/>
                     <constraint firstItem="sUn-cw-HbQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="VdS-0o-REQ"/>
+                    <constraint firstItem="veT-lY-nPW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jhh-wd-M2T"/>
                     <constraint firstItem="qIm-3q-ZFA" firstAttribute="leading" secondItem="sUn-cw-HbQ" secondAttribute="trailing" constant="10" id="kKR-d4-mAW"/>
+                    <constraint firstAttribute="trailing" secondItem="veT-lY-nPW" secondAttribute="trailing" constant="20" id="kcu-74-8lV"/>
                     <constraint firstItem="Vhh-tU-nPI" firstAttribute="top" secondItem="qIm-3q-ZFA" secondAttribute="bottom" id="vFL-ir-mR3"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="headerImageView" destination="sUn-cw-HbQ" id="qRI-n9-mtw"/>
                 <outlet property="secondlb" destination="Vhh-tU-nPI" id="5nQ-3B-j5U"/>
+                <outlet property="statusLb" destination="veT-lY-nPW" id="gj2-RL-3tt"/>
                 <outlet property="titlelb" destination="qIm-3q-ZFA" id="CVt-WW-k4r"/>
             </connections>
         </tableViewCell>

@@ -34,9 +34,14 @@
     NSString * birthdayStr;
 
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBWhiteColor];
 
     [self setPickView];
     [self setDatePickerView];

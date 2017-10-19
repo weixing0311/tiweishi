@@ -32,11 +32,11 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self setTBWhiteColor];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBWhiteColor];
 
     self.title = @"我的订单";
     [self setTBRedColor];
@@ -140,7 +140,7 @@
     [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
     [param safeSetObject:orderNo forKey:@"orderNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/confirmReceipt.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
         [self.tableview reloadData];
         
@@ -217,22 +217,22 @@
     
     NSString * integral = [dic safeObjectForKey:@"integral"];
     if (integral.intValue>0&&priceStr.intValue>0) {
-        footer.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f+%@积分",[priceStr floatValue],integral];
+        footer.priceLabel.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
         
         
     }else{
         if (integral.intValue>0) {
-            footer.priceLabel.text =[NSString stringWithFormat:@"实付款：%@积分",integral];
+            footer.priceLabel.text =[NSString stringWithFormat:@"%@积分",integral];
             
         }else{
-            footer.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[priceStr floatValue]];
+            footer.priceLabel.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
         }
         
     }
 
     
     
-    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"payableAmount"]floatValue]];
+//    footer.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic objectForKey:@"payableAmount"]floatValue]];
     
     NSString * payStr =@"";
     if (status ==10||status ==3) {
@@ -320,8 +320,24 @@
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[infoDic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
     
 
+    NSString * priceStr = [infoDic safeObjectForKey:@"normalPrice"];
+    NSString * integral = [dic safeObjectForKey:@"integral"];
+    if (integral.intValue>0&&priceStr.floatValue>0) {
+        cell.priceLabel.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+        
+    }else{
+        if (integral.intValue>0) {
+            cell.priceLabel.text =[NSString stringWithFormat:@"%@积分",integral];
+            
+        }else{
+            cell.priceLabel.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+        }
+        
+    }
+
     
-    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"normalPrice"]floatValue]];
+    
+//    cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[infoDic safeObjectForKey:@"normalPrice"]floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     NSString * isgift = [NSString stringWithFormat:@"%@",[infoDic safeObjectForKey:@"isGift"]];
     if ([isgift isEqualToString:@"1"]) {

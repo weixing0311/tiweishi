@@ -124,26 +124,36 @@
 
 -(void)ConfirmTheGoodsWithOrderNo:(NSString *)orderNo
 {
-    NSMutableDictionary * param =[NSMutableDictionary dictionary];
-    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
-    [param safeSetObject:orderNo forKey:@"orderNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/confirmReceipt.do" paramters:param success:^(NSDictionary *dic) {
-        [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
-        [self.tableview reloadData];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"是否确认收货？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"确认收货" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSMutableDictionary * param =[NSMutableDictionary dictionary];
+        [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
+        [param safeSetObject:orderNo forKey:@"orderNo"];
         
-    } failure:^(NSError *error) {
-        for (NSString * str in [error.userInfo allKeys]) {
-            if ([str isEqualToString:@"message"]) {
-                [[UserModel shareInstance]showErrorWithStatus:str];
-                return ;
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/confirmReceipt.do" paramters:param success:^(NSDictionary *dic) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
+            [self.tableview reloadData];
+            
+        } failure:^(NSError *error) {
+            for (NSString * str in [error.userInfo allKeys]) {
+                if ([str isEqualToString:@"message"]) {
+                    [[UserModel shareInstance]showErrorWithStatus:str];
+                    return ;
+                }
             }
-        }
-        [[UserModel shareInstance]showErrorWithStatus:@"确认收货失败"];
+            [[UserModel shareInstance]showErrorWithStatus:@"确认收货失败"];
+            
+            
+        }];
 
-
-    }];
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"再等等" style:UIAlertActionStyleCancel handler:nil]];
+    
+     [self presentViewController:al animated:YES completion:nil];
+     
+     
     
 
 }

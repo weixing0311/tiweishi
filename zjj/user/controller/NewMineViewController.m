@@ -26,13 +26,13 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self setTBWhiteColor];
     [self getUserInfo];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的";
-    [self setTBWhiteColor];
 ;
     
     [self setNavi];

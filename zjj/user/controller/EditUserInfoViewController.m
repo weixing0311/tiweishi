@@ -32,6 +32,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self setTBWhiteColor];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -51,7 +52,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"基本信息";
-    [self setTBWhiteColor];
 ;
     
     self.tableview.delegate = self;
@@ -122,10 +122,10 @@
     NSDate * maxDate = [NSDate date];
     NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString * mindateStr = @"1995-01-01 00:00:00";
+    NSString * mindateStr = @"1900-01-01 00:00:00";
     NSDate * minDate = [formatter dateFromString:mindateStr];
     
-    NSString * defaultDateStr = mindateStr;
+    NSString * defaultDateStr = @"1990-01-01 00:00:00";
     NSDate * defaultDate = [formatter dateFromString:defaultDateStr];
     
     self.datePicker.minimumDate = minDate;
@@ -270,8 +270,8 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.delegate= self;
-        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"default")];
-        [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"default")];
+        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"before")];
+        [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"last")];
 
         return cell;
 
@@ -337,11 +337,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
         case 0:
+            
             [self showAlertWithType:indexPath.row];
             break;
         case 1:
-            [self.hiddentf becomeFirstResponder];
             self.hiddentf.tag = indexPath.row;
+            [self.hiddentf becomeFirstResponder];
+            [self.pickView reloadAllComponents];
+
             break;
         case 2:
             [self showAlertWithType:indexPath.row];
@@ -351,8 +354,9 @@
 
             break;
         case 4:
-            [self.hiddentf becomeFirstResponder];
             self.hiddentf.tag = indexPath.row;
+            [self.hiddentf becomeFirstResponder];
+            [self.pickView reloadAllComponents];
 
             break;
 

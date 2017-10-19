@@ -35,12 +35,12 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self setTBWhiteColor];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"写文章";
-    [self setTBWhiteColor];
     [self buildRightNaviBarItem];
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;//实现代理
@@ -62,7 +62,10 @@
 {
 //    [self convertMovSourceURL:self.movieUrl];
 
-    if (self.textView.text.length<1&&!self.movieUrl&&_imagesArray.count<1) {
+    NSString *strUrl = [self.textView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+
+    if (strUrl.length<1&&!self.movieUrl&&_imagesArray.count<1) {
         [[UserModel shareInstance]showInfoWithStatus:@"文章不能为空"];
     }
     if (self.textView.text.length>100) {
@@ -137,7 +140,10 @@
 
 -(void)buildRightNaviBarItem
 {
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"settings_"] style:UIBarButtonItemStylePlain target:self action:@selector(didUpdateInfo)];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithTitle:@"发表" style:UIBarButtonItemStylePlain target:self action:@selector(didUpdateInfo)];
+    
+    
+//    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"settings_"] style:UIBarButtonItemStylePlain target:self action:@selector(didUpdateInfo)];
     
     self.navigationItem.rightBarButtonItem = rightItem;
     

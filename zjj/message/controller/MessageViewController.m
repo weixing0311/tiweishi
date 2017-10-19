@@ -21,9 +21,14 @@
     int page;
     int pageSize;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBWhiteColor];
 ;
     self.tableview.delegate = self;
     self.tableview.dataSource = self;

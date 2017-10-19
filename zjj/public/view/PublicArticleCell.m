@@ -10,7 +10,7 @@
 #import "PublicCollImageCell.h"
 #import <CoreImage/CoreImage.h>
 #define BigImageWidth JFA_SCREEN_WIDTH-20
-#define BigImageHeight (JFA_SCREEN_WIDTH-20)*0.8
+#define BigImageHeight (JFA_SCREEN_WIDTH-20)*0.7
 @implementation PublicArticleCell
 {
     float cellHeight ;
@@ -75,6 +75,11 @@
 {
     cellHeight = item.rowHieght;
     self.currModel = item;
+    if ([item.loadSuccess isEqualToString:@"1"]) {
+        self.collectionView.hidden =NO;
+    }else{
+        self.collectionView.hidden = YES;
+    }
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"logo")];
     
     self.titleIb.text = item.title;
@@ -105,6 +110,12 @@
         self.gzBtn.selected = NO;
     }
     
+    
+    
+    
+}
+-(void)loadImagesWithItem:(CommunityModel *)item
+{
     if (item.movieStr.length>5) {
         //        self.playerBtn.hidden = NO;
         [self.imagesArray removeAllObjects];
@@ -138,16 +149,15 @@
                 }
             }
             [self.imagesArray addObject:dict];
-            
         }
     }
-    
+    if (!_imagesArray|| _imagesArray.count==0) {
+        self.collectionView.hidden = YES;
+    }else{
+        self.collectionView.hidden = NO;
+    }
     [self.collectionView reloadData];
-    
-    
-    
 }
-
 
 
 
@@ -337,6 +347,11 @@
     }else{
         cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
     }
+        if (indexPath.row ==_imagesArray.count-1) {
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(loadImageSuccessWithCell:)]) {
+                [self.delegate loadImageSuccessWithCell:self];
+            }
+        }
     }];
 
 //    }
@@ -377,7 +392,7 @@
 {
     NSDictionary * dic = [_imagesArray objectAtIndex:indexPath.row];
     if (_imagesArray.count ==1) {
-        return CGSizeMake(BigImageWidth, BigImageHeight);
+        return CGSizeMake(BigImageWidth-20, BigImageHeight);
     }
 //        // 先从缓存中查找图片
 //        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];

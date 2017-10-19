@@ -241,11 +241,11 @@
                             <action selector="didGz:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xHg-Ip-lSF"/>
                         </connections>
                     </button>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="q8y-Xo-NuN">
+                    <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="q8y-Xo-NuN">
                         <rect key="frame" x="10" y="106.5" width="300" height="43.5"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yEI-nl-xKe">
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cCk-DU-vzT">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -284,7 +284,8 @@
                 <outlet property="gzBtn" destination="bxO-Wq-cBJ" id="eHx-pO-wYs"/>
                 <outlet property="headImageView" destination="lsp-Qx-N2Q" id="0oy-Gb-o0I"/>
                 <outlet property="jbBtn" destination="vYs-3G-0Nk" id="AP1-jx-Lqh"/>
-                <outlet property="layout" destination="yEI-nl-xKe" id="pnr-ar-xsb"/>
+                <outlet property="layout" destination="cCk-DU-vzT" id="fsV-US-rR5"/>
+                <outlet property="nemuView" destination="a0c-0o-aO4" id="cOo-U8-iXh"/>
                 <outlet property="plbtn" destination="lBe-9H-NfC" id="hFE-AR-dce"/>
                 <outlet property="shareBtn" destination="AhE-eR-MZu" id="m0q-H7-Kry"/>
                 <outlet property="shareCountlb" destination="m5y-60-fCZ" id="e1c-GB-6IS"/>

@@ -27,12 +27,13 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getJiFen];
+    [self setTBWhiteColor];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"积分商城";
-    [self setTBWhiteColor];
     self.jifenlb.adjustsFontSizeToFitWidth = YES;
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;//实现代理
@@ -145,7 +146,7 @@
     }
     NSString * priceStr = [dict safeObjectForKey:@"productPrice"];
     NSString * integral = [dict safeObjectForKey:@"productIntegral"];
-    if (integral.intValue>0&&priceStr.intValue>0) {
+    if (integral.intValue>0&&priceStr.floatValue>0) {
         cell.pricelb.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
         
         

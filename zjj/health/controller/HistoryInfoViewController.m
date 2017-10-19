@@ -13,8 +13,8 @@
 #import "ShareHealthItem.h"
 #import "HistoryBigCell.h"
 #import "NewHealthHistoryListViewController.h"
-@interface HistoryInfoViewController ()<UITableViewDelegate,UITableViewDataSource,historySectionCellDelegate>
-@property (weak,  nonatomic) IBOutlet UIView *rlView;
+#import "HistoryCell.h"
+@interface HistoryInfoViewController ()<UITableViewDelegate,UITableViewDataSource,historySectionCellDelegate,historyCellDelegate>
 @property (nonatomic,strong) HistoryHeaderView * headerView;
 @property (weak,  nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong) NSMutableDictionary * infoDict;
@@ -29,13 +29,13 @@
     [super viewWillAppear:animated];
     //    self.navigationController.navigationBarHidden = YES;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
+    [self setTBWhiteColor];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"历史记录";
-    [self setTBWhiteColor];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     _infoDict = [NSMutableDictionary dictionary];
@@ -123,35 +123,46 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * identifier = @"HistoryBigCell";
-    HistoryBigCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//    static NSString * identifier = @"HistoryBigCell";
+//    HistoryBigCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//    if (!cell) {
+//        cell = [self getXibCellWithTitle:identifier];
+//    }
+//    NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
+//    cell.delegate = self;
+//    [cell setInfoWithDict:dic];
+    static NSString * identifier = @"HistoryCell";
+    HistoryCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [self getXibCellWithTitle:identifier];
     }
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
     cell.delegate = self;
+    cell.tag = indexPath.row;
     [cell setInfoWithDict:dic];
-    
+
     return cell;
 }
 
 
 #pragma mark ---subView DELEGATE
--(void)showCellTabWithCell:(HistoryBigCell*)cell
+-(void)showCellTabWithCell:(HistoryCell*)cell
 {
     NSMutableDictionary * dic = [_dataArray objectAtIndex:cell.tag];
-    
+    if (!dic) {
+        return;
+    }
     if (cell.showBtn.selected ==YES) {
         cell.showBtn.selected = NO;
         [dic safeSetObject:@"100" forKey:@"rowHeight"];
-        cell.listTableview.hidden = YES;
+        cell.infoView.hidden = YES;
         if ([[dic allKeys]containsObject:@"isSelected"]) {
             [dic removeObjectForKey:@"isSelected"];
         }
     }else{
         [dic safeSetObject:@"isSelected" forKey:@"isSelected"];
         [dic safeSetObject:@"700" forKey:@"rowHeight"];
-        cell.listTableview.hidden = NO;
+        cell.infoView.hidden = NO;
         cell.showBtn.selected = YES;
     }
     [self.tableview reloadData];

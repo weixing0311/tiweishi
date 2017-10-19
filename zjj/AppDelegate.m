@@ -48,6 +48,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+//    if (@available(iOS 11.0, *)){
+//        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+//    }
     
     [MobClick setLogEnabled:YES];
     UMConfigInstance.appKey = @"5938fc6fae1bf85185000571";

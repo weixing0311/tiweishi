@@ -41,7 +41,7 @@
 //测试域名
 //#define kMyBaseUrl @"http://192.168.1.130:8101/"
 //鹏飞
-//#define kMyBaseUrl @"http://192.168.1.45:8080/"
+//#define kMyBaseUrl @"http://192.168.1.63:8080/"
 
 //皮皮刚
 //#define kMyBaseUrl @"http://192.168.1.74:9099/"

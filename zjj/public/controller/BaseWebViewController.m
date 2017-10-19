@@ -95,7 +95,7 @@
     
     WKPreferences *preferences = [WKPreferences new];
     preferences.javaScriptCanOpenWindowsAutomatically = YES;
-    preferences.minimumFontSize = 40.0;
+//    preferences.minimumFontSize = 40.0;
     configuration.preferences = preferences;
     
     

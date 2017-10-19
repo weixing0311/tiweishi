@@ -30,7 +30,8 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
+    [self setTBWhiteColor];
+
 }
 
 - (void)viewDidLoad {
@@ -170,11 +171,11 @@
         NSString * price = [self.infoDict safeObjectForKey:@"productPrice"];
         NSString * integral = [self.infoDict safeObjectForKey:@"productIntegral"];
         
-        if (price.intValue>0&&integral.intValue>0) {
+        if (price.intValue>0&&integral.floatValue>0) {
             cell.integrallb.text = [NSString stringWithFormat:@"￥%.2f+%@分",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue],integral];
             
         }else{
-            if (price.intValue>0) {
+            if (price.floatValue>0) {
                 cell.integrallb.text = [NSString stringWithFormat:@"￥%.2f",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue]];
             }else{
                 cell.integrallb.text = [NSString stringWithFormat:@"%@分",integral];

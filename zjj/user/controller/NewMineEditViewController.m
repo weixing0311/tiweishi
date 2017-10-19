@@ -20,10 +20,15 @@
 {
     NSArray * dataArray;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"设置";
-    [self setTBWhiteColor];
 
     self.tableview.delegate = self;
     self.tableview.dataSource = self;

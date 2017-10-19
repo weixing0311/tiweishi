@@ -21,11 +21,16 @@
 {
 //    GrowthHeader2View * grView;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"我的等级";
-    [self setTBWhiteColor];
 ;
     
     UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"Prompt.png") style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
@@ -112,9 +117,13 @@
                 [bigArr addObject:dic];
             }
         }
+        NSDictionary * currDic ;
         DLog(@"bigArr--%@",bigArr);
-        NSDictionary * currDic = [arr objectAtIndex:(arr.count-1-bigArr.count)];
-        
+        if (bigArr.count==0) {
+            currDic = [arr lastObject];
+        }else{
+            currDic = bigArr[0];
+        }
         cell.levellb.text = [currDic objectForKey:@"gradeName"];;
         
         //判断是否签到
@@ -145,7 +154,13 @@
     cell.titlelb.text = [dic safeObjectForKey:@"taskName"];
     [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:getImage(@"")];
     cell.secondlb.text = [dic safeObjectForKey:@"integral"];
-    
+        if ([dic safeObjectForKey:@"success"]) {
+            cell.statusLb.text = @"已完成";
+            cell.statusLb.textColor = HEXCOLOR(0x666666);
+        }else{
+            cell.statusLb.text = @"未完成";
+            cell.statusLb.textColor =[UIColor redColor];
+        }
     return cell;
     }
 }

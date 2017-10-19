@@ -33,6 +33,9 @@
     [super viewDidLoad];
     [self setNbColor];
     self.title = @"购物车";
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getCarInfo) name:@"refreshShopCart" object:nil];
     self.tableView .delegate =self;
     self.tableView.dataSource = self;

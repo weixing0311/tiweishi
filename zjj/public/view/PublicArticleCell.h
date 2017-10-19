@@ -37,6 +37,7 @@
 @property (nonatomic,strong)CommunityModel * currModel;
 @property (weak, nonatomic) IBOutlet UILabel *shareCountlb;
 
+@property (weak, nonatomic) IBOutlet UIView *nemuView;
 
 
 
@@ -45,6 +46,7 @@
 
 @property (nonatomic,assign)id<PublicArticleCellDelegate>delegate;
 -(void)setInfoWithDict:(CommunityModel *)item;
+-(void)loadImagesWithItem:(CommunityModel *)item;
 - (CGFloat)cellOffset;
 @end
 
@@ -57,4 +59,5 @@
 -(void)didShareWithCell:(PublicArticleCell*)cell;
 -(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(int)index;
 -(void)didJBWithCell:(PublicArticleCell *)cell;
+-(void)loadImageSuccessWithCell:(PublicArticleCell *)cell;
 @end

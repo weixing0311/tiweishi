@@ -25,6 +25,12 @@
     NSMutableArray * _dataArray;
     NSMutableDictionary * _infoDict;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"订单详情";
@@ -60,20 +66,26 @@
 //确认收货
 -(void)ConfirmTheGoodsWithOrderNo:(NSString *)orderNo
 {
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"是否确认收货？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"确认收货" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
     [param safeSetObject:orderNo forKey:@"orderNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/confirmReceipt.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        [[UserModel shareInstance]showErrorWithStatus:@"确认收货失败"];
         
     }];
-    
+}]];
+[al addAction:[UIAlertAction actionWithTitle:@"再等等" style:UIAlertActionStyleCancel handler:nil]];
+
+[self presentViewController:al animated:YES completion:nil];
+
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -273,7 +285,25 @@
             cell.payTsView.hidden =NO;
             cell.lastTime.text =[NSString stringWithFormat:@"剩余时间：%@",@"0小时0分"];
             
-            cell.paypriceLabel.text = [NSString stringWithFormat:@"需付款:￥%.2f",[[_infoDict objectForKey:@"payableAmount"]floatValue]];
+            
+            NSString * priceStr = [_infoDict safeObjectForKey:@"productPrice"];
+            NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
+            if (integral.intValue>0&&priceStr.floatValue>0) {
+                cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:￥%.2f+%@积分",[priceStr floatValue],integral];
+                
+                
+            }else{
+                if (integral.intValue>0) {
+                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%@积分",integral];
+                    
+                }else{
+                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:￥%.2f",[priceStr floatValue]];
+                }
+                
+            }
+
+            
+            
             NSString * finishTime =[_infoDict safeObjectForKey:@"timer"];
             [cell setTimeLabelText:finishTime];
             
@@ -308,7 +338,22 @@
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
         [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
         
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"normalPrice"]floatValue]];
+        
+        
+        NSString * priceStr = [dic safeObjectForKey:@"unitPrice"];
+        NSString * integral = [dic safeObjectForKey:@"integral"];
+        if (integral.intValue>0&&priceStr.floatValue>0) {
+            cell.priceLabel.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+            
+        }else{
+            if (integral.intValue>0) {
+                cell.priceLabel.text =[NSString stringWithFormat:@"%@积分",integral];
+                
+            }else{
+                cell.priceLabel.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+            }
+        }
+        
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];
         
         NSString * isgift = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"isGift"]];
@@ -332,7 +377,7 @@
             cell.textLabel.text =[NSString stringWithFormat:@"下单时间：%@",[_infoDict objectForKey:@"createTime"]];
         }else{
             if (status==3) {
-                cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict objectForKey:@"paymentType"]];
+                cell.textLabel.text =[NSString stringWithFormat:@"支付方式：%@",[_infoDict objectForKey:@"paymentTypeId"]];
                 
             }else{
                 cell.textLabel.text = @"";
@@ -351,14 +396,34 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
+        NSDictionary * dic  = _dataArray.count>0?[_dataArray objectAtIndex:0]:[NSDictionary dictionary ];
+        NSString * priceStr = [dic safeObjectForKey:@"unitPrice"];
+        NSString * integral = [dic safeObjectForKey:@"integral"];
+        if (integral.intValue>0&&priceStr.floatValue>0) {
+            cell.value1label.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+            
+            
+        }else{
+            if (integral.intValue>0) {
+                cell.value1label.text =[NSString stringWithFormat:@"%@积分",integral];
+                cell.value3label.text =[NSString stringWithFormat:@"%@积分",integral];
+
+            }else{
+                cell.value1label.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+                cell.value3label.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+
+            }
+            
+        }
+
         
-        //商品金额= totalprice-运费（freight）
-        cell.value1label.text = [NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"itemTotalPrice"]floatValue]-[[_infoDict safeObjectForKey:@"freight"]floatValue]];
-        cell.value2label.text =[NSString stringWithFormat:@"+￥%.2f",[[_infoDict safeObjectForKey:@"freight"]floatValue]];
-        cell.value4label.text =[NSString stringWithFormat:@"-￥%.2f",[[_infoDict safeObjectForKey:@"totalPrice"]floatValue]-[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];
-        cell.value3label.text =[NSString stringWithFormat:@"￥%.2f",[[_infoDict safeObjectForKey:@"payableAmount"]floatValue]];
+        cell.value2label.text =@"￥0.00";
+        
+        cell.value4label.text =@"￥0.00";
+        
+        
         cell.title4label.text = @"商品优惠";
-        if (status ==1) {
+        if (status ==3||status==10) {
             cell.title3label.text = @"已付款";
         }else{
             cell.title3label.text = @"需付款";
@@ -375,7 +440,7 @@
         BaseWebViewController * web =[[BaseWebViewController alloc]init];
         web.title = @"我的配送";
         NSString * orderNo = [_infoDict safeObjectForKey:@"orderNo"];
-        web.urlStr = [NSString stringWithFormat:@"app/fatTeacher/logisticsInformation.html?orderNo=%@",orderNo];
+        web.urlStr = [NSString stringWithFormat:@"app/fatTeacher/integralLogisticsInformation.html?orderNo=%@",orderNo];
         web.payType =5;
         [self.navigationController pushViewController:web animated:YES];
     }
@@ -471,7 +536,6 @@
             [self getlistInfo_IS_CONSUMERS];
             
         } failure:^(NSError *error) {
-            [[UserModel shareInstance] showErrorWithStatus:@"取消失败"];
         }];
         
     }]];

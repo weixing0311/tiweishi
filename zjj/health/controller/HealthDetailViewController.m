@@ -32,13 +32,13 @@
     [super viewWillAppear:animated];
     //    self.navigationController.navigationBarHidden = YES;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
+    [self setTBWhiteColor];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"健康报告";
-    [self setTBWhiteColor];
     self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;

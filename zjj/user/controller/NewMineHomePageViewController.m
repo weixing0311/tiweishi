@@ -41,6 +41,8 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 //    [self.tableview headerBeginRefreshing];
+    [self setTBWhiteColor];
+
 
 }
 -(void)viewDidDisappear:(BOOL)animated
@@ -50,14 +52,11 @@
     _playerView = nil;
     PlayingCell = nil;
     [self clearSDCeche];
-
-    
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBWhiteColor];
+    self.title = @" ";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshMyInfo) name:@"refreshHomePageInfo" object:nil];
     if (![self.userId isEqualToString:[UserModel shareInstance].userId]) {
         self.shareBtn.hidden = YES;
@@ -293,6 +292,10 @@
         }
         
         [cell setInfoWithDict:item];
+        if (self.tableview.dragging==NO&&self.tableview.decelerating ==NO) {
+            [cell loadImagesWithItem:item];
+        }
+
         return cell;
         
     }
@@ -331,7 +334,7 @@
     NSArray<PublicArticleCell *> *array = [self.tableview visibleCells];
     //enumerateObjectsUsingBlock 类似于for，但是比for更快
     [array enumerateObjectsUsingBlock:^(PublicArticleCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        //        [obj cellOffset];
+//                [obj cellOffset];
     }];
 }
 
@@ -357,7 +360,7 @@
     PlayingCell = cell;
     //销毁播放器
     [_playerView destroyPlayer];
-    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
+    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.7)];
     _playerView = playerView;
     [cell.collectionView addSubview:_playerView];
     //    _playerView.fillMode = ResizeAspectFill;
@@ -409,14 +412,14 @@
 {
     if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
         changeImageNum =1;
-        [self ChangeHeadImage];
+        [self ChangeHeadImageWithTitle:@"更换头像"];
     }
 }
 -(void)changeBgImageView
 {
     if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
         changeImageNum =2;
-        [self ChangeHeadImage];
+        [self ChangeHeadImageWithTitle:@"更换背景"];
 
     }
 //    app/user/uploadBackGroundImg.do   userId   imgurl
@@ -425,48 +428,27 @@
 {
     
 }
--(void)didGzWithCell:(PublicArticleCell*)cell
-{
-    if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
-        return;
-    }
-    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    if (cell.gzBtn.selected ==YES) {
-        NSMutableDictionary * params =[NSMutableDictionary dictionary];
-        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-        [params setObject:model.userId forKey:@"followId"];
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
-            DLog(@"dic-关注成功--%@",dic);
-            cell.gzBtn.selected = YES;
-            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
-        } failure:^(NSError *error) {
-            
-        }];
-    }else{
-        NSMutableDictionary * params =[NSMutableDictionary dictionary];
-        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-        [params setObject:model.userId forKey:@"followId"];
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
-            DLog(@"dic-关注成功--%@",dic);
-            cell.gzBtn.selected = YES;
-            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
-        } failure:^(NSError *error) {
-            
-        }];
-    }
-
-}
 -(void)didZanWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:@"" forKey:@"commentId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
-    [params safeSetObject:@"1" forKey:@"isFabulous"];//1是点赞 0取消
+    if (model.isFabulous) {
+        [params safeSetObject:@"0" forKey:@"isFabulous"];//1是点赞 0取消
+    }else{
+        [params safeSetObject:@"1" forKey:@"isFabulous"];//1是点赞 0取消
+    }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
-        [[UserModel shareInstance]showSuccessWithStatus:@""];
+        if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
+
+        }else{
+            [[UserModel shareInstance]showSuccessWithStatus:@"点赞成功"];
+
+        }
         [self refreshZanInfoWithCell:cell];
     } failure:^(NSError *error) {
         
@@ -484,7 +466,9 @@
     }];
     [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if (alert.textFields.firstObject.text.length<5) {
+        NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        if (strUrl.length<5) {
             [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
             return ;
         }
@@ -513,12 +497,14 @@
         model.isFabulous = @"0";//1是点赞 0取消
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
+        model.greatnum = [NSString stringWithFormat:@"%d",[model.greatnum intValue]-1];
         cell.zanImageView.image = getImage(@"praise");
         
     }else{
         model.isFabulous = @"1";
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
+        model.greatnum = [NSString stringWithFormat:@"%d",[model.greatnum intValue]+1];
         cell.zanImageView.image = getImage(@"praise_Selected");
     }
     
@@ -565,6 +551,7 @@
             DLog(@"dic-关注成功--%@",dic);
             cell.gzBtn.selected = YES;
             [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+            [self.tableview headerBeginRefreshing];
         } failure:^(NSError *error) {
             
         }];
@@ -582,7 +569,9 @@
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
             DLog(@"dic-取消关注成功--%@",dic);
             cell.gzBtn.selected = YES;
-            [[UserModel shareInstance]showSuccessWithStatus: @"关注成功"];
+            [[UserModel shareInstance]showSuccessWithStatus: @"取消成功"];
+            [self.tableview headerBeginRefreshing];
+
         } failure:^(NSError *error) {
             
         }];
@@ -606,11 +595,11 @@
 
 }
 
-- (void)ChangeHeadImage{
+- (void)ChangeHeadImageWithTitle:(NSString *)title{
     
     
     
-    UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:@"修改头像" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:title preferredStyle:UIAlertControllerStyleActionSheet];
     
     
     
@@ -718,6 +707,23 @@
         DLog(@"faile-error-%@",error);
     }];
 }
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    for (NSIndexPath * indexPath in [self.tableview indexPathsForVisibleRows]) {
+        if (indexPath.section ==3) {
+            CommunityModel * item = [_dataArray objectAtIndex:indexPath.row];
+            PublicArticleCell * cell = [self.tableview cellForRowAtIndexPath:indexPath];
+            [cell loadImagesWithItem:item];
+
+        }
+    }
+}
+
+
+/*
+ * 清理sd_webImage缓存
+ **/
 -(void)clearSDCeche
 {
     [[SDWebImageManager sharedManager] cancelAll];

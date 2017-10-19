@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.headerImageView.layer.borderWidth= 2;
-    self.headerImageView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+//    self.headerImageView.layer.borderWidth= 2;
+//    self.headerImageView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
     self.totalIntegerallb.adjustsFontSizeToFitWidth = YES;
     self.levellb.adjustsFontSizeToFitWidth = YES;
 }

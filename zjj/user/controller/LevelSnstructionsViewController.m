@@ -30,9 +30,14 @@
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTBWhiteColor];
     // Do any additional setup after loading the view from its nib.
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:getImage(@"head_default")];
     self.headImageView.layer.borderWidth= 2;
@@ -62,7 +67,12 @@
         width = self.bgTiaolb.frame.size.width;
 
     }else{
-        NSDictionary * currDic = [arr objectAtIndex:(arr.count-bigArr.count)];
+        NSDictionary * currDic ;
+//        if (bigArr.count==arr.count) {
+//            currDic = [arr objectAtIndex:0];
+//        }else{
+            currDic = [bigArr objectAtIndex:0];
+//        }
         
         int jf1 = [[currDic objectForKey:@"integral"]intValue];
         

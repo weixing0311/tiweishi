@@ -12,6 +12,7 @@
 #import "UpdataAddressCell.h"
 #import "UpDateOrderCell.h"
 #import "PublicCell.h"
+#import "IntegralOrderViewController.h"
 @interface IntegralOrderUpdateViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 
@@ -23,6 +24,12 @@
     NSMutableDictionary * addressDict;
     NSString * warehouseNo;//仓储编号
 
+
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setTBWhiteColor];
 
 }
 - (instancetype)init
@@ -38,7 +45,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"提交订单";
-    [self setTBWhiteColor];
 ;
     
     addressDict  = [NSMutableDictionary dictionary];
@@ -52,13 +58,13 @@
     NSString * priceStr = [_infoDict safeObjectForKey:@"productPrice"];
 
     NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
-    if (integral.intValue>0&&priceStr.intValue>0) {
+    if (integral.intValue>0&&priceStr.floatValue>0) {
         self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f+%@积分",[priceStr floatValue],integral];
         
 
     }else{
         if (integral.intValue>0) {
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%@分",integral];
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%@积分",integral];
 
         }else{
             self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[priceStr floatValue]];
@@ -215,11 +221,26 @@
         cell.detailTextLabel.textColor =[UIColor redColor];
         if (indexPath.row ==0) {
             cell.textLabel.text = @"商品金额";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"+￥%.0f",[[self.param objectForKey:@"totalPrice"]floatValue]];
+            NSString * priceStr = [self.infoDict safeObjectForKey:@"productPrice"];
+            NSString * integral = [self.infoDict safeObjectForKey:@"productIntegral"];
+            if (integral.intValue>0&&priceStr.floatValue>0) {
+                cell.detailTextLabel.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+                
+                
+            }else{
+                if (integral.intValue>0) {
+                    cell.detailTextLabel.text =[NSString stringWithFormat:@"%@积分",integral];
+                    
+                }else{
+                    cell.detailTextLabel.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+                }
+                
+            }
+
         }else if (indexPath.row ==1)
         {
             cell.textLabel.text = @"立减";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"-￥%.00f",[[self.param objectForKey:@"totalPrice"]floatValue]-[[self.param objectForKey:@"payableAmount"]floatValue]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"-￥0.00"];
         }else{
             cell.textLabel.text = @"运费";
             cell.detailTextLabel.text = @"免运费";
@@ -294,6 +315,19 @@
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         
         [[UserModel shareInstance]showSuccessWithStatus:@"提交成功"];
+        
+        NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
+        float price = [[dataDic safeObjectForKey:@"payableAmount"]floatValue];
+        if (price==0) {
+            IntegralOrderViewController * ordVC = [[IntegralOrderViewController alloc]init];
+            ordVC.hidesBottomBarWhenPushed = YES;
+            NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+            [arr removeLastObject];
+            [arr addObject:ordVC];
+            [self.navigationController setViewControllers:arr];
+
+            
+        }else{
         BaseWebViewController *web = [[BaseWebViewController alloc]init];
         web.urlStr = @"app/checkstand.html";
         web.payableAmount = [dataDict safeObjectForKey:@"payableAmount"];
@@ -304,9 +338,7 @@
         web.orderNo = [dataDict safeObjectForKey:@"orderNo"];
         web.title  =@"收银台";
         [self.navigationController pushViewController:web animated:YES];
-        
-        
-        
+        }
         
         
     } failure:^(NSError *error) {

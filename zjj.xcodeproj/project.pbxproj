@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C005FD61F983A7200C9E37C /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C005FD41F983A7200C9E37C /* HistoryCell.m */; };
+		6C005FD71F983A7200C9E37C /* HistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C005FD51F983A7200C9E37C /* HistoryCell.xib */; };
 		6C0F287E1F7267BF00FD27FF /* GrowthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0F287C1F7267BF00FD27FF /* GrowthCell.m */; };
 		6C0F287F1F7267BF00FD27FF /* GrowthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C0F287D1F7267BF00FD27FF /* GrowthCell.xib */; };
 		6C0F28831F72731B00FD27FF /* IntegralDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0F28811F72731B00FD27FF /* IntegralDetailHeaderCell.m */; };
@@ -272,7 +274,6 @@
 		6C73AFF21F31A4950042C1A2 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73AFF01F31A4950042C1A2 /* MessageCell.xib */; };
 		6C73AFF51F31AC550042C1A2 /* WXAlipayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AFF41F31AC550042C1A2 /* WXAlipayController.m */; };
 		6C73AFFA1F31B6990042C1A2 /* FriendsCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AFF81F31B6990042C1A2 /* FriendsCircleViewController.m */; };
-		6C73AFFB1F31B6990042C1A2 /* FriendsCircleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73AFF91F31B6990042C1A2 /* FriendsCircleViewController.xib */; };
 		6C73AFFF1F31B7360042C1A2 /* FriendsCircleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73AFFD1F31B7360042C1A2 /* FriendsCircleCell.m */; };
 		6C73B0001F31B7360042C1A2 /* FriendsCircleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73AFFE1F31B7360042C1A2 /* FriendsCircleCell.xib */; };
 		6C73B0231F31C36C0042C1A2 /* foundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73B0221F31C36C0042C1A2 /* foundViewController.xib */; };
@@ -826,6 +827,9 @@
 
 /* Begin PBXFileReference section */
 		3E77EF9400214F051E669A5A /* Pods-zjj.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zjj.debug.xcconfig"; path = "Pods/Target Support Files/Pods-zjj/Pods-zjj.debug.xcconfig"; sourceTree = "<group>"; };
+		6C005FD31F983A7200C9E37C /* HistoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
+		6C005FD41F983A7200C9E37C /* HistoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
+		6C005FD51F983A7200C9E37C /* HistoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryCell.xib; sourceTree = "<group>"; };
 		6C0F287B1F7267BF00FD27FF /* GrowthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowthCell.h; sourceTree = "<group>"; };
 		6C0F287C1F7267BF00FD27FF /* GrowthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowthCell.m; sourceTree = "<group>"; };
 		6C0F287D1F7267BF00FD27FF /* GrowthCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GrowthCell.xib; sourceTree = "<group>"; };
@@ -1183,6 +1187,7 @@
 		6C47124A1F27391700E5E750 /* WXPsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXPsTitleCell.h; sourceTree = "<group>"; };
 		6C47124B1F27391700E5E750 /* WXPsTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXPsTitleCell.m; sourceTree = "<group>"; };
 		6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXPsTitleCell.xib; sourceTree = "<group>"; };
+		6C5D598E1F988FEE0040EE5A /* integralBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = integralBg.png; sourceTree = "<group>"; };
 		6C6773701F90AE470007CB2D /* WeighingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeighingViewController.h; sourceTree = "<group>"; };
 		6C6773711F90AE470007CB2D /* WeighingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeighingViewController.m; sourceTree = "<group>"; };
 		6C6773721F90AE470007CB2D /* WeighingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeighingViewController.xib; sourceTree = "<group>"; };
@@ -1271,7 +1276,6 @@
 		6C73AFF41F31AC550042C1A2 /* WXAlipayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXAlipayController.m; sourceTree = "<group>"; };
 		6C73AFF71F31B6990042C1A2 /* FriendsCircleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsCircleViewController.h; sourceTree = "<group>"; };
 		6C73AFF81F31B6990042C1A2 /* FriendsCircleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsCircleViewController.m; sourceTree = "<group>"; };
-		6C73AFF91F31B6990042C1A2 /* FriendsCircleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsCircleViewController.xib; sourceTree = "<group>"; };
 		6C73AFFC1F31B7360042C1A2 /* FriendsCircleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsCircleCell.h; sourceTree = "<group>"; };
 		6C73AFFD1F31B7360042C1A2 /* FriendsCircleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsCircleCell.m; sourceTree = "<group>"; };
 		6C73AFFE1F31B7360042C1A2 /* FriendsCircleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsCircleCell.xib; sourceTree = "<group>"; };
@@ -3256,6 +3260,9 @@
 				6C6CFEA81F904E60005C2738 /* HistoryBigCell.h */,
 				6C6CFEA91F904E60005C2738 /* HistoryBigCell.m */,
 				6C6CFEAA1F904E60005C2738 /* HistoryBigCell.xib */,
+				6C005FD31F983A7200C9E37C /* HistoryCell.h */,
+				6C005FD41F983A7200C9E37C /* HistoryCell.m */,
+				6C005FD51F983A7200C9E37C /* HistoryCell.xib */,
 			);
 			name = historyInfo;
 			sourceTree = "<group>";
@@ -3318,7 +3325,6 @@
 			children = (
 				6C73AFF71F31B6990042C1A2 /* FriendsCircleViewController.h */,
 				6C73AFF81F31B6990042C1A2 /* FriendsCircleViewController.m */,
-				6C73AFF91F31B6990042C1A2 /* FriendsCircleViewController.xib */,
 				6C73AFFC1F31B7360042C1A2 /* FriendsCircleCell.h */,
 				6C73AFFD1F31B7360042C1A2 /* FriendsCircleCell.m */,
 				6C73AFFE1F31B7360042C1A2 /* FriendsCircleCell.xib */,
@@ -3972,6 +3978,7 @@
 		6CD011331EF8CADA00FB9419 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6C5D598E1F988FEE0040EE5A /* integralBg.png */,
 				6C6CFEA61F904B2A005C2738 /* blackback_@2x.png */,
 				6C6CFEA71F904B2A005C2738 /* blackback_@3x.png */,
 				6C6CFE591F8CAF9E005C2738 /* praise_selected@2x.png */,
@@ -4699,7 +4706,6 @@
 				6CFDEBD41F8B7DE7005D3971 /* bodyfat_buy_1.png in Resources */,
 				6CD010DC1EF62FA400FB9419 /* AddressDetailViewController.xib in Resources */,
 				6CFDEC271F8B7DE7005D3971 /* footer-ShoppingCart-red@3x.png in Resources */,
-				6C73AFFB1F31B6990042C1A2 /* FriendsCircleViewController.xib in Resources */,
 				6CFDEBF61F8B7DE7005D3971 /* community@2x.png in Resources */,
 				6CFDEC8D1F8B7DE8005D3971 /* new-icon@2x.png in Resources */,
 				6C2241B91F7E2692001BB2FD /* PublicCollImageCell.xib in Resources */,
@@ -4713,6 +4719,7 @@
 				6CFDEC171F8B7DE7005D3971 /* fonter-help-red@3x.png in Resources */,
 				6C13C5E11EFA747900435A27 /* UpdataAddressCell.xib in Resources */,
 				6CFDEC061F8B7DE7005D3971 /* defaultHead@2x.png in Resources */,
+				6C005FD71F983A7200C9E37C /* HistoryCell.xib in Resources */,
 				6CFDEBBC1F8B7DE7005D3971 /* addressLine@3x.png in Resources */,
 				6C6CFE661F8E3408005C2738 /* ADDChengUserViewController.xib in Resources */,
 				6CFDECE31F8B7DE8005D3971 /* VS@2x.png in Resources */,
@@ -5118,6 +5125,7 @@
 				6C3639951EFE47E100268851 /* AASeries.m in Sources */,
 				6CCEEB351EEE7F9F002E1618 /* ShopCarViewController.m in Sources */,
 				6C1B2BD01EECDEFD0092AAF0 /* TabbarViewController.m in Sources */,
+				6C005FD61F983A7200C9E37C /* HistoryCell.m in Sources */,
 				6CD011851EF9057500FB9419 /* HomeHeadView.m in Sources */,
 				6CD010CB1EF61C0600FB9419 /* GoodsDetailViewController.m in Sources */,
 				6CD010D61EF62BC500FB9419 /* AddressListCell.m in Sources */,

@@ -83,7 +83,7 @@ static CommunityModel * imageModel;
     float imageHeight = 0.0f;
     
     if (self.movieStr.length>5) {
-        imageHeight = (JFA_SCREEN_WIDTH-20)*0.8;
+        imageHeight = (JFA_SCREEN_WIDTH-20)*0.7;
     }
     else
     {
@@ -94,7 +94,7 @@ static CommunityModel * imageModel;
         }
         else if (images.count==1)
         {
-            imageHeight = (JFA_SCREEN_WIDTH-20)*0.8;
+            imageHeight = (JFA_SCREEN_WIDTH-20)*0.7;
         }
         else if (images.count>1&& images.count<=3)
         {

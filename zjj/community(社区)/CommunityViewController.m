@@ -30,6 +30,7 @@
     int page;
     int pageSize;
     PublicArticleCell * PlayingCell;
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -181,6 +182,11 @@
     cell.delegate = self;
     cell.tag = indexPath.row;
     [cell setInfoWithDict:item];
+
+    if (self.tableview.dragging==NO&&self.tableview.decelerating ==NO&&cell.collectionView.hidden ==YES) {
+        [cell loadImagesWithItem:item];
+    }
+    
     if (self.segment.selectedSegmentIndex ==0) {
         cell.gzBtn.hidden = YES;
     }else{
@@ -247,7 +253,7 @@
     PlayingCell = cell;
     //销毁播放器
     [_playerView destroyPlayer];
-    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
+    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.7)];
     _playerView = playerView;
     [cell.collectionView addSubview:_playerView];
 //    _playerView.fillMode = ResizeAspectFill;
@@ -281,7 +287,8 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
         model.isFollow = @"1";
-        [self.tableview reloadData];
+        PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+        currCell.gzBtn.selected =YES;
     } failure:^(NSError *error) {
         
     }];
@@ -294,11 +301,21 @@
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:@"" forKey:@"commentId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
-    [params safeSetObject:@"1" forKey:@"isFabulous"];//1是点赞 0取消
+    if (model.isFabulous) {
+        [params safeSetObject:@"0" forKey:@"isFabulous"];//1是点赞 0取消
+    }else{
+        [params safeSetObject:@"1" forKey:@"isFabulous"];//1是点赞 0取消
+    }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
 
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
-        [[UserModel shareInstance]showSuccessWithStatus:@""];
+        if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
+            
+        }else{
+            [[UserModel shareInstance]showSuccessWithStatus:@"点赞成功"];
+            
+        }
         [self refreshZanInfoWithCell:cell];
     } failure:^(NSError *error) {
         
@@ -377,7 +394,9 @@
     }];
     [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if (alert.textFields.firstObject.text.length<5) {
+        NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+
+        if (strUrl.length<5) {
             [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
             return ;
         }
@@ -397,6 +416,11 @@
     
 
 }
+-(void)loadImageSuccessWithCell:(PublicArticleCell *)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    model.loadSuccess = @"1";
+}
 -(void)clearSDCeche
 {
     [[SDWebImageManager sharedManager] cancelAll];
@@ -404,25 +428,33 @@
     [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
 
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    [self clearSDCeche];
 
-    // Dispose of any resources that can be recreated.
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+    {
+        
+    }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    for (NSIndexPath * indexPath in [self.tableview indexPathsForVisibleRows]) {
+        CommunityModel * item = [_dataArray objectAtIndex:indexPath.row];
+       PublicArticleCell * cell = [self.tableview cellForRowAtIndexPath:indexPath];
+        [cell loadImagesWithItem:item];
+    }
 }
-*/
 
 - (IBAction)didClickSegment:(UISegmentedControl *)sender {
     
     [self.tableview headerBeginRefreshing];
 }
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [self clearSDCeche];
+    
+    // Dispose of any resources that can be recreated.
+}
+
 @end

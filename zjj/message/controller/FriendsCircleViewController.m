@@ -11,37 +11,86 @@
 #import "FcBigImgViewController.h"
 #import "LoadedImageModel.h"
 @interface FriendsCircleViewController ()<UITableViewDelegate,UITableViewDataSource,friendsCircleCellDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (strong, nonatomic)  UIView *segBgView;
+
+@property (strong, nonatomic)  UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic,strong)UIImageView * bigImageView;
 @property (nonatomic,strong)UIScrollView   * blackView;
 @property (nonatomic,assign)CGRect originalRect;
 
 @end
-
+///
 @implementation FriendsCircleViewController
 {
     int page;
     int pageSize;
     NSInteger lastClickImageCell;
+    UISegmentedControl * segment;
+    NSArray * _segmentArray;
+    NSString * showSegType;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"朋友圈推广";
     [self setTBRedColor];
+    self.segBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, 48)];
+    self.segBgView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.segBgView];
+    [self.view bringSubviewToFront: self.segBgView];
+
+    self.tableview  = [[UITableView alloc]initWithFrame:CGRectMake(0, 64+48, JFA_SCREEN_WIDTH, self.view.frame.size.height-48) style:UITableViewStylePlain];
+    self.tableview.delegate = self;
+    self.tableview.dataSource = self;
+    [self.view addSubview:self.tableview];
+    [self setExtraCellLineHiddenWithTb:self.tableview];
+    [self setRefrshWithTableView:self.tableview];
+    
+
+    [self getSegmentInfo];
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     pageSize=30;
     lastClickImageCell=1000000;
     self.dataArray = [NSMutableArray array];
-    // Do any additional setup after loading the view from its nib.
-    self.tableview.delegate = self;
-    self.tableview.dataSource = self;
-    [self setExtraCellLineHiddenWithTb:self.tableview];
-    [self setRefrshWithTableView:self.tableview];
+    _segmentArray = [NSArray array];
+    
+}
+////获取segment
+-(void)getSegmentInfo
+{
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/sysShareMsgType/sysShareMsgTypeList.do" paramters:nil success:^(NSDictionary *dic) {
+        _segmentArray = [[dic safeObjectForKey:@"data"]objectForKey:@"array"];
+        NSMutableArray * titleArray =[NSMutableArray array];
+        for (int i =0; i<_segmentArray.count; i++) {
+            NSDictionary * dic = [_segmentArray objectAtIndex:i];
+            NSString * title = [dic safeObjectForKey:@"msgtype"];
+            [titleArray addObject:title];
+        }
+        segment =[[UISegmentedControl alloc]initWithItems:titleArray];
+//        for (int i =0; i<_segmentArray.count; i++) {
+//            NSDictionary * dict = [_segmentArray objectAtIndex:i];
+//            [segment setTitle:[dict safeObjectForKey:@"msgtype"] forSegmentAtIndex:i];
+//        }
+        segment.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 48);
+        [segment addTarget:self action:@selector(didClickSegment:) forControlEvents:UIControlEventValueChanged];
+        [self.segBgView addSubview:segment];
+        [self ChangeMySegmentStyle:segment];
+        segment.selectedSegmentIndex=0;
+        showSegType = [[_segmentArray objectAtIndex:0] safeObjectForKey:@"id"];
+        [self.tableview headerBeginRefreshing];
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+-(void)didClickSegment:(UISegmentedControl *)segment
+{
+    NSDictionary * dic =_segmentArray[segment.selectedSegmentIndex];
+    showSegType = [dic safeObjectForKey:@"id"];
     [self.tableview headerBeginRefreshing];
 }
-
-
-
 -(void)headerRereshing
 {
     page =1;
@@ -54,11 +103,11 @@
 }
 -(void)getinfo
 {
-    
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
+    [params  safeSetObject:showSegType forKey:@"shareMsgType"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryShareMsgList.do" paramters:params success:^(NSDictionary *dic) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];

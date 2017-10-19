@@ -421,9 +421,7 @@
                         <constraint firstAttribute="height" constant="187" id="wjr-jf-cSx"/>
                     </constraints>
                     <string key="text">说明：
-1、优化关键词需要消耗积分，积分用来优化关键词。
-2、免费用户挂机一小时赠送1积分；企业用户挂机不送积分。
-3、免费用户可通过接受任务获取积分，详情问丁丁。不懂可以BB。</string>
+1.积分可以在积分商城兑换商品，完成任务可以获得积分，每个任务每日仅可完成一次。2.当前等级根据累计积分来判定，积分的使用与否并不影响所在的等级。</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
