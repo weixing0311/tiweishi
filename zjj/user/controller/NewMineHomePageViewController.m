@@ -20,6 +20,7 @@
 #import "EditUserInfoViewController.h"
 #import "BeforeAfterContrastCell.h"
 #import "FcBigImgViewController.h"
+#import "PostArticleViewController.h"
 @interface NewMineHomePageViewController ()<UITableViewDataSource,UITableViewDelegate,PublicArticleCellDelegate,NewMineHomePageHeaderCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
@@ -390,6 +391,29 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)didClickShare:(id)sender {
+    
+    UIImage * image = [self getImage];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        [self shareWithType:SSDKPlatformSubTypeWechatSession image:image];
+
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline image:image];
+
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"社区" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        PostArticleViewController * postVC =[[PostArticleViewController alloc]init];
+        postVC.firstImage = image;
+        [self.navigationController pushViewController:postVC animated:YES];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:al animated:YES completion:nil];
+    
 }
 
 #pragma  mark ---cell delegate
@@ -410,9 +434,9 @@
 }
 -(void)didChangeHeaderImage
 {
+    
     if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
-        changeImageNum =1;
-        [self ChangeHeadImageWithTitle:@"更换头像"];
+        [self didShowChangeUserInfoPage];
     }
 }
 -(void)changeBgImageView
@@ -719,7 +743,69 @@
         }
     }
 }
+-(void) shareWithType:(SSDKPlatformType)type image:(UIImage *)image
+{
+    if (!image) {
+        return;
+    }
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    NSArray* imageArray = @[image];
+    
+    [shareParams SSDKSetupShareParamsByText:nil
+                                     images:imageArray
+                                        url:nil
+                                      title:nil
+                                       type:SSDKContentTypeImage];
+    
+    [shareParams SSDKEnableUseClientShare];
+    [SVProgressHUD showWithStatus:@"开始分享"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    
+    //进行分享
+    [ShareSDK share:type
+         parameters:shareParams
+     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         
+         switch (state) {
+             case SSDKResponseStateSuccess:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                 break;
+             }
+             case SSDKResponseStateFail:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+                 break;
+             }
+             case SSDKResponseStateCancel:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                 break;
+             }
+             default:
+                 break;
+         }
+     }];
+    
+}
 
+-(UIImage *)getImage
+{
+    
+    UIGraphicsBeginImageContext(CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT));
+    CGContextRef contextRef = UIGraphicsGetCurrentContext();
+    [self.navigationController.view.layer renderInContext:contextRef];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+    
+}
 
 /*
  * 清理sd_webImage缓存

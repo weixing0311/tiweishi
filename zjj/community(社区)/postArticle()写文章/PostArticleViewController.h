@@ -9,5 +9,5 @@
 #import "JFABaseTableViewController.h"
 
 @interface PostArticleViewController : JFABaseTableViewController
-
+@property (nonatomic,strong)UIImage * firstImage;
 @end

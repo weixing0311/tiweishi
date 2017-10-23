@@ -107,12 +107,8 @@
 {
     switch (indexPath.section) {
         case 0:
-            return 250;
+            return JFA_SCREEN_WIDTH/0.8;
             break;
-        case 1:
-            return 44;
-            break;
-            
         default:
             return 100;
             break;
@@ -136,7 +132,7 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -145,10 +141,10 @@
             return 1;
             break;
          case 1:
-            return 1;
+            return 2;
             break;
         default:
-            return 2;
+            return 0;
             break;
     }
 }
@@ -172,28 +168,17 @@
         NSString * integral = [self.infoDict safeObjectForKey:@"productIntegral"];
         
         if (price.intValue>0&&integral.floatValue>0) {
-            cell.integrallb.text = [NSString stringWithFormat:@"￥%.2f+%@分",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue],integral];
+            cell.integrallb.text = [NSString stringWithFormat:@"%@积分+%.2f元",integral,[[self.infoDict safeObjectForKey:@"productPrice"]floatValue]];
             
         }else{
             if (price.floatValue>0) {
-                cell.integrallb.text = [NSString stringWithFormat:@"￥%.2f",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue]];
+                cell.integrallb.text = [NSString stringWithFormat:@"%.2f元",[[self.infoDict safeObjectForKey:@"productPrice"]floatValue]];
             }else{
-                cell.integrallb.text = [NSString stringWithFormat:@"%@分",integral];
+                cell.integrallb.text = [NSString stringWithFormat:@"%@积分",integral];
             }
         }
         cell.integrallb.adjustsFontSizeToFitWidth = YES;
 //        cell.integrallb.text = [NSString stringWithFormat:@"%@积分",[self.infoDict safeObjectForKey:@"productIntegral"]];
-        return cell;
-    }
-    else if (indexPath.section ==1)
-    {
-        static NSString * identifier = @"cell";
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-        }
-        cell.textLabel.text = @"商品参数";
-        cell.detailTextLabel.text = @"···";
         return cell;
     }
     else
@@ -208,21 +193,21 @@
             cell.titlelb.text = @"商品详情";
             cell.contentlb.text = [self.infoDict safeObjectForKey:@"productInformation"];
         }else{
-            cell.titlelb.text = @"兑换流程";
-            cell.contentlb.text = @"";
+            cell.titlelb.text = @"注意事项";
+            cell.contentlb.text = [self.infoDict safeObjectForKey:@"note"];
  
         }
         
         return cell;
     }
 }
-
+//有问题
 //获取上传数据
 -(NSString *)getUpdateInfo
 {
     NSMutableDictionary * dic =[NSMutableDictionary dictionary];
     [dic safeSetObject:[self.infoDict safeObjectForKey:@"productNo"] forKey:@"productNo"];
-    [dic safeSetObject:self.countlb.text forKey:@"quantity"];
+    [dic safeSetObject:@"1" forKey:@"quantity"];
     
     
     [dic setObject:[self.infoDict safeObjectForKey:@"productPrice"] forKey:@"unitPrice"];

@@ -258,20 +258,30 @@
         [footBtn.secondBtn setTitle:@"取消订单" forState:UIControlStateNormal];
         
     }
-    else if (status ==3&&operateStatus==4)
-    {
-        footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
-        footBtn.frame = CGRectMake(0, 32, JFA_SCREEN_WIDTH, 44);
-        footBtn.myDelegate =self;
+    
+    else if (status==3) {
+        
+        OrderFootBtnView * footBtn = [self getXibCellWithTitle:@"OrderFootBtnView"];
+        footBtn.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 44);
         footBtn.tag = section;
+        footBtn.myDelegate = self;
+        [footBtn.firstBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+        footBtn.secondBtn .hidden = YES;
         [view addSubview:footBtn];
         
-        footBtn.firstBtn.hidden = NO;
-        footBtn.secondBtn.hidden =YES;
-        footBtn.thirdBtn.hidden =YES;
-        
-        //        [footBtn.secondBtn setTitle:@"查看物流" forState:UIControlStateNormal];
-        
+        if (operateStatus==3) {
+            footBtn.firstBtn.hidden = YES;
+            footBtn.secondBtn.hidden =YES;
+            footBtn.thirdBtn.hidden =YES;
+        }
+        else if(operateStatus==4)
+        {
+            footBtn.firstBtn.hidden = NO;
+            footBtn.secondBtn.hidden =YES;
+            footBtn.thirdBtn.hidden =YES;
+            
+        }
+
     }
     
     return view;
@@ -323,14 +333,14 @@
     NSString * priceStr = [infoDic safeObjectForKey:@"normalPrice"];
     NSString * integral = [dic safeObjectForKey:@"integral"];
     if (integral.intValue>0&&priceStr.floatValue>0) {
-        cell.priceLabel.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+        cell.priceLabel.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];
         
     }else{
         if (integral.intValue>0) {
             cell.priceLabel.text =[NSString stringWithFormat:@"%@积分",integral];
             
         }else{
-            cell.priceLabel.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+            cell.priceLabel.text =[NSString stringWithFormat:@"%.2f元",[priceStr floatValue]];
         }
         
     }
@@ -437,7 +447,10 @@
     
     [self.tableview reloadData];
 }
-
+-(void)orderChange
+{
+    [self.tableview headerBeginRefreshing];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

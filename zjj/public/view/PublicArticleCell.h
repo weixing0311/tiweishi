@@ -28,21 +28,18 @@
 @property (weak, nonatomic) IBOutlet UIButton *gzBtn;
 
 - (IBAction)didClickJB:(id)sender;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *zanCountlb;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountlb;
-
-
 @property (nonatomic,strong)CommunityModel * currModel;
 @property (weak, nonatomic) IBOutlet UILabel *shareCountlb;
 
 @property (weak, nonatomic) IBOutlet UIView *nemuView;
-
-
-
-
 @property (nonatomic,strong)NSMutableArray * imagesArray;
+
+
+- (IBAction)didClickHeadImage:(id)sender;
+
+
 
 @property (nonatomic,assign)id<PublicArticleCellDelegate>delegate;
 -(void)setInfoWithDict:(CommunityModel *)item;
@@ -60,4 +57,5 @@
 -(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(int)index;
 -(void)didJBWithCell:(PublicArticleCell *)cell;
 -(void)loadImageSuccessWithCell:(PublicArticleCell *)cell;
+-(void)didTapHeadImageViewWithCell:(PublicArticleCell *)cell;
 @end

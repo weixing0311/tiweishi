@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"健康报告";
-    self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
@@ -70,15 +70,27 @@
         }
     }];
 }
+/*
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView * view = [UIView new];
+    return view;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView * view = [UIView new];
+    return view;
 
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10;
+    return 4;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
+ */
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
@@ -86,16 +98,16 @@
     }
     else if (indexPath.section ==1)
     {
-        return 100;
+        return 70;
     }
     else if (indexPath.section ==2)
     {
-        return 60;
+        return 45;
     }
 
     else if (indexPath.section ==3)
     {
-        return 200;
+        return 155;
     }
 
     else if (indexPath.section ==4)
@@ -104,11 +116,11 @@
             ((ClickItemNo >3&&ClickItemNo<7)&&indexPath.row==1)||
             (ClickItemNo>6&&indexPath.row==2))
         {
-            return (JFA_SCREEN_WIDTH-20)/3+340;
+            return 70+340;
         }
         else
         {
-        return (JFA_SCREEN_WIDTH-20)/3;
+        return 70;
         }
     }
 

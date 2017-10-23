@@ -16,6 +16,7 @@
 }
 -(void)setInfoWithDict:(HealthDetailsItem *)item
 {
+    self.fatLevellb.text = [NSString stringWithFormat:@"%.1fkg",item.weight];
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

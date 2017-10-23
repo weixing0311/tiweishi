@@ -272,6 +272,7 @@
         [cell loadImagesWithItem:item];
         cell.nemuView.hidden = YES;
         cell.gzBtn.hidden = YES;
+        cell.jbBtn.hidden = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
 
@@ -479,6 +480,16 @@
         zzView.hidden = YES;
         [commentView.commentTf resignFirstResponder];
     }
+}
+-(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(int)index
+{
+    CommunityModel * item = [_dataArray objectAtIndex:cell.tag];
+    FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
+    fc.images = [NSMutableArray arrayWithArray:item.pictures];
+    fc.page = index;
+    
+    [self presentViewController:fc animated:YES completion:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {

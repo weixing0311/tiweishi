@@ -59,7 +59,7 @@
 
     NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
     if (integral.intValue>0&&priceStr.floatValue>0) {
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f+%@积分",[priceStr floatValue],integral];
+        self.priceLabel.text =[NSString stringWithFormat:@"实付款：%@积分+%.2f元",integral,[priceStr floatValue]];
         
 
     }else{
@@ -67,7 +67,7 @@
             self.priceLabel.text =[NSString stringWithFormat:@"实付款：%@积分",integral];
 
         }else{
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[priceStr floatValue]];
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%.2f元",[priceStr floatValue]];
         }
 
     }
@@ -224,7 +224,7 @@
             NSString * priceStr = [self.infoDict safeObjectForKey:@"productPrice"];
             NSString * integral = [self.infoDict safeObjectForKey:@"productIntegral"];
             if (integral.intValue>0&&priceStr.floatValue>0) {
-                cell.detailTextLabel.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+                cell.detailTextLabel.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];
                 
                 
             }else{
@@ -232,7 +232,7 @@
                     cell.detailTextLabel.text =[NSString stringWithFormat:@"%@积分",integral];
                     
                 }else{
-                    cell.detailTextLabel.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+                    cell.detailTextLabel.text =[NSString stringWithFormat:@"%.2f元",[priceStr floatValue]];
                 }
                 
             }

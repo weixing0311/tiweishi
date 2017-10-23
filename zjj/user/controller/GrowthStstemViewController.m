@@ -24,7 +24,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setTBWhiteColor];
+    [self setTBRedColor];
 
 }
 - (void)viewDidLoad {
@@ -78,7 +78,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section ==0) {
-        return 260 ;
+        return 290 ;
     }else{
     return 60;
     }
@@ -90,6 +90,22 @@
         return 1;
     }else{
     return self.dataArray.count;
+    }
+}
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section ==1) {
+        return @"成长任务";
+    }else{
+        return @"";
+    }
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section ==0) {
+        return 0;
+    }else{
+        return 45;
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -121,8 +137,12 @@
         DLog(@"bigArr--%@",bigArr);
         if (bigArr.count==0) {
             currDic = [arr lastObject];
-        }else{
+        }
+        else if (bigArr.count ==arr.count) {
             currDic = bigArr[0];
+        }
+        else{
+            currDic = arr[arr.count-bigArr.count-1];
         }
         cell.levellb.text = [currDic objectForKey:@"gradeName"];;
         

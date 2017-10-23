@@ -122,6 +122,8 @@
     } failure:^(NSError *error) {
         if (error.code ==402) {
             [headerArr removeAllObjects];
+            [self refreshPageInfoWithItem:nil];
+
         }
         
         
@@ -129,6 +131,18 @@
 }
 -(void)refreshPageInfoWithItem:(HealthItem*)item
 {
+    
+    if (item==nil) {
+        self.weightlb.text = @"0.0kg";
+        self.lessWeightLb.text = @"-";
+        self.trendArrowImageView.hidden = YES;
+        self.fatStatuslb.text = @"";
+        self.resignTimelb.text = @"";
+        self.redFatlb.text = @"";
+
+    }
+    self.resignTimelb.text = [NSString stringWithFormat:@"已使用脂将军%d天",item.userDays];
+    self.redFatlb.text = [NSString stringWithFormat:@"已减脂%.1fkg",item.subtractWeight];
     [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
     
     self.weightlb.text = [NSString stringWithFormat:@"%.1f",item.weight];
@@ -240,6 +254,8 @@
         
         if ([subId isEqualToString:[UserModel shareInstance].subId]) {
             [[SubUserItem shareInstance]setInfoWithHealthId:subId];
+            [[UserModel shareInstance]setHealthidWithId:subId];
+
             [self refreshMyInfoView];
             self.userListView.hidden = YES;
             return;
@@ -269,6 +285,9 @@
     [self presentViewController:we animated:YES completion:nil];
 }
 - (IBAction)didClickEnterDetail:(id)sender {
+    if (!headerArr|| headerArr.count<1) {
+        return;
+    }
     HealthItem * item = [headerArr objectAtIndex:0];
     HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
     hd.hidesBottomBarWhenPushed=YES;
@@ -281,11 +300,9 @@
 }
 - (IBAction)didClickShowhistoryInfo:(id)sender {
     
-    HealthItem * item = [headerArr objectAtIndex:0];
 
     HistoryInfoViewController * hist = [[HistoryInfoViewController alloc]init];
     hist.hidesBottomBarWhenPushed=YES;
-    hist.dataId =[NSString stringWithFormat:@"%d",item.DataId];
     [self.navigationController pushViewController: hist animated:YES];
 }
 

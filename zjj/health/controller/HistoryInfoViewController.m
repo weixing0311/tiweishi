@@ -80,8 +80,9 @@
         [self.tableview reloadData];
     } failure:^(NSError *error) {
         DLog(@"%@",error);
-        if (error.code ==-1001) {
-            [[UserModel shareInstance] showErrorWithStatus:@"请求超时"];
+        if (error.code ==402) {
+            [_dataArray removeAllObjects];
+            [self.tableview reloadData];
         }
     }];
 

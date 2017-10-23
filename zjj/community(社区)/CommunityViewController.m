@@ -15,6 +15,8 @@
 #import "ArticleDetailViewController.h"
 #import "CommunityCell.h"
 #import "FcBigImgViewController.h"
+#import "NewMineHomePageViewController.h"
+
 
 @interface CommunityViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PublicArticleCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
@@ -66,7 +68,7 @@
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self setRefrshWithTableView:self.tableview];
     pageSize= 30;
-    self.segment.selectedSegmentIndex = 0;
+    self.segment.selectedSegmentIndex = 1;
     [self.tableview headerBeginRefreshing];
 }
 -(void)refreshTableView
@@ -388,30 +390,41 @@
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
     
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+    if ([model.userId isEqualToString:[UserModel shareInstance].userId]) {
         
-    }];
-    [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-
-        if (strUrl.length<5) {
-            [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
-            return ;
-        }
-        NSMutableDictionary * params = [NSMutableDictionary dictionary];
-        [params safeSetObject:model.uid forKey:@"articleId"];
-        [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
-        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-        self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
-            [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
-        } failure:^(NSError *error) {
+    }
+    else
+    {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             
         }];
+        [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+            
+            if (strUrl.length<5) {
+                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
+                return ;
+            }
+            NSMutableDictionary * params = [NSMutableDictionary dictionary];
+            [params safeSetObject:model.uid forKey:@"articleId"];
+            [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
+            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+                [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
+            } failure:^(NSError *error) {
+                
+            }];
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
 
-    }]];
-    [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    
+    
+    
     
     
 
@@ -428,7 +441,15 @@
     [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
 
 }
-
+-(void)didTapHeadImageViewWithCell:(PublicArticleCell *)cell
+{
+    CommunityModel * model =[_dataArray objectAtIndex:cell.tag];
+    
+    
+    NewMineHomePageViewController * mine = [[NewMineHomePageViewController alloc]init];
+    mine.userId = model.userId;
+    [self.navigationController pushViewController:mine animated:YES];
+}
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (!decelerate)

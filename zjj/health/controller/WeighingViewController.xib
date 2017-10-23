@@ -41,6 +41,12 @@
                         <constraint firstAttribute="width" constant="100" id="HOb-Bh-UNN"/>
                         <constraint firstAttribute="height" constant="100" id="eer-P2-TOj"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="50"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oe4-7t-pU1">
                     <rect key="frame" x="30" y="190" width="315" height="25"/>
@@ -60,8 +66,29 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shangCheng_" translatesAutoresizingMaskIntoConstraints="NO" id="Vka-mX-ohC">
+                    <rect key="frame" x="137" y="416" width="100" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="hCa-59-0fs"/>
+                        <constraint firstAttribute="height" constant="45" id="srZ-dm-B9K"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sc_dian3_" translatesAutoresizingMaskIntoConstraints="NO" id="rwT-Uf-irP">
+                    <rect key="frame" x="184.5" y="336" width="5" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="5" id="P5q-ct-7dv"/>
+                        <constraint firstAttribute="height" constant="30" id="wYA-KX-Gra"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="didRode_" translatesAutoresizingMaskIntoConstraints="NO" id="t5h-iM-iqB">
+                    <rect key="frame" x="122" y="373" width="130" height="130"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="130" id="GHd-eD-3ba"/>
+                        <constraint firstAttribute="width" constant="130" id="iKY-7P-8UE"/>
+                    </constraints>
+                </imageView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dNX-Yk-Ppn">
-                    <rect key="frame" x="112" y="416" width="150" height="30"/>
+                    <rect key="frame" x="112" y="528" width="150" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="150" id="Vin-L4-dAx"/>
                         <constraint firstAttribute="height" constant="30" id="cmq-9R-GTV"/>
@@ -73,20 +100,6 @@
                         <action selector="didClickLj:" destination="-1" eventType="touchUpInside" id="Lgx-dc-yLr"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shangCheng_" translatesAutoresizingMaskIntoConstraints="NO" id="Vka-mX-ohC">
-                    <rect key="frame" x="112" y="386" width="150" height="150"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="150" id="hCa-59-0fs"/>
-                        <constraint firstAttribute="height" constant="150" id="srZ-dm-B9K"/>
-                    </constraints>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sc_dian3_" translatesAutoresizingMaskIntoConstraints="NO" id="rwT-Uf-irP">
-                    <rect key="frame" x="184.5" y="336" width="5" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="5" id="P5q-ct-7dv"/>
-                        <constraint firstAttribute="height" constant="30" id="wYA-KX-Gra"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.031372549019607843" green="0.81568627450980391" blue="0.77647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -94,17 +107,19 @@
                 <constraint firstAttribute="trailing" secondItem="Oe4-7t-pU1" secondAttribute="trailing" constant="30" id="7Ab-6g-oc6"/>
                 <constraint firstItem="Vka-mX-ohC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AZh-cl-y12"/>
                 <constraint firstItem="leI-Eq-fNn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="Bn9-5R-83q"/>
-                <constraint firstItem="dNX-Yk-Ppn" firstAttribute="top" secondItem="rwT-Uf-irP" secondAttribute="bottom" constant="50" id="EJw-tK-zXl"/>
                 <constraint firstItem="Oe4-7t-pU1" firstAttribute="top" secondItem="P4v-iy-FQ0" secondAttribute="bottom" constant="20" id="O09-AC-h38"/>
                 <constraint firstItem="rwT-Uf-irP" firstAttribute="top" secondItem="bSP-M0-AhO" secondAttribute="bottom" constant="20" id="PuF-0f-vH5"/>
                 <constraint firstItem="dNX-Yk-Ppn" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="UVC-Oh-sIi"/>
                 <constraint firstItem="bSP-M0-AhO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Vzx-aC-aO4"/>
                 <constraint firstItem="rwT-Uf-irP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="W5h-6z-Rp4"/>
+                <constraint firstItem="Vka-mX-ohC" firstAttribute="centerX" secondItem="t5h-iM-iqB" secondAttribute="centerX" id="b7z-V9-32g"/>
                 <constraint firstItem="P4v-iy-FQ0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="bej-12-z4H"/>
-                <constraint firstItem="Vka-mX-ohC" firstAttribute="top" secondItem="rwT-Uf-irP" secondAttribute="bottom" constant="20" id="j4B-XK-a9G"/>
+                <constraint firstItem="Vka-mX-ohC" firstAttribute="top" secondItem="rwT-Uf-irP" secondAttribute="bottom" constant="50" id="j4B-XK-a9G"/>
+                <constraint firstItem="Vka-mX-ohC" firstAttribute="centerY" secondItem="t5h-iM-iqB" secondAttribute="centerY" id="keh-pU-uEI"/>
                 <constraint firstItem="P4v-iy-FQ0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lF1-AH-eL0"/>
                 <constraint firstItem="bSP-M0-AhO" firstAttribute="top" secondItem="Oe4-7t-pU1" secondAttribute="bottom" constant="80" id="uzA-ev-bmt"/>
                 <constraint firstAttribute="trailing" secondItem="leI-Eq-fNn" secondAttribute="trailing" constant="10" id="v3l-YI-7Uq"/>
+                <constraint firstItem="dNX-Yk-Ppn" firstAttribute="top" secondItem="t5h-iM-iqB" secondAttribute="bottom" constant="25" id="wLS-Fb-uZg"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>
@@ -112,6 +127,7 @@
     <resources>
         <image name="Sc_dian3_" width="3" height="28"/>
         <image name="close_whte_" width="13" height="13"/>
-        <image name="shangCheng_" width="164" height="146"/>
+        <image name="didRode_" width="176" height="176"/>
+        <image name="shangCheng_" width="108" height="59"/>
     </resources>
 </document>

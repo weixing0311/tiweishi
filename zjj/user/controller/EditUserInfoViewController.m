@@ -10,6 +10,8 @@
 #import "EditUserInfoImageCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
+#import "HeadImageCell.h"
+
 @interface EditUserInfoViewController ()<UITableViewDelegate,UITableViewDataSource,EditUserInfoCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong) UIPickerView * pickView;
@@ -94,10 +96,10 @@
 -(void)didChoose
 {
     [self.hiddentf resignFirstResponder];
-    if (self.hiddentf.tag==1) {
+    if (self.hiddentf.tag==2) {
         [self.upDataDict safeSetObject:pickRow==1?@"2":@"1" forKey:@"sex"];
     }
-    else if(self.hiddentf.tag==4)
+    else if(self.hiddentf.tag==5)
     {
         [self.upDataDict safeSetObject:@(pickRow+80) forKey:@"heigth"];
     }
@@ -195,10 +197,12 @@
 {
     NSString * urlStr = @"";
     if (imageType ==1) {
-        urlStr =@"app/evaluatUser/uploadFatBeforeImg.do";
-    }else
+        urlStr = @"app/evaluatUser/uploadFatBeforeImg.do";
+    }else if(imageType ==2)
     {
-        urlStr =@"app/evaluatUser/uploadFatAfterImg.do";
+        urlStr = @"app/evaluatUser/uploadFatAfterImg.do";
+    }else{
+        urlStr = @"app/user/uploadHeadImg.do";
     }
     
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
@@ -251,19 +255,36 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    return 9;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==5) {
+    if (indexPath.row ==6) {
         return 250;
-    }else{
+    }
+    else if (indexPath.row ==0)
+    {
+        return 60;
+    }
+    else
+    {
         return 44;
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==5) {
+    
+    if (indexPath.row ==0) {
+        static NSString * identifier = @"HeadImageCell";
+        HeadImageCell * cell = [self.tableview dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [self getXibCellWithTitle:identifier];
+        }
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:getImage(@"head_default")];
+        return cell;
+    }
+    
+    else if (indexPath.row ==6) {
         static NSString * identifier = @"EditUserInfoImageCell";
         EditUserInfoImageCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
@@ -272,16 +293,16 @@
         cell.delegate= self;
         [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"before")];
         [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"last")];
-
+        
         return cell;
-
+        
         
     }else{
-    static NSString * identifier = @"cell";
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-    }
+        static NSString * identifier = @"cell";
+        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+        }
         
         cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
         if (indexPath.row <5) {
@@ -290,44 +311,44 @@
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-
+        
         switch (indexPath.row) {
-            case 0:
+            case 1:
                 cell.textLabel.text = @"昵称";
                 cell.detailTextLabel.text = [_upDataDict safeObjectForKey:@"nickName"];
                 break;
-            case 1:
+            case 2:
                 cell.textLabel.text = @"性别";
                 cell.detailTextLabel.text = [[_upDataDict safeObjectForKey:@"sex"]isEqualToString:@"1"]?@"男":@"女";
                 break;
-            case 2:
+            case 3:
                 cell.textLabel.text = @"简介";
                 
                 
                 cell.detailTextLabel.text = [_infoDict safeObjectForKey:@"introduction"];
                 break;
-            case 3:
+            case 4:
                 cell.textLabel.text = @"年龄";
                 cell.detailTextLabel.text =[NSString stringWithFormat:@"%@",[[_upDataDict safeObjectForKey:@"birthday"]getAge]];
                 break;
-            case 4:
+            case 5:
                 cell.textLabel.text = @"身高(cm)";
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[_upDataDict safeObjectForKey:@"heigth"]];
                 break;
-            case 6:
+            case 7:
                 cell.textLabel.text = @"等级";
                 cell.detailTextLabel.text =[_infoDict safeObjectForKey:@"gradeName"];
                 break;
-            case 7:
+            case 8:
                 cell.textLabel.text = @"积分";
                 cell.detailTextLabel.text = [_infoDict safeObjectForKey:@"integral"];
                 break;
-
+                
             default:
                 break;
         }
         
-        
+
 
     return cell;
     }
@@ -336,24 +357,27 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
-        case 0:
+        case 0 :
+            [self changeHeaderWithType:3];
+            break;
+        case 1:
             
             [self showAlertWithType:indexPath.row];
             break;
-        case 1:
+        case 2:
             self.hiddentf.tag = indexPath.row;
             [self.hiddentf becomeFirstResponder];
             [self.pickView reloadAllComponents];
 
             break;
-        case 2:
+        case 3:
             [self showAlertWithType:indexPath.row];
             break;
-        case 3:
+        case 4:
             [self.datePickTf becomeFirstResponder];
 
             break;
-        case 4:
+        case 5:
             self.hiddentf.tag = indexPath.row;
             [self.hiddentf becomeFirstResponder];
             [self.pickView reloadAllComponents];
@@ -374,16 +398,27 @@
     NSString * title1 = @"修改昵称";
     NSString * title2 = @"编辑简介";
     
-    UIAlertController * al = [UIAlertController alertControllerWithTitle:indexPathRow==0?title1:title2 message:@"不能少于四个字符" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:indexPathRow==1?title1:title2 message:@"" preferredStyle:UIAlertControllerStyleAlert];
     
     [al addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.text = indexPathRow==0?[_infoDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
+        textField.text = indexPathRow==1?[_infoDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
     }];
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if (al.textFields.firstObject.text.length<4) {
+        if (![self valiNickName:al.textFields.firstObject.text]&&indexPathRow ==1) {
+            [[UserModel shareInstance]showInfoWithStatus:@"昵称格式不正确"];
+
+            return;
+        }
+        if (al.textFields.firstObject.text.length<1) {
+            [[UserModel shareInstance]showInfoWithStatus:@"修改内容不能为空"];
             return ;
         }
-        if (indexPathRow==0) {
+        if (al.textFields.firstObject.text.length>7&&indexPathRow ==1) {
+            [[UserModel shareInstance]showInfoWithStatus:@"昵称最长7字符"];
+
+        }
+
+        if (indexPathRow==1) {
             [self.upDataDict safeSetObject:al.textFields.firstObject.text forKey:@"nickName"];
             haveChangeInfo = YES;
             [self.tableview reloadData];
@@ -429,10 +464,25 @@
 }
 
 #pragma  mark ---image delegate
-- (void)changeHeaderWithType:(int)type//type:1前2后
+- (void)changeHeaderWithType:(int)type//type:1前2后3头像
 {
     imageType = type;
-    UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:@"修改头像" preferredStyle:UIAlertControllerStyleActionSheet];
+    NSString * titleStr ;
+    switch (type) {
+        case 1:
+            titleStr = @"减肥前";
+            break;
+        case 2:
+            titleStr = @"减肥后";
+            break;
+        case 3:
+            titleStr = @"头像";
+            break;
+
+        default:
+            break;
+    }
+    UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:titleStr preferredStyle:UIAlertControllerStyleActionSheet];
     
     [al addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -458,10 +508,54 @@
         [self presentViewController:pickerImage animated:YES completion:nil];
         
     }]];
+    
+    if (type !=3) {
+        [al addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self didDeleteFatImageWithType:type];
+            
+            
+        }]];
+    }
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     
     [self presentViewController:al animated:YES completion:nil];
 }
+
+
+-(void)didDeleteFatImageWithType:(int)type
+{
+    UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:@"是否确认删除图片？" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params safeSetObject:type==1?@"fatBefore":@"fatAfter" forKey:@"type"];
+        self.currentTasks =[[BaseSservice sharedManager]post1:@"" paramters:params success:^(NSDictionary *dic) {
+            
+            [[UserModel shareInstance ]showSuccessWithStatus:@"删除成功"];
+            
+            if (type==1) {
+                [_infoDict removeObjectForKey:@"fatBefore"];
+            }else{
+                [_infoDict removeObjectForKey:@"fatAfter"];
+            }
+            [self.tableview reloadData];
+        } failure:^(NSError *error) {
+            
+        }];
+        
+        
+    }]];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+
+}
+
+
 
 #pragma mark ----imagepickerdelegate
 
@@ -547,6 +641,17 @@
     pickRow = row;
 }
 
+-(BOOL)valiNickName:(NSString * )nickName
+{
+    nickName = [nickName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    //    $("#inputNum").val(val.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,''));
+    NSString * NICK_NUM = @"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+";
+    
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", NICK_NUM];
+    BOOL isMatch = [pred evaluateWithObject:nickName];
+    return isMatch;
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -66,7 +66,7 @@
         self.value1Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_MUSCLE];
 
         self.title2Label.text = @"基础代谢";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.bmr];
+        self.value2Label.text = [NSString stringWithFormat:@"%.1f",item.bmr];
         self.value2Label.textColor = [[HealthModel shareInstance] getHealthDetailColorWithStatus:IS_MODEL_WATER];
 
         

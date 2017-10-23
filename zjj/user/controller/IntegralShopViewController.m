@@ -137,17 +137,26 @@
     cell.backgroundColor = [UIColor whiteColor];
     [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"picture"]] placeholderImage:getImage(@"")];
     cell.titlelb .text = [dict safeObjectForKey:@"viceTitle"];
-    cell.timelb  .text = [dict safeObjectForKey:@""];
     NSString * gradeStr =[dict safeObjectForKey:@"grade"];
     if ( [gradeStr isEqualToString:@"0"]||!gradeStr) {
         cell.secondlb .text = @"无限制";
     }else{
     cell.secondlb.text = [NSString stringWithFormat:@"%@级以上",[dict safeObjectForKey:@"grade"]];
     }
+    
+    NSString * restrictionNum = [dict  safeObjectForKey:@"restrictionNum"];
+    
+    if ([restrictionNum isEqualToString:@"0"]) {
+        cell.timelb.text = @"";
+    }else{
+        cell.timelb.text = [NSString  stringWithFormat:@"限购%d件",[restrictionNum intValue]];
+        cell.timelb.hidden = NO;
+    }
+    
     NSString * priceStr = [dict safeObjectForKey:@"productPrice"];
     NSString * integral = [dict safeObjectForKey:@"productIntegral"];
     if (integral.intValue>0&&priceStr.floatValue>0) {
-        cell.pricelb.text =[NSString stringWithFormat:@"￥%.2f+%@积分",[priceStr floatValue],integral];
+        cell.pricelb.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];
         
         
     }else{
@@ -155,7 +164,7 @@
             cell.pricelb.text =[NSString stringWithFormat:@"%@积分",integral];
             
         }else{
-            cell.pricelb.text =[NSString stringWithFormat:@"￥%.2f",[priceStr floatValue]];
+            cell.pricelb.text =[NSString stringWithFormat:@"%.2f元",[priceStr floatValue]];
         }
         
     }
@@ -167,7 +176,7 @@
 //设置item大小
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((JFA_SCREEN_WIDTH-20)/2, (JFA_SCREEN_WIDTH-20)/2+30);
+    return CGSizeMake((JFA_SCREEN_WIDTH-20)/2, (JFA_SCREEN_WIDTH-20)/2+70);
 }
 //这个是两行cell之间的间距（上下行cell的间距）
 

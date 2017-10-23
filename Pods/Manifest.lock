@@ -23,6 +23,7 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SVProgressHUD (2.1.2)
+  - TZImagePickerController (1.8.0)
 
 DEPENDENCIES:
   - ACSimpleKeychain (~> 0.3)
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - Masonry (~> 1.0.2)
   - SDWebImage (~> 4.0.0)
   - SVProgressHUD (~> 2.1.2)
+  - TZImagePickerController (~> 1.8.0)
 
 SPEC CHECKSUMS:
   ACSimpleKeychain: 5c2920e4122636f66e0bafe5aa1e46a66334cbfb
@@ -40,7 +42,8 @@ SPEC CHECKSUMS:
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  TZImagePickerController: 2a74f34f116e8229264e2afc122b0d8d4683c626
 
-PODFILE CHECKSUM: ea785b553e950238cfddab8fe9fa6cf1cf435df9
+PODFILE CHECKSUM: a1393e8338e18d8552cef0a8aaf5abd2b80518ac
 
 COCOAPODS: 1.2.1

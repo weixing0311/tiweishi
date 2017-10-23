@@ -76,6 +76,9 @@ typedef enum {
 @property (nonatomic,assign) float              height;
 @property (nonatomic,assign) int                age;
 
+@property (nonatomic,assign) int                userDays;//注册时长
+@property (nonatomic,assign) float              subtractWeight;//已减脂重量
+
 
 -(void)setobjectWithDic:(NSDictionary *)dict ;//
 

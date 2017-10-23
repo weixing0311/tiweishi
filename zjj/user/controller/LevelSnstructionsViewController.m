@@ -102,13 +102,14 @@
 {
     NSArray * arr = [_infoDict safeObjectForKey:@"integeralGrade"];
     for (int i =0; i<arr.count; i++) {
-        UIView * dianView = [[UIView alloc]initWithFrame:CGRectMake(30+(JFA_SCREEN_WIDTH-50)/arr.count*i-5, 36, 10, 10)];
+        UIView * dianView = [[UIView alloc]initWithFrame:CGRectMake(30+(JFA_SCREEN_WIDTH-50)/arr.count*i-5, 37, 10, 10)];
         dianView.layer.cornerRadius = 5;
         dianView.layer.masksToBounds = YES;
         dianView.backgroundColor = [UIColor whiteColor];
         UILabel * lb =[[UILabel alloc]initWithFrame:CGRectMake(dianView.center.x-15, 57, 30, 15)];
         lb.text = [NSString stringWithFormat:@"%d级",i+1];
-        
+        lb.textColor = [UIColor whiteColor];
+        lb.font = [UIFont systemFontOfSize:13];
         [_cbgView addSubview:dianView];
         [_cbgView addSubview:lb];
     }

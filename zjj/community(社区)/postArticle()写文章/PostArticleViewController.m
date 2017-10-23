@@ -11,8 +11,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AssetsLibrary/AssetsLibrary.h>  // 必须导入
-
-@interface PostArticleViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+#import "FcBigImgViewController.h"
+#import "TZImagePickerController.h"
+@interface PostArticleViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,TZImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIView *imageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -51,7 +52,9 @@
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"AddImageCell"bundle:nil]forCellWithReuseIdentifier:@"AddImageCell"];
     _imagesArray  =[NSMutableArray array];
-
+    if (self.firstImage) {
+        [_imagesArray addObject:self.firstImage];
+    }
     [_imagesArray addObject:getImage(@"camera")];
 
     [self.imageView addSubview:self.collectionView];
@@ -216,6 +219,21 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
+    
+    
+    TZImagePickerController * imagePickerVc =[[TZImagePickerController alloc]initWithMaxImagesCount:9 delegate:self];
+    
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        
+    }];
+    
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+    
+    
+    
+    
+    
     if (indexPath.row ==_imagesArray.count-1) {
         if (_isHaveMovie ==YES) {
             return;

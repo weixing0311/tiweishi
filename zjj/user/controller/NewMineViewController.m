@@ -77,131 +77,154 @@
 
 }
 
-
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==0) {
-        return 120;
-    }else if (indexPath.row ==1)
-    {
+    if (indexPath.section ==0) {
+        if (indexPath.row ==0) {
+            return 80;
+        }
         return 60;
+    }else{
+        return 50;
     }
-    else
-    {
-        return 44;
+
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section==0) {
+        return 0;
+    }else{
+        return 15;
     }
 }
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"";
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    if (section ==0) {
+        return 2;
+    }
+    return 4;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==0) {
-        static NSString * identifier = @"NewMineHeaderCell";
-        NewMineHeaderCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [self  getXibCellWithTitle:identifier];
-        }
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]]placeholderImage:getImage(@"defaultHead")];
-        cell.nickNamelb.text  = [_infoDict safeObjectForKey:@"nickName"];
-        NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
-        if (introduction.length<1) {
-            cell.secondlb.text = @"您还没有编辑简介~";
-        }else{
-            cell.secondlb.text = [NSString stringWithFormat:@"简介：%@",introduction];
-        }
-
-
-        return cell;
-    }
-    else if (indexPath.row ==1)
-    {
-        static NSString * identifier = @"NewMineRelationsCell";
-        NewMineRelationsCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [self  getXibCellWithTitle:identifier];
-        }
-        cell.delegate = self;
-        cell.value2lb.text = [_infoDict safeObjectForKey:@"followNum"];
-        cell.value3lb.text = [_infoDict safeObjectForKey:@"fansNum"];
-
-        return cell;
-
-    }
-    else
-    {
-        static NSString * identifier = @"PublicCell";
-        PublicCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [self getXibCellWithTitle:identifier];
-        }
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
-        if (indexPath.row==2) {
-            cell.titleLabel.text = @"成长体系";
-            cell.headImageView.image = getImage(@"todayTask");
-        }
-        else if (indexPath.row==3) {
-            cell.titleLabel.text = @"积分商城";
-            cell.headImageView.image = getImage(@"employ");
+    if (indexPath.section ==0) {
+        if (indexPath.row ==0)
+        {
+            static NSString * identifier = @"NewMineHeaderCell";
+            NewMineHeaderCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [self  getXibCellWithTitle:identifier];
+            }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
+            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]]placeholderImage:getImage(@"defaultHead")];
+            cell.nickNamelb.text  = [_infoDict safeObjectForKey:@"nickName"];
+            NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
+            if (introduction.length<1) {
+                cell.secondlb.text = @"您还没有编辑简介~";
+            }else{
+                cell.secondlb.text = [NSString stringWithFormat:@"简介：%@",introduction];
+            }
+            return cell;
         }
-        else {
-            cell.titleLabel.text = @"我的订单";
-            cell.headImageView.image = getImage(@"issue");
-            
+        else
+        {
+            static NSString * identifier = @"NewMineRelationsCell";
+            NewMineRelationsCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [self  getXibCellWithTitle:identifier];
+            }
+            cell.delegate = self;
+            cell.value2lb.text = [_infoDict safeObjectForKey:@"followNum"];
+            cell.value3lb.text = [_infoDict safeObjectForKey:@"fansNum"];
+            return cell;
         }
+    }else{
 
+            static NSString * identifier = @"PublicCell";
+            PublicCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [self getXibCellWithTitle:identifier];
+            }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            if (indexPath.row ==0) {
+                cell.titleLabel.text = @"我的主页";
+                cell.headImageView.image = getImage(@"todayTask");
+            }
+            else if (indexPath.row==1) {
+                cell.titleLabel.text = @"成长体系";
+                cell.headImageView.image = getImage(@"todayTask");
+            }
+            else if (indexPath.row==2) {
+                cell.titleLabel.text = @"积分商城";
+                cell.headImageView.image = getImage(@"employ");
+            }
+            else {
+                cell.titleLabel.text = @"我的订单";
+                cell.headImageView.image = getImage(@"issue");
+            }
+            return cell;
         
-        return cell;
-
     }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row==0)
-    {
-        DLog(@"个人信息");
-        NewMineHomePageViewController * mb= [[NewMineHomePageViewController alloc]init];
-        mb.hidesBottomBarWhenPushed=YES;
-        mb.userId = [UserModel shareInstance].userId;
-        [self.navigationController pushViewController:mb animated:YES];
+    if (indexPath.section ==0) {
+        if (indexPath.row ==0) {
+            DLog(@"个人信息");
+            NewMineHomePageViewController * mb= [[NewMineHomePageViewController alloc]init];
+            mb.hidesBottomBarWhenPushed=YES;
+            mb.userId = [UserModel shareInstance].userId;
+            [self.navigationController pushViewController:mb animated:YES];
 
-    }
-    else if(indexPath.row==1)
-    {
-        
-    }
-    else if(indexPath.row==2)
-    {
-        DLog(@"成长体系");
+        }
+    }else{
+         if(indexPath.row ==0)
+        {
+            NewMineHomePageViewController * page = [[NewMineHomePageViewController alloc]init];
+            page.userId = [UserModel shareInstance].userId;
+            [self.navigationController pushViewController:page animated:YES];
 
-        GrowthStstemViewController * gs = [[GrowthStstemViewController alloc]init];
-        gs.hidesBottomBarWhenPushed=YES;
+        }
+        else if(indexPath.row==1)
+        {
+            DLog(@"成长体系");
+            
+            GrowthStstemViewController * gs = [[GrowthStstemViewController alloc]init];
+            gs.hidesBottomBarWhenPushed=YES;
+            
+            [self.navigationController pushViewController:gs animated:YES];
 
-        [self.navigationController pushViewController:gs animated:YES];
-    }
-    else if(indexPath.row==3)
-    {
-        DLog(@"积分商城");
+        }
+        else if(indexPath.row==2)
+        {
+            DLog(@"积分商城");
+            
+            IntegralShopViewController * its = [[IntegralShopViewController alloc]init];
+            its.hidesBottomBarWhenPushed=YES;
+            
+            [self.navigationController pushViewController:its animated:YES];
 
-        IntegralShopViewController * its = [[IntegralShopViewController alloc]init];
-        its.hidesBottomBarWhenPushed=YES;
+        }
+        else
+        {
+            DLog(@"购买记录");
+            IntegralOrderViewController * ord = [[IntegralOrderViewController alloc]init];
+            ord.hidesBottomBarWhenPushed=YES;
+            [self.navigationController pushViewController:ord animated:YES];
+        }
 
-        [self.navigationController pushViewController:its animated:YES];
-    }
-
-    else
-    {
-        DLog(@"购买记录");
-        IntegralOrderViewController * ord = [[IntegralOrderViewController alloc]init];
-        ord.hidesBottomBarWhenPushed=YES;
-        [self.navigationController pushViewController:ord animated:YES];
     }
 
 }

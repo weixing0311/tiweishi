@@ -137,7 +137,7 @@
     else{
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
-
+        [_dataArray removeAllObjects];
         NSArray * arr = [self.dict safeObjectForKey:@"array"];
         
         for (NSDictionary *dic in arr) {
@@ -153,7 +153,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 80;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -178,13 +178,24 @@
     }else{
         cell.gzbtn.hidden =NO;
     }
-    
+    UIColor * bgColor ;
+    UIColor * layerColor;
     if (model.isFollow||self.pageType ==IS_GZ) {
         cell.gzbtn.selected =YES;
+        cell.gzbtn.layer.borderWidth= 1;
+        bgColor = [UIColor whiteColor];
+        layerColor = HEXCOLOR(0x666666);
+
     }else
     {
         cell.gzbtn.selected = NO;
+        cell.gzbtn.layer.borderWidth= 1;
+        bgColor = [UIColor redColor];
+        layerColor = [UIColor redColor];
     }
+    cell.gzbtn.layer.borderColor = layerColor.CGColor;
+    cell.gzbtn.backgroundColor = bgColor;
+
     return cell;
 }
 
@@ -226,8 +237,9 @@
         [params setObject:model.userId forKey:@"followId"];
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
             DLog(@"dic-关注成功--%@",dic);
-            cell.gzbtn.selected =YES;
+//            cell.gzbtn.selected =YES;
             [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+            [self getInfo];
         } failure:^(NSError *error) {
             
         }];

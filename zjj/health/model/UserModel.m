@@ -226,6 +226,7 @@ static UserModel *model;
 //            return;
 //        }
 //    }
+    [self writeToDoc];
 }
 -(NSMutableDictionary *)getChangeUserInfoDict
 {

@@ -27,7 +27,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-1V-b2q">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <color key="backgroundColor" red="0.73333333333333328" green="0.73333333333333328" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yik-Yb-mRQ">
                     <rect key="frame" x="20" y="120" width="335" height="188"/>
@@ -421,7 +421,8 @@
                         <constraint firstAttribute="height" constant="187" id="wjr-jf-cSx"/>
                     </constraints>
                     <string key="text">说明：
-1.积分可以在积分商城兑换商品，完成任务可以获得积分，每个任务每日仅可完成一次。2.当前等级根据累计积分来判定，积分的使用与否并不影响所在的等级。</string>
+1.积分可以在积分商城兑换商品，完成任务可以获得积分，每个任务每日仅可完成一次。
+2.当前等级根据累计积分来判定，积分的使用与否并不影响所在的等级。</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>

@@ -80,7 +80,7 @@
     zhetimeout--;
     if (!zhetimeout||zhetimeout<=0) {
         [_timer invalidate];
-        self.timeLabel.text = @"补货结束";
+        self.lastTime.text = @"补货结束";
     }
     [self updateTimeInVisibleCellsWithString:zhetimeout];
 }

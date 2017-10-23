@@ -464,4 +464,9 @@
     
     
 }
+- (IBAction)didClickHeadImage:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didTapHeadImageViewWithCell:)]) {
+        [self.delegate didTapHeadImageViewWithCell:self];
+    }
+}
 @end
