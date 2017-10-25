@@ -221,19 +221,6 @@
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     
     
-    
-    TZImagePickerController * imagePickerVc =[[TZImagePickerController alloc]initWithMaxImagesCount:9 delegate:self];
-    
-    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        
-    }];
-    
-    [self presentViewController:imagePickerVc animated:YES completion:nil];
-    
-    
-    
-    
-    
     if (indexPath.row ==_imagesArray.count-1) {
         if (_isHaveMovie ==YES) {
             return;

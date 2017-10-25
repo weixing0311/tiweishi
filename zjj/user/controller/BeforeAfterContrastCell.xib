@@ -142,7 +142,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VS.png" translatesAutoresizingMaskIntoConstraints="NO" id="u1J-wv-43Y">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vs_" translatesAutoresizingMaskIntoConstraints="NO" id="u1J-wv-43Y">
                                 <rect key="frame" x="140" y="69" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="iUc-tF-IeF"/>
@@ -226,6 +226,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="VS.png" width="36" height="36"/>
+        <image name="vs_" width="35" height="35"/>
     </resources>
 </document>

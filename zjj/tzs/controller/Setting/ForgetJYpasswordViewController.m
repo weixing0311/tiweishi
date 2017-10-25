@@ -65,7 +65,7 @@
     
     
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
-    [param setObject:self.mobiletf.text forKey:@"mobilePhone"];
+    [param setObject:[NSString encryptString:self.mobiletf.text] forKey:@"mobilePhone"];
     [param setObject:self.cardTf.text forKey:@"accountNo"];
     [param setObject:[NSString encryptString: self.passwordtf.text] forKey:@"password"];
     [param setObject:[NSString encryptString: self.repasswordtf.text] forKey:@"repPassword"];

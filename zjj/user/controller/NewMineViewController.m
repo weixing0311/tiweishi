@@ -17,17 +17,25 @@
 #import "GuanZViewController.h"
 #import "NewMineHomePageViewController.h"
 #import "IntegralOrderViewController.h"
+#import "NewMineTableViewCell.h"
+#import "CommunityViewController.h"
 @interface NewMineViewController ()<UITableViewDelegate,UITableViewDataSource,mineRelationsCellDelegate,mineRelationsCellDelegate>
 @property (nonatomic,strong)NSMutableDictionary * infoDict;
 @end
 
 @implementation NewMineViewController
+{
+    int notifacationCount;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    self.tabBarController.tabBar.hidden = NO;
+
     [self setTBWhiteColor];
     [self getUserInfo];
+    [self getMyMessageCountInfo];
 
 }
 - (void)viewDidLoad {
@@ -37,14 +45,11 @@
     
     [self setNavi];
     
-    
-    
     _infoDict = [NSMutableDictionary dictionary];
     
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
-//    [self getUserInfo];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -76,7 +81,22 @@
     
 
 }
-
+-(void)getMyMessageCountInfo
+{
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/queryMsgDynamic.do" paramters:params success:^(NSDictionary *dic) {
+        
+        NSString * dynamicTimes = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"dynamicTimes"];
+        if (dynamicTimes&&[dynamicTimes intValue]>0) {
+            notifacationCount = [dynamicTimes intValue];
+            [self.tableview reloadData];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -111,7 +131,7 @@
     if (section ==0) {
         return 2;
     }
-    return 4;
+    return 5;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -149,28 +169,40 @@
         }
     }else{
 
-            static NSString * identifier = @"PublicCell";
-            PublicCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
+            static NSString * identifier = @"NewMineTableViewCell";
+            NewMineTableViewCell * cell  = [tableView dequeueReusableCellWithIdentifier:identifier];
             if (!cell) {
                 cell = [self getXibCellWithTitle:identifier];
             }
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             if (indexPath.row ==0) {
-                cell.titleLabel.text = @"我的主页";
-                cell.headImageView.image = getImage(@"todayTask");
+                cell.titleLabel.text = @"个人主页";
+                cell.headImageView.image = getImage(@"home_1_");
             }
-            else if (indexPath.row==1) {
-                cell.titleLabel.text = @"成长体系";
-                cell.headImageView.image = getImage(@"todayTask");
+            else if(indexPath.row ==1)
+            {
+                cell.titleLabel.text = @"我的消息";
+                cell.headImageView.image = getImage(@"home_2_");
+                if (notifacationCount==0||notifacationCount) {
+                    cell.notifationCountLb.hidden = YES;
+                }else{
+                    cell.notifationCountLb.hidden = NO;
+                }
+                cell.notifationCountLb.text =[NSString stringWithFormat:@"%d",notifacationCount];
+
             }
             else if (indexPath.row==2) {
+                cell.titleLabel.text = @"成长体系";
+                cell.headImageView.image = getImage(@"home_3_");
+            }
+            else if (indexPath.row==3) {
                 cell.titleLabel.text = @"积分商城";
-                cell.headImageView.image = getImage(@"employ");
+                cell.headImageView.image = getImage(@"home_4_");
             }
             else {
                 cell.titleLabel.text = @"我的订单";
-                cell.headImageView.image = getImage(@"issue");
+                cell.headImageView.image = getImage(@"home_5_");
             }
             return cell;
         
@@ -197,7 +229,13 @@
             [self.navigationController pushViewController:page animated:YES];
 
         }
-        else if(indexPath.row==1)
+        else if(indexPath.row ==1)
+        {
+            CommunityViewController * comm = [[CommunityViewController alloc]init];
+            comm.isMyMessagePage =YES;
+            [self.navigationController pushViewController:comm animated:YES];
+        }
+        else if(indexPath.row==2)
         {
             DLog(@"成长体系");
             
@@ -207,7 +245,7 @@
             [self.navigationController pushViewController:gs animated:YES];
 
         }
-        else if(indexPath.row==2)
+        else if(indexPath.row==3)
         {
             DLog(@"积分商城");
             
@@ -247,9 +285,6 @@
 #pragma mark ----delegate
 
 
--(void)showzt
-{
-}
 -(void)showGZ
 {
     GuanZViewController * gz =[[GuanZViewController alloc]init];

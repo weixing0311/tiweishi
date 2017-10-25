@@ -401,7 +401,7 @@
     UIAlertController * al = [UIAlertController alertControllerWithTitle:indexPathRow==1?title1:title2 message:@"" preferredStyle:UIAlertControllerStyleAlert];
     
     [al addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.text = indexPathRow==1?[_infoDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
+        textField.text = indexPathRow==1?[_upDataDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
     }];
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (![self valiNickName:al.textFields.firstObject.text]&&indexPathRow ==1) {
@@ -415,7 +415,7 @@
         }
         if (al.textFields.firstObject.text.length>7&&indexPathRow ==1) {
             [[UserModel shareInstance]showInfoWithStatus:@"昵称最长7字符"];
-
+            return;
         }
 
         if (indexPathRow==1) {
@@ -598,10 +598,10 @@
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     
-    if (self.hiddentf.tag==1) {
+    if (self.hiddentf.tag==2) {
         return 2;
     }
-    else if(self.hiddentf.tag==4)
+    else if(self.hiddentf.tag==5)
     {
         return 200;
     }
@@ -613,7 +613,7 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     
-    if (self.hiddentf.tag==1) {
+    if (self.hiddentf.tag==2) {
         switch (row) {
             case 0:
                 return @"男";
@@ -624,7 +624,7 @@
                 break;
         }
     }
-    else if(self.hiddentf.tag==4)
+    else if(self.hiddentf.tag==5)
     {
         return [NSString  stringWithFormat:@"%ld",row+80];
     }

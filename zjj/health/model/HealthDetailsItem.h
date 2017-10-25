@@ -93,6 +93,10 @@
 @property (nonatomic,assign) int                height;//严重
 
 
+@property (nonatomic,assign) int                ranking;//排名
+@property (nonatomic,assign) float              percent;//占比
+@property (nonatomic,assign) int                myScore;//分数
+
 -(NSString *)getHealthDetailShuoMingWithStatus:(NSInteger)myType item:(HealthDetailsItem*)item;//获取等级说明
 -(NSString *)getinstructionsWithType:(NSInteger)index;
 -(void)getInfoWithDict:(NSDictionary *)dict;

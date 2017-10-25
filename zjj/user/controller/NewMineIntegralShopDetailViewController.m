@@ -105,15 +105,20 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.section) {
-        case 0:
+    if (indexPath.section==0) {
             return JFA_SCREEN_WIDTH/0.8;
-            break;
-        default:
-            return 100;
-            break;
+    }else
+    {
+        return 250;
+        
     }
 }
+- (CGFloat)cellContentViewWith
+{
+    
+    return JFA_SCREEN_WIDTH;
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section==1||section==2) {
@@ -195,12 +200,14 @@
         }else{
             cell.titlelb.text = @"注意事项";
             cell.contentlb.text = [self.infoDict safeObjectForKey:@"note"];
- 
         }
         
+        float height = cell.contentlb.frame.size.height;
+        DLog(@"height--%.1f",height);
         return cell;
     }
 }
+
 //有问题
 //获取上传数据
 -(NSString *)getUpdateInfo

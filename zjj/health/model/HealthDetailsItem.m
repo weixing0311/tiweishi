@@ -107,6 +107,10 @@ static HealthDetailsItem *item;
     self.height                  = [[dict safeObjectForKey:@"height"]intValue];
     self.age                     = [[dict safeObjectForKey:@"age"]intValue];
 
+    self.ranking                 = [[dict safeObjectForKey:@"ranking"]intValue];
+    self.percent                 = [[dict safeObjectForKey:@"percent"]floatValue];
+    self.myScore                = [[dict safeObjectForKey:@"score"]intValue];
+    
 }
 
 

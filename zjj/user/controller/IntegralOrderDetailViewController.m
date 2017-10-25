@@ -76,7 +76,11 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
-        [self.tableview reloadData];
+        [self getlistInfo_IS_CONSUMERS];
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(orderChange)]) {
+            [self.delegate orderChange];
+        }
+
         
     } failure:^(NSError *error) {
         
@@ -163,7 +167,7 @@
     if (indexPath.section==0)
     {
         int status = [[_infoDict objectForKey:@"status"]intValue];
-        if (status==3||status ==1) {
+        if (status==3) {
             return 80;
             
         }else{
@@ -280,27 +284,29 @@
             cell.titleLabel.text  =[_infoDict safeObjectForKey:@"clientDescription"];
             cell.timeLabel.text = [_infoDict safeObjectForKey:@"operationTime"];
         }
-        else if(status ==1){
-            cell.hidden = NO;
-            cell.payTsView.hidden =NO;
-            cell.lastTime.text =[NSString stringWithFormat:@"剩余时间：%@",@"0小时0分"];
-            NSString * finishTime =[_infoDict safeObjectForKey:@"timer"];
-            [cell setTimeLabelText:finishTime];
-
-            NSString * priceStr = [_infoDict safeObjectForKey:@"productPrice"];
-            NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
-            if (integral.intValue>0&&priceStr.floatValue>0) {
-                cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%@积分+%.2f元",integral,[priceStr floatValue]];
-            }else{
-                if (integral.intValue>0) {
-                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%@积分",integral];
-                    
-                }else{
-                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%.2f元",[priceStr floatValue]];
-                }
-                
-            }
-        }else{
+//        else if(status ==1){
+//            cell.hidden = NO;
+//            cell.payTsView.hidden =NO;
+//            cell.lastTime.text =[NSString stringWithFormat:@"剩余时间：%@",@"0小时0分"];
+//            NSString * finishTime =[_infoDict safeObjectForKey:@"timer"];
+//            [cell setTimeLabelText:finishTime];
+//
+//            NSString * priceStr = [_infoDict safeObjectForKey:@"productPrice"];
+//            NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
+//            if (integral.intValue>0&&priceStr.floatValue>0) {
+//                cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%@积分+%.2f元",integral,[priceStr floatValue]];
+//            }
+//            else{
+//                if (integral.intValue>0) {
+//                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%@积分",integral];
+//
+//                }else{
+//                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%.2f元",[priceStr floatValue]];
+//                }
+//
+//            }
+//        }
+        else{
             cell.hidden = YES;
             cell.payTsView.hidden = YES;
         }
@@ -414,7 +420,7 @@
         }
 
         
-        cell.value2label.text =@"0.00元";
+        cell.value2label.text =@"免运费";
         
         cell.value4label.text =@"0.00元";
         

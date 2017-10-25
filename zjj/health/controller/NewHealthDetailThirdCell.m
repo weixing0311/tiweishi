@@ -19,6 +19,10 @@
     
 }
 - (IBAction)didClickShare:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didShareImage)]) {
+    
+        [self.delegate didShareImage];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

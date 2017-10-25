@@ -7,7 +7,6 @@
 //
 
 #import "UserModel.h"
-#import "ACSimpleKeychain.h"
 #import "TimeModel.h"
 #import "AppDelegate.h"
 static UserModel *model;

@@ -14,7 +14,8 @@
 #import "NewHealthDetailFivthCell.h"
 #import "NewHealthDetailSixCell.h"
 #import "HealthDetailsItem.h"
-@interface HealthDetailViewController ()<UITableViewDelegate,UITableViewDataSource,NewHealthDetileFiveDelegate>
+#import "WriteArtcleViewController.h"
+@interface HealthDetailViewController ()<UITableViewDelegate,UITableViewDataSource,NewHealthDetileFiveDelegate,NewHealthDetailThirdDelegate>
 @property (strong, nonatomic) UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray  * dataArray;
 @property (nonatomic,strong)HealthDetailsItem * infoItem ;
@@ -47,6 +48,15 @@
     _dataArray = [NSMutableArray array];
     [self getInfo];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)buildRightNaviBarItem
+{
+    
+    
+        UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"shareWhite_"] style:UIBarButtonItemStylePlain target:self action:@selector(didShare)];
+    
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
 }
 
 
@@ -179,6 +189,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
+        cell.delegate = self;
         [cell setInfoWithDict:self.infoItem];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -312,6 +323,105 @@
     
     [self.tableview reloadData];
 }
+
+#pragma  mark ---cellDelegate
+-(void)didShareImage
+{
+    UIImage * image = [self getImage];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        [self shareWithType:SSDKPlatformSubTypeWechatSession image:image];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline image:image];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"QQ" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformTypeQQ image:image];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:al animated:YES completion:nil];
+}
+-(void) shareWithType:(SSDKPlatformType)type image:(UIImage *)image
+{
+    if (!image) {
+        return;
+    }
+    
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    NSArray* imageArray = @[image];
+    
+    [shareParams SSDKSetupShareParamsByText:nil
+                                     images:imageArray
+                                        url:nil
+                                      title:nil
+                                       type:SSDKContentTypeImage];
+    
+    [shareParams SSDKEnableUseClientShare];
+    [SVProgressHUD showWithStatus:@"开始分享"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    
+    //进行分享
+    [ShareSDK share:type
+         parameters:shareParams
+     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+         
+         
+         switch (state) {
+             case SSDKResponseStateSuccess:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                 [self getIntegral];
+                 break;
+             }
+             case SSDKResponseStateFail:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+                 break;
+             }
+             case SSDKResponseStateCancel:
+             {
+                 [[UserModel shareInstance]dismiss];
+                 //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                 break;
+             }
+             default:
+                 break;
+         }
+     }];
+    
+}
+-(void)getIntegral
+{
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params setObject:@"7" forKey:@"taskId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+-(UIImage *)getImage
+{
+    
+    UIGraphicsBeginImageContext(CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT));
+    CGContextRef contextRef = UIGraphicsGetCurrentContext();
+    [self.navigationController.view.layer renderInContext:contextRef];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

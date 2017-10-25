@@ -142,7 +142,8 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
-        [self.tableview reloadData];
+        [self.tableview headerBeginRefreshing];
+
         
     } failure:^(NSError *error) {
         for (NSString * str in [error.userInfo allKeys]) {

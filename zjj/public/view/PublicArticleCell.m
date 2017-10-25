@@ -38,11 +38,6 @@
 
 
 }
-- (IBAction)didClickPlay:(id)sender {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didPlayWithCell:)]) {
-        [self.delegate didPlayWithCell:self];
-    }
-}
 
 #pragma mark --button SEL
 - (IBAction)didShare:(id)sender {
@@ -109,48 +104,25 @@
     }else{
         self.gzBtn.selected = NO;
     }
-    
-    
-    
-    
 }
 -(void)loadImagesWithItem:(CommunityModel *)item
 {
-    if (item.movieStr.length>5) {
-        //        self.playerBtn.hidden = NO;
-        [self.imagesArray removeAllObjects];
+    [self.imagesArray removeAllObjects];
+    for (NSString * imageStr in item.pictures) {
         NSMutableDictionary * dict =[NSMutableDictionary dictionary];
-        [dict safeSetObject:item.movieImageStr forKey:@"videoImageStr"];
-        [dict safeSetObject:@(BigImageWidth) forKey:@"videoSizeWidht"];
-        [dict safeSetObject:@(BigImageHeight) forKey:@"videoSizeHeight"];
-        
-        [self.imagesArray addObject:dict];
-    }else{
-        [self.imagesArray removeAllObjects];
-        //        self.playerBtn.hidden = YES;
-        //        self.imagesArray = item.pictures;
-        for (NSString * imageStr in item.pictures) {
-            NSMutableDictionary * dict =[NSMutableDictionary dictionary];
-            [dict safeSetObject:imageStr forKey:@"videoImageStr"];
-            if (item.pictures.count==1) {
-                [dict safeSetObject:@(BigImageWidth ) forKey:@"videoSizeWidht"];
-                [dict safeSetObject:@(BigImageHeight) forKey:@"videoSizeHeight"];
-                
-            }else{
-                if (item.pictures.count ==4) {
-                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-20) forKey:@"videoSizeWidht"];
-                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-20) forKey:@"videoSizeHeight"];
-                    
-                }
-                else
-                {
-                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/3-10) forKey:@"videoSizeWidht"];
-                    [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/3-10) forKey:@"videoSizeHeight"];
-                }
-            }
-            [self.imagesArray addObject:dict];
+        [dict safeSetObject:imageStr forKey:@"videoImageStr"];
+        if (item.pictures.count ==4) {
+            [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-20) forKey:@"videoSizeWidht"];
+            [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/2-20) forKey:@"videoSizeHeight"];
         }
+        else
+        {
+            [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/3-10) forKey:@"videoSizeWidht"];
+            [dict safeSetObject:@((JFA_SCREEN_WIDTH-20)/3-10) forKey:@"videoSizeHeight"];
+        }
+        [self.imagesArray addObject:dict];
     }
+    
     if (!_imagesArray|| _imagesArray.count==0) {
         self.collectionView.hidden = YES;
     }else{
@@ -161,37 +133,6 @@
 
 
 
-#pragma mark-------根据imgView的宽高获得图片的比例
-
--(UIImage *)getImageFromUrl:(NSURL *)imgUrl imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height{
-    
-    
-    UIImage * newImage = [self getImageWithUrl:imgUrl imgViewWidth:width imgViewHeight:height];
-    
-    return newImage;
-    
-}
-
-
--(UIImage *)getImageWithUrl:(NSURL *)imgUrl imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height{
-    
-    //data 转image
-    
-    UIImage * image ;
-    
-    //根据网址将图片转化成image
-    
-    NSData * data = [NSData dataWithContentsOfURL:imgUrl];
-    
-    image =[UIImage imageWithData:data];
-    
-    //图片剪切
-    
-    UIImage * newImage = [self cutImage:image imgViewWidth:width imgViewHeight:height];
-    
-    return newImage;
-    
-}
 
 //裁剪图片
 
@@ -264,34 +205,7 @@
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-//    if (_imagesArray.count ==1) {
-//        // 先从缓存中查找图片
-//        NSDictionary * dic = [_imagesArray objectAtIndex:0];
-//
-//        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
-//
-//        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
-//        if (!image) {
-//            return UIEdgeInsetsMake(5,([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2, 5, ([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue])/2);//分别为上、左、下、右
-//        }else{
-//            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
-//
-//            CGFloat imageW = image.size.width;
-//            CGFloat imageH = image.size.height;
-//
-//            CGFloat imageWH = imageW/imageH;
-//            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.8-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
-//            CGFloat bigImageW = bigImageH* imageWH;
-//
-//            //手动计算cell
-//            return UIEdgeInsetsMake(5,(JFA_SCREEN_WIDTH-bigImageW)/2, 5, (JFA_SCREEN_WIDTH-bigImageW)/2);//分别为上、左、下、右
-//
-//        }
-//    }else{
         return UIEdgeInsetsMake(5,10, 5, 10);//分别为上、左、下、右
-
-        
-//    }
 
 }
 
@@ -300,123 +214,30 @@
     PublicCollImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PublicCollImageCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     
-    if (self.currModel.movieStr.length>5) {
-        cell.headerImageView.hidden =NO;
-        cell.playImageView.hidden = NO;
-        cell.midImageView.hidden = NO;
-        cell.visualView.hidden =NO;
-        [cell bringSubviewToFront:cell.playImageView];
-    }else{
-        if (_imagesArray.count==1) {
-            cell.headerImageView.hidden = YES;
-            cell.midImageView.hidden =NO;
-        }else{
-            cell.midImageView.hidden = YES;
-            cell.headerImageView.hidden =NO;
-        }
-        cell.playImageView.hidden = YES;
-        cell.visualView.hidden = YES;
- 
-    }
     
     NSMutableDictionary * dict = [_imagesArray objectAtIndex:indexPath.row];
+
+    [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"videoImageStr"]] placeholderImage:getImage(@"default")];
     
-//    if (self.imagesArray.count ==1) {
-//        [self configureCell:cell atIndexPath:indexPath];
-//    }else{
-    
-    [cell.headerImageView sd_setImageWithURL:[dict safeObjectForKey:@"videoImageStr"] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        if (error) {
-            cell.headerImageView.image = getImage(@"bigDefalut_");
-            return ;
-        }
-//        if (!image) {
-//            cell.headerImageView.image = getImage(@"");
-//
+//    [cell.headerImageView sd_setImageWithURL:[dict safeObjectForKey:@"videoImageStr"] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+//        if (error) {
+//            cell.headerImageView.image = getImage(@"default");
 //            return ;
 //        }
-        if (_imagesArray.count==1) {
-          
-            cell.midImageView.image = [self cutImage:image imgViewWidth:BigImageHeight/image.size.height*image.size.width imgViewHeight:BigImageHeight];
-            
-            cell.midImageView.frame = CGRectMake(0, 0, BigImageHeight/image.size.height*image.size.width, BigImageHeight);
-            
-            cell.headerImageView.image = [self cutImage:image imgViewWidth:BigImageWidth imgViewHeight:BigImageHeight];
-
-            cell.midImageView.center = cell.center;
-    }else{
-        cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
-    }
-        if (indexPath.row ==_imagesArray.count-1) {
-            if (self.delegate &&[self.delegate respondsToSelector:@selector(loadImageSuccessWithCell:)]) {
-                [self.delegate loadImageSuccessWithCell:self];
-            }
-        }
-    }];
-
-//    }
+//        cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
+//    }];
     return cell;
 }
 
-- (void)configureCell:(PublicCollImageCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSString *imgURL = [self.imagesArray[indexPath.row]safeObjectForKey:@"videoImageStr"];
-    UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imgURL];
-    
-    if ( !cachedImage ) {
-        [self downloadImage:[self.imagesArray[indexPath.row]safeObjectForKey:@"videoImageStr"] forIndexPath:indexPath];
-        cell.headerImageView.image = getImage(@"default");
-    } else {
-        cell.headerImageView.image =cachedImage;
-    }
-}
-
-- (void)downloadImage:(NSString *)imageURL forIndexPath:(NSIndexPath *)indexPath {
-    // 利用 SDWebImage 框架提供的功能下载图片
-    
-    
-    NSMutableDictionary * dic = [self.imagesArray objectAtIndex:indexPath.row];
-    [[SDWebImageDownloader sharedDownloader]downloadImageWithURL:[NSURL URLWithString:imageURL] options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
-        
-        [dic safeSetObject:@(BigImageHeight/image.size.height*image.size.width) forKey:@"videoSizeWidht"];
-        [dic safeSetObject:@(BigImageHeight) forKey:@"videoSizeHeight"];
-        
-        [[SDImageCache sharedImageCache]storeImage:image forKey:imageURL completion:nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-        });
-    }];
-}
 
 //设置item大小
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary * dic = [_imagesArray objectAtIndex:indexPath.row];
-    if (_imagesArray.count ==1) {
-        return CGSizeMake(BigImageWidth-20, BigImageHeight);
-    }
-//        // 先从缓存中查找图片
-//        UIImage *image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey: [dic safeObjectForKey:@"videoImageStr"]];
-//
-//        // 没有找到已下载的图片就使用默认的占位图，当然高度也是默认的高度了，除了高度不固定的文字部分。
-//        if (!image) {
-//            return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
-//        }else{
-//            DLog(@"bigimageSize (%f) ----%f,%f image --W-%f  h --%f",BigImageHeight,BigImageHeight*image.size.width/image.size.height,BigImageHeight,image.size.width,image.size.height);
-//
-//            CGFloat imageW = image.size.width;
-//            CGFloat imageH = image.size.height;
-//
-//            CGFloat imageWH = imageW/imageH;
-//            CGFloat bigImageH = (JFA_SCREEN_WIDTH-20)*0.7-20<imageH?(JFA_SCREEN_WIDTH-20)*0.8-20:imageH;
-//            CGFloat bigImageW = bigImageH* imageWH;
-//
-//            //手动计算cell
-//            return CGSizeMake(bigImageW, bigImageH);
-//        }
-//    }else{
-        return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
-
+//    if (_imagesArray.count ==1) {
+//        return CGSizeMake(BigImageWidth-20, BigImageHeight);
 //    }
+        return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
 }
 //这个是两行cell之间的间距（上下行cell的间距）
 
@@ -433,18 +254,9 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    if (self.currModel.movieStr.length>5) {
-        
-        if (self.delegate && [self.delegate respondsToSelector:@selector(didPlayWithCell:)]) {
-            [self.delegate didPlayWithCell:self];
-        }
-
-    }else
-    {
         if (self.delegate && [self.delegate respondsToSelector:@selector(didShowBigImageWithCell:index:)]) {
             [self.delegate didShowBigImageWithCell:self index:indexPath.row];
         }
-    }
 }
 
 

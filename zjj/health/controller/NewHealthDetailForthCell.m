@@ -16,9 +16,9 @@
 }
 -(void)setInfoWithDict:(HealthDetailsItem *)item
 {
-    self.firstlb.text = [NSString stringWithFormat:@"%d",[HealthDetailsItem instance].normal+[HealthDetailsItem instance].serious+[HealthDetailsItem instance].warn];
-    self.secondlb.text = [NSString stringWithFormat:@"%d",[HealthDetailsItem instance].serious];
-    self.thirdlb.text  =[NSString stringWithFormat:@"%d",[HealthDetailsItem instance].serious];
+    self.firstlb.text = [NSString stringWithFormat:@"%d",item.normal+item.serious+item.warn];
+    self.secondlb.text = [NSString stringWithFormat:@"%d",item.serious];
+    self.thirdlb.text  =[NSString stringWithFormat:@"%d",item.serious];
 
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

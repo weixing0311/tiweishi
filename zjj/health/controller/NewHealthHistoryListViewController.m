@@ -15,6 +15,7 @@
 #import <ShareSDK/NSMutableDictionary+SSDKShare.h>
 #import "ShareListView.h"
 #import "HistoryCell.h"
+#import "WriteArtcleViewController.h"
 @interface NewHealthHistoryListViewController ()<UITableViewDelegate,UITableViewDataSource,historySectionCellDelegate,historyCellDelegate>
 @property (weak,  nonatomic) IBOutlet UIView *rlView;
 @property (strong,  nonatomic)  UITableView *tableview;
@@ -59,7 +60,7 @@
 }
 -(void)enterRightPage
 {
-    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"分享" message:nil preferredStyle:UIAlertControllerStyleAlert ];
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"分享" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [al addAction: [UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self didShareFriedns:nil];
         
@@ -89,7 +90,6 @@
 }
 -(void)getShareInfo
 {
-    
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     [param safeSetObject:@(page) forKey:@"page"];
@@ -303,8 +303,11 @@
         return ;
     }
     UIImage * image = [self showShareView];
-    [self shareWithType:SSDKPlatformTypeQQ image:image];
-    
+    WriteArtcleViewController*postVC = [[WriteArtcleViewController alloc]init];
+    postVC.firstImage = image;
+    postVC.shareType  =0;
+    [self.navigationController pushViewController:postVC animated:YES];
+
 }
 
 -(void) shareWithType:(SSDKPlatformType)type image:(UIImage *)image

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -121,7 +121,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6g4-VP-2Iv">
-                    <rect key="frame" x="0.0" y="10" width="375" height="60"/>
+                    <rect key="frame" x="0.0" y="80" width="375" height="60"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入注册手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ddY-nk-vel">
                             <rect key="frame" x="10" y="10" width="355" height="40"/>
@@ -136,7 +136,6 @@
                         <constraint firstAttribute="height" constant="60" id="PJJ-jY-F2g"/>
                         <constraint firstItem="ddY-nk-vel" firstAttribute="leading" secondItem="6g4-VP-2Iv" secondAttribute="leading" constant="10" id="R1Y-wY-ppr"/>
                         <constraint firstAttribute="trailing" secondItem="ddY-nk-vel" secondAttribute="trailing" constant="10" id="eEc-jn-mdz"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="gqZ-AO-WBu"/>
                         <constraint firstItem="ddY-nk-vel" firstAttribute="top" secondItem="6g4-VP-2Iv" secondAttribute="top" constant="10" id="lo0-dD-g0M"/>
                     </constraints>
                 </view>
@@ -156,7 +155,7 @@
                 <constraint firstAttribute="trailing" secondItem="kY9-dU-e33" secondAttribute="trailing" constant="20" id="d51-6W-nYx"/>
                 <constraint firstAttribute="trailing" secondItem="Bvo-at-WP7" secondAttribute="trailing" id="f4l-oq-VfC"/>
                 <constraint firstItem="3Ev-oA-IjN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g3Q-e5-zMC"/>
-                <constraint firstItem="6g4-VP-2Iv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="hzB-8K-ku9"/>
+                <constraint firstItem="6g4-VP-2Iv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="hzB-8K-ku9"/>
                 <constraint firstItem="Bvo-at-WP7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="iFx-CW-DVK"/>
                 <constraint firstItem="Bvo-at-WP7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="71" id="jhp-tm-bZy"/>
                 <constraint firstItem="Mhi-9W-waW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oeV-lK-eZE"/>

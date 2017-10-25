@@ -33,6 +33,7 @@
 #import "Masonry.h"
 #import "SDImageCache.h"
 #import "NSDate+CustomDate.h"
+#import "SDAutoLayout.h"
 //domain
 //正式
 //#define kMyBaseUrl @"https://mall.fitgeneral.com/"

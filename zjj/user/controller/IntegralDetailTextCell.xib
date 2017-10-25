@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品详情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ih-JS-S6Z">
@@ -27,27 +28,25 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YJS-mC-gS6">
-                        <rect key="frame" x="20" y="40" width="290" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="height" priority="10" constant="100" id="25B-ia-tZc"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <nil key="textColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vus-Mm-dny">
+                        <rect key="frame" x="20" y="40" width="280" height="41.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="7Ih-JS-S6Z" secondAttribute="trailing" constant="10" id="5yS-1F-P95"/>
-                    <constraint firstItem="YJS-mC-gS6" firstAttribute="top" secondItem="7Ih-JS-S6Z" secondAttribute="bottom" constant="10" id="SBq-Kq-Ya3"/>
-                    <constraint firstAttribute="trailing" secondItem="YJS-mC-gS6" secondAttribute="trailing" constant="10" id="bKO-df-WdR"/>
-                    <constraint firstItem="YJS-mC-gS6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="gNS-nA-Npu"/>
+                    <constraint firstItem="vus-Mm-dny" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="AeB-fk-3nZ"/>
+                    <constraint firstItem="vus-Mm-dny" firstAttribute="top" secondItem="7Ih-JS-S6Z" secondAttribute="bottom" constant="10" id="Wcs-ps-wfz"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="vus-Mm-dny" secondAttribute="bottom" constant="10" id="Wj3-hE-cdF"/>
+                    <constraint firstAttribute="trailing" secondItem="vus-Mm-dny" secondAttribute="trailing" constant="20" id="g0d-E1-5DE"/>
                     <constraint firstItem="7Ih-JS-S6Z" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nE2-Sx-alY"/>
                     <constraint firstItem="7Ih-JS-S6Z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="rNq-Wl-URH"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="contentlb" destination="YJS-mC-gS6" id="Ek2-aH-x2H"/>
+                <outlet property="contentlb" destination="vus-Mm-dny" id="b51-7u-cvG"/>
                 <outlet property="titlelb" destination="7Ih-JS-S6Z" id="PcH-Hb-bhN"/>
             </connections>
         </tableViewCell>

@@ -14,7 +14,9 @@
 #import "SDImageCache.h"
 #import "FcBigImgViewController.h"
 #import "PublicArticleCell.h"
-@interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate,UIPickerViewDelegate,UIPickerViewDataSource,PublicArticleCellDelegate>
+#import "ArtcleDetailNumCell.h"
+#import "CommunityCell.h"
+@interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate,UIPickerViewDelegate,UIPickerViewDataSource,PublicArticleCellDelegate,BigImageArticleCellDelegate>
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @property (nonatomic,strong) NSMutableArray * commentArray;
@@ -28,6 +30,7 @@
     UIView * zzView;
     int page;
     int pageSize;
+    CommunityCell * PlayingCell;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -155,38 +158,10 @@
         [self.dataArray addObject:item];
 
         
-//        NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
-//        if (videoPath.length>5) {
-//            
-//            NSMutableDictionary * dic =[NSMutableDictionary dictionary];
-//            [dic safeSetObject:[_infoDict safeObjectForKey:@"videoImg"] forKey:@"imgUrl"];
-//            [dic safeSetObject:@(JFA_SCREEN_WIDTH-20) forKey:@"width"];
-//            [dic safeSetObject:@((JFA_SCREEN_WIDTH-20)*0.6) forKey:@"height"];
-//            [_dataArray addObject:dic];
-//
-//        }
-//        else
-//        {
-//            for ( int i =0; i<9; i++) {
-//                NSString * imageUrl = [_infoDict safeObjectForKey:[NSString stringWithFormat:@"picture%d",i+1]];
-//                if (imageUrl&&imageUrl.length>0) {
-//                    NSMutableDictionary * dic =[NSMutableDictionary dictionary];
-//                    [dic safeSetObject:imageUrl forKey:@"imgUrl"];
-//                    [dic safeSetObject:@(JFA_SCREEN_WIDTH-20) forKey:@"width"];
-//                    [dic safeSetObject:@((JFA_SCREEN_WIDTH-20)*0.6) forKey:@"height"];
-//                    [_dataArray addObject:dic];
-//                }
-//            }
-//        }
-        
-//        [self.tableview reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-        
-        
         _commentArray = [dataDict safeObjectForKey:@"array"];
         
         
         [self.tableview reloadData];
-//        [self.tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationFade];
 
     } failure:^(NSError *error) {
         
@@ -223,7 +198,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -231,6 +206,9 @@
     switch (section) {
         case 0:
             return _dataArray.count;
+            break;
+        case 1:
+            return 1;
             break;
         default:
             return _commentArray.count;
@@ -246,7 +224,13 @@
         
         float rowheight = item.rowHieght;
         return rowheight;
-    }else
+    }
+    else if (indexPath.section ==1)
+    {
+        
+        return 40;
+    }
+    else
     {
         NSDictionary *dic =[_commentArray objectAtIndex:indexPath.row];
         NSString * contentStr = [dic safeObjectForKey:@"content"];
@@ -257,49 +241,61 @@
 {
     
     if (indexPath.section ==0) {
-        
         CommunityModel * item = [_dataArray objectAtIndex:indexPath.row];
         
-        static  NSString * identifier = @"PublicArticleCell";
-        PublicArticleCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [self getXibCellWithTitle:identifier];
+        if (item.movieImageStr.length>5||item.pictures.count==1) {
+            static  NSString * identifier = @"CommunityCell";
+            CommunityCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [self getXibCellWithTitle:identifier];
+            }
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            [cell setInfoWithDict:item];
+            
+            cell.nemuView.hidden = YES;
+            cell.gzBtn.hidden = YES;
+            cell.jbBtn.hidden = YES;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+
+        }else{
+            static  NSString * identifier = @"PublicArticleCell";
+            PublicArticleCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [self getXibCellWithTitle:identifier];
+            }
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            [cell setInfoWithDict:item];
+            
+            [cell loadImagesWithItem:item];
+            cell.nemuView.hidden = YES;
+            cell.gzBtn.hidden = YES;
+            cell.jbBtn.hidden = YES;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+
         }
-        cell.delegate = self;
-        cell.tag = indexPath.row;
-        [cell setInfoWithDict:item];
         
-        [cell loadImagesWithItem:item];
-        cell.nemuView.hidden = YES;
-        cell.gzBtn.hidden = YES;
-        cell.jbBtn.hidden = YES;
+        
+        
+        
+        
+    }
+    else if (indexPath.section ==1)
+    {
+        static NSString * identifer = @"ArtcleDetailNumCell";
+        ArtcleDetailNumCell * cell = [tableView dequeueReusableCellWithIdentifier:identifer];
+        if (!cell) {
+            cell = [self getXibCellWithTitle:identifer];
+        }
+        cell.firstlb.text = [NSString stringWithFormat:@"转发 %@     评论 %@",[_infoDict safeObjectForKey:@"forwardingnum"]?[_infoDict safeObjectForKey:@"forwardingnum"]:@"0",[_infoDict safeObjectForKey:@"commentnum"]?[_infoDict safeObjectForKey:@"commentnum"]:@"0"];
+        cell.secondlb.text = [NSString stringWithFormat:@"点赞 %@",[_infoDict safeObjectForKey:@"greatnum"]?[_infoDict safeObjectForKey:@"greatnum"]:@"0"];
+
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-
-    }
-//    else if (indexPath.section ==1)
-//    {
-//        static NSString * identifer = @"ArtcleDetaileImageCell";
-//        ArtcleDetaileImageCell * cell = [tableView dequeueReusableCellWithIdentifier:identifer];
-//        if (!cell) {
-//            cell = [self getXibCellWithTitle:identifer];
-//        }
-//        NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
-//
-//        if (videoPath.length>5) {
-//            cell.playImageView.hidden = NO;
-//        }
-//        else{
-//            cell.playImageView.hidden = YES;
-//        }
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//
-//        [self configureCell:cell atIndexPath:indexPath];
-//        
-//        return cell;
-//
-//    }else
+    }else
     {
         static NSString * identifer = @"ArtcleDetailCommentCell";
         ArtcleDetailCommentCell * cell = [tableView dequeueReusableCellWithIdentifier:identifer];
@@ -367,10 +363,61 @@
 
     }
 }
+
+-(void)didPlayWithBigCell:(CommunityCell *)cell
+{
+    NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
+    NSString * contentStr = [_infoDict safeObjectForKey:@"content"];
+    float height = 65+([self getContentHeightWithContent:contentStr Font:15]<20?20:[self getContentHeightWithContent:contentStr Font:15]);
+        //记录被点击的Cell
+        //销毁播放器
+        [_playerView destroyPlayer];
+        CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(10,height+10, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.6)];
+        _playerView = playerView;
+        [self.tableview addSubview:_playerView];
+        //视频地址
+        _playerView.url = [NSURL URLWithString:videoPath];
+        //播放
+        [_playerView playVideo];
+        //返回按钮点击事件回调
+        [_playerView backButton:^(UIButton *button) {
+            NSLog(@"返回按钮被点击");
+        }];
+        //播放完成回调
+        [_playerView endPlay:^{
+            //销毁播放器
+            [_playerView destroyPlayer];
+            _playerView = nil;
+            
+            NSLog(@"播放完成");
+        }];
+}
+
+-(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(NSInteger)index
+{
+    [self showBigImageViewWithIndex:cell.tag page:index];
+    
+}
+-(void)didShowBigImageWithBigCell:(CommunityCell*)cell index:(NSInteger)index
+{
+    [self showBigImageViewWithIndex:cell.tag page:index];
+}
+-(void)showBigImageViewWithIndex:(NSInteger)index page:(int)page
+{
+    CommunityModel * item = [_dataArray objectAtIndex:index];
+    FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
+    fc.images = [NSMutableArray arrayWithArray:item.pictures];
+    fc.page = index;
+    [self presentViewController:fc animated:YES completion:nil];
+
+}
+
+
+
 -(double)getContentHeightWithContent:(NSString *)contentStr Font:(int)ft
 {
     NSMutableParagraphStyle * paragraph = [[NSMutableParagraphStyle alloc] init];
-    paragraph.lineSpacing = 10;
+    paragraph.lineSpacing = 5;
     
     UIFont *font = [UIFont systemFontOfSize:ft];
     NSDictionary * dict = @{NSFontAttributeName:font,
@@ -480,16 +527,6 @@
         zzView.hidden = YES;
         [commentView.commentTf resignFirstResponder];
     }
-}
--(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(int)index
-{
-    CommunityModel * item = [_dataArray objectAtIndex:cell.tag];
-    FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
-    fc.images = [NSMutableArray arrayWithArray:item.pictures];
-    fc.page = index;
-    
-    [self presentViewController:fc animated:YES completion:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -1,5 +1,4 @@
 PODS:
-  - ACSimpleKeychain (0.3)
   - AFNetworking (3.1.0):
     - AFNetworking/NSURLSession (= 3.1.0)
     - AFNetworking/Reachability (= 3.1.0)
@@ -19,6 +18,7 @@ PODS:
   - JPush (3.0.5):
     - JCore (~> 1.1.1)
   - Masonry (1.0.2)
+  - SDAutoLayout (2.1.8)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
@@ -26,24 +26,24 @@ PODS:
   - TZImagePickerController (1.8.0)
 
 DEPENDENCIES:
-  - ACSimpleKeychain (~> 0.3)
   - AFNetworking (~> 3.1.0)
   - JPush (~> 3.0.5)
   - Masonry (~> 1.0.2)
+  - SDAutoLayout (~> 2.1.8)
   - SDWebImage (~> 4.0.0)
   - SVProgressHUD (~> 2.1.2)
   - TZImagePickerController (~> 1.8.0)
 
 SPEC CHECKSUMS:
-  ACSimpleKeychain: 5c2920e4122636f66e0bafe5aa1e46a66334cbfb
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   JCore: dff3c50e9a7522a508cd9096ca79165968e1aed3
   JPush: dd0b776998aa705a6242b947bf72e5a640387cfe
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  SDAutoLayout: 5a4b48d6b8a5172ae8d088d2879e40dd795e6251
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   TZImagePickerController: 2a74f34f116e8229264e2afc122b0d8d4683c626
 
-PODFILE CHECKSUM: a1393e8338e18d8552cef0a8aaf5abd2b80518ac
+PODFILE CHECKSUM: 667b2d52e7b97bf6b287e36cb3295721b46cf696
 
 COCOAPODS: 1.2.1

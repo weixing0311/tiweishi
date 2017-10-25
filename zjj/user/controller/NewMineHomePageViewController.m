@@ -10,7 +10,8 @@
 #import "PublicArticleCell.h"
 #import "NewMineHomePageCell.h"
 #import "CommunityModel.h"
-#import "PostArticleViewController.h"
+//#import "PostArticleViewController.h"
+#import "WriteArtcleViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "CLPlayerView.h"
 #import "UIView+CLSetRect.h"
@@ -20,8 +21,8 @@
 #import "EditUserInfoViewController.h"
 #import "BeforeAfterContrastCell.h"
 #import "FcBigImgViewController.h"
-#import "PostArticleViewController.h"
-@interface NewMineHomePageViewController ()<UITableViewDataSource,UITableViewDelegate,PublicArticleCellDelegate,NewMineHomePageHeaderCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "CommunityCell.h"
+@interface NewMineHomePageViewController ()<UITableViewDataSource,UITableViewDelegate,PublicArticleCellDelegate,NewMineHomePageHeaderCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,BigImageArticleCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic, weak) CLPlayerView *playerView;
@@ -33,7 +34,7 @@
 {
     int page;
     int pageSize;
-    PublicArticleCell * PlayingCell;
+    CommunityCell * PlayingCell;
     int changeImageNum;
 
 }
@@ -276,29 +277,47 @@
     else
     {
         CommunityModel * item =[self.dataArray objectAtIndex:indexPath.row];
-        static  NSString * identifier = @"PublicArticleCell";
-        PublicArticleCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [self getXibCellWithTitle:identifier];
-        }
-        cell.tag = indexPath.row;
-        cell.delegate = self;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.gzBtn.hidden = YES;
-
-        if ([self.userId isEqualToString:[UserModel shareInstance].userId]) {
-            cell.jbBtn.hidden = YES;
+        
+        
+        if (item.pictures.count==1||item.movieStr.length>5) {
+            static  NSString * identifier = @"CommunityCell";
+            CommunityCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [self getXibCellWithTitle:identifier];
+            }
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            [cell setInfoWithDict:item];
+            
+            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
+                cell.gzBtn.hidden = YES;
+            }else{
+                cell.gzBtn.hidden = NO;
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
         }else{
-            cell.jbBtn.hidden = NO;
-        }
-        
-        [cell setInfoWithDict:item];
-        if (self.tableview.dragging==NO&&self.tableview.decelerating ==NO) {
+            static  NSString * identifier = @"PublicArticleCell";
+            PublicArticleCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [self getXibCellWithTitle:identifier];
+            }
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            [cell setInfoWithDict:item];
             [cell loadImagesWithItem:item];
+            
+            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
+                cell.gzBtn.hidden = YES;
+            }else{
+                cell.gzBtn.hidden = NO;
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
         }
 
-        return cell;
-        
     }
 }
 //cell离开tableView时调用
@@ -392,28 +411,23 @@
 }
 - (IBAction)didClickShare:(id)sender {
     
-    UIImage * image = [self getImage];
-    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController * al =[UIAlertController alertControllerWithTitle:@"分享" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline ];
+        
+    }]];
     [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatSession ];
         
-        
-        [self shareWithType:SSDKPlatformSubTypeWechatSession image:image];
-
     }]];
-    [al addAction:[UIAlertAction actionWithTitle:@"朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self shareWithType:SSDKPlatformSubTypeWechatTimeline image:image];
-
-    }]];
-    [al addAction:[UIAlertAction actionWithTitle:@"社区" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        PostArticleViewController * postVC =[[PostArticleViewController alloc]init];
-        postVC.firstImage = image;
-        [self.navigationController pushViewController:postVC animated:YES];
+    [al addAction:[UIAlertAction actionWithTitle:@"QQ好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformTypeQQ ];
         
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:al animated:YES completion:nil];
     
+    
+    [self presentViewController:al animated:YES completion:nil];
 }
 
 #pragma  mark ---cell delegate
@@ -452,6 +466,24 @@
 {
     
 }
+-(void)didGzWithCell:(PublicArticleCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:model.userId forKey:@"followId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        model.isFollow = @"1";
+        PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+        currCell.gzBtn.selected =YES;
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
+}
 -(void)didZanWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
@@ -468,10 +500,10 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
         if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
             [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
-
+            
         }else{
             [[UserModel shareInstance]showSuccessWithStatus:@"点赞成功"];
-
+            
         }
         [self refreshZanInfoWithCell:cell];
     } failure:^(NSError *error) {
@@ -479,40 +511,6 @@
     }];
     
 }
-
--(void)didJBWithCell:(PublicArticleCell *)cell
-{
-    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        
-    }];
-    [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-        if (strUrl.length<5) {
-            [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
-            return ;
-        }
-        NSMutableDictionary * params = [NSMutableDictionary dictionary];
-        [params safeSetObject:model.uid forKey:@"articleId"];
-        [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
-        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-        self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
-            [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
-        } failure:^(NSError *error) {
-            
-        }];
-        
-    }]];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    
-    
-}
-
 -(void)refreshZanInfoWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
@@ -521,14 +519,12 @@
         model.isFabulous = @"0";//1是点赞 0取消
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
-        model.greatnum = [NSString stringWithFormat:@"%d",[model.greatnum intValue]-1];
         cell.zanImageView.image = getImage(@"praise");
         
     }else{
         model.isFabulous = @"1";
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
-        model.greatnum = [NSString stringWithFormat:@"%d",[model.greatnum intValue]+1];
         cell.zanImageView.image = getImage(@"praise_Selected");
     }
     
@@ -536,32 +532,360 @@
 
 -(void)didPLWithCell:(PublicArticleCell*)cell
 {
-    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    ArticleDetailViewController * ard =[[ArticleDetailViewController alloc]init];
-    ard.infoModel = model;
-    ard.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ard animated:YES];
-    
+    [self enterDetailPageWithIndex:cell.tag];
     //
 }
 -(void)didShareWithCell:(PublicArticleCell*)cell
 {
-    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    
-    
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params safeSetObject:model.uid forKey:@"id"];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/article/updateForwardingnum.do" paramters:params success:^(NSDictionary *dic) {
-        
-    } failure:^(NSError *error) {
-        
-    }];
+    [self shareWithIndex:cell.tag];
     
     //    /app/community/article/updateForwardingnum.do
     //        参数：    id //文章Id
 }
 
+-(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(NSInteger)index
+{
+    [self showBigImageViewWithIndex:cell.tag page:index];
+    
+}
+-(void)didJBWithCell:(PublicArticleCell *)cell
+{
+    [self didJbWithIndex:cell.tag];
+}
+-(void)didTapHeadImageViewWithCell:(PublicArticleCell *)cell
+{
+    [self enterUserPageViewWithIndex:cell.tag];
+}
+-(void)refreshCellRowHeightWithBigCell:(CommunityCell*)cell height:(double)height
+{
+    
+}
+-(void)didPlayWithBigCell:(CommunityCell *)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    //记录被点击的Cell
+    PlayingCell = cell;
+    //销毁播放器
+    [_playerView destroyPlayer];
+    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-40), (JFA_SCREEN_WIDTH-40)*0.6)];
+    _playerView = playerView;
+    [cell.playerBgView addSubview:_playerView];
+    [cell.playerBgView bringSubviewToFront:_playerView];
+    //    _playerView.fillMode = ResizeAspectFill;
+    
+    //视频地址
+    _playerView.url = [NSURL URLWithString:model.movieStr];
+    //播放
+    [_playerView playVideo];
+    //返回按钮点击事件回调
+    [_playerView backButton:^(UIButton *button) {
+        NSLog(@"返回按钮被点击");
+        [_playerView destroyPlayer];
+        _playerView = nil;
+        PlayingCell = nil;
+        
+    }];
+    //播放完成回调
+    [_playerView endPlay:^{
+        //销毁播放器
+        [_playerView destroyPlayer];
+        _playerView = nil;
+        PlayingCell = nil;
+        
+        NSLog(@"播放完成");
+    }];
+    
+}
+-(void)didGzWithBigCell:(CommunityCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:model.userId forKey:@"followId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        model.isFollow = @"1";
+        CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+        currCell.gzBtn.selected =YES;
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+-(void)didZanWithBigCell:(CommunityCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:@"" forKey:@"commentId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    if (model.isFabulous) {
+        [params safeSetObject:@"0" forKey:@"isFabulous"];//1是点赞 0取消
+    }else{
+        [params safeSetObject:@"1" forKey:@"isFabulous"];//1是点赞 0取消
+    }
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
+        if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
+            
+        }else{
+            [[UserModel shareInstance]showSuccessWithStatus:@"点赞成功"];
+            
+        }
+        [self refreshZanInfoWithBigCell:cell];
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+-(void)refreshZanInfoWithBigCell:(CommunityCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    
+    if ([model.isFabulous isEqualToString:@"1"]) {
+        model.isFabulous = @"0";//1是点赞 0取消
+        int zanCount = [cell.zanCountlb.text intValue];
+        cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
+        cell.zanImageView.image = getImage(@"praise");
+        
+    }else{
+        model.isFabulous = @"1";
+        int zanCount = [cell.zanCountlb.text intValue];
+        cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
+        cell.zanImageView.image = getImage(@"praise_Selected");
+    }
+    
+}
+
+-(void)didPLWithBigCell:(CommunityCell*)cell
+{
+    [self enterDetailPageWithIndex:cell.tag];
+}
+-(void)didShareWithBigCell:(CommunityCell*)cell
+{
+    [self shareWithIndex:cell.tag];
+}
+-(void)didShowBigImageWithBigCell:(CommunityCell*)cell index:(NSInteger)index
+{
+    [self showBigImageViewWithIndex:cell.tag page:index];
+}
+-(void)didJBWithBigCell:(CommunityCell *)cell
+{
+    [self didJbWithIndex:cell.tag];
+}
+-(void)loadImageSuccessWithBigCell:(CommunityCell *)cell
+{
+    
+}
+-(void)didTapHeadImageViewWithBigCell:(CommunityCell *)cell
+{
+    [self enterUserPageViewWithIndex:cell.tag];
+}
+
+
+
+-(void)enterUserPageViewWithIndex:(NSInteger)index
+{
+    CommunityModel * model =[_dataArray objectAtIndex:index];
+    
+    
+    NewMineHomePageViewController * mine = [[NewMineHomePageViewController alloc]init];
+    mine.userId = model.userId;
+    [self.navigationController pushViewController:mine animated:YES];
+    
+}
+
+-(void)showBigImageViewWithIndex:(NSInteger)index page:(int)page
+{
+    CommunityModel * item = [_dataArray objectAtIndex:index];
+    FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
+    fc.images = [NSMutableArray arrayWithArray:item.pictures];
+    fc.page = page;
+    
+    [self presentViewController:fc animated:YES completion:nil];
+    
+}
+-(void)didJbWithIndex:(NSInteger)index
+{
+    ///app/reportArticle/updateIsreported.do
+    //参数：    userId //用户Id
+    //articleId //文章Id
+    //reportContent //举报原因
+    
+    CommunityModel * model = [_dataArray objectAtIndex:index];
+    
+    if ([model.userId isEqualToString:[UserModel shareInstance].userId]) {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"确定要删除此文章吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            
+            NSMutableDictionary * params = [NSMutableDictionary dictionary];
+            [params safeSetObject:model.uid forKey:@"articleId"];
+            [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
+            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"appintegraldeleteArticle=app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
+                [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
+            } failure:^(NSError *error) {
+                
+            }];
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            
+        }];
+        [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+            
+            if (strUrl.length<5) {
+                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
+                return ;
+            }
+            NSMutableDictionary * params = [NSMutableDictionary dictionary];
+            [params safeSetObject:model.uid forKey:@"articleId"];
+            [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
+            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+                [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
+            } failure:^(NSError *error) {
+                
+            }];
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }
+    
+    
+    
+}
+
+-(void)enterDetailPageWithIndex:(NSInteger)index
+{
+    CommunityModel * model = [_dataArray objectAtIndex:index];
+    ArticleDetailViewController * ard =[[ArticleDetailViewController alloc]init];
+    ard.infoModel = model;
+    ard.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ard animated:YES];
+    
+}
+
+
+
+-(void)loadImageSuccessWithCell:(PublicArticleCell *)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    model.loadSuccess = @"1";
+}
+
+
+#pragma  mark -----share
+
+-(void)shareWithIndex:(NSInteger)index
+{
+    UIAlertController * al =[UIAlertController alertControllerWithTitle:@"分享" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatTimeline index:index];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformSubTypeWechatSession index:index];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"QQ好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self shareWithType:SSDKPlatformTypeQQ index:index];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    
+    [self presentViewController:al animated:YES completion:nil];
+    
+}
+
+-(void) shareWithType:(SSDKPlatformType)type index:(NSInteger)index
+{
+    CommunityModel * model = [_dataArray objectAtIndex:index];
+    NSString * title  = [NSString stringWithFormat:@"%@发表的文章",model.title];
+    NSString * content = model.content;
+    if (content.length>100) {
+        content = [content substringToIndex:100];
+    }
+    NSMutableDictionary * params  =[NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareArticleLink.do " paramters:params success:^(NSDictionary *dic) {
+        
+        NSString * shareUrl = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"url"];
+        
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        if (type ==SSDKPlatformSubTypeWechatTimeline||type==SSDKPlatformSubTypeWechatSession) {
+            [shareParams SSDKSetupWeChatParamsByText:content title:title url:[NSURL URLWithString:shareUrl] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+            
+        }else if (type==SSDKPlatformTypeQQ)
+        {
+            [shareParams SSDKSetupShareParamsByText:content
+                                             images:[UserModel shareInstance].headUrl
+                                                url:[NSURL URLWithString:shareUrl]
+                                              title:title
+                                               type:SSDKContentTypeWebPage];
+            
+        }
+        
+        
+        
+        [shareParams SSDKEnableUseClientShare];
+        [SVProgressHUD showWithStatus:@"开始分享"];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+        
+        
+        //进行分享
+        [ShareSDK share:type
+             parameters:shareParams
+         onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+             
+             
+             switch (state) {
+                 case SSDKResponseStateSuccess:
+                 {
+                     [[UserModel shareInstance]dismiss];
+                     //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                     break;
+                 }
+                 case SSDKResponseStateFail:
+                 {
+                     [[UserModel shareInstance]dismiss];
+                     //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+                     DLog(@"error-%@",error);
+                     break;
+                 }
+                 case SSDKResponseStateCancel:
+                 {
+                     [[UserModel shareInstance]dismiss];
+                     //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                     break;
+                 }
+                 default:
+                     break;
+             }
+         }];
+        
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 -(void)didGzUserWithCell:(NewMineHomePageCell *)cell
 {
@@ -608,16 +932,6 @@
     
 }
 
--(void)didShowBigImageWithCell:(PublicArticleCell*)cell index:(int)index
-{
-    CommunityModel * item = [_dataArray objectAtIndex:cell.tag];
-    FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
-    fc.images = [NSMutableArray arrayWithArray:item.pictures];
-    fc.page = index;
-    
-    [self presentViewController:fc animated:YES completion:nil];
-
-}
 
 - (void)ChangeHeadImageWithTitle:(NSString *)title{
     
@@ -743,56 +1057,85 @@
         }
     }
 }
--(void) shareWithType:(SSDKPlatformType)type image:(UIImage *)image
+-(void) shareWithType:(SSDKPlatformType)type
 {
-    if (!image) {
-        return;
-    }
     
-    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    NSArray* imageArray = @[image];
-    
-    [shareParams SSDKSetupShareParamsByText:nil
-                                     images:imageArray
-                                        url:nil
-                                      title:nil
-                                       type:SSDKContentTypeImage];
-    
-    [shareParams SSDKEnableUseClientShare];
-    [SVProgressHUD showWithStatus:@"开始分享"];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
-    
-    
-    //进行分享
-    [ShareSDK share:type
-         parameters:shareParams
-     onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-         
-         
-         switch (state) {
-             case SSDKResponseStateSuccess:
-             {
-                 [[UserModel shareInstance]dismiss];
-                 //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
-                 break;
+    NSMutableDictionary * params  =[NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareHomeLink.do" paramters:params success:^(NSDictionary *dic) {
+        
+        NSString * shareUrl = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"url"];
+        
+        
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        if (type ==SSDKPlatformSubTypeWechatTimeline||type==SSDKPlatformSubTypeWechatSession) {
+            [shareParams SSDKSetupWeChatParamsByText:@"" title:@"" url:[NSURL URLWithString:shareUrl] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+            
+        }else if (type==SSDKPlatformTypeQQ)
+        {
+            [shareParams SSDKSetupShareParamsByText:@""
+                                             images:[UserModel shareInstance].headUrl
+                                                url:[NSURL URLWithString:shareUrl]
+                                              title:[UserModel shareInstance].nickName
+                                               type:SSDKContentTypeWebPage];
+            
+        }
+        
+        
+        
+        [shareParams SSDKEnableUseClientShare];
+        [SVProgressHUD showWithStatus:@"开始分享"];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+        
+        
+        //进行分享
+        [ShareSDK share:type
+             parameters:shareParams
+         onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+             
+             
+             switch (state) {
+                 case SSDKResponseStateSuccess:
+                 {
+                     [[UserModel shareInstance]dismiss];
+                     //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                     break;
+                 }
+                 case SSDKResponseStateFail:
+                 {
+                     [[UserModel shareInstance]dismiss];
+                     //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+                     DLog(@"error-%@",error);
+                     break;
+                 }
+                 case SSDKResponseStateCancel:
+                 {
+                     [[UserModel shareInstance]dismiss];
+                     //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
+                     break;
+                 }
+                 default:
+                     break;
              }
-             case SSDKResponseStateFail:
-             {
-                 [[UserModel shareInstance]dismiss];
-                 //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
-                 break;
-             }
-             case SSDKResponseStateCancel:
-             {
-                 [[UserModel shareInstance]dismiss];
-                 //                 [[UserModel shareInstance] showInfoWithStatus:@"取消分享"];
-                 break;
-             }
-             default:
-                 break;
-         }
-     }];
-    
+         }];
+
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+///完成获取积分任务--- 分享主页 分享健康报告
+-(void)getIntegral
+{
+        NSMutableDictionary * params = [NSMutableDictionary dictionary];
+        [params setObject:@"6" forKey:@"taskId"];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+        } failure:^(NSError *error) {
+            
+        }];
 }
 
 -(UIImage *)getImage
