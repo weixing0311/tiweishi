@@ -105,17 +105,18 @@
 
             break;
         case 2:
-            
-            self.headerImageView.image = getImage(@"bone1_");
-            self.headerNamelb.text = @"骨骼肌";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeight];
+           
+            self.headerImageView.image = getImage(@"fat1_");
+            self.headerNamelb.text = @"脂肪量";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
-
-            self.sliderLislb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMax];
             
-            currX = [self getlocationDianL:self.currItem.boneMuscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.fatWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+
 
             break;
         case 3:
@@ -146,29 +147,30 @@
 
             break;
         case 5:
+            self.headerImageView.image = getImage(@"bone1_");
+            self.headerNamelb.text = @"骨骼肌";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+            
+            self.sliderLislb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.boneMuscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+
+            break;
+        case 6:
+            
             self.headerImageView.image = getImage(@"water1_");
             self.headerNamelb.text = @"水分";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.waterWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
-
+            
             self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.waterWeightMin];
             self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.waterWeightMax];
             
             currX = [self getlocationDianL:self.currItem.waterWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
-
-            break;
-        case 6:
-            self.headerImageView.image = getImage(@"fat1_");
-            self.headerNamelb.text = @"脂肪量";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeight];
-            self.secondTitle.text = self.headerNamelb.text;
-            self.secondHeadImage.image = self.headerImageView.image;
-
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMax];
-            
-            currX = [self getlocationDianL:self.currItem.fatWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
 
             break;
@@ -295,9 +297,10 @@
 
 -(NSString *)getTextWithColor:(UIColor *)color
 {
-    if (color ==normalColor) {
+    
+    if (CGColorEqualToColor(color.CGColor, normalColor.CGColor)) {
         return @"正常";
-    }else if (color ==warningColor)
+    }else if (CGColorEqualToColor(color.CGColor, warningColor.CGColor))
     {
         return @"偏低";
     }else{
@@ -403,7 +406,7 @@
             
             break;
         case IS_MODEL_BONEMUSCLE:
-            switch (item.boneLevel) {
+            switch (item.boneMuscleLevel) {
                 case 1:
                     return normalColor;
                     break;

@@ -16,6 +16,7 @@
 #import "PublicArticleCell.h"
 #import "ArtcleDetailNumCell.h"
 #import "CommunityCell.h"
+#import "ArtcleZanViewController.h"
 @interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate,UIPickerViewDelegate,UIPickerViewDataSource,PublicArticleCellDelegate,BigImageArticleCellDelegate>
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic,strong) NSMutableArray * dataArray;
@@ -50,7 +51,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"文章详情";
+    self.title = @"评论";
     [self setNotification];
     page =1;
     _dataArray = [NSMutableArray array];
@@ -228,7 +229,7 @@
     else if (indexPath.section ==1)
     {
         
-        return 40;
+        return 88;
     }
     else
     {
@@ -255,7 +256,7 @@
             
             cell.nemuView.hidden = YES;
             cell.gzBtn.hidden = YES;
-            cell.jbBtn.hidden = YES;
+//            cell.jbBtn.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
 
@@ -272,7 +273,7 @@
             [cell loadImagesWithItem:item];
             cell.nemuView.hidden = YES;
             cell.gzBtn.hidden = YES;
-            cell.jbBtn.hidden = YES;
+//            cell.jbBtn.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
 
@@ -290,9 +291,9 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifer];
         }
-        cell.firstlb.text = [NSString stringWithFormat:@"转发 %@     评论 %@",[_infoDict safeObjectForKey:@"forwardingnum"]?[_infoDict safeObjectForKey:@"forwardingnum"]:@"0",[_infoDict safeObjectForKey:@"commentnum"]?[_infoDict safeObjectForKey:@"commentnum"]:@"0"];
-        cell.secondlb.text = [NSString stringWithFormat:@"点赞 %@",[_infoDict safeObjectForKey:@"greatnum"]?[_infoDict safeObjectForKey:@"greatnum"]:@"0"];
-
+        cell.firstLb.text = [NSString stringWithFormat:@"评论 %@",[_infoDict safeObjectForKey:@"commentnum"]?[_infoDict safeObjectForKey:@"commentnum"]:@"0"];
+        cell.zanLabel.text = [NSString stringWithFormat:@"%@、%@、%@等%@人都觉得很赞",@"丁丁",@"坑逼",@"真特么的坑啊我曹",@"22"];
+        [cell.zanBtn addTarget:self action:@selector(showZanPersons) forControlEvents:UIControlEventTouchUpInside];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else
@@ -312,6 +313,7 @@
         cell.timelb.text = [dict safeObjectForKey:@"createTime"];
         cell.contentlb.text = [dict safeObjectForKey:@"content"];
         cell.zanCountlb.text = [dict safeObjectForKey:@"greatnum"];
+        cell.levelLb.text = [dict safeObjectForKey:@"gradeId"];
         if ([dict safeObjectForKey:@"isFabulous"]) {
             cell.zanImageView.image = getImage(@"praise_Selected");
         }else{
@@ -322,48 +324,12 @@
     }
     
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)showZanPersons
 {
-    if (indexPath.section ==1) {
-        NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
-        NSString * contentStr = [_infoDict safeObjectForKey:@"content"];
-        float height = 65+([self getContentHeightWithContent:contentStr Font:15]<20?20:[self getContentHeightWithContent:contentStr Font:15]);
-        if (videoPath.length>5) {
-            //记录被点击的Cell
-            //销毁播放器
-            [_playerView destroyPlayer];
-            CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(10,height+10, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.8)];
-            _playerView = playerView;
-            [self.tableview addSubview:_playerView];
-            //视频地址
-            _playerView.url = [NSURL URLWithString:videoPath];
-            //播放
-            [_playerView playVideo];
-            //返回按钮点击事件回调
-            [_playerView backButton:^(UIButton *button) {
-                NSLog(@"返回按钮被点击");
-            }];
-            //播放完成回调
-            [_playerView endPlay:^{
-                //销毁播放器
-                [_playerView destroyPlayer];
-                _playerView = nil;
-                
-                NSLog(@"播放完成");
-            }];
-            
-        }else{
-            FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
-            fc.images = _dataArray;
-            fc.page = indexPath.row;
-            
-            [self presentViewController:fc animated:YES completion:nil];
-
-        }
-
-    }
+    ArtcleZanViewController * artcl = [[ArtcleZanViewController alloc]init];
+    artcl.articleId = [_infoDict safeObjectForKey:@""];
+    [self.navigationController pushViewController:artcl animated:YES];
 }
-
 -(void)didPlayWithBigCell:(CommunityCell *)cell
 {
     NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
@@ -427,37 +393,6 @@
     return size.height;
 
 }
-//- (void)configureCell:(ArtcleDetaileImageCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//    NSString *imgURL = [self.dataArray[indexPath.row]safeObjectForKey:@"imgUrl"];
-//    UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imgURL];
-//
-//    if ( !cachedImage ) {
-//        [self downloadImage:[self.dataArray[indexPath.row]safeObjectForKey:@"imgUrl"] forIndexPath:indexPath];
-//        cell.HeadImgView.image = getImage(@"default");
-//    } else {
-//        cell.HeadImgView.image =cachedImage;
-//    }
-//}
-
-//- (void)downloadImage:(NSString *)imageURL forIndexPath:(NSIndexPath *)indexPath {
-//    // 利用 SDWebImage 框架提供的功能下载图片
-//
-//
-//    NSMutableDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-//    [[SDWebImageDownloader sharedDownloader]downloadImageWithURL:[NSURL URLWithString:imageURL] options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
-//
-//        [dic safeSetObject:@(JFA_SCREEN_WIDTH-20) forKey:@"width"];
-//        [dic safeSetObject:@((JFA_SCREEN_WIDTH-20)/image.size.width*image.size.height) forKey:@"height"];
-//
-//        [[SDImageCache sharedImageCache]storeImage:image forKey:imageURL completion:nil];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.tableview reloadData];
-//        });
-//
-//    }];
-//
-//
-//}
 #pragma mark ---上传评论
 -(void)didSendCommentWithText:(NSString *)textStr
 {
@@ -514,6 +449,113 @@
     }
 
 }
+
+
+-(void)didGzWithCell:(PublicArticleCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:model.userId forKey:@"followId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        model.isFollow = @"1";
+        PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+        currCell.gzBtn.selected =YES;
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
+}
+-(void)didGzWithBigCell:(CommunityCell*)cell
+{
+    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:model.userId forKey:@"followId"];
+    [params safeSetObject:model.uid forKey:@"articleId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+        model.isFollow = @"1";
+        CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+        currCell.gzBtn.selected =YES;
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+#pragma mark---举报
+-(void)didJBWithCell:(PublicArticleCell *)cell
+{
+    [self didJbWithIndex:cell.tag];
+}
+-(void)didJBWithBigCell:(CommunityCell *)cell
+{
+    [self didJbWithIndex:cell.tag];
+}
+-(void)didJbWithIndex:(NSInteger)index
+{
+    ///app/reportArticle/updateIsreported.do
+    //参数：    userId //用户Id
+    //articleId //文章Id
+    //reportContent //举报原因
+    
+    CommunityModel * model = [_dataArray objectAtIndex:index];
+    
+    if ([model.userId isEqualToString:[UserModel shareInstance].userId]) {
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"确定要删除此文章吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            
+            NSMutableDictionary * params = [NSMutableDictionary dictionary];
+            [params safeSetObject:model.uid forKey:@"articleId"];
+            [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
+            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
+                [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
+                [_dataArray removeObject:model];
+                [self.tableview reloadData];
+            } failure:^(NSError *error) {
+                
+            }];
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            
+        }];
+        [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+            
+            if (strUrl.length<5) {
+                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
+                return ;
+            }
+            NSMutableDictionary * params = [NSMutableDictionary dictionary];
+            [params safeSetObject:model.uid forKey:@"articleId"];
+            [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
+            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+                [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
+            } failure:^(NSError *error) {
+                
+            }];
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
 -(void)clearSDCeche
 {
     [[SDWebImageManager sharedManager] cancelAll];

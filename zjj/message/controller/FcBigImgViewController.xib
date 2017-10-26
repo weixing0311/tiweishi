@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FcBigImgViewController">
             <connections>
+                <outlet property="myScrollView" destination="4je-5D-lwJ" id="vxa-vg-Hke"/>
                 <outlet property="pageLabel" destination="s8Q-c7-loE" id="rCw-ET-SY1"/>
                 <outlet property="scrollview" destination="4je-5D-lwJ" id="n0n-Et-lRv"/>
                 <outlet property="titleView" destination="79l-8g-P9T" id="Yec-rL-g42"/>
@@ -57,12 +58,27 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MRt-B0-YnH">
+                            <rect key="frame" x="330" y="20" width="45" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="45" id="Zox-Vc-Lom"/>
+                            </constraints>
+                            <state key="normal" title="保存">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="didSaveImage:" destination="-1" eventType="touchUpInside" id="7cy-gT-Udn"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.45791416952054792" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="Uyy-ek-JbB"/>
                         <constraint firstItem="eyf-Am-z4a" firstAttribute="centerX" secondItem="79l-8g-P9T" secondAttribute="centerX" id="fd7-Do-HHN"/>
                         <constraint firstItem="eyf-Am-z4a" firstAttribute="top" secondItem="79l-8g-P9T" secondAttribute="top" constant="20" id="frU-dt-zES"/>
+                        <constraint firstAttribute="bottom" secondItem="MRt-B0-YnH" secondAttribute="bottom" id="gdD-pD-Tl5"/>
+                        <constraint firstAttribute="trailing" secondItem="MRt-B0-YnH" secondAttribute="trailing" id="vZ7-t2-ebw"/>
+                        <constraint firstItem="MRt-B0-YnH" firstAttribute="top" secondItem="79l-8g-P9T" secondAttribute="top" constant="20" id="y7S-lb-tJp"/>
                     </constraints>
                 </view>
             </subviews>

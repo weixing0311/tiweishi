@@ -305,4 +305,7 @@
  */
 
 -(BOOL)valiNickName:(NSString * )nickName;
+
+///上传完成任务接口
+-(void)didCompleteTheTaskWithId:(NSString *)taskId;
 @end

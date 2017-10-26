@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.nicknamelb.adjustsFontSizeToFitWidth = YES;
     // Initialization code
 }
 -(void)setInfoWithDict:(HealthDetailsItem *)item

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *zanBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *zanImageView;
 @property (weak, nonatomic) IBOutlet UILabel *zanCountlb;
+@property (weak, nonatomic) IBOutlet UILabel *levelLb;
 
 
 

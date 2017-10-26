@@ -13,6 +13,8 @@
 		6C027F211F9F245A00556440 /* NewMineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C027F1F1F9F245A00556440 /* NewMineTableViewCell.xib */; };
 		6C027F251F9F33B300556440 /* ArtcleDetailNumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F231F9F33B300556440 /* ArtcleDetailNumCell.m */; };
 		6C027F261F9F33B300556440 /* ArtcleDetailNumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C027F241F9F33B300556440 /* ArtcleDetailNumCell.xib */; };
+		6C027F391FA17E5300556440 /* NSString+Eomji.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F381FA17E5300556440 /* NSString+Eomji.m */; };
+		6C027F3C1FA1D87000556440 /* ArtcleZanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F3B1FA1D87000556440 /* ArtcleZanViewController.m */; };
 		6C0F287E1F7267BF00FD27FF /* GrowthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0F287C1F7267BF00FD27FF /* GrowthCell.m */; };
 		6C0F287F1F7267BF00FD27FF /* GrowthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C0F287D1F7267BF00FD27FF /* GrowthCell.xib */; };
 		6C0F28831F72731B00FD27FF /* IntegralDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0F28811F72731B00FD27FF /* IntegralDetailHeaderCell.m */; };
@@ -704,8 +706,6 @@
 		6CFDEC701F8B7DE8005D3971 /* last@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB361F8B7DE6005D3971 /* last@3x.png */; };
 		6CFDEC711F8B7DE8005D3971 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB371F8B7DE6005D3971 /* logo@2x.png */; };
 		6CFDEC721F8B7DE8005D3971 /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB381F8B7DE6005D3971 /* logo@3x.png */; };
-		6CFDEC731F8B7DE8005D3971 /* man@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB391F8B7DE6005D3971 /* man@2x.png */; };
-		6CFDEC741F8B7DE8005D3971 /* man@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB3A1F8B7DE6005D3971 /* man@3x.png */; };
 		6CFDEC751F8B7DE8005D3971 /* map-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB3B1F8B7DE6005D3971 /* map-icon.png */; };
 		6CFDEC761F8B7DE8005D3971 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB3C1F8B7DE6005D3971 /* map.png */; };
 		6CFDEC771F8B7DE8005D3971 /* me@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CFDEB3D1F8B7DE6005D3971 /* me@2x.png */; };
@@ -847,6 +847,10 @@
 		6C027F231F9F33B300556440 /* ArtcleDetailNumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArtcleDetailNumCell.m; sourceTree = "<group>"; };
 		6C027F241F9F33B300556440 /* ArtcleDetailNumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArtcleDetailNumCell.xib; sourceTree = "<group>"; };
 		6C027F361FA0624D00556440 /* CommunityCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommunityCellDelegate.h; sourceTree = "<group>"; };
+		6C027F371FA17E5300556440 /* NSString+Eomji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Eomji.h"; sourceTree = "<group>"; };
+		6C027F381FA17E5300556440 /* NSString+Eomji.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Eomji.m"; sourceTree = "<group>"; };
+		6C027F3A1FA1D87000556440 /* ArtcleZanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtcleZanViewController.h; sourceTree = "<group>"; };
+		6C027F3B1FA1D87000556440 /* ArtcleZanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArtcleZanViewController.m; sourceTree = "<group>"; };
 		6C0F287B1F7267BF00FD27FF /* GrowthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowthCell.h; sourceTree = "<group>"; };
 		6C0F287C1F7267BF00FD27FF /* GrowthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowthCell.m; sourceTree = "<group>"; };
 		6C0F287D1F7267BF00FD27FF /* GrowthCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GrowthCell.xib; sourceTree = "<group>"; };
@@ -1850,8 +1854,6 @@
 		6CFDEB361F8B7DE6005D3971 /* last@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "last@3x.png"; sourceTree = "<group>"; };
 		6CFDEB371F8B7DE6005D3971 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		6CFDEB381F8B7DE6005D3971 /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
-		6CFDEB391F8B7DE6005D3971 /* man@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man@2x.png"; sourceTree = "<group>"; };
-		6CFDEB3A1F8B7DE6005D3971 /* man@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "man@3x.png"; sourceTree = "<group>"; };
 		6CFDEB3B1F8B7DE6005D3971 /* map-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-icon.png"; sourceTree = "<group>"; };
 		6CFDEB3C1F8B7DE6005D3971 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		6CFDEB3D1F8B7DE6005D3971 /* me@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me@2x.png"; sourceTree = "<group>"; };
@@ -2753,6 +2755,8 @@
 				6CFDE8061F8B547B005D3971 /* CommentView.h */,
 				6CFDE8071F8B547B005D3971 /* CommentView.m */,
 				6CFDE8091F8B5482005D3971 /* CommentView.xib */,
+				6C027F3A1FA1D87000556440 /* ArtcleZanViewController.h */,
+				6C027F3B1FA1D87000556440 /* ArtcleZanViewController.m */,
 			);
 			path = "articleDetail(文章详情)";
 			sourceTree = "<group>";
@@ -3816,6 +3820,8 @@
 				6C73AF761F2F04510042C1A2 /* UINavigationController+CustomNavigationCotroller.m */,
 				6CF778CD1F565DF60002BDC7 /* NSString+Password.h */,
 				6CF778CE1F565DF60002BDC7 /* NSString+Password.m */,
+				6C027F371FA17E5300556440 /* NSString+Eomji.h */,
+				6C027F381FA17E5300556440 /* NSString+Eomji.m */,
 			);
 			path = category;
 			sourceTree = "<group>";
@@ -4221,8 +4227,6 @@
 				6CFDEB361F8B7DE6005D3971 /* last@3x.png */,
 				6CFDEB371F8B7DE6005D3971 /* logo@2x.png */,
 				6CFDEB381F8B7DE6005D3971 /* logo@3x.png */,
-				6CFDEB391F8B7DE6005D3971 /* man@2x.png */,
-				6CFDEB3A1F8B7DE6005D3971 /* man@3x.png */,
 				6CFDEB3B1F8B7DE6005D3971 /* map-icon.png */,
 				6CFDEB3C1F8B7DE6005D3971 /* map.png */,
 				6CFDEB3D1F8B7DE6005D3971 /* me@2x.png */,
@@ -4817,7 +4821,6 @@
 				6CD92FF41F0B280500D7989E /* ShareViewController.xib in Resources */,
 				6CFDEC131F8B7DE7005D3971 /* employ@3x.png in Resources */,
 				6CFDEBD51F8B7DE7005D3971 /* bodyfat_buy_2.png in Resources */,
-				6CFDEC731F8B7DE8005D3971 /* man@2x.png in Resources */,
 				6CD92FDC1F0A786E00D7989E /* ShareDetailView.xib in Resources */,
 				6CD010D21EF62B1D00FB9419 /* AddressListViewController.xib in Resources */,
 				6CFDEBC71F8B7DE7005D3971 /* argument@2x.png in Resources */,
@@ -5072,7 +5075,6 @@
 				6CFDEC291F8B7DE7005D3971 /* footer-ShoppingCart@3x.png in Resources */,
 				6CFDECC01F8B7DE8005D3971 /* record-shouru@3x.png in Resources */,
 				6CFDEC571F8B7DE8005D3971 /* home-weight02@2x.png in Resources */,
-				6CFDEC741F8B7DE8005D3971 /* man@3x.png in Resources */,
 				6CFDEC221F8B7DE7005D3971 /* footer-PersonalCenter-red@2x.png in Resources */,
 				6CFDEBFA1F8B7DE7005D3971 /* contact-us-img@2x.png in Resources */,
 				6CFDECBD1F8B7DE8005D3971 /* record-jiangli@2x.png in Resources */,
@@ -5144,6 +5146,7 @@
 				6C6CFE951F8F69CA005C2738 /* DAYNavigationBar.m in Sources */,
 				6C6CFE961F8F69CA005C2738 /* DAYUtils.m in Sources */,
 				6C6CFEC11F908EF9005C2738 /* NewHealthDetailSecondCell.m in Sources */,
+				6C027F3C1FA1D87000556440 /* ArtcleZanViewController.m in Sources */,
 				6C22419A1F7C9482001BB2FD /* AILoadingView.m in Sources */,
 				6C2241991F7C9479001BB2FD /* CLSlider.m in Sources */,
 				6C2241941F7C946E001BB2FD /* CLPlayerMaskView.m in Sources */,
@@ -5372,6 +5375,7 @@
 				6C363A181F05097700268851 /* TeamOrderDetailViewController.m in Sources */,
 				6C027F201F9F245A00556440 /* NewMineTableViewCell.m in Sources */,
 				6C3639861EFE47E100268851 /* AAAreaspline.m in Sources */,
+				6C027F391FA17E5300556440 /* NSString+Eomji.m in Sources */,
 				6CB7508C1F73942E007BAE04 /* NewMineHomePageCell.m in Sources */,
 				6C8F53BF1F11D38A00C7A275 /* NSDictionary+JFASafeObject.m in Sources */,
 				6CB750921F749AC5007BAE04 /* CommunityShareViewController.m in Sources */,

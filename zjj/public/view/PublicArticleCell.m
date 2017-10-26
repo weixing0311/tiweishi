@@ -86,11 +86,12 @@
     str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
 
     
-    self.contentlb.text = str;
-    self.timelb.text = item.releaseTime;
-    self.zanCountlb.text = item.greatnum;
+    self.contentlb.text      = str;
+    self.timelb.text         = item.releaseTime;
+    self.zanCountlb.text     = item.greatnum;
     self.commentCountlb.text = item.commentnum;
-    
+    self.shareCountlb.text   = item.forwardingnum;
+    self.levelLb.text        = item.level;
     if (item.isFabulous&&[item.isFabulous isEqualToString:@"1"]) {
         
         self.zanImageView.image = getImage(@"praise_Selected");
@@ -101,8 +102,10 @@
     
     if ( item.isFollow&&[item.isFollow isEqualToString:@"1"]) {
         self.gzBtn.selected = YES;
+        self.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
     }else{
         self.gzBtn.selected = NO;
+        self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
     }
 }
 -(void)loadImagesWithItem:(CommunityModel *)item

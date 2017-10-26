@@ -89,10 +89,8 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/queryMsgDynamic.do" paramters:params success:^(NSDictionary *dic) {
         
         NSString * dynamicTimes = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"dynamicTimes"];
-        if (dynamicTimes&&[dynamicTimes intValue]>0) {
-            notifacationCount = [dynamicTimes intValue];
-            [self.tableview reloadData];
-        }
+        notifacationCount = [dynamicTimes intValue];
+        [self.tableview reloadData];
     } failure:^(NSError *error) {
         
     }];
@@ -184,7 +182,7 @@
             {
                 cell.titleLabel.text = @"我的消息";
                 cell.headImageView.image = getImage(@"home_2_");
-                if (notifacationCount==0||notifacationCount) {
+                if (notifacationCount==0||!notifacationCount) {
                     cell.notifationCountLb.hidden = YES;
                 }else{
                     cell.notifationCountLb.hidden = NO;

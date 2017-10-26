@@ -495,5 +495,16 @@ static UserModel *model;
     
 }
 
+-(void)didCompleteTheTaskWithId:(NSString *)taskId
+{
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params setObject:taskId forKey:@"taskId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    
+    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 @end

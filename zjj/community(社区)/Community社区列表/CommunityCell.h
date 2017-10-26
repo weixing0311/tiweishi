@@ -24,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *midImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *zhezhaoceng;
+@property (weak, nonatomic) IBOutlet UILabel *levelLb;
+
+
 @property (nonatomic,strong)CommunityModel * currModel;
 @property (nonatomic,assign)id<BigImageArticleCellDelegate>delegate;
 

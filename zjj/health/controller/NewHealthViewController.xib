@@ -93,8 +93,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rjx-Mn-ZpW">
                             <rect key="frame" x="98" y="149" width="180" height="180"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="666.6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5p-JG-ImX">
-                                    <rect key="frame" x="18.5" y="60" width="144" height="66"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5p-JG-ImX">
+                                    <rect key="frame" x="51.5" y="60" width="78.5" height="66"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="20" constant="160" id="KMI-b0-fhB"/>
                                     </constraints>
@@ -103,7 +103,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="kg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SF6-pQ-4Wu">
-                                    <rect key="frame" x="162.5" y="95" width="21" height="21"/>
+                                    <rect key="frame" x="130" y="95" width="21" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="21" id="apG-kN-Ltb"/>
                                         <constraint firstAttribute="height" constant="21" id="zH3-b9-FuW"/>
@@ -309,7 +309,7 @@
                         <constraint firstItem="CkS-cb-JPf" firstAttribute="leading" secondItem="A8X-Ob-zBJ" secondAttribute="leading" id="Q0R-MB-BBt"/>
                         <constraint firstAttribute="trailing" secondItem="etq-tc-iBb" secondAttribute="trailing" id="QhH-Vi-BrF"/>
                         <constraint firstAttribute="trailing" secondItem="cPx-3A-SgG" secondAttribute="trailing" id="YJa-Km-HaR"/>
-                        <constraint firstAttribute="bottom" secondItem="cPx-3A-SgG" secondAttribute="bottom" constant="150" id="Z5s-ir-pHc"/>
+                        <constraint firstAttribute="bottom" secondItem="cPx-3A-SgG" secondAttribute="bottom" constant="180" id="Z5s-ir-pHc"/>
                         <constraint firstItem="cPx-3A-SgG" firstAttribute="centerX" secondItem="KM4-Ix-RBQ" secondAttribute="centerX" id="Zly-Ce-hHB"/>
                         <constraint firstItem="etq-tc-iBb" firstAttribute="top" secondItem="cPx-3A-SgG" secondAttribute="bottom" id="chJ-Mi-ItU"/>
                         <constraint firstItem="cPx-3A-SgG" firstAttribute="centerX" secondItem="zCm-D2-27C" secondAttribute="centerX" id="ej0-QQ-o74"/>

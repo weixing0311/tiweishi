@@ -44,6 +44,7 @@ static CommunityModel * imageModel;
     self.forwardingnum = [dict safeObjectForKey:@"forwardingnum"];
     self.commentnum = [dict safeObjectForKey:@"commentnum"];
     self.isFabulous = [dict safeObjectForKey:@"isFabulous"];
+    self.level      = [dict safeObjectForKey:@"gradeId"];
     [self setInPictureWithDict:dict];
 
     self.rowHieght = [self CalculateCellHieghtWithContent:[dict safeObjectForKey:@"content"] images:self.pictures];
@@ -115,7 +116,7 @@ static CommunityModel * imageModel;
             imageHeight = ((JFA_SCREEN_WIDTH-20)/3)*3;
         }
     }
-    return size.height+imageHeight+120;
+    return size.height+imageHeight+130;
     
 }
 @end

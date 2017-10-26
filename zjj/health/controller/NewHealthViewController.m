@@ -9,7 +9,6 @@
 #import "NewHealthViewController.h"
 #import "HealthMainCell.h"
 #import "MeasurementInfoCell.h"
-#import "TZdetaolViewController.h"
 #import "LoignViewController.h"
 #import "UserView.h"
 #import "UserCellCell.h"
@@ -46,9 +45,10 @@
 
 @implementation NewHealthViewController
 {
-        NSMutableArray * headerArr;
-        UserView *_userView;
-        BOOL isrefresh;
+    NSMutableArray * headerArr;
+    UserView *_userView;
+    BOOL isrefresh;
+    BOOL enterDetailPage;///称重完成后进去详情页面
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -102,6 +102,7 @@
 }
 -(void)weightingSuccess
 {
+    enterDetailPage = YES;
     [self getHeaderInfo];
 }
 -(void)getHeaderInfo
@@ -117,7 +118,10 @@
         [item setobjectWithDic:[dic objectForKey:@"data"]];
         [headerArr addObject:item];
         [self refreshPageInfoWithItem:item];
-        
+        if (enterDetailPage ==YES) {
+            enterDetailPage =NO;
+            [self enterDetailView];
+        }
         
     } failure:^(NSError *error) {
         if (error.code ==402) {
@@ -196,11 +200,11 @@
     }
     HealthItem * item = [headerArr objectAtIndex:0];
     
-    TZdetaolViewController * tz =[[TZdetaolViewController alloc]init];
-    tz.hidesBottomBarWhenPushed=YES;
-    //    self.navigationController.navigationBarHidden = NO;
-    tz.dataId = [NSString stringWithFormat:@"%d",item.DataId];
-    [self.navigationController pushViewController:tz animated:YES];
+    HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
+    hd.hidesBottomBarWhenPushed=YES;
+    hd.dataId =[NSString stringWithFormat:@"%d",item.DataId];
+    
+    [self.navigationController pushViewController:hd animated:YES];
 }
 -(void)didEnterChart
 {

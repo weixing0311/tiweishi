@@ -18,6 +18,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.gzBtn.layer.borderWidth= 1;
+    self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
+
     self.imagesArray = [NSMutableArray array];
     [self.midImageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showBigImage)]];
 
@@ -27,9 +30,36 @@
     self.currModel = item;
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"logo")];
     
-    self.titleIb.text = item.title;
-    self.contentlb.text = item.content;
-    self.timelb.text = item.releaseTime;
+    self.titleIb.text        = item.title;
+    self.contentlb.text      = item.content;
+    self.timelb.text         = item.releaseTime;
+    self.zanCountlb.text     = item.greatnum;
+    self.commentCountlb.text = item.commentnum;
+    self.shareCountlb.text   = item.forwardingnum;
+    self.levelLb.text        = item.level;
+    if (item.isFabulous&&[item.isFabulous isEqualToString:@"1"]) {
+        
+        self.zanImageView.image = getImage(@"praise_Selected");
+        self.zanCountlb.textColor = [UIColor orangeColor];
+        
+    }else{
+        self.zanImageView.image = getImage(@"praise");
+        self.zanCountlb.textColor = HEXCOLOR(0x666666);
+    }
+    
+    if ( item.isFollow&&[item.isFollow isEqualToString:@"1"]) {
+        self.gzBtn.selected = YES;
+        self.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+
+    }else{
+        self.gzBtn.selected = NO;
+        self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
+
+        
+    }
+
+    
+    
     NSString * imageUrl ;
     if (item.movieStr.length>5) {
         self.midImageView.userInteractionEnabled = NO;
@@ -81,7 +111,11 @@
 - (void)downloadImage:(NSString *)imageURL {
     // 利用 SDWebImage 框架提供的功能下载图片
     [[SDWebImageDownloader sharedDownloader]downloadImageWithURL:[NSURL URLWithString:imageURL] options:SDWebImageDownloaderUseNSURLCache progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
-        
+        if (error) {
+            self.bgImageView.image = getImage(@"default");
+            self.midImageView.image = getImage(@"");
+            return ;
+        }
         [[SDImageCache sharedImageCache]storeImage:image forKey:imageURL completion:nil];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.bgImageView.image = image;

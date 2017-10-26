@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ArtcleDetailNumCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *firstlb;
-@property (weak, nonatomic) IBOutlet UILabel *secondlb;
+@property (weak, nonatomic) IBOutlet UILabel *zanLabel;
+@property (weak, nonatomic) IBOutlet UIButton *zanBtn;
+@property (weak, nonatomic) IBOutlet UILabel *firstLb;
 
 @end

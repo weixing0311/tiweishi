@@ -142,7 +142,7 @@
             currDic = bigArr[0];
         }
         else{
-            currDic = arr[arr.count-bigArr.count-1];
+            currDic = bigArr[0];
         }
         cell.levellb.text = [currDic objectForKey:@"gradeName"];;
         

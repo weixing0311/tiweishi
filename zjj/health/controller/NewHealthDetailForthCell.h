@@ -12,6 +12,5 @@
 @interface NewHealthDetailForthCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *firstlb;
 @property (weak, nonatomic) IBOutlet UILabel *secondlb;
-@property (weak, nonatomic) IBOutlet UILabel *thirdlb;
 -(void)setInfoWithDict:(HealthDetailsItem *)item;
 @end

@@ -9,6 +9,7 @@
 #import "FcBigImgViewController.h"
 
 @interface FcBigImgViewController ()<UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
 
 @end
 
@@ -29,7 +30,7 @@
             currImage = [currImage objectForKey:@"imgUrl"];
         }
         UIImageView * imageView =[[UIImageView alloc]initWithFrame:CGRectMake(i*JFA_SCREEN_WIDTH+5, 0, 0, 0)];
-
+        imageView.tag = i;
         
         
         
@@ -46,14 +47,14 @@
                                                                   kCFStringEncodingUTF8));
 
         
-        [imageView sd_setImageWithURL:[NSURL URLWithString:encodedString] placeholderImage:[UIImage imageNamed:@"head_default"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:encodedString] placeholderImage:[UIImage imageNamed:@"default"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
             if (!error) {
             float imageHeight = JFA_SCREEN_WIDTH * image.size.height/image.size.width ;
                 
                 imageView.frame =CGRectMake(i*JFA_SCREEN_WIDTH+5, (JFA_SCREEN_HEIGHT-imageHeight)/2, JFA_SCREEN_WIDTH-10, imageHeight);
             }
-            
+            imageView.image = image;
         }];
         [self.scrollview addSubview:imageView];
 
@@ -71,6 +72,18 @@
 - (IBAction)didClickBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
     
+}
+- (IBAction)didSaveImage:(id)sender {
+    int page = self.myScrollView.contentOffset.x/JFA_SCREEN_WIDTH;
+    UIImageView * imageView = (UIImageView*)[self.view viewWithTag:page];
+    UIImageWriteToSavedPhotosAlbum(imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)self);
+
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    
+    NSLog(@"image = %@, error = %@, contextInfo = %@", image, error, contextInfo);
 }
 
 - (void)didReceiveMemoryWarning {

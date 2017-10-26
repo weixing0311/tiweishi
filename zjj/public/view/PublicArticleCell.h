@@ -45,6 +45,10 @@
 @property (weak, nonatomic) IBOutlet UIView *nemuView;
 ///图片集合
 @property (nonatomic,strong)NSMutableArray * imagesArray;
+///等级label
+@property (weak, nonatomic) IBOutlet UILabel *levelLb;
+
+
 
 ///点击头像事件
 - (IBAction)didClickHeadImage:(id)sender;
@@ -58,6 +62,9 @@
 -(void)setInfoWithDict:(CommunityModel *)item;
 ///接收图片方法
 -(void)loadImagesWithItem:(CommunityModel *)item;
+
+
+
 - (CGFloat)cellOffset;
 @end
 

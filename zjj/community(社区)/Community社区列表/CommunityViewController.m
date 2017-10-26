@@ -205,7 +205,7 @@
         cell.tag = indexPath.row;
         [cell setInfoWithDict:item];
         
-        if (self.segment.selectedSegmentIndex ==0||self.isMyMessagePage==YES) {
+        if (self.segment.selectedSegmentIndex ==0||self.isMyMessagePage==YES||[item.userId isEqualToString:[UserModel shareInstance].userId]) {
             cell.gzBtn.hidden = YES;
         }else{
             cell.gzBtn.hidden = NO;
@@ -224,7 +224,7 @@
         [cell setInfoWithDict:item];
         [cell loadImagesWithItem:item];
         
-        if (self.segment.selectedSegmentIndex ==0||self.isMyMessagePage==YES) {
+        if (self.segment.selectedSegmentIndex ==0||self.isMyMessagePage==YES||[item.userId isEqualToString:[UserModel shareInstance].userId]) {
             cell.gzBtn.hidden = YES;
         }else{
             cell.gzBtn.hidden = NO;
@@ -289,6 +289,8 @@
         model.isFollow = @"1";
         PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
         currCell.gzBtn.selected =YES;
+        currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+
     } failure:^(NSError *error) {
         
     }];
@@ -331,12 +333,15 @@
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
         cell.zanImageView.image = getImage(@"praise");
-        
+        cell.zanCountlb.textColor = HEXCOLOR(0x666666);
+
     }else{
         model.isFabulous = @"1";
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
         cell.zanImageView.image = getImage(@"praise_Selected");
+        cell.zanCountlb.textColor = [UIColor orangeColor];
+
     }
     
 }
@@ -419,6 +424,8 @@
         model.isFollow = @"1";
         CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
         currCell.gzBtn.selected =YES;
+        currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+
     } failure:^(NSError *error) {
         
     }];
@@ -460,12 +467,14 @@
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
         cell.zanImageView.image = getImage(@"praise");
-        
+        cell.zanCountlb.textColor = HEXCOLOR(0x666666);
+
     }else{
         model.isFabulous = @"1";
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
         cell.zanImageView.image = getImage(@"praise_Selected");
+        cell.zanCountlb.textColor = [UIColor orangeColor];
     }
     
 }
@@ -539,8 +548,10 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"appintegraldeleteArticle=app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
+                [_dataArray removeObject:model];
+                [self.tableview reloadData];
             } failure:^(NSError *error) {
                 
             }];
@@ -638,7 +649,7 @@
     NSMutableDictionary * params  =[NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareArticleLink.do " paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareArticleLink.do" paramters:params success:^(NSDictionary *dic) {
         
         NSString * shareUrl = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"url"];
         
@@ -673,7 +684,9 @@
                  case SSDKResponseStateSuccess:
                  {
                      [[UserModel shareInstance]dismiss];
-                     //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                     
+                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"4"];
+                     
                      break;
                  }
                  case SSDKResponseStateFail:

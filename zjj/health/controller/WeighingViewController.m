@@ -79,7 +79,7 @@
         if (self.delegate &&[self.delegate respondsToSelector:@selector(weightingSuccess)]) {
             [self.delegate weightingSuccess];
         }
-        
+        [self dismissViewControllerAnimated:YES completion:nil];
 //        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
         
 //        TZdetaolViewController * tzDetai =[[TZdetaolViewController alloc]init];

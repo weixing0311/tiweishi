@@ -172,7 +172,7 @@
     GuanzModel * model = [_dataArray objectAtIndex:indexPath.row];
     [cell.headerimageView sd_setImageWithURL:[NSURL URLWithString:model.headImgUrl]placeholderImage:getImage(@"default")];
     cell.nicknamelb.text = model.nickname;
-    
+    cell.secondLb.text = model.introduction;
     if ([model.userId isEqualToString:[UserModel shareInstance].userId]) {
         cell.gzbtn.hidden = YES;
     }else{
@@ -221,7 +221,13 @@
             [params setObject:model.userId forKey:@"followId"];
             self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
                 DLog(@"dic-取消关注成功--%@",dic);
-                [self getInfo];
+                if (self.pageType==IS_SEARCH) {
+                    cell.gzbtn.selected =YES;
+                    cell.gzbtn.backgroundColor = [UIColor redColor];
+                    cell.gzbtn.layer.borderColor = [UIColor redColor].CGColor;
+                }else{
+                    [self getInfo];
+                }
                 [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
             } failure:^(NSError *error) {
                 
@@ -239,7 +245,13 @@
             DLog(@"dic-关注成功--%@",dic);
 //            cell.gzbtn.selected =YES;
             [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+            if (self.pageType==IS_SEARCH) {
+                cell.gzbtn.selected =YES;
+                cell.gzbtn.backgroundColor = [UIColor whiteColor];
+                cell.gzbtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+            }else{
             [self getInfo];
+            }
         } failure:^(NSError *error) {
             
         }];

@@ -280,7 +280,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:getImage(@"head_default")];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] placeholderImage:getImage(@"head_default")];
         return cell;
     }
     

@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nicknamelb;
 @property (weak, nonatomic) IBOutlet UIImageView *headerimageView;
 @property (weak, nonatomic) IBOutlet UIButton *gzbtn;
+@property (weak, nonatomic) IBOutlet UILabel *secondLb;
+
 - (IBAction)didClickGz:(id)sender;
 @property (nonatomic,assign)id<UserListCellGZDelegate>delegate;
 @end

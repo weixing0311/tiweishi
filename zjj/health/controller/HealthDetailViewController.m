@@ -126,11 +126,11 @@
             ((ClickItemNo >3&&ClickItemNo<7)&&indexPath.row==1)||
             (ClickItemNo>6&&indexPath.row==2))
         {
-            return 70+340;
+            return 90+340;
         }
         else
         {
-        return 70;
+        return 90;
         }
     }
 
@@ -377,7 +377,8 @@
              {
                  [[UserModel shareInstance]dismiss];
                  //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
-                 [self getIntegral];
+                 
+                [[UserModel shareInstance]didCompleteTheTaskWithId:@"7"];
                  break;
              }
              case SSDKResponseStateFail:
@@ -397,17 +398,6 @@
          }
      }];
     
-}
--(void)getIntegral
-{
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params setObject:@"7" forKey:@"taskId"];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
-    } failure:^(NSError *error) {
-        
-    }];
 }
 
 -(UIImage *)getImage

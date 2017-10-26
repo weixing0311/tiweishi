@@ -34,6 +34,11 @@
 #import "SDImageCache.h"
 #import "NSDate+CustomDate.h"
 #import "SDAutoLayout.h"
+#import "NSString+Eomji.h"
+
+
+
+
 //domain
 //正式
 //#define kMyBaseUrl @"https://mall.fitgeneral.com/"
@@ -50,6 +55,8 @@
 //天龙
 //#define kMyBaseUrl @"http://192.168.1.85:8989/"
 
+//老张
+//#define kMyBaseUrl @"http://192.168.1.64:8080/"
 
 
 

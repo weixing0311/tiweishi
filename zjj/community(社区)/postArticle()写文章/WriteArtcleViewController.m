@@ -538,7 +538,20 @@
         // NSLog(@"图片名字:%@",fileName);
     }
 }
-
+#pragma mark ---textView Delegate
+//-(void)textViewDidChange:(UITextView *)textView
+//{
+//
+//    BOOL flag=[NSString isContainsTwoEmoji:textView.text];
+//
+//    if (textView == self.textView) {
+//
+//        if (flag)
+//        {
+//            self.textView.text = [textView.text substringToIndex:textView.text.length -2];
+//        }
+//    }
+//}
 
 
 - (void)didReceiveMemoryWarning {

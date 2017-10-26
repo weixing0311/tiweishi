@@ -133,7 +133,7 @@
     NSString * fatBefore =[_infoDict safeObjectForKey:@"fatBefore"];
 
     if (indexPath.section ==0) {
-        return JFA_SCREEN_WIDTH/320*199;
+        return JFA_SCREEN_WIDTH*0.56;
     }
     else if(indexPath.section ==1)
     {
@@ -208,6 +208,7 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.delegate = self;
+        cell.headImageView.layer.cornerRadius = cell.headImageView.frame.size.height/2;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.headImageView sd_setBackgroundImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"defaultHead")
          ];
@@ -223,7 +224,7 @@
         }
         int  sex = [UserModel shareInstance].gender;
         if (sex ==1) {
-            cell.sexImageView.image = getImage(@"man");
+            cell.sexImageView.image = getImage(@"man_");
             
         }else{
             cell.sexImageView.image =getImage(@"woman_");
@@ -252,10 +253,18 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.beforeWeightlb.text = [NSString stringWithFormat:@"%.0fkg",[[_infoDict safeObjectForKey:@"beforeWeight"] floatValue]];
-        cell.afterweightlb.text = [NSString stringWithFormat:@"%.0fkg",[[_infoDict safeObjectForKey:@"afterWeight"] floatValue]];
+        cell.beforeWeightlb.text = [NSString stringWithFormat:@"%.1fkg",[[_infoDict safeObjectForKey:@"beforeWeight"] floatValue]];
+        cell.afterweightlb.text = [NSString stringWithFormat:@"%.1fkg",[[_infoDict safeObjectForKey:@"afterWeight"] floatValue]];
         cell.continuousDatelb.text = [NSString stringWithFormat:@"%@",[_infoDict safeObjectForKey:@"registerDate"]?[_infoDict safeObjectForKey:@"registerDate"]:@"0"];
-        cell.lossWeightlb.text = [NSString stringWithFormat:@"%.0f",[[_infoDict safeObjectForKey:@"beforeWeight"]floatValue]-[[_infoDict safeObjectForKey:@"afterWeight"]floatValue]];
+        
+        float lossWeight  = [[_infoDict safeObjectForKey:@"beforeWeight"]floatValue]-[[_infoDict safeObjectForKey:@"afterWeight"]floatValue];
+        
+        if (lossWeight>0) {
+            cell.afterweightlb.textColor = [UIColor greenColor];
+        }else{
+            cell.afterweightlb.textColor = [UIColor orangeColor];
+        }
+        cell.lossWeightlb.text = [NSString stringWithFormat:@"%.0f",lossWeight>0?lossWeight:0];
 
         return cell;
     }
@@ -343,7 +352,7 @@
     }else if(section ==2){
         return @"减脂前后";
     }else{
-        return @"最新动态";
+        return @"最新状态";
 
     }
 
@@ -478,6 +487,8 @@
         model.isFollow = @"1";
         PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
         currCell.gzBtn.selected =YES;
+        currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+
     } failure:^(NSError *error) {
         
     }];
@@ -520,12 +531,15 @@
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
         cell.zanImageView.image = getImage(@"praise");
-        
+        cell.zanCountlb.textColor = HEXCOLOR(0x666666);
+
     }else{
         model.isFabulous = @"1";
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
         cell.zanImageView.image = getImage(@"praise_Selected");
+        cell.zanCountlb.textColor = [UIColor orangeColor];
+
     }
     
 }
@@ -608,6 +622,8 @@
         model.isFollow = @"1";
         CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
         currCell.gzBtn.selected =YES;
+        currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+
     } failure:^(NSError *error) {
         
     }];
@@ -649,12 +665,15 @@
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount-1];
         cell.zanImageView.image = getImage(@"praise");
-        
+        cell.zanCountlb.textColor = HEXCOLOR(0x666666);
+
     }else{
         model.isFabulous = @"1";
         int zanCount = [cell.zanCountlb.text intValue];
         cell.zanCountlb.text = [NSString stringWithFormat:@"%d",zanCount+1];
         cell.zanImageView.image = getImage(@"praise_Selected");
+        cell.zanCountlb.textColor = [UIColor orangeColor];
+
     }
     
 }
@@ -727,8 +746,11 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"appintegraldeleteArticle=app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
+                [_dataArray removeObject:model];
+                [self.tableview reloadData];
+
             } failure:^(NSError *error) {
                 
             }];
@@ -860,6 +882,7 @@
                  {
                      [[UserModel shareInstance]dismiss];
                      //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"4"];
                      break;
                  }
                  case SSDKResponseStateFail:
@@ -1046,17 +1069,6 @@
     }];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    for (NSIndexPath * indexPath in [self.tableview indexPathsForVisibleRows]) {
-        if (indexPath.section ==3) {
-            CommunityModel * item = [_dataArray objectAtIndex:indexPath.row];
-            PublicArticleCell * cell = [self.tableview cellForRowAtIndexPath:indexPath];
-            [cell loadImagesWithItem:item];
-
-        }
-    }
-}
 -(void) shareWithType:(SSDKPlatformType)type
 {
     
@@ -1099,6 +1111,8 @@
                  {
                      [[UserModel shareInstance]dismiss];
                      //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+                     
+                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"6"];
                      break;
                  }
                  case SSDKResponseStateFail:
