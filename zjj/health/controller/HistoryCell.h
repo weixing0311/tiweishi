@@ -16,7 +16,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLb;
 @property (weak, nonatomic) IBOutlet UILabel *weightlb;
 @property (weak, nonatomic) IBOutlet UILabel *tzlLb;
-@property (weak, nonatomic) IBOutlet UIButton *showBtn;
+
+@property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
+@property (weak, nonatomic) IBOutlet UILabel *daysLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
 
 @property (weak, nonatomic) IBOutlet UILabel *value1lb;
@@ -54,7 +57,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *value13lb;
 
--(void)setInfoWithDict:(NSDictionary *)infoDict;
+-(void)setInfoWithDict:(NSDictionary *)infoDict isHidden:(BOOL)isHidden;
 
 @end
 @protocol historyCellDelegate <NSObject>

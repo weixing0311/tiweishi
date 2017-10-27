@@ -141,12 +141,7 @@
     }
     else if(indexPath.section==2)
     {
-        if (fatBefore.length>0)
-        {
-            return 250;
-        }else{
-            return 0;
-        }
+        return 250;
     }
 
     else
@@ -175,12 +170,7 @@
     }
     else if(section==2)
     {
-        if (fatBefore.length>0)
-        {
-            return 1;
-        }else{
-            return 0;
-        }
+        return 1;
     }
     else
     {
@@ -277,8 +267,8 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"before")];
-        [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"last")];
+        [cell.fatBeforeBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
+        [cell.fatAfterBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
         
         return cell;
         

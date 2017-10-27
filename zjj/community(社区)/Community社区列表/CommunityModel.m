@@ -113,7 +113,7 @@ static CommunityModel * imageModel;
         }
         else
         {
-            imageHeight = ((JFA_SCREEN_WIDTH-20)/3)*3;
+            imageHeight = ((JFA_SCREEN_WIDTH-40)/3)*3;
         }
     }
     return size.height+imageHeight+130;

@@ -21,19 +21,24 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sBv-3T-nHN">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="622"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hg2-BA-8Sh">
-                    <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                    <rect key="frame" x="0.0" y="622" width="375" height="45"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwR-aG-phE">
-                            <rect key="frame" x="0.0" y="0.0" width="187.5" height="60"/>
-                            <state key="normal" title="日历模式"/>
+                            <rect key="frame" x="0.0" y="0.0" width="187.5" height="45"/>
+                            <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="日历模式">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8M-Fw-VdX">
-                            <rect key="frame" x="187.5" y="0.0" width="187.5" height="60"/>
-                            <state key="normal" title="列表模式"/>
+                            <rect key="frame" x="187.5" y="0.0" width="187.5" height="45"/>
+                            <state key="normal" title="列表模式">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="didEnterShareListView:" destination="-1" eventType="touchUpInside" id="81y-Vk-Oem"/>
                             </connections>
@@ -47,7 +52,7 @@
                         <constraint firstAttribute="trailing" secondItem="r8M-Fw-VdX" secondAttribute="trailing" id="RHi-uP-fFS"/>
                         <constraint firstAttribute="bottom" secondItem="r8M-Fw-VdX" secondAttribute="bottom" id="ZM2-4P-zHl"/>
                         <constraint firstItem="nwR-aG-phE" firstAttribute="top" secondItem="hg2-BA-8Sh" secondAttribute="top" id="kLG-dQ-mbf"/>
-                        <constraint firstAttribute="height" constant="60" id="lEx-0b-wmy"/>
+                        <constraint firstAttribute="height" constant="45" id="lEx-0b-wmy"/>
                         <constraint firstItem="r8M-Fw-VdX" firstAttribute="top" secondItem="hg2-BA-8Sh" secondAttribute="top" id="sZB-yO-rPQ"/>
                         <constraint firstItem="r8M-Fw-VdX" firstAttribute="width" secondItem="nwR-aG-phE" secondAttribute="width" id="tgx-lN-AM7"/>
                     </constraints>

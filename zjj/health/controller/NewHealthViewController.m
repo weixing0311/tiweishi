@@ -10,7 +10,6 @@
 #import "HealthMainCell.h"
 #import "MeasurementInfoCell.h"
 #import "LoignViewController.h"
-#import "UserView.h"
 #import "UserCellCell.h"
 #import "UserListView.h"
 #import "ChangeUserInfoViewController.h"
@@ -24,7 +23,7 @@
 #import "HistoryInfoViewController.h"
 #import "HealthDetailViewController.h"
 #import "WeighingViewController.h"
-@interface NewHealthViewController ()<userListDelegate,userViewDelegate,healthMainDelegate,weightingDelegate>
+@interface NewHealthViewController ()<userListDelegate,healthMainDelegate,weightingDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
 @property (weak, nonatomic) IBOutlet UIButton *userHeaderView;
@@ -46,7 +45,6 @@
 @implementation NewHealthViewController
 {
     NSMutableArray * headerArr;
-    UserView *_userView;
     BOOL isrefresh;
     BOOL enterDetailPage;///称重完成后进去详情页面
 }
@@ -58,8 +56,8 @@
     self.tabBarController.tabBar.hidden = NO;
     [self refreshMyInfoView];
     
-    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
-    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
+//    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+//    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
     [self buildUserListView];
     [[UserModel shareInstance]getbalance];
     
@@ -220,8 +218,9 @@
 
 -(void)refreshMyInfoView
 {
-    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
-    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
+    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
+    
+//    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
 }
 
 -(void)refreshPcInfo
@@ -277,8 +276,10 @@
 {
     
     [self getHeaderInfo];
-    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
-    _userView.nameLabel.text =[SubUserItem shareInstance].nickname;
+    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
+
+//    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+//    _userView.nameLabel.text =[SubUserItem shareInstance].nickname;
     
 }
 

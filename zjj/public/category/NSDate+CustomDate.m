@@ -32,7 +32,6 @@
     [outputFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *string= [outputFormatter stringFromDate:self];
     return string;
-
 }
 -(NSString*)mmdd
 {

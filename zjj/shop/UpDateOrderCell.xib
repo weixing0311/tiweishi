@@ -27,10 +27,9 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9h-jB-YM4">
-                        <rect key="frame" x="95" y="15" width="0.0" height="20"/>
+                        <rect key="frame" x="95" y="15" width="205" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="GHa-eU-oeg"/>
-                            <constraint firstAttribute="width" priority="10" constant="200" id="pvJ-EI-wPI"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -84,6 +83,7 @@
                     <constraint firstItem="vIs-7A-nPT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="fyi-Jr-OcV"/>
                     <constraint firstItem="g6V-U2-Fh9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="15" id="gal-Nl-um4"/>
                     <constraint firstItem="YTq-gY-M7L" firstAttribute="top" secondItem="T9h-jB-YM4" secondAttribute="bottom" constant="2" id="gdz-Zz-Sjx"/>
+                    <constraint firstAttribute="trailing" secondItem="T9h-jB-YM4" secondAttribute="trailing" constant="20" id="ja2-mj-yfY"/>
                     <constraint firstItem="YTq-gY-M7L" firstAttribute="leading" secondItem="QEU-ii-jOl" secondAttribute="trailing" constant="10" id="kS2-Ni-W6M"/>
                     <constraint firstItem="QEU-ii-jOl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="o82-Kd-f4v"/>
                     <constraint firstAttribute="bottom" secondItem="QEU-ii-jOl" secondAttribute="bottom" constant="15" id="p8o-op-0Ej"/>

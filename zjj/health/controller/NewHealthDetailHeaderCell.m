@@ -20,9 +20,41 @@
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:getImage(@"head_default")];
     self.nicknamelb.text = [SubUserItem shareInstance].nickname;
     self.value1lb.text = [NSString stringWithFormat:@"身高:%d  年龄:%d",item.height,item.age];
-    self.value2lb.text = [NSString stringWithFormat:@"体型:%@  身体年龄:%d",@"偏胖型",item.bodyAge];
+    self.value2lb.text = [NSString stringWithFormat:@"体型:%@  身体年龄:%d",[self getBodyStatusWithLevel:item.weightLevel],item.bodyAge];
+    self.value2lb.adjustsFontSizeToFitWidth = YES;
 
 }
+
+-(NSString *)getBodyStatusWithLevel:(int)level
+{
+    switch (level) {
+        case 1:
+            return  [NSString stringWithFormat:@"偏瘦"];
+            break;
+        case 2:
+            return  [NSString stringWithFormat:@"正常"];
+            break;
+        case 3:
+            return   [NSString stringWithFormat:@"轻度肥胖"];
+            break;
+        case 4:
+            return  [NSString stringWithFormat:@"中度肥胖"];
+            break;
+        case 5:
+            return   [NSString stringWithFormat:@"重度肥胖"];
+            break;
+        case 6:
+            return   [NSString stringWithFormat:@"极度肥胖"];
+            break;
+        default:
+            return @"";
+            break;
+    }
+
+}
+
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

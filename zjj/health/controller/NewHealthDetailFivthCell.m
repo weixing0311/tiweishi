@@ -34,11 +34,9 @@
         self.value1Label.text = [NSString stringWithFormat:@"%.1f",item.bmi];
         self.status1Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
 
-
-        self.title2Label.text = @"骨骼肌";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneMuscleWeight];
-        self.status2Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE item:item];
-
+        self.title2Label.text = @"脂肪量";
+        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
+        self.status2Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
         
         self.title3Label.text = @"体脂率";
         self.value3Label.text = [NSString stringWithFormat:@"%.1f%%",item.fatPercentage];
@@ -49,20 +47,15 @@
         self.title1Label.text = @"蛋白质";
         self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
         self.status1Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
+        
+        self.title2Label.text = @"骨骼肌";
+        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneMuscleWeight];
+        self.status2Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE item:item];
 
-        self.title2Label.text = @"水分";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
-        self.status2Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        self.title3Label.text = @"水分";
+        self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
+        self.status3Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
 
-        
-        
-        
-        self.title3Label.text = @"脂肪量";
-        self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
-        self.status3Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
-
-        
-        
         
     }else{//肌肉  基础代谢  内脏脂肪
         

@@ -93,7 +93,7 @@
 //    [SVProgressHUD show];
     
     NSURLSessionTask * task = [manager POST:[NSString stringWithFormat:@"%@%@",[self JFADomin],url] parameters:paramters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        [SVProgressHUD dismiss];
+        [SVProgressHUD dismiss];
         NSDictionary * dic = [self dictionaryWithData:responseObject];
         
         NSString * statusStr =[dic safeObjectForKey:@"status"];

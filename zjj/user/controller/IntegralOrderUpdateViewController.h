@@ -7,9 +7,9 @@
 //
 
 #import "JFABaseTableViewController.h"
-
+#import "IntegralShopDetailModel.h"
 @interface IntegralOrderUpdateViewController : JFABaseTableViewController
-@property (nonatomic,strong) NSMutableDictionary * infoDict;
+@property (nonatomic,strong) IntegralShopDetailModel * model;
 @property (nonatomic,strong) NSMutableDictionary * param;
 @property (nonatomic,assign) int goodsCount;
 @property (nonatomic,copy) NSString * orderItem;

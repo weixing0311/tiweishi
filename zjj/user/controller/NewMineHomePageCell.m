@@ -15,6 +15,9 @@
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(changeBGiamgeViewImage)];
     tap.delegate= self;
     [self.bgImageView addGestureRecognizer:tap];
+    self.headImageView.layer.masksToBounds = YES;
+    self.headImageView.layer.cornerRadius = self.headImageView.frame.size.width/2;
+
     // Initialization code
 }
 -(void)changeBGiamgeViewImage

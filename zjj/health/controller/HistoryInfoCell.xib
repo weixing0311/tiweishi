@@ -19,14 +19,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dzq-AK-qKc">
-                        <rect key="frame" x="20" y="6.5" width="33" height="31"/>
+                        <rect key="frame" x="20" y="11.5" width="22" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="33" id="9wE-62-cnX"/>
-                            <constraint firstAttribute="height" constant="31" id="P5i-6V-yhb"/>
+                            <constraint firstAttribute="width" constant="22" id="9wE-62-cnX"/>
+                            <constraint firstAttribute="height" constant="21" id="P5i-6V-yhb"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxx-j5-0jq">
-                        <rect key="frame" x="63" y="13.5" width="80" height="18"/>
+                        <rect key="frame" x="52" y="13.5" width="80" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="rPf-O8-lmE"/>
                         </constraints>

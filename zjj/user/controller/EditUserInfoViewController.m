@@ -221,6 +221,7 @@
         }
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshHomePageInfo" object:nil];
+        [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
 
         [self.tableview reloadData];
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
@@ -280,7 +281,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] placeholderImage:getImage(@"head_default")];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:getImage(@"head_default")];
         return cell;
     }
     
@@ -291,8 +292,8 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.delegate= self;
-        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"before")];
-        [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"last")];
+        [cell.fatBeforeBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
+        [cell.fatAfterBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
         
         return cell;
         

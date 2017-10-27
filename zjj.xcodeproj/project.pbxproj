@@ -15,12 +15,11 @@
 		6C027F261F9F33B300556440 /* ArtcleDetailNumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C027F241F9F33B300556440 /* ArtcleDetailNumCell.xib */; };
 		6C027F391FA17E5300556440 /* NSString+Eomji.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F381FA17E5300556440 /* NSString+Eomji.m */; };
 		6C027F3C1FA1D87000556440 /* ArtcleZanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F3B1FA1D87000556440 /* ArtcleZanViewController.m */; };
+		6C027F3F1FA2BF1900556440 /* IntegralShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F3E1FA2BF1900556440 /* IntegralShopDetailViewController.m */; };
+		6C027F421FA2C0A400556440 /* IntegralShopDetailContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F411FA2C0A400556440 /* IntegralShopDetailContentCell.m */; };
+		6C027F451FA2C11500556440 /* IntegralShopDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C027F441FA2C11500556440 /* IntegralShopDetailModel.m */; };
 		6C0F287E1F7267BF00FD27FF /* GrowthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0F287C1F7267BF00FD27FF /* GrowthCell.m */; };
 		6C0F287F1F7267BF00FD27FF /* GrowthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C0F287D1F7267BF00FD27FF /* GrowthCell.xib */; };
-		6C0F28831F72731B00FD27FF /* IntegralDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0F28811F72731B00FD27FF /* IntegralDetailHeaderCell.m */; };
-		6C0F28841F72731B00FD27FF /* IntegralDetailHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C0F28821F72731B00FD27FF /* IntegralDetailHeaderCell.xib */; };
-		6C0F28881F734E4D00FD27FF /* IntegralDetailTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C0F28861F734E4D00FD27FF /* IntegralDetailTextCell.m */; };
-		6C0F28891F734E4D00FD27FF /* IntegralDetailTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C0F28871F734E4D00FD27FF /* IntegralDetailTextCell.xib */; };
 		6C125E0D1F39AA6F00B2323F /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C125E0A1F39AA6F00B2323F /* NSArray+Extension.m */; };
 		6C125E0E1F39AA6F00B2323F /* NSDictionary+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C125E0C1F39AA6F00B2323F /* NSDictionary+Extension.m */; };
 		6C125E171F41455700B2323F /* BaseWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C125E161F41455700B2323F /* BaseWebViewController.m */; };
@@ -95,8 +94,6 @@
 		6C2AF24B1F71108B00C00F2A /* IntegralShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF2491F71108B00C00F2A /* IntegralShopViewController.xib */; };
 		6C2AF24F1F7111E400C00F2A /* integralShopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2AF24D1F7111E400C00F2A /* integralShopCell.m */; };
 		6C2AF2501F7111E400C00F2A /* integralShopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF24E1F7111E400C00F2A /* integralShopCell.xib */; };
-		6C2AF2561F71F96700C00F2A /* NewMineIntegralShopDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2AF2541F71F96700C00F2A /* NewMineIntegralShopDetailViewController.m */; };
-		6C2AF2571F71F96700C00F2A /* NewMineIntegralShopDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF2551F71F96700C00F2A /* NewMineIntegralShopDetailViewController.xib */; };
 		6C2AF25C1F71F9FC00C00F2A /* GrowthStstemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2AF25A1F71F9FC00C00F2A /* GrowthStstemViewController.m */; };
 		6C2AF25D1F71F9FC00C00F2A /* GrowthStstemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF25B1F71F9FC00C00F2A /* GrowthStstemViewController.xib */; };
 		6C2AF2601F71FA3800C00F2A /* GrowthHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2AF25F1F71FA3800C00F2A /* GrowthHeaderView.m */; };
@@ -254,8 +251,6 @@
 		6C6CFE9B1F8F771E005C2738 /* HistoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE9A1F8F771E005C2738 /* HistoryHeaderView.xib */; };
 		6C6CFE9F1F8F7AC7005C2738 /* HistoryInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFE9D1F8F7AC7005C2738 /* HistoryInfoCell.m */; };
 		6C6CFEA01F8F7AC7005C2738 /* HistoryInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFE9E1F8F7AC7005C2738 /* HistoryInfoCell.xib */; };
-		6C6CFEAB1F904E60005C2738 /* HistoryBigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEA91F904E60005C2738 /* HistoryBigCell.m */; };
-		6C6CFEAC1F904E60005C2738 /* HistoryBigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFEAA1F904E60005C2738 /* HistoryBigCell.xib */; };
 		6C6CFEB61F908C5A005C2738 /* HealthDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEB41F908C5A005C2738 /* HealthDetailViewController.m */; };
 		6C6CFEBC1F908D10005C2738 /* NewHealthDetailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CFEBA1F908D10005C2738 /* NewHealthDetailHeaderCell.m */; };
 		6C6CFEBD1F908D10005C2738 /* NewHealthDetailHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6CFEBB1F908D10005C2738 /* NewHealthDetailHeaderCell.xib */; };
@@ -336,7 +331,6 @@
 		6CA024C21F19021C00F54DF3 /* AddSubUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA024C01F19021C00F54DF3 /* AddSubUserCell.xib */; };
 		6CA024C51F19BA3400F54DF3 /* SubProjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA024C41F19BA3400F54DF3 /* SubProjectItem.m */; };
 		6CA024C81F19DBA100F54DF3 /* YMSocketUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA024C71F19DBA100F54DF3 /* YMSocketUtils.m */; };
-		6CA706B51F9F1C1200415071 /* IntegralDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA706B41F9F1C1200415071 /* IntegralDetailModel.m */; };
 		6CA9C8391F78B49300E0941B /* IntegralOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA9C8371F78B49300E0941B /* IntegralOrderDetailViewController.m */; };
 		6CA9C83A1F78B49300E0941B /* IntegralOrderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA9C8381F78B49300E0941B /* IntegralOrderDetailViewController.xib */; };
 		6CB7508C1F73942E007BAE04 /* NewMineHomePageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB7508A1F73942E007BAE04 /* NewMineHomePageCell.m */; };
@@ -851,15 +845,15 @@
 		6C027F381FA17E5300556440 /* NSString+Eomji.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Eomji.m"; sourceTree = "<group>"; };
 		6C027F3A1FA1D87000556440 /* ArtcleZanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtcleZanViewController.h; sourceTree = "<group>"; };
 		6C027F3B1FA1D87000556440 /* ArtcleZanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArtcleZanViewController.m; sourceTree = "<group>"; };
+		6C027F3D1FA2BF1900556440 /* IntegralShopDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopDetailViewController.h; sourceTree = "<group>"; };
+		6C027F3E1FA2BF1900556440 /* IntegralShopDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralShopDetailViewController.m; sourceTree = "<group>"; };
+		6C027F401FA2C0A400556440 /* IntegralShopDetailContentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopDetailContentCell.h; sourceTree = "<group>"; };
+		6C027F411FA2C0A400556440 /* IntegralShopDetailContentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralShopDetailContentCell.m; sourceTree = "<group>"; };
+		6C027F431FA2C11500556440 /* IntegralShopDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralShopDetailModel.h; sourceTree = "<group>"; };
+		6C027F441FA2C11500556440 /* IntegralShopDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralShopDetailModel.m; sourceTree = "<group>"; };
 		6C0F287B1F7267BF00FD27FF /* GrowthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowthCell.h; sourceTree = "<group>"; };
 		6C0F287C1F7267BF00FD27FF /* GrowthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowthCell.m; sourceTree = "<group>"; };
 		6C0F287D1F7267BF00FD27FF /* GrowthCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GrowthCell.xib; sourceTree = "<group>"; };
-		6C0F28801F72731B00FD27FF /* IntegralDetailHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegralDetailHeaderCell.h; sourceTree = "<group>"; };
-		6C0F28811F72731B00FD27FF /* IntegralDetailHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegralDetailHeaderCell.m; sourceTree = "<group>"; };
-		6C0F28821F72731B00FD27FF /* IntegralDetailHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntegralDetailHeaderCell.xib; sourceTree = "<group>"; };
-		6C0F28851F734E4D00FD27FF /* IntegralDetailTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegralDetailTextCell.h; sourceTree = "<group>"; };
-		6C0F28861F734E4D00FD27FF /* IntegralDetailTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegralDetailTextCell.m; sourceTree = "<group>"; };
-		6C0F28871F734E4D00FD27FF /* IntegralDetailTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntegralDetailTextCell.xib; sourceTree = "<group>"; };
 		6C125E091F39AA6F00B2323F /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
 		6C125E0A1F39AA6F00B2323F /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
 		6C125E0B1F39AA6F00B2323F /* NSDictionary+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Extension.h"; sourceTree = "<group>"; };
@@ -990,9 +984,6 @@
 		6C2AF24C1F7111E400C00F2A /* integralShopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = integralShopCell.h; sourceTree = "<group>"; };
 		6C2AF24D1F7111E400C00F2A /* integralShopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = integralShopCell.m; sourceTree = "<group>"; };
 		6C2AF24E1F7111E400C00F2A /* integralShopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = integralShopCell.xib; sourceTree = "<group>"; };
-		6C2AF2531F71F96700C00F2A /* NewMineIntegralShopDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMineIntegralShopDetailViewController.h; sourceTree = "<group>"; };
-		6C2AF2541F71F96700C00F2A /* NewMineIntegralShopDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMineIntegralShopDetailViewController.m; sourceTree = "<group>"; };
-		6C2AF2551F71F96700C00F2A /* NewMineIntegralShopDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewMineIntegralShopDetailViewController.xib; sourceTree = "<group>"; };
 		6C2AF2591F71F9FC00C00F2A /* GrowthStstemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowthStstemViewController.h; sourceTree = "<group>"; };
 		6C2AF25A1F71F9FC00C00F2A /* GrowthStstemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowthStstemViewController.m; sourceTree = "<group>"; };
 		6C2AF25B1F71F9FC00C00F2A /* GrowthStstemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GrowthStstemViewController.xib; sourceTree = "<group>"; };
@@ -1254,9 +1245,6 @@
 		6C6CFE9E1F8F7AC7005C2738 /* HistoryInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryInfoCell.xib; sourceTree = "<group>"; };
 		6C6CFEA61F904B2A005C2738 /* blackback_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackback_@2x.png"; sourceTree = "<group>"; };
 		6C6CFEA71F904B2A005C2738 /* blackback_@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackback_@3x.png"; sourceTree = "<group>"; };
-		6C6CFEA81F904E60005C2738 /* HistoryBigCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryBigCell.h; sourceTree = "<group>"; };
-		6C6CFEA91F904E60005C2738 /* HistoryBigCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryBigCell.m; sourceTree = "<group>"; };
-		6C6CFEAA1F904E60005C2738 /* HistoryBigCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryBigCell.xib; sourceTree = "<group>"; };
 		6C6CFEB31F908C5A005C2738 /* HealthDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HealthDetailViewController.h; sourceTree = "<group>"; };
 		6C6CFEB41F908C5A005C2738 /* HealthDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealthDetailViewController.m; sourceTree = "<group>"; };
 		6C6CFEB91F908D10005C2738 /* NewHealthDetailHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewHealthDetailHeaderCell.h; sourceTree = "<group>"; };
@@ -1381,8 +1369,6 @@
 		6CA024C41F19BA3400F54DF3 /* SubProjectItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubProjectItem.m; sourceTree = "<group>"; };
 		6CA024C61F19DBA100F54DF3 /* YMSocketUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMSocketUtils.h; sourceTree = "<group>"; };
 		6CA024C71F19DBA100F54DF3 /* YMSocketUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMSocketUtils.m; sourceTree = "<group>"; };
-		6CA706B31F9F1C1200415071 /* IntegralDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralDetailModel.h; sourceTree = "<group>"; };
-		6CA706B41F9F1C1200415071 /* IntegralDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralDetailModel.m; sourceTree = "<group>"; };
 		6CA9C8361F78B49300E0941B /* IntegralOrderDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralOrderDetailViewController.h; sourceTree = "<group>"; };
 		6CA9C8371F78B49300E0941B /* IntegralOrderDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralOrderDetailViewController.m; sourceTree = "<group>"; };
 		6CA9C8381F78B49300E0941B /* IntegralOrderDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntegralOrderDetailViewController.xib; sourceTree = "<group>"; };
@@ -2851,17 +2837,12 @@
 		6C2AF2521F71F94100C00F2A /* detail(详情) */ = {
 			isa = PBXGroup;
 			children = (
-				6C2AF2531F71F96700C00F2A /* NewMineIntegralShopDetailViewController.h */,
-				6C2AF2541F71F96700C00F2A /* NewMineIntegralShopDetailViewController.m */,
-				6C2AF2551F71F96700C00F2A /* NewMineIntegralShopDetailViewController.xib */,
-				6C0F28801F72731B00FD27FF /* IntegralDetailHeaderCell.h */,
-				6C0F28811F72731B00FD27FF /* IntegralDetailHeaderCell.m */,
-				6C0F28821F72731B00FD27FF /* IntegralDetailHeaderCell.xib */,
-				6C0F28851F734E4D00FD27FF /* IntegralDetailTextCell.h */,
-				6C0F28861F734E4D00FD27FF /* IntegralDetailTextCell.m */,
-				6C0F28871F734E4D00FD27FF /* IntegralDetailTextCell.xib */,
-				6CA706B31F9F1C1200415071 /* IntegralDetailModel.h */,
-				6CA706B41F9F1C1200415071 /* IntegralDetailModel.m */,
+				6C027F3D1FA2BF1900556440 /* IntegralShopDetailViewController.h */,
+				6C027F3E1FA2BF1900556440 /* IntegralShopDetailViewController.m */,
+				6C027F401FA2C0A400556440 /* IntegralShopDetailContentCell.h */,
+				6C027F411FA2C0A400556440 /* IntegralShopDetailContentCell.m */,
+				6C027F431FA2C11500556440 /* IntegralShopDetailModel.h */,
+				6C027F441FA2C11500556440 /* IntegralShopDetailModel.m */,
 			);
 			name = "detail(详情)";
 			sourceTree = "<group>";
@@ -3306,9 +3287,6 @@
 				6C6CFE9C1F8F7AC7005C2738 /* HistoryInfoCell.h */,
 				6C6CFE9D1F8F7AC7005C2738 /* HistoryInfoCell.m */,
 				6C6CFE9E1F8F7AC7005C2738 /* HistoryInfoCell.xib */,
-				6C6CFEA81F904E60005C2738 /* HistoryBigCell.h */,
-				6C6CFEA91F904E60005C2738 /* HistoryBigCell.m */,
-				6C6CFEAA1F904E60005C2738 /* HistoryBigCell.xib */,
 				6C005FD31F983A7200C9E37C /* HistoryCell.h */,
 				6C005FD41F983A7200C9E37C /* HistoryCell.m */,
 				6C005FD51F983A7200C9E37C /* HistoryCell.xib */,
@@ -4746,7 +4724,6 @@
 				6CFDEC551F8B7DE8005D3971 /* home-weight01@2x.png in Resources */,
 				6CFDECCC1F8B7DE8005D3971 /* scan@3x.png in Resources */,
 				6CFDEC241F8B7DE7005D3971 /* footer-PersonalCenter@2x.png in Resources */,
-				6C6CFEAC1F904E60005C2738 /* HistoryBigCell.xib in Resources */,
 				6CFDEC471F8B7DE8005D3971 /* help-icon09@3x.png in Resources */,
 				6CFDEC151F8B7DE7005D3971 /* fang-7@3x.png in Resources */,
 				6CC81FD31F1FA0E200EB470C /* DistributionBottomCell.xib in Resources */,
@@ -4801,7 +4778,6 @@
 				6CFDEBCA1F8B7DE7005D3971 /* arrow-right@3x.png in Resources */,
 				6C1DBD9B1F67BC3F00F5B975 /* CardView.xib in Resources */,
 				6CDBC3ED1F4E67E90059A15E /* PaySuccessViewController.xib in Resources */,
-				6C0F28891F734E4D00FD27FF /* IntegralDetailTextCell.xib in Resources */,
 				6CFDECA11F8B7DE8005D3971 /* personal-myOder-icon@3x.png in Resources */,
 				6CFDEC3C1F8B7DE7005D3971 /* help-icon04@2x.png in Resources */,
 				6CFDEC971F8B7DE8005D3971 /* person-xiao.png in Resources */,
@@ -4836,7 +4812,6 @@
 				6CFDECB71F8B7DE8005D3971 /* record-chong@2x.png in Resources */,
 				6CB7508D1F73942E007BAE04 /* NewMineHomePageCell.xib in Resources */,
 				6CFDEBDA1F8B7DE7005D3971 /* bodyfat_team_1.png in Resources */,
-				6C0F28841F72731B00FD27FF /* IntegralDetailHeaderCell.xib in Resources */,
 				6CFDECB61F8B7DE8005D3971 /* reCodeS@3x.png in Resources */,
 				6CFDEBE61F8B7DE7005D3971 /* busnessCard_default.png in Resources */,
 				6CFDEC421F8B7DE8005D3971 /* help-icon07@2x.png in Resources */,
@@ -4870,7 +4845,6 @@
 				6CFDECE91F8B7DE8005D3971 /* write@3x.png in Resources */,
 				6C2AF2391F71081E00C00F2A /* NewMineRelationsCell.xib in Resources */,
 				6C363A1E1F05098A00268851 /* TZSOrderDetailViewController.xib in Resources */,
-				6C2AF2571F71F96700C00F2A /* NewMineIntegralShopDetailViewController.xib in Resources */,
 				6C2241B41F7DE43C001BB2FD /* CommunityCell.xib in Resources */,
 				6CFDEC4A1F8B7DE8005D3971 /* help-icon11@2x.png in Resources */,
 				6CFDEC9A1F8B7DE8005D3971 /* personal-help-icon@2x.png in Resources */,
@@ -5190,7 +5164,6 @@
 				6CD010D61EF62BC500FB9419 /* AddressListCell.m in Sources */,
 				6CFDE7FA1F8B539D005D3971 /* ArtcleDetaileImageCell.m in Sources */,
 				6CA0249F1F12544F00F54DF3 /* HealthDetailSelectedCell.m in Sources */,
-				6C2AF2561F71F96700C00F2A /* NewMineIntegralShopDetailViewController.m in Sources */,
 				6CD011451EF8CE4400FB9419 /* OrderHeader.m in Sources */,
 				6C3639901EFE47E100268851 /* AAOptions.m in Sources */,
 				6CD0108E1EF3FA2C00FB9419 /* HealthModel.m in Sources */,
@@ -5210,7 +5183,6 @@
 				6CCEEB211EEE7F56002E1618 /* HomePageViewController.m in Sources */,
 				6C36397A1EFE47E100268851 /* AAChartView.m in Sources */,
 				6CC81FD21F1FA0E200EB470C /* DistributionBottomCell.m in Sources */,
-				6CA706B51F9F1C1200415071 /* IntegralDetailModel.m in Sources */,
 				6C9980F31F9EDD4200FC57E8 /* TZTestCell.m in Sources */,
 				6C6CFE9F1F8F7AC7005C2738 /* HistoryInfoCell.m in Sources */,
 				6C3639841EFE47E100268851 /* AAAnimation.m in Sources */,
@@ -5251,7 +5223,6 @@
 				6C8F53C51F11D38A00C7A275 /* UIImage+LocalImage.m in Sources */,
 				6C3639911EFE47E100268851 /* AAOptions3d.m in Sources */,
 				6C6CFE751F8F3D37005C2738 /* NewHealthViewController.m in Sources */,
-				6C0F28831F72731B00FD27FF /* IntegralDetailHeaderCell.m in Sources */,
 				6CF778CF1F565DF60002BDC7 /* NSString+Password.m in Sources */,
 				6CD010F91EF7FBED00FB9419 /* DetailCxCell.m in Sources */,
 				6CD19FAC1F74FB4700DF1289 /* GuanZViewController.m in Sources */,
@@ -5260,7 +5231,6 @@
 				6C3639061EFD099500268851 /* TZSChangeMobileViewController.m in Sources */,
 				6C125E0D1F39AA6F00B2323F /* NSArray+Extension.m in Sources */,
 				6C3639EE1F035A5B00268851 /* TZSSendCell.m in Sources */,
-				6C6CFEAB1F904E60005C2738 /* HistoryBigCell.m in Sources */,
 				6C125E0E1F39AA6F00B2323F /* NSDictionary+Extension.m in Sources */,
 				6C3639D31F029B7C00268851 /* OrderFootBtnView.m in Sources */,
 				6C3639991EFE47E100268851 /* AASubtitle.m in Sources */,
@@ -5284,6 +5254,7 @@
 				6CEDADF61F74A9F000D3C223 /* IntegralOrderUpdateViewController.m in Sources */,
 				6C3639131EFD0BD300268851 /* ChangeJYpasswordViewController.m in Sources */,
 				6CD0109B1EF4D42000FB9419 /* HealthDetailsItem.m in Sources */,
+				6C027F451FA2C11500556440 /* IntegralShopDetailModel.m in Sources */,
 				6C43113E1F06527C0094EFF4 /* jzsSchoolWebViewController.m in Sources */,
 				6C1B2B581EECDE350092AAF0 /* main.m in Sources */,
 				6C2AF2291F7102B300C00F2A /* NewMineViewController.m in Sources */,
@@ -5363,6 +5334,7 @@
 				6C2AF26C1F71FFC200C00F2A /* IntegralOrderCell.m in Sources */,
 				6CD010C61EF5547F00FB9419 /* ShopCarCell.m in Sources */,
 				6CD010B21EF52BDD00FB9419 /* BannerItem.m in Sources */,
+				6C027F421FA2C0A400556440 /* IntegralShopDetailContentCell.m in Sources */,
 				6C6CFE6F1F8F165C005C2738 /* GrowthStstemHeaderCell.m in Sources */,
 				6C36398A1EFE47E100268851 /* AADataLabels.m in Sources */,
 				6CD010E11EF655D600FB9419 /* BDBankCardViewController.m in Sources */,
@@ -5407,6 +5379,7 @@
 				6C73AF771F2F04510042C1A2 /* UINavigationController+CustomNavigationCotroller.m in Sources */,
 				6CD010681EF375B900FB9419 /* UserSubManager.m in Sources */,
 				6CDBC3EC1F4E67E90059A15E /* PaySuccessViewController.m in Sources */,
+				6C027F3F1FA2BF1900556440 /* IntegralShopDetailViewController.m in Sources */,
 				6CCEEB4D1EEF8B0A002E1618 /* BTManager.m in Sources */,
 				6CD0106F1EF3B9DE00FB9419 /* RSA.m in Sources */,
 				6CB750981F749C80007BAE04 /* PostArticleViewController.m in Sources */,
@@ -5420,7 +5393,6 @@
 				6CD92FCF1F0A223200D7989E /* UserCellCell.m in Sources */,
 				6CA024AF1F14C01700F54DF3 /* ChangPasswordViewController.m in Sources */,
 				6C73AF6E1F29D7610042C1A2 /* PayPriceCell.m in Sources */,
-				6C0F28881F734E4D00FD27FF /* IntegralDetailTextCell.m in Sources */,
 				6C6CFED51F909E32005C2738 /* NewHealthDetailSixCell.m in Sources */,
 				6CFDE8081F8B547B005D3971 /* CommentView.m in Sources */,
 				6CD9300B1F0B984100D7989E /* ShareBottomView.m in Sources */,
@@ -5605,7 +5577,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = zjj/zjj.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing 1001 Technology Co., Ltd. (AZ8E9LFA87)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ko55275679@sina.com (JAKQCD3UAQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AZ8E9LFA87;
@@ -5633,7 +5605,12 @@
 				INFOPLIST_FILE = zjj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/zjj/vender/SDK/ShareSDK/Support/PlatformSDK/WeChatSDK",
+					"$(inherited)",
+					"$(PROJECT_DIR)/zjj/vender/ShareSDK/libraries/extends/WeChatSDK",
+					"$(PROJECT_DIR)/zjj/vender/SDK/ShareSDK/Support/PlatformSDK/APSocialSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.hguard.tiweishi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

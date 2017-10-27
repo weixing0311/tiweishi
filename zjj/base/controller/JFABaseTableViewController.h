@@ -59,4 +59,7 @@
  * 设置segment的样式为白色背景只修改字体颜色
  */
 -(void)ChangeMySegmentStyle:(UISegmentedControl*)segment;
+
+-(NSString*)DataTOjsonString:(id)object;
+
 @end

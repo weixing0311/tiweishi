@@ -23,6 +23,26 @@
     self.titleLabel.text = item.productName;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[item.productPrice floatValue]];
 }
+-(void)setUpInfoWithIntegralDetailModel:(IntegralShopDetailModel *)model
+{
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:model.picture]];
+    self.titleLabel.text = model.viceTitle;
+
+    NSString * price = model.productPrice;
+    NSString * integral = model.productIntegral;
+    
+    if (price.floatValue>0&&integral.intValue>0) {
+        self.priceLabel.text = [NSString stringWithFormat:@"%@积分+%.2f元",integral,[price floatValue]];
+        
+    }else{
+        if (price.floatValue>0) {
+            self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[price floatValue]];
+        }else{
+            self.priceLabel.text = [NSString stringWithFormat:@"%@积分",integral];
+        }
+    }
+
+}
 -(void)setUpCellWithDict:(NSDictionary *)dic
 {
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]]];

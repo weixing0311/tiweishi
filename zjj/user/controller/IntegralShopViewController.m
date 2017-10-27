@@ -9,7 +9,7 @@
 #import "IntegralShopViewController.h"
 #import "integralShopCell.h"
 #import "IntegralOrderViewController.h"
-#import "NewMineIntegralShopDetailViewController.h"
+#import "IntegralShopDetailViewController.h"
 @interface IntegralShopViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
@@ -194,7 +194,7 @@
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-    NewMineIntegralShopDetailViewController * nmd = [[NewMineIntegralShopDetailViewController alloc]init];
+    IntegralShopDetailViewController * nmd = [[IntegralShopDetailViewController alloc]init];
     nmd.productNo = [dic safeObjectForKey:@"productNo"];
     [self.navigationController pushViewController:nmd animated:YES];
 }

@@ -36,7 +36,6 @@
 {
     self = [super init];
     if (self) {
-        self.infoDict =[NSMutableDictionary dictionary];
         self.param = [NSMutableDictionary dictionary];
     }
     return self;
@@ -55,19 +54,19 @@
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self getDefaultAddressFromNet];
-    NSString * priceStr = [_infoDict safeObjectForKey:@"productPrice"];
+    NSString * priceStr = self.model.productPrice;
 
-    NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
+    NSString * integral = self.model.productIntegral;
     if (integral.intValue>0&&priceStr.floatValue>0) {
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：%@积分+%.2f元",integral,[priceStr floatValue]];
+        self.priceLabel.text =[NSString stringWithFormat:@"实付款：%d积分+%.2f元",[integral intValue]*self.goodsCount,[priceStr floatValue]*self.goodsCount];
         
 
     }else{
         if (integral.intValue>0) {
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%@积分",integral];
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%d积分",[integral intValue]*self.goodsCount ];
 
         }else{
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%.2f元",[priceStr floatValue]];
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：%.2f元",[priceStr floatValue]*self.goodsCount];
         }
 
     }
@@ -95,7 +94,7 @@
         [addressDict setDictionary:[dic objectForKey:@"data"]];
         [self.tableview reloadData];
         
-        NSString * isWarehouseSend = [self.infoDict safeObjectForKey:@"isWarehouseSend"];
+        NSString * isWarehouseSend = self.model.isWarehouseSend;
         if (isWarehouseSend&&![isWarehouseSend isEqualToString:@"0"]) {
             [self getwarehousingWithproviceId:[addressDict safeObjectForKey:@"provinceId"]];
 
@@ -136,7 +135,7 @@
     
     NSMutableArray * arr=[NSMutableArray array];
     
-    NSString *  productNo  =[self.infoDict objectForKey:@"productNo"] ;
+    NSString *  productNo  =self.model.productNo ;
     NSString * quantity = [NSString stringWithFormat:@"%d",self.goodsCount];
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
@@ -196,8 +195,7 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        
-        [cell setUpCellWithDict:self.infoDict];
+        [cell setUpInfoWithIntegralDetailModel:self.model];
         cell.countLabel.text = [NSString stringWithFormat:@"x%d",self.goodsCount];
         return cell;
         
@@ -221,18 +219,18 @@
         cell.detailTextLabel.textColor =[UIColor redColor];
         if (indexPath.row ==0) {
             cell.textLabel.text = @"商品金额";
-            NSString * priceStr = [self.infoDict safeObjectForKey:@"productPrice"];
-            NSString * integral = [self.infoDict safeObjectForKey:@"productIntegral"];
+            NSString * priceStr = self.model.productPrice;
+            NSString * integral = self.model.productIntegral;
             if (integral.intValue>0&&priceStr.floatValue>0) {
-                cell.detailTextLabel.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];
+                cell.detailTextLabel.text =[NSString stringWithFormat:@"%d积分+%.2f元",[integral intValue] *_goodsCount,[priceStr floatValue]*_goodsCount];
                 
                 
             }else{
                 if (integral.intValue>0) {
-                    cell.detailTextLabel.text =[NSString stringWithFormat:@"%@积分",integral];
+                    cell.detailTextLabel.text =[NSString stringWithFormat:@"%d积分",[integral intValue]];
                     
                 }else{
-                    cell.detailTextLabel.text =[NSString stringWithFormat:@"%.2f元",[priceStr floatValue]];
+                    cell.detailTextLabel.text =[NSString stringWithFormat:@"%.2f元",[priceStr floatValue]*_goodsCount];
                 }
                 
             }
@@ -300,12 +298,12 @@
     [self.param safeSetObject:[addressDict safeObjectForKey:@"countyId"] forKey:@"county"];
     
     
-    [self.param safeSetObject:[self.infoDict safeObjectForKey:@"productPrice"] forKey:@"totalPrice"];
-    [self.param safeSetObject:[self.infoDict safeObjectForKey:@"productPrice"] forKey:@"payableAmount"];
+    [self.param safeSetObject:@([self.model.productPrice floatValue]*self.goodsCount) forKey:@"totalPrice"];
+    [self.param safeSetObject:@([self.model.productPrice floatValue]*self.goodsCount) forKey:@"payableAmount"];
     
     [self.param safeSetObject:warehouseNo forKey:@"warehouseNo"];
     
-    [self.param safeSetObject:[self.infoDict safeObjectForKey:@"productIntegral"] forKey:@"integral"];
+    [self.param safeSetObject:@([self.model.productIntegral intValue]*self.goodsCount) forKey:@"integral"];
     
     
     DLog(@"上传数据---%@",self.param);

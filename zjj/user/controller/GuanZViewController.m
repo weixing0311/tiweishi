@@ -33,6 +33,8 @@
 
     self.tableview.delegate =self;
     self.tableview.dataSource =self;
+    self.tableview.separatorColor = HEXCOLOR(0xeeeeee);
+    self.tableview.backgroundColor = HEXCOLOR(0xeeeeee);
     [self setExtraCellLineHiddenWithTb:self.tableview];
     pageSize = 30;
     _dataArray = [NSMutableArray array];

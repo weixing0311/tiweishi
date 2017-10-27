@@ -57,9 +57,10 @@
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.nameTF.text forKey:@"userName"];
     [param setObject:[NSString encryptString: self.sfzTf.text] forKey:@"userCode"];
-//    [SVProgressHUD showWithStatus: @"认证中。。"];
+    [SVProgressHUD showWithStatus: @"认证中。。"];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
+    
     self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" paramters:param success:^(NSDictionary *dic) {
         
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];

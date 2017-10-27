@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GoodsDetailItem.h"
 #import "shopCarCellItem.h"
+#import "IntegralShopDetailModel.h"
 @interface UpDateOrderCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -22,5 +23,6 @@
 
 -(void)setUpCellWithGoodsDetailItem:(GoodsDetailItem *)item;
 -(void)setUpCellWithShopCarCellItem:(shopCarCellItem *)item;
+-(void)setUpInfoWithIntegralDetailModel:(IntegralShopDetailModel *)model;
 -(void)setUpCellWithDict:(NSDictionary *)dic;
 @end

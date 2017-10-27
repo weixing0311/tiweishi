@@ -30,8 +30,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yik-Yb-mRQ">
-                    <rect key="frame" x="20" y="120" width="335" height="188"/>
+                    <rect key="frame" x="20" y="120" width="335" height="167.5"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="levelSM_" translatesAutoresizingMaskIntoConstraints="NO" id="iZr-aI-eO6">
+                            <rect key="frame" x="0.0" y="0.0" width="335" height="167.5"/>
+                        </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="还差10积分升级到LV2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EfH-QV-Xgv">
                             <rect key="frame" x="20" y="42" width="295" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -384,14 +387,17 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="0.040391710070000003" blue="0.059190538190000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="EfH-QV-Xgv" firstAttribute="centerX" secondItem="yik-Yb-mRQ" secondAttribute="centerX" id="0a1-hI-WQs"/>
-                        <constraint firstAttribute="width" secondItem="yik-Yb-mRQ" secondAttribute="height" multiplier="25:14" id="GEp-Ms-CIp"/>
+                        <constraint firstItem="iZr-aI-eO6" firstAttribute="top" secondItem="yik-Yb-mRQ" secondAttribute="top" id="3t0-Sf-NFO"/>
+                        <constraint firstItem="iZr-aI-eO6" firstAttribute="leading" secondItem="yik-Yb-mRQ" secondAttribute="leading" id="B8L-2J-jbf"/>
+                        <constraint firstAttribute="width" secondItem="yik-Yb-mRQ" secondAttribute="height" multiplier="2:1" id="GEp-Ms-CIp"/>
                         <constraint firstItem="itL-fp-cmB" firstAttribute="top" secondItem="EfH-QV-Xgv" secondAttribute="bottom" id="KJS-kp-tHo"/>
                         <constraint firstItem="itL-fp-cmB" firstAttribute="leading" secondItem="yik-Yb-mRQ" secondAttribute="leading" id="aE7-nE-L3w"/>
                         <constraint firstAttribute="trailing" secondItem="EfH-QV-Xgv" secondAttribute="trailing" constant="20" id="cOh-zR-hmj"/>
+                        <constraint firstAttribute="trailing" secondItem="iZr-aI-eO6" secondAttribute="trailing" id="gFf-fD-U6o"/>
                         <constraint firstItem="EfH-QV-Xgv" firstAttribute="top" secondItem="yik-Yb-mRQ" secondAttribute="top" constant="42" id="ibw-QQ-Jyt"/>
+                        <constraint firstAttribute="bottom" secondItem="iZr-aI-eO6" secondAttribute="bottom" id="jvB-ik-fvL"/>
                         <constraint firstAttribute="trailing" secondItem="itL-fp-cmB" secondAttribute="trailing" id="qKC-DF-cQM"/>
                         <constraint firstItem="EfH-QV-Xgv" firstAttribute="leading" secondItem="yik-Yb-mRQ" secondAttribute="leading" constant="20" id="sal-2d-MYa"/>
                     </constraints>
@@ -416,7 +422,7 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-cY-H9E">
-                    <rect key="frame" x="20" y="366" width="335" height="187"/>
+                    <rect key="frame" x="20" y="345.5" width="335" height="187"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="187" id="wjr-jf-cSx"/>
                     </constraints>
@@ -445,4 +451,7 @@
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="levelSM_" width="341" height="185"/>
+    </resources>
 </document>

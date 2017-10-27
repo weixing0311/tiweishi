@@ -11,10 +11,10 @@
 #import "NSDate+CustomDate.h"
 #import "Daysquare.h"
 #import "ShareHealthItem.h"
-#import "HistoryBigCell.h"
+//#import "HistoryBigCell.h"
 #import "NewHealthHistoryListViewController.h"
 #import "HistoryCell.h"
-@interface HistoryInfoViewController ()<UITableViewDelegate,UITableViewDataSource,historySectionCellDelegate,historyCellDelegate>
+@interface HistoryInfoViewController ()<UITableViewDelegate,UITableViewDataSource,historyCellDelegate>
 @property (nonatomic,strong) HistoryHeaderView * headerView;
 @property (weak,  nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong) NSMutableDictionary * infoDict;
@@ -23,7 +23,10 @@
 @end
 
 @implementation HistoryInfoViewController
-
+{
+    NSInteger showIndexPathRow;
+    
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -107,13 +110,10 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * dic =[_dataArray objectAtIndex:indexPath.row];
-    NSString *rowHeight = [dic safeObjectForKey:@"rowHeight"];
-    if (rowHeight) {
-        return  [rowHeight intValue];
-    }else{
-        return 100;
+    if(indexPath.row ==showIndexPathRow) {
+        return 670;
     }
+    return 70;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -124,50 +124,59 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static NSString * identifier = @"HistoryBigCell";
-//    HistoryBigCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//    if (!cell) {
-//        cell = [self getXibCellWithTitle:identifier];
-//    }
-//    NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-//    cell.delegate = self;
-//    [cell setInfoWithDict:dic];
     static NSString * identifier = @"HistoryCell";
     HistoryCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [self getXibCellWithTitle:identifier];
     }
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
+    if (showIndexPathRow==indexPath.row) {
+        [cell setInfoWithDict:dic isHidden:NO];
+    }else{
+        [cell setInfoWithDict:dic isHidden:YES];
+    }
+    
     cell.delegate = self;
     cell.tag = indexPath.row;
-    [cell setInfoWithDict:dic];
-
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
-
-
-#pragma mark ---subView DELEGATE
--(void)showCellTabWithCell:(HistoryCell*)cell
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableDictionary * dic = [_dataArray objectAtIndex:cell.tag];
-    if (!dic) {
-        return;
-    }
-    if (cell.showBtn.selected ==YES) {
-        cell.showBtn.selected = NO;
-        [dic safeSetObject:@"100" forKey:@"rowHeight"];
-        cell.infoView.hidden = YES;
-        if ([[dic allKeys]containsObject:@"isSelected"]) {
-            [dic removeObjectForKey:@"isSelected"];
-        }
+    [tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+    
+    if (indexPath.row ==showIndexPathRow) {
+        showIndexPathRow =100000000000;
     }else{
-        [dic safeSetObject:@"isSelected" forKey:@"isSelected"];
-        [dic safeSetObject:@"700" forKey:@"rowHeight"];
-        cell.infoView.hidden = NO;
-        cell.showBtn.selected = YES;
+        showIndexPathRow=indexPath.row;
     }
     [self.tableview reloadData];
+
 }
+
+#pragma mark ---subView DELEGATE
+//-(void)showCellTabWithCell:(HistoryCell*)cell
+//{
+//    NSMutableDictionary * dic = [_dataArray objectAtIndex:cell.tag];
+//    if (!dic) {
+//        return;
+//    }
+//    if (cell.showBtn.selected ==YES) {
+//        cell.showBtn.selected = NO;
+//        [dic safeSetObject:@"100" forKey:@"rowHeight"];
+//        cell.infoView.hidden = YES;
+//        if ([[dic allKeys]containsObject:@"isSelected"]) {
+//            [dic removeObjectForKey:@"isSelected"];
+//        }
+//    }else{
+//        [dic safeSetObject:@"isSelected" forKey:@"isSelected"];
+//        [dic safeSetObject:@"700" forKey:@"rowHeight"];
+//        cell.infoView.hidden = NO;
+//        cell.showBtn.selected = YES;
+//    }
+//    [self.tableview reloadData];
+//}
 
 - (IBAction)didEnterShareListView:(id)sender {
     NewHealthHistoryListViewController * nhl = [[NewHealthHistoryListViewController alloc]init];
