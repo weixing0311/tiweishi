@@ -89,8 +89,6 @@
         return;
         
     }
-
-    
     
     NSData *fileData = UIImageJPEGRepresentation(self.headImageView.image,0.01);
 

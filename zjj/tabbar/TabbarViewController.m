@@ -7,11 +7,11 @@
 //
 
 #import "TabbarViewController.h"
-#import "HealthViewController.h"
+//#import "HealthViewController.h"
 #import "MessageViewController.h"
 #import "foundViewController.h"
 #import "ShopTabbbarController.h"
-#import "UserViewController.h"
+//#import "UserViewController.h"
 #import "ShopTestViewController.h"
 #import "TzsTabbarViewController.h"
 #import "JzSchoolViewController.h"

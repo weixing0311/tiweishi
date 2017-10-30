@@ -26,4 +26,14 @@
     self.introduction = [dict safeObjectForKey:@"introduction"];
 
 }
+-(void)setGzsPersonInfoWithDict:(NSDictionary *)dict
+{
+    self.headImgUrl = [dict safeObjectForKey:@"headimgurl"];
+    self.nickname = [dict safeObjectForKey:@"nickName"];
+//    self.isFollow = [[dict safeObjectForKey:@"isFollow"]boolValue];
+    self.userId = [dict safeObjectForKey:@"userId"];
+//    self.introduction = [dict safeObjectForKey:@"introduction"];
+    
+}
+
 @end

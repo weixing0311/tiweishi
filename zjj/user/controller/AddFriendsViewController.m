@@ -13,6 +13,7 @@
 
 @interface AddFriendsViewController ()<UITextFieldDelegate,qrcodeDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchtf;
+@property (weak, nonatomic) IBOutlet UIView *searchBgView;
 
 @end
 
@@ -32,6 +33,11 @@
     self.searchtf.delegate = self;
     self.searchtf.returnKeyType  = UIReturnKeyGo;
     self.searchtf.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    
+    self.searchBgView.layer.borderWidth= 2;
+    self.searchBgView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+
     // Do any additional setup after loading the view from its nib.
 }
 

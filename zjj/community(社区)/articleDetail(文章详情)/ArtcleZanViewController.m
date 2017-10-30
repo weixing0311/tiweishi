@@ -16,40 +16,79 @@
 @end
 
 @implementation ArtcleZanViewController
+{
+    int page;
+    int pageSize;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.title = @"点赞的人";
+    [self setTBWhiteColor];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableview.delegate = self;
     self.tableview.dataSource  = self;
     [self.view addSubview:self.tableview];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     _dataArray = [NSMutableArray array];
-    [self getZanPersonInfo];
+    
+    
+    [self setRefrshWithTableView:self.tableview];
     // Do any additional setup after loading the view.
 }
+-(void)headerRereshing
+{
+    page =1;
+    [self getZanPersonInfo];
+}
+-(void)footerRereshing
+{
+    page++;
+    [self getZanPersonInfo];
+}
+
+
 -(void)getZanPersonInfo
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:self.articleId forKey:@"articleId"];
+    [param safeSetObject:@(page) forKey:@"page"];
+    [param safeSetObject:@"30" forKey:@"pageSize"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/queryGreatPerson.do" paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
-        
+        [self.tableview footerEndRefreshing];
+        [self.tableview headerEndRefreshing];
+
+        if (page ==1) {
+            [self.dataArray removeAllObjects];
+            [self.tableview setFooterHidden:NO];
+        }
+        if (infoArr.count<30) {
+            [self.tableview setFooterHidden:YES];
+        }
+
         for (NSDictionary *dic in infoArr) {
             GuanzModel * model = [[GuanzModel alloc]init];
-            [model setGzInfoWithDict:dic];
+            [model setGzsPersonInfoWithDict:dic];
             [_dataArray addObject:model];
         }
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        if ([error code] ==402) {
+        [self.tableview footerEndRefreshing];
+        [self.tableview headerEndRefreshing];
+        if (page ==1) {
             [_dataArray removeAllObjects];
             [self.tableview reloadData];
         }
-        
     }];
 
 }
@@ -75,29 +114,7 @@
     [cell.headerimageView sd_setImageWithURL:[NSURL URLWithString:model.headImgUrl]placeholderImage:getImage(@"default")];
     cell.nicknamelb.text = model.nickname;
     cell.secondLb.text = model.introduction;
-    if ([model.userId isEqualToString:[UserModel shareInstance].userId]) {
-        cell.gzbtn.hidden = YES;
-    }else{
-        cell.gzbtn.hidden =NO;
-    }
-    UIColor * bgColor ;
-    UIColor * layerColor;
-    if (model.isFollow) {
-        cell.gzbtn.selected =YES;
-        cell.gzbtn.layer.borderWidth= 1;
-        bgColor = [UIColor whiteColor];
-        layerColor = HEXCOLOR(0x666666);
-        
-    }else
-    {
-        cell.gzbtn.selected = NO;
-        cell.gzbtn.layer.borderWidth= 1;
-        bgColor = [UIColor redColor];
-        layerColor = [UIColor redColor];
-    }
-    cell.gzbtn.layer.borderColor = layerColor.CGColor;
-    cell.gzbtn.backgroundColor = bgColor;
-    
+    cell.gzbtn.hidden = YES;
     return cell;
 }
 

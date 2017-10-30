@@ -17,10 +17,12 @@
 #import "ArtcleDetailNumCell.h"
 #import "CommunityCell.h"
 #import "ArtcleZanViewController.h"
+#import "GuanzModel.h"
 @interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate,UIPickerViewDelegate,UIPickerViewDataSource,PublicArticleCellDelegate,BigImageArticleCellDelegate>
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @property (nonatomic,strong) NSMutableArray * commentArray;
+@property (nonatomic,strong) NSMutableArray * zanCountArray;
 @property (nonatomic,strong) NSMutableDictionary * infoDict;;
 @property (nonatomic, weak) CLPlayerView *playerView;
 @end
@@ -57,7 +59,8 @@
     _dataArray = [NSMutableArray array];
     _commentArray =[NSMutableArray array];
     _infoDict =[NSMutableDictionary dictionary];
-
+    _zanCountArray =[NSMutableArray array];
+    
     self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-60) style:UITableViewStylePlain];
     self.tableview.delegate =self;
     self.tableview.dataSource = self;
@@ -66,7 +69,7 @@
 //    [self setRefrshWithTableView:self.tableview];
     [self buildCommentView];
     [self getCommentList];
-
+    
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -153,7 +156,7 @@
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         _infoDict = [dataDict safeObjectForKey:@"article"];
         
-        
+        [self getZanPersonInfo];
         CommunityModel * item = [[CommunityModel alloc]init];
         [item setInfoWithDict:_infoDict];
         [self.dataArray addObject:item];
@@ -196,6 +199,33 @@
         
     }];
 }
+
+///获取点赞人信息
+-(void)getZanPersonInfo
+{
+    NSMutableDictionary * param = [NSMutableDictionary dictionary];
+    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [param safeSetObject:[_infoDict safeObjectForKey:@"id"] forKey:@"articleId"];
+    [param safeSetObject:@"1" forKey:@"page"];
+    [param safeSetObject:@"15" forKey:@"pageSize"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/queryGreatPerson.do" paramters:param success:^(NSDictionary *dic) {
+        NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
+        NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
+        
+        for (NSDictionary *dic in infoArr) {
+            GuanzModel * model = [[GuanzModel alloc]init];
+            [model setGzInfoWithDict:dic];
+            [_zanCountArray addObject:model];
+        }
+        [self.tableview reloadData];
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -279,10 +309,6 @@
 
         }
         
-        
-        
-        
-        
     }
     else if (indexPath.section ==1)
     {
@@ -291,8 +317,41 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifer];
         }
+        
         cell.firstLb.text = [NSString stringWithFormat:@"评论 %@",[_infoDict safeObjectForKey:@"commentnum"]?[_infoDict safeObjectForKey:@"commentnum"]:@"0"];
-        cell.zanLabel.text = [NSString stringWithFormat:@"%@、%@、%@等%@人都觉得很赞",@"丁丁",@"坑逼",@"真特么的坑啊我曹",@"22"];
+        
+        
+        NSString * ZanName ;
+        int zanCount = [[_infoDict safeObjectForKey:@"greatnum"]intValue];
+
+        if (self.zanCountArray.count<1||!self.zanCountArray) {
+            cell.zanLabel.text = @"0";
+        }
+        else if (self.zanCountArray.count<5) {
+            for (int i =0; i<self.zanCountArray.count; i++) {
+                GuanzModel * model = [self.zanCountArray objectAtIndex:i];
+                ZanName =[NSString stringWithFormat:@"%@%@赞了%d次",ZanName?[NSString stringWithFormat:@"%@、",ZanName]:@"",model.nickname,zanCount];
+            }
+        }else{
+            GuanzModel * model1 = [self.zanCountArray objectAtIndex:0];
+            GuanzModel * model2 = [self.zanCountArray objectAtIndex:1];
+            GuanzModel * model3 = [self.zanCountArray objectAtIndex:2];
+            GuanzModel * model4 = [self.zanCountArray objectAtIndex:2];
+            GuanzModel * model5 = [self.zanCountArray objectAtIndex:2];
+
+            ZanName =[NSString stringWithFormat:@"%@、%@、%@、%@、%@...",model1.nickname,model2.nickname,model3.nickname,model4.nickname,model5.nickname];
+
+        }
+        cell.zanLabel.text = [NSString stringWithFormat:@"%@",ZanName];
+
+        
+        if (zanCount<4) {
+            cell.zanCountLb.text = @"";
+        }else{
+            cell.zanCountLb.text = [NSString stringWithFormat:@"共赞了%d次",zanCount];
+        }
+        
+        
         [cell.zanBtn addTarget:self action:@selector(showZanPersons) forControlEvents:UIControlEventTouchUpInside];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -327,7 +386,7 @@
 -(void)showZanPersons
 {
     ArtcleZanViewController * artcl = [[ArtcleZanViewController alloc]init];
-    artcl.articleId = [_infoDict safeObjectForKey:@""];
+    artcl.articleId = [_infoDict safeObjectForKey:@"id"];
     [self.navigationController pushViewController:artcl animated:YES];
 }
 -(void)didPlayWithBigCell:(CommunityCell *)cell
@@ -373,7 +432,7 @@
     CommunityModel * item = [_dataArray objectAtIndex:index];
     FcBigImgViewController * fc =[[FcBigImgViewController alloc]init];
     fc.images = [NSMutableArray arrayWithArray:item.pictures];
-    fc.page = index;
+    fc.page = page;
     [self presentViewController:fc animated:YES completion:nil];
 
 }

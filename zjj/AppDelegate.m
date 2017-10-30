@@ -16,7 +16,7 @@
 #import "WXApi.h"
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
-#import "ChangeUserInfoViewController.h"
+#import "ADDChengUserViewController.h"
 #import <UMMobClick/MobClick.h>
 #import "YMSocketUtils.h"
 
@@ -43,7 +43,6 @@
 {
     LoignViewController *lo;
     NSTimer      * hudTimer;
-    
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -115,9 +114,9 @@
             
  
         }else{
-            ChangeUserInfoViewController * cg =[[ChangeUserInfoViewController alloc]init];
+            ADDChengUserViewController * cg =[[ADDChengUserViewController alloc]init];
             UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:cg];
-            cg.changeType = 1;
+            cg.isResignUser = YES;
             [self.window setRootViewController:nav];
         }
         

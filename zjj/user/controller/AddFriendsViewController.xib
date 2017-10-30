@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddFriendsViewController">
             <connections>
+                <outlet property="searchBgView" destination="1FE-KR-MHp" id="gHI-0G-Vwx"/>
                 <outlet property="searchtf" destination="sFQ-1w-ihf" id="OdX-ty-0Cc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,28 +25,47 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8VP-LA-rkt">
                     <rect key="frame" x="0.0" y="64" width="375" height="80"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入。。。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
-                            <rect key="frame" x="10" y="17.5" width="355" height="45"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1FE-KR-MHp">
+                            <rect key="frame" x="20" y="15" width="335" height="50"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入。。。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
+                                    <rect key="frame" x="40" y="0.0" width="275" height="50"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="45" id="Hv6-HO-46Y"/>
+                                <constraint firstAttribute="height" constant="50" id="7t0-e2-kOI"/>
+                                <constraint firstItem="sFQ-1w-ihf" firstAttribute="leading" secondItem="1FE-KR-MHp" secondAttribute="leading" constant="40" id="eID-2U-GYK"/>
+                                <constraint firstAttribute="trailing" secondItem="sFQ-1w-ihf" secondAttribute="trailing" constant="20" id="lgS-PZ-jah"/>
+                                <constraint firstItem="sFQ-1w-ihf" firstAttribute="top" secondItem="1FE-KR-MHp" secondAttribute="top" id="mi4-UX-j2w"/>
+                                <constraint firstAttribute="bottom" secondItem="sFQ-1w-ihf" secondAttribute="bottom" id="wAd-ZL-X5R"/>
                             </constraints>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_" translatesAutoresizingMaskIntoConstraints="NO" id="sC9-2L-Lne">
+                            <rect key="frame" x="20" y="27.5" width="25" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="lTC-II-LQf"/>
+                                <constraint firstAttribute="width" constant="25" id="oNW-lK-XGI"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="sFQ-1w-ihf" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="10" id="20u-Bj-L4v"/>
                         <constraint firstAttribute="height" constant="80" id="AS8-RQ-Rt8"/>
-                        <constraint firstAttribute="trailing" secondItem="sFQ-1w-ihf" secondAttribute="trailing" constant="10" id="NDg-1t-FP3"/>
-                        <constraint firstItem="sFQ-1w-ihf" firstAttribute="centerY" secondItem="8VP-LA-rkt" secondAttribute="centerY" id="gVE-Q8-2BX"/>
+                        <constraint firstAttribute="trailing" secondItem="1FE-KR-MHp" secondAttribute="trailing" constant="20" id="IMi-pH-2lw"/>
+                        <constraint firstItem="1FE-KR-MHp" firstAttribute="centerY" secondItem="8VP-LA-rkt" secondAttribute="centerY" id="Tsj-XU-HnZ"/>
+                        <constraint firstItem="1FE-KR-MHp" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="20" id="jbm-X1-78G"/>
+                        <constraint firstItem="sC9-2L-Lne" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="20" id="oE1-eO-6Dw"/>
+                        <constraint firstItem="sC9-2L-Lne" firstAttribute="centerY" secondItem="8VP-LA-rkt" secondAttribute="centerY" id="pPC-pT-72d"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdz-yf-R7S">
                     <rect key="frame" x="0.0" y="144" width="375" height="55"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reCodeS.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yal-BT-oC4">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scanning_" translatesAutoresizingMaskIntoConstraints="NO" id="Yal-BT-oC4">
                             <rect key="frame" x="20" y="10" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Yal-BT-oC4" secondAttribute="height" multiplier="1:1" id="3gW-fR-OmR"/>
@@ -60,12 +80,6 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNh-32-6gk">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
-                            <connections>
-                                <action selector="didGetqrcode:" destination="-1" eventType="touchUpInside" id="JDJ-k7-kZY"/>
-                            </connections>
-                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jvH-Ti-QOp">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
                             <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,6 +90,12 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNh-32-6gk">
+                            <rect key="frame" x="-34" y="-27" width="375" height="55"/>
+                            <connections>
+                                <action selector="didGetqrcode:" destination="-1" eventType="touchUpInside" id="JDJ-k7-kZY"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -98,7 +118,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIF-aj-069">
                     <rect key="frame" x="0.0" y="199" width="375" height="55"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personal-recode.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfN-A8-5rA">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myRecode_" translatesAutoresizingMaskIntoConstraints="NO" id="JfN-A8-5rA">
                             <rect key="frame" x="20" y="10" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="JfN-A8-5rA" secondAttribute="height" multiplier="1:1" id="afH-ga-Iyi"/>
@@ -181,7 +201,8 @@
         </view>
     </objects>
     <resources>
-        <image name="personal-recode.png" width="27" height="30"/>
-        <image name="reCodeS.png" width="20" height="20"/>
+        <image name="myRecode_" width="24" height="24"/>
+        <image name="scanning_" width="24" height="24"/>
+        <image name="search_" width="13" height="13"/>
     </resources>
 </document>

@@ -9,7 +9,7 @@
 #import "CommunityViewController.h"
 #import "PublicArticleCell.h"
 #import "CommunityModel.h"
-//#import "PostArticleViewController.h"
+#import "PostArticleViewController.h"
 #import "WriteArtcleViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 
@@ -73,7 +73,7 @@
 
     
     if (_isMyMessagePage !=YES) {
-        [self buildRightNaviBarItem];
+        
     }
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
@@ -94,6 +94,14 @@
     self.navigationItem.rightBarButtonItem = rightItem;
 
 }
+
+- (IBAction)enterOldWrite:(id)sender {
+    PostArticleViewController *ar = [[PostArticleViewController alloc]init];
+    ar.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ar animated:YES];
+
+}
+
 - (IBAction)enterWirte:(id)sender {
     [self didEnterWritePage];
 }
@@ -291,6 +299,15 @@
         currCell.gzBtn.selected =YES;
         currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
 
+        if (_dataArray.count>100) {
+            return ;
+        }
+        for (CommunityModel * allmodel  in _dataArray) {
+            if ([allmodel.userId isEqualToString:model.userId]) {
+                allmodel.isFollow = @"1";
+            }
+        }
+        [self.tableview reloadData];
     } failure:^(NSError *error) {
         
     }];
@@ -425,7 +442,15 @@
         CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
         currCell.gzBtn.selected =YES;
         currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
-
+        if (_dataArray.count>100) {
+            return ;
+        }
+        for (CommunityModel * allmodel  in _dataArray) {
+            if ([allmodel.userId isEqualToString:model.userId]) {
+                allmodel.isFollow = @"1";
+            }
+        }
+        [self.tableview reloadData];
     } failure:^(NSError *error) {
         
     }];
@@ -730,9 +755,14 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    [self clearSDCeche];
-    
+//    [self clearSDCeche];
+    DLog(@"内存溢出");
     // Dispose of any resources that can be recreated.
+    if (self.isViewLoaded && !self.view.window)// 是否是正在使用的视图
+    {
+        self.view = nil;// 目的是再次进入时能够重新加载调用viewDidLoad函数。
+    }
+    
 }
 
 @end

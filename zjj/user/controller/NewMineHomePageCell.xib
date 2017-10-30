@@ -24,7 +24,7 @@
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newMineBg_" translatesAutoresizingMaskIntoConstraints="NO" id="5Jr-jg-HLR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="209.5"/>
                     </imageView>
-                    <visualEffectView opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBh-e1-vtG">
+                    <visualEffectView hidden="YES" opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBh-e1-vtG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="209.5"/>
                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fzF-ZM-FTb">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="209.5"/>

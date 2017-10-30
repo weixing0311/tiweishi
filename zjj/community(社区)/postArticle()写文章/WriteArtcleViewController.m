@@ -36,6 +36,8 @@
 @property (nonatomic,assign) BOOL isHaveVideo;
 @property (nonatomic,strong) UITextView * textView;
 @property (nonatomic,copy) NSString * videoUrlStr;
+@property (nonatomic,assign) BOOL isShooting;//判断是不是拍摄的视频
+@property (nonatomic,copy)   NSURL * shootingVideoUrl;
 @end
 
 @implementation WriteArtcleViewController
@@ -51,6 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"写文章";
+    self.isShooting = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
@@ -90,10 +93,13 @@
     
     
     if (self.isHaveVideo==YES) {
-        
-        //      long lsog =   [self fileSizeAtPath:self.movieUrl];
-        
-        NSData * data = [NSData dataWithContentsOfFile:_videoUrlStr];
+        NSData * data;
+        if (_isShooting==YES) {
+            data = [NSData dataWithContentsOfURL:_shootingVideoUrl];
+        }else{
+            data = [NSData dataWithContentsOfFile:_videoUrlStr];
+
+        }
         NSData *videoImgData = UIImageJPEGRepresentation(_selectedPhotos[0], 1);
         
         self.currentTasks = [[BaseSservice sharedManager]
@@ -293,6 +299,10 @@
             return NO;
         }
     }
+    else if (self.videoUrlStr.length>5)
+    {
+        return YES;
+    }
     return NO;
 }
 #pragma mark - LxGridViewDataSource
@@ -319,13 +329,69 @@
 }
 
 - (void)pushTZImagePickerController {
+    
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"添加照片/视频" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [al addAction:[UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        NSString *mediaType = AVMediaTypeVideo;
+        //        pickerCon.mediaTypes = @[(NSString *)];//设定相机为视频
+        
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            [[UserModel shareInstance]showInfoWithStatus:@"相机权限受限"];
+            
+            NSLog(@"相机权限受限");
+            return;
+        }
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
+            NSLog(@"%@",granted ? @"麦克风准许":@"麦克风不准许");
+        }];
+        
+        AVAuthorizationStatus authStatus1 = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
+        if (authStatus1 ==AVAuthorizationStatusNotDetermined||
+            authStatus1 ==AVAuthorizationStatusRestricted||
+            authStatus1==AVAuthorizationStatusDenied) {
+            [[UserModel shareInstance]showInfoWithStatus:@"麦克风未授权"];
+            return;
+        }
+        
+        
+        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
+        picker.delegate = self;
+        picker.allowsEditing = NO;//设置可编辑
+        picker.sourceType = sourceType;
+        
+        picker.mediaTypes = @[(NSString *)kUTTypeMovie,(NSString *)kUTTypeVideo];//设定相机为视频
+        //        picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;//设置相机后摄像头
+        picker.videoMaximumDuration = 10;//最长拍摄时间
+        picker.videoQuality = UIImagePickerControllerQualityTypeIFrame1280x720;//拍摄质量
+        
+        
+        
+        [self presentViewController:picker animated:YES completion:nil];
+    }]];
+
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self enterPhotoAlbum];
+
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+}
+-(void)enterPhotoAlbum
+{
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:4 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置
     imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
     
-        // 1.设置目前已经选中的图片数组
+    // 1.设置目前已经选中的图片数组
     imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
     imagePickerVc.allowTakePicture = YES; // 在内部显示拍照按钮
     
@@ -417,7 +483,11 @@
 
 - (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    
     NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    
     if ([type isEqualToString:@"public.image"]) {
         TZImagePickerController *tzImagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
         tzImagePickerVc.sortAscendingByModificationDate = YES;
@@ -443,6 +513,24 @@
             }
         }];
     }
+    else if([type isEqualToString:@"public.movie"])
+    {
+        if (_selectedPhotos.count!=0) {
+            return;
+        }
+        NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSLog(@"found a video");
+        
+        
+        UIImage * image =[self getThumbnailImage:videoURL];
+        
+        [_selectedPhotos insertObject:image atIndex:0];
+        self.isHaveVideo = YES;
+        self.shootingVideoUrl = videoURL;
+        self.isShooting =YES;
+        [self.collectionView reloadData];
+    }
+
 }
 
 - (void)refreshCollectionViewWithAddedAsset:(id)asset image:(UIImage *)image {
@@ -513,8 +601,14 @@
 }
 - (void)deleteBtnClik:(UIButton *)sender {
     [_selectedPhotos removeObjectAtIndex:sender.tag];
-    [_selectedAssets removeObjectAtIndex:sender.tag];
+    if (_selectedAssets.count>0) {
+        [_selectedAssets removeObjectAtIndex:sender.tag];
+    }
     
+    if (_selectedPhotos.count<1) {
+        _videoUrlStr = @"";
+        _isShooting = NO;
+    }
     [_collectionView performBatchUpdates:^{
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
         [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
@@ -552,7 +646,39 @@
 //        }
 //    }
 //}
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+//    NSString *mediaType=[info objectForKey:UIImagePickerControllerMediaType];
+//
+//
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
+//获取视频缩略图
+-(UIImage *)getThumbnailImage:(NSURL *)videoUrl {
+    if (videoUrl) {
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoUrl options:nil];
+        AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+        // 设定缩略图的方向
+        // 如果不设定，可能会在视频旋转90/180/270°时，获取到的缩略图是被旋转过的，而不是正向的
+        gen.appliesPreferredTrackTransform = YES;
+        // 设置图片的最大size(分辨率)
+        gen.maximumSize = CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+        CMTime time = CMTimeMakeWithSeconds(5.0, 600); //取第5秒，一秒钟600帧
+        NSError *error = nil;
+        CMTime actualTime;
+        CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+        if (error) {
+            UIImage *placeHoldImg = [UIImage imageNamed:@"posters_default_horizontal"];
+            return placeHoldImg;
+        }
+        UIImage *thumb = [[UIImage alloc] initWithCGImage:image];
+        CGImageRelease(image);
+        return thumb;
+    } else {
+        UIImage *placeHoldImg = getImage(@"default");
+        return placeHoldImg;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

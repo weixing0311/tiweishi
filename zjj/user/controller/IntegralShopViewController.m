@@ -81,8 +81,11 @@
             self.collectionView.footerHidden = NO;
             
         }
-        
-        self.dataArray = [[dic objectForKey:@"data"] objectForKey:@"array"];
+        NSArray * infoArr =[[dic objectForKey:@"data"] objectForKey:@"array"];
+        if (infoArr.count<30) {
+            self.collectionView.footerHidden = YES;
+        }
+        [self.dataArray  addObjectsFromArray:infoArr];
         
         [self.collectionView reloadData];
 

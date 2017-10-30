@@ -205,6 +205,16 @@
         [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_")];
         
         
+        [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if (error) {
+                return ;
+            }
+            cell.bgImageView.image = [self cutImage:image imgViewWidth:image.size.width imgViewHeight:image.size.width*0.56];
+        }];
+        
+        
+        
+        
         cell.nicknamelb.text = [_infoDict safeObjectForKey:@"nickName"];
         NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
         if (introduction.length<1) {
@@ -365,6 +375,10 @@
     ArticleDetailViewController * ard =[[ArticleDetailViewController alloc]init];
     ard.infoModel = model;
     [self.navigationController pushViewController:ard animated:YES];
+    }
+    else if(indexPath.section ==2)
+    {
+        [self didShowChangeUserInfoPage];
     }
 }
 
@@ -1141,6 +1155,42 @@
             
         }];
 }
+
+
+- (UIImage *)cutImage:(UIImage*)image imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height
+
+{
+    
+    //压缩图片
+    
+    
+    
+    CGSize newSize;
+    
+    CGImageRef imageRef = nil;
+    
+    if ((image.size.width / image.size.height) < (width / height)) {
+        
+        newSize.width = image.size.width;
+        
+        newSize.height = image.size.width * height /width;
+        
+        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, 0, newSize.width, newSize.height));
+        
+    } else {
+        
+        newSize.height = image.size.height;
+        
+        newSize.width = image.size.height * width / height;
+        
+        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(fabs(image.size.width - newSize.width) / 2, 0, newSize.width, newSize.height));
+        
+    }
+    
+    return [UIImage imageWithCGImage:imageRef];
+    
+}
+
 
 -(UIImage *)getImage
 {

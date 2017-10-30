@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *zhezhaoceng;
 @property (weak, nonatomic) IBOutlet UILabel *levelLb;
+@property (weak, nonatomic) IBOutlet UILabel *topLabel;
 
 
 @property (nonatomic,strong)CommunityModel * currModel;

@@ -66,7 +66,6 @@
 //    [self convertMovSourceURL:self.movieUrl];
 
     NSString *strUrl = [self.textView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
 
     if (strUrl.length<1&&!self.movieUrl&&_imagesArray.count<1) {
         [[UserModel shareInstance]showInfoWithStatus:@"文章不能为空"];
@@ -368,7 +367,6 @@
         
     
     [al addAction:[UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         
         NSString *mediaType = AVMediaTypeVideo;
         //        pickerCon.mediaTypes = @[(NSString *)];//设定相机为视频

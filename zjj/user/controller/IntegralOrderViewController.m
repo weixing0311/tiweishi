@@ -18,6 +18,7 @@
 #import "IntegralOrderDetailViewController.h"
 @interface IntegralOrderViewController ()<UITableViewDelegate,UITableViewDataSource,orderFootBtnViewDelegate,orderDetailViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *enptyView;
 @end
 
 @implementation IntegralOrderViewController
@@ -94,11 +95,22 @@
             [self.tableview setFooterHidden:YES];
         }
         [self getinfoWithStatus:self.segment.selectedSegmentIndex];
+        if (_dataArray.count<1) {
+            self.enptyView.hidden = NO;
+        }
+        else{
+            self.enptyView.hidden =YES;
+        }
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
+        if ([error code]==402) {
+            if (_dataArray.count<1) {
+                self.enptyView.hidden = NO;
+            }
+        }
         
     }];
 }
@@ -445,7 +457,11 @@
 - (IBAction)didChangeStatussegment:(UISegmentedControl *)sender {
     
     [self getinfoWithStatus:sender.selectedSegmentIndex];
-    
+    if (_dataArray.count<1) {
+        self.enptyView.hidden = NO;
+    }else{
+        self.enptyView.hidden = YES;
+    }
     [self.tableview reloadData];
 }
 -(void)orderChange

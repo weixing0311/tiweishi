@@ -45,6 +45,7 @@ static CommunityModel * imageModel;
     self.commentnum = [dict safeObjectForKey:@"commentnum"];
     self.isFabulous = [dict safeObjectForKey:@"isFabulous"];
     self.level      = [dict safeObjectForKey:@"gradeId"];
+    self.topNum     = [dict safeObjectForKey:@"topNum"];
     [self setInPictureWithDict:dict];
 
     self.rowHieght = [self CalculateCellHieghtWithContent:[dict safeObjectForKey:@"content"] images:self.pictures];

@@ -29,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"";
     goodsCount =1;
     // Do any additional setup after loading the view.
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, self.view.frame.size.height-50) style:UITableViewStylePlain];
@@ -116,11 +117,6 @@
     Class mClass =  NSClassFromString(identifier);
     return  [_tableView cellHeightForIndexPath:indexPath model:_listArray[indexPath.row] keyPath:@"model" cellClass:mClass contentViewWidth:[UIScreen mainScreen].bounds.size.width];
 }
-
-
-
-
-
 
 
 

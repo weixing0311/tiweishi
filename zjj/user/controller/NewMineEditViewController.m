@@ -33,12 +33,12 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
-    dataArray  =@[@"修改密码",@"消息设置",@"清空缓存",@"版本更新",@"关于我们",];
+    dataArray  =@[@"修改密码",@"清空缓存",@"关于我们",];
     // Do any additional setup after loading the view from its nib.
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 3;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -65,19 +65,11 @@
     }
     else if (indexPath.row==2)
     {
-        
-    }
-
-    else if (indexPath.row==3)
-    {
-        
-    }
-
-    else
-    {
         AboutUsViewController * ab= [[AboutUsViewController alloc]init];
         [self.navigationController pushViewController:ab animated:YES];
+
     }
+
 
 }
 - (IBAction)loignOut:(id)sender {

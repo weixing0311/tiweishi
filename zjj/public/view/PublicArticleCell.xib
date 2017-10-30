@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsp-Qx-N2Q">
@@ -271,6 +271,22 @@
                             <constraint firstAttribute="height" constant="10" id="Ohs-nX-HmK"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="置顶" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0f-nV-Mhd">
+                        <rect key="frame" x="180" y="25" width="40" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="h2D-1H-T3a"/>
+                            <constraint firstAttribute="height" constant="20" id="vNu-qI-dRq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="JOg-Wq-fna" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="5ME-3W-LLR"/>
@@ -278,6 +294,8 @@
                     <constraint firstAttribute="bottom" secondItem="a0c-0o-aO4" secondAttribute="bottom" id="AVj-SJ-TpG"/>
                     <constraint firstItem="cZq-9h-X9c" firstAttribute="top" secondItem="uKv-EL-2zU" secondAttribute="bottom" constant="3" id="CB9-fn-2gF"/>
                     <constraint firstItem="a0c-0o-aO4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="EdA-lt-rET"/>
+                    <constraint firstItem="bxO-Wq-cBJ" firstAttribute="leading" secondItem="s0f-nV-Mhd" secondAttribute="trailing" constant="10" id="KEp-wG-jT0"/>
+                    <constraint firstItem="bxO-Wq-cBJ" firstAttribute="top" secondItem="s0f-nV-Mhd" secondAttribute="top" id="L35-ej-Ara"/>
                     <constraint firstAttribute="trailing" secondItem="vPL-eg-4lN" secondAttribute="trailing" id="Li4-yG-S6o"/>
                     <constraint firstItem="vYs-3G-0Nk" firstAttribute="leading" secondItem="bxO-Wq-cBJ" secondAttribute="trailing" id="VES-tT-Kj5"/>
                     <constraint firstItem="bxO-Wq-cBJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="WsJ-V8-Pp3"/>
@@ -316,6 +334,7 @@
                 <outlet property="shareCountlb" destination="m5y-60-fCZ" id="e1c-GB-6IS"/>
                 <outlet property="timelb" destination="cZq-9h-X9c" id="JdQ-zn-Rnf"/>
                 <outlet property="titleIb" destination="uKv-EL-2zU" id="gVy-xC-dUk"/>
+                <outlet property="topLabel" destination="s0f-nV-Mhd" id="OKf-9I-46O"/>
                 <outlet property="zanCountlb" destination="jde-rx-Sb0" id="6FK-UP-env"/>
                 <outlet property="zanImageView" destination="5wO-fb-rtU" id="yur-mM-rJl"/>
                 <outlet property="zanbtn" destination="HrC-qH-vH3" id="WWg-ep-dZA"/>

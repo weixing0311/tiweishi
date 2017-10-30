@@ -10,7 +10,7 @@
 #import "QRCodeResignViewController.h"
 #import "TabbarViewController.h"
 #import "JPUSHService.h"
-#import "ChangeUserInfoViewController.h"
+#import "ADDChengUserViewController.h"
 @interface ResignViewController ()<qrcodeDelegate,UITextFieldDelegate>
 {
     NSTimer   * _timer;
@@ -169,9 +169,9 @@
             self.view.window.rootViewController = tab;
             
         }else{
-            ChangeUserInfoViewController *cg =[[ChangeUserInfoViewController alloc]init];
+            ADDChengUserViewController *cg =[[ADDChengUserViewController alloc]init];
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cg];
-            cg.changeType =1;
+            cg.isResignUser =YES;
             [self presentViewController:nav animated:YES completion:nil];
         }
         

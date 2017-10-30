@@ -12,6 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.headerImageView.contentMode =UIViewContentModeScaleAspectFill;
+    self.headerImageView.clipsToBounds = YES;
     // Initialization code
 
 }

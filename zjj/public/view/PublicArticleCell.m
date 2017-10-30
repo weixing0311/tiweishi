@@ -22,6 +22,8 @@
     // Initialization code
     self.gzBtn.layer.borderWidth= 1;
     self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
+    self.topLabel.layer.borderWidth= 1;
+    self.topLabel.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
 
     
     
@@ -107,6 +109,12 @@
         self.gzBtn.selected = NO;
         self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
     }
+    if ([item.topNum intValue]>0) {
+        self.topLabel.hidden = NO;
+    }else{
+        self.topLabel.hidden = YES;
+    }
+    
 }
 -(void)loadImagesWithItem:(CommunityModel *)item
 {
@@ -139,39 +147,6 @@
 
 //裁剪图片
 
-- (UIImage *)cutImage:(UIImage*)image imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height
-
-{
-    
-    //压缩图片
-    
-    
-    
-    CGSize newSize;
-    
-    CGImageRef imageRef = nil;
-    
-    if ((image.size.width / image.size.height) < (width / height)) {
-        
-        newSize.width = image.size.width;
-        
-        newSize.height = image.size.width * height /width;
-        
-        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(0, fabs(image.size.height - newSize.height) / 2, newSize.width, newSize.height));
-        
-    } else {
-        
-        newSize.height = image.size.height;
-        
-        newSize.width = image.size.height * width / height;
-        
-        imageRef = CGImageCreateWithImageInRect([image CGImage], CGRectMake(fabs(image.size.width - newSize.width) / 2, 0, newSize.width, newSize.height));
-        
-    }
-    
-    return [UIImage imageWithCGImage:imageRef];
-    
-}
 - (CGFloat)cellOffset{
     /*
      - (CGRect)convertRect:(CGRect)rect toView:(nullable UIView *)view;
@@ -222,13 +197,6 @@
 
     [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"videoImageStr"]] placeholderImage:getImage(@"default")];
     
-//    [cell.headerImageView sd_setImageWithURL:[dict safeObjectForKey:@"videoImageStr"] placeholderImage:getImage(@"default") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//        if (error) {
-//            cell.headerImageView.image = getImage(@"default");
-//            return ;
-//        }
-//        cell.headerImageView.image = [self cutImage:image imgViewWidth:(JFA_SCREEN_WIDTH-20)/2-20 imgViewHeight:(JFA_SCREEN_WIDTH-20)/2-20];
-//    }];
     return cell;
 }
 

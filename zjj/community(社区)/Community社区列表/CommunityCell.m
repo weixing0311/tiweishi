@@ -21,6 +21,11 @@
     self.gzBtn.layer.borderWidth= 1;
     self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
 
+    self.topLabel.layer.borderWidth= 1;
+    self.topLabel.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+
+    
+    
     self.imagesArray = [NSMutableArray array];
     [self.midImageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showBigImage)]];
 
@@ -54,11 +59,14 @@
     }else{
         self.gzBtn.selected = NO;
         self.gzBtn.layer.borderColor = [UIColor redColor].CGColor;
-
-        
     }
 
-    
+    if ([item.topNum intValue]>0) {
+        self.topLabel.hidden = NO;
+    }else{
+        self.topLabel.hidden = YES;
+    }
+
     
     NSString * imageUrl ;
     if (item.movieStr.length>5) {

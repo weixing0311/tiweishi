@@ -14,10 +14,7 @@
     [super awakeFromNib];
     // Initialization code
 }
--(void)setInfoWithDict:(HealthDetailsItem *)item
-{
-    
-}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

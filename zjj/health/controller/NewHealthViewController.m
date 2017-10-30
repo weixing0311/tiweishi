@@ -12,7 +12,6 @@
 #import "LoignViewController.h"
 #import "UserCellCell.h"
 #import "UserListView.h"
-#import "ChangeUserInfoViewController.h"
 #import "ShareViewController.h"
 #import "CharViewController.h"
 #import "WWXBlueToothManager.h"
@@ -90,7 +89,7 @@
 }
 -(void)buildUserListView
 {
-    self.userListView = [[UserListView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, self.view.frame.size.height-64)];
+    self.userListView = [[UserListView alloc]initWithFrame:CGRectMake(0, 20, JFA_SCREEN_WIDTH, self.view.frame.size.height-20)];
     self.userListView.backgroundColor =RGBACOLOR(0/225.0f, 0/225.0f, 0/225.0f, .3);
     self.userListView.hidden = YES;
     self.userListView.delegate = self;
@@ -218,6 +217,8 @@
 
 -(void)refreshMyInfoView
 {
+    [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
+    
     [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
     
 //    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;

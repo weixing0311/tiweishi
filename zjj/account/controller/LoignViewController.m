@@ -9,7 +9,7 @@
 #import "LoignViewController.h"
 #import "TabbarViewController.h"
 #import "ResignAgumentViewController.h"
-#import "ChangeUserInfoViewController.h"
+#import "ADDChengUserViewController.h"
 #import "TzsTabbarViewController.h"
 #import "ForgetPasswordViewController.h"
 #import "JPUSHService.h"
@@ -175,9 +175,9 @@
             
             
         }else{
-            ChangeUserInfoViewController *cg =[[ChangeUserInfoViewController alloc]init];
+            ADDChengUserViewController *cg =[[ADDChengUserViewController alloc]init];
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cg];
-            cg.changeType =1;
+            cg.isResignUser =YES;
             [self presentViewController:nav animated:YES completion:nil];
         }
 
@@ -232,9 +232,9 @@
             self.view.window.rootViewController = tab;
             
         }else{
-            ChangeUserInfoViewController *cg =[[ChangeUserInfoViewController alloc]init];
+            ADDChengUserViewController *cg =[[ADDChengUserViewController alloc]init];
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cg];
-            cg.changeType =1;
+            cg.isResignUser =YES;
             [self presentViewController:nav animated:YES completion:nil];
         }
         

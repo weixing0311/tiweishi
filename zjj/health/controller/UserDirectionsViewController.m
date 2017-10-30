@@ -25,6 +25,7 @@
     [super viewDidLoad];
     self.title = @"使用说明";
     [self buildScrol];
+    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)buildScrol

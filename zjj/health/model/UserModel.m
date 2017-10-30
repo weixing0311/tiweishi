@@ -486,9 +486,9 @@ static UserModel *model;
 -(BOOL)valiNickName:(NSString * )nickName
 {
     nickName = [nickName stringByReplacingOccurrencesOfString:@" " withString:@""];
-    //    $("#inputNum").val(val.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,''));
-    NSString * NICK_NUM = @"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+";
-    
+//        $("#inputNum").val(val.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,''));
+//    NSString * NICK_NUM = @"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5][0-9]+";
+    NSString * NICK_NUM = @"^[a-zA-Z0-9\u4e00-\u9fa5]+$";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", NICK_NUM];
     BOOL isMatch = [pred evaluateWithObject:nickName];
     return isMatch;
