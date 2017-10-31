@@ -74,7 +74,7 @@
     [param safeSetObject:[NSString encryptString:self.repasswordtf.text] forKey:@"repPassword"];
     
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/changePassword.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/changePassword.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {

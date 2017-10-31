@@ -63,7 +63,7 @@
     [param setObject:self.mobileTF.text forKey:@"mobilePhone"];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhoneMsg.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhoneMsg.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError *error) {
         [_timer invalidate];
@@ -124,7 +124,7 @@
     [param setObject:[NSString encryptString: self.passwordtf.text] forKey:@"password"];
     [param setObject:self.vertf.text forKey:@"vcode"];
     [SVProgressHUD show];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePhone.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];

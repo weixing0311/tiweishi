@@ -660,7 +660,7 @@
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:self.UpLoadlogString forKey:@"message"];
-    [[BaseSservice sharedManager]postDebugWithUrl:@"app/userDebugMsg/savemsg.do" paramters:param ];
+    [[BaseSservice sharedManager]postDebugWithUrl:@"app/userDebugMsg/savemsg.do"  paramters:param ];
 }
 
 /*

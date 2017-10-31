@@ -81,7 +81,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:@(page) forKey:@"page"];
     [param setObject:@"30" forKey:@"pageSize"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryCollectionList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryCollectionList.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         if ( page==1) {
             [self.dataArray removeAllObjects];

@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.secondlb.adjustsFontSizeToFitWidth = YES;
     // Initialization code
 }
 

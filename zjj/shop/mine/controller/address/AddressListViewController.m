@@ -40,7 +40,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/addressList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/addressList.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
             self.dataArray =[NSMutableArray arrayWithCapacity:0];
             [self.dataArray addObjectsFromArray:[[dic safeObjectForKey:@"data"]objectForKey:@"array"]];
@@ -108,7 +108,7 @@
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/deleteAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/deleteAddress.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
         [self.dataArray removeObject:dict];
         
@@ -135,7 +135,7 @@
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[dict safeObjectForKey:@"id"] forKey:@"id"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/setDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/setDefaultAddress.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
         

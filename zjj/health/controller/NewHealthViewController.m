@@ -107,7 +107,7 @@
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:kuHeaderserReviewUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kuHeaderserReviewUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         
         [headerArr removeAllObjects];

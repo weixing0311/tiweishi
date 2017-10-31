@@ -435,9 +435,11 @@
             
             
             
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/user/addIntroduction.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/user/addIntroduction.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
                 [_infoDict safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshHomePageInfo" object:nil];
+
                 [self.tableview reloadData];
             } failure:^(NSError *error) {
                 
@@ -491,7 +493,13 @@
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
         picker.delegate = self;
-        picker.allowsEditing = NO;//设置可编辑
+        if (type==3) {
+            picker.allowsEditing = YES;//设置可编辑
+
+        }else{
+            picker.allowsEditing = NO;//设置可编辑
+
+        }
         picker.sourceType = sourceType;
         [self presentViewController:picker animated:YES completion:nil];
         
@@ -505,7 +513,13 @@
             
         }
         pickerImage.delegate = self;
-        pickerImage.allowsEditing = NO;
+        if (type==3) {
+            pickerImage.allowsEditing = YES;//设置可编辑
+            
+        }else{
+            pickerImage.allowsEditing = NO;//设置可编辑
+            
+        }
         [self presentViewController:pickerImage animated:YES completion:nil];
         
     }]];
@@ -533,7 +547,7 @@
         NSMutableDictionary * params =[NSMutableDictionary dictionary];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         [params safeSetObject:type==1?@"fatBefore":@"fatAfter" forKey:@"type"];
-        self.currentTasks =[[BaseSservice sharedManager]post1:@"" paramters:params success:^(NSDictionary *dic) {
+        self.currentTasks =[[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteFatImg.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
             
             [[UserModel shareInstance ]showSuccessWithStatus:@"删除成功"];
             
@@ -565,12 +579,14 @@
     //判断资源类型
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
         //如果是图片
-        UIImage *image =info[UIImagePickerControllerOriginalImage];
-        [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
-        
+        UIImage *image ;
+//        [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
+        if (imageType ==3) {
+            image =info[UIImagePickerControllerEditedImage];
+        }else{
+            image =info[UIImagePickerControllerOriginalImage];
+        }
         [self dismissViewControllerAnimated:YES completion:nil];
-        
-        
         if (picker.sourceType ==UIImagePickerControllerSourceTypeCamera) {
             NSData *  fileDate = UIImageJPEGRepresentation(image, 0.001);
             [self upDataImageWithImage:fileDate];

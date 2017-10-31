@@ -61,7 +61,7 @@
     [param safeSetObject:self.articleId forKey:@"articleId"];
     [param safeSetObject:@(page) forKey:@"page"];
     [param safeSetObject:@"30" forKey:@"pageSize"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/queryGreatPerson.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/queryGreatPerson.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
         [self.tableview footerEndRefreshing];

@@ -92,7 +92,7 @@
     self.timelb.text         = item.releaseTime;
     self.zanCountlb.text     = item.greatnum;
     self.commentCountlb.text = item.commentnum;
-    self.shareCountlb.text   = item.forwardingnum;
+//    self.shareCountlb.text   = item.forwardingnum;
     self.levelLb.text        = item.level;
     if (item.isFabulous&&[item.isFabulous isEqualToString:@"1"]) {
         
@@ -147,26 +147,6 @@
 
 //裁剪图片
 
-- (CGFloat)cellOffset{
-    /*
-     - (CGRect)convertRect:(CGRect)rect toView:(nullable UIView *)view;
-     将rect由rect所在视图转换到目标视图view中，返回在目标视图view中的rect
-     这里用来获取self在window上的位置
-     */
-    CGRect toWindow      = [self convertRect:self.bounds toView:self.window];
-    //获取父视图的中心
-    CGPoint windowCenter = self.superview.center;
-    //cell在y轴上的位移
-    CGFloat cellOffsetY  = CGRectGetMidY(toWindow) - windowCenter.y;
-    //位移比例
-    CGFloat offsetDig    = 2 * cellOffsetY / self.superview.frame.size.height ;
-    //要补偿的位移,self.superview.frame.origin.y是tableView的Y值，这里加上是为了让图片从最上面开始显示
-    CGFloat offset       = - offsetDig * (JFA_SCREEN_WIDTH-20 - cellHeight) / 2;
-    //让pictureViewY轴方向位移offset
-    CGAffineTransform transY = CGAffineTransformMakeTranslation(0,offset);
-//    self.imagesView.transform   = transY;
-    return offset;
-}
 
 
 #pragma mark ----collectionView Delegate
@@ -176,7 +156,6 @@
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-//    DLog(@"%d",self.imagesArray.count);
     return self.imagesArray.count;
 }
 ////定义每个Section的四边间距
@@ -191,10 +170,7 @@
 {
     PublicCollImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PublicCollImageCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    
-    
     NSMutableDictionary * dict = [_imagesArray objectAtIndex:indexPath.row];
-
     [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"videoImageStr"]] placeholderImage:getImage(@"default")];
     
     return cell;
@@ -205,10 +181,7 @@
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary * dic = [_imagesArray objectAtIndex:indexPath.row];
-//    if (_imagesArray.count ==1) {
-//        return CGSizeMake(BigImageWidth-20, BigImageHeight);
-//    }
-        return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
+    return CGSizeMake([[dic safeObjectForKey:@"videoSizeWidht"]doubleValue], [[dic safeObjectForKey:@"videoSizeHeight"]doubleValue]);
 }
 //这个是两行cell之间的间距（上下行cell的间距）
 

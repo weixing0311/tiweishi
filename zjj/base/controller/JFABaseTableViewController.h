@@ -11,6 +11,8 @@
 #import "ServiceResultErrorView.h"
 #import "JFANetWorkServiceItem.h"
 #import "AppDelegate.h"
+#import "EmptyView.h"
+
 @interface JFABaseTableViewController : UIViewController<subNetWorkDelegate>
 
 @property(nonatomic,strong)NSMutableArray* requestArray;
@@ -18,7 +20,7 @@
 @property(nonatomic,strong)ServiceResultErrorView * errorView;
 @property(nonatomic,strong)JFASubNetWorkErrorView* networkErrorView;
 @property (nonatomic,strong)NSURLSessionTask * currentTasks;
-
+@property (nonatomic,strong) EmptyView * emptyView;
 -(void)refreshForNetworkError;
 -(UIImage*)backImage;
 - (void)back;
@@ -61,5 +63,8 @@
 -(void)ChangeMySegmentStyle:(UISegmentedControl*)segment;
 
 -(NSString*)DataTOjsonString:(id)object;
+-(void)showEmptyViewWithTitle:(NSString *)title;
+
+-(void)hiddenEmptyView;
 
 @end

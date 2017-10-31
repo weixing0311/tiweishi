@@ -105,7 +105,7 @@
 {
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/wapactive.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/wapactive.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);
     }];
@@ -114,7 +114,7 @@
 //获取个人信息
 -(void)getbalance
 {
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
 
         [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
@@ -155,7 +155,7 @@
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
 
         

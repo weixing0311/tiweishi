@@ -79,6 +79,7 @@
 }
 
 -(NSURLSessionTask*)post1:(NSString*)url
+           HiddenProgress:(BOOL)isHidden
                paramters:(NSMutableDictionary *)paramters
                  success:(requestSuccessBlock)success
                  failure:(requestFailureBlock)failure
@@ -89,6 +90,9 @@
     [manager.requestSerializer setValue:[[UserModel shareInstance] getVersion] forHTTPHeaderField:@"version"];
     DLog(@"request.Url-%@",[NSString stringWithFormat:@"%@%@",[self JFADomin],url]);
     
+    ///去除连接中的空行
+     url= [url stringByReplacingOccurrencesOfString:@" " withString:@""];
+
     
 //    [SVProgressHUD show];
     
@@ -115,7 +119,12 @@
                     success(dic);
                 }else{
                     [SVProgressHUD dismiss];
-                    [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
+                    if (isHidden==YES) {
+                        
+                    }else{
+                        [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
+
+                    }
                     NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
                     
                     failure(error);

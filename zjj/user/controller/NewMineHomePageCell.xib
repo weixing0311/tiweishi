@@ -51,17 +51,17 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="write.png" translatesAutoresizingMaskIntoConstraints="NO" id="XWp-zp-Rj5">
-                        <rect key="frame" x="217" y="160.5" width="15" height="15"/>
+                        <rect key="frame" x="197.5" y="160.5" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="cZT-nT-Bcq"/>
                             <constraint firstAttribute="height" constant="15" id="etl-wE-Fi2"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NC0-gb-bUj">
-                        <rect key="frame" x="169" y="158" width="38" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NC0-gb-bUj">
+                        <rect key="frame" x="187.5" y="158" width="0.0" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="cAY-zw-fyK"/>
-                            <constraint firstAttribute="width" priority="20" constant="200" id="tfc-Ou-N8U"/>
+                            <constraint firstAttribute="width" priority="5" constant="100" id="tfc-Ou-N8U"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

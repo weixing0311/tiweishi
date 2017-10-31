@@ -31,7 +31,11 @@ static CommunityModel * imageModel;
 {
     self.headurl = [dict safeObjectForKey:@"headimgurl"];
     self.releaseTime = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"createTime"]];
-    self.content = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"content"]];
+    
+    NSString * contentStr = [[dict safeObjectForKey:@"content"] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    
+    self.content = [NSString stringWithFormat:@"%@",contentStr];
     self.userId = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"userId"]];
     self.uid = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"id"]];
     self.title = [NSString stringWithFormat:@"%@",[dict safeObjectForKey:@"nickName"]];
@@ -48,7 +52,7 @@ static CommunityModel * imageModel;
     self.topNum     = [dict safeObjectForKey:@"topNum"];
     [self setInPictureWithDict:dict];
 
-    self.rowHieght = [self CalculateCellHieghtWithContent:[dict safeObjectForKey:@"content"] images:self.pictures];
+    self.rowHieght = [self CalculateCellHieghtWithContent:contentStr images:self.pictures];
 
 }
 -(NSMutableArray *)thumbArray
@@ -80,12 +84,17 @@ static CommunityModel * imageModel;
     NSDictionary * dict = @{NSFontAttributeName:font,
                             NSParagraphStyleAttributeName:paragraph};
     
-    CGSize size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-40, 500) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
+    CGSize size;
+    if (contentStr.length>0) {
+        size = [contentStr boundingRectWithSize:CGSizeMake(JFA_SCREEN_WIDTH-40, 500) options:NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil].size;
+    }else{
+        size = CGSizeMake(0, 0);
+    }
     
     float imageHeight = 0.0f;
     
     if (self.movieStr.length>5) {
-        imageHeight = (JFA_SCREEN_WIDTH-20)*0.6;
+        imageHeight = (JFA_SCREEN_WIDTH-40)*0.6;
     }
     else
     {
@@ -95,7 +104,7 @@ static CommunityModel * imageModel;
         }
         else if (images.count==1)
         {
-            imageHeight = (JFA_SCREEN_WIDTH-20)*0.6;
+            imageHeight = (JFA_SCREEN_WIDTH-40)*0.6;
         }
         else if (images.count>1&& images.count<=3)
         {
@@ -105,11 +114,11 @@ static CommunityModel * imageModel;
         {
             if (images.count ==4)
             {
-                imageHeight = (JFA_SCREEN_WIDTH-20);
+                imageHeight = JFA_SCREEN_WIDTH-60;
             }
             else
             {
-                imageHeight = ((JFA_SCREEN_WIDTH-20)/3-10)*2;
+                imageHeight = ((JFA_SCREEN_WIDTH-20)/3-10)*2+10;
             }
         }
         else
@@ -117,7 +126,7 @@ static CommunityModel * imageModel;
             imageHeight = ((JFA_SCREEN_WIDTH-40)/3)*3;
         }
     }
-    return size.height+imageHeight+130;
+    return size.height+imageHeight+140;
     
 }
 @end

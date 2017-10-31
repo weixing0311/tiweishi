@@ -114,7 +114,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString * bundleVersion =[infoDictionary objectForKey:@"CFBundleVersion"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic --%@",dic);
         NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
         int   upDataVersion = [[dataDic safeObjectForKey:@"version"]intValue];

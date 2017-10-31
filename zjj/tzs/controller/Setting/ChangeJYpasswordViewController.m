@@ -70,7 +70,7 @@
     [param setObject:[NSString encryptString: self.renewpassword.text] forKey:@"repPassword"];
     [param setObject:self.verTf.text forKey:@"vcode"];
     [SVProgressHUD show];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/changeTradePassword.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/changeTradePassword.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
     } failure:^(NSError *error) {
@@ -95,7 +95,7 @@
     [param setObject:self.mobiletf.text forKey:@"mobilePhone"];
     [param setObject:@"4" forKey:@"msgType"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {

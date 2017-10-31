@@ -24,7 +24,7 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    
+    self.dateCountLabel.adjustsFontSizeToFitWidth = YES;
     self.headImageView.layer.masksToBounds = YES;
     self.headImageView.layer.cornerRadius = self.headImageView.frame.size.width / 2;
     self.headImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -42,6 +42,16 @@
 -(void)setInfoWithArr:(NSMutableArray *) arr
 {
 //    [self paixuWithArr:arr];
+    
+    ShareHealthItem *  m1 = [[ShareHealthItem alloc]init];
+    ShareHealthItem *  m2 = [[ShareHealthItem alloc]init];
+    [m1 setobjectWithDic:arr[0]];
+    [m2 setobjectWithDic:arr[1]];
+
+    [arr removeAllObjects];
+    [arr addObject:m1];
+    [arr addObject:m2];
+    
     self.infoArray = [NSMutableArray arrayWithArray:[arr sortedArrayWithOptions:NSSortStable usingComparator:^ NSComparisonResult (ShareHealthItem *  m1,ShareHealthItem * m2){
         
 //        return item1.createTime.compare(item2.createTime) == .orderedAscending
@@ -109,7 +119,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40;
+    return 722/_dataArray.count;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

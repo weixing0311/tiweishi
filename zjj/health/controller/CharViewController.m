@@ -92,7 +92,7 @@
     [param safeSetObject:self.startDate forKey:@"startDate"];
     [param safeSetObject:self.endDate forKey:@"endDate"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatTrend.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatTrend.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         NSArray * arr = [dataDict safeObjectForKey:@"array"];
         [_dataArray removeAllObjects];

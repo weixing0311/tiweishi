@@ -105,7 +105,7 @@
     [param safeSetObject:[NSString stringWithFormat:@"2,3"] forKey:@"stockType"];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/order/info/queryOrderInfoList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/order/info/queryOrderInfoList.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
         

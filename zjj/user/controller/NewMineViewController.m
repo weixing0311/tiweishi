@@ -71,7 +71,7 @@
 //    app/user/getUserHome.do
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserHome.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getUserHome.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         _infoDict = [dic safeObjectForKey:@"data"];
         [self.tableview reloadData];
@@ -86,7 +86,7 @@
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/queryMsgDynamic.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/queryMsgDynamic.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         NSString * dynamicTimes = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"dynamicTimes"];
         notifacationCount = [dynamicTimes intValue];

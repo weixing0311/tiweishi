@@ -89,7 +89,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/getDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/getDefaultAddress.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"success --%@",dic);
         [addressDict setDictionary:[dic objectForKey:@"data"]];
         [self.tableview reloadData];
@@ -116,7 +116,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[self getWarehousingUpdateInfo] forKey:@"products"];
     [param setObject:proviceId forKey:@"proviceId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/warehouseno/getWarehouseNo.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/warehouseno/getWarehouseNo.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict = [dic safeObjectForKey:@"data"];
         warehouseNo = [dict safeObjectForKey:@"warehouseNo"];
     } failure:^(NSError *error) {
@@ -307,7 +307,7 @@
     
     
     DLog(@"上传数据---%@",self.param);
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/saveOrderInfo.do" paramters:self.param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/saveOrderInfo.do" HiddenProgress:NO paramters:self.param success:^(NSDictionary *dic) {
         DLog(@"下单成功--%@",dic);
         
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];

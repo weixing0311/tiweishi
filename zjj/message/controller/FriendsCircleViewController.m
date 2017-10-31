@@ -59,7 +59,7 @@
 ////获取segment
 -(void)getSegmentInfo
 {
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/sysShareMsgType/sysShareMsgTypeList.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/sysShareMsgType/sysShareMsgTypeList.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         _segmentArray = [[dic safeObjectForKey:@"data"]objectForKey:@"array"];
         NSMutableArray * titleArray =[NSMutableArray array];
         for (int i =0; i<_segmentArray.count; i++) {
@@ -108,7 +108,7 @@
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
     [params  safeSetObject:showSegType forKey:@"shareMsgType"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryShareMsgList.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryShareMsgList.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
         
@@ -238,7 +238,7 @@
     
     
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/msg/countShareNum.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/msg/countShareNum.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
     } failure:^(NSError *error) {
         

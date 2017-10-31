@@ -19,7 +19,7 @@
 #import "NewMineHomePageViewController.h"
 #import "WriteArtcleViewController.h"
 #import "CommunityCell.h"
-@interface CommunityViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PublicArticleCellDelegate,BigImageArticleCellDelegate>
+@interface CommunityViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PublicArticleCellDelegate,BigImageArticleCellDelegate,ArticleDetailDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
 
@@ -69,7 +69,8 @@
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableView) name:@"SENDARTICLESUCCESS" object:nil];
-    [self ChangeMySegmentStyle:self.segment];
+    [self setSegmentStyle];
+    
 
     
     if (_isMyMessagePage !=YES) {
@@ -82,6 +83,26 @@
     pageSize= 30;
     self.segment.selectedSegmentIndex = 1;
     [self.tableview headerBeginRefreshing];
+}
+
+-(void)setSegmentStyle
+{
+    [self.segment setTintColor:[UIColor whiteColor]];
+    [self.segment setBackgroundImage:[UIImage imageNamed:@"selectImg"]
+                       forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    
+    UIFont *font = [UIFont boldSystemFontOfSize:17.0f];   // 设置字体大小
+
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor],NSForegroundColorAttributeName,font,NSFontAttributeName,nil];
+    
+    
+    NSDictionary *dics = [NSDictionary dictionaryWithObjectsAndKeys:HEXCOLOR(0x666666),NSForegroundColorAttributeName,font,NSFontAttributeName,nil];
+    
+    [self.segment setTitleTextAttributes:dics forState:UIControlStateNormal];
+    [self.segment setTitleTextAttributes:dic forState:UIControlStateSelected];
+    
+    
+
 }
 -(void)refreshTableView
 {
@@ -150,7 +171,7 @@
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:urlStr paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:urlStr HiddenProgress:NO paramters:params  success:^(NSDictionary *dic) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
         
@@ -292,7 +313,7 @@
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
         model.isFollow = @"1";
         PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
@@ -327,7 +348,7 @@
     }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
 
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
             [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
             
@@ -436,7 +457,7 @@
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
         model.isFollow = @"1";
         CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
@@ -469,7 +490,7 @@
     }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
             [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
             
@@ -573,7 +594,7 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
                 [_dataArray removeObject:model];
                 [self.tableview reloadData];
@@ -605,19 +626,14 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
             } failure:^(NSError *error) {
                 
             }];
-            
         }]];
         [self presentViewController:alert animated:YES completion:nil];
-        
     }
-    
-    
-
 }
 
 -(void)enterDetailPageWithIndex:(NSInteger)index
@@ -625,6 +641,7 @@
     CommunityModel * model = [_dataArray objectAtIndex:index];
     ArticleDetailViewController * ard =[[ArticleDetailViewController alloc]init];
     ard.infoModel = model;
+    ard.delegate = self;
     ard.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ard animated:YES];
 
@@ -674,7 +691,7 @@
     NSMutableDictionary * params  =[NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareArticleLink.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareArticleLink.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         NSString * shareUrl = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"url"];
         
@@ -709,7 +726,6 @@
                  case SSDKResponseStateSuccess:
                  {
                      [[UserModel shareInstance]dismiss];
-                     
                      [[UserModel shareInstance]didCompleteTheTaskWithId:@"4"];
                      
                      break;
@@ -717,7 +733,9 @@
                  case SSDKResponseStateFail:
                  {
                      [[UserModel shareInstance]dismiss];
-                     //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+#ifdef DEBUG
+                     [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+#endif
                      DLog(@"error-%@",error);
                      break;
                  }
@@ -753,6 +771,19 @@
     
     [self.tableview headerBeginRefreshing];
 }
+
+
+#pragma mark---nextVCdelegate
+-(void)refreshCommentWithModel:(CommunityModel *)model
+{
+    for (CommunityModel * model1 in _dataArray) {
+        if ([model1.uid isEqualToString:model.uid]) {
+            model1.commentnum = [NSString stringWithFormat:@"%d",[model1.commentnum intValue]+1];
+        }
+    }
+    [self.tableview reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 //    [self clearSDCeche];

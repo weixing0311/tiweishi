@@ -123,7 +123,7 @@
     [param setObject:self.vertf.text forKey:@"vcode"];
     
     [SVProgressHUD show];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/appuser/regsiter.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/appuser/regsiter.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         
         [[UserModel shareInstance] showSuccessWithStatus:@"注册成功"];
@@ -149,7 +149,7 @@
     [param safeSetObject:[NSString encryptString:self.passwordtf.text] forKey:@"password"];
     
     [SVProgressHUD showWithStatus:@"登录中..."];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         [SVProgressHUD dismiss];
         //设置Jpush---别名
@@ -196,7 +196,7 @@
     [param setObject:self.mobiletf.text forKey:@"mobilePhone"];
     [param setObject:@"0" forKey:@"msgType"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance] showSuccessWithStatus:@"已发送"];
     } failure:^(NSError * error) {
@@ -229,7 +229,7 @@
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[dic safeObjectForKey:@"recid"] forKey:@"recid"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/appuser/getPhoneByUserId.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/appuser/getPhoneByUserId.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance]showSuccessWithStatus:@"获取推荐人手机号成功"];
         NSDictionary * dataDic = [dic safeObjectForKey:@"data"];

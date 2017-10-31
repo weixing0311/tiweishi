@@ -160,7 +160,7 @@
         [param safeSetObject:@"" forKey:@"postCode"];
         [param safeSetObject:self.defaultSwitch.isOn?@"1":@"0" forKey:@"isDefault"];//是不是默认地址 0否1是
 
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/updateAddress.do" paramters:param success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/updateAddress.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
                 [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
                 [self.navigationController popViewControllerAnimated:YES];
@@ -181,7 +181,7 @@
         [param safeSetObject:@"" forKey:@"postCode"];
         [param safeSetObject:self.defaultSwitch.isOn?@"1":@"0" forKey:@"isDefault"];//是不是默认地址 0否1是
 
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/addAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userAddress/addAddress.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
             [[UserModel shareInstance] showSuccessWithStatus: @"添加成功"];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshAddressListTableView" object:nil];
             [self.navigationController popViewControllerAnimated:YES];
@@ -219,7 +219,7 @@
 
 -(void)getCityInfo
 {
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/area/queryArea.do" paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/area/queryArea.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         
 
         

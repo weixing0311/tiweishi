@@ -57,7 +57,7 @@
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:self.productNo forKey:@"productNo"];
     
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/product/queryProductintegralDetail.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/product/queryProductintegralDetail.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary * infoDict = [[[dic objectForKey:@"data"] objectForKey:@"array"]objectAtIndex:0];
         
         

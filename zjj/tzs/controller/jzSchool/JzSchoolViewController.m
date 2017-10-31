@@ -68,7 +68,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:@(page) forKey:@"page"];
     [param safeSetObject:@"30" forKey:@"pageSize"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryInformateList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryInformateList.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];

@@ -80,7 +80,7 @@
     [param setObject:@"" forKey:@"status"];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/orderInfo/queryIntegrationOrderInfo.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/orderInfo/queryIntegrationOrderInfo.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
@@ -128,7 +128,7 @@
         [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
         [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
         
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/cancelOrderDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
             [[UserModel shareInstance] showSuccessWithStatus:@"取消成功"];
             [self.tableview headerBeginRefreshing];
             
@@ -152,7 +152,7 @@
     [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
     [param safeSetObject:orderNo forKey:@"orderNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
         [self.tableview headerBeginRefreshing];
 

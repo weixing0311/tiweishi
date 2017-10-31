@@ -227,6 +227,8 @@
 		6C47124D1F27391700E5E750 /* WXPsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C47124B1F27391700E5E750 /* WXPsTitleCell.m */; };
 		6C47124E1F27391700E5E750 /* WXPsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */; };
 		6C57799A1FA701B800388986 /* ClearCecheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5779991FA701B800388986 /* ClearCecheModel.m */; };
+		6C5779A01FA8668300388986 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57799F1FA8668300388986 /* EmptyView.m */; };
+		6C5779A21FA8669000388986 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5779A11FA8669000388986 /* EmptyView.xib */; };
 		6C6773731F90AE470007CB2D /* WeighingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6773711F90AE470007CB2D /* WeighingViewController.m */; };
 		6C6773741F90AE470007CB2D /* WeighingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6773721F90AE470007CB2D /* WeighingViewController.xib */; };
 		6C6773791F9596520007CB2D /* NewHealthHistoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6773771F9596520007CB2D /* NewHealthHistoryListViewController.m */; };
@@ -1192,6 +1194,9 @@
 		6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXPsTitleCell.xib; sourceTree = "<group>"; };
 		6C5779981FA701B800388986 /* ClearCecheModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClearCecheModel.h; sourceTree = "<group>"; };
 		6C5779991FA701B800388986 /* ClearCecheModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClearCecheModel.m; sourceTree = "<group>"; };
+		6C57799E1FA8668300388986 /* EmptyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
+		6C57799F1FA8668300388986 /* EmptyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
+		6C5779A11FA8669000388986 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		6C5D598E1F988FEE0040EE5A /* integralBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = integralBg.png; sourceTree = "<group>"; };
 		6C6773701F90AE470007CB2D /* WeighingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeighingViewController.h; sourceTree = "<group>"; };
 		6C6773711F90AE470007CB2D /* WeighingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeighingViewController.m; sourceTree = "<group>"; };
@@ -2496,6 +2501,9 @@
 				6C2241B51F7E2692001BB2FD /* PublicCollImageCell.h */,
 				6C2241B61F7E2692001BB2FD /* PublicCollImageCell.m */,
 				6C2241B71F7E2692001BB2FD /* PublicCollImageCell.xib */,
+				6C57799E1FA8668300388986 /* EmptyView.h */,
+				6C57799F1FA8668300388986 /* EmptyView.m */,
+				6C5779A11FA8669000388986 /* EmptyView.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -5022,6 +5030,7 @@
 				6C43113A1F064DE90094EFF4 /* JZSchoolCell.xib in Resources */,
 				6CFDECB01F8B7DE8005D3971 /* Prompt@3x.png in Resources */,
 				6C6CFEC21F908EF9005C2738 /* NewHealthDetailSecondCell.xib in Resources */,
+				6C5779A21FA8669000388986 /* EmptyView.xib in Resources */,
 				6CD010F51EF7FB0C00FB9419 /* DetailWeigthCell.xib in Resources */,
 				6CFDEC2B1F8B7DE7005D3971 /* footer-ShoppingMall-red@3x.png in Resources */,
 				6CFDECA71F8B7DE8005D3971 /* personal-tou@2x.png in Resources */,
@@ -5120,6 +5129,7 @@
 				6CD19FB11F74FCB100DF1289 /* UserListCell.m in Sources */,
 				6CA024C11F19021C00F54DF3 /* AddSubUserCell.m in Sources */,
 				6C2241B31F7DE43C001BB2FD /* CommunityCell.m in Sources */,
+				6C5779A01FA8668300388986 /* EmptyView.m in Sources */,
 				6CA9C8391F78B49300E0941B /* IntegralOrderDetailViewController.m in Sources */,
 				6C2AF2381F71081E00C00F2A /* NewMineRelationsCell.m in Sources */,
 				6C6CFE651F8E3408005C2738 /* ADDChengUserViewController.m in Sources */,

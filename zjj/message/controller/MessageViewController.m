@@ -58,7 +58,7 @@
     [params safeSetObject:@(page) forKey:@"page"];
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
 
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/msg/queryMsgList.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/msg/queryMsgList.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [self.tableview headerEndRefreshing];
         [self.tableview footerEndRefreshing];
         

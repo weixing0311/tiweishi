@@ -66,7 +66,7 @@
     [al addAction: [UIAlertAction actionWithTitle:@"朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self didShareVX:nil];
     }]];
-    [al addAction: [UIAlertAction actionWithTitle:@"QQ" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [al addAction: [UIAlertAction actionWithTitle:@"社区" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self didShareQQ:nil];
     }]];
     [al addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -92,7 +92,7 @@
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     [param safeSetObject:@(page) forKey:@"page"];
     [param safeSetObject:@(pageSize) forKey:@"pageSize"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatListNew.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatListNew.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
         
@@ -261,7 +261,7 @@
     UIImage * image = [self showShareView];
     WriteArtcleViewController*postVC = [[WriteArtcleViewController alloc]init];
     postVC.firstImage = image;
-    postVC.shareType  =0;
+    postVC.shareType  =nil;
     [self.navigationController pushViewController:postVC animated:YES];
 
 }

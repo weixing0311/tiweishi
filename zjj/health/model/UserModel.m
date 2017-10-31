@@ -412,7 +412,7 @@ static UserModel *model;
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     int  bundleVersion =[[infoDictionary objectForKey:@"CFBundleVersion"]intValue];
     
-    [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" paramters:nil success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager]post1:@"app/isForce/judgeVersion.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         
         DLog(@"dic --%@",dic);
         NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
@@ -455,7 +455,7 @@ static UserModel *model;
 ////获取个人信息
 -(void)getbalance
 {
-    [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" paramters:nil success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager]post1:@"app/user/getUserInfo.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         
         [[UserModel shareInstance]setTzsInfoWithDict:[dic safeObjectForKey:@"data"]];
@@ -467,7 +467,7 @@ static UserModel *model;
 ///获取通知广告
 -(void)getNotiadvertising
 {
-    [[BaseSservice sharedManager]post1:@"app/notify/queryNotifyInfo.do" paramters:nil success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager]post1:@"app/notify/queryNotifyInfo.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         DLog(@"url--%@  dic--%@",@"app/notify/queryNotifyInfo.do",dic);
         
         NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
@@ -490,7 +490,7 @@ static UserModel *model;
 //    NSString * NICK_NUM = @"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5][0-9]+";
     NSString * NICK_NUM = @"^[a-zA-Z0-9\u4e00-\u9fa5]+$";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", NICK_NUM];
-    BOOL isMatch = [pred evaluateWithObject:nickName];
+    BOOL isMatch = [pred evaluateWithObject:nickName]; 
     return isMatch;
     
 }
@@ -501,7 +501,7 @@ static UserModel *model;
     [params setObject:taskId forKey:@"taskId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
     } failure:^(NSError *error) {
         
     }];

@@ -199,7 +199,7 @@
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         [param safeSetObject:subId forKey:@"id"];
         
-    [[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteChild.do" paramters:param success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager]post1:@"app/evaluatUser/deleteChild.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
             self.hidden = YES;
             [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
             [[UserModel shareInstance]removeChildDict:dict];

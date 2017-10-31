@@ -94,7 +94,7 @@
     [params safeSetObject:self.userId forKey:@"userId"];
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/queryUserHome.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/queryUserHome.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
         
@@ -486,7 +486,7 @@
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
         model.isFollow = @"1";
         PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
@@ -512,7 +512,7 @@
     }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
             [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
             
@@ -621,7 +621,7 @@
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
         model.isFollow = @"1";
         CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
@@ -646,7 +646,7 @@
     }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         if (model.isFabulous&&[model.isFabulous isEqualToString:@"1"]) {
             [[UserModel shareInstance]showSuccessWithStatus:@"取消点赞成功"];
             
@@ -750,7 +750,7 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
                 [_dataArray removeObject:model];
                 [self.tableview reloadData];
@@ -781,7 +781,7 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
             } failure:^(NSError *error) {
                 
@@ -850,7 +850,7 @@
     NSMutableDictionary * params  =[NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareArticleLink.do " paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareArticleLink.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         NSString * shareUrl = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"url"];
         
@@ -922,7 +922,7 @@
         NSMutableDictionary * params =[NSMutableDictionary dictionary];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         [params setObject:[_infoDict safeObjectForKey:@"userId"] forKey:@"followId"];
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
             DLog(@"dic-关注成功--%@",dic);
             cell.gzBtn.selected = YES;
             [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
@@ -941,7 +941,7 @@
         NSMutableDictionary * params =[NSMutableDictionary dictionary];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         [params setObject:followId forKey:@"followId"];
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
             DLog(@"dic-取消关注成功--%@",dic);
             cell.gzBtn.selected = YES;
             [[UserModel shareInstance]showSuccessWithStatus: @"取消成功"];
@@ -1076,9 +1076,10 @@
 -(void) shareWithType:(SSDKPlatformType)type
 {
     
+    
     NSMutableDictionary * params  =[NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareHomeLink.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/shareHomeLink.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         NSString * shareUrl = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"url"];
         
@@ -1113,16 +1114,19 @@
              switch (state) {
                  case SSDKResponseStateSuccess:
                  {
-                     [[UserModel shareInstance]dismiss];
-                     //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
-                     
-                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"6"];
+                  [[UserModel shareInstance]dismiss];
+#ifdef DEBUG
+                   [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
+#endif
+                 [[UserModel shareInstance]didCompleteTheTaskWithId:@"6"];
                      break;
                  }
                  case SSDKResponseStateFail:
                  {
                      [[UserModel shareInstance]dismiss];
-                     //                 [[UserModel shareInstance] showErrorWithStatus:@"分享失败"];
+#ifdef DEBUG
+                     [[UserModel shareInstance] showErrorWithStatus:@"error"];
+#endif
                      DLog(@"error-%@",error);
                      break;
                  }
@@ -1150,7 +1154,7 @@
         [params setObject:@"6" forKey:@"taskId"];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         } failure:^(NSError *error) {
             
         }];

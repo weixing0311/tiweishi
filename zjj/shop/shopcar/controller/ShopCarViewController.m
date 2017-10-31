@@ -57,7 +57,7 @@
 {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductList.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductList.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         self.emptyView.hidden =YES;
             [self.dataArray removeAllObjects];
             NSArray *arr =[[dic objectForKey:@"data" ]objectForKey:@"productArray"];
@@ -180,7 +180,7 @@
     
     [param setObject:str forKey:@"jsonData"];
     DLog(@"%@---%@",str,param);
-    [[BaseSservice sharedManager] post1:@"app/order/shoppingCart/updateShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager] post1:@"app/order/shoppingCart/updateShoppingCart.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
@@ -236,7 +236,7 @@
         [param safeSetObject:jsonValue forKey:@"jsonData"];
         DLog(@"%@--jsonvalue:%@",param,jsonValue);
         
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/delShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/delShoppingCart.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
             
             
             [self.dataArray removeObject:item];

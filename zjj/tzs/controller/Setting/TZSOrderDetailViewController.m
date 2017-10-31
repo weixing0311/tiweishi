@@ -43,7 +43,7 @@
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param setObject:self.orderNo forKey:@"orderNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/queryOrderInfoOne.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/queryOrderInfoOne.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
         _infoDict = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"][0];
         [_dataArray addObjectsFromArray:[_infoDict safeObjectForKey:@"itemJson"]];
@@ -355,7 +355,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:[_infoDict safeObjectForKey:@"orderNo"] forKey:@"orderNo"];
     [param safeSetObject:[UserModel shareInstance].nickName  forKey:@"userName"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/cancelOrder.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"删除订单成功--%@",dic);
         [[UserModel shareInstance]showSuccessWithStatus:@"取消订单成功"];
         [self.navigationController popViewControllerAnimated:YES];

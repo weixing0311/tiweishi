@@ -60,7 +60,7 @@
     [param setObject:self.mobiletf.text forKey:@"mobilePhone"];
     [param setObject:@"1" forKey:@"msgType"];
 //    短信类型 0注册 1找回密码 2登录 3修改手机号 4 修改交易密码  5 找回交易密码
-    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         NSDictionary *dict = dic;
         NSString * status = [dict objectForKey:@"status"];
@@ -139,7 +139,7 @@
     [param safeSetObject:self.vertf.text forKey:@"vcode"];
     
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/findPassword.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/findPassword.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:^(NSError *error) {

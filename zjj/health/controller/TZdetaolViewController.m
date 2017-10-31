@@ -112,7 +112,7 @@
     [param safeSetObject:self.dataId forKey:@"dataId"];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:kShareUserReviewInfoUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kShareUserReviewInfoUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[HealthDetailsItem instance]getInfoWithDict:[dic objectForKey:@"data" ]];
         [self.tableview reloadData];
         DLog(@"%@",dic);
@@ -130,7 +130,7 @@
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     [param safeSetObject:@([HealthDetailsItem instance].DataId) forKey:@"dataId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/deleteEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/deleteEvaluatData.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"deletePCINFO" object:nil];
         [self.navigationController popViewControllerAnimated:YES];

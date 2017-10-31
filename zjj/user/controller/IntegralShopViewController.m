@@ -72,7 +72,7 @@
     [param setObject:@(self.count) forKey:@"pageSize"];
 //    [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
 
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/product/queryProductintegral.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/product/queryProductintegral.do " HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [self.collectionView headerEndRefreshing];
         [self.collectionView footerEndRefreshing];
         
@@ -100,7 +100,7 @@
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryIntegeralAndSucc.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryIntegeralAndSucc.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         self.jifenlb.text = [NSString stringWithFormat:@"积分 %@",[dataDict safeObjectForKey:@"currentIntegeral"]];
@@ -147,12 +147,12 @@
     cell.secondlb.text = [NSString stringWithFormat:@"%@级以上",[dict safeObjectForKey:@"grade"]];
     }
     
-    NSString * restrictionNum = [dict  safeObjectForKey:@"restrictionNum"];
+    NSString * restrictionNum = [dict  safeObjectForKey:@"restrictionTimes"];
     
     if ([restrictionNum isEqualToString:@"0"]) {
         cell.timelb.text = @"";
     }else{
-        cell.timelb.text = [NSString  stringWithFormat:@"限购%d件",[restrictionNum intValue]];
+        cell.timelb.text = [NSString  stringWithFormat:@"限购%d次",[restrictionNum intValue]];
         cell.timelb.hidden = NO;
     }
     

@@ -65,7 +65,7 @@
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[dic safeObjectForKey:@"recid"] forKey:@"recid"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/appuser/getPhoneByUserId.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/appuser/getPhoneByUserId.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance]showSuccessWithStatus:@"获取推荐人手机号成功"];
         NSDictionary * dataDic = [dic safeObjectForKey:@"data"];
@@ -93,7 +93,7 @@
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params setObject:[NSString encryptString: self.mobiletf.text] forKey:@"phone"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatUser/bindingCoach.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatUser/bindingCoach.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         self.addView .hidden = YES;
         DLog(@"dic --%@",dic);
         [UserModel shareInstance].superiorDict = [dic safeObjectForKey:@"data"];

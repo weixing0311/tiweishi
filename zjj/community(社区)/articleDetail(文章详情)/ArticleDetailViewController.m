@@ -146,7 +146,7 @@
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:@(page) forKey:@"page"];
     [params safeSetObject:self.infoModel.uid forKey:@"articleId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlecomment/queryArticlecomment.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlecomment/queryArticlecomment.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         if (page==1) {
             [self.dataArray removeAllObjects];
@@ -179,14 +179,16 @@
     [params safeSetObject:commentStr forKey:@"content"];
     [params safeSetObject:self.infoModel.uid forKey:@"articleId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlecomment/saveArticlecomment.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlecomment/saveArticlecomment.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [commentView.commentTf resignFirstResponder];
         commentView.commentTf.text = @"";
         [[UserModel shareInstance]showSuccessWithStatus:@"发表成功"];
         
         
         [self getCommentList];
-        
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(refreshCommentWithModel:)]) {
+            [self.delegate refreshCommentWithModel:self.infoModel];
+        }
 //        NSMutableDictionary * infoDict =[NSMutableDictionary dictionary];
 //        [infoDict safeSetObject:[UserModel shareInstance].headUrl forKey:@"headimgurl"];
 //        [infoDict safeSetObject:[UserModel shareInstance].nickName forKey:@"nickName"];
@@ -208,7 +210,7 @@
     [param safeSetObject:[_infoDict safeObjectForKey:@"id"] forKey:@"articleId"];
     [param safeSetObject:@"1" forKey:@"page"];
     [param safeSetObject:@"15" forKey:@"pageSize"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/queryGreatPerson.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/queryGreatPerson.do" HiddenProgress:YES paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
         
@@ -299,7 +301,6 @@
             cell.delegate = self;
             cell.tag = indexPath.row;
             [cell setInfoWithDict:item];
-            
             [cell loadImagesWithItem:item];
             cell.nemuView.hidden = YES;
             cell.gzBtn.hidden = YES;
@@ -325,24 +326,26 @@
         int zanCount = [[_infoDict safeObjectForKey:@"greatnum"]intValue];
 
         if (self.zanCountArray.count<1||!self.zanCountArray) {
-            cell.zanLabel.text = @"0";
+            ZanName = @"暂时还没有人点赞";
+            cell.zanLabel.text = [NSString stringWithFormat:@"%@",ZanName];
         }
-        else if (self.zanCountArray.count<5) {
+        else if (self.zanCountArray.count<4) {
             for (int i =0; i<self.zanCountArray.count; i++) {
                 GuanzModel * model = [self.zanCountArray objectAtIndex:i];
-                ZanName =[NSString stringWithFormat:@"%@%@赞了%d次",ZanName?[NSString stringWithFormat:@"%@、",ZanName]:@"",model.nickname,zanCount];
+                ZanName =[NSString stringWithFormat:@"%@%@",ZanName?[NSString stringWithFormat:@"%@、",ZanName]:@"",model.nickname];
             }
+            cell.zanLabel.text = [NSString stringWithFormat:@"%@赞了%d次",ZanName,zanCount];
+
         }else{
             GuanzModel * model1 = [self.zanCountArray objectAtIndex:0];
             GuanzModel * model2 = [self.zanCountArray objectAtIndex:1];
             GuanzModel * model3 = [self.zanCountArray objectAtIndex:2];
             GuanzModel * model4 = [self.zanCountArray objectAtIndex:2];
-            GuanzModel * model5 = [self.zanCountArray objectAtIndex:2];
 
-            ZanName =[NSString stringWithFormat:@"%@、%@、%@、%@、%@...",model1.nickname,model2.nickname,model3.nickname,model4.nickname,model5.nickname];
+            ZanName =[NSString stringWithFormat:@"%@、%@、%@、%@...",model1.nickname,model2.nickname,model3.nickname,model4.nickname];
+            cell.zanLabel.text = [NSString stringWithFormat:@"%@",ZanName];
 
         }
-        cell.zanLabel.text = [NSString stringWithFormat:@"%@",ZanName];
 
         
         if (zanCount<4) {
@@ -392,14 +395,12 @@
 -(void)didPlayWithBigCell:(CommunityCell *)cell
 {
     NSString * videoPath = [_infoDict safeObjectForKey:@"videoPath"];
-    NSString * contentStr = [_infoDict safeObjectForKey:@"content"];
-    float height = 65+([self getContentHeightWithContent:contentStr Font:15]<20?20:[self getContentHeightWithContent:contentStr Font:15]);
-        //记录被点击的Cell
         //销毁播放器
         [_playerView destroyPlayer];
-        CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(10,height+10, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.6)];
+        CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0,0, (JFA_SCREEN_WIDTH-40), (JFA_SCREEN_WIDTH-40)*0.6)];
         _playerView = playerView;
-        [self.tableview addSubview:_playerView];
+    [cell.playerBgView addSubview:_playerView];
+    [cell.playerBgView bringSubviewToFront:_playerView];
         //视频地址
         _playerView.url = [NSURL URLWithString:videoPath];
         //播放
@@ -478,7 +479,7 @@
         [params safeSetObject:@"1" forKey:@"isFabulous"];//1是点赞 0取消
     }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/updateIsFabulous.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@""];
         [self refreshZanInfoWithCell:cell];
     } failure:^(NSError *error) {
@@ -517,7 +518,7 @@
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
         model.isFollow = @"1";
         PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
@@ -535,7 +536,7 @@
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
         model.isFollow = @"1";
         CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
@@ -575,7 +576,7 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/community/articlepage/deleteArticle.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"删除成功"];
                 [_dataArray removeObject:model];
                 [self.tableview reloadData];
@@ -604,7 +605,7 @@
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
             } failure:^(NSError *error) {
                 
@@ -629,6 +630,7 @@
         [commentView.commentTf resignFirstResponder];
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

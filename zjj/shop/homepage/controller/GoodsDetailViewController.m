@@ -114,7 +114,7 @@
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.productNo forKey:@"productNo"];
     [SVProgressHUD showWithStatus:@"加载中..."];
-    self.currentTasks = [[BaseSservice sharedManager]post1:kProductsDetail paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kProductsDetail HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         item = [[GoodsDetailItem alloc]init ];
         [item setupInfoWithDict:[dic objectForKey:@"data"]];
@@ -135,7 +135,7 @@
 {
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/searchProductCount.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         int total = [[[dic safeObjectForKey:@"data"]safeObjectForKey:@"total"]intValue];
         if (!total||total==0) {
@@ -155,7 +155,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param setObject:self.productNo forKey:@"productNo"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/product/queryAppPictureDetail.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/product/queryAppPictureDetail.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict = [dic objectForKey:@"data"];
         
         NSString * url1 =[dict safeObjectForKey:@"pictureDetail"];
@@ -347,7 +347,7 @@
     
     [param safeSetObject:jsonValue forKey:@"jsonData"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/saveShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/shoppingCart/saveShoppingCart.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:@"加入成功"];
 
         [self getgoodsCountWithNet];

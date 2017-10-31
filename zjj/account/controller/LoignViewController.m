@@ -149,7 +149,7 @@
     [param safeSetObject:[NSString encryptString:self.passWordTf.text] forKey:@"password"];
         
     [SVProgressHUD showWithStatus:@"登录中..."];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/loginPwd.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         [SVProgressHUD dismiss];
         //设置Jpush---别名
@@ -210,7 +210,7 @@
     [param setObject:[NSString encryptString:self.mobileTf.text] forKey:@"mobilePhone"];
     [param setObject:self.verTF.text forKey:@"vcode"];
     DLog(@"param--%@",param);
-    self.currentTasks = [[BaseSservice sharedManager]post1:kLoignWithVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kLoignWithVerUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"登录成功"];
         
@@ -289,7 +289,7 @@
     [param setObject:self.mobileTf.text forKey:@"mobilePhone"];
     [param setObject:@"2" forKey:@"msgType"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kSendMobileVerUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         NSDictionary *dict = dic;
         NSString * status = [dict objectForKey:@"status"];

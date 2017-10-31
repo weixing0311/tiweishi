@@ -71,7 +71,7 @@
     
     DLog(@"上传数据---%@",param);
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/addEvaluatData.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/addEvaluatData.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         self.statuslb.text = @"上传成功！";
         

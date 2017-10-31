@@ -68,9 +68,10 @@
         [param safeSetObject:@(pageSize) forKey:@"pageSize"];
         [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/queryFans.do" paramters:param success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/queryFans.do" HiddenProgress:YES paramters:param success:^(NSDictionary *dic) {
             [self.tableview footerEndRefreshing];
             [self.tableview headerEndRefreshing];
+            [self hiddenEmptyView];
             if (page ==1) {
                 [self.dataArray removeAllObjects];
                 [self.tableview setFooterHidden:NO];
@@ -96,6 +97,8 @@
             if ([error code] ==402) {
                 [_dataArray removeAllObjects];
                 [self.tableview reloadData];
+                
+               [self showEmptyViewWithTitle:@"还没有粉丝"];
             }
             
         }];
@@ -106,9 +109,10 @@
         [param safeSetObject:@(page) forKey:@"page"];
         [param safeSetObject:@(pageSize) forKey:@"pageSize"];
 
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/queryUserFollow.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/queryUserFollow.do" HiddenProgress:YES paramters:param success:^(NSDictionary *dic) {
         [self.tableview footerEndRefreshing];
         [self.tableview headerEndRefreshing];
+        [self hiddenEmptyView];
         if (page ==1) {
             [self.dataArray removeAllObjects];
             [self.tableview setFooterHidden:NO];
@@ -132,8 +136,8 @@
         if ([error code] ==402) {
             [_dataArray removeAllObjects];
             [self.tableview reloadData];
+            [self showEmptyViewWithTitle:@"还没有关注别人"];
         }
-
     }];
     }
     else{
@@ -221,10 +225,10 @@
             NSMutableDictionary * params =[NSMutableDictionary dictionary];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
             [params setObject:model.userId forKey:@"followId"];
-            self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" paramters:params success:^(NSDictionary *dic) {
+            self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 DLog(@"dic-取消关注成功--%@",dic);
                 if (self.pageType==IS_SEARCH) {
-                    cell.gzbtn.selected =YES;
+                    cell.gzbtn.selected =NO;
                     cell.gzbtn.backgroundColor = [UIColor redColor];
                     cell.gzbtn.layer.borderColor = [UIColor redColor].CGColor;
                 }else{
@@ -243,7 +247,7 @@
         NSMutableDictionary * params =[NSMutableDictionary dictionary];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         [params setObject:model.userId forKey:@"followId"];
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
             DLog(@"dic-关注成功--%@",dic);
 //            cell.gzbtn.selected =YES;
             [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
@@ -255,7 +259,6 @@
             [self getInfo];
             }
         } failure:^(NSError *error) {
-            
         }];
     }
 }

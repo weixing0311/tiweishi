@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+Extension.h"
 #import "TabbarViewController.h"
+#import "LoignViewController.h"
 @interface ADDChengUserViewController ()<UIPickerViewDelegate,UIPickerViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 - (IBAction)didChangeHeaderImage:(id)sender;
@@ -25,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *heighttf;
 @property (nonatomic,strong) UIPickerView * pickView;
 @property (nonatomic,strong) UIDatePicker * datePicker;
+@property (weak, nonatomic) IBOutlet UILabel *StitleLabel;
 
 @end
 
@@ -38,18 +40,45 @@
 {
     [super viewWillAppear:animated];
     [self setTBWhiteColor];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    if (self.isResignUser==YES) {
+        self.StitleLabel.text = @"完善资料";
+    }else{
+        self.StitleLabel.text = @"添加用秤用户";
+    }
+    [self setTBWhiteColor];
+    
+    self.nicknametf.delegate = self;
+    self.nicknametf.returnKeyType = UIReturnKeyDone;
+    
+    
     [self setPickView];
     [self setDatePickerView];
     self.nicknametf.delegate = self;
     // Do any additional setup after loading the view from its nib.
 }
+
+
+
+
 - (IBAction)didClickBack:(id)sender {
+    if (self.isResignUser) {
+        
+        if ([self.view.window.rootViewController isKindOfClass:[ADDChengUserViewController class]]) {
+            LoignViewController * loign = [[LoignViewController alloc]init];
+            self.view.window.rootViewController =loign;
+        }else{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        
+    }else{
     [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 //上传数据
@@ -118,7 +147,30 @@
 }
 -(void)addMainUserInfo
 {
-    NSData *fileData = UIImageJPEGRepresentation(self.headImageView.image,0.001);
+    
+    if ([[UserModel shareInstance] valiNickName:self.nicknametf.text]!=YES) {
+        [[UserModel shareInstance]showInfoWithStatus:@"昵称只能由中文、字母或数字组成"];
+        return;
+    }
+    
+    if (self.nicknametf.text.length>6) {
+        [[UserModel shareInstance] showInfoWithStatus:@"昵称最长为6字符"];
+        return;
+        
+    }
+    if (self.agetf.text.length<1) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请填写年龄"];
+        return;
+        
+    }
+    if (self.heighttf.text.length<1) {
+        [[UserModel shareInstance] showInfoWithStatus:@"请填写身高"];
+        return;
+        
+    }
+
+    
+    NSData *fileData = UIImageJPEGRepresentation(self.headImageView.image,0.01);
 
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
 
@@ -130,7 +182,6 @@
 
     
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:params imageData:fileData imageName:@"headimgurl" success:^(NSDictionary *dic) {
-        
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];
         NSString * subId =[NSString stringWithFormat:@"%@",[dataDic safeObjectForKey:@"id"]];
@@ -212,7 +263,7 @@
 
 - (IBAction)didSaveUserInfo:(id)sender {
     
-    [self addSubUserInfo];
+    [self upDateInfo];
 }
 
 

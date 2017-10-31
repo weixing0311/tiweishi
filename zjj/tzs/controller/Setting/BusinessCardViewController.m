@@ -93,7 +93,7 @@
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getBusinessCard.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/getBusinessCard.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         DLog(@"---%@",dic);
         NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
         

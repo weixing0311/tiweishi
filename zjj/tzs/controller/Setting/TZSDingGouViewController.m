@@ -57,7 +57,7 @@
 {
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/getSeviceInfo.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/getSeviceInfo.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         _buyArray = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"condition"];
         
         _dataArray =[[dic safeObjectForKey:@"data"]safeObjectForKey:@"productList"];
@@ -86,7 +86,7 @@
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:conId forKey:@"conditionId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/upgradeFatTeacher.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/upgradeFatTeacher.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"success--%@",dic);
         
         NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
@@ -125,7 +125,7 @@
     [dic setObject:str forKey:@"orderItem"];
     
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/submitServiceOrder.do" paramters:dic success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/submitServiceOrder.do" HiddenProgress:NO paramters:dic success:^(NSDictionary *dic) {
         DLog(@"dic --%@",dic);
         
         NSDictionary * dataDict = [dic safeObjectForKey:@"data"];

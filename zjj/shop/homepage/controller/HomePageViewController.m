@@ -100,7 +100,7 @@
     [param setObject:@(self.count) forKey:@"pageSize"];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:kgetGoodsListInfo paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kgetGoodsListInfo HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"goods---%@--message_%@",dic,[dic objectForKey:@"message"]);
         [self.collectionView headerEndRefreshing];
         [self.collectionView footerEndRefreshing];
@@ -135,7 +135,7 @@
 }
 -(void)getBanner
 {
-    self.currentTasks = [[BaseSservice sharedManager]post1:kBannerListUrl paramters:nil success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kBannerListUrl HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         DLog(@"bannerdic---%@",dic);
         NSMutableArray *arr =[[dic objectForKey:@"data"]objectForKey:@"array"];
         NSMutableArray *array =[[HomeModel shareInstance]arraySortingWithArray:arr];

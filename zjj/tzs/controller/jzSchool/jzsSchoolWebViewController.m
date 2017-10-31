@@ -197,7 +197,7 @@
     [param safeSetObject:@(self.informateId) forKey:@"informateId"];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:like forKey:@"isLike"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/changeIsLike.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/changeIsLike.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance] showSuccessWithStatus:nil];
         DLog(@"dic--%@",dic);
         if (self.zanBtn.selected ==YES) {
@@ -227,7 +227,7 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:col forKey:@"isCollection"];
 
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/changeIsCollection.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/changeIsCollection.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
         [[UserModel shareInstance] showSuccessWithStatus:nil];
         if (self.collectionBtn.selected ==YES) {
@@ -250,7 +250,7 @@
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:@(self.informateId) forKey:@"informateId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/changeReadNum.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/changeReadNum.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);

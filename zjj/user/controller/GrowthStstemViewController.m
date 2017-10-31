@@ -60,7 +60,7 @@
 {
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryAll.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryAll.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         self.infoDict = [NSDictionary dictionaryWithDictionary:[dic objectForKey:@"data"]];
 
         self.dataArray = [self.infoDict safeObjectForKey:@"taskArry"];
@@ -202,7 +202,7 @@
     }
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         DLog(@"签到success-dic:%@",dic);
         [[UserModel shareInstance]showSuccessWithStatus:@"签到成功！"];
         [self getInfo];

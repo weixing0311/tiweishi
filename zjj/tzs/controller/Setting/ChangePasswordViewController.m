@@ -59,7 +59,7 @@
     [param setObject:[NSString encryptString: self.repasswordtf.text] forKey:@"repPassword"];
     
     [SVProgressHUD show];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePassword.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/changePassword.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
 //        [SVProgressHUD dismiss];
         [[UserModel shareInstance] showSuccessWithStatus:@"修改成功"];
         [self.navigationController popViewControllerAnimated:YES];

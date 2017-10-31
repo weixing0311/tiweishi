@@ -47,7 +47,7 @@
     //userid nickname
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:textStr forKey:@"nickName"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/searchUserFollow.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/searchUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         
         GuanZViewController * gz = [[GuanZViewController alloc]init];
         gz.title = @"搜索结果";
@@ -108,7 +108,7 @@
     NSMutableDictionary * params =[NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params setObject:[dic safeObjectForKey:@"recid"] forKey:@"followId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/followUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         DLog(@"dic-关注成功--%@",dic);
         [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
     } failure:^(NSError *error) {

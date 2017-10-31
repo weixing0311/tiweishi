@@ -60,7 +60,7 @@
 {
     NSMutableDictionary * param = [NSMutableDictionary dictionary];
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/statusCount.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary *dict =[dic objectForKey:@"data"];
         
         int waitCollect      = [[dict safeObjectForKey:@"uncollected"]intValue];

@@ -64,7 +64,7 @@
     DLog(@"bigArr--%@",bigArr);
     if (bigArr.count==0||bigArr.count==1) {
         self.titleLabel.text =[NSString stringWithFormat:@"%@",@"您已达到最高级"];
-        width = self.bgTiaolb.frame.size.width;
+        width = JFA_SCREEN_WIDTH-100;
 
     }else{
         NSDictionary * currDic ;
@@ -76,7 +76,7 @@
         int  integral = [[currDic objectForKey:@"integral"]intValue];
         
         CurrentInegral =integral-countIntegral;
-        currentLevel = [currDic objectForKey:@"gradeName"];
+        currentLevel = [[bigArr objectAtIndex:1] objectForKey:@"gradeName"];
         self.titleLabel.text =[NSString stringWithFormat:@"还差%d积分升级到%@", CurrentInegral,currentLevel];
 
         NSDictionary * lastDict = [arr objectAtIndex:arr.count-bigArr.count];
@@ -84,14 +84,14 @@
         float littleWidth =(CurrentInegral-lastIntegral)/(jf1-lastIntegral)*self.bgTiaolb.frame.size.width/arr.count;
         
         
-        width = self.bgTiaolb.frame.size.width/arr.count*(arr.count-bigArr.count+1)+littleWidth;
+        width = (JFA_SCREEN_WIDTH-100)/arr.count*(arr.count-bigArr.count+1)+littleWidth;
 
     }
     
     
 //    float width = countIntegral/[[[arr lastObject]objectForKey:@"integral"]intValue]*(JFA_SCREEN_WIDTH-100);
-    if (width>self.bgTiaolb.frame.size.width) {
-        width =self.bgTiaolb.frame.size.width;
+    if (width>JFA_SCREEN_WIDTH-100) {
+        width =JFA_SCREEN_WIDTH-100;
     }
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, width, 5)];
     view.backgroundColor = [UIColor whiteColor];

@@ -73,7 +73,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/getDefaultAddress.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/getDefaultAddress.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"success --%@",dic);
         
         addressDict =[NSMutableDictionary dictionaryWithDictionary:[dic objectForKey:@"data"]];
@@ -95,7 +95,7 @@
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setObject:[self getWarehousingUpdateInfo] forKey:@"products"];
     [param setObject:proviceId forKey:@"proviceId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/warehouseno/getWarehouseNo.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/warehouseno/getWarehouseNo.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dict = [dic safeObjectForKey:@"data"];
         self.warehouseNo =[dict safeObjectForKey:@"warehouseNo"];
         [self getTransfortationPriceWithproviceId:proviceId warehouseNo:self.warehouseNo];
@@ -115,7 +115,7 @@
     [param safeSetObject:[self getufUpdatainfo] forKey:@"products"];
     [param safeSetObject:proviceId forKey:@"proviceId"];
     [param safeSetObject:warehouseNo forKey:@"warehouseNo"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/freigthCount/freigthProductCount.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/freigthCount/freigthProductCount.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         weightStr = [[dic objectForKey:@"data"]objectForKey:@"freight"];
         self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
         [self.tableview reloadData];
@@ -138,7 +138,7 @@
 //    [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
 //    [param safeSetObject:@"" forKey:@"orderNo"];
 //    
-//    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" paramters:param success:^(NSDictionary *dic) {
+//    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
 //        
 //        
 //    } failure:^(NSError *error) {
@@ -299,7 +299,7 @@
     [param safeSetObject:self.productStr forKey:@"productArray"];
     [param safeSetObject:self.warehouseNo forKey:@"warehouseNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/addDelivery.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/addDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         
         NSDictionary * dataDic =[dic safeObjectForKey:@"data"];

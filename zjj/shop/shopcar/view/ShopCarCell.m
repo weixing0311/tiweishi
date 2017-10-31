@@ -155,7 +155,7 @@
 //    
 //    [param setObject:str forKey:@"jsonData"];
 //    DLog(@"%@---%@",str,param);
-//    [[BaseSservice sharedManager] post1:@"app/order/shoppingCart/updateShoppingCart.do" paramters:param success:^(NSDictionary *dic) {
+//    [[BaseSservice sharedManager] post1:@"app/order/shoppingCart/updateShoppingCart.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
 //        
 //        self.countLabel.text = [NSString stringWithFormat:@"%d",count];
 //        

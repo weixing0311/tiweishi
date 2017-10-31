@@ -46,7 +46,7 @@
     NSString * passwordStr = [NSString encryptString:self.passwordTf.text];
     [param safeSetObject:[UserModel shareInstance].userId  forKey:@"userId"];
     [param safeSetObject:passwordStr forKey:@"tradePwd"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/addUserTradePwd.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/user/addUserTradePwd.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"%@",dic);
         [[UserModel shareInstance] showSuccessWithStatus:@"设置成功"];
         [self.navigationController popViewControllerAnimated:YES];

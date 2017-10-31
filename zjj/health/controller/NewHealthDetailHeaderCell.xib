@@ -23,14 +23,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="163" height="100"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Kr-nv-h7O">
-                                <rect key="frame" x="10" y="20" width="60" height="60"/>
+                                <rect key="frame" x="15" y="28" width="44" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="5r9-bZ-Kpl"/>
-                                    <constraint firstAttribute="width" constant="60" id="Tvw-df-tGT"/>
+                                    <constraint firstAttribute="height" constant="44" id="5r9-bZ-Kpl"/>
+                                    <constraint firstAttribute="width" constant="44" id="Tvw-df-tGT"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="蜡笔小丁丁" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzS-kW-NbH">
-                                <rect key="frame" x="80" y="40" width="73" height="20"/>
+                                <rect key="frame" x="69" y="40" width="84" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="PY3-3S-LOe"/>
                                 </constraints>
@@ -44,7 +50,7 @@
                             <constraint firstItem="fzS-kW-NbH" firstAttribute="centerY" secondItem="jwR-XI-7KI" secondAttribute="centerY" id="CQz-s9-xlU"/>
                             <constraint firstAttribute="trailing" secondItem="fzS-kW-NbH" secondAttribute="trailing" constant="10" id="cgi-EY-kmh"/>
                             <constraint firstItem="fzS-kW-NbH" firstAttribute="leading" secondItem="5Kr-nv-h7O" secondAttribute="trailing" constant="10" id="fHf-S4-e7F"/>
-                            <constraint firstItem="5Kr-nv-h7O" firstAttribute="leading" secondItem="jwR-XI-7KI" secondAttribute="leading" constant="10" id="hfk-6g-UBm"/>
+                            <constraint firstItem="5Kr-nv-h7O" firstAttribute="leading" secondItem="jwR-XI-7KI" secondAttribute="leading" constant="15" id="hfk-6g-UBm"/>
                             <constraint firstItem="5Kr-nv-h7O" firstAttribute="centerY" secondItem="jwR-XI-7KI" secondAttribute="centerY" id="yLB-fC-uzT"/>
                         </constraints>
                     </view>

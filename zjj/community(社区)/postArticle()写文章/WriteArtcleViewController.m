@@ -57,16 +57,20 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
-//    if (self.firstImage) {
-//        [_selectedPhotos addObject:self.firstImage];
-//    }
     [self configCollectionView];
     [self buildTextView];
     [self buildRightNaviBarItem];
-
+    [self myTypeIsShareImage];
     // Do any additional setup after loading the view.
 }
+-(void)myTypeIsShareImage
+{
+    if (self.firstImage) {
+        [_selectedPhotos addObject:self.firstImage];
+        [self.collectionView reloadData];
+    }
 
+}
 ///创建右上button
 -(void)buildRightNaviBarItem
 {
@@ -144,7 +148,7 @@
         [params setObject:_shareType forKey:@"taskId"];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" paramters:params success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         } failure:^(NSError *error) {
             
         }];
@@ -240,7 +244,7 @@
         }
     } else {
         cell.imageView.image = _selectedPhotos[indexPath.row];
-        if (_selectedAssets.count>0) {
+        if (_selectedAssets.count>0&&_selectedPhotos.count==_selectedAssets.count) {
             cell.asset = _selectedAssets[indexPath.row];
         }
         cell.deleteBtn.hidden = NO;
@@ -257,33 +261,35 @@
         }
         [self pushTZImagePickerController];
     } else { // preview photos or video / 预览照片或者视频
-        id asset = _selectedAssets[indexPath.row];
-        BOOL isVideo = NO;
-        if ([asset isKindOfClass:[PHAsset class]]) {
-            PHAsset *phAsset = asset;
-            isVideo = phAsset.mediaType == PHAssetMediaTypeVideo;
-        } else if ([asset isKindOfClass:[ALAsset class]]) {
-            ALAsset *alAsset = asset;
-            isVideo = [[alAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo];
-        }
-         else if (isVideo) { // perview video / 预览视频
-            TZVideoPlayerController *vc = [[TZVideoPlayerController alloc] init];
-            TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeVideo timeLength:@""];
-            vc.model = model;
-            [self presentViewController:vc animated:YES completion:nil];
-        } else { // preview photos / 预览照片
-            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithSelectedAssets:_selectedAssets selectedPhotos:_selectedPhotos index:indexPath.row];
-            imagePickerVc.maxImagesCount = 9;
-            imagePickerVc.allowPickingGif =NO;
-            imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
-            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-                _selectedPhotos = [NSMutableArray arrayWithArray:photos];
-                _selectedAssets = [NSMutableArray arrayWithArray:assets];
-                _isSelectOriginalPhoto = isSelectOriginalPhoto;
-                [_collectionView reloadData];
-                _collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
-            }];
-            [self presentViewController:imagePickerVc animated:YES completion:nil];
+        if (_selectedPhotos.count==_selectedAssets.count) {
+            id asset = _selectedAssets[indexPath.row];
+            BOOL isVideo = NO;
+            if ([asset isKindOfClass:[PHAsset class]]) {
+                PHAsset *phAsset = asset;
+                isVideo = phAsset.mediaType == PHAssetMediaTypeVideo;
+            } else if ([asset isKindOfClass:[ALAsset class]]) {
+                ALAsset *alAsset = asset;
+                isVideo = [[alAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo];
+            }
+            else if (isVideo) { // perview video / 预览视频
+                TZVideoPlayerController *vc = [[TZVideoPlayerController alloc] init];
+                TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypeVideo timeLength:@""];
+                vc.model = model;
+                [self presentViewController:vc animated:YES completion:nil];
+            } else { // preview photos / 预览照片
+                TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithSelectedAssets:_selectedAssets selectedPhotos:_selectedPhotos index:indexPath.row];
+                imagePickerVc.maxImagesCount = 9;
+                imagePickerVc.allowPickingGif =NO;
+                imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
+                [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+                    _selectedPhotos = [NSMutableArray arrayWithArray:photos];
+                    _selectedAssets = [NSMutableArray arrayWithArray:assets];
+                    _isSelectOriginalPhoto = isSelectOriginalPhoto;
+                    [_collectionView reloadData];
+                    _collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
+                }];
+                [self presentViewController:imagePickerVc animated:YES completion:nil];
+            }
         }
     }
 }
@@ -331,48 +337,49 @@
 - (void)pushTZImagePickerController {
     
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"添加照片/视频" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    [al addAction:[UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        
-        NSString *mediaType = AVMediaTypeVideo;
-        //        pickerCon.mediaTypes = @[(NSString *)];//设定相机为视频
-        
-        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
-        
-        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
-            [[UserModel shareInstance]showInfoWithStatus:@"相机权限受限"];
+    if (_selectedPhotos.count==0) {
+        [al addAction:[UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            NSLog(@"相机权限受限");
-            return;
-        }
-        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
-            NSLog(@"%@",granted ? @"麦克风准许":@"麦克风不准许");
-        }];
-        
-        AVAuthorizationStatus authStatus1 = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
-        if (authStatus1 ==AVAuthorizationStatusNotDetermined||
-            authStatus1 ==AVAuthorizationStatusRestricted||
-            authStatus1==AVAuthorizationStatusDenied) {
-            [[UserModel shareInstance]showInfoWithStatus:@"麦克风未授权"];
-            return;
-        }
-        
-        
-        UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
-        picker.delegate = self;
-        picker.allowsEditing = NO;//设置可编辑
-        picker.sourceType = sourceType;
-        
-        picker.mediaTypes = @[(NSString *)kUTTypeMovie,(NSString *)kUTTypeVideo];//设定相机为视频
-        //        picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;//设置相机后摄像头
-        picker.videoMaximumDuration = 10;//最长拍摄时间
-        picker.videoQuality = UIImagePickerControllerQualityTypeIFrame1280x720;//拍摄质量
-        
-        
-        
-        [self presentViewController:picker animated:YES completion:nil];
-    }]];
+            
+            NSString *mediaType = AVMediaTypeVideo;
+            //        pickerCon.mediaTypes = @[(NSString *)];//设定相机为视频
+            
+            AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+            
+            if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+                [[UserModel shareInstance]showInfoWithStatus:@"相机权限受限"];
+                
+                NSLog(@"相机权限受限");
+                return;
+            }
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL granted) {
+                NSLog(@"%@",granted ? @"麦克风准许":@"麦克风不准许");
+            }];
+            
+            AVAuthorizationStatus authStatus1 = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
+            if (authStatus1 ==AVAuthorizationStatusNotDetermined||
+                authStatus1 ==AVAuthorizationStatusRestricted||
+                authStatus1==AVAuthorizationStatusDenied) {
+                [[UserModel shareInstance]showInfoWithStatus:@"麦克风未授权"];
+                return;
+            }
+            
+            
+            UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
+            picker.delegate = self;
+            picker.allowsEditing = NO;//设置可编辑
+            picker.sourceType = sourceType;
+            
+            picker.mediaTypes = @[(NSString *)kUTTypeMovie,(NSString *)kUTTypeVideo];//设定相机为视频
+            //        picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;//设置相机后摄像头
+            picker.videoMaximumDuration = 10;//最长拍摄时间
+            picker.videoQuality = UIImagePickerControllerQualityTypeIFrame1280x720;//拍摄质量
+            
+            [self presentViewController:picker animated:YES completion:nil];
+        }]];
+
+    }
 
     
     [al addAction:[UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -385,12 +392,19 @@
 }
 -(void)enterPhotoAlbum
 {
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9-_selectedPhotos.count columnNumber:4 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置
     imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
-    
+    if (_selectedPhotos.count>0)
+    {
+        imagePickerVc.allowPickingVideo =NO;
+    }
+    else
+    {
+        imagePickerVc.allowPickingVideo =YES;
+    }
     // 1.设置目前已经选中的图片数组
     imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
     imagePickerVc.allowTakePicture = YES; // 在内部显示拍照按钮
@@ -570,8 +584,12 @@
     }
 }
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
+    
     _selectedPhotos = [NSMutableArray arrayWithArray:photos];
     _selectedAssets = [NSMutableArray arrayWithArray:assets];
+    if (self.firstImage) {
+        [_selectedPhotos addObject:self.firstImage];
+    }
     _isSelectOriginalPhoto = isSelectOriginalPhoto;
     [_collectionView reloadData];
     // _collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
@@ -600,8 +618,14 @@
     [_collectionView reloadData];
 }
 - (void)deleteBtnClik:(UIButton *)sender {
+    
+    if ([self isSameImageWithImage:[_selectedPhotos objectAtIndex:sender.tag]]==YES) {
+        self.firstImage = nil;
+        self.shareType = nil;
+    }
+    
     [_selectedPhotos removeObjectAtIndex:sender.tag];
-    if (_selectedAssets.count>0) {
+    if (_selectedAssets.count>0&&_selectedAssets.count==_selectedPhotos.count) {
         [_selectedAssets removeObjectAtIndex:sender.tag];
     }
     
@@ -615,6 +639,18 @@
     } completion:^(BOOL finished) {
         [_collectionView reloadData];
     }];
+}
+
+-(BOOL)isSameImageWithImage:(UIImage *)image
+{
+    NSData *data1 = UIImagePNGRepresentation(self.firstImage);
+    NSData *data = UIImagePNGRepresentation(image);
+    if ([data isEqual:data1]) {
+        return YES;
+    }else{
+        return NO;
+    }
+
 }
 #pragma mark - Private
 

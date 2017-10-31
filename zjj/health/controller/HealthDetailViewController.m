@@ -47,6 +47,7 @@
     [self setExtraCellLineHiddenWithTb:self.tableview];
     _dataArray = [NSMutableArray array];
     [self getInfo];
+    [self buildRightNaviBarItem];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)buildRightNaviBarItem
@@ -66,7 +67,7 @@
     [param safeSetObject:self.dataId forKey:@"dataId"];
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:kShareUserReviewInfoUrl paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:kShareUserReviewInfoUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         self.infoItem = [[HealthDetailsItem alloc]init];
         [self.infoItem getInfoWithDict:[dic objectForKey:@"data" ]];
@@ -328,6 +329,15 @@
 -(void)didShareImage
 {
     UIImage * image = [self getImage];
+    WriteArtcleViewController * write = [[WriteArtcleViewController alloc]init];
+    write.firstImage = image;
+    write.shareType = @"";
+    [self.navigationController pushViewController:write animated:YES];
+}
+
+-(void)didShare
+{
+    UIImage * image = [self getImage];
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -345,7 +355,9 @@
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:al animated:YES completion:nil];
+
 }
+
 -(void) shareWithType:(SSDKPlatformType)type image:(UIImage *)image
 {
     if (!image) {
@@ -411,85 +423,46 @@
     return image;
     
 }
-
-
-
--(void)showAlertViewWithItem:(HealthDetailsItem*)item
+-(void)showAlertViewWithsubtractMaxWeight:(float)subtractMaxWeight
 {
-    
-    double lessWeight = item.lastWeight-item.weight;
-    
-    int recordWeight = [[[NSUserDefaults standardUserDefaults]objectForKey:@"recordWeight"]doubleValue];
-    
-    if (lessWeight>5&&recordWeight&&lessWeight>recordWeight) {
-        int currRecordWeight = lessWeight/5;
-        [[NSUserDefaults standardUserDefaults]setValue:[NSString stringWithFormat:@"%d",currRecordWeight*6] forKey:@"recordWeight"];
-        
-        UIAlertController * al =[UIAlertController alertControllerWithTitle:@"" message:[self getDUDUAlertCtitle:item] preferredStyle:UIAlertControllerStyleAlert];
-        [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //添加跳转
-        }]];
-        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:al animated:YES completion:nil];
+    UIAlertController * al =[UIAlertController alertControllerWithTitle:@"" message:[self getDUDUAlertCtitle:subtractMaxWeight] preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //添加跳转
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:al animated:YES completion:nil];
 
-    }
-
-    
-    
-    if (lessWeight ==0) {
-        
-    }else{
-        
-    }
-    
-    
-    
-    
-    
-    
-    
 }
 
 
--(NSString *)getDUDUAlertCtitle:(HealthDetailsItem*)item
+-(NSString *)getDUDUAlertCtitle:(float)lastkg
 {
-    
-    if (item.lastWeight -item.weight>5&&item.lastWeight-item.weight<10)
-    {
-        
-    }
-    else if(item.lastWeight -item.weight>10&&item.lastWeight-item.weight<15)
-    {
-    }
-    else if(item.lastWeight -item.weight>10&&item.lastWeight-item.weight<15)
-    {
-    }
-    return [NSString stringWithFormat:@"恭喜您，已减%.1fkg，发条动态向各位减脂同道分享自己的变化吧！记录数据，超越自己。",item.lastWeight-item.weight];
+    return [NSString stringWithFormat:@"恭喜您，已减%.1f斤，发条动态向各位减脂同道分享自己的变化吧！记录数据，超越自己。",lastkg*2];
     
 }
 
 
 
--(NSString *)getAlertViewTitle:(HealthDetailsItem*)item
-{
-    
-    if (item.weight ==item.lastWeight) {
-        return [NSString stringWithFormat:@"您现在体重为%.1fkg，发条动态吧，记录数据，超越自己。",item.weight];
-    }else
-    {
-        NSString * status = @"";
-        if (item.weight-item.lastWeight>0) {
-            status = @"重";
-        }else{
-            status = @"轻";
-        }
-        
-        return [NSString stringWithFormat:@"您比上次%@了%.1fkg，发条动态向各位减脂同道分享自己的变化据吧！记录数据，超越自己。",status,fabsf(item.weight-item.lastWeight)];
-    }
-    
-}
-    
-    
+//-(NSString *)getAlertViewTitle:(HealthDetailsItem*)item
+//{
+//
+//    if (item.weight ==item.lastWeight) {
+//        return [NSString stringWithFormat:@"您现在体重为%.1fkg，发条动态吧，记录数据，超越自己。",item.weight];
+//    }else
+//    {
+//        NSString * status = @"";
+//        if (item.weight-item.lastWeight>0) {
+//            status = @"重";
+//        }else{
+//            status = @"轻";
+//        }
+//
+//        return [NSString stringWithFormat:@"您比上次%@了%.1fkg，发条动态向各位减脂同道分享自己的变化据吧！记录数据，超越自己。",status,fabsf(item.weight-item.lastWeight)];
+//    }
+//
+//}
+//
+
     
     
     

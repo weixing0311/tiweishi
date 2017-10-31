@@ -115,9 +115,8 @@
  
         }else{
             ADDChengUserViewController * cg =[[ADDChengUserViewController alloc]init];
-            UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:cg];
             cg.isResignUser = YES;
-            [self.window setRootViewController:nav];
+            [self.window setRootViewController:cg];
         }
         
     }else{

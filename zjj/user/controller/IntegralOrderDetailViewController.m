@@ -50,7 +50,7 @@
     NSMutableDictionary * param =[NSMutableDictionary dictionary];
     [param setObject:self.orderNo forKey:@"orderNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/orderInfo/queryIntegrationOrderItem.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/orderInfo/queryIntegrationOrderItem.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
         _infoDict = [[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"][0];
         [_dataArray removeAllObjects];
@@ -74,7 +74,7 @@
     [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
     [param safeSetObject:orderNo forKey:@"orderNo"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
         [self getlistInfo_IS_CONSUMERS];
         if (self.delegate &&[self.delegate respondsToSelector:@selector(orderChange)]) {
@@ -535,7 +535,7 @@
         [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
         [param safeSetObject:[UserModel shareInstance].username forKey:@"userName"];
         
-        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/cancelOrderDelivery.do" paramters:param success:^(NSDictionary *dic) {
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/cancelOrderDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
             [[UserModel shareInstance] showSuccessWithStatus:@"取消成功"];
             [self getlistInfo_IS_CONSUMERS];
             if (self.delegate &&[self.delegate respondsToSelector:@selector(orderChange)]) {

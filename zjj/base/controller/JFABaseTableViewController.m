@@ -49,13 +49,35 @@
 //
 //        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_background"] forBarMetrics:UIBarMetricsDefault];
 //    }
-    
+    [self emptyView];
     if (!self.requestArray) {
         self.requestArray=[[NSMutableArray alloc] initWithCapacity:0];
     }
 
 }
+-(EmptyView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [self getXibCellWithTitle:@"EmptyView"];
+        _emptyView.hidden = YES;
+        _emptyView.frame = self.view.bounds;
+        _emptyView.backgroundColor =HEXCOLOR(0xeeeeee);
+        [self.view addSubview:_emptyView];
+    }
+    return _emptyView;
+}
 
+
+-(void)showEmptyViewWithTitle:(NSString *)title
+{
+    _emptyView.hidden =NO;
+    _emptyView.titleLabel.text = title;
+    [self.view bringSubviewToFront:_emptyView];
+}
+-(void)hiddenEmptyView
+{
+    _emptyView.hidden =YES;
+}
 -(void)setNbColor
 {
     self.navigationController.navigationBar.barTintColor = HEXCOLOR(0xfb0628);

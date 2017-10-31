@@ -40,7 +40,7 @@
     self.timelb.text         = item.releaseTime;
     self.zanCountlb.text     = item.greatnum;
     self.commentCountlb.text = item.commentnum;
-    self.shareCountlb.text   = item.forwardingnum;
+//    self.shareCountlb.text   = item.forwardingnum;
     self.levelLb.text        = item.level;
     if (item.isFabulous&&[item.isFabulous isEqualToString:@"1"]) {
         

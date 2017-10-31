@@ -26,10 +26,10 @@
                     <rect key="frame" x="0.0" y="64" width="375" height="80"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1FE-KR-MHp">
-                            <rect key="frame" x="20" y="15" width="335" height="50"/>
+                            <rect key="frame" x="20" y="17.5" width="335" height="45"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入。。。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
-                                    <rect key="frame" x="40" y="0.0" width="275" height="50"/>
+                                    <rect key="frame" x="40" y="0.0" width="275" height="45"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -37,7 +37,7 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="7t0-e2-kOI"/>
+                                <constraint firstAttribute="height" constant="45" id="7t0-e2-kOI"/>
                                 <constraint firstItem="sFQ-1w-ihf" firstAttribute="leading" secondItem="1FE-KR-MHp" secondAttribute="leading" constant="40" id="eID-2U-GYK"/>
                                 <constraint firstAttribute="trailing" secondItem="sFQ-1w-ihf" secondAttribute="trailing" constant="20" id="lgS-PZ-jah"/>
                                 <constraint firstItem="sFQ-1w-ihf" firstAttribute="top" secondItem="1FE-KR-MHp" secondAttribute="top" id="mi4-UX-j2w"/>
@@ -90,8 +90,8 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNh-32-6gk">
-                            <rect key="frame" x="-34" y="-27" width="375" height="55"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNh-32-6gk">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                             <connections>
                                 <action selector="didGetqrcode:" destination="-1" eventType="touchUpInside" id="JDJ-k7-kZY"/>
                             </connections>

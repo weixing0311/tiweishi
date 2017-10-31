@@ -34,7 +34,7 @@
     [param safeSetObject:self.sfzTf.text forKey:@""];
     [param setObject:self.nameTF.text forKey:@""];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@" " HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         if ([[dic objectForKey:@"status"]isEqualToString:@"success"]) {
             
@@ -61,7 +61,7 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
 
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" paramters:param success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/user/attestation.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         NSDictionary * dataDict =[dic safeObjectForKey:@"data"];
         [[UserModel shareInstance] didAttestSuccessWithDict:dataDict];
