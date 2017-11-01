@@ -194,12 +194,7 @@
 -(void)didClickQdWithCell:(GrowthStstemHeaderCell *)cell
 {
     NSMutableDictionary * params  = [NSMutableDictionary dictionary];
-    for (NSDictionary * dic in self.dataArray) {
-        if ([[dic safeObjectForKey:@"taskName"]isEqualToString:@"签到"]) {
-            [params setObject:[dic safeObjectForKey:@"id"] forKey:@"taskId"];
-            [params setObject:[dic safeObjectForKey:@"integral"] forKey:@"integeral"];
-        }
-    }
+    [params setObject:@"1" forKey:@"taskId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {

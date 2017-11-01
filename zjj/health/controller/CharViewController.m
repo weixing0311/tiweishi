@@ -161,7 +161,7 @@
             
             break;
         case 5:
-            [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"骨骼肌"];
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"骨量"];
             
             break;
             
@@ -314,7 +314,7 @@
              [self ChartViewsetDateArray:self.dateArray infoArray:_waterArray title:@"水分"];
             break;
         case 4:
-             [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"骨骼肌"];
+             [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"骨量"];
             break;
             
         default:
@@ -367,7 +367,7 @@
             [self ChartViewsetDateArray:self.dateArray infoArray:_waterArray title:@"水分"];
             break;
         case 5:
-            [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"骨骼肌"];
+            [self ChartViewsetDateArray:self.dateArray infoArray:_mBoneArray title:@"量"];
             break;
             
         default:

@@ -98,13 +98,14 @@
     [self.view addSubview:self.userListView];
     
 }
--(void)weightingSuccessWithSubtractMaxWeight:(NSString *)subtractMaxWeight dataId:(NSString *)dataId
+-(void)weightingSuccessWithSubtractMaxWeight:(NSString *)subtractMaxWeight dataId:(NSString *)dataId shareDict:(NSDictionary *)shareDict
 {
     [self getHeaderInfo];
     HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
     hd.hidesBottomBarWhenPushed=YES;
     hd.subtractMaxWeight = subtractMaxWeight;
     hd.dataId =dataId;
+    hd.shareDict = [NSMutableDictionary dictionaryWithDictionary:shareDict];
     [self.navigationController pushViewController:hd animated:YES];
 
 }

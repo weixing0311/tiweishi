@@ -15,6 +15,8 @@
 #import "NewHealthDetailSixCell.h"
 #import "HealthDetailsItem.h"
 #import "WriteArtcleViewController.h"
+#import "ShareListView.h"
+#import "ShareHealthItem.h"
 @interface HealthDetailViewController ()<UITableViewDelegate,UITableViewDataSource,NewHealthDetileFiveDelegate,NewHealthDetailThirdDelegate>
 @property (strong, nonatomic) UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray  * dataArray;
@@ -334,16 +336,16 @@
 #pragma  mark ---cellDelegate
 -(void)didShareImage
 {
-    UIImage * image = [self getImage];
+    UIImage * image = [self getImageWithView:self.tableview];
     WriteArtcleViewController * write = [[WriteArtcleViewController alloc]init];
     write.firstImage = image;
-    write.shareType = @"";
+    write.shareType = @"8";
     [self.navigationController pushViewController:write animated:YES];
 }
 
 -(void)didShare
 {
-    UIImage * image = [self getImage];
+    UIImage * image = [self getImageWithView:self.tableview];
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -373,7 +375,7 @@
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
     NSArray* imageArray = @[image];
     
-    [shareParams SSDKSetupShareParamsByText:nil
+    [shareParams SSDKSetupShareParamsByText:ShareContentInfo
                                      images:imageArray
                                         url:nil
                                       title:nil
@@ -396,7 +398,7 @@
                  [[UserModel shareInstance]dismiss];
                  //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
                  
-                [[UserModel shareInstance]didCompleteTheTaskWithId:@"7"];
+                [[UserModel shareInstance]didCompleteTheTaskWithId:@"8"];
                  break;
              }
              case SSDKResponseStateFail:
@@ -434,6 +436,14 @@
     UIAlertController * al =[UIAlertController alertControllerWithTitle:@"" message:[self getDUDUAlertCtitle:[subtractMaxWeight floatValue]] preferredStyle:UIAlertControllerStyleAlert];
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //添加跳转
+        
+        UIImage * image = [self showShareView];
+        WriteArtcleViewController * write = [[WriteArtcleViewController alloc]init];
+        write.firstImage = image;
+        write.shareType = @"8";
+        [self.navigationController pushViewController:write animated:YES];
+
+        
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:al animated:YES completion:nil];
@@ -470,8 +480,38 @@
 //
 
     
+-(UIImage *)showShareView
+{
     
+    NSString * qrCode = [UserModel shareInstance].qrcodeImageUrl;
+    if (!qrCode||qrCode.length<1) {
+        [[UserModel shareInstance]getbalance];
+    }
     
+    ShareListView * shareTr = [self getXibCellWithTitle:@"ShareListView"];
+    ShareHealthItem * item1 = [self.shareDict safeObjectForKey:@"first"];
+    ShareHealthItem * item2 =[self.shareDict safeObjectForKey:@"now"];
+    NSMutableArray * arr =[NSMutableArray array];
+    [arr addObject:item1];
+    [arr addObject:item2];
+    [shareTr setInfoWithArr:arr];
+    [self.view addSubview:shareTr];
+    [self.view bringSubviewToFront:shareTr];
+    return  [self getImageWithView:shareTr];
+    
+}
+
+-(UIImage *)getImageWithView:(UIView*)view
+{
+    UIGraphicsBeginImageContext(view.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
+    UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文
+    //    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
+//    [view removeFromSuperview];
+    return viewImage;
+}
+
 
 
 - (void)didReceiveMemoryWarning {

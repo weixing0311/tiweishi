@@ -273,7 +273,7 @@
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
     NSArray* imageArray = @[image];
     
-    [shareParams SSDKSetupShareParamsByText:nil
+    [shareParams SSDKSetupShareParamsByText:ShareContentInfo
                                      images:imageArray
                                         url:nil
                                       title:nil

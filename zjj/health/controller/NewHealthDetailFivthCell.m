@@ -48,9 +48,9 @@
         self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
         self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
         
-        self.title2Label.text = @"骨骼肌";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneMuscleWeight];
-        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE item:item];
+        self.title2Label.text = @"骨量";
+        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneWeight];
+        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONE item:item];
 
         self.title3Label.text = @"水分";
         self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
@@ -140,15 +140,15 @@
             break;
         case 5:
             self.headerImageView.image = getImage(@"bone1_");
-            self.headerNamelb.text = @"骨骼肌";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeight];
+            self.headerNamelb.text = @"骨量";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
             
-            self.sliderLislb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMax];
+            self.sliderLislb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneWeightMax];
             
-            currX = [self getlocationDianL:self.currItem.boneMuscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+            currX = [self getlocationDianL:self.currItem.boneWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 6:
@@ -316,6 +316,7 @@
 -(NSString *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
 {
     //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
+    //肌肉\骨骼肌\水分\蛋白质\骨重判定标准
     switch (myType) {
         case IS_MODEL_BMI:
             switch (item.bmiLevel) {
@@ -373,7 +374,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"高";
+                    return @"低";
                     break;
                     
                 default:
@@ -386,7 +387,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"高";
+                    return @"低";
                     break;
                 default:
                     break;
@@ -400,7 +401,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"高";
+                    return @"低";
                     break;
 
                     
@@ -416,7 +417,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"高";
+                    return @"低";
                     break;
 
                 default:
@@ -447,7 +448,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"高";
+                    return @"低";
                     break;
                 default:
                     break;

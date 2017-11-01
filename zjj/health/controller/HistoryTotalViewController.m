@@ -18,6 +18,8 @@
     NewHealthHistoryListViewController * newHealthHistoryListVC;
     HistoryInfoViewController * HistoryRlVC;
     UIScrollView * bbScr;
+    UIButton * btn1;
+    UIButton * btn2;
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -68,18 +70,25 @@
 
 
     
-    UIButton * btn1 = [UIButton new];
-    UIButton * btn2 = [UIButton new];
-    btn1.backgroundColor = [UIColor redColor];
+    btn1 = [UIButton new];
+    btn2 = [UIButton new];
+    btn1.backgroundColor = [UIColor orangeColor];
     
-    [btn1 addTarget:self action:@selector(change1) forControlEvents:UIControlEventTouchUpInside];
-    [btn1 setTitle:@"1" forState:UIControlStateNormal];
+    [btn1 addTarget:self action:@selector(change1:) forControlEvents:UIControlEventTouchUpInside];
+    [btn1 setTitle:@"列表模式" forState:UIControlStateNormal];
+    [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [btn1 setTitleColor:HEXCOLOR(0x666666) forState:UIControlStateNormal];
+    btn1.selected = YES;
+    btn1.tag = 1;
     [self.view addSubview:btn1];
     
-    [btn2 addTarget:self action:@selector(change2) forControlEvents:UIControlEventTouchUpInside];
-    [btn2 setTitle:@"2" forState:UIControlStateNormal];
+    [btn2 addTarget:self action:@selector(change2:) forControlEvents:UIControlEventTouchUpInside];
+    [btn2 setTitle:@"日历模式" forState:UIControlStateNormal];
+    [btn2 setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [btn2 setTitleColor:HEXCOLOR(0x666666) forState:UIControlStateNormal];
     [self.view addSubview:btn2];
-    btn2.backgroundColor = [UIColor orangeColor];
+    btn2.tag =2;
+    btn2.backgroundColor = [UIColor whiteColor];
     
     
     btn1.frame = CGRectMake(0, self.view.frame.size.height-45, JFA_SCREEN_WIDTH/2, 45);
@@ -89,24 +98,35 @@
 }
 -(void)didClickShare
 {
+    
     [newHealthHistoryListVC enterRightPage];
 }
--(void)change1
+-(void)change1:(UIButton *)sender
 {
+    if (btn1.selected==YES) {
+        return;
+    }
+    btn1.selected = YES;
+    btn1.backgroundColor = [UIColor orangeColor];
+    btn2.selected =NO;
+    btn2.backgroundColor =[UIColor whiteColor];
     
-//    if (bbScr.contentOffset == CGPointMake(0, 0)) {
-//        return;
-//    }
     bbScr.contentOffset = CGPointMake(0, 0);
     UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"share_") style:UIBarButtonItemStylePlain target:self action:@selector(didClickShare)];
     self.navigationItem.rightBarButtonItem = rightitem;
 
 }
--(void)change2
+-(void)change2:(UIButton *)sender
 {
-//    if (bbScr.contentOffset == CGPointMake(JFA_SCREEN_WIDTH, 0)) {
-//        return;
-//    }
+    if (btn2.selected==YES) {
+        return;
+    }
+
+    btn2.selected = YES;
+    btn2.backgroundColor = [UIColor orangeColor];
+    btn1.selected =NO;
+    btn1.backgroundColor =[UIColor whiteColor];
+    
     bbScr.contentOffset = CGPointMake(JFA_SCREEN_WIDTH, 0);
    self.navigationItem.rightBarButtonItem = nil;
 }

@@ -52,7 +52,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"写文章";
+    self.title = @"发表状态";
     self.isShooting = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     _selectedPhotos = [NSMutableArray array];

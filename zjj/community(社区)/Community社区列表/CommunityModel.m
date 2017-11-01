@@ -114,7 +114,7 @@ static CommunityModel * imageModel;
         {
             if (images.count ==4)
             {
-                imageHeight = JFA_SCREEN_WIDTH-60;
+                imageHeight = JFA_SCREEN_WIDTH-50;
             }
             else
             {

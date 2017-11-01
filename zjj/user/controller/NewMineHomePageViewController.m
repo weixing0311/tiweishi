@@ -886,7 +886,7 @@
                  {
                      [[UserModel shareInstance]dismiss];
                      //                 [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
-                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"4"];
+                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"5"];
                      break;
                  }
                  case SSDKResponseStateFail:
@@ -1086,11 +1086,11 @@
         
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
         if (type ==SSDKPlatformSubTypeWechatTimeline||type==SSDKPlatformSubTypeWechatSession) {
-            [shareParams SSDKSetupWeChatParamsByText:@"" title:@"" url:[NSURL URLWithString:shareUrl] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
+            [shareParams SSDKSetupWeChatParamsByText:ShareContentInfo title:[NSString stringWithFormat:@"%@的个人主页",[UserModel shareInstance].nickName] url:[NSURL URLWithString:shareUrl] thumbImage:[UserModel shareInstance].headUrl image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeWebPage forPlatformSubType:type];
             
         }else if (type==SSDKPlatformTypeQQ)
         {
-            [shareParams SSDKSetupShareParamsByText:@""
+            [shareParams SSDKSetupShareParamsByText:ShareContentInfo
                                              images:[UserModel shareInstance].headUrl
                                                 url:[NSURL URLWithString:shareUrl]
                                               title:[UserModel shareInstance].nickName
@@ -1118,7 +1118,7 @@
 #ifdef DEBUG
                    [[UserModel shareInstance] showSuccessWithStatus:@"分享成功"];
 #endif
-                 [[UserModel shareInstance]didCompleteTheTaskWithId:@"6"];
+                 [[UserModel shareInstance]didCompleteTheTaskWithId:@"7"];
                      break;
                  }
                  case SSDKResponseStateFail:
@@ -1151,7 +1151,7 @@
 -(void)getIntegral
 {
         NSMutableDictionary * params = [NSMutableDictionary dictionary];
-        [params setObject:@"6" forKey:@"taskId"];
+        [params setObject:@"7" forKey:@"taskId"];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {

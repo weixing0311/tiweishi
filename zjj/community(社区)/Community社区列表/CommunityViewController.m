@@ -137,7 +137,7 @@
     WriteArtcleViewController * pr = [[WriteArtcleViewController alloc]init];
 //    PostArticleViewController * pr = [[PostArticleViewController alloc]init];
     pr.hidesBottomBarWhenPushed = YES;
-    pr.shareType = @"5";
+    pr.shareType = @"6";
     [self.navigationController pushViewController:pr animated:YES];
 }
 
@@ -869,14 +869,9 @@
                 [_dataArray removeObject:model];
                 [self.tableview reloadData];
             } failure:^(NSError *error) {
-                
             }];
-            
         }]];
         [self presentViewController:alert animated:YES completion:nil];
-
-        
-        
     }
     else
     {
@@ -892,6 +887,11 @@
                 [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
                 return ;
             }
+            if (strUrl.length>64) {
+                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能大于64个字。"];
+                return ;
+            }
+
             NSMutableDictionary * params = [NSMutableDictionary dictionary];
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
@@ -1129,7 +1129,7 @@
                  case SSDKResponseStateSuccess:
                  {
                      [[UserModel shareInstance]dismiss];
-                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"4"];
+                     [[UserModel shareInstance]didCompleteTheTaskWithId:@"5"];
                      
                      break;
                  }

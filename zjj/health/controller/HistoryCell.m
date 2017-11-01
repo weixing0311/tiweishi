@@ -65,9 +65,9 @@
         
         self.second4lb.text = [self getwl:[[infoDict objectForKey:@"weightLevel"]intValue]];
 
-        if ([self.second4lb.text intValue]==1||[self.second4lb.text intValue]==3||[self.second4lb.text intValue]==4) {
+        if ([self.value4lb.text intValue]==1||[self.value4lb.text intValue]==3||[self.value4lb.text intValue]==4) {
             self.second4lb.backgroundColor = warningColor;
-        }else if ([self.second4lb.text intValue]==2)
+        }else if ([self.value4lb.text intValue]==2)
         {
             self.second4lb.backgroundColor = normalColor;
         }
@@ -124,7 +124,7 @@
 {
     if ([levelStr isEqualToString:@"正常"]) {
         return normalColor;
-    }else if([levelStr isEqualToString:@"低"]||[levelStr isEqualToString:@"偏瘦"]){
+    }else if([levelStr isEqualToString:@"低"]||[levelStr isEqualToString:@"偏瘦"]||[levelStr isEqualToString:@"偏低"]){
         return warningColor;
     }
     else {

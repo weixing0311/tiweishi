@@ -11,4 +11,5 @@
 @interface HealthDetailViewController : JFABaseTableViewController
 @property (nonatomic,copy) NSString * dataId;
 @property (nonatomic,copy) NSString * subtractMaxWeight;
+@property (nonatomic,strong)NSMutableDictionary * shareDict;
 @end

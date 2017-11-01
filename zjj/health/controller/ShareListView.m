@@ -285,9 +285,9 @@
                            protein1,@"level1",
                            protein2,@"level2", nil];
 
-    NSDictionary * dic9 = [NSDictionary dictionaryWithObjectsAndKeys:@"骨骼肌(kg)",@"title",
-                           [NSString stringWithFormat:@"%.1f",item1.boneMuscleWeight],@"value1",
-                           [NSString stringWithFormat:@"%.1f",item2.boneMuscleWeight],@"value2",
+    NSDictionary * dic9 = [NSDictionary dictionaryWithObjectsAndKeys:@"骨量(kg)",@"title",
+                           [NSString stringWithFormat:@"%.1f",item1.boneWeight],@"value1",
+                           [NSString stringWithFormat:@"%.1f",item2.boneWeight],@"value2",
                            boneMuscle1,@"level1",
                            boneMuscle2,@"level2", nil];
 //水分
