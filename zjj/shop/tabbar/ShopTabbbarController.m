@@ -29,9 +29,6 @@
     
     ShopTestViewController *st =[[ShopTestViewController alloc]init];
     st.title = @"健康";
-
-    
-    
     HomePageViewController *news = [[HomePageViewController alloc]init];
     UINavigationController * nav1 = [[UINavigationController alloc]initWithRootViewController:news];
     nav1.navigationBar.barTintColor = [UIColor redColor];
@@ -42,7 +39,7 @@
     foundViewController *found = [[foundViewController alloc]init];
     UINavigationController * nav2 = [[UINavigationController alloc]initWithRootViewController:found];
     nav2.navigationBar.barTintColor = [UIColor redColor];
-    found.title = @"发现";
+    found.title = @"推广";
     
     ShopCarViewController *shop = [[ShopCarViewController alloc]init];
     shop.title = @"购物车";

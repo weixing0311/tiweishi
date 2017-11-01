@@ -17,7 +17,6 @@
     [self.bgImageView addGestureRecognizer:tap];
     self.headImageView.layer.masksToBounds = YES;
     self.headImageView.layer.cornerRadius = self.headImageView.frame.size.width/2;
-    self.jjlb.adjustsFontSizeToFitWidth = YES;
     // Initialization code
 }
 -(void)changeBGiamgeViewImage

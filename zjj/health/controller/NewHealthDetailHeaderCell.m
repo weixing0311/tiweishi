@@ -32,19 +32,19 @@
             return  [NSString stringWithFormat:@"偏瘦"];
             break;
         case 2:
-            return  [NSString stringWithFormat:@"正常"];
+            return  [NSString stringWithFormat:@"标准"];
             break;
         case 3:
-            return   [NSString stringWithFormat:@"轻度肥胖"];
+            return   [NSString stringWithFormat:@"偏胖"];
             break;
         case 4:
-            return  [NSString stringWithFormat:@"中度肥胖"];
+            return  [NSString stringWithFormat:@"偏胖"];
             break;
         case 5:
-            return   [NSString stringWithFormat:@"重度肥胖"];
+            return   [NSString stringWithFormat:@"超重"];
             break;
         case 6:
-            return   [NSString stringWithFormat:@"极度肥胖"];
+            return   [NSString stringWithFormat:@"超重"];
             break;
         default:
             return @"";

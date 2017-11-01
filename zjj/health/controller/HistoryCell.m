@@ -38,7 +38,7 @@
         
         self.value3lb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"weight"]floatValue]];
         
-        self.value4lb.text = [self getwl:[[infoDict objectForKey:@"weightLevel"]intValue]];
+        self.value4lb.text = [NSString stringWithFormat:@"%@",[infoDict objectForKey:@"weightLevel"]];
         
         self.value5lb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"fatPercentage"]floatValue]*100];
         
@@ -63,11 +63,24 @@
         self.second3Lb.backgroundColor = [self getColorWithLevel:self.second3Lb.text];
 
         
-        self.second5Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"visceralFatPercentageLevel"]intValue] status:IS_SAME];
+        self.second4lb.text = [self getwl:[[infoDict objectForKey:@"weightLevel"]intValue]];
+
+        if ([self.second4lb.text intValue]==1||[self.second4lb.text intValue]==3||[self.second4lb.text intValue]==4) {
+            self.second4lb.backgroundColor = warningColor;
+        }else if ([self.second4lb.text intValue]==2)
+        {
+            self.second4lb.backgroundColor = normalColor;
+        }
+        else{
+            self.second4lb.backgroundColor = seriousColor;
+        }
+        
+        
+        self.second5Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"fatPercentageLevel"]intValue] status:IS_FATPERCENT];
         self.second5Lb.backgroundColor = [self getColorWithLevel:self.second5Lb.text];
 
         
-        self.second6Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"fatWeightLevel"]intValue] status:IS_SAME];
+        self.second6Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"fatWeightLevel"]intValue] status:IS_FAT];
         self.second6Lb.backgroundColor = [self getColorWithLevel:self.second6Lb.text];
 
         

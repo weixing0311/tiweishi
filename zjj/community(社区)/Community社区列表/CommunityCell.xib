@@ -31,7 +31,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这个是一个内容 但是都是没用的废话废话废话废话" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hM-WM-mAJ">
                         <rect key="frame" x="10" y="70" width="347" height="9"/>
-                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="20" constant="400" id="mqn-ir-lcp"/>
                         </constraints>
@@ -111,14 +110,14 @@
                                 <rect key="frame" x="125" y="1" width="125" height="39"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discuss.png" translatesAutoresizingMaskIntoConstraints="NO" id="obN-6n-EHG">
-                                        <rect key="frame" x="33.5" y="11" width="18" height="16"/>
+                                        <rect key="frame" x="43.5" y="11" width="18" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="K6M-oW-ZL8"/>
                                             <constraint firstAttribute="width" constant="18" id="V0U-WA-hvI"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDf-77-Lho">
-                                        <rect key="frame" x="59" y="9" width="55.5" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="评论" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDf-77-Lho">
+                                        <rect key="frame" x="69" y="9" width="45.5" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="BWR-Sf-46d"/>
                                         </constraints>
@@ -146,23 +145,23 @@
                                     <constraint firstAttribute="bottom" secondItem="QsB-3f-7Oi" secondAttribute="bottom" id="eOZ-g1-qGX"/>
                                     <constraint firstAttribute="trailing" secondItem="KDf-77-Lho" secondAttribute="trailing" constant="10" id="oyL-fy-EGe"/>
                                     <constraint firstItem="QsB-3f-7Oi" firstAttribute="top" secondItem="5Hp-Yb-IUT" secondAttribute="top" id="uC9-8o-yHl"/>
-                                    <constraint firstItem="obN-6n-EHG" firstAttribute="centerX" secondItem="5Hp-Yb-IUT" secondAttribute="centerX" constant="-20" id="vKg-su-08I"/>
+                                    <constraint firstItem="obN-6n-EHG" firstAttribute="centerX" secondItem="5Hp-Yb-IUT" secondAttribute="centerX" constant="-10" id="vKg-su-08I"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crd-a4-OuY">
                                 <rect key="frame" x="250" y="1" width="125" height="39"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="praise.png" translatesAutoresizingMaskIntoConstraints="NO" id="5ni-hJ-z5l">
-                                        <rect key="frame" x="80" y="11.5" width="15" height="15"/>
+                                        <rect key="frame" x="74.5" y="11.5" width="15" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="GS1-rr-ew4"/>
                                             <constraint firstAttribute="width" constant="15" id="xVc-pE-pSw"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rj9-Sw-foL">
-                                        <rect key="frame" x="105" y="9" width="10" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="赞" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rj9-Sw-foL">
+                                        <rect key="frame" x="99.5" y="9" width="15.5" height="20"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="10" id="Azc-Dl-sK8"/>
+                                            <constraint firstAttribute="width" priority="10" constant="50" id="Azc-Dl-sK8"/>
                                             <constraint firstAttribute="height" constant="20" id="dBi-Yb-W9S"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -233,7 +232,7 @@
                         <state key="normal" title="+关注">
                             <color key="titleColor" red="1" green="0.040391710070000003" blue="0.059190538190000003" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
-                        <state key="selected" title="已关注">
+                        <state key="selected" title="取消关注">
                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <userDefinedRuntimeAttributes>
@@ -294,7 +293,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qsd-r1-Y9c">
-                                <rect key="frame" x="0.0" y="-1" width="335" height="194"/>
+                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jac-6E-w5y">

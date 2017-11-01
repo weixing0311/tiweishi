@@ -178,7 +178,7 @@
     [params safeSetObject:self.nicknametf.text forKey:@"nickName"];
     [params safeSetObject:[NSString stringWithFormat:@"%d",self.manBtn.selected==YES?1:2] forKey:@"sex"];
     [params safeSetObject:self.heighttf.text forKey:@"heigth"];
-    [params safeSetObject:self.agetf.text forKey:@"birthday"];
+    [params safeSetObject:birthdayStr forKey:@"birthday"];
 
     
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/perfectMainUser.do" paramters:params imageData:fileData imageName:@"headimgurl" success:^(NSDictionary *dic) {

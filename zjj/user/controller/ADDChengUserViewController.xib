@@ -27,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上传头像" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ita-w7-99t">
-                    <rect key="frame" x="137.5" y="205" width="100" height="20"/>
+                    <rect key="frame" x="137.5" y="200" width="100" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="GaL-Yh-B8y"/>
                         <constraint firstAttribute="width" constant="100" id="Wdt-6O-DHf"/>
@@ -37,7 +37,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVN-rf-dVW">
-                    <rect key="frame" x="30" y="255" width="315" height="70"/>
+                    <rect key="frame" x="30" y="235" width="315" height="70"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MoB-Zl-kfy">
                             <rect key="frame" x="0.0" y="0.0" width="157.5" height="70"/>
@@ -122,7 +122,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTo-lw-jUO">
-                    <rect key="frame" x="40" y="365" width="295" height="60"/>
+                    <rect key="frame" x="40" y="325" width="295" height="60"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="name.png" translatesAutoresizingMaskIntoConstraints="NO" id="zAG-u1-0q0">
                             <rect key="frame" x="10" y="20" width="20" height="20"/>
@@ -165,7 +165,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aey-Om-7Vt">
-                    <rect key="frame" x="40" y="425" width="295" height="60"/>
+                    <rect key="frame" x="40" y="385" width="295" height="60"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="age.png" translatesAutoresizingMaskIntoConstraints="NO" id="BXp-l4-57H">
                             <rect key="frame" x="10" y="20" width="20" height="20"/>
@@ -208,7 +208,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8NP-dl-6hq">
-                    <rect key="frame" x="40" y="485" width="295" height="60"/>
+                    <rect key="frame" x="40" y="445" width="295" height="60"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="height.png" translatesAutoresizingMaskIntoConstraints="NO" id="5bM-PY-oRZ">
                             <rect key="frame" x="10" y="20" width="20" height="20"/>
@@ -337,14 +337,14 @@
                 <constraint firstItem="Ita-w7-99t" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2i9-ig-he6"/>
                 <constraint firstItem="yVN-rf-dVW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="4DT-8E-nbd"/>
                 <constraint firstAttribute="trailing" secondItem="rTo-lw-jUO" secondAttribute="trailing" constant="40" id="4Rk-ZH-W4V"/>
-                <constraint firstItem="yVN-rf-dVW" firstAttribute="top" secondItem="Ita-w7-99t" secondAttribute="bottom" constant="30" id="DFv-Sk-vGd"/>
+                <constraint firstItem="yVN-rf-dVW" firstAttribute="top" secondItem="Ita-w7-99t" secondAttribute="bottom" constant="15" id="DFv-Sk-vGd"/>
                 <constraint firstItem="Aey-Om-7Vt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="DoI-fB-dru"/>
                 <constraint firstAttribute="trailing" secondItem="Aey-Om-7Vt" secondAttribute="trailing" constant="40" id="OaG-HJ-VqG"/>
                 <constraint firstAttribute="trailing" secondItem="iAk-DO-kfL" secondAttribute="trailing" id="QQ6-Fi-93M"/>
                 <constraint firstItem="q8E-XL-zVI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="UIA-IK-axG"/>
                 <constraint firstItem="8NP-dl-6hq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="UIu-Ie-iVq"/>
-                <constraint firstItem="rTo-lw-jUO" firstAttribute="top" secondItem="yVN-rf-dVW" secondAttribute="bottom" constant="40" id="ZoT-KX-6nX"/>
-                <constraint firstItem="Ita-w7-99t" firstAttribute="top" secondItem="nLU-rB-6Ea" secondAttribute="bottom" constant="20" id="cef-dV-C9g"/>
+                <constraint firstItem="rTo-lw-jUO" firstAttribute="top" secondItem="yVN-rf-dVW" secondAttribute="bottom" constant="20" id="ZoT-KX-6nX"/>
+                <constraint firstItem="Ita-w7-99t" firstAttribute="top" secondItem="nLU-rB-6Ea" secondAttribute="bottom" constant="15" id="cef-dV-C9g"/>
                 <constraint firstAttribute="trailing" secondItem="yVN-rf-dVW" secondAttribute="trailing" constant="30" id="cfN-Vg-db2"/>
                 <constraint firstItem="8NP-dl-6hq" firstAttribute="top" secondItem="Aey-Om-7Vt" secondAttribute="bottom" id="hhU-lY-b8d"/>
                 <constraint firstItem="iAk-DO-kfL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nfx-fU-CzQ"/>

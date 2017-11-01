@@ -22,6 +22,7 @@
 #import "HistoryInfoViewController.h"
 #import "HealthDetailViewController.h"
 #import "WeighingViewController.h"
+#import "HistoryTotalViewController.h"
 @interface NewHealthViewController ()<userListDelegate,healthMainDelegate,weightingDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
@@ -97,10 +98,15 @@
     [self.view addSubview:self.userListView];
     
 }
--(void)weightingSuccess
+-(void)weightingSuccessWithSubtractMaxWeight:(NSString *)subtractMaxWeight dataId:(NSString *)dataId
 {
-    enterDetailPage = YES;
     [self getHeaderInfo];
+    HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
+    hd.hidesBottomBarWhenPushed=YES;
+    hd.subtractMaxWeight = subtractMaxWeight;
+    hd.dataId =dataId;
+    [self.navigationController pushViewController:hd animated:YES];
+
 }
 -(void)getHeaderInfo
 {
@@ -115,10 +121,6 @@
         [item setobjectWithDic:[dic objectForKey:@"data"]];
         [headerArr addObject:item];
         [self refreshPageInfoWithItem:item];
-        if (enterDetailPage ==YES) {
-            enterDetailPage =NO;
-            [self enterDetailView];
-        }
         
     } failure:^(NSError *error) {
         if (error.code ==402) {
@@ -306,8 +308,8 @@
 }
 - (IBAction)didClickShowhistoryInfo:(id)sender {
     
-
-    HistoryInfoViewController * hist = [[HistoryInfoViewController alloc]init];
+    HistoryTotalViewController * hist = [[HistoryTotalViewController alloc]init];
+//    HistoryInfoViewController * hist = [[HistoryInfoViewController alloc]init];
     hist.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController: hist animated:YES];
 }

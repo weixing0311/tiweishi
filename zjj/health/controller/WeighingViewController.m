@@ -75,9 +75,11 @@
         
         self.statuslb.text = @"上传成功！";
         
-    
-        if (self.delegate &&[self.delegate respondsToSelector:@selector(weightingSuccess)]) {
-            [self.delegate weightingSuccess];
+        
+        NSDictionary * dataDict= [dic safeObjectForKey:@"data"];
+        
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(weightingSuccessWithSubtractMaxWeight:dataId:)]) {
+            [self.delegate weightingSuccessWithSubtractMaxWeight:[dataDict safeObjectForKey:@"subtractMaxWeight"]dataId:[dataDict safeObjectForKey:@"DataId"]];
         }
         [self dismissViewControllerAnimated:YES completion:nil];
 //        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];

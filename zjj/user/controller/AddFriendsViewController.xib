@@ -26,31 +26,39 @@
                     <rect key="frame" x="0.0" y="64" width="375" height="80"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1FE-KR-MHp">
-                            <rect key="frame" x="20" y="17.5" width="335" height="45"/>
+                            <rect key="frame" x="20" y="22.5" width="335" height="35"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入。。。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
-                                    <rect key="frame" x="40" y="0.0" width="275" height="45"/>
+                                    <rect key="frame" x="40" y="0.0" width="275" height="35"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_" translatesAutoresizingMaskIntoConstraints="NO" id="sC9-2L-Lne">
+                                    <rect key="frame" x="10" y="10" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="lTC-II-LQf"/>
+                                        <constraint firstAttribute="width" constant="15" id="oNW-lK-XGI"/>
+                                    </constraints>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="45" id="7t0-e2-kOI"/>
-                                <constraint firstItem="sFQ-1w-ihf" firstAttribute="leading" secondItem="1FE-KR-MHp" secondAttribute="leading" constant="40" id="eID-2U-GYK"/>
+                                <constraint firstItem="sC9-2L-Lne" firstAttribute="centerY" secondItem="1FE-KR-MHp" secondAttribute="centerY" id="1Fg-66-gDK"/>
+                                <constraint firstAttribute="height" constant="35" id="7t0-e2-kOI"/>
+                                <constraint firstItem="sC9-2L-Lne" firstAttribute="leading" secondItem="1FE-KR-MHp" secondAttribute="leading" constant="10" id="dL3-Ci-nu4"/>
                                 <constraint firstAttribute="trailing" secondItem="sFQ-1w-ihf" secondAttribute="trailing" constant="20" id="lgS-PZ-jah"/>
                                 <constraint firstItem="sFQ-1w-ihf" firstAttribute="top" secondItem="1FE-KR-MHp" secondAttribute="top" id="mi4-UX-j2w"/>
                                 <constraint firstAttribute="bottom" secondItem="sFQ-1w-ihf" secondAttribute="bottom" id="wAd-ZL-X5R"/>
+                                <constraint firstItem="sFQ-1w-ihf" firstAttribute="leading" secondItem="sC9-2L-Lne" secondAttribute="trailing" constant="15" id="y91-4a-yGZ"/>
                             </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            </userDefinedRuntimeAttributes>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_" translatesAutoresizingMaskIntoConstraints="NO" id="sC9-2L-Lne">
-                            <rect key="frame" x="20" y="27.5" width="25" height="25"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="25" id="lTC-II-LQf"/>
-                                <constraint firstAttribute="width" constant="25" id="oNW-lK-XGI"/>
-                            </constraints>
-                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -58,8 +66,6 @@
                         <constraint firstAttribute="trailing" secondItem="1FE-KR-MHp" secondAttribute="trailing" constant="20" id="IMi-pH-2lw"/>
                         <constraint firstItem="1FE-KR-MHp" firstAttribute="centerY" secondItem="8VP-LA-rkt" secondAttribute="centerY" id="Tsj-XU-HnZ"/>
                         <constraint firstItem="1FE-KR-MHp" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="20" id="jbm-X1-78G"/>
-                        <constraint firstItem="sC9-2L-Lne" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="20" id="oE1-eO-6Dw"/>
-                        <constraint firstItem="sC9-2L-Lne" firstAttribute="centerY" secondItem="8VP-LA-rkt" secondAttribute="centerY" id="pPC-pT-72d"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdz-yf-R7S">

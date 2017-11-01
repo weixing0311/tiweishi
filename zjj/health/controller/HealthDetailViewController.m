@@ -48,6 +48,12 @@
     _dataArray = [NSMutableArray array];
     [self getInfo];
     [self buildRightNaviBarItem];
+    
+    
+    if (self.subtractMaxWeight.length>0) {
+        [self showAlertViewWithsubtractMaxWeight:self.subtractMaxWeight];
+    }
+    
     // Do any additional setup after loading the view from its nib.
 }
 -(void)buildRightNaviBarItem
@@ -423,9 +429,9 @@
     return image;
     
 }
--(void)showAlertViewWithsubtractMaxWeight:(float)subtractMaxWeight
+-(void)showAlertViewWithsubtractMaxWeight:(NSString *)subtractMaxWeight
 {
-    UIAlertController * al =[UIAlertController alertControllerWithTitle:@"" message:[self getDUDUAlertCtitle:subtractMaxWeight] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController * al =[UIAlertController alertControllerWithTitle:@"" message:[self getDUDUAlertCtitle:[subtractMaxWeight floatValue]] preferredStyle:UIAlertControllerStyleAlert];
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //添加跳转
     }]];

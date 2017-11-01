@@ -229,6 +229,7 @@
 		6C57799A1FA701B800388986 /* ClearCecheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5779991FA701B800388986 /* ClearCecheModel.m */; };
 		6C5779A01FA8668300388986 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57799F1FA8668300388986 /* EmptyView.m */; };
 		6C5779A21FA8669000388986 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5779A11FA8669000388986 /* EmptyView.xib */; };
+		6C5779A51FA9B72A00388986 /* HistoryTotalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5779A41FA9B72A00388986 /* HistoryTotalViewController.m */; };
 		6C6773731F90AE470007CB2D /* WeighingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6773711F90AE470007CB2D /* WeighingViewController.m */; };
 		6C6773741F90AE470007CB2D /* WeighingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C6773721F90AE470007CB2D /* WeighingViewController.xib */; };
 		6C6773791F9596520007CB2D /* NewHealthHistoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6773771F9596520007CB2D /* NewHealthHistoryListViewController.m */; };
@@ -1197,6 +1198,8 @@
 		6C57799E1FA8668300388986 /* EmptyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
 		6C57799F1FA8668300388986 /* EmptyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
 		6C5779A11FA8669000388986 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		6C5779A31FA9B72A00388986 /* HistoryTotalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryTotalViewController.h; sourceTree = "<group>"; };
+		6C5779A41FA9B72A00388986 /* HistoryTotalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryTotalViewController.m; sourceTree = "<group>"; };
 		6C5D598E1F988FEE0040EE5A /* integralBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = integralBg.png; sourceTree = "<group>"; };
 		6C6773701F90AE470007CB2D /* WeighingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeighingViewController.h; sourceTree = "<group>"; };
 		6C6773711F90AE470007CB2D /* WeighingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeighingViewController.m; sourceTree = "<group>"; };
@@ -3294,6 +3297,8 @@
 				6C005FD31F983A7200C9E37C /* HistoryCell.h */,
 				6C005FD41F983A7200C9E37C /* HistoryCell.m */,
 				6C005FD51F983A7200C9E37C /* HistoryCell.xib */,
+				6C5779A31FA9B72A00388986 /* HistoryTotalViewController.h */,
+				6C5779A41FA9B72A00388986 /* HistoryTotalViewController.m */,
 			);
 			name = historyInfo;
 			sourceTree = "<group>";
@@ -5136,6 +5141,7 @@
 				6C8F53C11F11D38A00C7A275 /* NSString+JFAExtend.m in Sources */,
 				6C363A091F03940500268851 /* UIScrollView+MJExtension.m in Sources */,
 				6C3639921EFE47E100268851 /* AAPie.m in Sources */,
+				6C5779A51FA9B72A00388986 /* HistoryTotalViewController.m in Sources */,
 				6CD92FE61F0A7FD000D7989E /* ShareListView.m in Sources */,
 				6C1DBD861F67AF1D00F5B975 /* SuperiorViewController.m in Sources */,
 				6CDE37E51EF0D813001F10DE /* ResignAgumentViewController.m in Sources */,

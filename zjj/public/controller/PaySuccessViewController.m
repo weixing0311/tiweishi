@@ -12,7 +12,8 @@
 #import "TZSMyDingGouViewController.h"
 #import "GoodsDetailViewController.h"
 #import "BaseWebViewController.h"
-
+#import "IntegralOrderViewController.h"
+#import "IntegralOrderDetailViewController.h"
 @interface PaySuccessViewController ()
 
 @end
@@ -58,7 +59,7 @@
 //支付成功跳转返回
 -(void)paySuccessBackWithType:(int )orderType
 {
-    //        1 消费者订购 2 配送订购 3 服务订购 4 充值
+    //        1 消费者订购 2 配送订购 3 服务订购 4 充值 5积分
     
     if (orderType ==1)
     {
@@ -127,6 +128,30 @@
         [arr addObject:mdVC];
         [self.navigationController setViewControllers:arr];
         
+    }
+    else if (orderType ==5)
+    {
+        for (UIViewController * controller in self.navigationController.viewControllers) {
+            
+            if ([controller isKindOfClass:[IntegralOrderDetailViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+                //                DLog(@"我曹草草草");
+                return ;
+            }
+            else if ([controller isKindOfClass:[IntegralOrderViewController class]])
+            {
+                [self.navigationController popToViewController:controller animated:YES];
+                return;
+            }
+        }
+        IntegralOrderViewController * mdVC = [[IntegralOrderViewController alloc]init];
+        mdVC.hidesBottomBarWhenPushed = YES;
+        
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+        [arr removeLastObject];
+        [arr removeLastObject];
+        [arr addObject:mdVC];
+        [self.navigationController setViewControllers:arr];
     }
     else
     {

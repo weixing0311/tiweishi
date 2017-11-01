@@ -344,7 +344,7 @@
     
 
     NSString * priceStr = [infoDic safeObjectForKey:@"normalPrice"];
-    NSString * integral = [dic safeObjectForKey:@"integral"];
+    NSString * integral = [infoDic safeObjectForKey:@"integral"];
     if (integral.intValue>0&&priceStr.floatValue>0) {
         cell.priceLabel.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];
         

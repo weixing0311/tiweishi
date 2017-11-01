@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *second3Lb;
 
 @property (weak, nonatomic) IBOutlet UILabel *value4lb;
+@property (weak, nonatomic) IBOutlet UILabel *second4lb;
 
 @property (weak, nonatomic) IBOutlet UILabel *value5lb;
 @property (weak, nonatomic) IBOutlet UILabel *second5Lb;

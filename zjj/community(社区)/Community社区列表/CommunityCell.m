@@ -33,7 +33,7 @@
 -(void)setInfoWithDict:(CommunityModel *)item
 {
     self.currModel = item;
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"logo")];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
     
     self.titleIb.text        = item.title;
     self.contentlb.text      = item.content;
@@ -219,9 +219,9 @@
     }
 }
 - (IBAction)didGz:(id)sender {
-    if (self.gzBtn.selected == YES) {
-        return;
-    }
+//    if (self.gzBtn.selected == YES) {
+//        return;
+//    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(didGzWithBigCell:)]) {
         [self.delegate didGzWithBigCell:self];
     }else{

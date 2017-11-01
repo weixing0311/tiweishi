@@ -32,52 +32,51 @@
     if (self.tag ==1) {//BMI 体重 体脂率
         self.title1Label.text = @"BMI";
         self.value1Label.text = [NSString stringWithFormat:@"%.1f",item.bmi];
-        self.status1Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
+        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
 
         self.title2Label.text = @"脂肪量";
         self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
-        self.status2Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
+        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
         
         self.title3Label.text = @"体脂率";
         self.value3Label.text = [NSString stringWithFormat:@"%.1f%%",item.fatPercentage];
-        self.status3Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT item:item];
+        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT item:item];
         
         
     }else if(self.tag==2){//蛋白质  水分  脂肪量
         self.title1Label.text = @"蛋白质";
         self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
-        self.status1Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
+        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
         
         self.title2Label.text = @"骨骼肌";
         self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneMuscleWeight];
-        self.status2Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE item:item];
+        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE item:item];
 
         self.title3Label.text = @"水分";
         self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
-        self.status3Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
 
         
     }else{//肌肉  基础代谢  内脏脂肪
         
         self.title1Label.text = @"肌肉";
         self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
-        self.status1Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_MUSCLE item:item];
+        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_MUSCLE item:item];
 
         self.title2Label.text = @"基础代谢";
         self.value2Label.text = [NSString stringWithFormat:@"%.1f",item.bmr];
-        self.status2Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
 
         
         
         self.title3Label.text = @"内脏脂肪";
         self.value3Label.text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
-        self.status3Label.backgroundColor = [self getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT item:item];
-
+        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT item:item];
     }
     
-    self.status1Label.text = [self getTextWithColor:self.status1Label.backgroundColor];
-    self.status2Label.text = [self getTextWithColor:self.status2Label.backgroundColor];
-    self.status3Label.text = [self getTextWithColor:self.status3Label.backgroundColor];
+    self.status1Label.backgroundColor = [self getColorWithString:self.status1Label.text];
+    self.status2Label.backgroundColor = [self getColorWithString:self.status2Label.text];
+    self.status3Label.backgroundColor = [self getColorWithString:self.status3Label.text];
 
 }
 -(void)setDetailViewContentWithButtonIndex:(NSInteger)index
@@ -115,13 +114,13 @@
         case 3:
             self.headerImageView.image = getImage(@"fat%1_");
             self.headerNamelb.text = @"体脂率";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeight];
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatPercentage];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
 
             
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMax];
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatPercentageMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatPercentageMax];
             
             currX = [self getlocationDianL:self.currItem.fatWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
@@ -187,7 +186,10 @@
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
 
-            currX = [self getlocationDianL:self.currItem.visceralFatPercentage  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.bmrMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmrMax];
+
+            currX = [self getlocationDianL:self.currItem.bmr  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 9:
@@ -288,36 +290,46 @@
 }
 
 
--(NSString *)getTextWithColor:(UIColor *)color
+-(UIColor *)getColorWithString:(NSString *)string
 {
     
-    if (CGColorEqualToColor(color.CGColor, normalColor.CGColor)) {
-        return @"正常";
-    }else if (CGColorEqualToColor(color.CGColor, warningColor.CGColor))
-    {
-        return @"偏低";
-    }else{
-        return @"高";
+    if ([string isEqualToString:@"偏低"]||[string isEqualToString:@"偏高"]) {
+        return warningColor;
     }
+    else if ([string isEqualToString:@"正常"])
+    {
+        return normalColor;
+    }else{
+        return seriousColor;
+    }
+    
+//    if (CGColorEqualToColor(color.CGColor, normalColor.CGColor)) {
+//        return @"正常";
+//    }else if (CGColorEqualToColor(color.CGColor, warningColor.CGColor))
+//    {
+//        return @"偏低";
+//    }else{
+//        return @"高";
+//    }
 }
 
--(UIColor *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
+-(NSString *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
 {
     //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
     switch (myType) {
         case IS_MODEL_BMI:
             switch (item.bmiLevel) {
                 case 1:
-                    return warningColor;
+                    return @"偏低";
                     break;
                 case 2:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 3:
-                    return seriousColor;
+                    return @"高";
                     break;
                 case 4:
-                    return warningColor;
+                    return @"高";
                     break;
                     
                 default:
@@ -326,13 +338,13 @@
         case IS_MODEL_FATPERCENT:
             switch (item.fatPercentageLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"偏高";
                     break;
                 case 3:
-                    return seriousColor;
+                    return @"高";
                     break;
                     
                 default:
@@ -342,13 +354,13 @@
         case IS_MODEL_FAT:
             switch (item.fatWeightLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"偏高";
                     break;
                 case 3:
-                    return seriousColor;
+                    return @"高";
                     break;
                     
                 default:
@@ -358,10 +370,10 @@
         case IS_MODEL_WATER:
             switch (item.waterLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"高";
                     break;
                     
                 default:
@@ -371,10 +383,10 @@
         case IS_MODEL_PROTEIN:
             switch (item.proteinLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"高";
                     break;
                 default:
                     break;
@@ -385,12 +397,12 @@
         case IS_MODEL_MUSCLE:
             switch (item.muscleLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"高";
                     break;
-                    
+
                     
                 default:
                     break;
@@ -401,12 +413,12 @@
         case IS_MODEL_BONEMUSCLE:
             switch (item.boneMuscleLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"高";
                     break;
-                    
+
                 default:
                     break;
             }
@@ -416,14 +428,15 @@
         case IS_MODEL_VISCERALFAT:
             switch (item.visceralFatPercentageLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"偏高";
                     break;
                 case 3:
-                    return seriousColor;
+                    return @"高";
                     break;
+                    
                 default:
                     break;
             }
@@ -431,10 +444,10 @@
         case IS_MODEL_BONE:
             switch (item.boneLevel) {
                 case 1:
-                    return normalColor;
+                    return @"正常";
                     break;
                 case 2:
-                    return warningColor;
+                    return @"高";
                     break;
                 default:
                     break;

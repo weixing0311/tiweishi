@@ -15,8 +15,6 @@
 #import "HistoryCell.h"
 #import "WriteArtcleViewController.h"
 @interface NewHealthHistoryListViewController ()<UITableViewDelegate,UITableViewDataSource,historyCellDelegate>
-@property (weak,  nonatomic) IBOutlet UIView *rlView;
-@property (strong,  nonatomic)  UITableView *tableview;
 @property (nonatomic,strong) NSMutableDictionary * infoDict;
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic,strong)NSMutableArray * chooseArray;

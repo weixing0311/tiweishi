@@ -9,5 +9,6 @@
 #import "JFABaseTableViewController.h"
 
 @interface NewHealthHistoryListViewController : JFABaseTableViewController
-
+@property (strong,  nonatomic)  UITableView *tableview;
+-(void)enterRightPage;
 @end

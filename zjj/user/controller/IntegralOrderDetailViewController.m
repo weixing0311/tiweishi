@@ -398,9 +398,8 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        NSDictionary * dic  = _dataArray.count>0?[_dataArray objectAtIndex:0]:[NSDictionary dictionary ];
-        NSString * priceStr = [dic safeObjectForKey:@"unitPrice"];
-        NSString * integral = [dic safeObjectForKey:@"integral"];
+        NSString * priceStr = [_infoDict safeObjectForKey:@"payableAmount"];
+        NSString * integral = [_infoDict safeObjectForKey:@"integral"];
         if (integral.intValue>0&&priceStr.floatValue>0) {
             cell.value1label.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];
             cell.value3label.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];

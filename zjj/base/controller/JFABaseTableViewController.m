@@ -88,7 +88,8 @@
 {
     self.navigationController.navigationBar.barTintColor = HEXCOLOR(0xfb0628);
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
+    [[UIBarButtonItem appearance]setBackButtonBackgroundVerticalPositionAdjustment:17 forBarMetrics:UIBarMetricsDefault];
+
 }
 -(void)setTBWhiteColor
 {
@@ -96,7 +97,7 @@
     self.navigationController.navigationBar.tintColor=[UIColor blackColor];
 
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
-    [[UIBarButtonItem appearance]setBackButtonBackgroundVerticalPositionAdjustment:20 forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance]setBackButtonBackgroundVerticalPositionAdjustment:17 forBarMetrics:UIBarMetricsDefault];
 //    [[UIBarButtonItem appearance]setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
 
 }

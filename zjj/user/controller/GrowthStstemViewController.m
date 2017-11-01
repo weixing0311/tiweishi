@@ -24,13 +24,13 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.title = @"我的等级";
     [self setTBRedColor];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"我的等级";
 ;
     
     UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"Prompt.png") style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];

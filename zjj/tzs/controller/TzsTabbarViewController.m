@@ -34,7 +34,7 @@
     foundViewController * found =[[foundViewController alloc]init];
     UINavigationController * nav2 = [[UINavigationController alloc]initWithRootViewController:found];
     nav2.navigationBar.barTintColor = [UIColor redColor];
-    found.title = @"发现";
+    found.title = @"推广";
     
     SettingViewController *shop = [[SettingViewController alloc]init];
     shop.title = @"我的";

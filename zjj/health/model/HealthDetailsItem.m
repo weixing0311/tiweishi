@@ -41,6 +41,9 @@ static HealthDetailsItem *item;
     
     self . visceralFatPercentageLevel = [[dict safeObjectForKey:@"visceralFatPercentageLevel"]floatValue];
     self . bmr                   = [[dict safeObjectForKey:@"bmr"]floatValue];
+    self . bmrMin                   = [[dict safeObjectForKey:@"bmrMin"]floatValue];
+    self . bmrMax                   = [[dict safeObjectForKey:@"bmrMax"]floatValue];
+
     self . bodyAge               = [[dict safeObjectForKey:@"bodyAge"]floatValue];
     self . bodyLevel             = [[dict safeObjectForKey:@"bodyLevel"]intValue];
     
@@ -94,22 +97,22 @@ static HealthDetailsItem *item;
     self . boneMuscleWeightMin   = [[dict safeObjectForKey:@"boneMuscleWeightMin"]floatValue];
     self . boneLevel             = [[dict safeObjectForKey:@"boneLevel"]intValue];
     
-    self.standardWeight          = [[dict safeObjectForKey:@"standardWeight"]floatValue];
-    self.weightControl           = [[dict safeObjectForKey:@"weightControl"]floatValue];
-    self.lbm                     = [[dict safeObjectForKey:@"lbm"]floatValue];
-    self.fatControl              = [[dict safeObjectForKey:@"fatControl"]floatValue];
+    self . standardWeight          = [[dict safeObjectForKey:@"standardWeight"]floatValue];
+    self . weightControl           = [[dict safeObjectForKey:@"weightControl"]floatValue];
+    self . lbm                     = [[dict safeObjectForKey:@"lbm"]floatValue];
+    self . fatControl              = [[dict safeObjectForKey:@"fatControl"]floatValue];
 
     
     self . normal                = [[dict safeObjectForKey:@"normal"]intValue];
     self . warn                  = [[dict safeObjectForKey:@"warn"]intValue];
     self . serious               = [[dict safeObjectForKey:@"serious"]intValue];
     
-    self.height                  = [[dict safeObjectForKey:@"height"]intValue];
-    self.age                     = [[dict safeObjectForKey:@"age"]intValue];
+    self . height                  = [[dict safeObjectForKey:@"height"]intValue];
+    self . age                     = [[dict safeObjectForKey:@"age"]intValue];
 
-    self.ranking                 = [[dict safeObjectForKey:@"ranking"]intValue];
-    self.percent                 = [[dict safeObjectForKey:@"percent"]floatValue];
-    self.myScore                = [[dict safeObjectForKey:@"score"]intValue];
+    self . ranking                 = [[dict safeObjectForKey:@"ranking"]intValue];
+    self . percent                 = [[dict safeObjectForKey:@"percent"]floatValue];
+    self . myScore                 = [[dict safeObjectForKey:@"score"]floatValue];
     
 }
 
@@ -337,7 +340,7 @@ static HealthDetailsItem *item;
             return @"BMI是Body Mass Index 的缩写，BMI中文是“体质指数”的意思，是以您的身高体重计算出来的。BMI是世界公认的一种评定肥胖程度的分级方法，主要用于统计，当需要比较及分析一个人的体重对于不同高度的人所带来的健康影响时，BMI值是一个中立而可靠的指标，是国际上常用的衡量人体胖瘦程度以及是否健康的一个标准。";
             break;
         case 2:
-            return @"骨骼肌又称横纹肌，肌肉中的一种。骨骼肌是由数以千计，具有收缩能力的肌细胞所组成。任何的体育活动，都是骨骼肌收缩的成果，人体共有600多条骨骼肌，约占全身重量的40%。";
+            return   @"脂肪量是指身体成分中，脂肪组织所占的重量。测量脂肪量比单纯的只测量体重更能反映我们身体的脂肪水平。";
             
             break;
         case 3:
@@ -351,12 +354,12 @@ static HealthDetailsItem *item;
             break;
 
         case 5:
-            return @"水分是指组成身体的各项物质所包含的水分。";
+            return @"骨骼肌又称横纹肌，肌肉中的一种。骨骼肌是由数以千计，具有收缩能力的肌细胞所组成。任何的体育活动，都是骨骼肌收缩的成果，人体共有600多条骨骼肌，约占全身重量的40%。";
             
             break;
 
         case 6:
-            return @"脂肪量是指身体成分中，脂肪组织所占的重量。测量脂肪量比单纯的只测量体重更能反映我们身体的脂肪水平。";
+            return @"水分是指组成身体的各项物质所包含的水分。";
             
             break;
 
@@ -404,12 +407,16 @@ static HealthDetailsItem *item;
                     break;
             }
         case 2:
-            switch (item.boneMuscleLevel) {
+            
+            switch (item.fatWeightLevel) {
                 case 1:
-                    return @"您的骨骼肌含量属于标准状态，这代表您在运动或高强度劳动时会比其他人拥有更强的耐力，如果您想要拥有更好的耐力与力量，建议您保持锻炼。";
+                    return @"您身体的脂肪量处于标准状态，表示您的身体状况处于比较好的阶段，但是还是要未雨绸缪奥，在饮食上不要太放肆奥，多锻炼总是没有坏处的。";
                     break;
                 case 2:
-                    return @"您的骨骼肌含量过低，这可能会造成您身体部分部位酸痛、无力等情况，建议您加强锻炼，增强骨骼肌的耐力与强度。";
+                    return @"您的脂肪量比较低，这代表着您身体比较健康，肥胖人群可能会患的各种疾病都与你没有关系，继续保持奥~";
+                    break;
+                case 3:
+                    return @"您目前身体的脂肪量偏高，建议您少吃高油脂类的食物，多吃蔬菜水果，每天进行半小时的有氧运动会使您的身体状况更好。";
                     break;
                     
                 default:
@@ -451,6 +458,22 @@ static HealthDetailsItem *item;
             
             
         case 5:
+            switch (item.boneMuscleLevel) {
+                case 1:
+                    return @"您的骨骼肌含量属于标准状态，这代表您在运动或高强度劳动时会比其他人拥有更强的耐力，如果您想要拥有更好的耐力与力量，建议您保持锻炼。";
+                    break;
+                case 2:
+                    return @"您的骨骼肌含量过低，这可能会造成您身体部分部位酸痛、无力等情况，建议您加强锻炼，增强骨骼肌的耐力与强度。";
+                    break;
+                    
+                default:
+                    break;
+            }
+
+            break;
+
+        case 6:
+            
             switch (item.waterLevel) {
                 case 1:
                     return @"您身体内的水分含量较低，建议您多补充水分，一般而言，成年人每一千克体重需饮水40毫升，您可以根据自身的体重来补充自身每天所需要的水分。";
@@ -462,23 +485,7 @@ static HealthDetailsItem *item;
                 default:
                     break;
             }
-            break;
-
-        case 6:
-            switch (item.fatWeightLevel) {
-                case 1:
-                    return @"您身体的脂肪量处于标准状态，表示您的身体状况处于比较好的阶段，但是还是要未雨绸缪奥，在饮食上不要太放肆奥，多锻炼总是没有坏处的。";
-                    break;
-                case 2:
-                    return @"您的脂肪量比较低，这代表着您身体比较健康，肥胖人群可能会患的各种疾病都与你没有关系，继续保持奥~";
-                    break;
-                case 3:
-                    return @"您目前身体的脂肪量偏高，建议您少吃高油脂类的食物，多吃蔬菜水果，每天进行半小时的有氧运动会使您的身体状况更好。";
-                    break;
-                    
-                default:
-                    break;
-            }
+            
             break;
         case 7:
             switch (item.muscleLevel) {

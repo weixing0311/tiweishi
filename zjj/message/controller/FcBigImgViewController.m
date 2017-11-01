@@ -29,7 +29,9 @@
         if (![currImage isKindOfClass:[NSString class]]) {
             currImage = [currImage objectForKey:@"imgUrl"];
         }
-        UIImageView * imageView =[[UIImageView alloc]initWithFrame:CGRectMake(i*JFA_SCREEN_WIDTH+5, 0, 0, 0)];
+        
+        UIScrollView *scr = [[UIScrollView alloc]initWithFrame:CGRectMake(i*JFA_SCREEN_WIDTH, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT)];
+        UIImageView * imageView =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
         imageView.tag = i;
         
         
@@ -52,11 +54,14 @@
             if (!error) {
             float imageHeight = JFA_SCREEN_WIDTH * image.size.height/image.size.width ;
                 
-                imageView.frame =CGRectMake(i*JFA_SCREEN_WIDTH+5, (JFA_SCREEN_HEIGHT-imageHeight)/2, JFA_SCREEN_WIDTH-10, imageHeight);
+                imageView.frame =CGRectMake(i*JFA_SCREEN_WIDTH, 0, JFA_SCREEN_WIDTH-10, imageHeight);
+                scr.contentSize = CGSizeMake(0, imageHeight);
             }
             imageView.image = image;
+            
         }];
-        [self.scrollview addSubview:imageView];
+        [scr addSubview:imageView];
+        [self.scrollview addSubview:scr];
 
     }
     

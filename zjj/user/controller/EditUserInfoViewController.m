@@ -11,6 +11,11 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 #import "HeadImageCell.h"
+#import "ChangePasswordViewController.h"
+#import "AboutUsViewController.h"
+#import "LoignViewController.h"
+
+#define videoCechePath [NSTemporaryDirectory() stringByAppendingString:@"MediaCache"]
 
 @interface EditUserInfoViewController ()<UITableViewDelegate,UITableViewDataSource,EditUserInfoCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
@@ -256,11 +261,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 9;
+    return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==6) {
+    if (indexPath.row ==9) {
         return 250;
     }
     else if (indexPath.row ==0)
@@ -285,7 +290,7 @@
         return cell;
     }
     
-    else if (indexPath.row ==6) {
+    else if (indexPath.row ==9) {
         static NSString * identifier = @"EditUserInfoImageCell";
         EditUserInfoImageCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
@@ -306,7 +311,7 @@
         }
         
         cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
-        if (indexPath.row <5) {
+        if (indexPath.row !=5&&indexPath.row !=9&&indexPath.row !=10) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else
         {
@@ -336,20 +341,22 @@
                 cell.textLabel.text = @"身高(cm)";
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[_upDataDict safeObjectForKey:@"heigth"]];
                 break;
+            case 6:
+                cell.textLabel.text = @"修改密码";
+                cell.detailTextLabel.text =@"";
+                break;
             case 7:
-                cell.textLabel.text = @"等级";
-                cell.detailTextLabel.text =[_infoDict safeObjectForKey:@"gradeName"];
+                cell.textLabel.text = @"清空缓存";
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[self getCecheSize]];
                 break;
             case 8:
-                cell.textLabel.text = @"积分";
-                cell.detailTextLabel.text = [_infoDict safeObjectForKey:@"integral"];
+                cell.textLabel.text = @"关于我们";
+                cell.detailTextLabel.text = @"";
                 break;
-                
+
             default:
                 break;
         }
-        
-
 
     return cell;
     }
@@ -357,36 +364,65 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.row) {
-        case 0 :
-            [self changeHeaderWithType:3];
-            break;
-        case 1:
-            
-            [self showAlertWithType:indexPath.row];
-            break;
-        case 2:
-            self.hiddentf.tag = indexPath.row;
-            [self.hiddentf becomeFirstResponder];
-            [self.pickView reloadAllComponents];
+    if (indexPath.row==0) {
+        [self changeHeaderWithType:3];
+    }
+    else if (indexPath.row ==1)
+    {
+        [self showAlertWithType:indexPath.row];
 
-            break;
-        case 3:
-            [self showAlertWithType:indexPath.row];
-            break;
-        case 4:
-            [self.datePickTf becomeFirstResponder];
+    }
+    else if (indexPath.row ==2)
+    {
+        self.hiddentf.tag = indexPath.row;
+        [self.hiddentf becomeFirstResponder];
+        [self.pickView reloadAllComponents];
 
-            break;
-        case 5:
-            self.hiddentf.tag = indexPath.row;
-            [self.hiddentf becomeFirstResponder];
-            [self.pickView reloadAllComponents];
+    }
+    else if (indexPath.row ==3)
+    {
+        [self showAlertWithType:indexPath.row];
 
-            break;
+    }
+    else if (indexPath.row ==4)
+    {
+        [self.datePickTf becomeFirstResponder];
 
-        default:
-            break;
+    }
+    else if (indexPath.row ==5)
+    {
+        self.hiddentf.tag = indexPath.row;
+        [self.hiddentf becomeFirstResponder];
+        [self.pickView reloadAllComponents];
+
+    }
+    else if (indexPath.row ==6)
+    {
+        ChangePasswordViewController * cb = [[ChangePasswordViewController alloc]init];
+        [self.navigationController pushViewController:cb animated:YES];
+
+    }
+    else if (indexPath.row ==7)
+    {
+        
+        UIAlertController * al = [UIAlertController alertControllerWithTitle:@"是否清理缓存？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [al addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
+            [[SDImageCache sharedImageCache] clearMemory];
+            [[NSFileManager defaultManager] removeItemAtPath:videoCechePath error:nil];
+
+            [self.tableview reloadData];
+
+        }]] ;
+        [al addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]] ;
+        [self presentViewController:al animated:YES completion:nil];
+        
+    }
+    else if (indexPath.row ==8)
+    {
+        AboutUsViewController * ab= [[AboutUsViewController alloc]init];
+        [self.navigationController pushViewController:ab animated:YES];
+
     }
 }
 
@@ -403,7 +439,11 @@
     
     [al addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.text = indexPathRow==1?[_upDataDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
+        textField.frame = CGRectMake(textField.frame.origin.x,textField.frame.origin.y, textField.frame.size.width, 60);
     }];
+    
+
+    
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (![self valiNickName:al.textFields.firstObject.text]&&indexPathRow ==1) {
             [[UserModel shareInstance]showInfoWithStatus:@"昵称格式不正确"];
@@ -669,6 +709,104 @@
     return isMatch;
     
 }
+- (IBAction)loignOut:(id)sender {
+    UIAlertController * la =[UIAlertController alertControllerWithTitle:@"是否确认退出登录？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [la addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:kMyloignInfo];
+        [[UserModel shareInstance]removeAllObject];
+        LoignViewController *lo = [[LoignViewController alloc]init];
+        self.view.window.rootViewController = lo;
+    }]];
+    [la addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    
+    [self presentViewController:la animated:YES completion:nil];
+    
+}
+
+-(NSString *)getCecheSize
+{
+    ///获取视频缓存
+   
+    
+    NSLog(@"视屏缓存%f",[self getSizeWithFilePath:videoCechePath]);
+
+    
+    CGFloat size = [[SDImageCache sharedImageCache] getSize];
+    NSString *message = [NSString stringWithFormat:@"%.2fB", size];
+    if (size > (1024 * 1024))
+    {
+        size = size / (1024 * 1024);
+        message = [NSString stringWithFormat:@"%.2fM", size];
+    }
+    else if (size > 1024)
+    {
+        size = size / 1024;
+        message = [NSString stringWithFormat:@"%.2fKB", size];
+    }
+    return message;
+}
+
+
+//获取文件大小
+
+- (double)getSizeWithFilePath:(NSString *)path{
+    
+    // 1.获得文件夹管理者
+    
+    NSFileManager *manger = [NSFileManager defaultManager];
+    
+    // 2.检测路径的合理性
+    
+    BOOL dir = NO;
+    
+    BOOL exits = [manger fileExistsAtPath:path isDirectory:&dir];
+    
+    if (!exits) return 0;
+    
+    // 3.判断是否为文件夹
+    
+    if (dir) { // 文件夹, 遍历文件夹里面的所有文件
+        
+        // 这个方法能获得这个文件夹下面的所有子路径(直接\间接子路径)
+        
+        NSArray *subpaths = [manger subpathsAtPath:path];
+        
+        int totalSize = 0;
+        
+        for (NSString *subpath in subpaths) {
+            
+            NSString *fullsubpath = [path stringByAppendingPathComponent:subpath];
+            
+            BOOL dir = NO;
+            
+            [manger fileExistsAtPath:fullsubpath isDirectory:&dir];
+            
+            if (!dir) { // 子路径是个文件
+                
+                NSDictionary *attrs = [manger attributesOfItemAtPath:fullsubpath error:nil];
+                
+                totalSize += [attrs[NSFileSize] intValue];
+                
+            }
+            
+        }
+        
+        return totalSize / (1024 * 1024.0);
+        
+    } else { // 文件
+        
+        NSDictionary *attrs = [manger attributesOfItemAtPath:path error:nil];
+        
+        return [attrs[NSFileSize] intValue]/ (1024.0 * 1024.0) ;//
+        
+    }
+    
+}
+
+//清除缓存                                        文件路径
+
+
 
 
 - (void)didReceiveMemoryWarning {

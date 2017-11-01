@@ -13,5 +13,5 @@
 @end
 @protocol weightingDelegate <NSObject>
 
--(void)weightingSuccess;
+-(void)weightingSuccessWithSubtractMaxWeight:(NSString *)subtractMaxWeight dataId:(NSString *)dataId;
 @end

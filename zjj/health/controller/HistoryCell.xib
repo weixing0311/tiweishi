@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="699.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gi4-gF-Jq0">
@@ -347,7 +347,7 @@
                                 <rect key="frame" x="0.0" y="133" width="320" height="43"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYV-af-zhM">
-                                        <rect key="frame" x="230" y="11.5" width="70" height="20"/>
+                                        <rect key="frame" x="160" y="11.5" width="70" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="RIb-KI-Owg"/>
                                             <constraint firstAttribute="height" constant="20" id="cKc-Zi-0NO"/>
@@ -373,16 +373,35 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Zu-iI-bbI">
+                                        <rect key="frame" x="250" y="11" width="50" height="20"/>
+                                        <color key="backgroundColor" red="0.25545247399999998" green="0.66438802080000003" blue="0.076768663190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="KKB-86-9VT"/>
+                                            <constraint firstAttribute="height" constant="20" id="MIk-aX-RFA"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="a7g-J6-ffn" firstAttribute="centerY" secondItem="lVB-c3-ZsE" secondAttribute="centerY" id="8pq-K1-xY6"/>
                                     <constraint firstItem="Ibs-lX-CdT" firstAttribute="leading" secondItem="a7g-J6-ffn" secondAttribute="trailing" constant="10" id="AfP-fE-mVy"/>
                                     <constraint firstItem="a7g-J6-ffn" firstAttribute="leading" secondItem="lVB-c3-ZsE" secondAttribute="leading" constant="10" id="K4r-O0-Fqa"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Zu-iI-bbI" secondAttribute="trailing" constant="20" id="SZM-hX-glB"/>
                                     <constraint firstAttribute="height" constant="43" id="T9s-US-1Jv"/>
                                     <constraint firstItem="YYV-af-zhM" firstAttribute="centerY" secondItem="lVB-c3-ZsE" secondAttribute="centerY" id="WTU-tk-pPd"/>
-                                    <constraint firstAttribute="trailing" secondItem="YYV-af-zhM" secondAttribute="trailing" constant="20" id="j4b-79-NHY"/>
+                                    <constraint firstItem="6Zu-iI-bbI" firstAttribute="leading" secondItem="YYV-af-zhM" secondAttribute="trailing" constant="20" id="cxv-mY-OlC"/>
                                     <constraint firstItem="Ibs-lX-CdT" firstAttribute="centerY" secondItem="lVB-c3-ZsE" secondAttribute="centerY" id="lBA-WX-Hdw"/>
+                                    <constraint firstItem="6Zu-iI-bbI" firstAttribute="centerY" secondItem="lVB-c3-ZsE" secondAttribute="centerY" id="vta-gD-XHL"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vAh-GX-s3O">
@@ -979,6 +998,7 @@
                 <outlet property="second11Lb" destination="eAi-it-CGu" id="Ap7-8X-z9y"/>
                 <outlet property="second12Lb" destination="Wm0-bk-and" id="sWR-Mo-aHN"/>
                 <outlet property="second3Lb" destination="wol-Wg-FG9" id="2sK-Be-Dd3"/>
+                <outlet property="second4lb" destination="6Zu-iI-bbI" id="kTT-a7-o6d"/>
                 <outlet property="second5Lb" destination="GPk-ID-vll" id="eRA-CC-0Gr"/>
                 <outlet property="second6Lb" destination="zhT-cK-DUz" id="e4c-fP-JVf"/>
                 <outlet property="second7Lb" destination="gtT-KJ-2Nv" id="5eX-Ul-acC"/>

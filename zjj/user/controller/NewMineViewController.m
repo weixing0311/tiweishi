@@ -223,6 +223,7 @@
          if(indexPath.row ==0)
         {
             NewMineHomePageViewController * page = [[NewMineHomePageViewController alloc]init];
+            page.hidesBottomBarWhenPushed=YES;
             page.userId = [UserModel shareInstance].userId;
             [self.navigationController pushViewController:page animated:YES];
 

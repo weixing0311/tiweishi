@@ -31,14 +31,15 @@
                                 <constraint firstAttribute="height" constant="1" id="JjH-9v-DCu"/>
                             </constraints>
                         </view>
-                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tSb-rP-c5C">
-                            <rect key="frame" x="127.5" y="25" width="120" height="34"/>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tSb-rP-c5C">
+                            <rect key="frame" x="107.5" y="25" width="160" height="34"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="120" id="pUZ-6N-Wjx"/>
+                                <constraint firstAttribute="width" constant="160" id="pUZ-6N-Wjx"/>
                             </constraints>
                             <segments>
-                                <segment title="关注"/>
+                                <segment title="主页"/>
                                 <segment title="发现"/>
+                                <segment title="关注"/>
                             </segments>
                             <connections>
                                 <action selector="didClickSegment:" destination="-1" eventType="valueChanged" id="tbz-jG-YxA"/>

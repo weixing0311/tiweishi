@@ -58,9 +58,9 @@
     }
 }
 - (IBAction)didGz:(id)sender {
-    if (self.gzBtn.selected == YES) {
-        return;
-    }
+//    if (self.gzBtn.selected == YES) {
+//        return;
+//    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(didGzWithCell:)]) {
         [self.delegate didGzWithCell:self];
     }else{
