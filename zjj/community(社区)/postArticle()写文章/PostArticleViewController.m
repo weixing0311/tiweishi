@@ -194,14 +194,14 @@
 //设置item大小
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isHaveMovie ==YES) {
-        
-        return CGSizeMake((JFA_SCREEN_WIDTH-20)/2, (JFA_SCREEN_WIDTH-20)/2/self.moiveSize.width*self.moiveSize.height);
-
-    }else{
+//    if (_isHaveMovie ==YES) {
+//
+//        return CGSizeMake((JFA_SCREEN_WIDTH-20)/2, (JFA_SCREEN_WIDTH-20)/2/self.moiveSize.width*self.moiveSize.height);
+//
+//    }else{
         return CGSizeMake((JFA_SCREEN_WIDTH-20)/4-20, (JFA_SCREEN_WIDTH-20)/4-20);
 
-    }
+//    }
 }
 //这个是两行cell之间的间距（上下行cell的间距）
 

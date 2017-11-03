@@ -218,7 +218,7 @@
         NSDictionary *dic = [_dataArray objectAtIndex:indexPath.row];
         
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"find_default"]options:SDWebImageRetryFailed];
         
         cell.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",[[dic safeObjectForKey:@"unitPrice"] floatValue]];
         cell.countLabel.text = [NSString stringWithFormat:@"x%@",[dic safeObjectForKey:@"quantity"]];

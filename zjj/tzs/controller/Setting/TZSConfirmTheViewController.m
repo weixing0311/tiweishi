@@ -210,7 +210,7 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         NSDictionary *dic =[_dataArray objectAtIndex:indexPath.row];
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"defPicture"]]placeholderImage:[UIImage imageNamed:@"head_default"]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"defPicture"]]placeholderImage:[UIImage imageNamed:@"head_default"]options:SDWebImageRetryFailed];
         cell.titleLabel.text = [dic safeObjectForKey:@"productName"];
         cell.priceLabel.text = @"";
 //        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"unitPrice"]];

@@ -23,7 +23,14 @@
 #import "BeforeAfterContrastCell.h"
 #import "EditUserInfoImageCell.h"
 #import "EditUserInfoViewController.h"
-@interface CommunityViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PublicArticleCellDelegate,BigImageArticleCellDelegate,ArticleDetailDelegate,NewMineHomePageHeaderCellDelegate>
+
+
+#import "Yd7View.h"
+#import "Yd8View.h"
+#import "Yd9View.h"
+
+
+@interface CommunityViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PublicArticleCellDelegate,BigImageArticleCellDelegate,ArticleDetailDelegate,NewMineHomePageHeaderCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @property (nonatomic,strong)NSMutableDictionary * infoDict;
@@ -39,7 +46,11 @@
     CommunityCell * PlayingCell;
     int changeImageNum;
 
-    
+#pragma mark ---guide
+    Yd7View * yd7 ;
+    Yd8View * yd8 ;
+    Yd9View * yd9 ;
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -89,6 +100,8 @@
     pageSize= 30;
     self.segment.selectedSegmentIndex = 1;
     [self.tableview headerBeginRefreshing];
+    
+    [self buildGuidePage];
 }
 
 -(void)setSegmentStyle
@@ -283,8 +296,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     if (self.segment.selectedSegmentIndex ==0) {
         if (indexPath.section ==0) {
             static NSString * identifier = @"NewMineHomePageCell";
@@ -297,19 +308,16 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.headImageView sd_setBackgroundImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"defaultHead")
              ];
-//            [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_")];
             
             
-            [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            [cell.bgImageView getImageWithUrl:[_infoDict safeObjectForKey:@"backGroundImg"] getImageFinish:^(UIImage *image, NSError *error) {
                 if (error) {
+                    cell.bgImageView.image = getImage(@"newMineBg_") ;
                     return ;
                 }
                 cell.bgImageView.image = [self cutImage:image imgViewWidth:image.size.width imgViewHeight:image.size.width*0.56];
+
             }];
-            
-            
-            
-            
             cell.nicknamelb.text = [_infoDict safeObjectForKey:@"nickName"];
             NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
             if (introduction.length<1) {
@@ -362,8 +370,8 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [cell.fatBeforeBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
-            [cell.fatAfterBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
+            [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
+            [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
             
             return cell;
             
@@ -411,9 +419,7 @@
                 return cell;
                 
             }
-            
         }
-
     }
     else{
     
@@ -435,6 +441,10 @@
         }else{
             cell.gzBtn.hidden = NO;
         }
+        if (self.segment.selectedSegmentIndex ==2) {
+            cell.gzBtn.selected = YES;
+        }
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
 
@@ -449,11 +459,15 @@
         [cell setInfoWithDict:item];
         [cell loadImagesWithItem:item];
         
-        if (self.segment.selectedSegmentIndex ==0||self.isMyMessagePage==YES||[item.userId isEqualToString:[UserModel shareInstance].userId]) {
+        if (self.isMyMessagePage==YES||[item.userId isEqualToString:[UserModel shareInstance].userId]) {
             cell.gzBtn.hidden = YES;
         }else{
             cell.gzBtn.hidden = NO;
         }
+        if (self.segment.selectedSegmentIndex ==2) {
+            cell.gzBtn.selected = YES;
+        }
+
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
 
@@ -522,6 +536,7 @@
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
     
     if (cell.gzBtn.selected==YES) {
+        [SVProgressHUD showWithStatus:@"修改中"];
         NSMutableDictionary * params =[NSMutableDictionary dictionary];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         [params setObject:model.userId forKey:@"followId"];
@@ -538,6 +553,9 @@
             for (CommunityModel * allmodel  in _dataArray) {
                 if ([allmodel.userId isEqualToString:model.userId]) {
                     allmodel.isFollow = @"0";
+                    if (self.segment.selectedSegmentIndex==2) {
+                        [_dataArray removeObject:allmodel];
+                    }
                 }
             }
             [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
@@ -549,6 +567,7 @@
         }];
 
     }else{
+        [SVProgressHUD showWithStatus:@"修改中"];
         NSMutableDictionary * params = [NSMutableDictionary dictionary];
         [params safeSetObject:model.userId forKey:@"followId"];
         [params safeSetObject:model.uid forKey:@"articleId"];
@@ -692,7 +711,7 @@
 -(void)didGzWithBigCell:(CommunityCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    
+    [SVProgressHUD showWithStatus:@"修改中。。。"];
     if (cell.gzBtn.selected==YES) {
         NSMutableDictionary * params =[NSMutableDictionary dictionary];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
@@ -710,6 +729,9 @@
             for (CommunityModel * allmodel  in _dataArray) {
                 if ([allmodel.userId isEqualToString:model.userId]) {
                     allmodel.isFollow = @"0";
+                    if (self.segment.selectedSegmentIndex==2) {
+                        [_dataArray removeObject:allmodel];
+                    }
                 }
             }
             [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
@@ -960,7 +982,7 @@
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
         picker.delegate = self;
-        picker.allowsEditing = YES;//设置可编辑
+        picker.allowsEditing = NO;//设置可编辑
         picker.sourceType = sourceType;
         [self presentViewController:picker animated:YES completion:nil];
         
@@ -975,7 +997,7 @@
             
         }
         pickerImage.delegate = self;
-        pickerImage.allowsEditing = YES;
+        pickerImage.allowsEditing = NO;
         [self presentViewController:pickerImage animated:YES completion:nil];
         
     }]];
@@ -991,7 +1013,7 @@
     //判断资源类型
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
         //如果是图片
-        UIImage *image =info[UIImagePickerControllerEditedImage];
+        UIImage *image =info[UIImagePickerControllerOriginalImage];
         [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
         
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -1186,6 +1208,21 @@
     }
     [self.tableview reloadData];
 }
+-(void)refreshGzStatusWithModel:(CommunityModel *)model isFollow:(NSString*)isFollow
+{
+    for (CommunityModel * model1 in _dataArray) {
+        if ([model1.uid isEqualToString:model.uid]) {
+            model1.isFollow =isFollow ;
+        }
+    }
+    [self.tableview reloadData];
+
+}
+
+
+
+
+
 - (UIImage *)cutImage:(UIImage*)image imgViewWidth:(CGFloat)width imgViewHeight:(CGFloat)height
 
 {
@@ -1231,5 +1268,105 @@
     }
     
 }
+
+
+
+
+
+#pragma mark ---引导页
+-(void)buildGuidePage
+{
+    if (self.isMyMessagePage==YES) {
+        return;
+    }
+    
+    //    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage2]) {
+    //        return;
+    //    }
+    
+    //    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage2];
+    yd7 = [self getXibCellWithTitle:@"Yd7View"];
+    yd8 = [self getXibCellWithTitle:@"Yd8View"];
+    yd9 = [self getXibCellWithTitle:@"Yd9View"];
+    
+    yd7.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    yd8.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    yd9.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    
+    yd7.tag = 1;
+    yd8.tag = 2;
+    yd9.tag = 3;
+    
+    
+    yd7.hidden = NO;
+    yd8.hidden = YES;
+    yd9.hidden = YES;
+    
+    UIApplication *ap = [UIApplication sharedApplication];
+    
+    [ap.keyWindow addSubview:yd7];
+    [ap.keyWindow addSubview:yd8];
+    [ap.keyWindow addSubview:yd9];
+    
+    [yd7.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    [yd8.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    [yd9.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [yd7.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+    [yd8.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+    [yd9.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+
+    [yd7 addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showNextsView:)]];
+    [yd8 addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showNextsView:)]];
+
+}
+
+-(void)showNextsView:(UIGestureRecognizer *)gest
+{
+    if ([gest.view isEqual:yd7]) {
+        
+        yd7.hidden = YES;
+        yd8.hidden =NO;
+    }
+    else if([gest.view isEqual:yd8])
+    {
+        yd8.hidden = YES;
+        yd9.hidden =NO;
+    }
+}
+
+
+
+-(void)showNextView:(UIButton *)sender
+{
+    if (sender==yd7.nextBtn) {
+        yd7.hidden = YES;
+        yd8.hidden =NO;
+    }
+    else if(sender ==yd8.nextBtn)
+    {
+        yd8.hidden = YES;
+        yd9.hidden =NO;
+    }
+    else if(sender ==yd9.nextBtn)
+    {
+        yd9.hidden = YES;
+        [yd7 removeFromSuperview];
+        [yd8 removeFromSuperview];
+        [yd9 removeFromSuperview];
+        
+    }
+}
+-(void)guideOver:(UIButton *)sender
+{
+    yd7.hidden = YES;
+    yd8.hidden = YES;
+    yd9.hidden = YES;
+    [yd7 removeFromSuperview];
+    [yd8 removeFromSuperview];
+    [yd9 removeFromSuperview];
+
+}
+
 
 @end

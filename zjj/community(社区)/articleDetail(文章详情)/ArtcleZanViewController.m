@@ -111,7 +111,7 @@
     cell.tag = indexPath.row;
     cell.delegate = self;
     GuanzModel * model = [_dataArray objectAtIndex:indexPath.row];
-    [cell.headerimageView sd_setImageWithURL:[NSURL URLWithString:model.headImgUrl]placeholderImage:getImage(@"default")];
+    [cell.headerimageView sd_setImageWithURL:[NSURL URLWithString:model.headImgUrl]placeholderImage:getImage(@"default")options:SDWebImageRetryFailed];
     cell.nicknamelb.text = model.nickname;
     cell.secondLb.text = model.introduction;
     cell.gzbtn.hidden = YES;

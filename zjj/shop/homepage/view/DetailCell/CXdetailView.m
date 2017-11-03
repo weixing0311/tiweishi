@@ -9,7 +9,9 @@
 #import "CXdetailView.h"
 #import "DetailCxCell.h"
 @implementation CXdetailView
-
+{
+    int myType;
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -52,7 +54,7 @@
     
     UIButton * closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(JFA_SCREEN_WIDTH-50, 10, 40, 40)];
     
-    [closeBtn setTitle:@"X" forState:UIControlStateNormal];
+    [closeBtn setTitle:@"×" forState:UIControlStateNormal];
     [closeBtn setTitleColor:HEXCOLOR(0x666666) forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(hiddenCuXiaoTabView) forControlEvents:UIControlEventTouchUpInside];
     [Headview addSubview:closeBtn];
@@ -98,22 +100,30 @@
     }
     
     NSDictionary * dic =[self.dataArray objectAtIndex:indexPath.row];
-    int hdtype = [[dic objectForKey:@"promotionType"]intValue];
-    if (hdtype ==1) {
-        cell.cxImgLabel.text = @"满减";
+    
+    if (myType ==1) {
+        cell.cxImgLabel.text = @"满赠";
+        cell.cxContentLabel.text = [dic safeObjectForKey:@"productName"];
     }else{
-        cell.cxImgLabel.text= @"满赠";
-    }
-    cell.cxContentLabel.text = [dic objectForKey:@"promotionDetail"];
-//    cell.selectionStyle =UITableViewCellSelectionStyleNone;
+        int hdtype = [[dic objectForKey:@"promotionType"]intValue];
+        if (hdtype ==1) {
+            cell.cxImgLabel.text = @"满减";
+        }else{
+            cell.cxImgLabel.text= @"满赠";
+        }
+        cell.cxContentLabel.text = [dic objectForKey:@"promotionDetail"];
 
+    }
+    
+//    cell.selectionStyle =UITableViewCellSelectionStyleNone;
 
 
     return cell;
 }
 
--(void)showCuxiaoTabViewWithArray:(NSArray *)arr
+-(void)showCuxiaoTabViewWithArray:(NSArray *)arr  type:(int)type
 {
+    myType = type;
     [self.dataArray removeAllObjects];
     [self.dataArray addObjectsFromArray:arr];
     

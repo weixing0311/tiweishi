@@ -64,4 +64,6 @@
 @protocol historyCellDelegate <NSObject>
 -(void)showCellTabWithCell:(HistoryCell*)cell;
 -(void)didChooseWithCell:(HistoryCell *)cell;
+
+-(void)didDeleteWithCell:(HistoryCell*)cell;
 @end

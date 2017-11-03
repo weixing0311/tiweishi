@@ -30,7 +30,7 @@
 }
 -(void)buildScrol
 {
-    UIScrollView * scr =[[UIScrollView alloc]initWithFrame:self.view.bounds];
+    UIScrollView * scr =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
     [self.view addSubview:scr];
     scr.pagingEnabled = YES;
     scr.contentSize = CGSizeMake(JFA_SCREEN_WIDTH*3, 0);

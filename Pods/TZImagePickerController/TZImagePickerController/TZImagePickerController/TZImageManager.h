@@ -10,18 +10,25 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
+#import "TZAssetModel.h"
 
 @class TZAlbumModel,TZAssetModel;
+@protocol TZImagePickerControllerDelegate;
 @interface TZImageManager : NSObject
 
 @property (nonatomic, strong) PHCachingImageManager *cachingImageManager;
 
 + (instancetype)manager NS_SWIFT_NAME(default());
++ (void)deallocManager;
+
+@property (assign, nonatomic) id<TZImagePickerControllerDelegate> pickerDelegate;
 
 @property (nonatomic, assign) BOOL shouldFixOrientation;
 
 /// Default is 600px / 默认600像素宽
 @property (nonatomic, assign) CGFloat photoPreviewMaxWidth;
+/// The pixel width of output image, Default is 828px / 导出图片的宽度，默认828像素宽
+@property (nonatomic, assign) CGFloat photoWidth;
 
 /// Default is 4, Use in photos collectionView in TZPhotoPickerController
 /// 默认4列, TZPhotoPickerController中的照片collectionView
@@ -59,9 +66,10 @@
 - (int32_t)getPhotoWithAsset:(id)asset photoWidth:(CGFloat)photoWidth completion:(void (^)(UIImage *photo,NSDictionary *info,BOOL isDegraded))completion progressHandler:(void (^)(double progress, NSError *error, BOOL *stop, NSDictionary *info))progressHandler networkAccessAllowed:(BOOL)networkAccessAllowed;
 
 /// Get full Image 获取原图
-/// 该方法一般会先返回缩略图，再返回原图(详见方法内部使用的系统API的说明)，如果info[PHImageResultIsDegradedKey] 为 YES，则表明当前返回的是缩略图，否则是原图。
+/// 如下两个方法completion一般会调多次，一般会先返回缩略图，再返回原图(详见方法内部使用的系统API的说明)，如果info[PHImageResultIsDegradedKey] 为 YES，则表明当前返回的是缩略图，否则是原图。
 - (void)getOriginalPhotoWithAsset:(id)asset completion:(void (^)(UIImage *photo,NSDictionary *info))completion;
 - (void)getOriginalPhotoWithAsset:(id)asset newCompletion:(void (^)(UIImage *photo,NSDictionary *info,BOOL isDegraded))completion;
+// 该方法中，completion只会走一次
 - (void)getOriginalPhotoDataWithAsset:(id)asset completion:(void (^)(NSData *data,NSDictionary *info,BOOL isDegraded))completion;
 
 /// Save photo 保存照片
@@ -70,7 +78,7 @@
 
 /// Get video 获得视频
 - (void)getVideoWithAsset:(id)asset completion:(void (^)(AVPlayerItem * playerItem, NSDictionary * info))completion;
-- (void)getVideoWithAsset:(id)asset progressHandler:(void (^)(double progress, NSError *error, BOOL *stop, NSDictionary *info))progressHandler completion:(void (^)(AVPlayerItem * _Nullable, NSDictionary * _Nullable))completion;
+- (void)getVideoWithAsset:(id)asset progressHandler:(void (^)(double progress, NSError *error, BOOL *stop, NSDictionary *info))progressHandler completion:(void (^)(AVPlayerItem *, NSDictionary *))completion;
 
 /// Export video 导出视频
 - (void)getVideoOutputPathWithAsset:(id)asset completion:(void (^)(NSString *outputPath))completion;
@@ -91,8 +99,10 @@
 /// 修正图片转向
 - (UIImage *)fixOrientation:(UIImage *)aImage;
 
-@end
+/// 获取asset的资源类型
+- (TZAssetModelMediaType)getAssetType:(id)asset;
 
+@end
 
 //@interface TZSortDescriptor : NSSortDescriptor
 //

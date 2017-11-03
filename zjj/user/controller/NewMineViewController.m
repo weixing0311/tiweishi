@@ -10,7 +10,7 @@
 #import "NewMineHeaderCell.h"
 #import "NewMineRelationsCell.h"
 #import "PublicCell.h"
-#import "NewMineEditViewController.h"
+#import "EditUserInfoViewController.h"
 #import "AddFriendsViewController.h"
 #import "IntegralShopViewController.h"
 #import "GrowthStstemViewController.h"
@@ -19,6 +19,13 @@
 #import "IntegralOrderViewController.h"
 #import "NewMineTableViewCell.h"
 #import "CommunityViewController.h"
+#import "Yd1View.h"
+#import "Yd2View.h"
+#import "Yd3View.h"
+#import "Yd4View.h"
+#import "Yd5View.h"
+#import "Yd6View.h"
+
 @interface NewMineViewController ()<UITableViewDelegate,UITableViewDataSource,mineRelationsCellDelegate,mineRelationsCellDelegate>
 @property (nonatomic,strong)NSMutableDictionary * infoDict;
 @end
@@ -26,6 +33,14 @@
 @implementation NewMineViewController
 {
     int notifacationCount;
+#pragma mark ---guide
+    Yd1View * yd1 ;
+    Yd2View * yd2 ;
+    Yd3View * yd3 ;
+    Yd4View * yd4 ;
+    Yd5View * yd5 ;
+    Yd5View * yd6 ;
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -45,6 +60,7 @@
     
     [self setNavi];
     
+    [self buildGuidePage];
     _infoDict = [NSMutableDictionary dictionary];
     
     self.tableview.delegate = self;
@@ -55,7 +71,7 @@
 
 -(void)setNavi
 {
-    UIBarButtonItem * leftItem =[[UIBarButtonItem alloc]initWithTitle:@"添加好友" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
+    UIBarButtonItem * leftItem =[[UIBarButtonItem alloc]initWithTitle:@"添加关注" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
 
     self.navigationItem.leftBarButtonItem = leftItem;
     
@@ -237,22 +253,16 @@
         else if(indexPath.row==2)
         {
             DLog(@"成长体系");
-            
             GrowthStstemViewController * gs = [[GrowthStstemViewController alloc]init];
             gs.hidesBottomBarWhenPushed=YES;
-            
             [self.navigationController pushViewController:gs animated:YES];
-
         }
         else if(indexPath.row==3)
         {
             DLog(@"积分商城");
-            
             IntegralShopViewController * its = [[IntegralShopViewController alloc]init];
             its.hidesBottomBarWhenPushed=YES;
-            
             [self.navigationController pushViewController:its animated:YES];
-
         }
         else
         {
@@ -261,15 +271,19 @@
             ord.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:ord animated:YES];
         }
-
     }
-
 }
 
 -(void)didClickEidt
 {
-    NewMineEditViewController * ne = [[NewMineEditViewController alloc]init];
+    EditUserInfoViewController * ne = [[EditUserInfoViewController alloc]init];
     ne.hidesBottomBarWhenPushed=YES;
+    ne.infoDict = self.infoDict;
+    [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"userId"] forKey:@"userId"];
+    [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"nickName"] forKey:@"nickName"];
+    [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"sex"] forKey:@"sex"];
+    [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"height"] forKey:@"heigth"];
+    [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"birthday"] forKey:@"birthday"];
 
     [self.navigationController pushViewController:ne animated:YES];
 }
@@ -309,14 +323,158 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark ---引导页
+-(void)buildGuidePage
+{
+    
+//    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage2]) {
+//        return;
+//    }
+    
+//    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage2];
+    yd1 = [self getXibCellWithTitle:@"Yd1View"];
+    yd2 = [self getXibCellWithTitle:@"Yd2View"];
+    yd3 = [self getXibCellWithTitle:@"Yd3View"];
+    yd4 = [self getXibCellWithTitle:@"Yd4View"];
+    yd5 = [self getXibCellWithTitle:@"Yd5View"];
+    yd6 = [self getXibCellWithTitle:@"Yd6View"];
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    yd1.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    yd2.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    yd3.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    yd4.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    yd5.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    yd6.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+
+    yd1.tag = 1;
+    yd2.tag = 2;
+    yd3.tag = 3;
+    yd4.tag = 4;
+    yd5.tag = 5;
+    yd6.tag = 6;
+
+    
+    yd1.hidden = NO;
+    yd2.hidden = YES;
+    yd3.hidden = YES;
+    yd4.hidden = YES;
+    yd5.hidden = YES;
+    yd6.hidden = YES;
+
+    UIApplication *ap = [UIApplication sharedApplication];
+
+    [ap.keyWindow addSubview:yd1];
+    [ap.keyWindow addSubview:yd2];
+    [ap.keyWindow addSubview:yd3];
+    [ap.keyWindow addSubview:yd4];
+    [ap.keyWindow addSubview:yd5];
+    [ap.keyWindow addSubview:yd6];
+
+    [yd1.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    [yd2.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    [yd3.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    [yd4.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    [yd5.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    [yd6.nextBtn addTarget:self action:@selector(showNextView:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [yd1.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+    [yd2.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+    [yd3.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+    [yd4.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+    [yd5.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+    [yd6.jumpBtn addTarget:self action:@selector(guideOver:) forControlEvents:UIControlEventTouchUpInside];
+
+    [yd1 addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showNextsView:)]];
+    [yd2 addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showNextsView:)]];
+    [yd3 addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showNextsView:)]];
+    [yd4 addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showNextsView:)]];
+    [yd5 addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showNextsView:)]];
+    
 }
-*/
 
+-(void)showNextsView:(UIGestureRecognizer *)gest
+{
+    if (gest.view==yd1) {
+        yd1.hidden = YES;
+        yd2.hidden =NO;
+    }
+    else if(gest.view==yd2)
+    {
+        yd2.hidden = YES;
+        yd3.hidden =NO;
+    }
+    else if(gest.view==yd3)
+    {
+        yd3.hidden = YES;
+        yd4.hidden =NO;
+    }
+    else if(gest.view==yd4)
+    {
+        yd4.hidden = YES;
+        yd5.hidden =NO;
+    }
+    else if(gest.view==yd5)
+    {
+        yd5.hidden = YES;
+        yd6.hidden =NO;
+    }
+}
+
+
+
+-(void)showNextView:(UIButton *)sender
+{
+    if (sender==yd1.nextBtn) {
+        yd1.hidden = YES;
+        yd2.hidden =NO;
+    }
+    else if(sender ==yd2.nextBtn)
+    {
+        yd2.hidden = YES;
+        yd3.hidden =NO;
+    }
+    else if(sender ==yd3.nextBtn)
+    {
+        yd3.hidden = YES;
+        yd4.hidden =NO;
+    }
+    else if(sender ==yd4.nextBtn)
+    {
+        yd4.hidden = YES;
+        yd5.hidden =NO;
+    }
+    else if(sender ==yd5.nextBtn)
+    {
+        yd5.hidden = YES;
+        yd6.hidden =NO;
+    }
+
+    else if(sender ==yd6.nextBtn)
+    {
+        yd6.hidden = YES;
+        [yd1 removeFromSuperview];
+        [yd2 removeFromSuperview];
+        [yd3 removeFromSuperview];
+        [yd4 removeFromSuperview];
+        [yd5 removeFromSuperview];
+        [yd6 removeFromSuperview];
+
+    }
+}
+-(void)guideOver:(UIButton *)sender
+{
+    yd1.hidden = YES;
+    yd2.hidden = YES;
+    yd3.hidden = YES;
+    yd4.hidden = YES;
+    yd5.hidden = YES;
+    yd6.hidden = YES;
+    [yd1 removeFromSuperview];
+    [yd2 removeFromSuperview];
+    [yd3 removeFromSuperview];
+    [yd4 removeFromSuperview];
+    [yd5 removeFromSuperview];
+    [yd6 removeFromSuperview];
+
+}
 @end

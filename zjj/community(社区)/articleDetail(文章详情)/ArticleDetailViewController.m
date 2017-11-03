@@ -34,6 +34,7 @@
     int page;
     int pageSize;
     CommunityCell * PlayingCell;
+    NSString * gzStatus;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -50,12 +51,23 @@
     [self clearSDCeche];
     
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if ([gzStatus isEqualToString:@"999"]) {
+        if (self.delegate &&[self.delegate respondsToSelector:@selector(refreshGzStatusWithModel:isFollow:)]) {
+            [self.delegate refreshGzStatusWithModel:_dataArray[0]isFollow:gzStatus];
+        }
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"评论";
     [self setNotification];
     page =1;
+    gzStatus =@"999";//是否点击过关注的状态
     _dataArray = [NSMutableArray array];
     _commentArray =[NSMutableArray array];
     _infoDict =[NSMutableDictionary dictionary];
@@ -287,7 +299,7 @@
             [cell setInfoWithDict:item];
             
             cell.nemuView.hidden = YES;
-            cell.gzBtn.hidden = YES;
+//            cell.gzBtn.hidden = YES;
 //            cell.jbBtn.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -303,7 +315,7 @@
             [cell setInfoWithDict:item];
             [cell loadImagesWithItem:item];
             cell.nemuView.hidden = YES;
-            cell.gzBtn.hidden = YES;
+//            cell.gzBtn.hidden = YES;
 //            cell.jbBtn.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
@@ -369,7 +381,7 @@
         cell.tag = indexPath.row;
         NSDictionary * dict = [_commentArray objectAtIndex:indexPath.row];
         
-        [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
+        [cell.headImgBtn sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
         
         cell.nicknamelb.text = [dict safeObjectForKey:@"nickName"];
         cell.timelb.text = [dict safeObjectForKey:@"createTime"];
@@ -514,37 +526,90 @@
 -(void)didGzWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params safeSetObject:model.userId forKey:@"followId"];
-    [params safeSetObject:model.uid forKey:@"articleId"];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
-        model.isFollow = @"1";
-        PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
-        currCell.gzBtn.selected =YES;
-    } failure:^(NSError *error) {
+    
+    if (cell.gzBtn.selected==YES) {
+        [SVProgressHUD showWithStatus:@"修改中"];
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            
+            model.isFollow = @"0";
+            gzStatus =@"0";
+            PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+            currCell.gzBtn.selected =YES;
+            currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+            
+            [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
+            
+            [self.tableview reloadData];
+            
+        } failure:^(NSError *error) {
+            
+        }];
         
-    }];
-    
-    
+    }else{
+        [SVProgressHUD showWithStatus:@"修改中"];
+        NSMutableDictionary * params = [NSMutableDictionary dictionary];
+        [params safeSetObject:model.userId forKey:@"followId"];
+        [params safeSetObject:model.uid forKey:@"articleId"];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+            model.isFollow = @"1";
+            gzStatus =@"1";
+            PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+            currCell.gzBtn.selected =YES;
+            currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+            
+            [self.tableview reloadData];
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 -(void)didGzWithBigCell:(CommunityCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    NSMutableDictionary * params = [NSMutableDictionary dictionary];
-    [params safeSetObject:model.userId forKey:@"followId"];
-    [params safeSetObject:model.uid forKey:@"articleId"];
-    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-        [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
-        model.isFollow = @"1";
-        CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
-        currCell.gzBtn.selected =YES;
-    } failure:^(NSError *error) {
+    [SVProgressHUD showWithStatus:@"修改中。。。"];
+    if (cell.gzBtn.selected==YES) {
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            
+            model.isFollow = @"0";
+            gzStatus =0;
+            CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+            currCell.gzBtn.selected =YES;
+            currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+            
+            [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
+            
+            [self.tableview reloadData];
+            
+        } failure:^(NSError *error) {
+            
+        }];
         
-    }];
-    
+    }else{
+        NSMutableDictionary * params = [NSMutableDictionary dictionary];
+        [params safeSetObject:model.userId forKey:@"followId"];
+        [params safeSetObject:model.uid forKey:@"articleId"];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/articlepage/attentUser.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
+            model.isFollow = @"1";
+            gzStatus =@"1";
+            CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+            currCell.gzBtn.selected =YES;
+            currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+            
+            [self.tableview reloadData];
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 #pragma mark---举报
 -(void)didJBWithCell:(PublicArticleCell *)cell

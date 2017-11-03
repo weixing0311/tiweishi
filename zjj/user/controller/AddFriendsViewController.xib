@@ -23,10 +23,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8VP-LA-rkt">
-                    <rect key="frame" x="0.0" y="64" width="375" height="80"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="55"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1FE-KR-MHp">
-                            <rect key="frame" x="20" y="22.5" width="335" height="35"/>
+                            <rect key="frame" x="20" y="10" width="335" height="35"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入。。。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
                                     <rect key="frame" x="40" y="0.0" width="275" height="35"/>
@@ -54,22 +54,22 @@
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="5"/>
+                                    <real key="value" value="17.5"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                             </userDefinedRuntimeAttributes>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="80" id="AS8-RQ-Rt8"/>
+                        <constraint firstAttribute="height" constant="55" id="AS8-RQ-Rt8"/>
                         <constraint firstAttribute="trailing" secondItem="1FE-KR-MHp" secondAttribute="trailing" constant="20" id="IMi-pH-2lw"/>
                         <constraint firstItem="1FE-KR-MHp" firstAttribute="centerY" secondItem="8VP-LA-rkt" secondAttribute="centerY" id="Tsj-XU-HnZ"/>
                         <constraint firstItem="1FE-KR-MHp" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="20" id="jbm-X1-78G"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdz-yf-R7S">
-                    <rect key="frame" x="0.0" y="144" width="375" height="55"/>
+                    <rect key="frame" x="0.0" y="119" width="375" height="55"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scanning_" translatesAutoresizingMaskIntoConstraints="NO" id="Yal-BT-oC4">
                             <rect key="frame" x="20" y="10" width="35" height="35"/>
@@ -122,7 +122,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIF-aj-069">
-                    <rect key="frame" x="0.0" y="199" width="375" height="55"/>
+                    <rect key="frame" x="0.0" y="174" width="375" height="55"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myRecode_" translatesAutoresizingMaskIntoConstraints="NO" id="JfN-A8-5rA">
                             <rect key="frame" x="20" y="10" width="35" height="35"/>

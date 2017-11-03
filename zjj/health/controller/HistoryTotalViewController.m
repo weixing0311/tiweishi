@@ -52,7 +52,7 @@
     [self addChildViewController:newHealthHistoryListVC];
     [newHealthHistoryListVC didMoveToParentViewController:self];
     newHealthHistoryListVC.view.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, bbScr.frame.size.height);
-    newHealthHistoryListVC.tableview.frame =CGRectMake(0, 0, JFA_SCREEN_WIDTH, bbScr.frame.size.height-20);
+    newHealthHistoryListVC.tableview.frame =CGRectMake(0, 134, JFA_SCREEN_WIDTH, bbScr.frame.size.height-134);
     [bbScr addSubview:newHealthHistoryListVC.view];
 
     

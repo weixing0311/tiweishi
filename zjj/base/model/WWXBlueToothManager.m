@@ -243,7 +243,7 @@ static WWXBlueToothManager * manager;
 {
     [_timer invalidate];
     DLog(@">>>连接到名称为（%@）的设备-成功",peripheral.name);
-    self.statusBlock(@"设备已连接。。。");
+    self.statusBlock(@"设备已连接");
     [self setTimeOut];
     [peripheral setDelegate:self];
     [peripheral discoverServices:nil];

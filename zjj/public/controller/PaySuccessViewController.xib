@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaySuccessViewController">
             <connections>
+                <outlet property="backBtn" destination="lBa-sh-IQu" id="A7U-oc-2hD"/>
+                <outlet property="statusImageView" destination="Tjl-5K-ypR" id="un9-93-yVg"/>
+                <outlet property="statuslb" destination="sAP-7V-4oz" id="QaJ-iB-p5r"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

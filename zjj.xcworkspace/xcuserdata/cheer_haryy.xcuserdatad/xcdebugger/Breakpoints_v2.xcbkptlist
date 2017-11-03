@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/shop/mine/controller/address/AddressDetailViewController.m"
-            timestampString = "531231319.660987"
+            timestampString = "531285835.919739"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "232"
@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/public/controller/BaseWebViewController.m"
-            timestampString = "530008746.335268"
+            timestampString = "531397744.912035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "669"
-            endingLineNumber = "669"
+            startingLineNumber = "688"
+            endingLineNumber = "688"
             landmarkName = "-backWithPayType"
             landmarkType = "7">
             <Locations>
@@ -52,11 +52,11 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
-                  timestampString = "531231319.836088"
+                  timestampString = "531397745.116568"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "669"
-                  endingLineNumber = "669"
+                  startingLineNumber = "688"
+                  endingLineNumber = "688"
                   offsetFromSymbolStart = "1164">
                </Location>
                <Location
@@ -67,11 +67,11 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
-                  timestampString = "531231319.838698"
+                  timestampString = "531397745.118597"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "669"
-                  endingLineNumber = "669"
+                  startingLineNumber = "688"
+                  endingLineNumber = "688"
                   offsetFromSymbolStart = "1180">
                </Location>
             </Locations>
@@ -84,7 +84,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/PrefixHeader.pch"
-            timestampString = "531231319.661442"
+            timestampString = "531397744.912118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "14"
@@ -100,7 +100,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/PrefixHeader.pch"
-            timestampString = "531231319.661672"
+            timestampString = "531397744.912172"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "17"
@@ -128,6 +128,102 @@
                   offsetFromSymbolStart = "0">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zjj/community(&#x793e;&#x533a;)/postArticle()&#x5199;&#x6587;&#x7ae0;/WriteArtcleViewController.m"
+            timestampString = "531313931.102458"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "-didUpdateInfo"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[WriteArtcleViewController didUpdateInfo]"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/WriteArtcleViewController.m"
+                  timestampString = "531397745.12558"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "1756">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[WriteArtcleViewController didUpdateInfo]_block_invoke_2"
+                  moduleName = "zjj"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/community(%E7%A4%BE%E5%8C%BA)/postArticle()%E5%86%99%E6%96%87%E7%AB%A0/WriteArtcleViewController.m"
+                  timestampString = "531397745.127557"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zjj/public/controller/BaseWebViewController.m"
+            timestampString = "531397744.912298"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "-webView:decidePolicyForNavigationAction:decisionHandler:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zjj/public/controller/BaseWebViewController.m"
+            timestampString = "531397744.912418"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
+            landmarkName = "-webView:decidePolicyForNavigationAction:decisionHandler:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zjj/user/controller/EditUserInfoViewController.m"
+            timestampString = "531397744.912478"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -507,4 +507,57 @@ static UserModel *model;
     }];
 }
 
+-(void)getIntegralInfo
+{
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryAll.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+-(void)changeUserDefaultWithSignInType:(int)type
+{
+    if (type==1) {
+        if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]) {
+            NSMutableDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert];
+            
+        [dic safeSetObject:@"hidden" forKey:[NSString stringWithFormat:@"%@",[UserModel shareInstance].userId]];
+            [[NSUserDefaults standardUserDefaults]setObject:dic forKey:kShowSignAlert];
+        }else{
+            NSMutableDictionary * dic =[NSMutableDictionary dictionary];
+            [dic safeSetObject:@"hidden" forKey:[NSString stringWithFormat:@"%@",[UserModel shareInstance].userId]];
+            [[NSUserDefaults standardUserDefaults]setObject:dic forKey:kShowSignAlert];
+        }
+    }
+    else
+    {
+        if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]) {
+            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]];
+            [dic removeObjectForKey:[NSString stringWithFormat:@"%@",[UserModel shareInstance].userId]];
+        }else{
+            return;
+        }
+    }
+}
+
+-(BOOL)getSignInNotifacationStatus
+{
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]) {
+        if (![[[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]isKindOfClass:[NSDictionary class]]) {
+            [[NSUserDefaults standardUserDefaults]removeObjectForKey:kShowSignAlert];
+            return YES;
+        }
+        NSMutableDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert];
+        if ([[dic allKeys]containsObject:[UserModel shareInstance].userId]) {
+            return NO;
+        }else{
+            return YES;
+        }
+    }else{
+        return YES;
+    }
+}
 @end

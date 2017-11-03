@@ -42,6 +42,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *secondTitle;
 @property (weak, nonatomic) IBOutlet UILabel *secondContent;
 
+@property (weak, nonatomic) IBOutlet UILabel *leftlb;
+@property (weak, nonatomic) IBOutlet UILabel *midlb;
+@property (weak, nonatomic) IBOutlet UILabel *rightlb;
 
 
 

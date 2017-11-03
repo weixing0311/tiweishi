@@ -48,7 +48,7 @@
 ///等级label
 @property (weak, nonatomic) IBOutlet UILabel *levelLb;
 
-@property (weak, nonatomic) IBOutlet UILabel *topLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *topLabel;
 
 
 ///点击头像事件

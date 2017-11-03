@@ -308,4 +308,13 @@
 
 ///上传完成任务接口
 -(void)didCompleteTheTaskWithId:(NSString *)taskId;
+
+
+
+///判断是否显示签到弹窗----YES--显示 --NO 不显示
+-(BOOL)getSignInNotifacationStatus;
+
+///修改签到弹窗状态
+-(void)changeUserDefaultWithSignInType:(int)type;
+
 @end

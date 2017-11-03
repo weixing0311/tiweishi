@@ -323,7 +323,7 @@
     
     if (indexPath.section ==1) {
 //        cuxDetailView
-        [cuxDetailView showCuxiaoTabViewWithArray:item.promotList];
+        [cuxDetailView showCuxiaoTabViewWithArray:item.promotList type:2];
     }
 }
 -(void)changeCount:(int)count

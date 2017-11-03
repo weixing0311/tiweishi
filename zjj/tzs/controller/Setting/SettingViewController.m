@@ -51,7 +51,7 @@
     isBigHeadImage = NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterOtherViewContoller:) name:@"shouyintaibackToViewController" object:nil];
     
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]options:SDWebImageRetryFailed];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
@@ -83,7 +83,7 @@
 //刷新个人信息
 -(void)refreshUserInfo
 {
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"logo_"]];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
@@ -224,7 +224,7 @@
         [ImagespView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenMe) ]];
         
         bigHeadImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 130, 60, 60)];
-        [bigHeadImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+        [bigHeadImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]options:SDWebImageRetryFailed];
         bigHeadImageView.userInteractionEnabled = YES;
         
         [ImagespView addSubview:bigHeadImageView];

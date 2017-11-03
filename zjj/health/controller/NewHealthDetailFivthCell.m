@@ -219,6 +219,19 @@
 
             break;
     }
+    
+    if (index==9) {
+        _leftlb.text = @"正常";
+        _midlb.text = @"超标";
+        _rightlb.text = @"高";
+    }else{
+        _leftlb.text = @"偏低";
+        _midlb.text = @"正常";
+        _rightlb.text = @"偏高";
+
+    }
+    
+    
     self.headerContentlb.text = [[HealthDetailsItem instance]getinstructionsWithType:index];
     self.headerContentlb.adjustsFontSizeToFitWidth =YES;
     NSString * contentStr =[[HealthDetailsItem instance]getHealthDetailShuoMingWithStatus:index item:self.currItem];
@@ -293,7 +306,7 @@
 -(UIColor *)getColorWithString:(NSString *)string
 {
     
-    if ([string isEqualToString:@"偏低"]||[string isEqualToString:@"偏高"]) {
+    if ([string isEqualToString:@"偏低"]||[string isEqualToString:@"偏高"]||[string isEqualToString:@"超标"]) {
         return warningColor;
     }
     else if ([string isEqualToString:@"正常"])
@@ -432,7 +445,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"偏高";
+                    return @"超标";
                     break;
                 case 3:
                     return @"高";

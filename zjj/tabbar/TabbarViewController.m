@@ -21,6 +21,7 @@
 #import "NewMineViewController.h"
 #import "CommunityViewController.h"
 #import "NewHealthViewController.h"
+#import "IntegralSignInView.h"
 @interface TabbarViewController ()<UITabBarControllerDelegate>
 
 @end
@@ -89,7 +90,7 @@
     item2.selectedImage = [UIImage imageNamed:@"discuss_"];
     
     item3.image = [UIImage imageNamed:@"tab_comm_"];
-    item3.selectedImage = [UIImage imageNamed:@"tab_comm1_"];
+//    item3.selectedImage = [UIImage imageNamed:@"tab_comm1_"];
 
     item4.image = [UIImage imageNamed:@"store gray_"];
     item4.selectedImage = [UIImage imageNamed:@"store_"];
@@ -102,11 +103,47 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didClickNotification:) name:@"GETNOTIFICATIONINFOS" object:nil];
     
-    
-    
-    
-    
+    [self getIntegralInfo];
 }
+
+///获取积分信息---拿出来是否签到参数 循环ing
+-(void)getIntegralInfo
+{
+//    if ([[UserModel shareInstance]getSignInNotifacationStatus]==NO) {
+//        return;
+//    }
+    
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryAll.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+        NSMutableDictionary * infoDict = [dic objectForKey:@"data"];
+        NSArray * qdArr = [infoDict safeObjectForKey:@"taskArry"];
+        NSDictionary * signInDict = [NSDictionary dictionary];
+        for (NSDictionary *QDdict in qdArr) {
+            NSString * taskName = [QDdict safeObjectForKey:@"taskName"];
+            if ([taskName isEqualToString:@"签到"]) {
+                signInDict = QDdict;
+            }
+        }
+        //如果签到成功 直接过 滚蛋ing---否则弹出签到框
+        if ([[signInDict allKeys]containsObject:@"success"]) {
+            return ;
+        }
+        [self showSignInView];
+    } failure:^(NSError *error) {
+        
+    }];
+}
+///显示弹框 然后请求接口
+-(void)showSignInView
+{
+    IntegralSignInView  * signView = [[[NSBundle mainBundle]loadNibNamed:@"IntegralSignInView" owner:nil options:nil]lastObject];
+    signView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    UIApplication *ap = [UIApplication sharedApplication];
+    [ap.keyWindow addSubview:signView];
+
+}
+
 -(void)didClickNotification:(NSNotification *)noti
 {
     //判断是不是mainview
@@ -135,45 +172,33 @@
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-//    UITabBarItem* item = tabBarController.tabBarItem;
+    UITabBarItem* item = tabBarController.tabBarItem;
     
-//    if (viewController ==self.viewControllers[1]||viewController ==self.viewControllers[2]) {
-//        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放"];
-//        return NO;
-//    }
-        //else if (viewController ==self.viewControllers[3])
-//    {
-//        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放，如需查看请关注《脂将军官方》公众号"];
-//
-//        return NO;
-//    }
+    if (viewController ==self.viewControllers[2]||viewController ==self.viewControllers[4]) {
+        if (![[UserModel shareInstance].subId isEqualToString:[UserModel shareInstance].healthId]) {
+            [[UserModel shareInstance]showInfoWithStatus:@"请切换成主用户再来使用此功能"];
+            return NO;
+        }else{
+            return YES;
+        }
+    }
     return YES;
-    
 
 }
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     DLog(@"item name = %@", item.title);
     
-    
-//    if ([item.title isEqualToString:@"消息"]||[item.title isEqualToString:@"发现"]||[item.title isEqualToString:@"云服务"]) {
-//        [[UserModel shareInstance]showInfoWithStatus:@"该功能暂未开放，如需查看请关注《脂将军官方》公众号"];
-//        return;
-//        
-//    }
     if ([item.title isEqualToString:@"云服务"]) {
         
         if ([[UserModel shareInstance].userType isEqualToString:@"1"]) {
-
             ShopTabbbarController *tb =[[ShopTabbbarController alloc]init];
             self.view.window.rootViewController = tb;
-
         }
         else{
             TzsTabbarViewController *tb =[[TzsTabbarViewController alloc]init];
             self.view.window.rootViewController = tb;
         }
-    
     }
 }
 

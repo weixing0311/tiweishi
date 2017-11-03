@@ -36,6 +36,9 @@
     int pageSize;
     CommunityCell * PlayingCell;
     int changeImageNum;
+    
+    
+    
 
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -141,7 +144,7 @@
     }
     else if(indexPath.section==2)
     {
-        return 250;
+        return JFA_SCREEN_WIDTH*0.7;
     }
 
     else
@@ -202,7 +205,11 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.headImageView sd_setBackgroundImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"headimgurl"]] forState:UIControlStateNormal placeholderImage:getImage(@"defaultHead")
          ];
-//        [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_")];
+        
+        
+//        [cell.bgImageView getImageWithUrl:[_infoDict safeObjectForKey:@"backGroundImg"] getImageFinish:^(UIImage *image, NSError *error) {
+//            cell.bgImageView.image = image;
+//        }];
         
         
         [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
@@ -211,9 +218,7 @@
             }
             cell.bgImageView.image = [self cutImage:image imgViewWidth:image.size.width imgViewHeight:image.size.width*0.56];
         }];
-        
-        
-        
+                
         
         cell.nicknamelb.text = [_infoDict safeObjectForKey:@"nickName"];
         NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
@@ -257,7 +262,11 @@
         cell.afterweightlb.text = [NSString stringWithFormat:@"%.1fkg",[[_infoDict safeObjectForKey:@"afterWeight"] floatValue]];
         cell.continuousDatelb.text = [NSString stringWithFormat:@"%@",[_infoDict safeObjectForKey:@"registerDate"]?[_infoDict safeObjectForKey:@"registerDate"]:@"0"];
         
-        float lossWeight  = [[_infoDict safeObjectForKey:@"beforeWeight"]floatValue]-[[_infoDict safeObjectForKey:@"afterWeight"]floatValue];
+        double befortWeight =[[_infoDict safeObjectForKey:@"beforeWeight"]doubleValue];
+        double afterWeight =[[_infoDict safeObjectForKey:@"afterWeight"]doubleValue];
+
+        
+        float lossWeight  = befortWeight-afterWeight;
         
         if (lossWeight>0) {
             cell.afterweightlb.textColor = [UIColor greenColor];
@@ -277,8 +286,12 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        [cell.fatBeforeBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
-        [cell.fatAfterBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
+        [cell.fatBeforeImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_") options:SDWebImageRetryFailed];
+        [cell.fatAfterImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatBefore_") options:SDWebImageRetryFailed];
+
+        
+//        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
+//        [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
         
         return cell;
         
@@ -482,6 +495,37 @@
 -(void)didGzWithCell:(PublicArticleCell*)cell
 {
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+
+    [SVProgressHUD showWithStatus:@"修改中"];
+    if (cell.gzBtn.selected==YES) {
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            
+            model.isFollow = @"0";
+            PublicArticleCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+            currCell.gzBtn.selected =YES;
+            currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+            
+            if (_dataArray.count>100) {
+                return ;
+            }
+            for (CommunityModel * allmodel  in _dataArray) {
+                if ([allmodel.userId isEqualToString:model.userId]) {
+                    allmodel.isFollow = @"0";
+                }
+            }
+            [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
+            
+            [self.tableview reloadData];
+            
+        } failure:^(NSError *error) {
+            
+        }];
+        
+    }else{
+
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
@@ -497,7 +541,7 @@
         
     }];
     
-    
+    }
 }
 -(void)didZanWithCell:(PublicArticleCell*)cell
 {
@@ -616,7 +660,38 @@
 }
 -(void)didGzWithBigCell:(CommunityCell*)cell
 {
+    
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
+    [SVProgressHUD showWithStatus:@"修改中。。。"];
+    if (cell.gzBtn.selected==YES) {
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            
+            model.isFollow = @"0";
+            CommunityCell * currCell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:cell.tag inSection:0]];
+            currCell.gzBtn.selected =YES;
+            currCell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+            
+            if (_dataArray.count>100) {
+                return ;
+            }
+            for (CommunityModel * allmodel  in _dataArray) {
+                if ([allmodel.userId isEqualToString:model.userId]) {
+                    allmodel.isFollow = @"0";
+                }
+            }
+            [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
+            
+            [self.tableview reloadData];
+            
+        } failure:^(NSError *error) {
+            
+        }];
+        
+    }else{
+
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:model.userId forKey:@"followId"];
     [params safeSetObject:model.uid forKey:@"articleId"];
@@ -631,6 +706,7 @@
     } failure:^(NSError *error) {
         
     }];
+    }
     
 }
 -(void)didZanWithBigCell:(CommunityCell*)cell
@@ -865,10 +941,7 @@
                                                 url:[NSURL URLWithString:shareUrl]
                                               title:title
                                                type:SSDKContentTypeWebPage];
-            
         }
-        
-        
         
         [shareParams SSDKEnableUseClientShare];
         [SVProgressHUD showWithStatus:@"开始分享"];
@@ -950,13 +1023,8 @@
         } failure:^(NSError *error) {
             
         }];
-        
     }]];
-    
     [self presentViewController:al animated:YES completion:nil];
-    
-    
-    
 }
 
 
@@ -1006,7 +1074,7 @@
     //判断资源类型
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
         //如果是图片
-        UIImage *image =info[UIImagePickerControllerEditedImage];
+        UIImage *image =info[UIImagePickerControllerOriginalImage];
         [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
         
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -1063,7 +1131,11 @@
     
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadBackGroundImg.do" paramters:param imageData:fileData imageName:@"imgurl" success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
-        [self.tableview headerBeginRefreshing];
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.tableview headerBeginRefreshing];
+        });
+
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
@@ -1225,4 +1297,10 @@
     [self clearSDCeche];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+
+
+
 @end

@@ -77,7 +77,7 @@
     }else{
         self.collectionView.hidden = YES;
     }
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"logo")];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
     
     self.titleIb.text = item.title;
     

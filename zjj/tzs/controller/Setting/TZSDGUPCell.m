@@ -16,6 +16,14 @@
     self.headImage.layer.borderWidth = 1;
     self.headImage.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
     self.priceLabel.adjustsFontSizeToFitWidth = YES;
+    
+    
+    self.cxImageLabel.layer.masksToBounds = YES;
+    self.cxImageLabel.layer.cornerRadius  = 5;
+    self.cxImageLabel.layer.borderWidth = 1;
+    self.cxImageLabel.layer.borderColor=[UIColor redColor].CGColor;
+
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -31,4 +39,11 @@
     }
 
 }
+
+- (IBAction)didShowCuXDetailView:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(showCXDetailWithDGCell:)]) {
+        [self.delegate showCXDetailWithDGCell:self];
+    }
+}
+
 @end

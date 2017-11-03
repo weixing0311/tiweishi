@@ -22,7 +22,7 @@
 -(void)setInfoWithDict:(NSDictionary *)infoDict  isHidden:(BOOL)isHidden
 {
     
-    self.weightlb.text =[NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"weight"]floatValue]];
+    self.weightlb.text =[NSString stringWithFormat:@"%.1fkg",[[infoDict safeObjectForKey:@"weight"]floatValue]];
     self.tzlLb.text = [NSString stringWithFormat:@"%.1f%%",[[infoDict safeObjectForKey:@"fatPercentage"]floatValue]*100];
     self.timeLb.text = [self getTimeWithString:[infoDict safeObjectForKey:@"createTime"]];
     self.daysLabel.text = [[infoDict safeObjectForKey:@"createTime"]yyyymmdd];
@@ -189,6 +189,14 @@
     }
 }
 
+- (IBAction)didDelete:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didDeleteWithCell:)]) {
+        [self.delegate didDeleteWithCell:self];
+    }else{
+        DLog(@"代理未执行");
+    }
+
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

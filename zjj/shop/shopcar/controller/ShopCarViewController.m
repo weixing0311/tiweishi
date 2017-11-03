@@ -130,7 +130,7 @@
     shopCarCellItem *item = [self.dataArray objectAtIndex:cell.tag];
 
     NSArray * arr = [NSArray arrayWithArray:item.promotTitle];
-    [cuxiaoDetailView showCuxiaoTabViewWithArray:arr];
+    [cuxiaoDetailView showCuxiaoTabViewWithArray:arr type:2];
 }
 -(void)getCountWithCell:(ShopCarCell *)cell type:(BOOL)type
 {

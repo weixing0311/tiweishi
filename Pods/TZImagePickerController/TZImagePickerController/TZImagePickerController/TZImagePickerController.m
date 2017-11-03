@@ -4,7 +4,8 @@
 //
 //  Created by 谭真 on 15/12/24.
 //  Copyright © 2015年 谭真. All rights reserved.
-//  version 1.8.0 - 2017.06.03
+//  version 1.8.9 - 2017.08.16
+//  更多信息，请前往项目的github地址：https://github.com/banchichen/TZImagePickerController
 
 #import "TZImagePickerController.h"
 #import "TZPhotoPickerController.h"
@@ -43,7 +44,7 @@
     self.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationBar.translucent = YES;
     [TZImageManager manager].shouldFixOrientation = NO;
-    
+
     // Default appearance, you can reset these after this method
     // 默认的外观，你可以在这个方法后重置
     self.oKButtonTitleColorNormal   = [UIColor colorWithRed:(83/255.0) green:(179/255.0) blue:(17/255.0) alpha:1.0];
@@ -53,7 +54,8 @@
         self.navigationBar.barTintColor = [UIColor colorWithRed:(34/255.0) green:(34/255.0)  blue:(34/255.0) alpha:1.0];
         self.navigationBar.tintColor = [UIColor whiteColor];
         self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+        if (!TZ_isGlobalHideStatusBar) [UIApplication sharedApplication].statusBarHidden = NO;
+    }    
 }
 
 - (void)setNaviBgColor:(UIColor *)naviBgColor {
@@ -110,7 +112,6 @@
     }else{
         [UIApplication sharedApplication].statusBarStyle = iOS7Later ? UIStatusBarStyleLightContent : UIStatusBarStyleBlackOpaque;
     }
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -236,16 +237,19 @@
     
     [self configDefaultImageName];
     [self configDefaultBtnTitle];
+    
+    CGFloat cropViewWH = MIN(self.view.tz_width, self.view.tz_height) / 3 * 2;
+    self.cropRect = CGRectMake((self.view.tz_width - cropViewWH) / 2, (self.view.tz_height - cropViewWH) / 2, cropViewWH, cropViewWH);
 }
 
 - (void)configDefaultImageName {
-    self.takePictureImageName = @"takePicture.png";
-    self.photoSelImageName = @"photo_sel_photoPickerVc.png";
-    self.photoDefImageName = @"photo_def_photoPickerVc.png";
-    self.photoNumberIconImageName = @"photo_number_icon.png";
-    self.photoPreviewOriginDefImageName = @"preview_original_def.png";
-    self.photoOriginDefImageName = @"photo_original_def.png";
-    self.photoOriginSelImageName = @"photo_original_sel.png";
+    self.takePictureImageName = @"takePicture";
+    self.photoSelImageName = @"photo_sel_photoPickerVc";
+    self.photoDefImageName = @"photo_def_photoPickerVc";
+    self.photoNumberIconImageName = @"photo_number_icon";
+    self.photoPreviewOriginDefImageName = @"preview_original_def";
+    self.photoOriginDefImageName = @"photo_original_def";
+    self.photoOriginSelImageName = @"photo_original_sel";
 }
 
 - (void)configDefaultBtnTitle {
@@ -287,14 +291,28 @@
     }
 }
 
-- (void)showAlertWithTitle:(NSString *)title {
+- (id)showAlertWithTitle:(NSString *)title {
     if (iOS8Later) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:[NSBundle tz_localizedStringForKey:@"OK"] style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
+        return alertController;
     } else {
-        [[[UIAlertView alloc] initWithTitle:title message:nil delegate:nil cancelButtonTitle:[NSBundle tz_localizedStringForKey:@"OK"] otherButtonTitles:nil, nil] show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:nil delegate:nil cancelButtonTitle:[NSBundle tz_localizedStringForKey:@"OK"] otherButtonTitles:nil, nil];
+        [alertView show];
+        return alertView;
     }
+}
+
+- (void)hideAlertView:(id)alertView {
+    if ([alertView isKindOfClass:[UIAlertController class]]) {
+        UIAlertController *alertC = alertView;
+        [alertC dismissViewControllerAnimated:YES completion:nil];
+    } else if ([alertView isKindOfClass:[UIAlertView class]]) {
+        UIAlertView *alertV = alertView;
+        [alertV dismissWithClickedButtonIndex:0 animated:YES];
+    }
+    alertView = nil;
 }
 
 - (void)showProgressHUD {
@@ -303,17 +321,14 @@
         [_progressHUD setBackgroundColor:[UIColor clearColor]];
         
         _HUDContainer = [[UIView alloc] init];
-        _HUDContainer.frame = CGRectMake((self.view.tz_width - 120) / 2, (self.view.tz_height - 90) / 2, 120, 90);
         _HUDContainer.layer.cornerRadius = 8;
         _HUDContainer.clipsToBounds = YES;
         _HUDContainer.backgroundColor = [UIColor darkGrayColor];
         _HUDContainer.alpha = 0.7;
         
         _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
         
         _HUDLabel = [[UILabel alloc] init];
-        _HUDLabel.frame = CGRectMake(0,40, 120, 50);
         _HUDLabel.textAlignment = NSTextAlignmentCenter;
         _HUDLabel.text = self.processHintStr;
         _HUDLabel.font = [UIFont systemFontOfSize:15];
@@ -366,15 +381,14 @@
 
 - (void)setCircleCropRadius:(NSInteger)circleCropRadius {
     _circleCropRadius = circleCropRadius;
-    _cropRect = CGRectMake(self.view.tz_width / 2 - circleCropRadius, self.view.tz_height / 2 - _circleCropRadius, _circleCropRadius * 2, _circleCropRadius * 2);
+    self.cropRect = CGRectMake(self.view.tz_width / 2 - circleCropRadius, self.view.tz_height / 2 - _circleCropRadius, _circleCropRadius * 2, _circleCropRadius * 2);
 }
 
-- (CGRect)cropRect {
-    if (_cropRect.size.width > 0) {
-        return _cropRect;
-    }
-    CGFloat cropViewWH = self.view.tz_width;
-    return CGRectMake(0, (self.view.tz_height - self.view.tz_width) / 2, cropViewWH, cropViewWH);
+- (void)setCropRect:(CGRect)cropRect {
+    _cropRect = cropRect;
+    _cropRectPortrait = cropRect;
+    CGFloat widthHeight = cropRect.size.width;
+    _cropRectLandscape = CGRectMake((self.view.tz_height - widthHeight) / 2, cropRect.origin.x, widthHeight, widthHeight);
 }
 
 - (void)setTimeout:(NSInteger)timeout {
@@ -384,6 +398,11 @@
     } else if (_timeout > 60) {
         _timeout = 60;
     }
+}
+
+- (void)setPickerDelegate:(id<TZImagePickerControllerDelegate>)pickerDelegate {
+    _pickerDelegate = pickerDelegate;
+    [TZImageManager manager].pickerDelegate = pickerDelegate;
 }
 
 - (void)setColumnNumber:(NSInteger)columnNumber {
@@ -424,11 +443,16 @@
     [TZImageManager manager].photoPreviewMaxWidth = _photoPreviewMaxWidth;
 }
 
+- (void)setPhotoWidth:(CGFloat)photoWidth {
+    _photoWidth = photoWidth;
+    [TZImageManager manager].photoWidth = photoWidth;
+}
+
 - (void)setSelectedAssets:(NSMutableArray *)selectedAssets {
     _selectedAssets = selectedAssets;
     _selectedModels = [NSMutableArray array];
     for (id asset in selectedAssets) {
-        TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:TZAssetModelMediaTypePhoto];
+        TZAssetModel *model = [TZAssetModel modelWithAsset:asset type:[[TZImageManager manager] getAssetType:asset]];
         model.isSelected = YES;
         [_selectedModels addObject:model];
     }
@@ -474,12 +498,46 @@
     [super pushViewController:viewController animated:animated];
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
 - (void)dealloc {
     // NSLog(@"%@ dealloc",NSStringFromClass(self.class));
+}
+
+#pragma mark - UIContentContainer
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self willInterfaceOrientionChange];
+    if (size.width > size.height) {
+        _cropRect = _cropRectLandscape;
+    } else {
+        _cropRect = _cropRectPortrait;
+    }
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self willInterfaceOrientionChange];
+    if (toInterfaceOrientation >= 3) {
+        _cropRect = _cropRectLandscape;
+    } else {
+        _cropRect = _cropRectPortrait;
+    }
+}
+
+- (void)willInterfaceOrientionChange {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.02 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (![UIApplication sharedApplication].statusBarHidden) {
+            if (iOS7Later && !TZ_isGlobalHideStatusBar) [UIApplication sharedApplication].statusBarHidden = NO;
+        }
+    });
+}
+
+#pragma mark - Layout
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    _HUDContainer.frame = CGRectMake((self.view.tz_width - 120) / 2, (self.view.tz_height - 90) / 2, 120, 90);
+    _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+    _HUDLabel.frame = CGRectMake(0,40, 120, 50);    
 }
 
 #pragma mark - Public
@@ -495,12 +553,6 @@
 }
 
 - (void)callDelegateMethod {
-    /*
-     // 兼容旧版本
-     if ([self.pickerDelegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
-     [self.pickerDelegate imagePickerControllerDidCancel:self];
-     }
-     */
     if ([self.pickerDelegate respondsToSelector:@selector(tz_imagePickerControllerDidCancel:)]) {
         [self.pickerDelegate tz_imagePickerControllerDidCancel:self];
     }
@@ -516,19 +568,18 @@
     UITableView *_tableView;
 }
 @property (nonatomic, strong) NSMutableArray *albumArr;
+@property (assign, nonatomic) BOOL isFirstAppear;
 @end
 
 @implementation TZAlbumPickerController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isFirstAppear = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     
     TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:imagePickerVc.cancelBtnTitleStr style:UIBarButtonItemStylePlain target:imagePickerVc action:@selector(cancelButtonClick)];
-    
-    // 1.6.10 采用微信的方式，只在相册列表页定义backBarButtonItem为返回，其余的顺系统的做法
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSBundle tz_localizedStringForKey:@"Back"] style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -539,6 +590,12 @@
         self.navigationItem.title = [NSBundle tz_localizedStringForKey:@"Photos"];
     } else if (imagePickerVc.allowPickingVideo) {
         self.navigationItem.title = [NSBundle tz_localizedStringForKey:@"Videos"];
+    }
+    
+    // 1.6.10 采用微信的方式，只在相册列表页定义backBarButtonItem为返回，其余的顺系统的做法
+    if (self.isFirstAppear) {
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSBundle tz_localizedStringForKey:@"Back"] style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.isFirstAppear = NO;
     }
     
     [self configTableView];
@@ -555,19 +612,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (!_tableView) {
-                    CGFloat top = 0;
-                    CGFloat tableViewHeight = 0;
-                    if (self.navigationController.navigationBar.isTranslucent) {
-                        top = 44;
-                        if (iOS7Later) top += 20;
-                        tableViewHeight = self.view.tz_height - top;
-                    } else {
-                        CGFloat navigationHeight = 44;
-                        if (iOS7Later) navigationHeight += 20;
-                        tableViewHeight = self.view.tz_height - navigationHeight;
-                    }
-                    
-                    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, top, self.view.tz_width, tableViewHeight) style:UITableViewStylePlain];
+                    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
                     _tableView.rowHeight = 70;
                     _tableView.tableFooterView = [[UIView alloc] init];
                     _tableView.dataSource = self;
@@ -584,6 +629,25 @@
 
 - (void)dealloc {
     // NSLog(@"%@ dealloc",NSStringFromClass(self.class));
+}
+
+#pragma mark - Layout
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat top = 0;
+    CGFloat tableViewHeight = 0;
+    CGFloat naviBarHeight = self.navigationController.navigationBar.tz_height;
+    BOOL isStatusBarHidden = [UIApplication sharedApplication].isStatusBarHidden;
+    if (self.navigationController.navigationBar.isTranslucent) {
+        top = naviBarHeight;
+        if (iOS7Later && !isStatusBarHidden) top += 20;
+        tableViewHeight = self.view.tz_height - top;
+    } else {
+        tableViewHeight = self.view.tz_height;
+    }
+    _tableView.frame = CGRectMake(0, top, self.view.tz_width, tableViewHeight);
 }
 
 #pragma mark - UITableViewDataSource && Delegate
@@ -609,6 +673,7 @@
     [self.navigationController pushViewController:photoPickerVc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
+
 #pragma clang diagnostic pop
 
 @end
@@ -617,15 +682,29 @@
 @implementation UIImage (MyBundle)
 
 + (UIImage *)imageNamedFromMyBundle:(NSString *)name {
-    UIImage *image = [UIImage imageNamed:[@"TZImagePickerController.bundle" stringByAppendingPathComponent:name]];
-    if (image) {
-        return image;
+    NSBundle *imageBundle = [NSBundle tz_imagePickerBundle];
+    name = [name stringByAppendingString:@"@2x"];
+    NSString *imagePath = [imageBundle pathForResource:name ofType:@"png"];
+    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+    if (!image) {
+        // 兼容业务方自己设置图片的方式
+        name = [name stringByReplacingOccurrencesOfString:@"@2x" withString:@""];
+        image = [UIImage imageNamed:name];
+    }
+    return image;
+}
+
+@end
+
+
+@implementation NSString (TzExtension)
+
+- (BOOL)tz_containsString:(NSString *)string {
+    if (iOS8Later) {
+        return [self containsString:string];
     } else {
-        image = [UIImage imageNamed:[@"Frameworks/TZImagePickerController.framework/TZImagePickerController.bundle" stringByAppendingPathComponent:name]];
-        if (!image) {
-            image = [UIImage imageNamed:name];
-        }
-        return image;
+        NSRange range = [self rangeOfString:string];
+        return range.location != NSNotFound;
     }
 }
 

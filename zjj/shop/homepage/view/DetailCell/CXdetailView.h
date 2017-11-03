@@ -12,7 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (strong, nonatomic) UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray * dataArray;
--(void)showCuxiaoTabViewWithArray:(NSArray *)arr;
+-(void)showCuxiaoTabViewWithArray:(NSArray *)arr type:(int)type;
 
 -(void)hiddenCuXiaoTabView;
 @end

@@ -167,7 +167,13 @@
 {
     
     if (indexPath.section ==0) {
-        return 88;
+        NSDictionary *dic =[_buyArray objectAtIndex:indexPath.row];
+        NSArray * promotListArr = [dic objectForKey:@"giftList"];
+        if (promotListArr&&promotListArr.count>0) {
+            return 88+30;
+        }else{
+            return 88;
+        }
     }else{
         
         NSDictionary *dic =[_dataArray objectAtIndex:indexPath.row];
@@ -197,6 +203,20 @@
         cell.secondLabel.text = [NSString stringWithFormat:@"直升%@",[dict safeObjectForKey:@"targetGrade"]];
 //        cell.thirdLabel .text = [dict safeObjectForKey:@"currentGrade"];
         cell.priceLabel .text = [NSString stringWithFormat:@"￥%.2f",[[dict safeObjectForKey:@"totalPrice"]floatValue]];
+        
+        
+        NSArray * array = [dict objectForKey:@"giftList"];
+        if (array&& array.count>0) {
+            cell.cxView.hidden= NO;
+            NSDictionary *dic =[array objectAtIndex:0];
+            cell.cxImageLabel.text= @"满赠";
+            cell.cxDetailLabel.text = [dic objectForKey:@"productName"];
+        }else{
+            cell.cxView.hidden =YES;
+        }
+
+        
+        
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
         return cell;
 
@@ -278,8 +298,16 @@
 -(void)showCXDetailWithCell:(TZSDGCell * )cell
 {
     NSDictionary *dic = [_dataArray objectAtIndex:cell.tag-100];
-    [cuxiaoDetailView showCuxiaoTabViewWithArray:[dic safeObjectForKey:@"promotList"] ];
+    [cuxiaoDetailView showCuxiaoTabViewWithArray:[dic safeObjectForKey:@"promotList"] type:2];
 }
+
+-(void)showCXDetailWithDGCell:(TZSDGUPCell * )cell
+{
+    NSDictionary *dic = [_buyArray objectAtIndex:cell.tag];
+    [cuxiaoDetailView showCuxiaoTabViewWithArray:[dic safeObjectForKey:@"giftList"] type:1];
+}
+
+
 -(void)addCountWithCell:(TZSDGCell *)cell
 {
     NSDictionary *dic = [_dataArray objectAtIndex:cell.tag-100];
@@ -288,7 +316,6 @@
     [self changeBottomInfo];
     
 }
-
 -(void)redCountWithCell:(TZSDGCell *)cell
 {
     NSDictionary *dic = [_dataArray objectAtIndex:cell.tag-100];

@@ -28,11 +28,11 @@
 
 -(void)setInfoWithDict:(NSDictionary *)dict
 {
-    [self.headimageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
+    [self.headimageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]options:SDWebImageRetryFailed];
     self.nameLabel.text = [UserModel shareInstance].nickName;
     self.levelLabel.text = [UserModel shareInstance].gradeName;
     self.levelImage.image = [[UserModel shareInstance] getLevelImage];
-    [self.qrcodeImage sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl] placeholderImage:[UIImage imageNamed:@"demoimage_"]];
+    [self.qrcodeImage sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl] placeholderImage:[UIImage imageNamed:@"demoimage_"]options:SDWebImageRetryFailed];
     _linkStr = [UserModel shareInstance].linkerUrl;
 
 

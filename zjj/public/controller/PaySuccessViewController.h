@@ -10,4 +10,5 @@
 
 @interface PaySuccessViewController : JFABaseTableViewController
 @property (nonatomic,assign)int orderType;
+@property (nonatomic,assign)BOOL paySuccess;
 @end

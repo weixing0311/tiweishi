@@ -14,6 +14,7 @@
 #import "ChangePasswordViewController.h"
 #import "AboutUsViewController.h"
 #import "LoignViewController.h"
+int64_t delayInSeconds = 2.0;      // 延迟的时间
 
 #define videoCechePath [NSTemporaryDirectory() stringByAppendingString:@"MediaCache"]
 
@@ -30,7 +31,7 @@
 {
     UIImage * beforeImage;
     UIImage * afterImage;
-    int  imageType;
+    int  imageType;//1 减肥前、2 减肥后、3头像
     int pickRow;
     BOOL haveChangeInfo;
     
@@ -206,7 +207,7 @@
     }else if(imageType ==2)
     {
         urlStr = @"app/evaluatUser/uploadFatAfterImg.do";
-    }else{
+    }else if(imageType ==3){
         urlStr = @"app/user/uploadHeadImg.do";
     }
     
@@ -216,24 +217,35 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
     
     self.currentTasks = [[BaseSservice sharedManager]postImage:urlStr paramters:param imageData:imageData imageName:@"headimgurl" success:^(NSDictionary *dic) {
-        [SVProgressHUD dismiss];
+        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshHomePageInfo" object:nil];
+
         NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
         if (imageType ==1) {
             [_infoDict safeSetObject:[dataDict safeObjectForKey:@"imgUrl"] forKey:@"fatBefore"];
-        }else{
+
+        }
+        else if(imageType ==2)
+        {
             [_infoDict safeSetObject:[dataDict safeObjectForKey:@"imgUrl"] forKey:@"fatAfter"];
 
         }
-        
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshHomePageInfo" object:nil];
-        [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
+        else if(imageType ==3)
+        {
+            [_infoDict safeSetObject:[dataDict safeObjectForKey:@"headimgurl"] forKey:@"headimgurl"];
+            [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
 
-        [self.tableview reloadData];
-        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+        }
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.tableview reloadData];
+
+        });
+        
         
         [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
     } failure:^(NSError *error) {
-        
         DLog(@"faile-error-%@",error);
     }];
 
@@ -266,7 +278,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row ==9) {
-        return 250;
+        return JFA_SCREEN_WIDTH*0.7;
     }
     else if (indexPath.row ==0)
     {
@@ -286,7 +298,14 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:getImage(@"head_default")];
+        [cell.headImageView getImageWithUrl:[UserModel shareInstance].headUrl getImageFinish:^(UIImage *image, NSError *error) {
+            if (error) {
+                DLog(@"error--%@",error);
+                return ;
+            }
+            cell.headImageView.image = image;
+        }];
+        
         return cell;
     }
     
@@ -297,11 +316,17 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         cell.delegate= self;
-        [cell.fatBeforeBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
-        [cell.fatAfterBtn setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
+        
+        [cell.fatBeforeImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_") options:SDWebImageRetryFailed];
+        [cell.fatAfterImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_") options:SDWebImageRetryFailed];
+
+        
+//        [cell.fatBeforeBtn sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] forState:UIControlStateNormal placeholderImage:getImage(@"fatBefore_") options:SDWebImageRetryFailed];
+//
+//        [cell.fatAfterBtn sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] forState:UIControlStateNormal placeholderImage:getImage(@"fatAfter_") options:SDWebImageRetryFailed];
+
         
         return cell;
-        
         
     }else{
         static NSString * identifier = @"cell";
@@ -329,7 +354,6 @@
                 break;
             case 3:
                 cell.textLabel.text = @"简介";
-                
                 
                 cell.detailTextLabel.text = [_infoDict safeObjectForKey:@"introduction"];
                 break;
@@ -628,15 +652,24 @@
         }
         [self dismissViewControllerAnimated:YES completion:nil];
         if (picker.sourceType ==UIImagePickerControllerSourceTypeCamera) {
-            NSData *  fileDate = UIImageJPEGRepresentation(image, 0.001);
-            [self upDataImageWithImage:fileDate];
-            
+            NSData * imageData = UIImageJPEGRepresentation(image,1);
+            double length = [imageData length]/1024/1024;
+            if (length>1) {
+                imageData = UIImageJPEGRepresentation(image, 1/length);
+            }
+            [self upDataImageWithImage:imageData];
         }else{
-            NSData *  fileDate = UIImageJPEGRepresentation(image, 0.01);
-            [self upDataImageWithImage:fileDate];
-            
-        }
+            NSData * imageData = UIImageJPEGRepresentation(image,1);
+            float size = [imageData length];
+            float length = size/1048576;
+            DLog(@"imagedata1---%f",length);
+            if (length>1) {
+                imageData = UIImageJPEGRepresentation(image, 1/length);
+                DLog(@"imageData2---%lu",[imageData length]/1024/1024);
+            }
         
+            [self upDataImageWithImage:imageData];
+        }
     }
 }
 //点击cancel 调用的方法

@@ -11,6 +11,8 @@
 @interface EditUserInfoImageCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *fatBeforeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *fatAfterBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *fatBeforeImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *fatAfterImageView;
 @property (nonatomic,assign)id<EditUserInfoCellDelegate>delegate;
 
 @end

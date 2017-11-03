@@ -63,11 +63,18 @@
     ShareHealthItem * item2 = [self.infoArray objectAtIndex:1];
 
     
-
+    _qrCodeImageView.image =getImage(@"shareQRCode");
+    [_qrCodeImageView getImageWithUrl:[UserModel shareInstance].qrcodeImageUrl getImageFinish:^(UIImage *image, NSError *error) {
+        if (error) {
+            _qrCodeImageView.image = getImage(@"shareQRCode");
+        }else{
+            _qrCodeImageView.image = image;
+        }
+    }];
     
-    _qrCodeImageView.image = [UIImage imageWithData:[UserModel shareInstance].qrcodeImageData];
-    
-    [self.qrCodeImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl ]placeholderImage:[UIImage imageNamed:@"head_default"]];
+//    _qrCodeImageView.image = [UIImage imageWithData:[UserModel shareInstance].qrcodeImageData];
+//
+//    [self.qrCodeImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].qrcodeImageUrl ]placeholderImage:[UIImage imageNamed:@"head_default"]];
 
     self.nameLabel.text = [SubUserItem shareInstance].nickname;
     

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="Yd4View">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acH-dN-SAY">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jvj-HV-x2C">
+                            <rect key="frame" x="0.0" y="265" width="375" height="50"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideHome3_" translatesAutoresizingMaskIntoConstraints="NO" id="L8f-Ah-90G">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="0Je-Mo-Htt"/>
+                                <constraint firstItem="L8f-Ah-90G" firstAttribute="leading" secondItem="Jvj-HV-x2C" secondAttribute="leading" id="N7d-Fe-XN5"/>
+                                <constraint firstAttribute="trailing" secondItem="L8f-Ah-90G" secondAttribute="trailing" id="bLf-7U-HBQ"/>
+                                <constraint firstAttribute="bottom" secondItem="L8f-Ah-90G" secondAttribute="bottom" id="c0M-Oc-4AY"/>
+                                <constraint firstItem="L8f-Ah-90G" firstAttribute="top" secondItem="Jvj-HV-x2C" secondAttribute="top" id="yeM-BU-BGP"/>
+                            </constraints>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideText7_" translatesAutoresizingMaskIntoConstraints="NO" id="WwM-w9-fUQ">
+                            <rect key="frame" x="81.5" y="410" width="212" height="47"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="47" id="Dto-vE-YvY"/>
+                                <constraint firstAttribute="width" constant="212" id="fDa-QD-tHX"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="biO-JB-DdH">
+                            <rect key="frame" x="102.5" y="507" width="170" height="41"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="41" id="4Zg-3W-aHS"/>
+                                <constraint firstAttribute="width" constant="170" id="vWw-M6-AzJ"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="guideNext_"/>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guideJt6_" translatesAutoresizingMaskIntoConstraints="NO" id="rj3-w3-jPm">
+                            <rect key="frame" x="175" y="327" width="24" height="73"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="24" id="5g0-Gv-evw"/>
+                                <constraint firstAttribute="height" constant="73" id="QaM-Ij-nOM"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.6854933647" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="WwM-w9-fUQ" firstAttribute="centerX" secondItem="acH-dN-SAY" secondAttribute="centerX" id="5e0-wt-Z4s"/>
+                        <constraint firstItem="rj3-w3-jPm" firstAttribute="centerX" secondItem="acH-dN-SAY" secondAttribute="centerX" id="Az0-Rf-Ca9"/>
+                        <constraint firstItem="WwM-w9-fUQ" firstAttribute="top" secondItem="rj3-w3-jPm" secondAttribute="bottom" constant="10" id="BxP-Ha-ErN"/>
+                        <constraint firstItem="biO-JB-DdH" firstAttribute="centerX" secondItem="acH-dN-SAY" secondAttribute="centerX" id="IUX-9M-L7D"/>
+                        <constraint firstItem="WwM-w9-fUQ" firstAttribute="centerY" secondItem="acH-dN-SAY" secondAttribute="centerY" constant="100" id="iZZ-Qs-syk"/>
+                        <constraint firstAttribute="trailing" secondItem="Jvj-HV-x2C" secondAttribute="trailing" id="rTv-oe-6te"/>
+                        <constraint firstItem="Jvj-HV-x2C" firstAttribute="top" secondItem="acH-dN-SAY" secondAttribute="top" constant="265" id="vbM-kB-yLO"/>
+                        <constraint firstItem="Jvj-HV-x2C" firstAttribute="leading" secondItem="acH-dN-SAY" secondAttribute="leading" id="zXP-ij-vFh"/>
+                        <constraint firstItem="biO-JB-DdH" firstAttribute="top" secondItem="WwM-w9-fUQ" secondAttribute="bottom" constant="50" id="zYv-JQ-g01"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npn-g3-mfS">
+                    <rect key="frame" x="267" y="30" width="88" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="41" id="A0r-i8-Wxw"/>
+                        <constraint firstAttribute="width" constant="88" id="Uig-rH-ZFQ"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="guideJump_"/>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Npn-g3-mfS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="1yg-IK-YAR"/>
+                <constraint firstAttribute="trailing" secondItem="Npn-g3-mfS" secondAttribute="trailing" constant="20" id="2qY-Pr-Xje"/>
+                <constraint firstItem="acH-dN-SAY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BmH-NB-T6X"/>
+                <constraint firstAttribute="trailing" secondItem="acH-dN-SAY" secondAttribute="trailing" id="JEl-E7-fsR"/>
+                <constraint firstAttribute="bottom" secondItem="acH-dN-SAY" secondAttribute="bottom" id="c5d-qy-Jqq"/>
+                <constraint firstItem="acH-dN-SAY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xDk-Jf-DFf"/>
+            </constraints>
+            <connections>
+                <outlet property="jumpBtn" destination="Npn-g3-mfS" id="cTZ-Ve-NBp"/>
+                <outlet property="nextBtn" destination="biO-JB-DdH" id="jeS-TN-w0M"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="guideHome3_" width="352" height="43"/>
+        <image name="guideJt6_" width="24" height="44"/>
+        <image name="guideJump_" width="88" height="41"/>
+        <image name="guideNext_" width="170" height="41"/>
+        <image name="guideText7_" width="212" height="47"/>
+    </resources>
+</document>

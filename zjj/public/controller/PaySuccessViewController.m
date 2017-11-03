@@ -15,6 +15,9 @@
 #import "IntegralOrderViewController.h"
 #import "IntegralOrderDetailViewController.h"
 @interface PaySuccessViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
+@property (weak, nonatomic) IBOutlet UILabel *statuslb;
+@property (weak, nonatomic) IBOutlet UIButton *backBtn;
 
 @end
 
@@ -32,8 +35,30 @@
         self.navigationItem.rightBarButtonItem = rightitem;
    
     }
-    
+    [self changePageWithPayStatus];
 }
+
+
+
+-(void)changePageWithPayStatus
+{
+    if (self.paySuccess==YES) {
+        self.statuslb.text = @"支付成功";
+        self.statusImageView.image = getImage(@"zhiTrue");
+        self.backBtn.backgroundColor = [UIColor greenColor];
+
+    }else{
+        self.statuslb.text = @"支付失败";
+        self.statusImageView.image = getImage(@"zhiFalse_");
+        self.backBtn.backgroundColor = [UIColor redColor];
+
+    }
+}
+
+
+
+
+
 -(void)didClickBack
 {
     NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];

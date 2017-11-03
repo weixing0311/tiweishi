@@ -41,9 +41,31 @@
     self.navigationItem.rightBarButtonItem = rightitem;
 
     
+    UIView * tisView = [[UIView alloc]initWithFrame: CGRectMake(0, 64, JFA_SCREEN_WIDTH, 70)];
+    tisView.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:tisView];
+
+    UIImageView * imageView = [UIImageView new];
+    imageView.frame = CGRectMake(10, 25, 20, 20);
+    imageView.image = getImage(@"white!_");
+    [tisView addSubview:imageView];
+    
+    UILabel * tsLabel = [UILabel new];
+    tsLabel.text = @"请选择您测量结果中的2条数据,并生成体脂趋势报告分享给好友";
+    tsLabel.frame = CGRectMake(40, 10, tisView.frame.size.width-50, 50);
+    tsLabel.font = [UIFont systemFontOfSize:14];
+    tsLabel.numberOfLines = 2;
+    tsLabel.textColor = [UIColor whiteColor];
+    [tisView addSubview:tsLabel];
+    
+    UIView * lineView = [UIView new];
+    lineView.frame = CGRectMake(0, 69, JFA_SCREEN_WIDTH, 1);
+    lineView.backgroundColor = HEXCOLOR(0xeeeeee);
+    [tisView addSubview:lineView];
+    
     
     pageSize = 30;
-    self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 134, JFA_SCREEN_WIDTH, self.view.frame.size.height-70) style:UITableViewStylePlain];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
@@ -141,13 +163,16 @@
         cell = [self getXibCellWithTitle:identifier];
     }
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-    for (HistoryCell * chooseCell in _chooseArray) {
-        if (chooseCell.tag ==indexPath.row) {
-            cell.chooseBtn.selected  = YES;
-        }else{
-            cell.chooseBtn.selected  = NO;
-        }
+    
+    if ([dic safeObjectForKey:@"choose"]&&[[dic safeObjectForKey:@"choose"]isEqualToString:@"1"])
+    {
+        cell.chooseBtn.selected = YES;
     }
+    else
+    {
+        cell.chooseBtn.selected =NO;
+    }
+    
     if (showIndexPathRow==indexPath.row) {
         [cell setInfoWithDict:dic isHidden:NO];
     }else{
@@ -171,6 +196,44 @@
     }
     [self.tableview reloadData];
 }
+-(void)didDeleteWithCell:(HistoryCell*)cell
+{
+    
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否确认要删除本条记录？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction: [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary * dict = [_dataArray objectAtIndex:cell.tag];
+        [self deleteListWithDict:dict IndexPath:cell.tag];
+
+    }]];
+    [al addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:al animated:YES completion:nil];
+}
+///删除
+-(void)deleteListWithDict:(NSDictionary *)dict IndexPath:(NSInteger )index
+{
+    [SVProgressHUD showWithStatus:@"删除中.."];
+    NSMutableDictionary * param =[NSMutableDictionary dictionary];
+    [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
+    [param safeSetObject:[dict safeObjectForKey:@"DataId"] forKey:@"dataId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/deleteEvaluatData.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"deletePCINFO" object:nil];
+        HistoryCell * cell = [self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        if ([_chooseArray containsObject:cell]) {
+            [_chooseArray removeObject:[_dataArray objectAtIndex:index]];
+        }
+        [_dataArray removeObjectAtIndex:index];
+        // 从列表中删除
+        [self.tableview deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
+
+        
+    } failure:^(NSError *error) {
+        
+    }];
+
+}
+
+
 
 #pragma mark ---subView DELEGATE
 //-(void)showCellTabWithCell:(HistoryCell*)cell
@@ -192,13 +255,18 @@
 //}
 -(void)didChooseWithCell:(HistoryCell *)cell
 {
+    NSMutableDictionary * dic = [_dataArray objectAtIndex:cell.tag];
+
     if (cell.chooseBtn.selected==YES) {
         cell.chooseBtn.selected =NO;
         [self.chooseArray removeObject:cell];
+        [dic safeSetObject:@"0" forKey:@"choose"];
+        
     }else{
         if (self.chooseArray.count<2) {
             cell.chooseBtn.selected = YES;
             [self.chooseArray addObject:cell];
+            [dic safeSetObject:@"1" forKey:@"choose"];
         }else{
             [[UserModel shareInstance] showInfoWithStatus:@"最多只能选两条"];
         }

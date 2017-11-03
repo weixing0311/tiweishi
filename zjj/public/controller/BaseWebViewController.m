@@ -208,12 +208,30 @@
         
         PaySuccessViewController * pas = [[PaySuccessViewController alloc]init];
         pas.orderType = orderType;
+        pas.paySuccess = YES;
         [self.navigationController pushViewController:pas animated:YES];
         
         decisionHandler(WKNavigationActionPolicyAllow);
         
         return;
     }
+    if([url containsString:@"notifyFail.jsp?"])//支付失败回调
+    {
+        NSDictionary * urlDict = [self getURLParameters:url];
+        
+        int orderType = [[urlDict safeObjectForKey:@"orderType"]intValue];
+        orderType=3;
+        
+        PaySuccessViewController * pas = [[PaySuccessViewController alloc]init];
+        pas.orderType = orderType;
+        pas.paySuccess = NO;
+        [self.navigationController pushViewController:pas animated:YES];
+        
+        decisionHandler(WKNavigationActionPolicyAllow);
+        
+        return;
+    }
+
 
     decisionHandler(WKNavigationActionPolicyAllow);
 }
@@ -637,6 +655,7 @@
         
         PaySuccessViewController * pas = [[PaySuccessViewController alloc]init];
         pas.orderType = self.payType;
+        pas.paySuccess = YES;
         [self.navigationController pushViewController:pas animated:YES];
 
         

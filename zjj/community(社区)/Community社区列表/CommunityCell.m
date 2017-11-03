@@ -33,7 +33,7 @@
 -(void)setInfoWithDict:(CommunityModel *)item
 {
     self.currModel = item;
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
+    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:item.headurl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
     
     self.titleIb.text        = item.title;
     self.contentlb.text      = item.content;

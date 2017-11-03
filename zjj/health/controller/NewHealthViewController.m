@@ -37,8 +37,18 @@
 @property (weak, nonatomic) IBOutlet UIView *minView;
 
 
+#pragma mark --引导页
+///1
+@property (weak, nonatomic) IBOutlet UIView *guide1View;
+@property (weak, nonatomic) IBOutlet UIView *Guide2View;
+@property (weak, nonatomic) IBOutlet UIView *guide3View;
+@property (weak, nonatomic) IBOutlet UIButton *next1btn;
+@property (weak, nonatomic) IBOutlet UIButton *next2btn;
+@property (weak, nonatomic) IBOutlet UIButton *next3btn;
 
-
+- (IBAction)didClickNext:(id)sender;
+- (IBAction)didStop:(id)sender;
+- (IBAction)didFinish:(id)sender;
 
 @end
 
@@ -76,8 +86,23 @@
     //删除评测数据返回后刷新
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshPcInfo) name:@"deletePCINFO" object:nil];
     [self getHeaderInfo];
+    
+    if (![[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage1]) {
+        self.guide1View.hidden = NO;
+        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage1];
+    }
+    
     // Do any additional setup after loading the view from its nib.
 }
+#pragma mark ---引导页操作
+-(void)buildGuildView
+{
+    [self.guide1View addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didshowNextGuild:)]];
+    [self.Guide2View addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didshowNextGuild:)]];
+
+    
+}
+#pragma mark -----
 -(void)setJpush
 {
     [JPUSHService setTags:nil alias:[UserModel shareInstance].userId fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
@@ -146,8 +171,8 @@
 
     }
     self.resignTimelb.text = [NSString stringWithFormat:@"已使用脂将军%d天",item.userDays];
-    self.redFatlb.text = [NSString stringWithFormat:@"已减脂%.1fkg",item.subtractWeight];
-    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
+    self.redFatlb.text = [NSString stringWithFormat:@"已减%.1fkg",item.subtractWeight*100/100];
+    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
     
     self.weightlb.text = [NSString stringWithFormat:@"%.1f",item.weight];
     
@@ -222,7 +247,7 @@
 {
     [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
     
-    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
+    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
     
 //    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
 }
@@ -280,7 +305,7 @@
 {
     
     [self getHeaderInfo];
-    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
+    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
 
 //    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
 //    _userView.nameLabel.text =[SubUserItem shareInstance].nickname;
@@ -348,4 +373,41 @@
 }
 */
 
+- (IBAction)didClickNext:(UIButton *)sender {
+   
+    if (sender.tag==1) {
+        self.Guide2View.hidden =NO;
+        self.guide1View.hidden = YES;
+
+    }else if (sender.tag==2){
+        self.guide3View.hidden = NO;
+        self.Guide2View.hidden =YES;
+    }
+}
+
+-(void)didshowNextGuild:(UIGestureRecognizer*)gest
+{
+    if (gest.view ==self.guide1View) {
+        self.Guide2View.hidden =NO;
+        self.guide1View.hidden = YES;
+        
+    }else if (gest.view ==self.Guide2View){
+        self.guide3View.hidden = NO;
+        self.Guide2View.hidden =YES;
+    }
+
+}
+
+- (IBAction)didStop:(id)sender {
+    self.guide1View.hidden = YES;
+    self.Guide2View.hidden = YES;
+    self.guide3View.hidden = YES;
+
+}
+- (IBAction)didFinish:(id)sender {
+    self.guide1View.hidden = YES;
+    self.Guide2View.hidden = YES;
+    self.guide3View.hidden = YES;
+
+}
 @end

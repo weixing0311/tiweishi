@@ -18,9 +18,18 @@
 @property (nonatomic,assign)id<TZSDGUPCellDelegate>delegate;
 - (IBAction)didBuy:(id)sender;
 
+
+@property (weak, nonatomic) IBOutlet UILabel *cxImageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cxDetailLabel;
+- (IBAction)didShowCuXDetailView:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *cxView;
+
+
+
 @end
 @protocol TZSDGUPCellDelegate <NSObject>
 
 -(void)didBuyWithCell:(TZSDGUPCell *)cell;
+-(void)showCXDetailWithDGCell:(TZSDGUPCell * )cell;
 
 @end

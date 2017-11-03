@@ -11,6 +11,7 @@
 #import "GrowthStstemHeaderCell.h"
 #import "GrowthCell.h"
 #import "LevelSnstructionsViewController.h"
+#import "IntegralSignInView.h"
 @interface GrowthStstemViewController ()<UITableViewDelegate,UITableViewDataSource,growthHeaderCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSArray * dataArray;
@@ -24,37 +25,26 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.title = @"我的等级";
+    self.title = @"成长体系";
     [self setTBRedColor];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-;
-    
     UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"Prompt.png") style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
     self.navigationItem.rightBarButtonItem = rightitem;
-
-    
-    
     
     
     _dataArray = [NSArray array];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
-//    [self buildHeaderView];
     
     [self getInfo];
     
-    
-    
-    
     // Do any additional setup after loading the view from its nib.
 }
-
-
 
 -(void)getInfo
 {
@@ -201,11 +191,19 @@
         DLog(@"签到success-dic:%@",dic);
         [[UserModel shareInstance]showSuccessWithStatus:@"签到成功！"];
         [self getInfo];
+        [self showSignInPage];
     } failure:^(NSError *error) {
         DLog(@"签到失败-error:%@",error);
-        
     }];
+}
 
+-(void)showSignInPage
+{
+    IntegralSignInView  * signView = [[[NSBundle mainBundle]loadNibNamed:@"IntegralSignInView" owner:nil options:nil]lastObject];
+    signView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT);
+    signView.signInBtn.selected =YES;
+    signView.signInBtn.backgroundColor = HEXCOLOR(0x9b9b9b);
+    [self.view addSubview:signView];
 }
 -(void)enterRightPage
 {

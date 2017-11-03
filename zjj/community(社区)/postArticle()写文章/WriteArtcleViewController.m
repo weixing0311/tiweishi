@@ -69,7 +69,6 @@
         [_selectedPhotos addObject:self.firstImage];
         [self.collectionView reloadData];
     }
-
 }
 ///创建右上button
 -(void)buildRightNaviBarItem
@@ -301,15 +300,20 @@
         PHAsset *phAsset = _selectedAssets[0];
         if (phAsset.mediaType == PHAssetMediaTypeVideo) {
             return YES;
-        }else{
+        }
+        else
+         {
+            return NO;
+        }
+    }else{
+        if (self.shootingVideoUrl)
+        {
+            return YES;
+        }else
+        {
             return NO;
         }
     }
-    else if (self.videoUrlStr.length>5)
-    {
-        return YES;
-    }
-    return NO;
 }
 #pragma mark - LxGridViewDataSource
 

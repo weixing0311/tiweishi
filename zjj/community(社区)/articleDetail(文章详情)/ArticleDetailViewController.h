@@ -15,4 +15,5 @@
 @end
 @protocol ArticleDetailDelegate <NSObject>
 -(void)refreshCommentWithModel:(CommunityModel *)model;
+-(void)refreshGzStatusWithModel:(CommunityModel *)model isFollow:(NSString*)isFollow;
 @end

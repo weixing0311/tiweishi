@@ -22,14 +22,13 @@
 
 #import "HomePageWebViewController.h"
 #import "TzsTabbarViewController.h"
-
+#import "GuidePageViewController.h"
 
 #import "JPUSHService.h"
 // iOS10注册APNs所需头文件
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
 #import <AdSupport/AdSupport.h>
-#import <UserNotifications/UserNotifications.h>
 
 #endif
 
@@ -94,39 +93,36 @@
     
     
     
-    
-    
-    if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
-        [[UserModel shareInstance]readToDoc];
-        
-        if ([UserModel shareInstance].birthday.length>2) {
-            
-//            TzsTabbarViewController * tabbar = [[TzsTabbarViewController alloc]init];
-//            [self.window setRootViewController:tabbar];
-            
-            TabbarViewController * tabbar = [[TabbarViewController alloc]init];
-            [self.window setRootViewController:tabbar];
-            
-            if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {
-                [[UserModel shareInstance]getNotiadvertising];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage]) {
+        if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
+            [[UserModel shareInstance]readToDoc];
+            if ([UserModel shareInstance].birthday.length>2) {
+                TabbarViewController * tabbar = [[TabbarViewController alloc]init];
+                [self.window setRootViewController:tabbar];
+                
+                if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {
+                    [[UserModel shareInstance]getNotiadvertising];
+                }
+            }else{
+                ADDChengUserViewController * cg =[[ADDChengUserViewController alloc]init];
+                cg.isResignUser = YES;
+                [self.window setRootViewController:cg];
             }
-            
-            
- 
         }else{
-            ADDChengUserViewController * cg =[[ADDChengUserViewController alloc]init];
-            cg.isResignUser = YES;
-            [self.window setRootViewController:cg];
+            
+            lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
+            [self.window setRootViewController:lo];
+            
         }
-        
+
     }else{
-    
-    lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
-//    UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:lo];
-    [self.window setRootViewController:lo];
-    
+        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage];
+        GuidePageViewController * guide = [[GuidePageViewController alloc]init];
+        [self.window setRootViewController: guide];
     }
-//    [[WXXShareManager shareInstance]buildShareSdk];
+    
+    
+    
     [ShareSDK registerActivePlatforms:@[
                                         @(SSDKPlatformTypeWechat),
                                         @(SSDKPlatformTypeQQ)]

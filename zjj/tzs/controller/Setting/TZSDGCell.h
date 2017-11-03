@@ -25,6 +25,11 @@
 
 - (IBAction)didAdd:(id)sender;
 - (IBAction)didRed:(id)sender;
+
+
+
+
+
 @end
 @protocol TZSDGCellDelegate <NSObject>
 

@@ -70,10 +70,6 @@
         [self.scrollview addSubview:scr];
 
     }
-    
-    
-    
-    
 }
 
 -(void)loadImageWithScr:(UIScrollView*)scr ImageView:(UIImageView *)imageView Url:(NSString *)imageUrl
@@ -106,7 +102,14 @@
             float imageHeight = JFA_SCREEN_WIDTH * image.size.height/image.size.width ;
             imageView.frame =CGRectMake(0, 0, JFA_SCREEN_WIDTH-10, imageHeight);
             scr.contentSize = CGSizeMake(JFA_SCREEN_WIDTH, imageHeight);
-            imageView.center = CGPointMake(JFA_SCREEN_WIDTH/2, scr.center.y);
+            
+            if (imageHeight>JFA_SCREEN_HEIGHT) {
+                imageView.center = CGPointMake(JFA_SCREEN_WIDTH/2, scr.contentSize.height/2);
+            }else{
+                imageView.center = CGPointMake(JFA_SCREEN_WIDTH/2, JFA_SCREEN_HEIGHT/2);
+
+            }
+            
 
         });
     }];

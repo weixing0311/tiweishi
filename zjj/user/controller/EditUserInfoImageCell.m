@@ -12,6 +12,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.fatBeforeImageView.contentMode =UIViewContentModeScaleAspectFill;
+    self.fatBeforeImageView.clipsToBounds = YES;
+    self.fatAfterImageView.contentMode =UIViewContentModeScaleAspectFill;
+    self.fatAfterImageView.clipsToBounds = YES;
+    
     // Initialization code
 }
 - (IBAction)addFatBeforeImage:(id)sender {

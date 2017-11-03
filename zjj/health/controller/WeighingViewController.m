@@ -15,18 +15,86 @@
 @property (weak, nonatomic) IBOutlet UILabel *statuslb;
 @property (weak, nonatomic) IBOutlet UIButton *lLJBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *chengImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *didRodeImageView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *measurementImageView;
+@property (weak, nonatomic) IBOutlet UIView *measurementView;
+
+@property (weak, nonatomic) IBOutlet UIView *WeighterrorView;
+
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
+
+
 
 @end
 
 @implementation WeighingViewController
-
+{
+    double angle;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear: animated];
+    [self.measurementImageView.layer removeAllAnimations];
+    [self.didRodeImageView .layer removeAllAnimations];
+    [[WWXBlueToothManager shareInstance]stop];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    angle =1;
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:getImage(@"head_default")];
-    self.nickNameLb.text = [SubUserItem shareInstance].nickname;
+    self.nickNameLb.text = [NSString stringWithFormat:@"您好,%@",[SubUserItem shareInstance].nickname];
+    self.lLJBtn.layer.masksToBounds = YES;
+    self.lLJBtn.layer.cornerRadius = 5;
+    self.lLJBtn.layer.borderWidth= 2;
+    self.lLJBtn.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+
+    
     // Do any additional setup after loading the view from its nib.
+    [self startAnimation];
     [self didUpdateinfo];
+    [self startAnimation2];
 }
+
+//UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+//view.center  =self.view.center;
+//view.backgroundColor = [UIColor redColor];
+//[self.view addSubview:view];
+
+    
+    
+-(void)startAnimation
+{
+    CGFloat circleByOneSecond = 1.5f;
+    // 执行动画
+    [UIView animateWithDuration:1.f / circleByOneSecond
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         self.didRodeImageView.transform = CGAffineTransformRotate(self.didRodeImageView.transform, M_PI_2);
+                     }
+                     completion:^(BOOL finished){
+                         [self startAnimation];
+                     }];
+}
+
+-(void)startAnimation2
+{
+    CGFloat circleByOneSecond = 1.5f;
+    
+    // 执行动画
+    [UIView animateWithDuration:1.f / circleByOneSecond
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         self.measurementImageView.transform = CGAffineTransformRotate(self.measurementImageView.transform, M_PI_2);
+                     }
+                     completion:^(BOOL finished){
+                         [self startAnimation2];
+                     }];
+}
+
+
 -(void)didUpdateinfo
 {
     
@@ -35,9 +103,11 @@
     
     [[WWXBlueToothManager shareInstance]startScanWithStatus:^(NSString *statusString) {
         self.statuslb.text =statusString;
-        
+        if ([statusString isEqualToString:@"设备已连接"]) {
+            self.measurementView.hidden = NO;
+        }
     } success:^(NSDictionary *dic) {
-        self.statuslb.text = @"测量成功！开始上传...";
+//        self.statuslb.text = @"测量成功！开始上传...";
 
         [[HealthModel shareInstance]setLogInUpLoadString:@"上传成功"];
         [[HealthModel shareInstance]UpdateBlueToothInfo];
@@ -47,11 +117,17 @@
     } faile:^(NSError *error, NSString *errMsg) {
         [SVProgressHUD dismiss];
         [[WWXBlueToothManager shareInstance]stop];
-        self.statuslb.text = errMsg;
+        if ([errMsg isEqualToString:@"连接超时"]) {
+            self.errorLabel.text = @"未能成功连接脂将军体脂秤，请重新连接它。";
+        }else{
+        self.errorLabel.text = errMsg;
+        }
+        self.measurementView.hidden = YES;
+        self.WeighterrorView.hidden =NO;
 
-        [[UserModel shareInstance] showErrorWithStatus:errMsg];
+        
+//        [[UserModel shareInstance] showErrorWithStatus:errMsg];
         [[HealthModel shareInstance]setLogInUpLoadString:[NSString stringWithFormat:@"上传失败--error---%@",error]];
-        self.lLJBtn.hidden =NO;
         [[HealthModel shareInstance]UpdateBlueToothInfo];
     }];
     
@@ -103,7 +179,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)didClickLj:(id)sender {
-    self.lLJBtn.hidden = YES;
+    self.WeighterrorView.hidden =YES;
+    self.measurementView.hidden = YES;
+
     [self didUpdateinfo];
 }
 

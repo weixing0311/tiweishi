@@ -8,7 +8,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,7 +32,7 @@
                         <blurEffect style="light"/>
                     </visualEffectView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="减肥小王子" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqG-Ix-qzT">
-                        <rect key="frame" x="144" y="128" width="87" height="20"/>
+                        <rect key="frame" x="144" y="118" width="87" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="oym-U8-MbK"/>
                             <constraint firstAttribute="width" priority="20" constant="150" id="p2D-yL-rVJ"/>
@@ -44,21 +43,21 @@
                         <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YMW-TV-6at">
-                        <rect key="frame" x="236" y="128" width="20" height="20"/>
+                        <rect key="frame" x="236" y="118" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="7Zm-Op-NOK"/>
                             <constraint firstAttribute="width" constant="20" id="9Do-Ph-3VU"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="write.png" translatesAutoresizingMaskIntoConstraints="NO" id="XWp-zp-Rj5">
-                        <rect key="frame" x="215" y="160.5" width="15" height="15"/>
+                        <rect key="frame" x="215" y="150.5" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="cZT-nT-Bcq"/>
                             <constraint firstAttribute="height" constant="15" id="etl-wE-Fi2"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="简介:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NC0-gb-bUj">
-                        <rect key="frame" x="170" y="158" width="35" height="20"/>
+                        <rect key="frame" x="170" y="148" width="35" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="cAY-zw-fyK"/>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="280" id="kY5-cO-M28"/>
@@ -70,23 +69,24 @@
                         <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8x4-aH-K3l">
-                        <rect key="frame" x="150.5" y="38" width="75" height="75"/>
+                        <rect key="frame" x="155.5" y="38" width="65" height="65"/>
                         <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="8x4-aH-K3l" secondAttribute="height" multiplier="1:1" id="l5G-Qu-um4"/>
+                            <constraint firstAttribute="width" constant="65" id="oZg-6N-bYR"/>
                         </constraints>
                         <connections>
                             <action selector="editHeaderImage:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Sa1-LJ-t6n"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OPF-tD-eJf">
-                        <rect key="frame" x="0.0" y="138" width="375" height="71.5"/>
+                        <rect key="frame" x="0.0" y="128" width="375" height="81.5"/>
                         <connections>
                             <action selector="editUserInfo:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="r6J-cq-Ib7"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjA-GG-uCv">
-                        <rect key="frame" x="271" y="128" width="55" height="25"/>
+                        <rect key="frame" x="271" y="118" width="55" height="25"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="N6a-IL-e9f"/>
@@ -114,7 +114,6 @@
                     <constraint firstItem="5Jr-jg-HLR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="02G-kP-SWg"/>
                     <constraint firstItem="8x4-aH-K3l" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="2VQ-Wm-b0s"/>
                     <constraint firstItem="OPF-tD-eJf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="2uz-ea-Ind"/>
-                    <constraint firstItem="8x4-aH-K3l" firstAttribute="width" secondItem="fzF-ZM-FTb" secondAttribute="width" multiplier="1:5" id="2wO-Zu-duK"/>
                     <constraint firstAttribute="bottom" secondItem="5Jr-jg-HLR" secondAttribute="bottom" id="4fm-m0-10o"/>
                     <constraint firstItem="8x4-aH-K3l" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="30" id="5oo-rW-fFb"/>
                     <constraint firstItem="OPF-tD-eJf" firstAttribute="top" secondItem="8x4-aH-K3l" secondAttribute="bottom" constant="25" id="7nR-8h-F1m"/>

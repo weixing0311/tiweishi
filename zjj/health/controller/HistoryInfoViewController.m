@@ -16,7 +16,7 @@
 #import "HistoryCell.h"
 @interface HistoryInfoViewController ()<UITableViewDelegate,UITableViewDataSource,historyCellDelegate>
 @property (nonatomic,strong) HistoryHeaderView * headerView;
-@property (weak,  nonatomic) IBOutlet UITableView *tableview;
+@property (strong, nonatomic) UITableView *tableview;
 @property (nonatomic,strong) NSMutableDictionary * infoDict;
 @property (nonatomic,strong)DAYCalendarView * calendarView;
 @property (nonatomic,strong)NSMutableArray * dataArray;
@@ -39,13 +39,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"历史记录";
+    self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, self.view.frame.size.height-50) style:UITableViewStylePlain];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    [self.view addSubview:self.tableview];
     _infoDict = [NSMutableDictionary dictionary];
     _dataArray = [NSMutableArray array];
     self.headerView =[self getXibCellWithTitle:@"HistoryHeaderView"];
     if (IS_IPHONE5) {
-        self.headerView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH);
+        self.headerView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH*0.7);
     }else{
         self.headerView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH*0.7);
 
@@ -135,7 +137,7 @@
     }else{
         [cell setInfoWithDict:dic isHidden:YES];
     }
-    
+    cell.chooseBtn.hidden = YES;
     cell.delegate = self;
     cell.tag = indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -154,7 +156,37 @@
     [self.tableview reloadData];
 
 }
-
+-(void)didDeleteWithCell:(HistoryCell*)cell
+{
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否确认要删除本条记录？" preferredStyle:UIAlertControllerStyleAlert];
+    [al addAction: [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary * dict = [_dataArray objectAtIndex:cell.tag];
+        [self deleteListWithDict:dict IndexPath:cell.tag];
+        
+    }]];
+    [al addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:al animated:YES completion:nil];
+}
+///删除
+-(void)deleteListWithDict:(NSDictionary *)dict IndexPath:(NSInteger )index
+{
+    [SVProgressHUD showWithStatus:@"删除中.."];
+    NSMutableDictionary * param =[NSMutableDictionary dictionary];
+    [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
+    [param safeSetObject:[dict safeObjectForKey:@"DataId"] forKey:@"dataId"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/deleteEvaluatData.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
+        [[UserModel shareInstance] showSuccessWithStatus:@"删除成功"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"deletePCINFO" object:nil];
+        [_dataArray removeObjectAtIndex:index];
+        // 从列表中删除
+        [self.tableview deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
 #pragma mark ---subView DELEGATE
 //-(void)showCellTabWithCell:(HistoryCell*)cell
 //{
