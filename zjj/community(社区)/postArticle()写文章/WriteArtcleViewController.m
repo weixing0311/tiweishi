@@ -73,7 +73,7 @@
 ///创建右上button
 -(void)buildRightNaviBarItem
 {
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithTitle:@"发表" style:UIBarButtonItemStylePlain target:self action:@selector(didUpdateInfo)];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithTitle:@"发布" style:UIBarButtonItemStylePlain target:self action:@selector(didUpdateInfo)];
     
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -156,7 +156,7 @@
 -(void)buildTextView
 {
     UIView * textBgView =[[UIView alloc]initWithFrame:CGRectMake(0, 80, JFA_SCREEN_WIDTH, 200)];
-    textBgView.backgroundColor = HEXCOLOR(0xeeeeee);
+    textBgView.backgroundColor = HEXCOLOR(0xffffff);
     
     
     [self.view addSubview:textBgView];
@@ -167,6 +167,12 @@
     _textView.delegate = self;
     _textView.returnKeyType = UIReturnKeyDone;
     [textBgView addSubview:_textView];
+    
+    _textView.layer.borderWidth= 1;
+    _textView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+    _textView.layer.cornerRadius = 5;
+    _textView.layer.masksToBounds =YES;
+    
 }
 
 ///build imagePickerVc

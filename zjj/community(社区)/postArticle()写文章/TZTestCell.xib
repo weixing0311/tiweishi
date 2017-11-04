@@ -27,7 +27,7 @@
                             <constraint firstAttribute="height" constant="25" id="bTM-q8-oP0"/>
                             <constraint firstAttribute="width" constant="25" id="jIX-Wa-58z"/>
                         </constraints>
-                        <state key="normal" image="close_whte_"/>
+                        <state key="normal" image="close_"/>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="videoPlay.png" translatesAutoresizingMaskIntoConstraints="NO" id="jtz-0h-hOq">
                         <rect key="frame" x="35" y="35" width="30" height="30"/>
@@ -56,7 +56,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="close_whte_" width="13" height="13"/>
+        <image name="close_" width="11" height="11"/>
         <image name="videoPlay.png" width="50" height="50"/>
     </resources>
 </document>

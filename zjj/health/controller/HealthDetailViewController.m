@@ -45,6 +45,7 @@
     self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.tableview.separatorStyle =UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableview];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     _dataArray = [NSMutableArray array];
@@ -120,7 +121,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 100;
+        return 110;
     }
     else if (indexPath.section ==1)
     {
@@ -128,7 +129,7 @@
     }
     else if (indexPath.section ==2)
     {
-        return 45;
+        return 55;
     }
 
     else if (indexPath.section ==3)

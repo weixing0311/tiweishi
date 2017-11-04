@@ -7,6 +7,9 @@
 //
 
 #import "NewHealthDetailHeaderCell.h"
+#define warningColor   [UIColor colorWithRed:246/255.0 green:172/255.0 blue:2/255.0 alpha:1]
+#define normalColor    [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1]
+#define seriousColor   [UIColor colorWithRed:236/255.0 green:85/255.0 blue:78/255.0 alpha:1]
 
 @implementation NewHealthDetailHeaderCell
 
@@ -19,8 +22,28 @@
 {
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
     self.nicknamelb.text = [SubUserItem shareInstance].nickname;
-    self.value1lb.text = [NSString stringWithFormat:@"身高:%d  年龄:%d",item.height,item.age];
-    self.value2lb.text = [NSString stringWithFormat:@"体型:%@  身体年龄:%d",[self getBodyStatusWithLevel:item.weightLevel],item.bodyAge];
+    
+    self.heightlb.text =[NSString stringWithFormat:@"身高:%d",item.height];
+    self.agelb.text =[NSString stringWithFormat:@"年龄:%d",item.age];
+    
+    self.bmrlb.text = [NSString stringWithFormat:@"体型:%@",[self getBodyStatusWithLevel:item.weightLevel]];
+    
+    if (item.weightLevel==1||item.weightLevel==3||item.weightLevel==4) {
+        self.bmrlb.textColor = warningColor;
+        
+    }else if (item.weightLevel==2)
+    {
+        self.bmrlb.textColor = normalColor;
+    }
+    else if (item.weightLevel==5||item.weightLevel==6)
+    {
+        self.bmrlb.textColor = seriousColor;
+    }
+    self.bodyAgelb.text = [NSString stringWithFormat:@"身体年龄:%d",item.bodyAge];
+    
+    
+//    self.value1lb.text = [NSString stringWithFormat:@"身高:%d",item.height];
+//    self.value2lb.text = [NSString stringWithFormat:@"体型:%@  身体年龄:%d",[self getBodyStatusWithLevel:item.weightLevel],item.bodyAge];
     self.value2lb.adjustsFontSizeToFitWidth = YES;
 
 }

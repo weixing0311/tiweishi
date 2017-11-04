@@ -15,4 +15,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *value1lb;
 @property (weak, nonatomic) IBOutlet UILabel *value2lb;
 -(void)setInfoWithDict:(HealthDetailsItem *)item;
+
+@property (weak, nonatomic) IBOutlet UILabel *heightlb;
+@property (weak, nonatomic) IBOutlet UILabel *agelb;
+@property (weak, nonatomic) IBOutlet UILabel *bodyAgelb;
+@property (weak, nonatomic) IBOutlet UILabel *bmrlb;
+
+
 @end

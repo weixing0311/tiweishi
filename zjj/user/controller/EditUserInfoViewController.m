@@ -60,8 +60,6 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"基本信息";
-;
-    
     self.tableview.delegate = self;
     self.tableview.dataSource= self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
@@ -252,7 +250,6 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
 }
 -(void)changeMainUserInfo
 {
-    
     if (haveChangeInfo !=YES) {
         return;
     }
@@ -277,7 +274,7 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row ==9) {
+    if (indexPath.row ==6) {
         return JFA_SCREEN_WIDTH*0.7;
     }
     else if (indexPath.row ==0)
@@ -309,7 +306,7 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         return cell;
     }
     
-    else if (indexPath.row ==9) {
+    else if (indexPath.row ==6) {
         static NSString * identifier = @"EditUserInfoImageCell";
         EditUserInfoImageCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
@@ -336,13 +333,13 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         }
         
         cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
-        if (indexPath.row !=5&&indexPath.row !=9&&indexPath.row !=10) {
+        if (indexPath.row !=5&&indexPath.row !=6&&indexPath.row !=10) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }else
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-        
+        cell.textLabel.textColor = HEXCOLOR(0x666666);
         switch (indexPath.row) {
             case 1:
                 cell.textLabel.text = @"昵称";
@@ -365,15 +362,15 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
                 cell.textLabel.text = @"身高(cm)";
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[_upDataDict safeObjectForKey:@"heigth"]];
                 break;
-            case 6:
+            case 7:
                 cell.textLabel.text = @"修改密码";
                 cell.detailTextLabel.text =@"";
                 break;
-            case 7:
+            case 8:
                 cell.textLabel.text = @"清空缓存";
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[self getCecheSize]];
                 break;
-            case 8:
+            case 9:
                 cell.textLabel.text = @"关于我们";
                 cell.detailTextLabel.text = @"";
                 break;
@@ -420,13 +417,13 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         [self.pickView reloadAllComponents];
 
     }
-    else if (indexPath.row ==6)
+    else if (indexPath.row ==7)
     {
         ChangePasswordViewController * cb = [[ChangePasswordViewController alloc]init];
         [self.navigationController pushViewController:cb animated:YES];
 
     }
-    else if (indexPath.row ==7)
+    else if (indexPath.row ==8)
     {
         
         UIAlertController * al = [UIAlertController alertControllerWithTitle:@"是否清理缓存？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -442,7 +439,7 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         [self presentViewController:al animated:YES completion:nil];
         
     }
-    else if (indexPath.row ==8)
+    else if (indexPath.row ==9)
     {
         AboutUsViewController * ab= [[AboutUsViewController alloc]init];
         [self.navigationController pushViewController:ab animated:YES];

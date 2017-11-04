@@ -26,10 +26,10 @@
                     <rect key="frame" x="0.0" y="64" width="375" height="55"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1FE-KR-MHp">
-                            <rect key="frame" x="20" y="10" width="335" height="35"/>
+                            <rect key="frame" x="10" y="10" width="355" height="35"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入。。。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sFQ-1w-ihf">
-                                    <rect key="frame" x="40" y="0.0" width="275" height="35"/>
+                                    <rect key="frame" x="40" y="0.0" width="295" height="35"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -54,7 +54,7 @@
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <real key="value" value="17.5"/>
+                                    <integer key="value" value="3"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                             </userDefinedRuntimeAttributes>
@@ -63,9 +63,9 @@
                     <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="AS8-RQ-Rt8"/>
-                        <constraint firstAttribute="trailing" secondItem="1FE-KR-MHp" secondAttribute="trailing" constant="20" id="IMi-pH-2lw"/>
+                        <constraint firstAttribute="trailing" secondItem="1FE-KR-MHp" secondAttribute="trailing" constant="10" id="IMi-pH-2lw"/>
                         <constraint firstItem="1FE-KR-MHp" firstAttribute="centerY" secondItem="8VP-LA-rkt" secondAttribute="centerY" id="Tsj-XU-HnZ"/>
-                        <constraint firstItem="1FE-KR-MHp" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="20" id="jbm-X1-78G"/>
+                        <constraint firstItem="1FE-KR-MHp" firstAttribute="leading" secondItem="8VP-LA-rkt" secondAttribute="leading" constant="10" id="jbm-X1-78G"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdz-yf-R7S">
@@ -83,7 +83,7 @@
                                 <constraint firstAttribute="height" constant="20" id="Inh-tn-2Ev"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jvH-Ti-QOp">
@@ -136,7 +136,7 @@
                                 <constraint firstAttribute="height" constant="20" id="fhs-kS-2AY"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1a-DB-ffj">

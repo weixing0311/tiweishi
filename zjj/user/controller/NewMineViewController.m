@@ -65,6 +65,8 @@
     
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.tableview.separatorColor = HEXCOLOR(0xeeeeee);
+    self.tableview.backgroundColor = HEXCOLOR(0xeeeeee);
     [self setExtraCellLineHiddenWithTb:self.tableview];
     // Do any additional setup after loading the view from its nib.
 }
@@ -327,11 +329,11 @@
 -(void)buildGuidePage
 {
     
-//    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage2]) {
-//        return;
-//    }
-//    
-//    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage2];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage2]) {
+        return;
+    }
+    
+    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage2];
     yd1 = [self getXibCellWithTitle:@"Yd1View"];
     yd2 = [self getXibCellWithTitle:@"Yd2View"];
     yd3 = [self getXibCellWithTitle:@"Yd3View"];

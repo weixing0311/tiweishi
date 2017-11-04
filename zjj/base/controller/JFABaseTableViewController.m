@@ -202,7 +202,7 @@
 -(void)setExtraCellLineHiddenWithTb:(UITableView *)tb
 {
     UIView *view =[[UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = HEXCOLOR(0xeeeeee);
     [tb setTableFooterView:view];
 }
 

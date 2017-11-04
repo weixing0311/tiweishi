@@ -26,8 +26,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"添加好友";
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    self.title = @"添加关注";
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     
     self.navigationItem.leftBarButtonItem = rightItem;
     self.searchtf.delegate = self;

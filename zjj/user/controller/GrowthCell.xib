@@ -40,12 +40,12 @@
                             <constraint firstAttribute="height" constant="20" id="2nd-gM-a4O"/>
                             <constraint firstAttribute="width" constant="150" id="4sU-kY-aJN"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.91859266490000002" green="0.49601236980000002" blue="0.1154242622" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veT-lY-nPW">
-                        <rect key="frame" x="220" y="19.5" width="80" height="20"/>
+                        <rect key="frame" x="220" y="20" width="80" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="siW-Q5-6Ha"/>
                             <constraint firstAttribute="width" constant="80" id="tr7-ZJ-O4k"/>

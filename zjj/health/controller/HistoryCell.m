@@ -22,7 +22,18 @@
 -(void)setInfoWithDict:(NSDictionary *)infoDict  isHidden:(BOOL)isHidden
 {
     
-    self.weightlb.text =[NSString stringWithFormat:@"%.1fkg",[[infoDict safeObjectForKey:@"weight"]floatValue]];
+    NSString * weightStr = [NSString stringWithFormat:@"%.1fkg",[[infoDict safeObjectForKey:@"weight"]floatValue]];
+    NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:weightStr];
+
+    NSDictionary *dic = @{NSFontAttributeName: [UIFont systemFontOfSize:12], NSForegroundColorAttributeName: HEXCOLOR(0xcccccc)};
+    
+    [tisString addAttributes:dic range:NSMakeRange(tisString.length-2, 2)];
+    
+    self.weightlb.attributedText = tisString;
+    
+    
+    
+    
     self.tzlLb.text = [NSString stringWithFormat:@"%.1f%%",[[infoDict safeObjectForKey:@"fatPercentage"]floatValue]*100];
     self.timeLb.text = [self getTimeWithString:[infoDict safeObjectForKey:@"createTime"]];
     self.daysLabel.text = [[infoDict safeObjectForKey:@"createTime"]yyyymmdd];

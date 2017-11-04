@@ -108,7 +108,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
-        cell.todayIntegerallb.text = [NSString  stringWithFormat:@"今日获得积分：%d",[[_infoDict safeObjectForKey:@"todayIntegeral"]intValue]];
+        cell.todayIntegerallb.text = [NSString  stringWithFormat:@"今日已赚取积分：%d",[[_infoDict safeObjectForKey:@"todayIntegeral"]intValue]];
         cell.totalIntegerallb.text = [NSString  stringWithFormat:@"%@分",[_infoDict safeObjectForKey:@"currentIntegeral"]];
         cell.dayslb.text = [NSString stringWithFormat:@"连续签到%@天",[_infoDict safeObjectForKey:@"cumulDays"]];
         
@@ -163,7 +163,7 @@
     NSDictionary * dic = [self.dataArray objectAtIndex:indexPath.row];
     cell.titlelb.text = [dic safeObjectForKey:@"taskName"];
     [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dic safeObjectForKey:@"picture"]] placeholderImage:getImage(@"")];
-    cell.secondlb.text = [dic safeObjectForKey:@"integral"];
+        cell.secondlb.text = [NSString stringWithFormat:@"积分+%@",[dic safeObjectForKey:@"integral"]];
         if ([dic safeObjectForKey:@"success"]) {
             cell.statusLb.text = @"已完成";
             cell.statusLb.textColor = HEXCOLOR(0x666666);

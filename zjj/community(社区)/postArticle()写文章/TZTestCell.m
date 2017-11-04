@@ -16,6 +16,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.imageView.contentMode =UIViewContentModeScaleAspectFill;
+    self.imageView.clipsToBounds = YES;
+
 }
 - (void)setAsset:(id)asset {
     _asset = asset;

@@ -247,7 +247,7 @@
 {
     [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
     
-    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
+    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
     
 //    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
 }

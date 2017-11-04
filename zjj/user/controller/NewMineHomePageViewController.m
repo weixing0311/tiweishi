@@ -363,7 +363,7 @@
     {
         return @"";
     }else if(section ==2){
-        return @"减脂前后";
+        return @"";
     }else{
         return @"最新状态";
 

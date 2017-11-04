@@ -18,11 +18,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.status1Label.layer.masksToBounds = YES;
-    self.status1Label.layer.cornerRadius = 5;
+    self.status1Label.layer.cornerRadius = 2;
     self.status2Label.layer.masksToBounds = YES;
-    self.status2Label.layer.cornerRadius = 5;
+    self.status2Label.layer.cornerRadius = 2;
     self.status3Label.layer.masksToBounds = YES;
-    self.status3Label.layer.cornerRadius = 5;
+    self.status3Label.layer.cornerRadius = 2;
 
     // Initialization code
 }

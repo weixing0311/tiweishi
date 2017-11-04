@@ -19,20 +19,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Tg-7w-f3f">
-                        <rect key="frame" x="20" y="6" width="30" height="30"/>
+                        <rect key="frame" x="20" y="8.5" width="25" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="6a6-uW-1Wa"/>
-                            <constraint firstAttribute="width" constant="30" id="sm7-eG-Qda"/>
+                            <constraint firstAttribute="height" constant="25" id="6a6-uW-1Wa"/>
+                            <constraint firstAttribute="width" constant="25" id="sm7-eG-Qda"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DOk-W8-pqB">
-                        <rect key="frame" x="65" y="11.5" width="150" height="20"/>
+                        <rect key="frame" x="60" y="11.5" width="150" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="9Na-BU-NaB"/>
                             <constraint firstAttribute="height" constant="20" id="umq-cj-Xcb"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opD-Hv-Pta">

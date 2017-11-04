@@ -98,7 +98,7 @@
 -(void)didUpdateinfo
 {
     
-    self.statuslb.text = @"请上秤。。。";
+    self.statuslb.text = @"请赤脚上称。。。";
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
     
     [[WWXBlueToothManager shareInstance]startScanWithStatus:^(NSString *statusString) {

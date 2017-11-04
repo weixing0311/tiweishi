@@ -1287,12 +1287,10 @@
     if (self.isMyMessagePage==YES) {
         return;
     }
-    
-    //    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage3]) {
-    //        return;
-    //    }
-    
-    //    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage3];
+        if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage3]) {
+            return;
+        }
+        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage3];
     yd7 = [self getXibCellWithTitle:@"Yd7View"];
     yd8 = [self getXibCellWithTitle:@"Yd8View"];
     yd9 = [self getXibCellWithTitle:@"Yd9View"];
