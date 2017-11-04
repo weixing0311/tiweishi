@@ -330,7 +330,7 @@
 //    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage2]) {
 //        return;
 //    }
-    
+//    
 //    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage2];
     yd1 = [self getXibCellWithTitle:@"Yd1View"];
     yd2 = [self getXibCellWithTitle:@"Yd2View"];

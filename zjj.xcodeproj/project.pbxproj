@@ -107,6 +107,13 @@
 		6C2AF2781F72077200C00F2A /* PublicArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF2761F72077200C00F2A /* PublicArticleCell.xib */; };
 		6C2AF27B1F72118400C00F2A /* GrowthHeader2View.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2AF27A1F72118400C00F2A /* GrowthHeader2View.m */; };
 		6C2AF27D1F72118D00C00F2A /* GrowthHeader2View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF27C1F72118D00C00F2A /* GrowthHeader2View.xib */; };
+		6C2F463C1FAD90CC00E9C914 /* PhoneChargesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F463A1FAD90CC00E9C914 /* PhoneChargesViewController.m */; };
+		6C2F463D1FAD90CC00E9C914 /* PhoneChargesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F463B1FAD90CC00E9C914 /* PhoneChargesViewController.xib */; };
+		6C2F46411FAD936200E9C914 /* PhoneChargesOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F463F1FAD936200E9C914 /* PhoneChargesOrderViewController.m */; };
+		6C2F46421FAD936200E9C914 /* PhoneChargesOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F46401FAD936200E9C914 /* PhoneChargesOrderViewController.xib */; };
+		6C2F46481FAD9CF700E9C914 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2F46471FAD9CF700E9C914 /* AddressBookUI.framework */; };
+		6C2F464A1FAD9CFD00E9C914 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2F46491FAD9CFD00E9C914 /* AddressBook.framework */; };
+		6C2F464D1FADA30100E9C914 /* KfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F464C1FADA30100E9C914 /* KfViewController.m */; };
 		6C3638DE1EFCEB2A00268851 /* TZSEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3638DC1EFCEB2A00268851 /* TZSEditViewController.m */; };
 		6C3638DF1EFCEB2A00268851 /* TZSEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3638DD1EFCEB2A00268851 /* TZSEditViewController.xib */; };
 		6C3638E41EFCEB4800268851 /* TZSMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3638E21EFCEB4800268851 /* TZSMessageViewController.m */; };
@@ -1022,6 +1029,16 @@
 		6C2AF2791F72118400C00F2A /* GrowthHeader2View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowthHeader2View.h; sourceTree = "<group>"; };
 		6C2AF27A1F72118400C00F2A /* GrowthHeader2View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowthHeader2View.m; sourceTree = "<group>"; };
 		6C2AF27C1F72118D00C00F2A /* GrowthHeader2View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GrowthHeader2View.xib; sourceTree = "<group>"; };
+		6C2F46391FAD90CC00E9C914 /* PhoneChargesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhoneChargesViewController.h; sourceTree = "<group>"; };
+		6C2F463A1FAD90CC00E9C914 /* PhoneChargesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhoneChargesViewController.m; sourceTree = "<group>"; };
+		6C2F463B1FAD90CC00E9C914 /* PhoneChargesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhoneChargesViewController.xib; sourceTree = "<group>"; };
+		6C2F463E1FAD936200E9C914 /* PhoneChargesOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhoneChargesOrderViewController.h; sourceTree = "<group>"; };
+		6C2F463F1FAD936200E9C914 /* PhoneChargesOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhoneChargesOrderViewController.m; sourceTree = "<group>"; };
+		6C2F46401FAD936200E9C914 /* PhoneChargesOrderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhoneChargesOrderViewController.xib; sourceTree = "<group>"; };
+		6C2F46471FAD9CF700E9C914 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		6C2F46491FAD9CFD00E9C914 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		6C2F464B1FADA30100E9C914 /* KfViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KfViewController.h; sourceTree = "<group>"; };
+		6C2F464C1FADA30100E9C914 /* KfViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KfViewController.m; sourceTree = "<group>"; };
 		6C3638DB1EFCEB2A00268851 /* TZSEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZSEditViewController.h; sourceTree = "<group>"; };
 		6C3638DC1EFCEB2A00268851 /* TZSEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZSEditViewController.m; sourceTree = "<group>"; };
 		6C3638DD1EFCEB2A00268851 /* TZSEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TZSEditViewController.xib; sourceTree = "<group>"; };
@@ -2025,6 +2042,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C2F464A1FAD9CFD00E9C914 /* AddressBook.framework in Frameworks */,
+				6C2F46481FAD9CF700E9C914 /* AddressBookUI.framework in Frameworks */,
 				6C3F13111F9ED8FD005D51C7 /* Photos.framework in Frameworks */,
 				6C6CFE911F8F698F005C2738 /* EventKitUI.framework in Frameworks */,
 				6C3EEED31F7BAE35001886EB /* MediaPlayer.framework in Frameworks */,
@@ -2500,6 +2519,8 @@
 				6C73AFF41F31AC550042C1A2 /* WXAlipayController.m */,
 				6C125E151F41455700B2323F /* BaseWebViewController.h */,
 				6C125E161F41455700B2323F /* BaseWebViewController.m */,
+				6C2F464B1FADA30100E9C914 /* KfViewController.h */,
+				6C2F464C1FADA30100E9C914 /* KfViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -3619,6 +3640,9 @@
 				6CA9C8361F78B49300E0941B /* IntegralOrderDetailViewController.h */,
 				6CA9C8371F78B49300E0941B /* IntegralOrderDetailViewController.m */,
 				6CA9C8381F78B49300E0941B /* IntegralOrderDetailViewController.xib */,
+				6C2F463E1FAD936200E9C914 /* PhoneChargesOrderViewController.h */,
+				6C2F463F1FAD936200E9C914 /* PhoneChargesOrderViewController.m */,
+				6C2F46401FAD936200E9C914 /* PhoneChargesOrderViewController.xib */,
 			);
 			name = roderDetail;
 			sourceTree = "<group>";
@@ -3659,6 +3683,9 @@
 				6CEDADF31F74A9F000D3C223 /* IntegralOrderUpdateViewController.h */,
 				6CEDADF41F74A9F000D3C223 /* IntegralOrderUpdateViewController.m */,
 				6CEDADF51F74A9F000D3C223 /* IntegralOrderUpdateViewController.xib */,
+				6C2F46391FAD90CC00E9C914 /* PhoneChargesViewController.h */,
+				6C2F463A1FAD90CC00E9C914 /* PhoneChargesViewController.m */,
+				6C2F463B1FAD90CC00E9C914 /* PhoneChargesViewController.xib */,
 			);
 			name = UpdateOrder;
 			sourceTree = "<group>";
@@ -4593,6 +4620,8 @@
 		D1E9214DBD69E802A4679F92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C2F46491FAD9CFD00E9C914 /* AddressBook.framework */,
+				6C2F46471FAD9CF700E9C914 /* AddressBookUI.framework */,
 				6C3F13101F9ED8FD005D51C7 /* Photos.framework */,
 				6C6CFE901F8F698E005C2738 /* EventKitUI.framework */,
 				6C3EEED21F7BAE34001886EB /* MediaPlayer.framework */,
@@ -4850,6 +4879,7 @@
 				6C1DBD8C1F67B2A600F5B975 /* SuperiorCell.xib in Resources */,
 				6C3638DF1EFCEB2A00268851 /* TZSEditViewController.xib in Resources */,
 				6CFDECE81F8B7DE8005D3971 /* write@2x.png in Resources */,
+				6C2F46421FAD936200E9C914 /* PhoneChargesOrderViewController.xib in Resources */,
 				6CFDEC551F8B7DE8005D3971 /* home-weight01@2x.png in Resources */,
 				6CFDECCC1F8B7DE8005D3971 /* scan@3x.png in Resources */,
 				6CFDEC241F8B7DE7005D3971 /* footer-PersonalCenter@2x.png in Resources */,
@@ -4894,6 +4924,7 @@
 				6CFDEC2F1F8B7DE7005D3971 /* girl@3x.png in Resources */,
 				6CDE37EE1EF0E902001F10DE /* HealthDetailSliderCell.xib in Resources */,
 				6CFDEBFB1F8B7DE7005D3971 /* contact-us-img@3x.png in Resources */,
+				6C2F463D1FAD90CC00E9C914 /* PhoneChargesViewController.xib in Resources */,
 				6CFDECA41F8B7DE8005D3971 /* personal-receiving@2x.png in Resources */,
 				6C36397F1EFE47E100268851 /* AAFunnel.js in Resources */,
 				6CFDEC391F8B7DE7005D3971 /* help-icon02@3x.png in Resources */,
@@ -5363,6 +5394,7 @@
 				6C36392C1EFE04CE00268851 /* UserView.m in Sources */,
 				6CD010D11EF62B1D00FB9419 /* AddressListViewController.m in Sources */,
 				6CD011121EF82A0A00FB9419 /* HelpViewController.m in Sources */,
+				6C2F463C1FAD90CC00E9C914 /* PhoneChargesViewController.m in Sources */,
 				6CCEEB1D1EEE7EFE002E1618 /* ShopTabbbarController.m in Sources */,
 				6C8F53C51F11D38A00C7A275 /* UIImage+LocalImage.m in Sources */,
 				6C3639911EFE47E100268851 /* AAOptions3d.m in Sources */,
@@ -5434,6 +5466,7 @@
 				6C3639871EFE47E100268851 /* AABar.m in Sources */,
 				6C3639891EFE47E100268851 /* AAColumn.m in Sources */,
 				6CCEEB471EEE8D4A002E1618 /* InfomationCell.m in Sources */,
+				6C2F464D1FADA30100E9C914 /* KfViewController.m in Sources */,
 				6C2241A41F7CDB8C001BB2FD /* GuanzModel.m in Sources */,
 				6CD011311EF8C98600FB9419 /* PublicCell.m in Sources */,
 				6CFDE7F51F8B49FE005D3971 /* BeforeAfterContrastCell.m in Sources */,
@@ -5489,6 +5522,7 @@
 				6CDBC40B1F501E6A0059A15E /* FcBigImgViewController.m in Sources */,
 				6C6CFE811F8F670B005C2738 /* HistoryInfoViewController.m in Sources */,
 				6CD010AE1EF5294F00FB9419 /* ADCarouselView.m in Sources */,
+				6C2F46411FAD936200E9C914 /* PhoneChargesOrderViewController.m in Sources */,
 				6C2241AE1F7CF8E4001BB2FD /* EditUserInfoImageCell.m in Sources */,
 				6C363A181F05097700268851 /* TeamOrderDetailViewController.m in Sources */,
 				6C803D701FAAE79900B2E186 /* GuidePageViewController.m in Sources */,

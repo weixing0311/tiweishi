@@ -58,6 +58,13 @@
     
     // Do any additional setup after loading the view from its nib.
 }
+
+-(void)buildtableFootView
+{
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 80)];
+    
+}
+
 -(void)buildRightNaviBarItem
 {
     
@@ -503,7 +510,9 @@
 
 -(UIImage *)getImageWithView:(UIView*)view
 {
-    UIGraphicsBeginImageContext(view.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0); //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
+
+//    UIGraphicsBeginImageContext(view.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
     UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文

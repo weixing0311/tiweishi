@@ -45,7 +45,7 @@
     if (self.paySuccess==YES) {
         self.statuslb.text = @"支付成功";
         self.statusImageView.image = getImage(@"zhiTrue");
-        self.backBtn.backgroundColor = [UIColor greenColor];
+        self.backBtn.backgroundColor = HEXCOLOR(0x1AAD18);
 
     }else{
         self.statuslb.text = @"支付失败";

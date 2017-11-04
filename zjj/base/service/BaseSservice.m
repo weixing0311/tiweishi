@@ -265,7 +265,7 @@
             
            NSInteger length = [imageData length]/1024/1024;
 
-            if (length>2) {
+            if (length>1) {
                 imageData = UIImageJPEGRepresentation(image, 1/length);
             }
 

@@ -219,14 +219,20 @@
 {
     GuanzModel * model =[_dataArray objectAtIndex:cell.tag];
     if (cell.gzbtn.selected==YES||self.pageType ==IS_GZ) {
-        UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"确定不在关注此人吗？" preferredStyle:UIAlertControllerStyleAlert];
-        [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-        [al addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSMutableDictionary * params =[NSMutableDictionary dictionary];
-            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            [params setObject:model.userId forKey:@"followId"];
-            self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-                DLog(@"dic-取消关注成功--%@",dic);
+        
+        [SVProgressHUD showWithStatus:@"修改中..."];
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [params setObject:model.userId forKey:@"followId"];
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/removeUserFollow.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            
+            DLog(@"dic-取消关注成功--%@",dic);
+
+            
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
+
                 if (self.pageType==IS_SEARCH) {
                     cell.gzbtn.selected =NO;
                     cell.gzbtn.backgroundColor = [UIColor redColor];
@@ -234,14 +240,16 @@
                 }else{
                     [self getInfo];
                 }
-                [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
-            } failure:^(NSError *error) {
-                
+
+            });
+
+            
+            
+        } failure:^(NSError *error) {
+            
             }];
             
-        }]];
         
-        [self presentViewController:al animated:YES completion:nil];
 
     }else{
         NSMutableDictionary * params =[NSMutableDictionary dictionary];

@@ -493,12 +493,15 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
             //introduction
             //修改简介
 
+            if (al.textFields.firstObject.text.length>30) {
+                [[UserModel shareInstance]showInfoWithStatus:@"最多只能输入30字"];
+                return ;
+            }
+
             NSMutableDictionary * params = [NSMutableDictionary dictionary];
             [params safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];
             [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            
-            
-            
+                        
             self.currentTasks =[[BaseSservice sharedManager]post1:@"app/user/addIntroduction.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
                 [[UserModel shareInstance]showSuccessWithStatus:@"修改成功"];
                 [_infoDict safeSetObject:al.textFields.firstObject.text forKey:@"introduction"];

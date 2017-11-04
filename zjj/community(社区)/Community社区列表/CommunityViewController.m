@@ -212,6 +212,11 @@
         if (infoArr.count<30) {
             [self.tableview setFooterHidden:YES];
         }
+        
+
+        
+        
+        
         for (NSMutableDictionary * infoDic in infoArr) {
             CommunityModel * item = [[CommunityModel alloc]init];
             [item setInfoWithDict:infoDic];
@@ -536,7 +541,7 @@
     CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
     
     if (cell.gzBtn.selected==YES) {
-        [SVProgressHUD showWithStatus:@"修改中"];
+        [SVProgressHUD showWithStatus:@"修改中..."];
         NSMutableDictionary * params =[NSMutableDictionary dictionary];
         [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         [params setObject:model.userId forKey:@"followId"];
@@ -550,22 +555,21 @@
             if (_dataArray.count>100) {
                 return ;
             }
-            for (CommunityModel * allmodel  in _dataArray) {
-                if ([allmodel.userId isEqualToString:model.userId]) {
-                    allmodel.isFollow = @"0";
-                    if (self.segment.selectedSegmentIndex==2) {
-                        [_dataArray removeObject:allmodel];
+            
+            //遍历数据，清除已经取消关注的model
+            [_dataArray enumerateObjectsUsingBlock:^(id key, NSUInteger value, BOOL *stop) {
+                CommunityModel * keyModel = key;
+                if ([keyModel.userId isEqualToString:model.userId]) {
+                    *stop =YES;
+                    if (*stop ==YES) {
+                        [_dataArray removeObject:keyModel];
                     }
                 }
-            }
+            }];
             [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
-
             [self.tableview reloadData];
-
         } failure:^(NSError *error) {
-            
         }];
-
     }else{
         [SVProgressHUD showWithStatus:@"修改中"];
         NSMutableDictionary * params = [NSMutableDictionary dictionary];
@@ -726,14 +730,18 @@
             if (_dataArray.count>100) {
                 return ;
             }
-            for (CommunityModel * allmodel  in _dataArray) {
-                if ([allmodel.userId isEqualToString:model.userId]) {
-                    allmodel.isFollow = @"0";
-                    if (self.segment.selectedSegmentIndex==2) {
-                        [_dataArray removeObject:allmodel];
+            
+            //遍历数据，清除已经取消关注的model
+            [_dataArray enumerateObjectsUsingBlock:^(id key, NSUInteger value, BOOL *stop) {
+                CommunityModel * keyModel = key;
+                if ([keyModel.userId isEqualToString:model.userId]) {
+                    *stop =YES;
+                    if (*stop ==YES) {
+                        [_dataArray removeObject:keyModel];
                     }
                 }
-            }
+            }];
+            
             [[UserModel shareInstance]showSuccessWithStatus: @"取消关注成功"];
             
             [self.tableview reloadData];
@@ -1280,11 +1288,11 @@
         return;
     }
     
-    //    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage2]) {
+    //    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage3]) {
     //        return;
     //    }
     
-    //    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage2];
+    //    [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage3];
     yd7 = [self getXibCellWithTitle:@"Yd7View"];
     yd8 = [self getXibCellWithTitle:@"Yd8View"];
     yd9 = [self getXibCellWithTitle:@"Yd9View"];

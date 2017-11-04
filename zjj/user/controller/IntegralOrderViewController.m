@@ -16,6 +16,7 @@
 #import "OrderHeader.h"
 #import "BaseWebViewController.h"
 #import "IntegralOrderDetailViewController.h"
+#import "PhoneChargesOrderViewController.h"
 @interface IntegralOrderViewController ()<UITableViewDelegate,UITableViewDataSource,orderFootBtnViewDelegate,orderDetailViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *enptyView;
@@ -376,6 +377,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSDictionary *dic = [_dataArray objectAtIndex:indexPath.section];
+    
+    NSString  * orderType = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"orderType"]];
+    if ([orderType isEqualToString:@"2"]) {
+        PhoneChargesOrderViewController * phone = [[PhoneChargesOrderViewController alloc]init];
+        phone.infoDict = dic;
+        [self.navigationController pushViewController:phone animated:YES];
+    }
+    
     IntegralOrderDetailViewController *or =[[IntegralOrderDetailViewController alloc]init];
     or.orderNo = [dic objectForKey:@"orderNo"];
     or.delegate =self;

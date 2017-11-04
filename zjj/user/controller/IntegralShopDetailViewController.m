@@ -10,6 +10,7 @@
 #import "IntegralShopDetailContentCell.h"
 #import "IntegralShopDetailModel.h"
 #import "IntegralOrderUpdateViewController.h"
+#import "PhoneChargesViewController.h"
 @interface IntegralShopDetailViewController ()<UITableViewDelegate,UITableViewDataSource,IntegralShopDetailCellDelegate,UITextFieldDelegate>
 {
     UITableView * _tableView;
@@ -74,7 +75,6 @@
     }];
 
 }
-
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -182,13 +182,24 @@
     if (!_listArray||_listArray.count<1) {
         return;
     }
-    IntegralOrderUpdateViewController *upd =[[IntegralOrderUpdateViewController alloc]init];
     
-    upd.model= _listArray[0];
+    IntegralShopDetailModel * model = _listArray[0];
+    
+    if ([model.classId isEqualToString:@"1"]) {
+        PhoneChargesViewController * phone = [[PhoneChargesViewController alloc]init];
+        phone.model = model;
+        phone.goodsCount = goodsCount;
+        [phone.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
+        [self.navigationController pushViewController:phone animated:YES];
+    }
+    else
+    {
+    IntegralOrderUpdateViewController *upd =[[IntegralOrderUpdateViewController alloc]init];
+    upd.model= model;
     upd.goodsCount = goodsCount;
     [upd.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
     [self.navigationController pushViewController:upd animated:YES];
-
+    }
 }
 //获取上传数据
 -(NSString *)getUpdateInfo

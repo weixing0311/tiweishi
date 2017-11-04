@@ -109,9 +109,9 @@
 ///获取积分信息---拿出来是否签到参数 循环ing
 -(void)getIntegralInfo
 {
-//    if ([[UserModel shareInstance]getSignInNotifacationStatus]==NO) {
-//        return;
-//    }
+    if ([[UserModel shareInstance]getSignInNotifacationStatus]==NO) {
+        return;
+    }
     
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];

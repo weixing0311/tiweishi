@@ -161,7 +161,6 @@
     if (integral.intValue>0&&priceStr.floatValue>0) {
         cell.pricelb.text =[NSString stringWithFormat:@"%@积分+%.2f元",integral,[priceStr floatValue]];
         
-        
     }else{
         if (integral.intValue>0) {
             cell.pricelb.text =[NSString stringWithFormat:@"%@积分",integral];

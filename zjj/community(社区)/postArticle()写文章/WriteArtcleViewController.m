@@ -101,10 +101,8 @@
             data = [NSData dataWithContentsOfURL:_shootingVideoUrl];
         }else{
             data = [NSData dataWithContentsOfFile:_videoUrlStr];
-
         }
         NSData *videoImgData = UIImageJPEGRepresentation(_selectedPhotos[0], 1);
-        
         self.currentTasks = [[BaseSservice sharedManager]
                              postMovie:@"app/community/article/saveArticle.do"
                              paramters:params

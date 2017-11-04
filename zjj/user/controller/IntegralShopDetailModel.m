@@ -26,5 +26,7 @@
     self.productPrice = [dict safeObjectForKey:@"productPrice"];
     self.grade = [dict safeObjectForKey:@"grade"];
     self.productIntegral = [dict safeObjectForKey:@"productIntegral"];
+    self.classId  = [dict safeObjectForKey:@"classId"];
+    self.stockCode = [dict safeObjectForKey:@"stockCode"];
 }
 @end
