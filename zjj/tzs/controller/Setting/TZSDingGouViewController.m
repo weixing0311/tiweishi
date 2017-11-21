@@ -12,6 +12,8 @@
 #import "CXdetailView.h"
 #import "AppDelegate.h"
 #import "BaseWebViewController.h"
+#import "VouchersTzsDgView.h"
+
 @interface TZSDingGouViewController ()<TZSDGCellDelegate,TZSDGUPCellDelegate,UITextFieldDelegate>
 
 @end
@@ -22,6 +24,7 @@
     NSMutableArray * _buyArray;
     NSMutableArray * _chooseArray;
     CXdetailView * cuxiaoDetailView;
+    VouchersTzsDgView * vouchersView;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -48,8 +51,18 @@
     
     
     [self getInfo];
+    [self buildVouchersView];
     // Do any additional setup after loading the view from its nib.
 }
+
+-(void)buildVouchersView
+{
+    vouchersView = [[VouchersTzsDgView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
+    vouchersView.hidden= YES;
+    vouchersView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:vouchersView];
+}
+
 #pragma mark ---网络请求
 
 // 请求列表数据
@@ -75,7 +88,6 @@
         }
         [(AppDelegate *)[UIApplication sharedApplication].delegate showAletViewWithmessage:errMsg];
     }];
-    
 }
 
 
@@ -280,7 +292,10 @@
     UIAlertController *al =[UIAlertController alertControllerWithTitle:@"" message:@"确定购买服务吗？" preferredStyle:UIAlertControllerStyleAlert];
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self updataGoodsInfo];
+        
+        
+        [self getVouchersInfo];
+        
         
     }]];
     [self presentViewController:al animated:YES completion:nil];
@@ -359,9 +374,10 @@
         
         NSDictionary *dic =[_buyArray objectAtIndex:cell.tag];
         DLog(@"%@",dic);
-        NSString * conditionId = [dic safeObjectForKey:@"conditionId"];
         cell.buyBtn.userInteractionEnabled = NO;
+        NSString * conditionId = [dic safeObjectForKey:@"conditionId"];
         [self updataWithConditionId:conditionId];
+
     }]];
     [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     
@@ -499,5 +515,54 @@
     return count;
 
 }
+
+-(void)getVouchersInfo
+{
+    NSString * productArr = [self getUpdateVouchersInfo];
+    NSMutableDictionary * params = [NSMutableDictionary dictionary];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+    [params safeSetObject:productArr forKey:@"productArr"];
+    
+    [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
+        
+        NSArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
+        if (dataArr.count>0) {
+            vouchersView.dataArray =[NSMutableArray arrayWithArray:dataArr];
+            [vouchersView didshow];
+        }else{
+            [self updataGoodsInfo];
+        }
+    } failure:^(NSError *error) {
+        if ([error code]==402) {
+            [self updataGoodsInfo];
+        }
+        
+    }];
+
+}
+//获取“获取此商品优惠券信息接口”上传数据
+-(NSString * )getUpdateVouchersInfo
+{
+    NSMutableArray * vouArr = [NSMutableArray array];
+    for (int i =0; i<_chooseArray.count; i++) {
+        NSDictionary * chooseDic = [_chooseArray objectAtIndex:i];
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        
+        int count = [[chooseDic safeObjectForKey:@"quantity"]intValue];
+        float price = [[chooseDic safeObjectForKey:@"unitPrice"]floatValue];
+        float totalPrice = price * count;
+        [dic safeSetObject:@"productName" forKey:@"productName"];
+        [dic safeSetObject:[chooseDic safeObjectForKey:@"unitPrice"] forKey:@"productPrice"];
+        [dic safeSetObject:[chooseDic safeObjectForKey:@"productNo"] forKey:@"productNo"];
+        [dic safeSetObject:[chooseDic safeObjectForKey:@"quantity"] forKey:@"quantity"];
+        [dic safeSetObject:@(totalPrice) forKey:@"itemTotalPrice"];
+        [vouArr addObject:dic];
+
+    }
+    
+    return [self DataTOjsonString:vouArr];
+    
+}
+
 
 @end

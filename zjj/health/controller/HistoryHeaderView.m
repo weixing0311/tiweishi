@@ -7,13 +7,18 @@
 //
 
 #import "HistoryHeaderView.h"
-
 @implementation HistoryHeaderView
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    self.calendarView = [[DAYCalendarView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-20, (JFA_SCREEN_WIDTH-20)*0.7-10)];
-    [self.riView addSubview:self.calendarView];
+    self.calendarPicker = [[[NSBundle mainBundle] loadNibNamed:@"SZCalendarPicker" owner:nil options:nil] lastObject];
+    self.calendarPicker.frame = CGRectMake(0, 0,JFA_SCREEN_WIDTH-20, 352);
+    [self.riView addSubview:self.calendarPicker];
+    self.calendarPicker.today = [NSDate date];
+    self.calendarPicker.date = self.calendarPicker.today;
+
+//    self.calendarView = [[DAYCalendarView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-20, (JFA_SCREEN_WIDTH-20)*0.7-10)];
+//    [self.riView addSubview:self.calendarView];
 
 }
 

@@ -42,7 +42,7 @@
 
     [self ChangeMySegmentStyle:self.segment];
     [self setRefrshWithTableView:self.tableview];
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)headerRereshing
@@ -72,24 +72,24 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/getUserOrder.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         if (page==1) {
             [_infoArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
+            self.tableview.mj_footer.hidden = NO;
         }
         
         
         [_infoArray addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];
         if (_infoArray.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden = YES;
         }
         [self getinfoWithStatus:self.segment.selectedSegmentIndex];
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
 
     }];
 }
@@ -320,7 +320,7 @@
 }
 -(void)tzsOrderChange
 {
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 
 @end

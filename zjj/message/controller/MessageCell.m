@@ -13,7 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    
+    self.bgView.layer.borderWidth= 1;
+    self.bgView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+
     
     // Initialization code
 }

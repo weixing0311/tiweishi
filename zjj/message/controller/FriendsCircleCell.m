@@ -32,10 +32,7 @@
     for (UIView * view in self.imagesView.subviews) {
         [view removeFromSuperview];
     }
-    NSMutableArray * picArr = item.pictures;
-    
-    [self buildNineImagesWithArray:picArr];
-    
+    [self buildNineImagesWithArray:item.pictures];
 }
 
 -(void)buildNineImagesWithArray:(NSArray *)array
@@ -58,45 +55,32 @@
     
     
     for(int index = 0; index< array.count; index++) {
+        UIImageView * imageView = [[UIImageView alloc]init];
+        imageView.contentMode =UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
+        imageView.backgroundColor = HEXCOLOR(0xeeeeee);
+        imageView.layer.borderWidth = 1;
+        imageView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
+
         UIButton *cellView = [UIButton buttonWithType:UIButtonTypeCustom ];
-        cellView.backgroundColor = HEXCOLOR(0xeeeeee);
-        cellView.layer.borderWidth = 1;
-        cellView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
 
 //        [cellView setBackgroundImageForState:UIControlStateNormal withURL:[NSURL URLWithString:array[index]] placeholderImage:[UIImage imageNamed:@"default"]];
         
         id imageCur = [array objectAtIndex:index];
         if ([imageCur isKindOfClass:[UIImage class]]) {
-            [cellView setBackgroundImage:imageCur forState:UIControlStateNormal];
+            imageView.image = imageCur;
 
         }else{
-            NSString *encodedString = (NSString *)
-            
-            CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                      
-                                                                      (CFStringRef)array[index],
-                                                                      
-                                                                      (CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",
-                                                                      
-                                                                      NULL,
-                                                                      
-                                                                      kCFStringEncodingUTF8));
+            NSString *encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)array[index],(CFStringRef)@"!$&'()*+,-./:;=?@_~%#[]",NULL,kCFStringEncodingUTF8));
 
-            [cellView sd_setImageWithURL:[NSURL URLWithString:encodedString] forState:UIControlStateNormal completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                if (!error) {
-                    
-                    [self.loadedImage addObject:image];
-                    [cellView setImage:[self cutImage:image imgViewWidth:cellW imgViewHeight:cellH] forState:UIControlStateNormal];
-                    if (self.loadedImage.count ==array.count) {
-                        [self saveImages];
-                    }
-
-                }
-            }];
             
             
             
-//        [cellView setBackgroundImage:[self getImageFromUrl:[NSURL URLWithString:array[index]] imgViewWidth:cellW imgViewHeight:cellH] forState:UIControlStateNormal];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:encodedString] placeholderImage:getImage(@"default")];
+            
+//            [imageView getImageWithUrl:encodedString getImageFinish:^(UIImage *image, NSError *error) {
+//                imageView.image =[self cutImage:image imgViewWidth:cellW imgViewHeight:cellH];
+//            }];
         }
         cellView.tag = index+1;
         [cellView addTarget:self action:@selector(didClickImages:) forControlEvents:UIControlEventTouchUpInside];
@@ -107,23 +91,13 @@
         CGFloat cellX = col * (cellW + margin);
         CGFloat cellY = row * (cellH + margin);
         cellView.frame = CGRectMake(cellX, cellY, cellW, cellH);
-        
-        // 添加到view 中  
+        imageView.frame =CGRectMake(cellX, cellY, cellW, cellH);
+        // 添加到view 中
+        [self.imagesView addSubview:imageView];
         [self.imagesView addSubview:cellView];
     }
-    
-    
-    
-    
 }
 
--(void)saveImages
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(insertImage:cell:)]) {
-        [self.delegate insertImage:self.loadedImage cell:self];
-    }
-
-}
 -(void)didClickImages:(UIButton *)sender
 {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(didCheckImagesWithButton:cell:)]) {

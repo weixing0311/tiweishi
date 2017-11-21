@@ -84,6 +84,7 @@
                  success:(requestSuccessBlock)success
                  failure:(requestFailureBlock)failure
 {
+    
     [manager.requestSerializer setValue:[UserModel shareInstance].userId?[UserModel shareInstance].userId:@"" forHTTPHeaderField:@"userId"];
     [manager.requestSerializer setValue:@"2" forHTTPHeaderField:@"source"];
     [manager.requestSerializer setValue:[UserModel shareInstance].token?[UserModel shareInstance].token:@"" forHTTPHeaderField:@"token"];
@@ -106,7 +107,6 @@
        
         
         if (code  ==601) {//登录失效
-            [SVProgressHUD dismiss];
             
             [(AppDelegate *)[UIApplication sharedApplication].delegate loignOut];
         }else{
@@ -118,12 +118,10 @@
                 if (statusStr&&[statusStr isEqualToString:@"success"]) {
                     success(dic);
                 }else{
-                    [SVProgressHUD dismiss];
-                    if (isHidden==YES) {
-                        
+                    if ([url isEqualToString:@"app/integral/growthsystem/gainPoints.do"]||[url isEqualToString:@"app/userGreat/queryGreatPerson.do"]||[url isEqualToString:@"app/integral/growthsystem/queryAll.do"]||[url isEqualToString:@"app/integral/growthsystem/queryTaskRule.do"]) {
+                        DLog(@"ISHIDDEN=YES url =%@",url);
                     }else{
                         [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];
-
                     }
                     NSError * error = [[NSError alloc]initWithDomain:NSURLErrorDomain code:[[dic objectForKey:@"code"]intValue] userInfo:dic];
                     

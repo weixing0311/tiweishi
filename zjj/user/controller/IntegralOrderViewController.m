@@ -53,7 +53,7 @@
     self.segment.selectedSegmentIndex = self.getOrderType;
     
     [self setRefrshWithTableView:self.tableview];
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -83,17 +83,17 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/orderInfo/queryIntegrationOrderInfo.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         if (page ==1) {
             [_infoArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
+            self.tableview.mj_footer.hidden = NO;
             
         }
         
         [_infoArray addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];
         if (_infoArray.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden = YES;
         }
         [self getinfoWithStatus:self.segment.selectedSegmentIndex];
         if (_dataArray.count<1) {
@@ -105,8 +105,8 @@
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         if ([error code]==402) {
             if (_dataArray.count<1) {
                 self.enptyView.hidden = NO;
@@ -131,7 +131,7 @@
         
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/cancelOrderDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
             [[UserModel shareInstance] showSuccessWithStatus:@"取消成功"];
-            [self.tableview headerBeginRefreshing];
+            [self.tableview.mj_header beginRefreshing];
             
         } failure:^(NSError *error) {
             [[UserModel shareInstance] showErrorWithStatus:@"取消失败"];
@@ -155,7 +155,7 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/confirmReceiptIntegral.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         [[UserModel shareInstance]showSuccessWithStatus:@"确认收货成功"];
-        [self.tableview headerBeginRefreshing];
+        [self.tableview.mj_header beginRefreshing];
 
         
     } failure:^(NSError *error) {
@@ -383,12 +383,14 @@
         PhoneChargesOrderViewController * phone = [[PhoneChargesOrderViewController alloc]init];
         phone.infoDict = dic;
         [self.navigationController pushViewController:phone animated:YES];
+    }else
+    {
+        IntegralOrderDetailViewController *or =[[IntegralOrderDetailViewController alloc]init];
+        or.orderNo = [dic objectForKey:@"orderNo"];
+        or.delegate =self;
+        [self.navigationController pushViewController:or animated:YES];
     }
     
-    IntegralOrderDetailViewController *or =[[IntegralOrderDetailViewController alloc]init];
-    or.orderNo = [dic objectForKey:@"orderNo"];
-    or.delegate =self;
-    [self.navigationController pushViewController:or animated:YES];
     
 }
 -(void)getinfoWithStatus:(NSInteger)segmentIndex
@@ -475,7 +477,7 @@
 }
 -(void)orderChange
 {
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

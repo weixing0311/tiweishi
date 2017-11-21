@@ -70,7 +70,7 @@
     if (strUrl.length<1&&!self.movieUrl&&_imagesArray.count<1) {
         [[UserModel shareInstance]showInfoWithStatus:@"文章不能为空"];
     }
-    if (self.textView.text.length>100) {
+    if (self.textView.text.length>121) {
         [[UserModel shareInstance]showInfoWithStatus:@"文章最长100字"];
         return;
     }

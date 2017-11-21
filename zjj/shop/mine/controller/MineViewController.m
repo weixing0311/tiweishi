@@ -15,6 +15,8 @@
 #import "ContactUsViewController.h"
 #import "QrCodeView.h"
 #import "SuperiorViewController.h"
+#import "KfViewController.h"
+
 @interface MineViewController ()<qrcodeDelegate>
 
 @end
@@ -91,7 +93,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -107,14 +109,14 @@
         cell.titleLabel.text = @"帮助中心";
         cell.secondLabel.text = @"帮助文档";
         cell.secondLabel.textColor = HEXCOLOR(0x999999);
-        cell .headImageView.image= [UIImage imageNamed:@"personal-help-icon"];
+        cell .headImageView.image= [UIImage imageNamed:@"personal_help_"];
     }
     else if ( indexPath.row ==1)
     {
         cell.titleLabel.text = @"联系我们";
         cell.secondLabel .text = @"联系方式";
         cell.secondLabel.textColor = HEXCOLOR(0x999999);
-        cell.headImageView.image= [UIImage imageNamed:@"personal-lianxi"];
+        cell.headImageView.image= [UIImage imageNamed:@"personal_Lx_"];
  
     }
     else if(indexPath.row==2)
@@ -122,10 +124,10 @@
         cell.titleLabel.text = @"邀请注册";
         cell.secondLabel .text = @"二维码注册";
         cell.secondLabel.textColor = HEXCOLOR(0x999999);
-        cell.headImageView.image= [UIImage imageNamed:@"personal-recode"];
+        cell.headImageView.image= [UIImage imageNamed:@"personal_resign_"];
  
     }
-    else
+    else if (indexPath.row ==3)
     {
         cell.titleLabel.text = @"我的推荐人";
         if ([UserModel shareInstance].superiorDict&&[[UserModel shareInstance].superiorDict allKeys].count>0) {
@@ -135,8 +137,14 @@
             cell.secondLabel .text = @"";
         }
         cell.secondLabel.textColor = HEXCOLOR(0x999999);
-        cell.headImageView.image= [UIImage imageNamed:@"personal-tui"];
+        cell.headImageView.image= [UIImage imageNamed:@"personal_tjr_"];
 
+    }else
+    {
+        cell.titleLabel.text = @"在线客服";
+        cell.secondLabel .text = @"";
+        cell.secondLabel.textColor = HEXCOLOR(0x999999);
+        cell.headImageView.image= [UIImage imageNamed:@"personal_kf_"];
     }
     return cell;
 }
@@ -168,11 +176,16 @@
         [self.view.window addSubview: rcodeView];
   
     }
-    else{
+    else if (indexPath.row ==3){
         SuperiorViewController * sp =[[SuperiorViewController alloc]init];
         sp.hidesBottomBarWhenPushed = YES;
 
         [self.navigationController pushViewController:sp animated:YES];
+    }
+    else{
+        KfViewController * kf = [[KfViewController alloc]init];
+        kf.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:kf animated:YES];
     }
 //    self.navigationController.navigationBarHidden = NO;
 

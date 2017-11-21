@@ -59,6 +59,8 @@ typedef enum
      *体型
      */
     IS_MODEL_SIZE,//体型
+    ///基础代谢
+    IS_MODEL_BMR,
 }isMyType;
 -(NSString *)getStatus:(isMyType)isMytype;
 -(UIColor *)returnColorWithLevel:(int)level;

@@ -78,7 +78,7 @@
         [self ChangeMySegmentStyle:segment];
         segment.selectedSegmentIndex=0;
         showSegType = [[_segmentArray objectAtIndex:0] safeObjectForKey:@"id"];
-        [self.tableview headerBeginRefreshing];
+        [self.tableview.mj_header beginRefreshing];
         
         
     } failure:^(NSError *error) {
@@ -89,7 +89,8 @@
 {
     NSDictionary * dic =_segmentArray[segment.selectedSegmentIndex];
     showSegType = [dic safeObjectForKey:@"id"];
-    [self.tableview headerBeginRefreshing];
+    page =1;
+    [self.tableview.mj_header beginRefreshing];
 }
 -(void)headerRereshing
 {
@@ -108,23 +109,19 @@
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
     [params  safeSetObject:showSegType forKey:@"shareMsgType"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryShareMsgList.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryShareMsgAndTypeList.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         
         if (page ==1) {
             [self.dataArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
-
+            self.tableview.mj_footer.hidden = NO;
         }
-        
-        
-        
         
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
         if (infoArr.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden = YES;
         }
         for (NSMutableDictionary * infoDic in infoArr) {
             LoadedImageModel * item = [[LoadedImageModel alloc]init];
@@ -136,8 +133,12 @@
         
         DLog(@"%@",dic);
     } failure:^(NSError *error) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        if (page==1&&[error code]==402) {
+            [self.dataArray removeAllObjects];
+            [self.tableview reloadData];
+        }
     }];
     
 
@@ -186,17 +187,17 @@
 {
     LoadedImageModel * item = [_dataArray objectAtIndex:cell.tag];
 
-    NSArray * imageArray = cell.loadedImage;
+    NSMutableArray * pictureArr = [NSMutableArray array];
     
-    [self shareWithType:SSDKPlatformSubTypeWechatTimeline dict:item arr:imageArray];
+    for (int i = 0; i<item.pictures.count; i++) {
+        UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:item.pictures[i]];
+        if (cachedImage) {
+            [pictureArr addObject:cachedImage];
+        }
+    }
 
-}
--(void)insertImage:(NSMutableArray * )arr cell:(FriendsCircleCell*)cell
-{
-    LoadedImageModel * item =[self.dataArray objectAtIndex:cell.tag];
-    [item.loadedImageArray addObjectsFromArray:arr];
-    
-    
+    [self shareWithType:SSDKPlatformSubTypeWechatTimeline dict:item arr:pictureArr];
+
 }
 -(void)didHiddenMe
 {
@@ -212,31 +213,14 @@
 {
     
     NSMutableArray *array = [[NSMutableArray alloc]init];
+    array  = [NSMutableArray arrayWithArray:arr];
 
-    if (item.loadedImageArray&&item.loadedImageArray.count==item.pictures.count) {
-        
-        array  = [NSMutableArray arrayWithArray:item.loadedImageArray];
-
-    }else{
-        
-        array = [NSMutableArray arrayWithArray:arr];
-    }
-    for (UIImage * image in array) {
-        if (![image isKindOfClass:[UIImage class]]) {
-            return;
-        }
-    }
-    
     if (array.count<1) {
         [[UserModel shareInstance]showInfoWithStatus:@"分享出错 请重试"];
-
         return;
     }
-    
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:item.uid forKey:@"id"];
-    
-    
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/msg/countShareNum.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         

@@ -26,6 +26,9 @@
 #import "Yd5View.h"
 #import "Yd6View.h"
 
+#import "VouchersGetViewController.h"
+#import "MyVoucthersViewController.h"
+
 @interface NewMineViewController ()<UITableViewDelegate,UITableViewDataSource,mineRelationsCellDelegate,mineRelationsCellDelegate>
 @property (nonatomic,strong)NSMutableDictionary * infoDict;
 @end
@@ -134,7 +137,7 @@
     if (section==0) {
         return 0;
     }else{
-        return 15;
+        return 10;
     }
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -147,7 +150,7 @@
     if (section ==0) {
         return 2;
     }
-    return 5;
+    return 7;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -216,9 +219,19 @@
                 cell.titleLabel.text = @"积分商城";
                 cell.headImageView.image = getImage(@"home_4_");
             }
-            else {
+            else if(indexPath.row ==4){
                 cell.titleLabel.text = @"我的订单";
                 cell.headImageView.image = getImage(@"home_5_");
+            }
+            else if(indexPath.row ==5)
+            {
+                cell.titleLabel.text = @"我的优惠券";
+                cell.headImageView.image = getImage(@"home_6_");
+
+            }else{
+                cell.titleLabel.text = @"领券中心";
+                cell.headImageView.image = getImage(@"home_6_");
+
             }
             return cell;
         
@@ -266,12 +279,24 @@
             its.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:its animated:YES];
         }
-        else
+        else if (indexPath.row ==4)
         {
             DLog(@"购买记录");
             IntegralOrderViewController * ord = [[IntegralOrderViewController alloc]init];
             ord.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:ord animated:YES];
+        }
+        else if(indexPath.row ==5)
+        {
+            MyVoucthersViewController * vo = [[MyVoucthersViewController alloc]init];
+            vo.hidesBottomBarWhenPushed=YES;
+            [self.navigationController pushViewController:vo animated:YES];
+        }
+        else
+        {
+            VouchersGetViewController * vo = [[VouchersGetViewController alloc]init];
+            vo.hidesBottomBarWhenPushed=YES;
+            [self.navigationController pushViewController:vo animated:YES];
         }
     }
 }
@@ -281,7 +306,6 @@
     EditUserInfoViewController * ne = [[EditUserInfoViewController alloc]init];
     ne.hidesBottomBarWhenPushed=YES;
     ne.infoDict = self.infoDict;
-    [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"userId"] forKey:@"userId"];
     [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"nickName"] forKey:@"nickName"];
     [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"sex"] forKey:@"sex"];
     [ne.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"height"] forKey:@"heigth"];

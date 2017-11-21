@@ -74,6 +74,7 @@
 @property (weak, nonatomic) IBOutlet UIView *thirdView;
 
 @property (weak, nonatomic) IBOutlet UIView *forthView;
+@property (weak, nonatomic) IBOutlet UIView *fifthView;
 
 
 @end

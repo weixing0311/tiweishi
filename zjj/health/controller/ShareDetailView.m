@@ -7,9 +7,11 @@
 //
 
 #import "ShareDetailView.h"
-#import "HealthDetailsItem.h"
-#import "HealthDetailNormalCell.h"
-#import "NSString+dateWithString.h"
+
+#define warningColor   [UIColor colorWithRed:246/255.0 green:172/255.0 blue:2/255.0 alpha:1]
+#define normalColor    [UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1]
+#define seriousColor   [UIColor colorWithRed:236/255.0 green:85/255.0 blue:78/255.0 alpha:1]
+
 @implementation ShareDetailView
 
 - (instancetype)init
@@ -27,144 +29,485 @@
     self.headImageView.layer.cornerRadius = self.headImageView.frame.size.width / 2;
     self.headImageView.layer.borderColor = [UIColor orangeColor].CGColor;
     self.headImageView.layer.borderWidth = 1;
-    _qrCodeImageView.image = [UIImage imageWithData:[UserModel shareInstance].qrcodeImageData];
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource= self;
-    [self setInfo];
+    self.recodeImageView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+    self.recodeImageView.layer.borderWidth = 1;
+
+    
+    
+    self.status1lb.layer.masksToBounds = YES;
+    self.status1lb.layer.cornerRadius = 2;
+    self.status2lb.layer.masksToBounds = YES;
+    self.status2lb.layer.cornerRadius = 2;
+    self.status3lb.layer.masksToBounds = YES;
+    self.status3lb.layer.cornerRadius = 2;
+    self.status4lb.layer.masksToBounds = YES;
+    self.status4lb.layer.cornerRadius = 2;
+    self.status5lb.layer.masksToBounds = YES;
+    self.status5lb.layer.cornerRadius = 2;
+    self.status6lb.layer.masksToBounds = YES;
+    self.status6lb.layer.cornerRadius = 2;
+    self.status7lb.layer.masksToBounds = YES;
+    self.status7lb.layer.cornerRadius = 2;
+    self.status8lb.layer.masksToBounds = YES;
+    self.status8lb.layer.cornerRadius = 2;
+    self.status9lb.layer.masksToBounds = YES;
+    self.status9lb.layer.cornerRadius = 2;
+
+    
+    
+//    _recodeImageView.image = [UIImage imageWithData:[UserModel shareInstance].qrcodeImageData];
+    
+    [self.recodeImageView getImageWithUrl:[UserModel shareInstance].qrcodeImageUrl getImageFinish:^(UIImage *image, NSError *error) {
+        if (error) {
+            self.recodeImageView.image = getImage(@"shareQRCode") ;
+            return ;
+        }
+        self.recodeImageView.image = image;
+        
+    }];
+
+    
+//    [self setInfo];
 
 }
--(void)setInfo
+-(void)setInfoWithItem:(HealthDetailsItem *)item
 {
     
-    self.generateTimeLabel.text =[[HealthDetailsItem instance].createTime mmddhhmm] ;
-    self.generateTimeLabel.adjustsFontSizeToFitWidth = YES;
-    self.bodyAgeLabel.text =[NSString stringWithFormat:@"身体年龄%d",[HealthDetailsItem instance].bodyAge];
-
-    self.bmrLabel.text = [NSString stringWithFormat:@"基础代谢%.0f",[HealthDetailsItem instance].bmr];
-
-    self.ageLabel.text = [NSString stringWithFormat:@"年龄:%d",[UserModel shareInstance].age];
-    self.heightLabel.text = [NSString stringWithFormat:@"身高:%.1f",[UserModel shareInstance].heigth];
+    [self.headImageView getImageWithUrl:[SubUserItem shareInstance].headUrl getImageFinish:^(UIImage *image, NSError *error) {
+        if (!error) {
+            self.headImageView.image = image;
+        }else{
+            self.headImageView.image = getImage(@"head_default");
+        }
+    }];
     
-    [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl]];
-    self.nameLabel.text =[SubUserItem shareInstance].nickname;
-
-// 体重
-    NSMutableAttributedString * weightAttStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%.1fkg",[HealthDetailsItem instance].weight] ];
-    [weightAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:27] range:NSMakeRange(weightAttStr.length-4, 4)];
-    self.weightLabel.attributedText = weightAttStr;
-
     
-    // 趋势提示
-    if  ([HealthDetailsItem instance].weight) {
-        float weightChange = [HealthDetailsItem instance].weight-[HealthDetailsItem instance].lastWeight;
-        self.trendLabel.text = [NSString stringWithFormat:@"%.1fkg",fabsf(weightChange) ];
-        self.trendArrowImageView.image =[UIImage imageNamed:weightChange > 0 ?@"trand_up_icon" : @"trand_down_icon"];
-        self.trendArrowImageView.hidden = NO;
+    
+    
+    
+    
+    self.nicknamelb.text = [SubUserItem shareInstance].nickname;
+    
+    self.heightlb.text =[NSString stringWithFormat:@"身高:%d",item.height];
+    self.agelb.text =[NSString stringWithFormat:@"年龄:%d",item.age];
+    
+    self.bodylb.text = [NSString stringWithFormat:@"体型:%@",[self getBodyStatusWithLevel:item.weightLevel]];
+    
+    self.bodyAgelb.text = [NSString stringWithFormat:@"%d",item.bodyAge];
+    
+    if (item.weightLevel==1||item.weightLevel==3||item.weightLevel==4) {
+        self.bodylb.textColor = warningColor;
+        
+    }else if (item.weightLevel==2)
+    {
+        self.bodylb.textColor = normalColor;
     }
-    else {
-        self.trendArrowImageView.hidden = YES;
-        self.trendLabel.text = @"-";
+    else if (item.weightLevel==5||item.weightLevel==6)
+    {
+        self.bodylb.textColor = seriousColor;
     }
-    switch ([HealthDetailsItem instance].weightLevel) {
+    self.bodyAgelb.text = [NSString stringWithFormat:@"身体年龄:%d",item.bodyAge];
+
+    self.weightlb.text = [NSString stringWithFormat:@"体重:%.1fkg",item.weight];
+    self.contentlb.text = [NSString stringWithFormat:@"在社区中排名第%d位，已超过社区%.0f%%的用户",item.ranking,item.percent];
+    
+    
+    NSString * scoreStr =[NSString stringWithFormat:@"%.1f分",item.myScore];
+    NSMutableAttributedString * scoreSStr = [[NSMutableAttributedString alloc]initWithString:scoreStr];
+    [scoreSStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(scoreSStr.length-1, 1)];
+
+    self.scorelb.attributedText = scoreSStr;
+    self.scorelb.adjustsFontSizeToFitWidth = YES;
+    
+    NSString * tisStr = [NSString stringWithFormat:@"本次%d项检查中有%d项预警%d项警告%d项正常",item.normal+item.serious+item.warn,item.warn,item.serious,item.normal];
+    
+    int normalLenght;
+    int warnLenght;
+    int seriouslenght;
+    if (item.normal==10) {
+        normalLenght =2;
+    }else{
+        normalLenght =1;
+    }
+    if (item.warn==10) {
+        warnLenght =2;
+    }else{
+        warnLenght =1;
+    }
+    if (item.serious==10) {
+        seriouslenght =2;
+    }else{
+        seriouslenght =1;
+    }
+    
+    
+    int lenght =0;
+    
+    NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:tisStr];
+    
+    //总共
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(lenght, 2)];
+    
+    lenght +=2;
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1] range:NSMakeRange(lenght, 2)];
+    lenght +=2;
+    
+    
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(lenght, 5)];
+    lenght +=5;
+    
+    //warn
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:246/255.0 green:172/255.0 blue:2/255.0 alpha:1] range:NSMakeRange(lenght, warnLenght)];
+    lenght+=warnLenght;
+    
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(lenght, 3)];
+    lenght+=3;
+    //serious
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:236/255.0 green:85/255.0 blue:78/255.0 alpha:1] range:NSMakeRange(lenght, seriouslenght)];
+    lenght+=seriouslenght;
+    
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(lenght, 3)];
+    lenght+=3;
+    //normal
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1] range:NSMakeRange(lenght, normalLenght)];
+    lenght+=normalLenght;
+    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(tisStr.length-3, 3)];
+    self.tclb.attributedText = tisString;
+    self.bglb.text = [self getContentWithItem:item];
+    [self setCurrInfo:item];
+    
+}
+-(NSString *)getBodyStatusWithLevel:(int)level
+{
+    switch (level) {
         case 1:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"偏瘦"];
-            self.weightStatusLabel.textColor = HEXCOLOR(0xf4a519);
+            return  [NSString stringWithFormat:@"偏瘦"];
             break;
         case 2:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"正常"];
-            self.weightStatusLabel.textColor = HEXCOLOR(0x41bf7c);
+            return  [NSString stringWithFormat:@"标准"];
             break;
         case 3:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"轻度肥胖"];
-            self.weightStatusLabel.textColor = HEXCOLOR(0xf4a519);
+            return   [NSString stringWithFormat:@"偏胖"];
             break;
         case 4:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"中度肥胖"];
-            self.weightStatusLabel.textColor = HEXCOLOR(0xf4a519);
+            return  [NSString stringWithFormat:@"偏胖"];
             break;
         case 5:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"重度肥胖"];
-            self.weightStatusLabel.textColor = HEXCOLOR(0xe84849);
+            return   [NSString stringWithFormat:@"超重"];
             break;
         case 6:
-            self.weightStatusLabel.text = [NSString stringWithFormat:@"极度肥胖"];
-            self.weightStatusLabel.textColor = HEXCOLOR(0xe84849);
+            return   [NSString stringWithFormat:@"超重"];
+            break;
+        default:
+            return @"";
+            break;
+    }
+    
+}
+
+-(void)setCurrInfo:(HealthDetailsItem *)item
+{
+        self.value1lb.text = [NSString stringWithFormat:@"%.1f",item.bmi];
+        self.status1lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
+        
+        self.value2lb.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
+        self.status2lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
+        
+        self.value3lb.text = [NSString stringWithFormat:@"%.1f%%",item.fatPercentage];
+        self.status3lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT item:item];
+        
+        
+        self.value4lb.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
+        self.status4lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
+        
+        self.value5lb.text = [NSString stringWithFormat:@"%.1fkg",item.boneWeight];
+        self.status5lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONE item:item];
+        
+        self.value6lb.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
+        self.status6lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        
+        
+        
+        self.value7lb.text = [NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
+        self.status7lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_MUSCLE item:item];
+        
+        self.value8lb.text = [NSString stringWithFormat:@"%.1f",item.bmr];
+        self.status8lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        
+        self.value9lb.text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
+        self.status9lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT item:item];
+    
+    self.status1lb.backgroundColor = [self getColorWithString:self.status1lb.text];
+    self.status2lb.backgroundColor = [self getColorWithString:self.status2lb.text];
+    self.status3lb.backgroundColor = [self getColorWithString:self.status3lb.text];
+    self.status4lb.backgroundColor = [self getColorWithString:self.status4lb.text];
+    self.status5lb.backgroundColor = [self getColorWithString:self.status5lb.text];
+    self.status6lb.backgroundColor = [self getColorWithString:self.status6lb.text];
+    self.status7lb.backgroundColor = [self getColorWithString:self.status7lb.text];
+    self.status8lb.backgroundColor = [self getColorWithString:self.status8lb.text];
+    self.status9lb.backgroundColor = [self getColorWithString:self.status9lb.text];
+
+}
+
+
+
+
+-(NSString *)getContentWithItem:(HealthDetailsItem *)item
+{
+    if (item.weight-item.lastWeight==0) {
+        switch (item.weightLevel) {
+            case 1:
+                return [NSString stringWithFormat:@"您的体重%.1fkg，体脂率%.1f%%，属于偏瘦身材，可以考虑补充营养，进行锻炼，毕竟过于消瘦也不好奥。",item.weight,item.fatPercentage];
+                break;
+            case 2:
+                return [NSString stringWithFormat:@"您的体重%.1fkg，体脂率%.1f%%，属于标准身材，您的体型很标准，继续保持，如果您对自己有更高要求，可以运动锻炼，进行增肌塑形。",item.weight,item.fatPercentage];
+                
+                break;
+            case 3:
+                return [NSString stringWithFormat:@"您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",item.weight,item.fatPercentage];
+                
+                break;
+            case 4:
+                return [NSString stringWithFormat:@"您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",item.weight,item.fatPercentage];
+                
+                break;
+            case 5:
+                return [NSString stringWithFormat:@"您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",item.weight,item.fatPercentage];
+                
+                break;
+            case 6:
+                return [NSString stringWithFormat:@"您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",item.weight,item.fatPercentage];
+                
+                break;
+                
+            default:
+                break;
+        }
+    }else{
+        switch (item.weightLevel) {
+            case 1:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"与首次相比，体重上升%.1fkg，提醒您补充营养也要把握好尺度，不要被肥胖趁虚而入奥。",fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"与首次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 2:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"与首次相比，体重上升%1.fkg，建议您注意饮食，不要被肥胖趁虚而入奥。",fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"与首次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 3:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"与首次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"与首次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 4:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"与首次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"与首次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 5:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"与首次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"与首次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 6:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"与首次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"与首次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+                
+            default:
+                return @"";
+                break;
+        }
+    }
+    return @"";
+    
+}
+-(NSString *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
+{
+    //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
+    //肌肉\骨骼肌\水分\蛋白质\骨重判定标准
+    switch (myType) {
+        case IS_MODEL_BMI:
+            switch (item.bmiLevel) {
+                case 1:
+                    return @"偏低";
+                    break;
+                case 2:
+                    return @"正常";
+                    break;
+                case 3:
+                    return @"高";
+                    break;
+                case 4:
+                    return @"高";
+                    break;
+                    
+                default:
+                    break;
+            }
+        case IS_MODEL_FATPERCENT:
+            switch (item.fatPercentageLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"偏高";
+                    break;
+                case 3:
+                    return @"高";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case IS_MODEL_FAT:
+            switch (item.fatWeightLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"偏高";
+                    break;
+                case 3:
+                    return @"高";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case IS_MODEL_WATER:
+            switch (item.waterLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"低";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case IS_MODEL_PROTEIN:
+            switch (item.proteinLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"低";
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            break;
+        case IS_MODEL_MUSCLE:
+            switch (item.muscleLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"低";
+                    break;
+                    
+                    
+                default:
+                    break;
+            }
+            
+            
+            break;
+        case IS_MODEL_BONEMUSCLE:
+            switch (item.boneMuscleLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"低";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+            
+            
+        case IS_MODEL_VISCERALFAT:
+            switch (item.visceralFatPercentageLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"超标";
+                    break;
+                case 3:
+                    return @"高";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case IS_MODEL_BONE:
+            switch (item.boneLevel) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"低";
+                    break;
+                default:
+                    break;
+            }
             break;
             
         default:
             break;
     }
+    return nil;
+}
+-(UIColor *)getColorWithString:(NSString *)string
+{
     
-
-    //显示中间大圆圈
-    if ([HealthDetailsItem instance].weightLevel==1||[HealthDetailsItem instance].weightLevel==3||[HealthDetailsItem instance].weightLevel==4) {
-        self.weightBgImageView.image =[UIImage imageNamed:@"warning_bg"];
+    if ([string isEqualToString:@"偏低"]||[string isEqualToString:@"偏高"]||[string isEqualToString:@"超标"]) {
+        return warningColor;
     }
-    else if ([HealthDetailsItem instance].weightLevel==5||[HealthDetailsItem instance].weightLevel==6) {
-        self.weightBgImageView.image =[UIImage imageNamed:@"danger_bg"];
+    else if ([string isEqualToString:@"正常"])
+    {
+        return normalColor;
+    }else{
+        return seriousColor;
     }
-    else {
-        self.weightBgImageView.image =[UIImage imageNamed:@"health_bg"];
-    }
-
-    NSString * tisStr = [NSString stringWithFormat:@"本次%d项检查中有，%d项预警，%d项警告，%d项正常",[HealthDetailsItem instance].normal+[HealthDetailsItem instance].serious+[HealthDetailsItem instance].warn,[HealthDetailsItem instance].warn,[HealthDetailsItem instance].serious,[HealthDetailsItem instance].normal];
     
-    NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:tisStr];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0, 2)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1] range:NSMakeRange(2, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(3, 6)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:246/255.0 green:172/255.0 blue:2/255.0 alpha:1] range:NSMakeRange(9, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(10, 4)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:236/255.0 green:85/255.0 blue:78/255.0 alpha:1] range:NSMakeRange(14, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(15, 4)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:57/255.0 green:208/255.0 blue:160/255.0 alpha:1] range:NSMakeRange(19, 1)];
-    
-    [tisString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(tisStr.length-3, 3)];
-    
-    self.scaleResultStatusLabel.attributedText = tisString;
-//    [self getImage];
 }
-
--(void)getImage
-{
-    UIGraphicsBeginImageContext(self.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
-//    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
-    UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文
-//    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 2;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 103;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString * identifier = @"HealthDetailNormalCell";
-    
-    HealthDetailNormalCell  *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        NSArray *nibs = [[NSBundle mainBundle]loadNibNamed:@"HealthDetailNormalCell" owner:nil options:nil];
-        cell = [nibs lastObject];
-    };
-    cell.tag = indexPath.row;
-    cell.backgroundColor = [UIColor clearColor];
-    [cell setUpWithItem:[HealthDetailsItem instance]];
-
-    return cell;
-}
-
 
 @end

@@ -41,9 +41,9 @@ static HealthDetailsItem *item;
     
     self . visceralFatPercentageLevel = [[dict safeObjectForKey:@"visceralFatPercentageLevel"]floatValue];
     self . bmr                   = [[dict safeObjectForKey:@"bmr"]floatValue];
-    self . bmrMin                   = [[dict safeObjectForKey:@"bmrMin"]floatValue];
-    self . bmrMax                   = [[dict safeObjectForKey:@"bmrMax"]floatValue];
-
+    self . bmrMin                = [[dict safeObjectForKey:@"bmrMin"]floatValue];
+    self . bmrMax                = [[dict safeObjectForKey:@"bmrMax"]floatValue];
+    self.bmrLevel                = [[dict safeObjectForKey:@"bmrLevel"]intValue];
     self . bodyAge               = [[dict safeObjectForKey:@"bodyAge"]floatValue];
     self . bodyLevel             = [[dict safeObjectForKey:@"bodyLevel"]intValue];
     
@@ -386,9 +386,12 @@ static HealthDetailsItem *item;
 
 -(NSString *)getHealthDetailShuoMingWithStatus:(NSInteger)myType item:(HealthDetailsItem*)item
 {
+
     //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
     switch (myType) {
         case 1:
+            //    bmi  1低  2正常3高4高
+
             switch (item.bmiLevel) {
                 case 1:
                     return @"您目前BMI值过低，属于偏瘦人群，建议您多补充营养并进行适当的锻炼，进行适当的力量训练可以使身体更加健康。";
@@ -407,7 +410,7 @@ static HealthDetailsItem *item;
                     break;
             }
         case 2:
-            
+            //    fatweightlevel  1正常2低3高
             switch (item.fatWeightLevel) {
                 case 1:
                     return @"您身体的脂肪量处于标准状态，表示您的身体状况处于比较好的阶段，但是还是要未雨绸缪奥，在饮食上不要太放肆奥，多锻炼总是没有坏处的。";
@@ -424,6 +427,8 @@ static HealthDetailsItem *item;
             }
             break;
         case 3:
+            //    fatPercentage level  1正常2低3高
+
             switch (item.fatPercentageLevel) {
                 case 1:
                     return @"您身体的体脂率处于标准状态，建议您继续保持，不要刻意减脂与增重，要注重均衡发展，在锻炼时要注意补充身体所需要的营养。";
@@ -441,6 +446,8 @@ static HealthDetailsItem *item;
             break;
 
         case 4:
+            //    蛋白质(P)/骨骼肌(boneMuscle)/骨量(boneWeight)/水分(waterWieghtLevel)/肌肉(Muscle)  1正常 else低
+
             switch (item.proteinLevel) {
                 case 1:
                     return @"您身体内所含的蛋白质处于标准状态，这代表您身体的各方面机能都属于良好状态，保持住当前的饮食习惯与睡眠时间奥。";
@@ -476,10 +483,10 @@ static HealthDetailsItem *item;
             
             switch (item.waterLevel) {
                 case 1:
-                    return @"您身体内的水分含量较低，建议您多补充水分，一般而言，成年人每一千克体重需饮水40毫升，您可以根据自身的体重来补充自身每天所需要的水分。";
+                    return @"您身体的水分含量处于标准状态，请保持这种状态，这代表您的身体循环系统比较正常，身体比较健康。";
                     break;
                 case 2:
-                    return @"您身体的水分含量处于标准状态，请保持这种状态，这代表您的身体循环系统比较正常，身体比较健康。";
+                    return @"您身体内的水分含量较低，建议您多补充水分，一般而言，成年人每一千克体重需饮水40毫升，您可以根据自身的体重来补充自身每天所需要的水分。";
                     break;
                     
                 default:
@@ -505,12 +512,15 @@ static HealthDetailsItem *item;
             break;
             
         case 8:
-            switch (item.boneLevel) {
+            switch (item.bmrLevel) {
                 case 1:
-                    return @""  ;
+                    return @"您的基础代谢处于标准状态，这代表您只要不多吃就可以拥有好身材，保持基础代谢最有效的方式就是每天进行适当的运动，饭后走一走就可以奥。"  ;
                     break;
                 case 2:
-                    return @"";
+                    return @"您的基础代谢偏低，这代表着您是易胖体质，想要拥有完美身材需要您比其他人多付出更多的努力，每天进行适当的锻炼，练出一副好身材，证明自己就算是易胖体质也比他们强。";
+                    break;
+                    case 3:
+                    return @"您当前的基础代谢较高，这代表您每天消耗的热量比较高，只要您能控制好饮食，加上适当的运动，相信您很快就会瘦下来的。";
                     break;
                 default:
                     break;
@@ -519,12 +529,14 @@ static HealthDetailsItem *item;
             
 
         case 9:
+//            内脂  1正常2超标3高
+
             switch (item.visceralFatPercentageLevel) {
                 case 1:
                     return @"您目前的内脏脂肪属于标准状态，建议您继续保持当前的饮食习惯与运动习惯，不要因为现在的状态比较好就心生懈怠奥，内脏脂肪过低或过高都会对身体造成很大的危害呢！";
                     break;
                 case 2:
-                    return @"您目前的内脏脂肪偏低，可能会造成免疫力下降，体力耐力不足等现象，这是因为胃和小肠的吸收能力不好照成的，建议您多运动改变能量的吸收与输出状态，多吃主食补充营养，保证充足睡眠来进行调整。";
+                    return @"您目前的内脏脂肪偏高，内脏脂肪过高容易引起各种心血管疾病，建议您多做运动，游泳、慢跑、快步走都是降低内脏脂肪的好方法。";
                     break;
                 case 3:
                     return @"您目前的内脏脂肪偏高，内脏脂肪过高容易引起各种心血管疾病，建议您多做运动，游泳、慢跑、快步走都是降低内脏脂肪的好方法。";

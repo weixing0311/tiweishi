@@ -18,6 +18,7 @@
 #import "CommunityCell.h"
 #import "ArtcleZanViewController.h"
 #import "GuanzModel.h"
+#import "NewMineHomePageViewController.h"
 @interface ArticleDetailViewController ()<UITableViewDelegate,UITableViewDataSource,commentViewDelegate,ArtcleDetailCommentDelegate,UIPickerViewDelegate,UIPickerViewDataSource,PublicArticleCellDelegate,BigImageArticleCellDelegate>
 @property (nonatomic,strong) UITableView *tableview;
 @property (nonatomic,strong) NSMutableArray * dataArray;
@@ -55,7 +56,7 @@
 {
     [super viewWillDisappear:animated];
     
-    if ([gzStatus isEqualToString:@"999"]) {
+    if (![gzStatus isEqualToString:@"999"]) {
         if (self.delegate &&[self.delegate respondsToSelector:@selector(refreshGzStatusWithModel:isFollow:)]) {
             [self.delegate refreshGzStatusWithModel:_dataArray[0]isFollow:gzStatus];
         }
@@ -299,6 +300,13 @@
             [cell setInfoWithDict:item];
             
             cell.nemuView.hidden = YES;
+            
+            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
+                cell.gzBtn.hidden = YES;
+            }else{
+                cell.gzBtn.hidden = NO;
+            }
+            
 //            cell.gzBtn.hidden = YES;
 //            cell.jbBtn.hidden = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -315,8 +323,11 @@
             [cell setInfoWithDict:item];
             [cell loadImagesWithItem:item];
             cell.nemuView.hidden = YES;
-//            cell.gzBtn.hidden = YES;
-//            cell.jbBtn.hidden = YES;
+            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
+                cell.gzBtn.hidden = YES;
+            }else{
+                cell.gzBtn.hidden = NO;
+            }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
 
@@ -679,6 +690,23 @@
         }]];
         [self presentViewController:alert animated:YES completion:nil];
     }
+}
+-(void)didTapHeadImageViewWithBigCell:(CommunityCell *)cell
+{
+    [self enterUserPageViewWithIndex:cell.tag];
+}
+-(void)didTapHeadImageViewWithCell:(PublicArticleCell *)cell
+{
+    [self enterUserPageViewWithIndex:cell.tag];
+}
+-(void)enterUserPageViewWithIndex:(NSInteger)index
+{
+    CommunityModel * model =[_dataArray objectAtIndex:index];
+    
+    NewMineHomePageViewController * mine = [[NewMineHomePageViewController alloc]init];
+    mine.userId = model.userId;
+    [self.navigationController pushViewController:mine animated:YES];
+    
 }
 
 -(void)clearSDCeche

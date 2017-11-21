@@ -30,7 +30,13 @@
     self.headImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.headImageView.layer.borderWidth = 1;
     
-
+    [self.headImageView getImageWithUrl:[SubUserItem shareInstance].headUrl getImageFinish:^(UIImage *image, NSError *error) {
+        if (error) {
+            self.headImageView.image = getImage(@"head_default");
+            return ;
+        }
+        self.headImageView.image = image;
+    }];
     
     
     self.tableView.delegate = self;
@@ -235,8 +241,8 @@
     NSString *protein1 =[[ShareHealthItem shareInstance] getHeightWithLevel:item1.proteinLevel status:IS_SAME];
     NSString *protein2 =[[ShareHealthItem shareInstance] getHeightWithLevel:item2.proteinLevel status:IS_SAME];
 //骨量
-    NSString *boneMuscle1 =[[ShareHealthItem shareInstance] getHeightWithLevel:item1.boneMuscleLevel status:IS_SAME];
-    NSString *boneMuscle2 =[[ShareHealthItem shareInstance] getHeightWithLevel:item2.boneMuscleLevel status:IS_SAME];
+    NSString *boneMuscle1 =[[ShareHealthItem shareInstance] getHeightWithLevel:item1.boneLevel status:IS_SAME];
+    NSString *boneMuscle2 =[[ShareHealthItem shareInstance] getHeightWithLevel:item2.boneLevel status:IS_SAME];
 //水分
     NSString *water1 =[[ShareHealthItem shareInstance] getHeightWithLevel:item1.waterLevel status:IS_SAME];
     NSString *water2 =[[ShareHealthItem shareInstance] getHeightWithLevel:item2.waterLevel status:IS_SAME];

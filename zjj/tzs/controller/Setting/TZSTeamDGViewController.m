@@ -40,7 +40,7 @@
     [self ChangeMySegmentStyle:self.segment];
     [self setExtraCellLineHiddenWithTb:self.tableView];
     [self setRefrshWithTableView:self.tableView];
-    [self.tableView headerBeginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -106,26 +106,26 @@
     [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"/app/order/info/queryOrderInfoList.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
-        [self.tableView headerEndRefreshing];
-        [self.tableView footerEndRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         
         if (page==1) {
             [_infoArray removeAllObjects];
-            [self.tableView setFooterHidden:NO];
+            self.tableView.mj_footer.hidden = NO;
 
         }
  
        [ _infoArray  addObjectsFromArray:[[dic objectForKey:@"data"]objectForKey:@"array"]];
         if (_infoArray.count<30) {
-            [self.tableView setFooterHidden:YES];
+            self.tableView.mj_footer.hidden = YES;
         }
         [self getinfoWithStatus:0];
         [self.tableView reloadData];
 
         DLog(@"%@",dic);
     } failure:^(NSError *error) {
-        [self.tableView headerEndRefreshing];
-        [self.tableView footerEndRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
     
 }
@@ -339,6 +339,6 @@
 
 -(void)teamOrderChange
 {
-    [self.tableView headerBeginRefreshing];
+    [self.tableView.mj_header beginRefreshing];
 }
 @end

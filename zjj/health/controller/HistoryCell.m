@@ -25,8 +25,8 @@
     NSString * weightStr = [NSString stringWithFormat:@"%.1fkg",[[infoDict safeObjectForKey:@"weight"]floatValue]];
     NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:weightStr];
 
-    NSDictionary *dic = @{NSFontAttributeName: [UIFont systemFontOfSize:12], NSForegroundColorAttributeName: HEXCOLOR(0xcccccc)};
-    
+    NSDictionary *dic = @{NSFontAttributeName: [UIFont systemFontOfSize:12], NSForegroundColorAttributeName: HEXCOLOR(0x999999)};
+
     [tisString addAttributes:dic range:NSMakeRange(tisString.length-2, 2)];
     
     self.weightlb.attributedText = tisString;
@@ -61,7 +61,7 @@
         
         self.value9lb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"proteinWeight"]floatValue]];
         
-        self.value10lb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"boneMuscleWeight"]floatValue]];
+        self.value10lb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"boneWeight"]floatValue]];
         
         self.value11lb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"waterWeight"]floatValue]];
         
@@ -70,21 +70,28 @@
         self.value13lb.text = [NSString stringWithFormat:@"%.1f",[[infoDict safeObjectForKey:@"standardWeight"]floatValue]];
 
         
-        self.second3Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"weightLevel"]intValue] status:IS_BODYWEIGHT];
-        self.second3Lb.backgroundColor = [self getColorWithLevel:self.second3Lb.text];
-
+        self.second3Lb.text = [self getwl:[[infoDict objectForKey:@"weightLevel"]intValue]];
         
         self.second4lb.text = [self getwl:[[infoDict objectForKey:@"weightLevel"]intValue]];
 
-        if ([self.value4lb.text intValue]==1||[self.value4lb.text intValue]==3||[self.value4lb.text intValue]==4) {
-            self.second4lb.backgroundColor = warningColor;
-        }else if ([self.value4lb.text intValue]==2)
-        {
-            self.second4lb.backgroundColor = normalColor;
-        }
-        else{
-            self.second4lb.backgroundColor = seriousColor;
-        }
+        self.second3Lb.backgroundColor = [self getColorWithLevel:self.second3Lb.text];
+        self.second4lb.backgroundColor = [self getColorWithLevel:self.second4lb.text];
+        
+
+//        if ([self.value4lb.text intValue]==1||[self.value4lb.text intValue]==3||[self.value4lb.text intValue]==4) {
+//            self.second4lb.backgroundColor = warningColor;
+//            self.second3Lb.backgroundColor = warningColor;
+//        }else if ([self.value4lb.text intValue]==2)
+//        {
+//            self.second4lb.backgroundColor = normalColor;
+//            self.second3Lb.backgroundColor = normalColor;
+//
+//        }
+//        else{
+//            self.second4lb.backgroundColor = seriousColor;
+//            self.second3Lb.backgroundColor = seriousColor;
+//
+//        }
         
         
         self.second5Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"fatPercentageLevel"]intValue] status:IS_FATPERCENT];
@@ -109,7 +116,7 @@
         self.second9Lb.backgroundColor = [self getColorWithLevel:self.second9Lb.text];
 
         
-        self.second10Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"boneMuscleLevel"]intValue] status:IS_SAME];
+        self.second10Lb.text = [[ShareHealthItem shareInstance] getHeightWithLevel:[[infoDict safeObjectForKey:@"boneLevel"]intValue] status:IS_SAME];
         self.second10Lb.backgroundColor = [self getColorWithLevel:self.second10Lb.text];
 
         
@@ -135,7 +142,7 @@
 {
     if ([levelStr isEqualToString:@"正常"]) {
         return normalColor;
-    }else if([levelStr isEqualToString:@"低"]||[levelStr isEqualToString:@"偏瘦"]||[levelStr isEqualToString:@"偏低"]){
+    }else if([levelStr isEqualToString:@"低"]||[levelStr isEqualToString:@"偏瘦"]||[levelStr isEqualToString:@"偏低"]||[levelStr isEqualToString:@"偏胖"]){
         return warningColor;
     }
     else {

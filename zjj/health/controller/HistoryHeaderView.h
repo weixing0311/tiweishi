@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Daysquare.h"
+#import "SZCalendarPicker.h"
 
 @interface HistoryHeaderView : UIView
-@property (nonatomic,strong)DAYCalendarView * calendarView;
+@property (nonatomic,strong)SZCalendarPicker *calendarPicker;
 @property (weak, nonatomic) IBOutlet UIView *riView;
 @end
 

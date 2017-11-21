@@ -45,7 +45,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-//    [self.tableview headerBeginRefreshing];
+//    [self.tableview.mj_header beginRefreshing];
     [self setTBWhiteColor];
 
 
@@ -78,7 +78,7 @@
 }
 -(void)refreshMyInfo
 {
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 -(void)headerRereshing
 {
@@ -98,12 +98,12 @@
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/usertArticleDetail/queryUserHome.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         
         if (page ==1) {
             [self.dataArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
+            self.tableview.mj_footer.hidden = NO;
             
         }
         
@@ -113,7 +113,7 @@
         
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
         if (infoArr.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden = YES;
         }
         for (NSMutableDictionary * infoDic in infoArr) {
             CommunityModel * item = [[CommunityModel alloc]init];
@@ -125,15 +125,14 @@
         
         DLog(@"%@",dic);
     } failure:^(NSError *error) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
     }];
     
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * fatBefore =[_infoDict safeObjectForKey:@"fatBefore"];
 
     if (indexPath.section ==0) {
         return JFA_SCREEN_WIDTH*0.56;
@@ -162,7 +161,6 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSString * fatBefore =[_infoDict safeObjectForKey:@"fatBefore"];
     
     if (section ==0) {
         return 1;
@@ -183,8 +181,11 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section ==0||section ==1) {
+    if (section ==0) {
         return 1;
+    }
+    else if (section ==1||section==2) {
+        return 10;
     }
     return 25;
 }
@@ -273,7 +274,7 @@
         }else{
             cell.afterweightlb.textColor = [UIColor orangeColor];
         }
-        cell.lossWeightlb.text = [NSString stringWithFormat:@"%.0f",lossWeight>0?lossWeight:0];
+        cell.lossWeightlb.text = [NSString stringWithFormat:@"%.1f",lossWeight>0?lossWeight:0];
 
         return cell;
     }
@@ -287,7 +288,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         [cell.fatBeforeImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_") options:SDWebImageRetryFailed];
-        [cell.fatAfterImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatBefore_") options:SDWebImageRetryFailed];
+        [cell.fatAfterImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_") options:SDWebImageRetryFailed];
 
         
 //        [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
@@ -311,11 +312,11 @@
             cell.tag = indexPath.row;
             [cell setInfoWithDict:item];
             
-            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
+////            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
+//                cell.gzBtn.hidden = YES;
+//            }else{
                 cell.gzBtn.hidden = YES;
-            }else{
-                cell.gzBtn.hidden = NO;
-            }
+//            }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             
@@ -330,11 +331,11 @@
             [cell setInfoWithDict:item];
             [cell loadImagesWithItem:item];
             
-            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
+//            if ([item.userId isEqualToString:[UserModel shareInstance].userId]) {
                 cell.gzBtn.hidden = YES;
-            }else{
-                cell.gzBtn.hidden = NO;
-            }
+//            }else{
+//                cell.gzBtn.hidden = NO;
+//            }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
             
@@ -399,38 +400,6 @@
 
 #pragma mark ---cell delegate
 
--(void)didPlayWithCell:(PublicArticleCell *)cell
-{
-    CommunityModel * model = [_dataArray objectAtIndex:cell.tag];
-    //记录被点击的Cell
-    PlayingCell = cell;
-    //销毁播放器
-    [_playerView destroyPlayer];
-    CLPlayerView *playerView = [[CLPlayerView alloc] initWithFrame:CGRectMake(0, 0, (JFA_SCREEN_WIDTH-20), (JFA_SCREEN_WIDTH-20)*0.7)];
-    _playerView = playerView;
-    [cell.collectionView addSubview:_playerView];
-    //    _playerView.fillMode = ResizeAspectFill;
-    
-    //视频地址
-    _playerView.url = [NSURL URLWithString:model.movieStr];
-    //播放
-    [_playerView playVideo];
-    //返回按钮点击事件回调
-    [_playerView backButton:^(UIButton *button) {
-        NSLog(@"返回按钮被点击");
-    }];
-    //播放完成回调
-    [_playerView endPlay:^{
-        //销毁播放器
-        [_playerView destroyPlayer];
-//        PlayingCell.playerBtn.hidden = NO;
-        _playerView = nil;
-        PlayingCell = nil;
-        
-        NSLog(@"播放完成");
-    }];
-    
-}
 
 - (IBAction)didClickBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -999,7 +968,7 @@
             DLog(@"dic-关注成功--%@",dic);
             cell.gzBtn.selected = YES;
             [[UserModel shareInstance]showSuccessWithStatus:@"关注成功"];
-            [self.tableview headerBeginRefreshing];
+            [self.tableview.mj_header beginRefreshing];
         } failure:^(NSError *error) {
             
         }];
@@ -1019,7 +988,7 @@
             
             cell.gzBtn.selected = YES;
             [[UserModel shareInstance]showSuccessWithStatus: @"取消成功"];
-            [self.tableview headerBeginRefreshing];
+            [self.tableview.mj_header beginRefreshing];
         });
     } failure:^(NSError *error) {
         
@@ -1030,11 +999,7 @@
 - (void)ChangeHeadImageWithTitle:(NSString *)title{
     
     
-    
     UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:title preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    
-    
     
     [al addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -1073,7 +1038,7 @@
     //判断资源类型
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
         //如果是图片
-        UIImage *image =info[UIImagePickerControllerOriginalImage];
+        UIImage *image =info[UIImagePickerControllerEditedImage];
         [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
         
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -1132,7 +1097,7 @@
         [SVProgressHUD dismiss];
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self.tableview headerBeginRefreshing];
+            [self.tableview.mj_header beginRefreshing];
         });
 
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];

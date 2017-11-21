@@ -14,12 +14,16 @@
 //#import "HistoryBigCell.h"
 #import "NewHealthHistoryListViewController.h"
 #import "HistoryCell.h"
+#import "SZCalendarPicker.h"
+
 @interface HistoryInfoViewController ()<UITableViewDelegate,UITableViewDataSource,historyCellDelegate>
 @property (nonatomic,strong) HistoryHeaderView * headerView;
 @property (strong, nonatomic) UITableView *tableview;
 @property (nonatomic,strong) NSMutableDictionary * infoDict;
 @property (nonatomic,strong)DAYCalendarView * calendarView;
 @property (nonatomic,strong)NSMutableArray * dataArray;
+@property (nonatomic,strong)SZCalendarPicker *calendarPicker;
+
 @end
 
 @implementation HistoryInfoViewController
@@ -39,36 +43,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"历史记录";
-    self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, self.view.frame.size.height-50) style:UITableViewStylePlain];
+    self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 70, JFA_SCREEN_WIDTH, self.view.frame.size.height-120) style:UITableViewStylePlain];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     [self.view addSubview:self.tableview];
     _infoDict = [NSMutableDictionary dictionary];
     _dataArray = [NSMutableArray array];
-    self.headerView =[self getXibCellWithTitle:@"HistoryHeaderView"];
-    if (IS_IPHONE5) {
-        self.headerView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH*0.7);
-    }else{
-        self.headerView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH*0.7);
-
-    }
-    self.tableview.tableHeaderView = self.headerView;
-    [self setExtraCellLineHiddenWithTb:self.tableview];
+//    self.headerView =[self getXibCellWithTitle:@"HistoryHeaderView"];
+//    if (IS_IPHONE5) {
+//        self.headerView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 352);
+//    }else{
+//        self.headerView.frame = CGRectMake(0, 0, JFA_SCREEN_WIDTH, 352);
+//    }
     
-    [self.headerView.calendarView addTarget:self action:@selector(calendarViewDidChange:) forControlEvents:UIControlEventValueChanged];
+    
+    
+//    self.tableview.tableHeaderView = self.headerView;
+    [self setExtraCellLineHiddenWithTb:self.tableview];
+    __weak HistoryInfoViewController * weakSelf = self;
+    self.calendarPicker = [[[NSBundle mainBundle] loadNibNamed:@"SZCalendarPicker" owner:nil options:nil] lastObject];
+    
+    int width =(JFA_SCREEN_WIDTH-20);
+    int yu = width%7;
+    self.calendarPicker.frame = CGRectMake(0, 0,JFA_SCREEN_WIDTH-20-yu, 352);
+    self.tableview.tableHeaderView =self.calendarPicker;
+    self.calendarPicker.today = [NSDate date];
+    self.calendarPicker.date = self.calendarPicker.today;
+    self.calendarPicker.calendarBlock = ^(NSInteger day, NSInteger month, NSInteger year){
+
+        
+        NSString * dateStr = [NSString stringWithFormat:@"%ld-%@%ld-%@%ld",(long)year,month<10?@"0":@"",(long)month,day<10?@"0":@"",(long)day];
+        [weakSelf getInfoWithDate:dateStr];
+    };
+
+//    [self.headerView.calendarView addTarget:self action:@selector(calendarViewDidChange:) forControlEvents:UIControlEventValueChanged];
     
     [self getInfoWithDate:[[NSDate date]yyyymmdd]];
 
     // Do any additional setup after loading the view from its nib.
-}
-- (void)calendarViewDidChange:(id)sender {
-//    self.datePicker.date = self.calendarView.selectedDate;
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYY-MM-dd";
-    NSLog(@"%@", [formatter stringFromDate:self.headerView.calendarView.selectedDate]);
-    
-    [self getInfoWithDate:[self.headerView.calendarView.selectedDate yyyymmdd]];
 }
 
 -(void)getInfoWithDate:(NSString *)dateStr
@@ -113,7 +125,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row ==showIndexPathRow) {
-        return 670;
+        return 626;
     }
     return 70;
 }

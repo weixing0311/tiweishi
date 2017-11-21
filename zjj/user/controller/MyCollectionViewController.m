@@ -86,13 +86,13 @@
         if ( page==1) {
             [self.dataArray removeAllObjects];
         }
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         [self.dataArray setArray:[[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"]];
         [self.tableview reloadData];
     } failure:^(NSError *error) {
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         DLog(@"error--%@",error);
     }];
 }

@@ -72,11 +72,11 @@
     [param safeSetObject:@(page) forKey:@"page"];
     [param safeSetObject:@(pageSize) forKey:@"pageSize"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatListNew.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         
         if (page==1) {
-            self.tableview.footerHidden = NO;
+            self.tableview.mj_footer.hidden = NO;
             [_dataArray removeAllObjects];
         }
         [_chooseArray removeAllObjects];
@@ -86,7 +86,7 @@
         NSArray * arr =[dict safeObjectForKey:@"array"];
 
         if (arr.count<30) {
-            self.tableview.footerHidden = YES;
+            self.tableview.mj_footer.hidden = YES;
         }
         
         for (int i =0; i<arr.count; i++) {
@@ -100,8 +100,8 @@
         
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
 
     }];
 }

@@ -17,6 +17,7 @@
 #import "WriteArtcleViewController.h"
 #import "ShareListView.h"
 #import "ShareHealthItem.h"
+#import "ShareDetailView.h"
 @interface HealthDetailViewController ()<UITableViewDelegate,UITableViewDataSource,NewHealthDetileFiveDelegate,NewHealthDetailThirdDelegate>
 @property (strong, nonatomic) UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray  * dataArray;
@@ -42,11 +43,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"健康报告";
-    self.tableview = [[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.view.backgroundColor =[UIColor whiteColor];
+    self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 70, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-70) style:UITableViewStylePlain];
+    
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.separatorStyle =UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableview];
+    
+    CGRect cellRectInWindow = [self.view convertRect:self.view.bounds toView:nil];
+    DLog(@"%.1f,%.1f",cellRectInWindow.origin.y,JFA_SCREEN_HEIGHT);
+
     [self setExtraCellLineHiddenWithTb:self.tableview];
     _dataArray = [NSMutableArray array];
     [self getInfo];
@@ -60,20 +67,12 @@
     // Do any additional setup after loading the view from its nib.
 }
 
--(void)buildtableFootView
-{
-    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 80)];
-    
-}
 
 -(void)buildRightNaviBarItem
 {
-    
-    
-        UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"shareWhite_"] style:UIBarButtonItemStylePlain target:self action:@selector(didShare)];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"shareWhite_"] style:UIBarButtonItemStylePlain target:self action:@selector(didShare)];
     
     self.navigationItem.rightBarButtonItem = rightItem;
-    
 }
 
 
@@ -344,7 +343,7 @@
 #pragma  mark ---cellDelegate
 -(void)didShareImage
 {
-    UIImage * image = [self getImageWithView:self.tableview];
+    UIImage * image = [self showShareView];
     WriteArtcleViewController * write = [[WriteArtcleViewController alloc]init];
     write.firstImage = image;
     write.shareType = @"8";
@@ -353,7 +352,7 @@
 
 -(void)didShare
 {
-    UIImage * image = [self getImageWithView:self.tableview];
+    UIImage * image = [self showShareView];
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     [al addAction:[UIAlertAction actionWithTitle:@"微信好友" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -462,65 +461,29 @@
 -(NSString *)getDUDUAlertCtitle:(float)lastkg
 {
     return [NSString stringWithFormat:@"恭喜您，已减%.1f斤，发条动态向各位减脂同道分享自己的变化吧！记录数据，超越自己。",lastkg*2];
-    
 }
 
-
-
-//-(NSString *)getAlertViewTitle:(HealthDetailsItem*)item
-//{
-//
-//    if (item.weight ==item.lastWeight) {
-//        return [NSString stringWithFormat:@"您现在体重为%.1fkg，发条动态吧，记录数据，超越自己。",item.weight];
-//    }else
-//    {
-//        NSString * status = @"";
-//        if (item.weight-item.lastWeight>0) {
-//            status = @"重";
-//        }else{
-//            status = @"轻";
-//        }
-//
-//        return [NSString stringWithFormat:@"您比上次%@了%.1fkg，发条动态向各位减脂同道分享自己的变化据吧！记录数据，超越自己。",status,fabsf(item.weight-item.lastWeight)];
-//    }
-//
-//}
-//
-
-    
+#pragma mark ---获取分享view
 -(UIImage *)showShareView
 {
-    
-    NSString * qrCode = [UserModel shareInstance].qrcodeImageUrl;
-    if (!qrCode||qrCode.length<1) {
-        [[UserModel shareInstance]getbalance];
-    }
-    
-    ShareListView * shareTr = [self getXibCellWithTitle:@"ShareListView"];
-    ShareHealthItem * item1 = [self.shareDict safeObjectForKey:@"first"];
-    ShareHealthItem * item2 =[self.shareDict safeObjectForKey:@"now"];
-    NSMutableArray * arr =[NSMutableArray array];
-    [arr addObject:item1];
-    [arr addObject:item2];
-    [shareTr setInfoWithArr:arr];
-    [self.view addSubview:shareTr];
-    [self.view bringSubviewToFront:shareTr];
-    return  [self getImageWithView:shareTr];
-    
+    ShareDetailView * de = [self getXibCellWithTitle:@"ShareDetailView"];
+    [de setInfoWithItem:self.infoItem];
+    [self.view addSubview:de];
+    [self.view bringSubviewToFront:de];
+    return  [self getImageWithView:de];
 }
 
 -(UIImage *)getImageWithView:(UIView*)view
 {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0); //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
-
-//    UIGraphicsBeginImageContext(view.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
+    UIGraphicsBeginImageContext(view.bounds.size);     //currentView 当前的view  创建一个基于位图的图形上下文并指定大小为
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];//renderInContext呈现接受者及其子范围到指定的上下文
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();//返回一个基于当前图形上下文的图片
     UIGraphicsEndImageContext();//移除栈顶的基于当前位图的图形上下文
     //    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);//然后将该图片保存到图片图
-//    [view removeFromSuperview];
+    [view removeFromSuperview];
     return viewImage;
 }
+
 
 
 

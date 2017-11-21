@@ -28,13 +28,11 @@
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/queryTaskRule.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
-        
         NSArray * arr = [[dic objectForKey:@"data"]objectForKey:@"array"];
-        
         for (int i =0; i<arr.count; i++) {
             NSDictionary * dic = arr[i];
             [self getdayLabelWithIndex:i].text =[NSString stringWithFormat:@"第%@天",[dic safeObjectForKey:@"days"]];
-            [self getIntegralLabelWithIndex:i].text =[NSString stringWithFormat:@"+%@",[arr[0]objectForKey:@"Integral"]];
+            [self getIntegralLabelWithIndex:i].text =[NSString stringWithFormat:@"+%@",[arr[i]objectForKey:@"Integral"]];
             NSString * status = [dic safeObjectForKey:@"status"];
             [self selectedItemWithIndex:i status:status];
         }
@@ -139,19 +137,19 @@
 
 -(void)didSignIn
 {
-//    NSMutableDictionary * params  = [NSMutableDictionary dictionary];
-//    [params setObject:@"1" forKey:@"taskId"];
-//    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-//
-//    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-//        DLog(@"签到success-dic:%@",dic);
-//        [[UserModel shareInstance]showSuccessWithStatus:@"签到成功！"];
+    NSMutableDictionary * params  = [NSMutableDictionary dictionary];
+    [params setObject:@"1" forKey:@"taskId"];
+    [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+
+    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+        DLog(@"签到success-dic:%@",dic);
+        [[UserModel shareInstance]showSuccessWithStatus:@"签到成功！"];
         self.signInBtn.selected = YES;
         self.signInBtn.backgroundColor = HEXCOLOR(0x9b9b9b);
         self.hidden = YES;
         [self removeFromSuperview];
-//    } failure:^(NSError *error) {
-//        DLog(@"签到失败-error:%@",error);
-//    }];
+    } failure:^(NSError *error) {
+        DLog(@"签到失败-error:%@",error);
+    }];
 }
 @end

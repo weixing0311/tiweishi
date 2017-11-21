@@ -73,7 +73,7 @@
 
     
     [self setRefrshWithTableView:(UITableView *)self.collectionView];
-    [self.collectionView headerBeginRefreshing];
+    [self.collectionView.mj_header beginRefreshing];
     
     [self getBanner];
 }
@@ -102,18 +102,18 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:kgetGoodsListInfo HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"goods---%@--message_%@",dic,[dic objectForKey:@"message"]);
-        [self.collectionView headerEndRefreshing];
-        [self.collectionView footerEndRefreshing];
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
 
         if (self.page ==1) {
             [_dataArray removeAllObjects];
-            self.collectionView.footerHidden = NO;
+            self.collectionView.mj_footer.hidden = NO;
 
         }
         
         NSArray *array = [[dic objectForKey:@"data"] objectForKey:@"array"];
         if ( array.count<30) {
-            self.collectionView.footerHidden = YES;
+            self.collectionView.mj_footer.hidden = YES;
         }
         for (NSDictionary *dict  in array) {
             GoodsItem *item = [[GoodsItem alloc]init];
@@ -124,8 +124,8 @@
         [self.collectionView reloadData];
         
     } failure:^(NSError *error) {
-        [self.collectionView headerEndRefreshing];
-        [self.collectionView footerEndRefreshing];
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
 
         if ([error code]==402) {
             

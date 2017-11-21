@@ -7,14 +7,10 @@
 //
 
 #import "NewHealthViewController.h"
-#import "HealthMainCell.h"
-#import "MeasurementInfoCell.h"
 #import "LoignViewController.h"
 #import "UserCellCell.h"
 #import "UserListView.h"
 #import "ShareViewController.h"
-#import "CharViewController.h"
-#import "WWXBlueToothManager.h"
 #import "HealthModel.h"
 #import "JPUSHService.h"
 #import "ADDChengUserViewController.h"
@@ -23,32 +19,13 @@
 #import "HealthDetailViewController.h"
 #import "WeighingViewController.h"
 #import "HistoryTotalViewController.h"
-@interface NewHealthViewController ()<userListDelegate,healthMainDelegate,weightingDelegate>
+#import "NewHealthCell.h"
+@interface NewHealthViewController ()<userListDelegate,weightingDelegate,UITableViewDelegate,UITableViewDataSource,newHealthCellDelegate>
 @property (nonatomic,strong)UIView * userBackView;
 @property (nonatomic,strong)UserListView * userListView;
-@property (weak, nonatomic) IBOutlet UIButton *userHeaderView;
-@property (weak, nonatomic) IBOutlet UIButton *rightBtn;
-@property (weak, nonatomic) IBOutlet UILabel *resignTimelb;
-@property (weak, nonatomic) IBOutlet UILabel *redFatlb;
-@property (weak, nonatomic) IBOutlet UILabel *fatStatuslb;
-@property (weak, nonatomic) IBOutlet UILabel *weightlb;
-@property (weak, nonatomic) IBOutlet UILabel *lessWeightLb;
-@property (weak, nonatomic) IBOutlet UIImageView *trendArrowImageView;
-@property (weak, nonatomic) IBOutlet UIView *minView;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
-#pragma mark --引导页
-///1
-@property (weak, nonatomic) IBOutlet UIView *guide1View;
-@property (weak, nonatomic) IBOutlet UIView *Guide2View;
-@property (weak, nonatomic) IBOutlet UIView *guide3View;
-@property (weak, nonatomic) IBOutlet UIButton *next1btn;
-@property (weak, nonatomic) IBOutlet UIButton *next2btn;
-@property (weak, nonatomic) IBOutlet UIButton *next3btn;
-
-- (IBAction)didClickNext:(id)sender;
-- (IBAction)didStop:(id)sender;
-- (IBAction)didFinish:(id)sender;
 
 @end
 
@@ -66,41 +43,39 @@
     self.tabBarController.tabBar.hidden = NO;
     [self refreshMyInfoView];
     
-//    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
-//    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
     [self buildUserListView];
     [[UserModel shareInstance]getbalance];
-    
     [[UserModel shareInstance]getUpdateInfo];
 
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_navbar.png"] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
     headerArr = [NSMutableArray array];
-    [self setJpush];
-    self.minView.layer.borderWidth= 2;
-    self.minView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+    self.tableview.delegate = self;
+    self.tableview.dataSource = self;
+    self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    
+    
+    
+    
+//    [self.tableview addHeaderWithTarget:self action:@selector(headerRereshing)];
+//    self.tableview.headerPullToRefreshText = @"下拉可以刷新了";
+//    self.tableview.headerReleaseToRefreshText = @"松开马上刷新了";
+//    self.tableview.headerRefreshingText = @"刷新中..";
+    self.tableview.separatorStyle =UITableViewCellSeparatorStyleNone;
 
+    [self setJpush];
     //删除评测数据返回后刷新
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshPcInfo) name:@"deletePCINFO" object:nil];
     [self getHeaderInfo];
     
-    if (![[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage1]) {
-        self.guide1View.hidden = NO;
-        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage1];
-    }
-    
     // Do any additional setup after loading the view from its nib.
 }
-#pragma mark ---引导页操作
--(void)buildGuildView
+-(void)headerRereshing
 {
-    [self.guide1View addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didshowNextGuild:)]];
-    [self.Guide2View addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didshowNextGuild:)]];
-
-    
+    [self getHeaderInfo];
 }
 #pragma mark -----
 -(void)setJpush
@@ -140,116 +115,60 @@
     [param safeSetObject:[UserModel shareInstance].subId forKey:@"subUserId"];
     
     self.currentTasks = [[BaseSservice sharedManager]post1:kuHeaderserReviewUrl HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
-        
+        [self.tableview.mj_header endRefreshing];
         
         [headerArr removeAllObjects];
         HealthItem *item =[[HealthItem alloc]init];
         [item setobjectWithDic:[dic objectForKey:@"data"]];
         [headerArr addObject:item];
-        [self refreshPageInfoWithItem:item];
+        [self.tableview reloadData];;
         
     } failure:^(NSError *error) {
         if (error.code ==402) {
             [headerArr removeAllObjects];
-            [self refreshPageInfoWithItem:nil];
+            [self.tableview reloadData];
 
         }
-        
+        [self.tableview.mj_header endRefreshing];
+
         
     }];
 }
--(void)refreshPageInfoWithItem:(HealthItem*)item
-{
-    
-    if (item==nil) {
-        self.weightlb.text = @"0.0kg";
-        self.lessWeightLb.text = @"-";
-        self.trendArrowImageView.hidden = YES;
-        self.fatStatuslb.text = @"";
-        self.resignTimelb.text = @"";
-        self.redFatlb.text = @"";
 
-    }
-    self.resignTimelb.text = [NSString stringWithFormat:@"已使用脂将军%d天",item.userDays];
-    self.redFatlb.text = [NSString stringWithFormat:@"已减%.1fkg",item.subtractWeight*100/100];
-    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return JFA_SCREEN_HEIGHT>560?JFA_SCREEN_HEIGHT:560;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * identifier = @"NewHealthCell";
     
-    self.weightlb.text = [NSString stringWithFormat:@"%.1f",item.weight];
+    NewHealthCell * cell = [self.tableview dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [self getXibCellWithTitle:identifier];
+    }
+    cell.delegate = self;
+    if (headerArr&&headerArr.count>0) {
+        HealthItem * item  = [headerArr objectAtIndex:indexPath.row];
+        [cell refreshPageInfoWithItem:item];
+    }else{
+        [cell refreshPageInfoWithItem:nil];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (item.weight) {
-        float weightChange = item.weight - item.lastWeight;
-        DLog(@"%f--%f",item.weight,item.lastWeight);
-        self.lessWeightLb.text = [NSString stringWithFormat:@"%.1fkg",fabsf(weightChange)];
-        self.trendArrowImageView.image =[UIImage imageNamed:weightChange>0?@"trand_up_icon":@"trand_down_icon"];
-        self.trendArrowImageView.hidden = NO;
-    }
-    else {
-        self.trendArrowImageView.hidden = YES;
-        self.lessWeightLb.text = @"-";
-    }
-    switch (item.weightLevel) {
-        case 1:
-            self.fatStatuslb.text = [NSString stringWithFormat:@"偏瘦"];
-//            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
-            break;
-        case 2:
-            self.fatStatuslb.text = [NSString stringWithFormat:@"正常"];
-//            self.fatStatuslb.textColor = HEXCOLOR(0x41bf7c);
-            break;
-        case 3:
-            self.fatStatuslb.text = [NSString stringWithFormat:@"轻度肥胖"];
-//            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
-            break;
-        case 4:
-            self.fatStatuslb.text = [NSString stringWithFormat:@"中度肥胖"];
-//            self.fatStatuslb.textColor = HEXCOLOR(0xf4a519);
-            break;
-        case 5:
-            self.fatStatuslb.text = [NSString stringWithFormat:@"重度肥胖"];
-//            self.fatStatuslb.textColor = HEXCOLOR(0xe84849);
-            break;
-        case 6:
-            self.fatStatuslb.text = [NSString stringWithFormat:@"极度肥胖"];
-//            self.fatStatuslb.textColor = HEXCOLOR(0xe84849);
-            break;
-            
-        default:
-            break;
-    }
+    return cell;
+}
 
-}
--(void)enterDetailView
-{
-    if (!headerArr||headerArr.count<1) {
-        return;
-    }
-    HealthItem * item = [headerArr objectAtIndex:0];
-    
-    HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
-    hd.hidesBottomBarWhenPushed=YES;
-    hd.dataId =[NSString stringWithFormat:@"%d",item.DataId];
-    
-    [self.navigationController pushViewController:hd animated:YES];
-}
--(void)didEnterChart
-{
-    
-    CharViewController * cr =[[CharViewController alloc]init];
-    //    self.navigationController.navigationBarHidden = NO;
-    cr.hidesBottomBarWhenPushed=YES;
-    
-    [self.navigationController pushViewController:cr animated:YES];
-}
 #pragma mark ---↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 
 -(void)refreshMyInfoView
 {
-    [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].subId];
-    
-    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")];
-    
-//    _userView.nameLabel.text = [SubUserItem shareInstance].nickname;
+    [self.tableview reloadData];
 }
 
 -(void)refreshPcInfo
@@ -257,16 +176,6 @@
     [self getHeaderInfo];
 }
 #pragma mark ---show subviewdelegate
--(void)showUserList
-{
-    if (self.userListView.hidden ==YES) {
-        self.userListView.hidden = NO;
-        [self.view bringSubviewToFront:self.userListView];
-        [self.userListView refreshInfo];
-    }else{
-        self.userListView.hidden = YES;
-    }
-}
 -(void)changeShowUserWithSubId:(NSString *)subId isAdd:(BOOL)isAdd
 {
     if (isAdd) {
@@ -277,11 +186,6 @@
         
         [self.navigationController pushViewController:addc animated:YES];
         
-        //        ChangeUserInfoViewController * cu = [[ChangeUserInfoViewController alloc]init];
-        //        cu.changeType = 3;
-        ////        self.navigationController.navigationBarHidden = NO;
-        //        cu.hidesBottomBarWhenPushed = YES;
-        //        [self.navigationController pushViewController:cu animated:YES];
     }else{
         
         if ([subId isEqualToString:[UserModel shareInstance].subId]) {
@@ -297,56 +201,20 @@
         [self reloadAll];
     }
     self.userListView.hidden = YES;
-    
 }
 
 
 -(void)reloadAll
 {
-    
     [self getHeaderInfo];
-    [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];
-
-//    [_userView.headImageView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
-//    _userView.nameLabel.text =[SubUserItem shareInstance].nickname;
-    
 }
 
 
-- (IBAction)didClickPC:(id)sender {
-    WeighingViewController * we = [[WeighingViewController alloc]init];
-    we.delegate = self;
-    [self presentViewController:we animated:YES completion:nil];
-}
-- (IBAction)didClickEnterDetail:(id)sender {
-    if (!headerArr|| headerArr.count<1) {
-        return;
-    }
-    HealthItem * item = [headerArr objectAtIndex:0];
-    HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
-    hd.hidesBottomBarWhenPushed=YES;
-    hd.dataId =[NSString stringWithFormat:@"%d",item.DataId];
+#pragma  mark ----cell delegate
 
-    [self.navigationController pushViewController:hd animated:YES];
-    
-    
-    
-}
-- (IBAction)didClickShowhistoryInfo:(id)sender {
-    
-    HistoryTotalViewController * hist = [[HistoryTotalViewController alloc]init];
-//    HistoryInfoViewController * hist = [[HistoryInfoViewController alloc]init];
-    hist.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController: hist animated:YES];
-}
 
-- (IBAction)didEnterUserDirections:(id)sender {
-    UserDirectionsViewController * dis = [[UserDirectionsViewController alloc]init];
-    dis.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:dis animated:YES];
-}
-
-- (IBAction)showUserList:(id)sender {
+-(void)didShowUserList
+{
     if (self.userListView.hidden ==YES) {
         self.userListView.hidden = NO;
         [self.view bringSubviewToFront:self.userListView];
@@ -356,7 +224,41 @@
     }
 
 }
+-(void)didShowSHuoming
+{
+    UserDirectionsViewController * dis = [[UserDirectionsViewController alloc]init];
+    dis.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:dis animated:YES];
 
+}
+-(void)didWeighting
+{
+    WeighingViewController * we = [[WeighingViewController alloc]init];
+    we.delegate = self;
+    [self presentViewController:we animated:YES completion:nil];
+
+}
+-(void)didEnterDetailVC
+{
+    if (!headerArr||headerArr.count<1) {
+        [[UserModel shareInstance]showInfoWithStatus:@"暂无数据"];
+        return;
+    }
+    HealthItem * item = [headerArr objectAtIndex:0];
+    
+    HealthDetailViewController * hd =[[HealthDetailViewController alloc]init];
+    hd.hidesBottomBarWhenPushed=YES;
+    hd.dataId =[NSString stringWithFormat:@"%d",item.DataId];
+    
+    [self.navigationController pushViewController:hd animated:YES];
+
+}
+-(void)didEnterRightVC
+{
+    HistoryTotalViewController * hist = [[HistoryTotalViewController alloc]init];
+    hist.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController: hist animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -373,41 +275,4 @@
 }
 */
 
-- (IBAction)didClickNext:(UIButton *)sender {
-   
-    if (sender.tag==1) {
-        self.Guide2View.hidden =NO;
-        self.guide1View.hidden = YES;
-
-    }else if (sender.tag==2){
-        self.guide3View.hidden = NO;
-        self.Guide2View.hidden =YES;
-    }
-}
-
--(void)didshowNextGuild:(UIGestureRecognizer*)gest
-{
-    if (gest.view ==self.guide1View) {
-        self.Guide2View.hidden =NO;
-        self.guide1View.hidden = YES;
-        
-    }else if (gest.view ==self.Guide2View){
-        self.guide3View.hidden = NO;
-        self.Guide2View.hidden =YES;
-    }
-
-}
-
-- (IBAction)didStop:(id)sender {
-    self.guide1View.hidden = YES;
-    self.Guide2View.hidden = YES;
-    self.guide3View.hidden = YES;
-
-}
-- (IBAction)didFinish:(id)sender {
-    self.guide1View.hidden = YES;
-    self.Guide2View.hidden = YES;
-    self.guide3View.hidden = YES;
-
-}
 @end

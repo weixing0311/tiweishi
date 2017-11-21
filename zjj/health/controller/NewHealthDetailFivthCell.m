@@ -65,7 +65,7 @@
 
         self.title2Label.text = @"基础代谢";
         self.value2Label.text = [NSString stringWithFormat:@"%.1f",item.bmr];
-        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMR item:item];
 
         
         
@@ -92,7 +92,7 @@
             
             self.sliderLislb.text = @"18.5";
             self.sliderMorlb.text = @"24";
-            
+            self.sliderBgImageView.image = getImage(@"sliderBg2_");
             currX = [self getlocationDianL:self.currItem.bmi  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
@@ -103,9 +103,12 @@
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
+            self.sliderBgImageView.image = getImage(@"sliderBg2_");
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.fatWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.fatWeightMax];
             
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatWeightMax];
+            
             
             currX = [self getlocationDianL:self.currItem.fatWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
@@ -114,15 +117,16 @@
         case 3:
             self.headerImageView.image = getImage(@"fat%1_");
             self.headerNamelb.text = @"体脂率";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatPercentage];
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentage];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
 
+            self.sliderBgImageView.image = getImage(@"sliderBg2_");
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentageMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentageMax];
             
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.fatPercentageMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.fatPercentageMax];
-            
-            currX = [self getlocationDianL:self.currItem.fatWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+            currX = [self getlocationDianL:self.currItem.fatPercentage  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 4:
@@ -131,9 +135,10 @@
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.proteinWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
+            self.sliderBgImageView.image = getImage(@"sliderBg3_");
 
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.proteinWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.proteinWeightMax];
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.proteinWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.proteinWeightMax];
             
             currX = [self getlocationDianL:self.currItem.proteinWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
@@ -144,9 +149,9 @@
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
-            
-            self.sliderLislb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneWeightMax];
+            self.sliderBgImageView.image = getImage(@"sliderBg3_");
+            self.sliderLislb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.boneWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.boneWeightMax];
             
             currX = [self getlocationDianL:self.currItem.boneWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
@@ -158,12 +163,12 @@
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.waterWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
-            
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.waterWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.waterWeightMax];
+            self.sliderBgImageView.image = getImage(@"sliderBg3_");
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.waterWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.waterWeightMax];
             
             currX = [self getlocationDianL:self.currItem.waterWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
-
 
             break;
         case 7:
@@ -172,9 +177,10 @@
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.muscleWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
+            self.sliderBgImageView.image = getImage(@"sliderBg3_");
 
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.muscleWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.muscleWeightMax];
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.muscleWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.muscleWeightMax];
             
             currX = [self getlocationDianL:self.currItem.muscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
@@ -183,6 +189,8 @@
             self.headerImageView.image = getImage(@"daiX1_");
             self.headerNamelb.text = @"基础代谢";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmr];
+            self.sliderBgImageView.image = getImage(@"sliderBg2_");
+
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
 
@@ -198,6 +206,7 @@
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.visceralFatPercentage];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
+            self.sliderBgImageView.image = getImage(@"sliderBg4_");
 
             self.sliderLislb.text =@"10";
             self.sliderMorlb.text = @"14";
@@ -236,7 +245,7 @@
     self.headerContentlb.adjustsFontSizeToFitWidth =YES;
     NSString * contentStr =[[HealthDetailsItem instance]getHealthDetailShuoMingWithStatus:index item:self.currItem];
     self.secondContent.text = contentStr;
-    self.sliderIconImage.frame = CGRectMake(currX, self.sliderBgView.bounds.size.height/2-10, 20, 20);
+    self.sliderIconImage.frame = CGRectMake(30+currX, self.sliderBgView.bounds.size.height/2-10, 20, 20);
 
 }
 
@@ -284,29 +293,31 @@
 
 
 
--(float)getlocationDianL:(float)dian Withleft:(float)left right:(float)right
+-(double)getlocationDianL:(float)dian Withleft:(float)min right:(float)max
 {
-    float width = (JFA_SCREEN_WIDTH -60)/3;
-
-    if (dian<left) {
-        float loW = 30+(width/left*dian);
-        return loW;
+    float width = JFA_SCREEN_WIDTH-60;//总长度
+    float start  = min-(max-min);//起始位置数值
+    float end    = max+(max-min);//终点位置数值
+    float one     = width/(end-start); //单点数值所占长度
+    
+    
+    if (dian<start||dian==start) {
+        return 0;
     }
-    else if (dian>left &&dian<right)
-    {
-        float loW = 30+width +(width/(right-left)*(dian-left));
-        return loW;
+    else if (dian>end||dian==end) {
+        return width;
     }else{
-        float loW = 30+width*2+(width/50*(dian-right));
-        return loW;
+        DLog(@"点坐标:--%f  min%.1f max %.1f",(dian-start)*one,(min-start)*one,(max-start)*one);
+        return (dian-start)* one;
     }
+    
 }
 
 
 -(UIColor *)getColorWithString:(NSString *)string
 {
     
-    if ([string isEqualToString:@"偏低"]||[string isEqualToString:@"偏高"]||[string isEqualToString:@"超标"]) {
+    if ([string isEqualToString:@"偏低"]||[string isEqualToString:@"偏高"]||[string isEqualToString:@"超标"]||[string isEqualToString:@"低"]) {
         return warningColor;
     }
     else if ([string isEqualToString:@"正常"])
@@ -355,7 +366,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"偏高";
+                    return @"低";
                     break;
                 case 3:
                     return @"高";
@@ -371,7 +382,7 @@
                     return @"正常";
                     break;
                 case 2:
-                    return @"偏高";
+                    return @"低";
                     break;
                 case 3:
                     return @"高";
@@ -467,7 +478,24 @@
                     break;
             }
             break;
-            
+        case IS_MODEL_BMR:
+            switch (item.bmrLevel) {
+
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"低";
+                    break;
+                case 3:
+                    return @"高";
+                    break;
+
+                default:
+                    break;
+            }
+
+            break;
         default:
             break;
     }

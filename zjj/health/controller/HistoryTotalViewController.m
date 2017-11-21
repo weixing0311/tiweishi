@@ -42,7 +42,7 @@
     self.navigationItem.rightBarButtonItem = rightitem;
 
     
-    bbScr = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, self.view.frame.size.height -50)];
+    bbScr = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, self.view.frame.size.height -55)];
     bbScr.pagingEnabled = YES;
     bbScr.delegate = self;
     bbScr.scrollEnabled = NO;
@@ -72,7 +72,9 @@
     
 
 
-    
+    UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-51, JFA_SCREEN_WIDTH, 1)];
+    lineView.backgroundColor = HEXCOLOR(0xeeeeee);
+    [self.view addSubview:lineView];
     btn1 = [UIButton new];
     btn2 = [UIButton new];
     btn1.backgroundColor = [UIColor orangeColor];
@@ -94,8 +96,8 @@
     btn2.backgroundColor = [UIColor whiteColor];
     
     
-    btn1.frame = CGRectMake(0, self.view.frame.size.height-45, JFA_SCREEN_WIDTH/2, 45);
-  btn2.frame = CGRectMake(JFA_SCREEN_WIDTH/2, self.view.frame.size.height-45, JFA_SCREEN_WIDTH/2, 45);
+    btn1.frame = CGRectMake(0, self.view.frame.size.height-50, JFA_SCREEN_WIDTH/2, 50);
+  btn2.frame = CGRectMake(JFA_SCREEN_WIDTH/2, self.view.frame.size.height-50, JFA_SCREEN_WIDTH/2, 50);
 
     
 }
@@ -115,7 +117,7 @@
     btn2.backgroundColor =[UIColor whiteColor];
     
     bbScr.contentOffset = CGPointMake(0, 0);
-    UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"share_") style:UIBarButtonItemStylePlain target:self action:@selector(didClickShare)];
+    UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(didClickShare)];
     self.navigationItem.rightBarButtonItem = rightitem;
 
 }

@@ -46,7 +46,7 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"integralShopCell"bundle:nil]forCellWithReuseIdentifier:@"integralShopCell"];
     
     [self setRefrshWithTableView:(UITableView *)self.collectionView];
-    [self.collectionView headerBeginRefreshing];
+    [self.collectionView.mj_header beginRefreshing];
 }
 -(void)headerRereshing
 {
@@ -73,25 +73,25 @@
 //    [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
 
     self.currentTasks =[[BaseSservice sharedManager]post1:@"app/integral/product/queryProductintegral.do " HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
-        [self.collectionView headerEndRefreshing];
-        [self.collectionView footerEndRefreshing];
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
         
         if (self.page ==1) {
             [_dataArray removeAllObjects];
-            self.collectionView.footerHidden = NO;
+            self.collectionView.mj_footer.hidden = NO;
             
         }
         NSArray * infoArr =[[dic objectForKey:@"data"] objectForKey:@"array"];
         if (infoArr.count<30) {
-            self.collectionView.footerHidden = YES;
+            self.collectionView.mj_footer.hidden =YES;
         }
         [self.dataArray  addObjectsFromArray:infoArr];
         
         [self.collectionView reloadData];
 
     } failure:^(NSError *error) {
-        [self.collectionView headerEndRefreshing];
-        [self.collectionView footerEndRefreshing];
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
     }];
 }
 

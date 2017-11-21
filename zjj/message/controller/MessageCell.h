@@ -11,6 +11,7 @@
 @interface MessageCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *BigImageView;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

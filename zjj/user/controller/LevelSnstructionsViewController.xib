@@ -29,7 +29,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yik-Yb-mRQ">
-                    <rect key="frame" x="20" y="120" width="335" height="167.5"/>
+                    <rect key="frame" x="20" y="100" width="335" height="167.5"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="levelSM_" translatesAutoresizingMaskIntoConstraints="NO" id="iZr-aI-eO6">
                             <rect key="frame" x="0.0" y="0.0" width="335" height="167.5"/>
@@ -84,7 +84,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FJt-Sl-v7z">
-                    <rect key="frame" x="158" y="90" width="60" height="60"/>
+                    <rect key="frame" x="158" y="70" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="Hc8-6N-ovK"/>
                         <constraint firstAttribute="height" constant="60" id="nGu-bg-4Qf"/>
@@ -96,15 +96,18 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </imageView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-cY-H9E">
-                    <rect key="frame" x="20" y="345.5" width="335" height="187"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="187" id="wjr-jf-cSx"/>
-                    </constraints>
-                    <string key="text">说明：
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-cY-H9E">
+                    <rect key="frame" x="20" y="277.5" width="335" height="369.5"/>
+                    <mutableString key="text">说明：
 1.积分可以在积分商城兑换商品，完成任务可以获得积分，每个任务每日仅可完成一次。
-2.当前等级根据累计积分来判定，积分的使用与否并不影响所在的等级。</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+2.当前等级根据累计积分来判定，积分的使用与否并不影响所在的等级。
+3.成长体系里面显示累计积分，积分下方显示每日可获得积分的任务，积分商城右上角显示当前剩余的可用积分。
+4.减脂前后照片请用户上传自己的真实照片，一经发现用户存在使用虚假照片获取积分的行为我们会依据第5条规章制度处理。
+5.成长体系内的积分任务，如发现用户存在使用不正当手段获取积分的行为，我们将采取扣除积分、冻结或关闭账户等措施。
+6.有关积分的一切事物最终解释权归脂将军所属公司所有。
+7.客服电话：4006-119-516(周一至周五9:00-17:30)。</mutableString>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
             </subviews>
@@ -114,13 +117,14 @@
                 <constraint firstItem="bH6-1V-b2q" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="IW4-gd-pbJ"/>
                 <constraint firstItem="6NJ-cY-H9E" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Jhx-kU-H53"/>
                 <constraint firstItem="bH6-1V-b2q" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LVy-ae-5CB"/>
-                <constraint firstItem="FJt-Sl-v7z" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="T22-EF-48o"/>
-                <constraint firstItem="yik-Yb-mRQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="120" id="VVP-5O-A3D"/>
+                <constraint firstItem="FJt-Sl-v7z" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="T22-EF-48o"/>
+                <constraint firstItem="yik-Yb-mRQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="VVP-5O-A3D"/>
+                <constraint firstAttribute="bottom" secondItem="6NJ-cY-H9E" secondAttribute="bottom" constant="20" id="VZs-HV-9nq"/>
                 <constraint firstAttribute="trailing" secondItem="yik-Yb-mRQ" secondAttribute="trailing" constant="20" id="ZK2-9u-fWa"/>
                 <constraint firstItem="FJt-Sl-v7z" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="haM-RY-nzq"/>
                 <constraint firstAttribute="trailing" secondItem="6NJ-cY-H9E" secondAttribute="trailing" constant="20" id="ldJ-Wu-ROo"/>
                 <constraint firstAttribute="bottom" secondItem="bH6-1V-b2q" secondAttribute="bottom" id="leh-cS-BrT"/>
-                <constraint firstItem="6NJ-cY-H9E" firstAttribute="top" secondItem="yik-Yb-mRQ" secondAttribute="bottom" constant="58.5" id="of4-W8-jTV"/>
+                <constraint firstItem="6NJ-cY-H9E" firstAttribute="top" secondItem="yik-Yb-mRQ" secondAttribute="bottom" constant="10" id="of4-W8-jTV"/>
                 <constraint firstAttribute="trailing" secondItem="bH6-1V-b2q" secondAttribute="trailing" id="yYq-fe-dNg"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="53.5"/>

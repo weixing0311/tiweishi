@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="139.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="买满3套享受单套880" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHu-be-r2C">
@@ -129,18 +129,6 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmH-9a-FoA">
-                        <rect key="frame" x="8" y="64" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="40" id="HRd-UL-W7m"/>
-                            <constraint firstAttribute="height" constant="40" id="XdA-7r-5VX"/>
-                        </constraints>
-                        <state key="normal" image="checked-false.png"/>
-                        <state key="selected" image="checked-true.png"/>
-                        <connections>
-                            <action selector="didChooseCell:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="g4i-dD-H4g"/>
-                        </connections>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffE-HT-0av">
                         <rect key="frame" x="327" y="47" width="40" height="40"/>
                         <constraints>
@@ -185,6 +173,18 @@
                             <constraint firstAttribute="height" constant="1" id="ch2-94-480"/>
                         </constraints>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmH-9a-FoA">
+                        <rect key="frame" x="0.0" y="67.5" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="HRd-UL-W7m"/>
+                            <constraint firstAttribute="height" constant="40" id="XdA-7r-5VX"/>
+                        </constraints>
+                        <state key="normal" image="checked-false.png"/>
+                        <state key="selected" image="checked-true.png"/>
+                        <connections>
+                            <action selector="didChooseCell:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="g4i-dD-H4g"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="9K9-y6-CwO" secondAttribute="bottom" constant="8.5" id="5An-8g-c6n"/>
@@ -195,6 +195,7 @@
                     <constraint firstItem="3Yt-h6-K2W" firstAttribute="top" secondItem="jVs-FZ-fmQ" secondAttribute="bottom" constant="4" id="AJs-kV-9f9"/>
                     <constraint firstItem="0g2-ux-OTM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="Dq7-UZ-lwd"/>
                     <constraint firstItem="jVs-FZ-fmQ" firstAttribute="top" secondItem="K6K-8n-UE1" secondAttribute="bottom" constant="15" id="DrW-cH-56E"/>
+                    <constraint firstItem="rmH-9a-FoA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="F6q-2v-KtJ"/>
                     <constraint firstItem="jVs-FZ-fmQ" firstAttribute="leading" secondItem="SI9-h0-SdD" secondAttribute="trailing" constant="10" id="Gok-QC-PFt"/>
                     <constraint firstItem="ffE-HT-0av" firstAttribute="top" secondItem="K6K-8n-UE1" secondAttribute="bottom" constant="7" id="Hkf-kV-z7z"/>
                     <constraint firstItem="nHu-be-r2C" firstAttribute="leading" secondItem="0g2-ux-OTM" secondAttribute="trailing" constant="10" id="J14-w7-pOE"/>
@@ -206,12 +207,11 @@
                     <constraint firstItem="0g2-ux-OTM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="WqN-8P-H7q"/>
                     <constraint firstAttribute="trailingMargin" secondItem="ffE-HT-0av" secondAttribute="trailing" id="Zud-zb-G2E"/>
                     <constraint firstItem="SI9-h0-SdD" firstAttribute="top" secondItem="K6K-8n-UE1" secondAttribute="bottom" constant="15" id="aLw-Ge-l9a"/>
+                    <constraint firstItem="SI9-h0-SdD" firstAttribute="centerY" secondItem="rmH-9a-FoA" secondAttribute="centerY" id="b7j-fS-uku"/>
                     <constraint firstItem="IDu-Cm-RJm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="bAY-X8-GSA"/>
                     <constraint firstItem="IDu-Cm-RJm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="bmv-sF-ukN"/>
-                    <constraint firstItem="rmH-9a-FoA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="f4U-D8-Dhb"/>
                     <constraint firstItem="FHg-GB-GiP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="gst-xo-ldI"/>
                     <constraint firstItem="nHu-be-r2C" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="jeT-Ja-ahy"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="rmH-9a-FoA" secondAttribute="bottom" constant="27.5" id="nhC-Nx-x5q"/>
                     <constraint firstItem="SI9-h0-SdD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="45" id="pgH-wP-BzF"/>
                     <constraint firstItem="K6K-8n-UE1" firstAttribute="top" secondItem="FHg-GB-GiP" secondAttribute="bottom" constant="5" id="uik-wB-7YG"/>
                 </constraints>

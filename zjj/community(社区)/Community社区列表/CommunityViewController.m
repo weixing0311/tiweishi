@@ -99,7 +99,7 @@
     [self setRefrshWithTableView:self.tableview];
     pageSize= 30;
     self.segment.selectedSegmentIndex = 1;
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
     
     [self buildGuidePage];
 }
@@ -125,7 +125,7 @@
 }
 -(void)refreshTableView
 {
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 -(void)buildRightNaviBarItem
 {
@@ -195,12 +195,12 @@
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
     self.currentTasks = [[BaseSservice sharedManager]post1:urlStr HiddenProgress:NO paramters:params  success:^(NSDictionary *dic) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         
         if (page ==1) {
             [self.dataArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
+            self.tableview.mj_footer.hidden = NO;
         }
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         if (self.segment.selectedSegmentIndex ==0) {
@@ -210,7 +210,7 @@
         }
         NSMutableArray * infoArr = [dataDic safeObjectForKey:@"array"];
         if (infoArr.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden=YES;
         }
         
 
@@ -226,8 +226,8 @@
         
         DLog(@"%@",dic);
     } failure:^(NSError *error) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         if (page ==1) {
             [_dataArray removeAllObjects];
             [self.tableview reloadData];
@@ -315,14 +315,13 @@
              ];
             
             
-            [cell.bgImageView getImageWithUrl:[_infoDict safeObjectForKey:@"backGroundImg"] getImageFinish:^(UIImage *image, NSError *error) {
+            [cell.bgImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"backGroundImg"]] placeholderImage:getImage(@"newMineBg_") completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                 if (error) {
-                    cell.bgImageView.image = getImage(@"newMineBg_") ;
                     return ;
                 }
                 cell.bgImageView.image = [self cutImage:image imgViewWidth:image.size.width imgViewHeight:image.size.width*0.56];
-
             }];
+            
             cell.nicknamelb.text = [_infoDict safeObjectForKey:@"nickName"];
             NSString * introduction = [_infoDict safeObjectForKey:@"introduction"];
             if (introduction.length<1) {
@@ -362,7 +361,7 @@
             }else{
                 cell.afterweightlb.textColor = [UIColor orangeColor];
             }
-            cell.lossWeightlb.text = [NSString stringWithFormat:@"%.0f",lossWeight>0?lossWeight:0];
+            cell.lossWeightlb.text = [NSString stringWithFormat:@"%.1f",lossWeight>0?lossWeight:0];
             
             return cell;
         }
@@ -375,16 +374,13 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [cell.fatBeforeBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_")];
-            [cell.fatAfterBtn setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_")];
-            
+            [cell.fatBeforeImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatBefore"]] placeholderImage:getImage(@"fatBefore_") options:SDWebImageRetryFailed];
+            [cell.fatAfterImageView sd_setImageWithURL:[NSURL URLWithString:[_infoDict safeObjectForKey:@"fatAfter"]] placeholderImage:getImage(@"fatAfter_") options:SDWebImageRetryFailed];
             return cell;
-            
         }
         else
         {
             CommunityModel * item =[self.dataArray objectAtIndex:indexPath.row];
-            
             
             if (item.pictures.count==1||item.movieStr.length>5) {
                 static  NSString * identifier = @"CommunityCell";
@@ -448,6 +444,8 @@
         }
         if (self.segment.selectedSegmentIndex ==2) {
             cell.gzBtn.selected = YES;
+            cell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
+
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -471,6 +469,7 @@
         }
         if (self.segment.selectedSegmentIndex ==2) {
             cell.gzBtn.selected = YES;
+            cell.gzBtn.layer.borderColor = HEXCOLOR(0x666666).CGColor;
         }
 
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -562,7 +561,11 @@
                 if ([keyModel.userId isEqualToString:model.userId]) {
                     *stop =YES;
                     if (*stop ==YES) {
-                        [_dataArray removeObject:keyModel];
+                        if (self.segment.selectedSegmentIndex==2) {
+                            [_dataArray removeObject:keyModel];
+                        }else{
+                            keyModel.isFollow=@"0";
+                        }
                     }
                 }
             }];
@@ -737,7 +740,11 @@
                 if ([keyModel.userId isEqualToString:model.userId]) {
                     *stop =YES;
                     if (*stop ==YES) {
-                        [_dataArray removeObject:keyModel];
+                        if (self.segment.selectedSegmentIndex==2) {
+                            [_dataArray removeObject:keyModel];
+                        }else{
+                            keyModel.isFollow=@"0";
+                        }
                     }
                 }
             }];
@@ -963,6 +970,8 @@
     [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"sex"] forKey:@"sex"];
     [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"heigth"] forKey:@"heigth"];
     [edit.upDataDict safeSetObject:[_infoDict safeObjectForKey:@"birthday"] forKey:@"birthday"];
+    edit.hidesBottomBarWhenPushed = YES;
+
     [self.navigationController pushViewController:edit animated:YES];
 
 }
@@ -990,7 +999,7 @@
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化
         picker.delegate = self;
-        picker.allowsEditing = NO;//设置可编辑
+        picker.allowsEditing = YES;//设置可编辑
         picker.sourceType = sourceType;
         [self presentViewController:picker animated:YES completion:nil];
         
@@ -1005,7 +1014,7 @@
             
         }
         pickerImage.delegate = self;
-        pickerImage.allowsEditing = NO;
+        pickerImage.allowsEditing = YES;
         [self presentViewController:pickerImage animated:YES completion:nil];
         
     }]];
@@ -1021,7 +1030,7 @@
     //判断资源类型
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]){
         //如果是图片
-        UIImage *image =info[UIImagePickerControllerOriginalImage];
+        UIImage *image =info[UIImagePickerControllerEditedImage];
         [image scaledToSize:CGSizeMake(JFA_SCREEN_WIDTH, JFA_SCREEN_WIDTH/image.size.width*image.size.height)];
         
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -1078,7 +1087,7 @@
     
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadBackGroundImg.do" paramters:param imageData:fileData imageName:@"imgurl" success:^(NSDictionary *dic) {
         [SVProgressHUD dismiss];
-        [self.tableview headerBeginRefreshing];
+        [self.tableview.mj_header beginRefreshing];
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
@@ -1202,7 +1211,7 @@
 
 - (IBAction)didClickSegment:(UISegmentedControl *)sender {
     
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 
 

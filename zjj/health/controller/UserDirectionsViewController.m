@@ -24,13 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"使用说明";
-    [self buildScrol];
     self.view.backgroundColor = [UIColor whiteColor];
-    // Do any additional setup after loading the view from its nib.
-}
--(void)buildScrol
-{
-    UIScrollView * scr =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
+
+    UIScrollView * scr =[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
     [self.view addSubview:scr];
     scr.pagingEnabled = YES;
     scr.contentSize = CGSizeMake(JFA_SCREEN_WIDTH*3, 0);
@@ -40,7 +36,6 @@
         imageView.image = getImage(imageName);
         [scr addSubview:imageView];
     }
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

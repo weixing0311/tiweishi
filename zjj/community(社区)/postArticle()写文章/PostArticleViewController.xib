@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,11 +36,21 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可输入121字" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovk-r1-uJH">
+                    <rect key="frame" x="205" y="230" width="150" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="daa-Ly-Bd4"/>
+                        <constraint firstAttribute="width" constant="150" id="eXe-nD-Vv1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Chr-Wo-5X3">
-                    <rect key="frame" x="10" y="240" width="355" height="377"/>
+                    <rect key="frame" x="10" y="250" width="355" height="367"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="gFK-EW-jFM">
-                            <rect key="frame" x="0.0" y="0.0" width="355" height="377"/>
+                            <rect key="frame" x="0.0" y="0.0" width="355" height="367"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QPd-q7-uQo">
                                 <size key="itemSize" width="50" height="50"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -59,7 +69,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Chr-Wo-5X3" firstAttribute="top" secondItem="Ll8-ef-c9Q" secondAttribute="bottom" constant="20" id="2xF-K1-RTx"/>
+                <constraint firstItem="Chr-Wo-5X3" firstAttribute="top" secondItem="Ll8-ef-c9Q" secondAttribute="bottom" constant="30" id="2xF-K1-RTx"/>
                 <constraint firstAttribute="bottom" secondItem="sDY-pE-sHa" secondAttribute="bottom" id="5UX-oN-3gw"/>
                 <constraint firstAttribute="trailing" secondItem="Chr-Wo-5X3" secondAttribute="trailing" constant="10" id="Azi-XF-dBQ"/>
                 <constraint firstAttribute="trailing" secondItem="Ll8-ef-c9Q" secondAttribute="trailing" constant="10" id="EyC-7Z-7Nw"/>
@@ -68,8 +78,10 @@
                 <constraint firstItem="Chr-Wo-5X3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="RMC-ln-hef"/>
                 <constraint firstItem="sDY-pE-sHa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g0z-Sy-rlI"/>
                 <constraint firstAttribute="bottom" secondItem="Chr-Wo-5X3" secondAttribute="bottom" constant="50" id="knP-j5-cUA"/>
+                <constraint firstItem="ovk-r1-uJH" firstAttribute="top" secondItem="Ll8-ef-c9Q" secondAttribute="bottom" constant="10" id="kvP-CF-nx4"/>
                 <constraint firstItem="Ll8-ef-c9Q" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="loH-QB-0o2"/>
                 <constraint firstItem="sDY-pE-sHa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="rDT-OF-Au1"/>
+                <constraint firstAttribute="trailing" secondItem="ovk-r1-uJH" secondAttribute="trailing" constant="20" id="toV-RN-G5v"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>

@@ -35,6 +35,8 @@
 @property (nonatomic,assign) float              bmr;// 基础代谢率
 @property (nonatomic,assign) float              bmrMax;
 @property (nonatomic,assign) float              bmrMin;
+@property (nonatomic,assign) int                bmrLevel;
+
 @property (nonatomic,assign) int              bodyAge;// 身体年龄
 @property (nonatomic,assign) int                bodyLevel; //身体指数
 

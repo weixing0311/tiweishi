@@ -171,7 +171,7 @@
     PublicCollImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PublicCollImageCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     NSMutableDictionary * dict = [_imagesArray objectAtIndex:indexPath.row];
-    [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"videoImageStr"]] placeholderImage:getImage(@"default")];
+    [cell.headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict safeObjectForKey:@"videoImageStr"]] placeholderImage:getImage(@"default")options:SDWebImageRetryFailed];
     
     return cell;
 }

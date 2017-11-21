@@ -10,7 +10,6 @@
 
 @interface LoadedImageModel : NSObject
 +(LoadedImageModel *)shareInstance;
-@property(nonatomic,strong)NSMutableArray * loadedImageArray;
 @property (nonatomic,copy)NSString * releaseTime;
 @property (nonatomic,copy)NSString * content;
 @property (nonatomic,copy)NSString * uid;

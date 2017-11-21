@@ -41,7 +41,7 @@
 
     if (self.pageType != IS_SEARCH) {
         [self setRefrshWithTableView:self.tableview];
-        [self.tableview headerBeginRefreshing];
+        [self.tableview.mj_header beginRefreshing];
     }else{
         [self getInfo];
     }
@@ -69,18 +69,18 @@
         [param safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
         
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/queryFans.do" HiddenProgress:YES paramters:param success:^(NSDictionary *dic) {
-            [self.tableview footerEndRefreshing];
-            [self.tableview headerEndRefreshing];
+            [self.tableview.mj_footer endRefreshing];
+            [self.tableview.mj_header endRefreshing];
             [self hiddenEmptyView];
             if (page ==1) {
                 [self.dataArray removeAllObjects];
-                [self.tableview setFooterHidden:NO];
+                self.tableview.mj_footer.hidden = NO;
                 
             }
             NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
             NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
             if (infoArr.count<30) {
-                [self.tableview setFooterHidden:YES];
+                self.tableview.mj_footer.hidden = YES;
             }
             
             for (NSDictionary *dic in infoArr) {
@@ -91,8 +91,8 @@
             [self.tableview reloadData];
             
         } failure:^(NSError *error) {
-            [self.tableview footerEndRefreshing];
-            [self.tableview headerEndRefreshing];
+            [self.tableview.mj_footer endRefreshing];
+            [self.tableview.mj_header endRefreshing];
 
             if ([error code] ==402) {
                 [_dataArray removeAllObjects];
@@ -110,17 +110,17 @@
         [param safeSetObject:@(pageSize) forKey:@"pageSize"];
 
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/community/userfollow/queryUserFollow.do" HiddenProgress:YES paramters:param success:^(NSDictionary *dic) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         [self hiddenEmptyView];
         if (page ==1) {
             [self.dataArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
+            self.tableview.mj_footer.hidden = NO;
         }
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
         if (infoArr.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden = YES;
         }
         for (NSDictionary *dic in infoArr) {
             GuanzModel * model = [[GuanzModel alloc]init];
@@ -131,8 +131,8 @@
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         if ([error code] ==402) {
             [_dataArray removeAllObjects];
             [self.tableview reloadData];
@@ -141,8 +141,8 @@
     }];
     }
     else{
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         [_dataArray removeAllObjects];
         NSArray * arr = [self.dict safeObjectForKey:@"array"];
         

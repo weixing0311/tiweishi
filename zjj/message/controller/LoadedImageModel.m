@@ -21,7 +21,6 @@ static LoadedImageModel * imageModel;
 {
     self = [super init];
     if (self) {
-        self.loadedImageArray = [NSMutableArray array];
     }
     return self;
 }

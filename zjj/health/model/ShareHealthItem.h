@@ -10,13 +10,12 @@
 typedef enum
 {
     IS_BMI,
-    IS_VISCERALFAT,//内脂
-    IS_FAT,//脂肪
-    IS_BONEMUSCLE,//骨骼肌
-    IS_FATPERCENT,//体脂  fatPercentage
-    IS_SAME,//肌肉\骨骼肌\水分\蛋白质\骨重判定标准
-    IS_BODYWEIGHT,//体重判定
-    IS_SIZE,//体型
+    IS_VISCERALFAT,///内脂
+    IS_FAT,///脂肪
+    IS_FATPERCENT,///体脂  fatPercentage
+    IS_SAME,///肌肉\骨骼肌\水分\蛋白质\骨重判定标准///骨骼肌
+    IS_BODYWEIGHT,///体重判定
+    IS_SIZE,///体型
 }mytype;
 @interface ShareHealthItem : NSObject
 +(ShareHealthItem *)shareInstance;

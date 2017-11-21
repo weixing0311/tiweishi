@@ -43,7 +43,7 @@
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self setRefrshWithTableView:self.tableview];
     [self ChangeMySegmentStyle:self.segment];
-    [self.tableview  headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 
 }
 -(void)headerRereshing
@@ -73,17 +73,17 @@
     
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/queryOrderDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic");
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
 
         if (page ==1) {
             [_infoArray removeAllObjects];
-            self.tableview.footerHidden = NO;
+            self.tableview.mj_footer.hidden = NO;
         }
         
         NSArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
         if (dataArr.count<30) {
-            self.tableview.footerHidden =YES;
+            self.tableview.mj_footer.hidden =YES;
         }
         [_infoArray addObjectsFromArray:dataArr];
         
@@ -93,8 +93,8 @@
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
 
         
     }];
@@ -112,7 +112,7 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         [[UserModel shareInstance]showSuccessWithStatus:@"取消成功"];
-        [self.tableview headerBeginRefreshing];
+        [self.tableview.mj_header beginRefreshing];
 
     } failure:^(NSError *error) {
         [[UserModel shareInstance]showErrorWithStatus:@"取消失败"];
@@ -423,7 +423,7 @@
 //        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/cancelOrderDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
 //            DLog(@"取消订单成功--%@",dic);
 //            [[UserModel shareInstance] showSuccessWithStatus:@"订单取消成功"];
-//            [self.tableview headerBeginRefreshing];
+//            [self.tableview.mj_header beginRefreshing];
 //
 //        } failure:^(NSError *error) {
 //            [[UserModel shareInstance] showErrorWithStatus:@"订单取消失败"];
@@ -439,7 +439,7 @@
         self.currentTasks = [[BaseSservice sharedManager]post1:@"app/orderList/cancelOrder.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
             DLog(@"取消订单成功--%@",dic);
             [[UserModel shareInstance] showSuccessWithStatus:@"订单取消成功"];
-            [self.tableview headerBeginRefreshing];
+            [self.tableview.mj_header beginRefreshing];
 
         } failure:^(NSError *error) {
             [[UserModel shareInstance] showErrorWithStatus:@"订单取消失败"];
@@ -452,7 +452,7 @@
 }
 -(void)distributionOrderChange
 {
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 
 @end

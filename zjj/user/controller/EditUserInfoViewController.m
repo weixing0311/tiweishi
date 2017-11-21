@@ -255,6 +255,7 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
     }
     
     [self.upDataDict safeSetObject:[UserModel shareInstance].healthId forKey:@"id"];
+    [self.upDataDict safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/evaluatUser/updateChild.do" paramters:self.upDataDict imageData:nil imageName:@"headimgurl.png" success:^(NSDictionary *dic) {
         [[UserModel shareInstance]setMainUserInfoWithDic:[dic objectForKey:@"data"]];
         [[SubUserItem shareInstance]setInfoWithHealthId:[UserModel shareInstance].healthId];
@@ -263,6 +264,7 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(NSError *error) {
+        
     }];
 }
 
@@ -331,11 +333,11 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         }
-        
         cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
-        if (indexPath.row !=5&&indexPath.row !=6&&indexPath.row !=10) {
+        if (indexPath.row !=6) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }else
+        }
+        else
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
@@ -437,17 +439,13 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         }]] ;
         [al addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]] ;
         [self presentViewController:al animated:YES completion:nil];
-        
     }
     else if (indexPath.row ==9)
     {
         AboutUsViewController * ab= [[AboutUsViewController alloc]init];
         [self.navigationController pushViewController:ab animated:YES];
-
     }
 }
-
-
 
 #pragma  mark --
 
@@ -462,9 +460,6 @@ int64_t delayInSeconds = 2.0;      // 延迟的时间
         textField.text = indexPathRow==1?[_upDataDict safeObjectForKey:@"nickName"]:[_infoDict safeObjectForKey:@"introduction"];
         textField.frame = CGRectMake(textField.frame.origin.x,textField.frame.origin.y, textField.frame.size.width, 60);
     }];
-    
-
-    
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (![self valiNickName:al.textFields.firstObject.text]&&indexPathRow ==1) {
             [[UserModel shareInstance]showInfoWithStatus:@"昵称格式不正确"];

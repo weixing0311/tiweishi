@@ -153,26 +153,13 @@ typedef enum {
 @end
 
 /*
- weightLevel  1偏瘦2正常3警告4警告5超重6超重  1低 2正常  3456 高
+ weightLevel  1偏瘦2正常3偏胖4偏胖5超重6超重      1低 2正常  3456 高
  fatPercentage level  1正常2低3高
- 
- bmi  1低  2正常3高4高
  fatweightlevel  1正常2低3高
- 
- waterlevel 1正常 else 低
- 
- 蛋白质  1正常 else低
- 
- muscle 肌肉 1正常 else 低
- 
- boneMuscle  1正常 else低
- 
+
+ bmi  1低  2正常3高4高
  内脂  1正常2超标3高
- 
- 
- 
- 
- 
+ 蛋白质(P)/骨骼肌(boneMuscle)/骨量(boneWeight)/水分(waterWieghtLevel)/肌肉(Muscle)  1正常 else低
  */
 
 

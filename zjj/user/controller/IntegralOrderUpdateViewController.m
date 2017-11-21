@@ -235,7 +235,8 @@
                 
             }
 
-        }else if (indexPath.row ==1)
+        }
+        else if (indexPath.row ==1)
         {
             cell.textLabel.text = @"立减";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"-￥0.00"];

@@ -52,7 +52,7 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
-                  timestampString = "531482094.846676"
+                  timestampString = "532948848.558047"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "688"
@@ -67,7 +67,7 @@
                   moduleName = "zjj"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
-                  timestampString = "531482094.84855"
+                  timestampString = "532948848.56001"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "688"
@@ -75,38 +75,6 @@
                   offsetFromSymbolStart = "1180">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/PrefixHeader.pch"
-            timestampString = "531397744.912118"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/PrefixHeader.pch"
-            timestampString = "531397744.912172"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "unknown"
-            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -128,22 +96,6 @@
                   offsetFromSymbolStart = "0">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/public/controller/BaseWebViewController.m"
-            timestampString = "531397744.912298"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
-            landmarkName = "-webView:decidePolicyForNavigationAction:decisionHandler:"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

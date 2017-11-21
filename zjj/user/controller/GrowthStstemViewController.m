@@ -109,9 +109,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
         cell.todayIntegerallb.text = [NSString  stringWithFormat:@"今日已赚取积分：%d",[[_infoDict safeObjectForKey:@"todayIntegeral"]intValue]];
-        cell.totalIntegerallb.text = [NSString  stringWithFormat:@"%@分",[_infoDict safeObjectForKey:@"currentIntegeral"]];
+        cell.totalIntegerallb.text = [NSString  stringWithFormat:@"%@分",[_infoDict safeObjectForKey:@"countIntegral"]];
         cell.dayslb.text = [NSString stringWithFormat:@"连续签到%@天",[_infoDict safeObjectForKey:@"cumulDays"]];
-        
         
         int  countIntegral = [[self.infoDict objectForKey:@"countIntegral"]intValue];
         NSMutableArray * bigArr =[NSMutableArray array];
@@ -168,8 +167,13 @@
             cell.statusLb.text = @"已完成";
             cell.statusLb.textColor = HEXCOLOR(0x666666);
         }else{
-            cell.statusLb.text = @"未完成";
-            cell.statusLb.textColor =[UIColor redColor];
+            if ([[dic allKeys]containsObject:@"topTimes"]) {
+                cell.statusLb.text = [NSString stringWithFormat:@"%@次",[dic objectForKey:@"topTimes"]];
+                cell.statusLb.textColor = HEXCOLOR(0x666666);
+            }else{
+                cell.statusLb.text = @"未完成";
+                cell.statusLb.textColor =[UIColor redColor];
+            }
         }
     return cell;
     }
@@ -194,6 +198,7 @@
         [self showSignInPage];
     } failure:^(NSError *error) {
         DLog(@"签到失败-error:%@",error);
+        [self showSignInPage];
     }];
 }
 

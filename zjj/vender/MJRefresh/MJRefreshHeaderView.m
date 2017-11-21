@@ -194,7 +194,11 @@
                 
                 [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{
 #warning 这句代码修复了，top值不断累加的bug
-                    self.scrollView.mj_contentInsetTop -= self.mj_height;
+                    if (self.mj_height ==64) {
+                        if (self.scrollView.mj_contentInsetTop==64) {
+                            self.scrollView.mj_contentInsetTop -= self.mj_height;
+                        }
+                    }
                 }];
             } else {
                 // 执行动画

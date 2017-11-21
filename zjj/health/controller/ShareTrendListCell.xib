@@ -24,7 +24,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="TCQ-co-qtn"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -35,16 +35,16 @@
                                 <rect key="frame" x="116" y="0.0" width="116" height="54.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdd-GU-J7Q">
-                                        <rect key="frame" x="31" y="16.5" width="54" height="22"/>
+                                        <rect key="frame" x="25.5" y="13.5" width="65" height="28"/>
                                         <color key="backgroundColor" red="0.2227362692" green="0.82085222010000003" blue="0.62489348649999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="54" id="aee-mv-1ac"/>
-                                            <constraint firstAttribute="height" constant="22" id="oFs-Rm-iqE"/>
+                                            <constraint firstAttribute="width" constant="65" id="aee-mv-1ac"/>
+                                            <constraint firstAttribute="height" constant="28" id="oFs-Rm-iqE"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正常" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhx-Kb-onV">
-                                        <rect key="frame" x="45" y="20" width="27" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="43" y="19" width="31" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -60,7 +60,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="极度肥胖" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zH-xf-sAZ">
                                 <rect key="frame" x="0.0" y="0.0" width="116" height="54.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -92,7 +92,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="极度肥胖" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w89-db-ZWC">
                                 <rect key="frame" x="0.0" y="0.0" width="116" height="54.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -100,16 +100,16 @@
                                 <rect key="frame" x="116" y="0.0" width="116" height="54.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBG-bT-aVk">
-                                        <rect key="frame" x="31" y="16.5" width="54" height="22"/>
+                                        <rect key="frame" x="26" y="13.5" width="64" height="28"/>
                                         <color key="backgroundColor" red="0.89451998472213745" green="0.43419092893600464" blue="0.28422117233276367" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="54" id="UAH-TA-Dsl"/>
-                                            <constraint firstAttribute="height" constant="22" id="hcq-hA-WZw"/>
+                                            <constraint firstAttribute="width" constant="64" id="UAH-TA-Dsl"/>
+                                            <constraint firstAttribute="height" constant="28" id="hcq-hA-WZw"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="不正常" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1q-mf-RMo">
-                                        <rect key="frame" x="38.5" y="20" width="40" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="35.5" y="19" width="46" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>

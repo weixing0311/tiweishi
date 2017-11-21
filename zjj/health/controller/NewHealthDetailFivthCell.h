@@ -45,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *leftlb;
 @property (weak, nonatomic) IBOutlet UILabel *midlb;
 @property (weak, nonatomic) IBOutlet UILabel *rightlb;
+@property (weak, nonatomic) IBOutlet UIImageView *sliderBgImageView;
 
 
 

@@ -22,6 +22,9 @@
 #import "BusinessCardViewController.h"
 #import "TabbarViewController.h"
 #import "BodyFatDivisionAgreementViewController.h"
+#import "KfViewController.h"
+#import "MyVoucthersViewController.h"
+#import "VouchersGetViewController.h"
 @interface SettingViewController ()<qrcodeDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
@@ -99,6 +102,8 @@
     [self.secondView setViewShadow];
     [self.thirdView  setViewShadow];
     [self.forthView  setViewShadow];
+    [self.fifthView  setViewShadow];
+
 }
 
 -(void)tj//统计
@@ -262,8 +267,20 @@
     UIImageView *img =(UIImageView *)[self.view viewWithTag:9527];
     [img removeFromSuperview];
 }
+#pragma mark ---券
 
-
+- (IBAction)getVouchers:(id)sender {
+    self.navigationController.navigationBarHidden =NO;
+    VouchersGetViewController * getVouchers =[[VouchersGetViewController alloc]init];
+    getVouchers.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:getVouchers animated:YES];
+}
+- (IBAction)myVouchers:(id)sender {
+    self.navigationController.navigationBarHidden =NO;
+    MyVoucthersViewController * myVouchers =[[MyVoucthersViewController alloc]init];
+    myVouchers.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:myVouchers animated:YES];
+}
 #pragma mark--订购
 - (IBAction)buy:(id)sender {
     self.navigationController.navigationBarHidden =NO;
@@ -400,8 +417,12 @@
     TZSEditViewController *edit = [[TZSEditViewController alloc]init];
     edit.hidesBottomBarWhenPushed =YES;
     [self.navigationController pushViewController:edit animated:YES];
+}
+- (IBAction)didShowKf:(id)sender {
+    KfViewController * kfVC = [[KfViewController alloc]init];
+    kfVC.hidesBottomBarWhenPushed =YES;
+    [self.navigationController pushViewController:kfVC animated:YES];
     
-
 }
 
 #pragma mark -----分享

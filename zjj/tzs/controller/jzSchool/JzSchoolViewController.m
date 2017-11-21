@@ -28,7 +28,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
 }
 
 - (void)viewDidLoad {
@@ -70,13 +70,13 @@
     [param safeSetObject:@"30" forKey:@"pageSize"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/informate/queryInformateList.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"dic--%@",dic);
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         [self.dataArray setArray:[[dic safeObjectForKey:@"data"]safeObjectForKey:@"array"]];
         [self.tableview reloadData];
     } failure:^(NSError *error) {
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
 
         DLog(@"error--%@",error);
     }];

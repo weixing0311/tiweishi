@@ -64,15 +64,15 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/userGreat/queryGreatPerson.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
 
         if (page ==1) {
             [self.dataArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
+            self.tableview.mj_footer.hidden = NO;
         }
         if (infoArr.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden =YES;
         }
 
         for (NSDictionary *dic in infoArr) {
@@ -83,8 +83,8 @@
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         if (page ==1) {
             [_dataArray removeAllObjects];
             [self.tableview reloadData];

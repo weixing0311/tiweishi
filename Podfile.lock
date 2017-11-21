@@ -18,6 +18,7 @@ PODS:
   - JPush (3.0.7):
     - JCore (~> 1.1.6)
   - Masonry (1.0.2)
+  - MJRefresh (3.1.15)
   - SDAutoLayout (2.1.9)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - JPush (~> 3.0.5)
   - Masonry (~> 1.0.2)
+  - MJRefresh (~> 3.1.15)
   - SDAutoLayout (~> 2.1.8)
   - SDWebImage (~> 4.0.0)
   - SVProgressHUD (~> 2.1.2)
@@ -39,11 +41,12 @@ SPEC CHECKSUMS:
   JCore: 18fc8725124f26e55625eaf224659b3a999dcf63
   JPush: 111b79b8a0169ab8fd4c486dac3ed166ed69293e
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MJRefresh: 9af70f5f9327a2cf87f0fb5929f35fcc2fa638ea
   SDAutoLayout: 6b6f4db0d009dfc46cef14ef710dbb164e86616c
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   TZImagePickerController: b44f4cfc6d320dab9a53adcdda725099be36dcda
 
-PODFILE CHECKSUM: 667b2d52e7b97bf6b287e36cb3295721b46cf696
+PODFILE CHECKSUM: 80318ffcfee0af7d4bda00fffbcf58542d887b9c
 
 COCOAPODS: 1.2.1

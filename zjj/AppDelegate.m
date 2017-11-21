@@ -198,9 +198,9 @@
     if ([UserModel shareInstance].isUpdate==YES) {
 
     UIAlertController * la =[UIAlertController alertControllerWithTitle:@"有新版本需要更新" message:[UserModel shareInstance].updateMessage preferredStyle:UIAlertControllerStyleAlert];
+        
     [la addAction:[UIAlertAction actionWithTitle:@"跳转到AppStore" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[UIApplication sharedApplication ] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/id1209417912"]];
-
     }]];
     
     if ([UserModel shareInstance].isForce==0) {

@@ -32,13 +32,15 @@
 ;
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.tableview.backgroundColor = HEXCOLOR(0xeeeeee);
+    self.tableview.separatorColor = HEXCOLOR(0xeeeeee);
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     pageSize =30;
     self.dataArray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor grayColor];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self setRefrshWithTableView:self.tableview];
-    [self.tableview headerBeginRefreshing];
+    [self.tableview.mj_header beginRefreshing];
     self.tableview.tableFooterView.backgroundColor = [UIColor orangeColor];
     // Do any additional setup after loading the view from its nib.
 }
@@ -59,18 +61,18 @@
     [params safeSetObject:@(pageSize) forKey:@"pageSize"];
 
     self.currentTasks =[[BaseSservice sharedManager]post1:@"app/msg/queryMsgList.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
         
         if (page ==1) {
             [self.dataArray removeAllObjects];
-            [self.tableview setFooterHidden:NO];
+            self.tableview.mj_footer.hidden = NO;
             
         }
         NSDictionary * dataDic  = [dic safeObjectForKey:@"data"];
         NSArray * infoArr = [dataDic safeObjectForKey:@"array"];
         if (infoArr.count<30) {
-            [self.tableview setFooterHidden:YES];
+            self.tableview.mj_footer.hidden = YES;
         }
         
         [self.dataArray addObjectsFromArray:infoArr];
@@ -84,8 +86,8 @@
         
         
         
-        [self.tableview headerEndRefreshing];
-        [self.tableview footerEndRefreshing];
+        [self.tableview.mj_header endRefreshing];
+        [self.tableview.mj_footer endRefreshing];
 
     }];
     

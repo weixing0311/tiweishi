@@ -214,21 +214,10 @@
 -(void)setRefrshWithTableView:(UITableView *)tb
 {
     
-    [tb addHeaderWithTarget:self action:@selector(headerRereshing)];
-#warning 自动刷新(一进入程序就下拉刷新)
-    [tb headerBeginRefreshing];
+    tb.mj_header =  [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     
-    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
-    [tb addFooterWithTarget:self action:@selector(footerRereshing)];
-    
-    // 设置文字(也可以不设置,默认的文字在MJRefreshConst中修改)
-    tb.headerPullToRefreshText = @"下拉可以刷新了";
-    tb.headerReleaseToRefreshText = @"松开马上刷新了";
-    tb.headerRefreshingText = @"刷新中..";
-    
-    tb.footerPullToRefreshText = @"上拉可以加载更多数据了";
-    tb.footerReleaseToRefreshText = @"松开马上加载更多数据了";
-    tb.footerRefreshingText = @"加载中...";
+    tb.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [tb.mj_header beginRefreshing];
 
 }
 -(void)headerRereshing

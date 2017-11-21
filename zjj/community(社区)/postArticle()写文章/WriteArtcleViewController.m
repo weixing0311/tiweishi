@@ -38,6 +38,7 @@
 @property (nonatomic,copy) NSString * videoUrlStr;
 @property (nonatomic,assign) BOOL isShooting;//判断是不是拍摄的视频
 @property (nonatomic,copy)   NSURL * shootingVideoUrl;
+@property (nonatomic,strong)UILabel * textViewCountLb;
 @end
 
 @implementation WriteArtcleViewController
@@ -62,6 +63,15 @@
     [self buildRightNaviBarItem];
     [self myTypeIsShareImage];
     // Do any additional setup after loading the view.
+}
+-(void)buildCountLabel
+{
+    self.textViewCountLb  = [[UILabel alloc]initWithFrame:CGRectMake(JFA_SCREEN_WIDTH-170, 285, 150, 15)];
+    self.textViewCountLb.backgroundColor = [UIColor clearColor];
+    self.textViewCountLb.text = @"可输入121字";
+    self.textViewCountLb.textColor = HEXCOLOR(0x666666);
+    self.textViewCountLb.textAlignment = NSTextAlignmentRight;
+    [self.view addSubview:self.textViewCountLb];
 }
 -(void)myTypeIsShareImage
 {
@@ -200,8 +210,7 @@
 - (void)configCollectionView {
     // 如不需要长按排序效果，将LxGridViewFlowLayout类改成UICollectionViewFlowLayout即可
     _layout = [[LxGridViewFlowLayout alloc] init];
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(20, 290, JFA_SCREEN_WIDTH-40, 300) collectionViewLayout:_layout];
-    CGFloat rgb = 244 / 255.0;
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(20, 300, JFA_SCREEN_WIDTH-40, 300) collectionViewLayout:_layout];
     _collectionView.alwaysBounceVertical = YES;
     _collectionView.backgroundColor = [UIColor whiteColor];
     
@@ -322,25 +331,25 @@
 #pragma mark - LxGridViewDataSource
 
 /// 以下三个方法为长按排序相关代码
-- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.item < _selectedPhotos.count;
-}
+//- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+//    return indexPath.item < _selectedPhotos.count;
+//}
 
-- (BOOL)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)sourceIndexPath canMoveToIndexPath:(NSIndexPath *)destinationIndexPath {
-    return (sourceIndexPath.item < _selectedPhotos.count && destinationIndexPath.item < _selectedPhotos.count);
-}
-
-- (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)sourceIndexPath didMoveToIndexPath:(NSIndexPath *)destinationIndexPath {
-    UIImage *image = _selectedPhotos[sourceIndexPath.item];
-    [_selectedPhotos removeObjectAtIndex:sourceIndexPath.item];
-    [_selectedPhotos insertObject:image atIndex:destinationIndexPath.item];
-    
-    id asset = _selectedAssets[sourceIndexPath.item];
-    [_selectedAssets removeObjectAtIndex:sourceIndexPath.item];
-    [_selectedAssets insertObject:asset atIndex:destinationIndexPath.item];
-    
-    [_collectionView reloadData];
-}
+//- (BOOL)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)sourceIndexPath canMoveToIndexPath:(NSIndexPath *)destinationIndexPath {
+//    return (sourceIndexPath.item < _selectedPhotos.count && destinationIndexPath.item < _selectedPhotos.count);
+//}
+//
+//- (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)sourceIndexPath didMoveToIndexPath:(NSIndexPath *)destinationIndexPath {
+//    UIImage *image = _selectedPhotos[sourceIndexPath.item];
+//    [_selectedPhotos removeObjectAtIndex:sourceIndexPath.item];
+//    [_selectedPhotos insertObject:image atIndex:destinationIndexPath.item];
+//
+//    id asset = _selectedAssets[sourceIndexPath.item];
+//    [_selectedAssets removeObjectAtIndex:sourceIndexPath.item];
+//    [_selectedAssets insertObject:asset atIndex:destinationIndexPath.item];
+//
+//    [_collectionView reloadData];
+//}
 
 - (void)pushTZImagePickerController {
     
@@ -552,7 +561,6 @@
         self.isShooting =YES;
         [self.collectionView reloadData];
     }
-
 }
 
 - (void)refreshCollectionViewWithAddedAsset:(id)asset image:(UIImage *)image {

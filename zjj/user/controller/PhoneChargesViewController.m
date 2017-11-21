@@ -56,15 +56,15 @@
     
     if (integral.intValue>0&&priceStr.floatValue>0) {
         self.bottomlb.text =[NSString stringWithFormat:@"实付款：%d积分+%.2f元",[integral intValue]*self.goodsCount,[priceStr floatValue]*self.goodsCount];
-        self.totallb.text = [NSString stringWithFormat:@"实付款：%d积分+%.2f元",[integral intValue]*self.goodsCount,[priceStr floatValue]*self.goodsCount];
+        self.totallb.text = [NSString stringWithFormat:@"%d积分+%.2f元",[integral intValue]*self.goodsCount,[priceStr floatValue]*self.goodsCount];
 
     }else{
         if (integral.intValue>0) {
             self.bottomlb.text =[NSString stringWithFormat:@"实付款：%d积分",[integral intValue]*self.goodsCount ];
-            self.totallb.text =[NSString stringWithFormat:@"实付款：%d积分",[integral intValue]*self.goodsCount ];
+            self.totallb.text =[NSString stringWithFormat:@"%d积分",[integral intValue]*self.goodsCount ];
         }else{
             self.bottomlb.text = [NSString stringWithFormat:@"实付款：%.2f元",[priceStr floatValue]*self.goodsCount];
-            self.totallb.text = [NSString stringWithFormat:@"实付款：%.2f元",[priceStr floatValue]*self.goodsCount];
+            self.totallb.text = [NSString stringWithFormat:@"%.2f元",[priceStr floatValue]*self.goodsCount];
         }
     }
 }

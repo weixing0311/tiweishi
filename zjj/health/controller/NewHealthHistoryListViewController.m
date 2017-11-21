@@ -37,7 +37,7 @@
     [super viewDidLoad];
     showIndexPathRow = 1000000000;
     self.title = @"历史记录";
-    UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithImage:getImage(@"share_") style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
+    UIBarButtonItem * rightitem =[[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(enterRightPage)];
     self.navigationItem.rightBarButtonItem = rightitem;
 
     
@@ -74,6 +74,7 @@
     self.chooseArray =[NSMutableArray array];
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self setRefrshWithTableView:self.tableview];
+    
 
 }
 -(void)enterRightPage
@@ -113,11 +114,11 @@
     [param safeSetObject:@(page) forKey:@"page"];
     [param safeSetObject:@(pageSize) forKey:@"pageSize"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/queryEvaluatListNew.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         
         if (page==1) {
-            self.tableview.footerHidden = NO;
+            self.tableview.mj_footer.hidden = NO;
             [_dataArray removeAllObjects];
             [_chooseArray removeAllObjects];
 
@@ -128,15 +129,15 @@
         NSArray * arr =[dict safeObjectForKey:@"array"];
         [_dataArray addObjectsFromArray:arr];
         if (arr.count<30) {
-            self.tableview.footerHidden = YES;
+            self.tableview.mj_footer.hidden = YES;
         }
         
         [self.tableview reloadData];
         
     } failure:^(NSError *error) {
         DLog(@"error--%@",error);
-        [self.tableview footerEndRefreshing];
-        [self.tableview headerEndRefreshing];
+        [self.tableview.mj_footer endRefreshing];
+        [self.tableview.mj_header endRefreshing];
         
     }];
 }
@@ -144,7 +145,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row ==showIndexPathRow) {
-        return 670;
+        return 606;
     }
     return 70;
 }
@@ -282,10 +283,7 @@
     if (!qrCode||qrCode.length<1) {
         [[UserModel shareInstance]getbalance];
     }
-    
-    
     ShareListView * shareTr = [self getXibCellWithTitle:@"ShareListView"];
-    
     HistoryCell * cell1 = [self.chooseArray objectAtIndex:0];
     HistoryCell * cell2 = [self.chooseArray objectAtIndex:1];
     ShareHealthItem * item1 = [self.dataArray objectAtIndex:cell1.tag];
@@ -296,6 +294,9 @@
     [shareTr setInfoWithArr:arr];
     [self.view addSubview:shareTr];
     [self.view bringSubviewToFront:shareTr];
+    
+    
+    
     return  [self getImageWithView:shareTr];
     
 }

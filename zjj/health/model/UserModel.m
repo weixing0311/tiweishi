@@ -501,7 +501,7 @@ static UserModel *model;
     [params setObject:taskId forKey:@"taskId"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     
-    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager]post1:@"app/integral/growthsystem/gainPoints.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
     } failure:^(NSError *error) {
         
     }];
@@ -546,10 +546,10 @@ static UserModel *model;
 -(BOOL)getSignInNotifacationStatus
 {
     if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]) {
-        if (![[[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]isKindOfClass:[NSDictionary class]]) {
-            [[NSUserDefaults standardUserDefaults]removeObjectForKey:kShowSignAlert];
-            return YES;
-        }
+//        if (![[[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert]isKindOfClass:[NSDictionary class]]) {
+//            [[NSUserDefaults standardUserDefaults]removeObjectForKey:kShowSignAlert];
+//            return YES;
+//        }
         NSMutableDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:kShowSignAlert];
         if ([[dic allKeys]containsObject:[UserModel shareInstance].userId]) {
             return NO;
