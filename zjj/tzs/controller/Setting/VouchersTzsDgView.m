@@ -11,6 +11,7 @@
 @implementation VouchersTzsDgView
 {
     UIView * titleView;
+    NSDictionary * chooseDict;
 }
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -24,6 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _dataArray = [NSMutableArray array];
+        chooseDict = [NSDictionary dictionary];
         [self initViews];
         
     }
@@ -46,7 +48,7 @@
     UIButton * closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(JFA_SCREEN_WIDTH-40, 0, 40, 44)];
     closeBtn.backgroundColor = [UIColor redColor];
     [closeBtn setImage:getImage(@"close_") forState:UIControlStateNormal];
-    [closeBtn addTarget:self action:@selector(didhidden) forControlEvents:UIControlEventTouchUpInside];
+    [closeBtn addTarget:self action:@selector(didClickhidden) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:closeBtn];
     UIView * lineView =[[UIView alloc]initWithFrame:CGRectMake(0, 44, JFA_SCREEN_WIDTH, 1)];
     lineView.backgroundColor = HEXCOLOR(0xeeeeee);
@@ -69,21 +71,21 @@
     line1View.backgroundColor = HEXCOLOR(0xeeeeee);
     [bottomView addSubview:line1View];
     
-    UILabel * b1lb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, JFA_SCREEN_WIDTH/3*2-10, 20)];
-    b1lb.backgroundColor = [UIColor whiteColor];
-    b1lb.textAlignment = NSTextAlignmentLeft;
-    b1lb.textColor = HEXCOLOR(0x6666666);
-    b1lb.adjustsFontSizeToFitWidth = YES;
-    b1lb.font = [UIFont systemFontOfSize:14];
-    [bottomView addSubview:b1lb];
+    self.value1lb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, JFA_SCREEN_WIDTH/3*2-10, 20)];
+    self.value1lb.backgroundColor = [UIColor whiteColor];
+    self.value1lb.textAlignment = NSTextAlignmentLeft;
+    self.value1lb.textColor = HEXCOLOR(0x6666666);
+    self.value1lb.adjustsFontSizeToFitWidth = YES;
+    self.value1lb.font = [UIFont systemFontOfSize:14];
+    [bottomView addSubview:self.value1lb];
     
-    UILabel * b2lb = [[UILabel alloc]initWithFrame:CGRectMake(5, 35, JFA_SCREEN_WIDTH/3*2-10, 20)];
-    b2lb.backgroundColor = [UIColor whiteColor];
-    b2lb.textAlignment = NSTextAlignmentLeft;
-    b2lb.textColor = HEXCOLOR(0x6666666);
-    b2lb.adjustsFontSizeToFitWidth = YES;
-    b2lb.font = [UIFont systemFontOfSize:14];
-    [bottomView addSubview:b2lb];
+    self.value2lb = [[UILabel alloc]initWithFrame:CGRectMake(5, 35, JFA_SCREEN_WIDTH/3*2-10, 20)];
+    self.value2lb.backgroundColor = [UIColor whiteColor];
+    self.value2lb.textAlignment = NSTextAlignmentLeft;
+    self.value2lb.textColor = HEXCOLOR(0x6666666);
+    self.value2lb.adjustsFontSizeToFitWidth = YES;
+    self.value2lb.font = [UIFont systemFontOfSize:14];
+    [bottomView addSubview:self.value2lb];
 
     UIButton * didBuyBtn = [[UIButton alloc]initWithFrame:CGRectMake(JFA_SCREEN_WIDTH/3*2, 1, JFA_SCREEN_WIDTH/3, 59)];
     didBuyBtn.backgroundColor = [UIColor redColor];
@@ -98,6 +100,9 @@
 {
     self.hidden =NO;
     [self.tableview reloadData];
+    self.value2lb.text = [NSString stringWithFormat:@"总额：￥%.2f，优惠：￥%.2f",self.totalPrice,self.Preferentialprice];
+    self.value1lb.text = [NSString stringWithFormat:@"实付款:￥%.2f", self.totalPrice-self.Preferentialprice];
+
     [UIView animateWithDuration:0.5 animations:^{
         self.contentView.frame = CGRectMake(0, 200-64, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-200);
     }];
@@ -111,10 +116,19 @@
         self.hidden = YES;
     }];
 }
-
+-(void)didClickhidden
+{
+    chooseDict = nil;
+    [self didhidden];
+}
 -(void)didBuy
 {
-    
+    if (!chooseDict) {
+        return;
+    }
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(didBuyWithDictionary:)]) {
+        [self.delegate didBuyWithDictionary:chooseDict];
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -136,6 +150,19 @@
     cell.titlelb.text = [dic safeObjectForKey:@"templateName"];
     cell.timelb.text = [NSString stringWithFormat:@"有效期至:%@",[dic safeObjectForKey:@"validEndTime"]];
     
+    if (chooseDict) {
+        NSString * chooseNo = [chooseDict safeObjectForKey:@"couponNo"];
+        NSString * cellNo = [dic safeObjectForKey:@"couponNo"];
+        if ([chooseNo isEqualToString:cellNo]) {
+            cell.didChooseImage.hidden = NO;;
+        }else{
+            cell.didChooseImage.hidden = YES;
+        }
+    }else{
+        cell.didChooseImage.hidden = YES;
+    }
+    
+    
     
     int type = [[dic safeObjectForKey:@"type"]intValue];
     if (type ==2) {
@@ -145,7 +172,6 @@
     }
     
     //    cell.faceValuelb.text = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"discountAmount"]];
-    cell.headImageView.image = getImage(@"default");
     
     //useRange//使用范围 0全部商品 1脂将军饼干 2 体脂称
     int userRange = [[dic safeObjectForKey:@"useRange"]intValue];
@@ -170,12 +196,36 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;
-    
+}
+
+-(void)changeValueInfo
+{
     
 }
+
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
     
+    if (chooseDict) {
+        NSString * chooseNo = [chooseDict safeObjectForKey:@"couponNo"];
+        NSString * cellNo = [dic safeObjectForKey:@"couponNo"];
+        if ([chooseNo isEqualToString:cellNo]) {
+            chooseDict =nil;
+        }else{
+            chooseDict = dic;
+        }
+    }else{
+        chooseDict =dic;
+    }
+
+    float amount = [[chooseDict safeObjectForKey:@"amount"]floatValue];
+    float prefrenPrice = self.Preferentialprice +amount;
+    self.value2lb.text = [NSString stringWithFormat:@"总额：￥%.2f，优惠：￥%.2f",self.totalPrice,prefrenPrice];
+    self.value1lb.text = [NSString stringWithFormat:@"实付款:￥%.2f", self.totalPrice-prefrenPrice];
+    [self.tableview reloadData];
 }
 @end

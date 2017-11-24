@@ -150,7 +150,7 @@
     if (section ==0) {
         return 2;
     }
-    return 7;
+    return 6;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -223,15 +223,16 @@
                 cell.titleLabel.text = @"我的订单";
                 cell.headImageView.image = getImage(@"home_5_");
             }
-            else if(indexPath.row ==5)
+//            else if(indexPath.row ==5)
+//            {
+//                cell.titleLabel.text = @"我的优惠券";
+//                cell.headImageView.image = getImage(@"home_6_");
+//
+//            }
+            else
             {
-                cell.titleLabel.text = @"我的优惠券";
-                cell.headImageView.image = getImage(@"home_6_");
-
-            }else{
                 cell.titleLabel.text = @"领券中心";
                 cell.headImageView.image = getImage(@"home_6_");
-
             }
             return cell;
         
@@ -286,12 +287,12 @@
             ord.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:ord animated:YES];
         }
-        else if(indexPath.row ==5)
-        {
-            MyVoucthersViewController * vo = [[MyVoucthersViewController alloc]init];
-            vo.hidesBottomBarWhenPushed=YES;
-            [self.navigationController pushViewController:vo animated:YES];
-        }
+//        else if(indexPath.row ==5)
+//        {
+//            MyVoucthersViewController * vo = [[MyVoucthersViewController alloc]init];
+//            vo.hidesBottomBarWhenPushed=YES;
+//            [self.navigationController pushViewController:vo animated:YES];
+//        }
         else
         {
             VouchersGetViewController * vo = [[VouchersGetViewController alloc]init];

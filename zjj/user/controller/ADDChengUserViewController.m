@@ -191,6 +191,7 @@
         [[SubUserItem shareInstance]setInfoWithHealthId:subId];
         
         TabbarViewController *tb =[[TabbarViewController alloc]init];
+        [UserModel shareInstance].tabbarStyle = @"health";
         self.view.window.rootViewController =tb;
         
         

@@ -365,7 +365,7 @@
     UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"此页面为消费者购买专属，如需升级体脂师，请点击“去认证”" preferredStyle:UIAlertControllerStyleAlert];
     [al addAction:[UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UpdataOrderViewController *upd =[[UpdataOrderViewController alloc]init];
-        
+
         upd.dataArray= [NSMutableArray arrayWithObject:item];
         upd.orderType =IS_FROM_GOODSDETAIL;
         upd.goodsCount = self.goodsCount;

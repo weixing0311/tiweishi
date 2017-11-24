@@ -77,6 +77,7 @@
 {
     if (self.firstImage) {
         [_selectedPhotos addObject:self.firstImage];
+        _textView.text = self.textStr;
         [self.collectionView reloadData];
     }
 }

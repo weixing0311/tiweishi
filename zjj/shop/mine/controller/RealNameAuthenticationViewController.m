@@ -75,6 +75,7 @@
         }
         
         TzsTabbarViewController *tzs =[[TzsTabbarViewController alloc]init];
+        [UserModel shareInstance].tabbarStyle = @"tzs";
         self.view.window.rootViewController = tzs;
     } failure:^(NSError *error) {
     }];

@@ -12,5 +12,6 @@
 @interface HomePageViewController : JFABaseTableViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ADCarouselViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
+@property (nonatomic,copy)NSString * couponNo;///从优惠券进来之后的券号
 
 @end

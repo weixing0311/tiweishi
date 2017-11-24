@@ -150,22 +150,14 @@
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/evaluatData/addEvaluatData.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         
         self.statuslb.text = @"上传成功！";
-        
-        
         NSDictionary * dataDict= [dic safeObjectForKey:@"data"];
+        
         
         if (self.delegate &&[self.delegate respondsToSelector:@selector(weightingSuccessWithSubtractMaxWeight:dataId:shareDict:)]) {
             [self.delegate weightingSuccessWithSubtractMaxWeight:[dataDict safeObjectForKey:@"subtractMaxWeight"]dataId:[dataDict safeObjectForKey:@"DataId"]shareDict:dataDict];
         }
+        
         [self dismissViewControllerAnimated:YES completion:nil];
-//        [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
-        
-//        TZdetaolViewController * tzDetai =[[TZdetaolViewController alloc]init];
-//        tzDetai.dataId = [[dic safeObjectForKey:@"data"] safeObjectForKey:@"DataId"];
-//        tzDetai.hidesBottomBarWhenPushed=YES;
-//        [self.navigationController pushViewController:tzDetai animated:YES];
-        
-        
         DLog(@"url-app/evaluatData/addEvaluatData.do  dic--%@",dic);
         
     } failure:^(NSError *error) {

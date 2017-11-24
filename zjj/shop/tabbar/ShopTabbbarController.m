@@ -25,7 +25,7 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(selectSuperTabbar) name:@"changeOtherItem" object:nil];
-    
+
     
     ShopTestViewController *st =[[ShopTestViewController alloc]init];
     st.title = @"健康";
@@ -88,11 +88,11 @@
     if ([item.title isEqualToString:@"健康"]) {
         
         TabbarViewController * tb= [[TabbarViewController alloc]init];
+        [UserModel shareInstance].tabbarStyle = @"health";
         self.view.window.rootViewController = tb;
         
     }
 }
-
 
 -(void)selectSuperTabbar
 {

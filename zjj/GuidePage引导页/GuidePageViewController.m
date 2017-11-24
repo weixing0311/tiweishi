@@ -29,6 +29,7 @@
         [[UserModel shareInstance]readToDoc];
         if ([UserModel shareInstance].birthday.length>2) {
             TabbarViewController * tabbar = [[TabbarViewController alloc]init];
+            [UserModel shareInstance].tabbarStyle = @"health";
             [self.view.window setRootViewController:tabbar];
             
             if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {

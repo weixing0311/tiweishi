@@ -274,6 +274,7 @@ static UserModel *model;
     self.partnerId      = [dict safeObjectForKey:@"partnerId"];
     self.grade          = [dict safeObjectForKey:@"grade"];
     self.isHaveCard     = [dict safeObjectForKey:@"isHaveCard"];
+    self.tourismIntegral =[dict safeObjectForKey:@"tourismIntegral"];
     self.qrcodeImageData =[NSData dataWithContentsOfURL:[NSURL URLWithString:self.qrcodeImageUrl]];
     self.superiorDict  = [dict safeObjectForKey:@"parent"];
     [self writeToDoc];

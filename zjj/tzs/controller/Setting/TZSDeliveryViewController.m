@@ -99,7 +99,7 @@
 
     }else{
         cell.tsView.hidden =NO;
-        cell.limitLabel.text = [NSString stringWithFormat:@"每月服务配送数量不得超过%@，当月可配送%d",[dict safeObjectForKey:@"limitQuantity"],([[dict safeObjectForKey:@"limitQuantity"]intValue]-[[dict safeObjectForKey:@"shippedQuantity"]intValue])];
+        cell.limitLabel.text = [NSString stringWithFormat:@"每月服务配送数量不得超过%@,当月可配送%d",[dict safeObjectForKey:@"limitQuantity"],([[dict safeObjectForKey:@"limitQuantity"]intValue]-[[dict safeObjectForKey:@"shippedQuantity"]intValue])];
 
     }
     

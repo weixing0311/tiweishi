@@ -21,7 +21,6 @@
 #import "YMSocketUtils.h"
 
 #import "HomePageWebViewController.h"
-#import "TzsTabbarViewController.h"
 #import "GuidePageViewController.h"
 
 #import "JPUSHService.h"
@@ -98,6 +97,7 @@
             [[UserModel shareInstance]readToDoc];
             if ([UserModel shareInstance].birthday.length>2) {
                 TabbarViewController * tabbar = [[TabbarViewController alloc]init];
+                [UserModel shareInstance].tabbarStyle = @"health";
                 [self.window setRootViewController:tabbar];
                 
                 if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {

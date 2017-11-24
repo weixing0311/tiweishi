@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tzsLabel;
 //排名
 @property (weak, nonatomic) IBOutlet UIButton *rankBtn;
+@property (weak, nonatomic) IBOutlet UILabel *integrallb;
 
 //资产
 @property (weak, nonatomic) IBOutlet UILabel *assetsLabel;

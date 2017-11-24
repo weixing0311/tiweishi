@@ -66,9 +66,15 @@ static VouchersModel * model;
     success([myMutableArr lastObject]);
 }
 
--(NSDictionary *)getChooseVoucherWithArr:(NSMutableArray*)myMutableArr index:(NSInteger)index
+-(NSDictionary *)getChooseVoucherWithArr:(NSArray*)myMutableArr couponNo:(NSString *)couponNo
 {
-    return myMutableArr[index];
+    for (NSDictionary * dic in myMutableArr) {
+        NSString * currCouponNo= [dic safeObjectForKey:@"couponNo"];
+        if ([currCouponNo isEqualToString:couponNo]) {
+            return dic;
+        }
+    }
+    return nil;
 }
 
 

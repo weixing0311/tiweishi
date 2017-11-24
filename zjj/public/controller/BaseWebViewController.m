@@ -47,7 +47,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNbColor];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     UIBarButtonItem * backItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back_"] style:UIBarButtonItemStylePlain target:self action:@selector(didClickBack)];
     self.navigationItem.leftBarButtonItem = backItem;
@@ -89,7 +89,7 @@
     [userContentController addScriptMessageHandler:self name:@"toReorder"];
     [userContentController addScriptMessageHandler:self name:@"toMyOrderDetail"];
     [userContentController addScriptMessageHandler:self name:@"toForward"];
-    
+    [userContentController addScriptMessageHandler:self name:@"lakalaCallback"];
 
     configuration.userContentController = userContentController;
     
@@ -102,7 +102,7 @@
 
     
     
-    self.webView = [[WKWebView alloc]initWithFrame:self.view.bounds configuration:configuration];
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 70, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-70) configuration:configuration];
     
     NSString  * urlss =@"";
     if ([_urlStr containsString:@"https://shouyin.yeepay.com"]) {
@@ -129,7 +129,7 @@
 #pragma mark ---progressview
 -(void)buildProgressView
 {
-    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 2)];
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, 2)];
     self.progressView.backgroundColor = [UIColor blueColor];
     //设置进度条的高度，下面这句代码表示进度条的宽度变为原来的1倍，高度变为原来的1.5倍.
     self.progressView.transform = CGAffineTransformMakeScale(1.0f, 1.5f);
@@ -348,7 +348,10 @@
     {
         [self loadUrlWithDict:message.body];
     }
-    
+    else if ([message.name isEqualToString:@"lakalaCallback"])
+    {
+        [self lakalaCallBackDict:message.body];
+    }
 }
 
 
@@ -423,8 +426,38 @@
     
     
 }
+#pragma  mark ---拉卡拉
+-(void)lakalaCallBackDict:(NSDictionary *)body
+{
+    //orderType
+    //payStatus   0交易取消 1付款中。。 2 成功
+    DLog(@"%@",body);
+    if (![body isKindOfClass:[NSDictionary class]]) {
+        [[UserModel shareInstance]showInfoWithStatus:@"后台参数错误"];
+        return;
+    }
+    int orderType = [[body safeObjectForKey:@"orderType"]intValue];
+    NSString * payStatus = [body safeObjectForKey:@"payStatus"];
 
+    if ([payStatus isEqualToString:@"0"]) {
+        PaySuccessViewController * pSuccess =[[PaySuccessViewController alloc]init];
+        pSuccess.paySuccess = NO;
+        pSuccess.orderType = orderType;
+        [self.navigationController pushViewController:pSuccess animated:YES];
 
+    }
+    else if ([payStatus isEqualToString:@"1"])
+    {
+        
+    }
+    else
+    {
+        PaySuccessViewController * pSuccess =[[PaySuccessViewController alloc]init];
+        pSuccess.paySuccess = YES;
+        pSuccess.orderType = orderType;
+        [self.navigationController pushViewController:pSuccess animated:YES];
+    }
+}
 
 // 页面开始加载时调用
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation

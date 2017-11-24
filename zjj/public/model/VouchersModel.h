@@ -33,7 +33,6 @@ typedef void (^getVouchersFail)(NSString  *errorStr);
                       Success:(getBestVoucherSuccess)success;
 
 ///获取选择的优惠券
--(NSDictionary *)getChooseVoucherWithArr:(NSMutableArray*)myMutableArr
-                                   index:(NSInteger)index;
-
+-(NSDictionary *)getChooseVoucherWithArr:(NSArray*)myMutableArr
+                                couponNo:(NSString *)couponNo;
 @end

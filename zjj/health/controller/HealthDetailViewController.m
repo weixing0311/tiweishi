@@ -124,7 +124,8 @@
     }
     else if (indexPath.section ==1)
     {
-        return 70;
+        return 125;
+
     }
     else if (indexPath.section ==2)
     {
@@ -133,7 +134,7 @@
 
     else if (indexPath.section ==3)
     {
-        return 155;
+        return 70;
     }
 
     else if (indexPath.section ==4)
@@ -187,13 +188,14 @@
     }
     else if (indexPath.section ==1)
     {
-        static NSString * identifier = @"NewHealthDetailSecondCell";
-        NewHealthDetailSecondCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        static NSString * identifier = @"NewHealthDetailForthCell";
+        NewHealthDetailForthCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
         [cell setInfoWithDict:self.infoItem];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
 
         return cell;
         
@@ -214,8 +216,8 @@
     }
     else if (indexPath.section ==3)
     {
-        static NSString * identifier = @"NewHealthDetailForthCell";
-        NewHealthDetailForthCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        static NSString * identifier = @"NewHealthDetailSecondCell";
+        NewHealthDetailSecondCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
@@ -347,6 +349,7 @@
     WriteArtcleViewController * write = [[WriteArtcleViewController alloc]init];
     write.firstImage = image;
     write.shareType = @"8";
+    write.textStr = [self getContentWithItem:self.infoItem];
     [self.navigationController pushViewController:write animated:YES];
 }
 
@@ -448,6 +451,7 @@
         WriteArtcleViewController * write = [[WriteArtcleViewController alloc]init];
         write.firstImage = image;
         write.shareType = @"8";
+        write.textStr = [self getContentWithItem:self.infoItem];
         [self.navigationController pushViewController:write animated:YES];
 
         
@@ -484,7 +488,103 @@
     return viewImage;
 }
 
-
+//分享到社区的文案
+-(NSString *)getContentWithItem:(HealthDetailsItem *)item
+{
+    if (item.weight-item.lastWeight==0) {
+        switch (item.weightLevel) {
+            case 1:
+                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于偏瘦身材，可以考虑补充营养，进行锻炼，毕竟过于消瘦也不好奥。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                break;
+            case 2:
+                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于标准身材，您的体型很标准，继续保持，如果您对自己有更高要求，可以运动锻炼，进行增肌塑形。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                
+                break;
+            case 3:
+                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                
+                break;
+            case 4:
+                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                
+                break;
+            case 5:
+                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                
+                break;
+            case 6:
+                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                
+                break;
+                
+            default:
+                break;
+        }
+    }else{
+        switch (item.weightLevel) {
+            case 1:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，提醒您补充营养也要把握好尺度，不要被肥胖趁虚而入奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 2:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%1.fkg，建议您注意饮食，不要被肥胖趁虚而入奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 3:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 4:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 5:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+            case 6:
+                if (item.weight-item.lastWeight>0) {
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }else{
+                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    
+                }
+                break;
+                
+            default:
+                return @"";
+                break;
+        }
+    }
+    return @"";
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

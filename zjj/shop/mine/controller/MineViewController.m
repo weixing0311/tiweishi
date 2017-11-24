@@ -16,7 +16,8 @@
 #import "QrCodeView.h"
 #import "SuperiorViewController.h"
 #import "KfViewController.h"
-
+#import "VouchersGetViewController.h"
+#import "ShopTabbbarController.h"
 @interface MineViewController ()<qrcodeDelegate>
 
 @end
@@ -26,6 +27,7 @@
 {
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBarHidden = YES;
+    
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self getWaitPayCount];
     self.tableview.bounces = NO;
@@ -93,7 +95,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -104,14 +106,18 @@
         cell =[arr lastObject];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (indexPath.row ==0) {
+        cell.titleLabel.text = @"领券中心";
+        cell.headImageView.image = getImage(@"home_6_");
 
-    if (indexPath.row==0) {
+    }
+    else if (indexPath.row==1) {
         cell.titleLabel.text = @"帮助中心";
         cell.secondLabel.text = @"帮助文档";
         cell.secondLabel.textColor = HEXCOLOR(0x999999);
         cell .headImageView.image= [UIImage imageNamed:@"personal_help_"];
     }
-    else if ( indexPath.row ==1)
+    else if (indexPath.row ==2)
     {
         cell.titleLabel.text = @"联系我们";
         cell.secondLabel .text = @"联系方式";
@@ -119,7 +125,7 @@
         cell.headImageView.image= [UIImage imageNamed:@"personal_Lx_"];
  
     }
-    else if(indexPath.row==2)
+    else if (indexPath.row==3)
     {
         cell.titleLabel.text = @"邀请注册";
         cell.secondLabel .text = @"二维码注册";
@@ -127,7 +133,7 @@
         cell.headImageView.image= [UIImage imageNamed:@"personal_resign_"];
  
     }
-    else if (indexPath.row ==3)
+    else if (indexPath.row ==4)
     {
         cell.titleLabel.text = @"我的推荐人";
         if ([UserModel shareInstance].superiorDict&&[[UserModel shareInstance].superiorDict allKeys].count>0) {
@@ -152,6 +158,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row ==0) {
+        VouchersGetViewController * vo = [[VouchersGetViewController alloc]init];
+        vo.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:vo animated:YES];
+
+    }
+    else if (indexPath.row ==1) {
         HomePageWebViewController *web =[[HomePageWebViewController alloc]init];
         web.title = @"帮助中心";
         web.urlStr = [NSString stringWithFormat:@"%@app/helpConsumers.html",kMyBaseUrl];
@@ -160,12 +172,12 @@
 
     }
     
-    else if(indexPath.row ==1){
+    else if(indexPath.row ==2){
         ContactUsViewController * cc = [[ContactUsViewController alloc]init];
         cc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:cc animated:YES];
     }
-    else if(indexPath.row ==2)
+    else if(indexPath.row ==3)
     {
         NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"QrCodeView"owner:self options:nil];
         
@@ -176,7 +188,7 @@
         [self.view.window addSubview: rcodeView];
   
     }
-    else if (indexPath.row ==3){
+    else if (indexPath.row ==4){
         SuperiorViewController * sp =[[SuperiorViewController alloc]init];
         sp.hidesBottomBarWhenPushed = YES;
 

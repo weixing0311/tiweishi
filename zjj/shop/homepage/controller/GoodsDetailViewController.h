@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bannerView;
 @property (nonatomic,copy)NSString *productNo;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-
+@property (nonatomic,copy)NSString * couponNo;///从优惠券进来之后的券号
 @property (weak, nonatomic) IBOutlet UIView *detailView;
 
 - (IBAction)didshopCar:(id)sender;

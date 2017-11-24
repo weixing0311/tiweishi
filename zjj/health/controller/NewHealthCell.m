@@ -38,6 +38,7 @@
         self.redFatlb.text = @"";
         
     }
+    [UserModel shareInstance].userDays = item.userDays;
     self.resignTimelb.text = [NSString stringWithFormat:@"已使用脂将军%d天",item.userDays];
     self.redFatlb.text = [NSString stringWithFormat:@"已减%.1fkg",item.subtractWeight*100/100];
     [self.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[SubUserItem shareInstance].headUrl] forState:UIControlStateNormal placeholderImage:getImage(@"head_default")options:SDWebImageRetryFailed];

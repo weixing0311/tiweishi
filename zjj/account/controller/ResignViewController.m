@@ -166,6 +166,7 @@
         if ([UserModel shareInstance].nickName.length>0) {
             
             TabbarViewController *tab = [[TabbarViewController alloc]init];
+            [UserModel shareInstance].tabbarStyle = @"health";
             self.view.window.rootViewController = tab;
             
         }else{

@@ -26,19 +26,19 @@
     self.heightlb.text =[NSString stringWithFormat:@"身高:%d",item.height];
     self.agelb.text =[NSString stringWithFormat:@"年龄:%d",item.age];
     
-    self.bmrlb.text = [NSString stringWithFormat:@"体型:%@",[self getBodyStatusWithLevel:item.weightLevel]];
+    self.bmrlb.text = [NSString stringWithFormat:@"基础代谢:%.1f",item.bmr];
     
-    if (item.weightLevel==1||item.weightLevel==3||item.weightLevel==4) {
-        self.bmrlb.textColor = warningColor;
-        
-    }else if (item.weightLevel==2)
-    {
-        self.bmrlb.textColor = normalColor;
-    }
-    else if (item.weightLevel==5||item.weightLevel==6)
-    {
-        self.bmrlb.textColor = seriousColor;
-    }
+//    if (item.weightLevel==1||item.weightLevel==3||item.weightLevel==4) {
+//        self.bmrlb.textColor = warningColor;
+//
+//    }else if (item.weightLevel==2)
+//    {
+//        self.bmrlb.textColor = normalColor;
+//    }
+//    else if (item.weightLevel==5||item.weightLevel==6)
+//    {
+//        self.bmrlb.textColor = seriousColor;
+//    }
     self.bodyAgelb.text = [NSString stringWithFormat:@"身体年龄:%d",item.bodyAge];
     
     

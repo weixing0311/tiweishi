@@ -26,6 +26,7 @@
     NSString * voucthersFaceValue;
     NSString * voucthersCouponNo;
     NSMutableDictionary * voucthersDict;
+    NSString * vouchersCountStr;
 }
 - (instancetype)init
 {
@@ -61,33 +62,31 @@
 }
 -(void)getVouchersWithArrString:(NSString *)string
 {
-    [[VouchersModel shareInstance]getMyUseVoucthersWithproductArr:string Success:^(NSDictionary *dic) {
-        DLog(@"dic--%@",dic);
-        [voucthersDict setDictionary:dic];
+    [[VouchersModel shareInstance] getMyUseVoucthersArrayWithproductArr:string Success:^(NSArray *resultArr) {
         
-        int type = [[voucthersDict objectForKey:@"type"]intValue];
-        float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+        NSMutableArray * mutarr = [NSMutableArray arrayWithArray:resultArr];
+        [mutarr enumerateObjectsUsingBlock:^(id key, NSUInteger value, BOOL *stop) {
+            NSDictionary * dict = key;
+            int type = [[dict safeObjectForKey:@"type"]intValue];
+                if (type !=4&&type!=5) {
+                    *stop =YES;
+                    if (*stop ==YES) {
+                        [mutarr removeObject:dict];
+                    }
+                }
+        }];
         
-        if (type ==4) {
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
-
-        }else if (type ==5)
-        {
-            if ([weightStr floatValue]>amount) {
-                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]-amount];
-            }else{
-                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
-            }
-        }else
-        {
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
+        if (mutarr.count ==0) {
+            vouchersCountStr = @"暂无优惠券";
+        }else{
+            vouchersCountStr = [NSString stringWithFormat:@"您有%lu张优惠券",(unsigned long)mutarr.count];
         }
-        
         [self.tableview reloadData];
+
     } fail:^(NSString *errorStr) {
-        DLog(@"error--%@",errorStr);
-        [voucthersDict removeAllObjects];
+        vouchersCountStr = @"暂无优惠券";
         [self.tableview reloadData];
+
     }];
 }
 
@@ -156,7 +155,7 @@
         weightStr = [[dic objectForKey:@"data"]objectForKey:@"freight"];
         
         
-        if (voucthersDict) {
+        if (voucthersDict&&[voucthersDict allKeys].count>0) {
             int type = [[voucthersDict objectForKey:@"type"]intValue];
             float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
             
@@ -293,12 +292,16 @@
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         }
         cell.textLabel.text = @"优惠券";
-        int type  = [[voucthersDict objectForKey:@"type"]intValue];
-        if (type ==4) {
-            cell.detailTextLabel.text = @"运费抵用券";
-        }else{
-            cell.detailTextLabel.text = voucthersFaceValue?voucthersFaceValue:@"";
-        }
+//        if (voucthersDict&&[voucthersDict allKeys].count>0) {
+//            int type  = [[voucthersDict objectForKey:@"type"]intValue];
+//            if (type ==4) {
+//                cell.detailTextLabel.text = @"运费抵用券";
+//            }else{
+//                cell.detailTextLabel.text = voucthersFaceValue?voucthersFaceValue:@"";
+//            }
+//        }else{
+            cell.detailTextLabel.text = vouchersCountStr;
+//        }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
         
@@ -325,7 +328,7 @@
         
         float  weightPrice  = [weightStr floatValue];
         
-        if (voucthersDict) {
+        if (voucthersDict&&[voucthersDict allKeys].count>0) {
             int type = [[voucthersDict objectForKey:@"type"]intValue];
             float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
             
@@ -367,7 +370,8 @@
     {
         MyVoucthersViewController * voucther = [[MyVoucthersViewController alloc]init];
         voucther.delegate = self;
-        voucther.isFromOrder = YES;
+        voucther.myType = IS_FROM_CONFIRM;
+        voucther.chooseDict = voucthersDict;
         voucther.productArr = [self getVoucthersInfo];
         [self.navigationController pushViewController:voucther animated:YES];
         
@@ -418,7 +422,7 @@
     [param safeSetObject:@"" forKey:@"buyerRemark"];
     [param safeSetObject:self.productStr forKey:@"productArray"];
     [param safeSetObject:self.warehouseNo forKey:@"warehouseNo"];
-    if (voucthersDict) {
+    if (voucthersDict&&[voucthersDict allKeys].count>0) {
         
     [param safeSetObject:[voucthersDict safeObjectForKey:@"couponNo"] forKey:@"couponNo"];
         
@@ -506,26 +510,69 @@
 }
 -(void)getVoucthersToUseWithId:(NSDictionary * )voucthersId
 {
-    voucthersFaceValue =  [voucthersId safeObjectForKey:@"discountAmount"];
-    voucthersCouponNo = [voucthersId safeObjectForKey:@"couponNo"];
-    [voucthersDict  setDictionary:voucthersId];
-    int type = [[voucthersDict objectForKey:@"type"]intValue];
-    float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
     
-    if (type ==4) {
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+    if (voucthersDict&&[voucthersDict allKeys].count>0) {
+        NSString * couponNo= [voucthersId safeObjectForKey:@"couponNo"];
+        NSString * indexCouponNo = [voucthersDict safeObjectForKey:@"voucthersDict"];
         
-    }else if (type ==5)
-    {
-        if ([weightStr floatValue]>amount) {
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]-amount];
+        if ([couponNo isEqualToString:indexCouponNo]) {
+            voucthersDict =nil;
+            voucthersFaceValue =nil;
+            voucthersCouponNo = nil;
+            vouchersCountStr =@"";
+
         }else{
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+            vouchersCountStr =[voucthersDict safeObjectForKey:@"grantName"];
+            voucthersFaceValue =  [voucthersId safeObjectForKey:@"discountAmount"];
+            voucthersCouponNo = [voucthersId safeObjectForKey:@"couponNo"];
+            [voucthersDict  setDictionary:voucthersId];
+            int type = [[voucthersDict objectForKey:@"type"]intValue];
+            float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+            
+            if (type ==4) {
+                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+                
+            }else if (type ==5)
+            {
+                if ([weightStr floatValue]>amount) {
+                    self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]-amount];
+                }else{
+                    self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+                }
+            }else
+            {
+                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
+            }
+
         }
-    }else
-    {
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
+    }else{
+        voucthersFaceValue =  [voucthersId safeObjectForKey:@"discountAmount"];
+        voucthersCouponNo = [voucthersId safeObjectForKey:@"couponNo"];
+        [voucthersDict  setDictionary:voucthersId];
+        int type = [[voucthersDict objectForKey:@"type"]intValue];
+        float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+        
+        if (type ==4) {
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+            
+        }else if (type ==5)
+        {
+            if ([weightStr floatValue]>amount) {
+                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]-amount];
+            }else{
+                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+            }
+        }else
+        {
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
+        }
+
     }
+
+    
+    
+    
+    
 
     [self.tableview reloadData];
 }

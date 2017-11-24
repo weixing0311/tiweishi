@@ -11,4 +11,5 @@
 @interface WriteArtcleViewController : JFABaseTableViewController
 @property (nonatomic,strong)UIImage * firstImage;
 @property (nonatomic,copy) NSString * shareType;
+@property (nonatomic,copy) NSString * textStr;
 @end

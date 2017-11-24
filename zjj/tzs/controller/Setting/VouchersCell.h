@@ -19,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *getBtn;
 @property (nonatomic,assign)id<VouchersCellDelegate>delegate;
 - (IBAction)didClickGetVouchers:(id)sender;
+-(void)setCellInfoWithDict:(NSDictionary *)dict;
+@property (weak, nonatomic) IBOutlet UIView *progressView;
+@property (weak, nonatomic) IBOutlet UILabel *lastCountlb;
+
 
 @end
 @protocol VouchersCellDelegate <NSObject>

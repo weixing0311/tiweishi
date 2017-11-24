@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="139.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XQj-B6-Lnp">
@@ -147,39 +147,39 @@
                                 <color key="textColor" red="0.99109692260000004" green="0.213834791" blue="0.18167625309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每月服务配送数量不得超过15，当月可配送15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkl-hx-iiK">
+                                <rect key="frame" x="10" y="24" width="300" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="YIm-pg-kyJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.99109692260000004" green="0.213834791" blue="0.18167625309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.97627311944961548" green="0.78301531076431274" blue="0.31309678819444442" alpha="0.12788955479452055" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="s2c-1H-mtp" firstAttribute="leading" secondItem="FEc-Dz-FwE" secondAttribute="leading" id="8dm-C1-Jt3"/>
                             <constraint firstItem="s2c-1H-mtp" firstAttribute="top" secondItem="Don-Rb-wbG" secondAttribute="bottom" id="ABv-am-LNY"/>
                             <constraint firstItem="5oR-eF-3db" firstAttribute="leading" secondItem="FEc-Dz-FwE" secondAttribute="leading" constant="10" id="EIF-Em-dNf"/>
+                            <constraint firstItem="vkl-hx-iiK" firstAttribute="top" secondItem="FEc-Dz-FwE" secondAttribute="topMargin" constant="16" id="FVD-Ki-cAY"/>
+                            <constraint firstItem="vkl-hx-iiK" firstAttribute="leading" secondItem="FEc-Dz-FwE" secondAttribute="leading" constant="10" id="MNb-AD-XfL"/>
                             <constraint firstItem="Don-Rb-wbG" firstAttribute="leading" secondItem="FEc-Dz-FwE" secondAttribute="leading" id="TXQ-zc-47j"/>
                             <constraint firstAttribute="bottom" secondItem="s2c-1H-mtp" secondAttribute="bottom" id="UKM-Au-oVa"/>
                             <constraint firstAttribute="trailing" secondItem="Don-Rb-wbG" secondAttribute="trailing" id="WEC-vT-4po"/>
+                            <constraint firstAttribute="trailing" secondItem="vkl-hx-iiK" secondAttribute="trailing" constant="10" id="Xg8-W1-ima"/>
                             <constraint firstAttribute="trailing" secondItem="s2c-1H-mtp" secondAttribute="trailing" id="hTh-t9-xRc"/>
                             <constraint firstItem="5oR-eF-3db" firstAttribute="top" secondItem="FEc-Dz-FwE" secondAttribute="top" constant="5" id="pyy-Ux-77u"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每月服务配送数量不得超过15，当月可配送15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkl-hx-iiK">
-                        <rect key="frame" x="8" y="26" width="304" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="20" id="YIm-pg-kyJ"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.99109692260000004" green="0.213834791" blue="0.18167625309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="f1h-ib-YgE" secondAttribute="bottom" constant="10" id="2O4-Od-Ru4"/>
                     <constraint firstItem="XQj-B6-Lnp" firstAttribute="top" secondItem="FEc-Dz-FwE" secondAttribute="bottom" constant="10" id="2hz-zw-TNv"/>
-                    <constraint firstItem="vkl-hx-iiK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="7Bn-Jm-OtC"/>
                     <constraint firstItem="XQj-B6-Lnp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="BbF-PN-8hb"/>
-                    <constraint firstItem="vkl-hx-iiK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="18" id="FF9-Fa-4XU"/>
                     <constraint firstItem="MJb-x8-2Hb" firstAttribute="top" secondItem="QSc-KL-uqA" secondAttribute="bottom" constant="2" id="GoY-wP-Qcf"/>
                     <constraint firstAttribute="bottom" secondItem="XQj-B6-Lnp" secondAttribute="bottom" constant="10" id="MTY-8H-b8R"/>
                     <constraint firstAttribute="trailing" secondItem="f1h-ib-YgE" secondAttribute="trailing" constant="10" id="QBO-1c-3dH"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="vkl-hx-iiK" secondAttribute="trailing" id="SjQ-0v-gNm"/>
                     <constraint firstItem="QSc-KL-uqA" firstAttribute="top" secondItem="H5H-l7-khR" secondAttribute="bottom" constant="5" id="Ucr-sP-9Mt"/>
                     <constraint firstItem="FEc-Dz-FwE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="dUE-JE-efW"/>
                     <constraint firstItem="FEc-Dz-FwE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="hKz-AM-DvB"/>

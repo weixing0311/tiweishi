@@ -193,10 +193,13 @@
         
         if ([[UserModel shareInstance].userType isEqualToString:@"1"]) {
             ShopTabbbarController *tb =[[ShopTabbbarController alloc]init];
+            [UserModel shareInstance].tabbarStyle = @"shop";
+
             self.view.window.rootViewController = tb;
         }
         else{
             TzsTabbarViewController *tb =[[TzsTabbarViewController alloc]init];
+            [UserModel shareInstance].tabbarStyle = @"tzs";
             self.view.window.rootViewController = tb;
         }
     }

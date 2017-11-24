@@ -30,48 +30,50 @@
 {
     self.currItem = item;
     if (self.tag ==1) {//BMI 体重 体脂率
-        self.title1Label.text = @"BMI";
-        self.value1Label.text = [NSString stringWithFormat:@"%.1f",item.bmi];
-        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
+        self.title1Label.text = @"体脂率";
+        self.value1Label.text = [NSString stringWithFormat:@"%.1f%%",item.fatPercentage];
+        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT item:item];
+
 
         self.title2Label.text = @"脂肪量";
         self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
         self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
         
-        self.title3Label.text = @"体脂率";
-        self.value3Label.text = [NSString stringWithFormat:@"%.1f%%",item.fatPercentage];
-        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT item:item];
-        
+        self.title3Label.text = @"内脏脂肪";
+        self.value3Label.text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
+        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT item:item];
+
         
     }else if(self.tag==2){//蛋白质  水分  脂肪量
-        self.title1Label.text = @"蛋白质";
-        self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
-        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
+        self.title1Label.text = @"肌肉";
+        self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
+        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_MUSCLE item:item];
+
+        self.title2Label.text = @"蛋白质";
+        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
+        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
         
-        self.title2Label.text = @"骨量";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneWeight];
-        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONE item:item];
+        self.title3Label.text = @"骨量";
+        self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneWeight];
+        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONE item:item];
+
+
+        
+    }else{//肌肉  基础代谢  内脏脂肪
+        self.title1Label.text = @"BMI";
+        self.value1Label.text = [NSString stringWithFormat:@"%.1f",item.bmi];
+        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
+
+
+        self.title2Label.text = @"骨骼肌";
+        self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneMuscleWeight];
+        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE item:item];
 
         self.title3Label.text = @"水分";
         self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
         self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
 
         
-    }else{//肌肉  基础代谢  内脏脂肪
-        
-        self.title1Label.text = @"肌肉";
-        self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
-        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_MUSCLE item:item];
-
-        self.title2Label.text = @"基础代谢";
-        self.value2Label.text = [NSString stringWithFormat:@"%.1f",item.bmr];
-        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMR item:item];
-
-        
-        
-        self.title3Label.text = @"内脏脂肪";
-        self.value3Label.text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
-        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT item:item];
     }
     
     self.status1Label.backgroundColor = [self getColorWithString:self.status1Label.text];
@@ -84,16 +86,18 @@
     float currX;
     switch (index) {
         case 1:
-            self.headerImageView.image = getImage(@"BMI1_");
-            self.headerNamelb.text = @"BMI";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmi];
+            self.headerImageView.image = getImage(@"fat%1_");
+            self.headerNamelb.text = @"体脂率";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentage];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
             
-            self.sliderLislb.text = @"18.5";
-            self.sliderMorlb.text = @"24";
             self.sliderBgImageView.image = getImage(@"sliderBg2_");
-            currX = [self getlocationDianL:self.currItem.bmi  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+            
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentageMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentageMax];
+            
+            currX = [self getlocationDianL:self.currItem.fatPercentage  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 2:
@@ -115,35 +119,51 @@
 
             break;
         case 3:
-            self.headerImageView.image = getImage(@"fat%1_");
-            self.headerNamelb.text = @"体脂率";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentage];
+            self.headerImageView.image = getImage(@"fei_");
+            self.headerNamelb.text = @"内脏脂肪";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.visceralFatPercentage];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
-
-            self.sliderBgImageView.image = getImage(@"sliderBg2_");
-
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentageMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f%%",self.currItem.fatPercentageMax];
+            self.sliderBgImageView.image = getImage(@"sliderBg4_");
             
-            currX = [self getlocationDianL:self.currItem.fatPercentage  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+            self.sliderLislb.text =@"10";
+            self.sliderMorlb.text = @"14";
+            
+            currX = [self getlocationDianL:self.currItem.visceralFatPercentage Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
         case 4:
+            
+            self.headerImageView.image = getImage(@"jirou1_");
+            self.headerNamelb.text = @"肌肉";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.muscleWeight];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+            self.sliderBgImageView.image = getImage(@"sliderBg3_");
+            
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.muscleWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.muscleWeightMax];
+            
+            currX = [self getlocationDianL:self.currItem.muscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+
+
+            break;
+        case 5:
             self.headerImageView.image = getImage(@"danBZ1_");
             self.headerNamelb.text = @"蛋白质";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.proteinWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
             self.sliderBgImageView.image = getImage(@"sliderBg3_");
-
+            
             self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.proteinWeightMin];
             self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.proteinWeightMax];
             
             currX = [self getlocationDianL:self.currItem.proteinWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
-        case 5:
+        case 6:
+
             self.headerImageView.image = getImage(@"bone1_");
             self.headerNamelb.text = @"骨量";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneWeight];
@@ -155,63 +175,49 @@
             
             currX = [self getlocationDianL:self.currItem.boneWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
+
             break;
-        case 6:
+        case 7:
+            self.headerImageView.image = getImage(@"BMI1_");
+            self.headerNamelb.text = @"BMI";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmi];
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
             
+            self.sliderLislb.text = @"18.5";
+            self.sliderMorlb.text = @"24";
+            self.sliderBgImageView.image = getImage(@"sliderBg2_");
+            currX = [self getlocationDianL:self.currItem.bmi  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+
+            break;
+        case 8:
+            self.headerImageView.image = getImage(@"boneMuscle1_");
+            self.headerNamelb.text = @"骨骼肌";
+            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeight];
+            self.sliderBgImageView.image = getImage(@"sliderBg3_");
+
+            self.secondTitle.text = self.headerNamelb.text;
+            self.secondHeadImage.image = self.headerImageView.image;
+
+            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMin];
+            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.boneMuscleWeightMax];
+
+            currX = [self getlocationDianL:self.currItem.boneMuscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
+
+            break;
+        case 9:
             self.headerImageView.image = getImage(@"water1_");
             self.headerNamelb.text = @"水分";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.waterWeight];
             self.secondTitle.text = self.headerNamelb.text;
             self.secondHeadImage.image = self.headerImageView.image;
             self.sliderBgImageView.image = getImage(@"sliderBg3_");
-
+            
             self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.waterWeightMin];
             self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.waterWeightMax];
             
             currX = [self getlocationDianL:self.currItem.waterWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
-            break;
-        case 7:
-            self.headerImageView.image = getImage(@"jirou1_");
-            self.headerNamelb.text = @"肌肉";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.muscleWeight];
-            self.secondTitle.text = self.headerNamelb.text;
-            self.secondHeadImage.image = self.headerImageView.image;
-            self.sliderBgImageView.image = getImage(@"sliderBg3_");
-
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1fkg",self.currItem.muscleWeightMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1fkg",self.currItem.muscleWeightMax];
-            
-            currX = [self getlocationDianL:self.currItem.muscleWeight  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
-
-            break;
-        case 8:
-            self.headerImageView.image = getImage(@"daiX1_");
-            self.headerNamelb.text = @"基础代谢";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmr];
-            self.sliderBgImageView.image = getImage(@"sliderBg2_");
-
-            self.secondTitle.text = self.headerNamelb.text;
-            self.secondHeadImage.image = self.headerImageView.image;
-
-            self.sliderLislb.text =[NSString stringWithFormat:@"%.1f",self.currItem.bmrMin];
-            self.sliderMorlb.text = [NSString stringWithFormat:@"%.1f",self.currItem.bmrMax];
-
-            currX = [self getlocationDianL:self.currItem.bmr  Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
-
-            break;
-        case 9:
-            self.headerImageView.image = getImage(@"fei_");
-            self.headerNamelb.text = @"内脏脂肪";
-            self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.visceralFatPercentage];
-            self.secondTitle.text = self.headerNamelb.text;
-            self.secondHeadImage.image = self.headerImageView.image;
-            self.sliderBgImageView.image = getImage(@"sliderBg4_");
-
-            self.sliderLislb.text =@"10";
-            self.sliderMorlb.text = @"14";
-            
-            currX = [self getlocationDianL:self.currItem.visceralFatPercentage Withleft:[self.sliderLislb.text floatValue] right:[self.sliderMorlb.text floatValue]];
 
             break;
 
@@ -229,7 +235,7 @@
             break;
     }
     
-    if (index==9) {
+    if (index==3) {
         _leftlb.text = @"正常";
         _midlb.text = @"超标";
         _rightlb.text = @"高";

@@ -23,6 +23,7 @@
     [super viewWillAppear:animated];
     self.title  = @"领券中心";
     [self setTBWhiteColor];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 
 }
 - (void)viewDidLoad {
@@ -48,7 +49,7 @@
 -(void)didEnterMyVouchersPage
 {
     MyVoucthersViewController * myv = [[MyVoucthersViewController alloc]init];
-    myv.isFromOrder =NO;
+    myv.myType =IS_FROM_MINE;
     [self.navigationController pushViewController:myv animated:YES];
 }
 -(void)getVouchListInfo
@@ -104,6 +105,9 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (IS_IPHONE5) {
+        return 80;
+    }
     return 130;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,59 +120,8 @@
     cell.delegate = self;
     cell.tag = indexPath.row;
     
-    
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-    cell.titlelb.text = [dic safeObjectForKey:@"grantName"];
-    cell.timelb.text = [NSString stringWithFormat:@"有效期至:%@",[dic safeObjectForKey:@"receiveEndTime"]];
-    cell.countlb.text = [NSString stringWithFormat:@"%d",[[dic safeObjectForKey:@"grantNum"]intValue]-[[dic safeObjectForKey:@"receiveNum"]intValue]];
-    
-    
-    
-    NSString * isReceive = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"isReceive"]];
-    if ([isReceive isEqualToString:@"0"]) {
-        cell.getBtn.selected = NO;
-        cell.getBtn.backgroundColor = [UIColor redColor];
-    }else{
-        cell.getBtn.selected = YES;
-        cell.getBtn.backgroundColor = HEXCOLOR(0xeeeeee);
-    }
-    
-    
-    int type = [[dic safeObjectForKey:@"type"]intValue];
-    if (type ==2) {
-        cell.faceValuelb.text = [NSString stringWithFormat:@"%.0f折",[[dic safeObjectForKey:@"discountAmount"]floatValue]*10];
-    }else{
-        cell.faceValuelb.text = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"discountAmount"]];
-    }
-    
-    cell.headImageView.image = getImage(@"default");
-    
-    //useRange//使用范围 0全部商品 1脂将军饼干 2 体脂称
-    int userRange = [[dic safeObjectForKey:@"useRange"]intValue];
-    if (userRange ==1) {
-        cell.limit2lb.text =@"仅限脂将军饼干使用";
-    }
-    else if(userRange ==2)
-    {
-        cell.limit2lb.text = @"仅限脂将军饼干使用";
-    }else
-    {
-        cell.limit2lb.text = @"(无限制)";
-    }
-    
-    int startAmount = [[dic safeObjectForKey:@"startAmount"]intValue];
-    if (!startAmount||startAmount ==0) {
-        cell.limitlb.text = @"(无限制)";
-    }else{
-        cell.limitlb.text = [NSString stringWithFormat:@"满%d可用",startAmount];
-    }
-    
-    
-    
-    
-    
-    
-    
+    [cell setCellInfoWithDict:dic];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

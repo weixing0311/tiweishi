@@ -15,4 +15,6 @@
 - (IBAction)placeTheOrder:(id)sender;
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @property (nonatomic,strong)NSMutableDictionary * param;
+@property (nonatomic,copy) NSString * defaultVouchersNo;
+
 @end

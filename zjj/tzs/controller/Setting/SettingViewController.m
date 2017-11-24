@@ -59,7 +59,7 @@
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
-    
+    self.integrallb.text = [NSString stringWithFormat:@"业务积分:%@",[UserModel shareInstance].tourismIntegral?[UserModel shareInstance].tourismIntegral:@"0"];
     if ([[UserModel shareInstance].phoneNum isEqualToString:@"15210642625"]) {
         self.czBtn.hidden = YES;
         self.thirdView.hidden = YES;
@@ -137,6 +137,7 @@
         UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"您还未实名认证，请去实名认证" preferredStyle:UIAlertControllerStyleAlert];
         [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             TabbarViewController * tb= [[TabbarViewController alloc]init];
+            [UserModel shareInstance].tabbarStyle = @"health";
             self.view.window.rootViewController = tb;
             
         }]];
@@ -279,6 +280,7 @@
     self.navigationController.navigationBarHidden =NO;
     MyVoucthersViewController * myVouchers =[[MyVoucthersViewController alloc]init];
     myVouchers.hidesBottomBarWhenPushed = YES;
+    myVouchers.myType = IS_FROM_MINE;
     [self.navigationController pushViewController:myVouchers animated:YES];
 }
 #pragma mark--订购

@@ -56,11 +56,17 @@
  */
 @property (nonatomic,copy  ) NSString * nickName;//昵称
 
-
+/**
+ * 业务积分
+ */
+@property (nonatomic,copy  ) NSString * tourismIntegral;
 /**
  *    需要显示用户的ID
  */
 @property (nonatomic,assign)int showId;
+
+
+@property (nonatomic,assign) int   userDays;
 
 /**
  *  子用户id
@@ -186,6 +192,10 @@
  *  更新本地个人信息
  */
 -(void)setHeadImageUrl:(NSString *)imageUrl;
+
+///判断tabbar
+@property (nonatomic,copy)NSString * tabbarStyle;
+
 
 /**
  * 判断个人信息是否为空

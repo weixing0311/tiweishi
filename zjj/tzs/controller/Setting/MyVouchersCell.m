@@ -22,5 +22,8 @@
 }
 
 - (IBAction)didClickUse:(id)sender {
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didUserVoucherWithCell:)]) {
+        [self.delegate didUserVoucherWithCell:self];
+    }
 }
 @end

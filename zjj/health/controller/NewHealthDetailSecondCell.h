@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "HealthDetailsItem.h"
 @interface NewHealthDetailSecondCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *scorelb;
-@property (weak, nonatomic) IBOutlet UILabel *fatLevellb;
-@property (weak, nonatomic) IBOutlet UILabel *contentlb;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLb;
+
 -(void)setInfoWithDict:(HealthDetailsItem *)item;
 @end

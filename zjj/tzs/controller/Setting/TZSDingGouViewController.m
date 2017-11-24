@@ -14,7 +14,7 @@
 #import "BaseWebViewController.h"
 #import "VouchersTzsDgView.h"
 
-@interface TZSDingGouViewController ()<TZSDGCellDelegate,TZSDGUPCellDelegate,UITextFieldDelegate>
+@interface TZSDingGouViewController ()<TZSDGCellDelegate,TZSDGUPCellDelegate,UITextFieldDelegate,vouchersTzsDgDelegate>
 
 @end
 
@@ -25,6 +25,9 @@
     NSMutableArray * _chooseArray;
     CXdetailView * cuxiaoDetailView;
     VouchersTzsDgView * vouchersView;
+    NSMutableDictionary * vouchersDict;
+    NSInteger             GoodsType;//是升级服务还是商品 1升级服务 2商品 999啥都不是
+    NSInteger           fuwuIndex;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -39,6 +42,9 @@
     _dataArray   = [NSMutableArray array];
     _chooseArray =[NSMutableArray array];
     _buyArray    = [NSMutableArray array];
+    vouchersDict =[NSMutableDictionary dictionary];
+    GoodsType = 999;
+    fuwuIndex = 999;
     self.tableview.delegate = self;
     self.tableview.dataSource= self;
     cuxiaoDetailView = [[CXdetailView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
@@ -59,6 +65,7 @@
 {
     vouchersView = [[VouchersTzsDgView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
     vouchersView.hidden= YES;
+    vouchersView.delegate = self;
     vouchersView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:vouchersView];
 }
@@ -98,6 +105,10 @@
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
     [param safeSetObject:conId forKey:@"conditionId"];
+    if (vouchersDict) {
+        [param safeSetObject:[vouchersDict safeObjectForKey:@"couponNo"] forKey:@"couponNo"];
+;
+    }
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/upgradeFatTeacher.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         DLog(@"success--%@",dic);
         
@@ -130,14 +141,25 @@
     float  payableAmount = totalPrice-payable;
     
     
-    NSMutableDictionary * dic =[NSMutableDictionary dictionary];
-    [dic setObject:[UserModel shareInstance].userId forKey:@"userId"];
-    [dic setObject:[NSString stringWithFormat:@"%.0f",totalPrice] forKey:@"totalPrice"];
-    [dic setObject:[NSString stringWithFormat:@"%.0f",payableAmount] forKey:@"payableAmount"];
-    [dic setObject:str forKey:@"orderItem"];
+    
+    NSMutableDictionary * params =[NSMutableDictionary dictionary];
+    [params setObject:[UserModel shareInstance].userId forKey:@"userId"];
     
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/submitServiceOrder.do" HiddenProgress:NO paramters:dic success:^(NSDictionary *dic) {
+    if (vouchersDict) {
+        float amount = [[vouchersDict safeObjectForKey:@"amount"]floatValue];
+        [params safeSetObject:[vouchersDict safeObjectForKey:@"couponNo"] forKey:@"couponNo"];
+        
+        payableAmount -=amount;
+    }
+
+    
+    [params setObject:[NSString stringWithFormat:@"%.0f",totalPrice] forKey:@"totalPrice"];
+    [params setObject:[NSString stringWithFormat:@"%.0f",payableAmount] forKey:@"payableAmount"];
+    [params setObject:str forKey:@"orderItem"];
+    
+    
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/serviceOrder/submitServiceOrder.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
         DLog(@"dic --%@",dic);
         
         NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
@@ -289,16 +311,8 @@
     if (_chooseArray.count<1) {
         return;
     }
-    UIAlertController *al =[UIAlertController alertControllerWithTitle:@"" message:@"确定购买服务吗？" preferredStyle:UIAlertControllerStyleAlert];
-    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        
-        [self getVouchersInfo];
-        
-        
-    }]];
-    [self presentViewController:al animated:YES completion:nil];
+    GoodsType =2;
+    [self getVouchersInfoWithIndex:0];
 }
 
 -(void)changeBottomInfo
@@ -306,7 +320,6 @@
     self.countLabel.text = [NSString stringWithFormat:@"总额：￥%.2f，优惠：￥%.2f",[self getPrice],[self getAllPreferentialOrice]];
     
     self.priceLabel.text = [NSString stringWithFormat:@"合计:￥%.2f", [self getPrice]-[self getAllPreferentialOrice]];
-
 }
 #pragma mark ----cellDelegate
 
@@ -369,19 +382,9 @@
 
 -(void)didBuyWithCell:(TZSDGUPCell *)cell
 {
-    UIAlertController *al = [UIAlertController alertControllerWithTitle:@"确定购买此服务？" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        NSDictionary *dic =[_buyArray objectAtIndex:cell.tag];
-        DLog(@"%@",dic);
-        cell.buyBtn.userInteractionEnabled = NO;
-        NSString * conditionId = [dic safeObjectForKey:@"conditionId"];
-        [self updataWithConditionId:conditionId];
-
-    }]];
-    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    
-    [self presentViewController:al animated:YES completion:nil];
+    GoodsType = 1;
+    fuwuIndex = cell.tag;
+    [self getVouchersInfoWithIndex:cell.tag];
 }
 
 
@@ -516,19 +519,39 @@
 
 }
 
--(void)getVouchersInfo
+-(void)getVouchersInfoWithIndex:(NSInteger)index
 {
-    NSString * productArr = [self getUpdateVouchersInfo];
+    NSString * productArr;
+    if (GoodsType ==1) {
+        productArr = [self getHdVouchersInfoWithIndex:index];
+    }else{
+        productArr = [self getUpdateVouchersInfo];
+    }
     NSMutableDictionary * params = [NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:productArr forKey:@"productArr"];
-    
     [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
-        
-        NSArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
+        NSMutableArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
+        [dataArr enumerateObjectsUsingBlock:^(id key, NSUInteger value, BOOL *stop) {
+            NSDictionary * dict = key;
+            int type = [[dict safeObjectForKey:@"type"]intValue];
+            if (type ==4||type==5) {
+                *stop =YES;
+                if (*stop ==YES) {
+                    [dataArr removeObject:dict];
+                }
+            }
+        }];
         if (dataArr.count>0) {
             vouchersView.dataArray =[NSMutableArray arrayWithArray:dataArr];
             [vouchersView didshow];
+            if (GoodsType ==1) {
+                vouchersView.totalPrice = [[[_buyArray objectAtIndex:index]safeObjectForKey:@"totalPrice"]floatValue];
+                vouchersView.Preferentialprice = 0.0;
+            }else{
+            vouchersView.totalPrice = [self getPrice];
+            vouchersView.Preferentialprice =[self getAllPreferentialOrice];
+            }
         }else{
             [self updataGoodsInfo];
         }
@@ -559,10 +582,44 @@
         [vouArr addObject:dic];
 
     }
-    
     return [self DataTOjsonString:vouArr];
     
 }
+///获取管理服务 的获取优惠券 的提交信息
+-(NSString *)getHdVouchersInfoWithIndex:(NSInteger)index
+{
+    NSMutableArray * vouArr = [NSMutableArray array];
+    NSDictionary * chooseDic = [_buyArray objectAtIndex:index];
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic safeSetObject:@"productName" forKey:@"productName"];
+    [dic safeSetObject:[chooseDic safeObjectForKey:@"totalPrice"] forKey:@"productPrice"];
+    [dic safeSetObject:[chooseDic safeObjectForKey:@"productNo"] forKey:@"productNo"];
+    [dic safeSetObject:@"1" forKey:@"quantity"];
+    [dic safeSetObject:[chooseDic safeObjectForKey:@"totalPrice"] forKey:@"itemTotalPrice"];
+    [vouArr addObject:dic];
+    return [self DataTOjsonString:vouArr];
+
+}
 
 
+-(void)didBuyWithDictionary:(NSDictionary *)dict
+{
+    [vouchersView didhidden];
+    if (!dict )
+    {
+        [vouchersDict removeAllObjects];
+    }
+    else
+    {
+        [vouchersDict setDictionary:dict];
+    }
+
+    if (GoodsType ==1) {
+        NSDictionary * dic = [_buyArray objectAtIndex:fuwuIndex];
+        
+        [self updataWithConditionId:[dic safeObjectForKey:@"conditionId"]];
+    }else{
+        [self updataGoodsInfo];
+    }
+}
 @end

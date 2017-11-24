@@ -14,4 +14,6 @@
 @protocol weightingDelegate <NSObject>
 
 -(void)weightingSuccessWithSubtractMaxWeight:(NSString *)subtractMaxWeight dataId:(NSString *)dataId shareDict:(NSDictionary *)shareDict;
+///水分异常
+-(void)MoistureAnomalies;
 @end

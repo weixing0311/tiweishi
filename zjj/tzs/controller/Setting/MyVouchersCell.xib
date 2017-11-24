@@ -26,9 +26,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ciE-aM-W6K">
                                 <rect key="frame" x="0.0" y="0.0" width="93.5" height="93.5"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UMd-DY-8Yo">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myVouchersBg_" translatesAutoresizingMaskIntoConstraints="NO" id="UMd-DY-8Yo">
                                         <rect key="frame" x="0.0" y="0.0" width="93.5" height="93.5"/>
-                                        <color key="backgroundColor" red="0.99104817710000004" green="0.69913736979999996" blue="0.16338433159999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xxd-qG-H7j">
                                         <rect key="frame" x="11.5" y="19" width="69.5" height="36"/>
@@ -43,7 +42,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.53477647569444442" blue="0.1775173611111111" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="f5w-oX-yAH" secondAttribute="trailing" constant="5" id="C9e-Fm-tSx"/>
                                     <constraint firstItem="UMd-DY-8Yo" firstAttribute="top" secondItem="ciE-aM-W6K" secondAttribute="top" id="Dni-Hl-mr0"/>
@@ -81,7 +79,7 @@
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iyE-dp-oNa">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iyE-dp-oNa">
                                 <rect key="frame" x="284" y="33.5" width="65" height="27"/>
                                 <color key="backgroundColor" red="0.99104817708333337" green="0.69913736979166663" blue="0.16338433159722221" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -95,10 +93,23 @@
                                     <action selector="didClickUse:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lEu-8c-QZN"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vouchersChoose_" translatesAutoresizingMaskIntoConstraints="NO" id="FL6-wb-hbd">
+                                <rect key="frame" x="329" y="0.0" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="2rk-5w-8D6"/>
+                                    <constraint firstAttribute="height" constant="30" id="wEy-cI-t2w"/>
+                                </constraints>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vouchersHasBeenUserd_" translatesAutoresizingMaskIntoConstraints="NO" id="FvU-bo-wRu">
+                                <rect key="frame" x="279" y="16" width="60" height="63"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="FvU-bo-wRu" secondAttribute="trailing" constant="20" id="3d5-zx-y63"/>
+                            <constraint firstAttribute="trailing" secondItem="FL6-wb-hbd" secondAttribute="trailing" id="DnL-cY-bSb"/>
                             <constraint firstItem="NHl-hE-cMp" firstAttribute="leading" secondItem="ciE-aM-W6K" secondAttribute="trailing" constant="15" id="Hpb-no-Kf6"/>
+                            <constraint firstItem="FL6-wb-hbd" firstAttribute="top" secondItem="M0W-a3-Adu" secondAttribute="top" id="JEP-r0-eWv"/>
                             <constraint firstItem="ciE-aM-W6K" firstAttribute="leading" secondItem="M0W-a3-Adu" secondAttribute="leading" id="K8g-Nq-eHw"/>
                             <constraint firstAttribute="trailing" secondItem="NHl-hE-cMp" secondAttribute="trailing" constant="10" id="VRp-1l-7L6"/>
                             <constraint firstAttribute="bottom" secondItem="UHe-Cx-5l6" secondAttribute="bottom" constant="10" id="Wzf-7A-R7w"/>
@@ -106,6 +117,7 @@
                             <constraint firstItem="emY-Fs-Hpl" firstAttribute="leading" secondItem="ciE-aM-W6K" secondAttribute="trailing" constant="15" id="hHg-ya-a09"/>
                             <constraint firstItem="UHe-Cx-5l6" firstAttribute="leading" secondItem="ciE-aM-W6K" secondAttribute="trailing" constant="15" id="mQ0-ip-h6S"/>
                             <constraint firstItem="iyE-dp-oNa" firstAttribute="centerY" secondItem="M0W-a3-Adu" secondAttribute="centerY" id="nD7-wA-0CW"/>
+                            <constraint firstItem="FvU-bo-wRu" firstAttribute="centerY" secondItem="M0W-a3-Adu" secondAttribute="centerY" id="qId-ym-Nl6"/>
                             <constraint firstItem="NHl-hE-cMp" firstAttribute="top" secondItem="M0W-a3-Adu" secondAttribute="top" constant="10" id="qWH-xd-oSh"/>
                             <constraint firstItem="emY-Fs-Hpl" firstAttribute="top" secondItem="NHl-hE-cMp" secondAttribute="bottom" constant="5" id="rd6-G8-zwY"/>
                             <constraint firstAttribute="trailing" secondItem="iyE-dp-oNa" secondAttribute="trailing" constant="10" id="viz-p5-okJ"/>
@@ -113,6 +125,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="0.65354773116438358" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="M0W-a3-Adu" secondAttribute="trailing" id="GUv-ER-Q9Z"/>
                     <constraint firstItem="M0W-a3-Adu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="XoZ-LE-FaP"/>
@@ -121,15 +134,22 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="didChooseImage" destination="FL6-wb-hbd" id="d0r-9z-S5E"/>
                 <outlet property="didUseBtn" destination="iyE-dp-oNa" id="gCk-X2-hyR"/>
                 <outlet property="faceValuelb" destination="Xxd-qG-H7j" id="mEq-P6-RCg"/>
                 <outlet property="headImageView" destination="UMd-DY-8Yo" id="mVW-vR-zqY"/>
                 <outlet property="limitGoodslb" destination="emY-Fs-Hpl" id="p7E-Gk-Oxl"/>
                 <outlet property="limitPricelb" destination="f5w-oX-yAH" id="A9x-80-wr9"/>
+                <outlet property="statusImage" destination="FvU-bo-wRu" id="eIj-OC-ULC"/>
                 <outlet property="timelb" destination="UHe-Cx-5l6" id="ca0-lG-ve4"/>
                 <outlet property="titlelb" destination="NHl-hE-cMp" id="tFr-tV-snk"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="54"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="myVouchersBg_" width="105" height="101"/>
+        <image name="vouchersChoose_" width="36" height="36"/>
+        <image name="vouchersHasBeenUserd_" width="60" height="63"/>
+    </resources>
 </document>

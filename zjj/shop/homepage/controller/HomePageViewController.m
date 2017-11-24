@@ -35,6 +35,7 @@
 {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    self.hidesBottomBarWhenPushed =NO;
 //    self.navigationController.navigationBarHidden = YES;
 //    self.navigationController.navigationBarHidden = YES;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
@@ -291,6 +292,9 @@
     GoodsDetailViewController *gs = [[GoodsDetailViewController alloc]init];
     gs.productNo = item.productNo;
     gs.hidesBottomBarWhenPushed = YES;
+    if (self.couponNo&&self.couponNo.length>3) {
+        gs.couponNo = self.couponNo;
+    }
 //    self.navigationController.navigationBarHidden = NO;
 
     [self.navigationController pushViewController:gs animated:YES];

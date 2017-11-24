@@ -27,6 +27,7 @@
     NSMutableDictionary * voucthersDict;//优惠券
     NSString            * payableAmountStr; //付款金额
     NSString            * totalPriceStr;//原始金额
+    NSString            * vouchersCountStr;//优惠券数量
 
 }
 - (instancetype)init
@@ -59,37 +60,57 @@
 }
 -(void)getVouchersWithArrString:(NSString *)string
 {
-    [[VouchersModel shareInstance]getMyUseVoucthersWithproductArr:string Success:^(NSDictionary *dic) {
-        DLog(@"dic--%@",dic);
-        [voucthersDict setDictionary:dic];
+    [[VouchersModel shareInstance] getMyUseVoucthersArrayWithproductArr:string Success:^(NSArray *resultArr) {
         
-        int type = [[voucthersDict objectForKey:@"type"]intValue];
-        float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
-
-        if (type ==4) {
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]];
-
-        }else if (type ==5)
-        {
-            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]-(([weightStr floatValue]-amount)>0?([weightStr floatValue]-amount):0)];
-        }else
-        {
-            if ([payableAmountStr floatValue]+[weightStr floatValue]>amount) {
-                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+[weightStr floatValue]-amount];
-            }else{
-                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
-            }
+        
+        
+        if (resultArr.count ==0) {
+            vouchersCountStr = @"暂无优惠券";
+        }else{
+            vouchersCountStr = [NSString stringWithFormat:@"您有%lu张优惠券",(unsigned long)resultArr.count];
         }
-        
         [self.tableview reloadData];
+
     } fail:^(NSString *errorStr) {
-        DLog(@"error--%@",errorStr);
-        [voucthersDict removeAllObjects];
+        vouchersCountStr = @"暂无优惠券";
         [self.tableview reloadData];
+
     }];
+    
+//    [[VouchersModel shareInstance]getMyUseVoucthersWithproductArr:string Success:^(NSDictionary *dic) {
+//        DLog(@"dic--%@",dic);
+//        [voucthersDict setDictionary:dic];
+//        [self changePriceWithVouchers];
+//
+//    } fail:^(NSString *errorStr) {
+//        DLog(@"error--%@",errorStr);
+//        [voucthersDict removeAllObjects];
+//        [self.tableview reloadData];
+//    }];
 }
 
+-(void)changePriceWithVouchers
+{
+    int type = [[voucthersDict objectForKey:@"type"]intValue];
+    float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+    
+    if (type ==4) {
+        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]];
+        
+    }else if (type ==5)
+    {
+        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]-(([weightStr floatValue]-amount)>0?([weightStr floatValue]-amount):0)];
+    }else
+    {
+        if ([payableAmountStr floatValue]+[weightStr floatValue]>amount) {
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+[weightStr floatValue]-amount];
+        }else{
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+        }
+    }
+    [self.tableview reloadData];
 
+}
 
 #pragma mark ---notifation
 -(void)getAddress:(NSNotification*)noti
@@ -154,7 +175,7 @@
         weightStr = [[dic objectForKey:@"data"]objectForKey:@"freight"];
         
         
-        if (voucthersDict) {
+        if (voucthersDict&&[voucthersDict allKeys].count>0) {
             float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
             if ([payableAmountStr floatValue]+[weightStr floatValue]>amount) {
                 self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+[weightStr floatValue]-amount];
@@ -258,16 +279,16 @@
         
         cell.textLabel.text = @"优惠券";
         
-        if (voucthersDict) {
-            int type = [[voucthersDict safeObjectForKey:@"type"]intValue];
-            if (type ==2) {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0f折",[[voucthersDict safeObjectForKey:@"discountAmount"]floatValue]*10];
-            }else{
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@",[voucthersDict safeObjectForKey:@"discountAmount"]];
-            }
-        }else{
-            cell.detailTextLabel.text = @"";
-        }
+//        if (voucthersDict&&[voucthersDict allKeys].count>0) {
+//            int type = [[voucthersDict safeObjectForKey:@"type"]intValue];
+//            if (type ==2) {
+//                cell.detailTextLabel.text = [NSString stringWithFormat:@"%.0f折",[[voucthersDict safeObjectForKey:@"discountAmount"]floatValue]*10];
+//            }else{
+//                cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@",[voucthersDict safeObjectForKey:@"discountAmount"]];
+//            }
+//        }else{
+        cell.detailTextLabel.text = vouchersCountStr;
+//        }
         cell.detailTextLabel.textColor = [UIColor redColor];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
@@ -320,8 +341,9 @@
     else if(indexPath.section ==3)
     {
         MyVoucthersViewController * voucther = [[MyVoucthersViewController alloc]init];
-        voucther.isFromOrder = YES;
+        voucther.myType = IS_FROM_SHOPDG;
         voucther.delegate = self;
+        voucther.chooseDict = voucthersDict;
         voucther.productArr = [self getVoucthersInfo];
         [self.navigationController pushViewController:voucther animated:YES];
     }
@@ -376,21 +398,14 @@
     totalPrice+=[weightStr floatValue];
     payableAmount +=[weightStr floatValue];
     [self.param safeSetObject:@(totalPrice) forKey:@"totalPrice"];
-    [self.param safeSetObject:@(payableAmount) forKey:@"payableAmount"];
+    [self.param safeSetObject:@([self getTruePayAmountPrice:payableAmount]) forKey:@"payableAmount"];
+    [self.param safeSetObject:@([self getWeightPrice]) forKey:@"freight"];
     
     
-    if (voucthersDict) {
-        float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
-        if (payableAmount>amount) {
-            [self.param safeSetObject:[NSString stringWithFormat:@"%.2f",payableAmount-amount] forKey:@"payableAmount"];
-        }else{
-            [self.param safeSetObject:@(0) forKey:@"payableAmount"];
-        }
+    if (voucthersDict&&[voucthersDict allKeys].count>0) {
+        [self.param safeSetObject:[voucthersDict safeObjectForKey:@"couponNo"] forKey:@"couponNo"];
     }
-    
     [self.param safeSetObject:warehouseNo forKey:@"warehouseNo"];
-    
-    [self.param safeSetObject:weightStr forKey:@"freight"];
     
     
     DLog(@"上传数据---%@",self.param);
@@ -425,14 +440,60 @@
 -(void)getVoucthersToUseWithId:(NSDictionary * )voucthersId
 {
     DLog(@"voucthers--%@",voucthersId);
-    [voucthersDict setDictionary:voucthersId];
-    float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
-    if ([payableAmountStr floatValue]+[weightStr floatValue]>amount) {
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+[weightStr floatValue]-amount];
-    }else{
-        self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
-    }
+    if (voucthersDict&&[voucthersDict allKeys].count>0) {
+        NSString * couponNo= [voucthersId safeObjectForKey:@"couponNo"];
+        NSString * indexCouponNo = [voucthersDict safeObjectForKey:@"couponNo"];
+        if ([couponNo isEqualToString:indexCouponNo]) {
+            voucthersDict =nil;
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+[weightStr floatValue]];
+            vouchersCountStr = @"";
+        }else{
+            voucthersDict  =[NSMutableDictionary dictionaryWithDictionary:voucthersId];
+            vouchersCountStr =[voucthersDict safeObjectForKey:@"grantName"];
 
+            float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+            int type = [[voucthersDict safeObjectForKey:@"type"]intValue];
+            
+            if (type==4||type==5) {
+                float weightPrice = [weightStr floatValue];
+                if (type ==4) {
+                    weightPrice = 0.0;
+                }else{
+                    weightPrice = weightPrice-amount>0?weightPrice-amount:0.0;
+                }
+                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+weightPrice];
+            }else{
+
+            if ([payableAmountStr floatValue]+[weightStr floatValue]>amount) {
+                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+[weightStr floatValue]-amount];
+            }else{
+                self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+            }
+        }
+        }
+    }else{
+        voucthersDict  =[NSMutableDictionary dictionaryWithDictionary:voucthersId];
+        vouchersCountStr =[voucthersDict safeObjectForKey:@"grantName"];
+        float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+        int type = [[voucthersDict safeObjectForKey:@"type"]intValue];
+        
+        if (type==4||type==5) {
+            float weightPrice = [weightStr floatValue];
+            if (type ==4) {
+                weightPrice = 0.0;
+            }else{
+                weightPrice = weightPrice-amount>0?weightPrice-amount:0.0;
+            }
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+weightPrice];
+        }else{
+        
+        if ([payableAmountStr floatValue]+[weightStr floatValue]>amount) {
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[payableAmountStr floatValue]+[weightStr floatValue]-amount];
+        }else{
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥0.00"];
+        }
+        }
+    }
     [self.tableview reloadData];
 }
 
@@ -654,4 +715,50 @@
     return [self DataTOjsonString:vouArr];
 }
 
+
+-(float)getTruePayAmountPrice:(float)payAmountPrice
+{
+    float weightPrice = [weightStr floatValue];
+    
+    if (voucthersDict) {
+        float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+        int type = [[voucthersDict safeObjectForKey:@"type"]intValue];
+        if (type==4||type==5) {
+            if (type==4) {
+                weightPrice = 0.0;
+            }else{
+                weightPrice = weightPrice-amount>0?weightPrice-amount:0.0;
+            }
+            return payAmountPrice+weightPrice;
+        }
+        else
+        {
+           return payAmountPrice+weightPrice-amount>0?payAmountPrice-amount+weightPrice:0;
+        }
+    }else{
+    return payAmountPrice+weightPrice;
+    }
+}
+-(float)getWeightPrice
+{
+    float weightPrice = [weightStr floatValue];
+    if (voucthersDict) {
+        float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
+        int type = [[voucthersDict safeObjectForKey:@"type"]intValue];
+        
+        if (type==4||type==5) {
+            if (type==4) {
+                return   0.0;
+            }else{
+                return   weightPrice-amount>0?weightPrice-amount:0.0;
+            }
+        }
+        else
+        {
+            return weightPrice;
+        }
+    }else{
+        return weightPrice;
+    }
+}
 @end

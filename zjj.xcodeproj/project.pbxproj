@@ -526,6 +526,7 @@
 		6CE17CE81FC2AA04001C7B73 /* VouchersTzsDgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE17CE71FC2AA04001C7B73 /* VouchersTzsDgView.m */; };
 		6CE17CEB1FC2AB48001C7B73 /* VouchersTzsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE17CEA1FC2AB48001C7B73 /* VouchersTzsCell.m */; };
 		6CE17CEE1FC2CA9F001C7B73 /* VouchersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE17CED1FC2CA9F001C7B73 /* VouchersModel.m */; };
+		6CE17CF11FC8110D001C7B73 /* RingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE17CF01FC8110C001C7B73 /* RingProgressView.m */; };
 		6CEDADF61F74A9F000D3C223 /* IntegralOrderUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDADF41F74A9F000D3C223 /* IntegralOrderUpdateViewController.m */; };
 		6CEDADF71F74A9F000D3C223 /* IntegralOrderUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEDADF51F74A9F000D3C223 /* IntegralOrderUpdateViewController.xib */; };
 		6CF778CF1F565DF60002BDC7 /* NSString+Password.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF778CE1F565DF60002BDC7 /* NSString+Password.m */; };
@@ -1706,6 +1707,8 @@
 		6CE17CEA1FC2AB48001C7B73 /* VouchersTzsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VouchersTzsCell.m; sourceTree = "<group>"; };
 		6CE17CEC1FC2CA9F001C7B73 /* VouchersModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VouchersModel.h; sourceTree = "<group>"; };
 		6CE17CED1FC2CA9F001C7B73 /* VouchersModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VouchersModel.m; sourceTree = "<group>"; };
+		6CE17CEF1FC8110C001C7B73 /* RingProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RingProgressView.h; sourceTree = "<group>"; };
+		6CE17CF01FC8110C001C7B73 /* RingProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RingProgressView.m; sourceTree = "<group>"; };
 		6CEDADF31F74A9F000D3C223 /* IntegralOrderUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegralOrderUpdateViewController.h; sourceTree = "<group>"; };
 		6CEDADF41F74A9F000D3C223 /* IntegralOrderUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegralOrderUpdateViewController.m; sourceTree = "<group>"; };
 		6CEDADF51F74A9F000D3C223 /* IntegralOrderUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntegralOrderUpdateViewController.xib; sourceTree = "<group>"; };
@@ -3354,6 +3357,8 @@
 				6C6635251FBC15EC008763A7 /* MyVouchersCell.xib */,
 				6C66352D1FBC1E74008763A7 /* MyVoucthersViewController.h */,
 				6C66352E1FBC1E74008763A7 /* MyVoucthersViewController.m */,
+				6CE17CEF1FC8110C001C7B73 /* RingProgressView.h */,
+				6CE17CF01FC8110C001C7B73 /* RingProgressView.m */,
 			);
 			name = "vouchers(优惠券)";
 			sourceTree = "<group>";
@@ -5512,6 +5517,7 @@
 				6C73AF5A1F2984500042C1A2 /* TZSDistributionDetailViewController.m in Sources */,
 				6CE17CE81FC2AA04001C7B73 /* VouchersTzsDgView.m in Sources */,
 				6C6CFECB1F90945C005C2738 /* NewHealthDetailForthCell.m in Sources */,
+				6CE17CF11FC8110D001C7B73 /* RingProgressView.m in Sources */,
 				6CFDE8041F8B5452005D3971 /* ArtcleDetailCommentCell.m in Sources */,
 				6CD0112A1EF8B8E900FB9419 /* ShopTestViewController.m in Sources */,
 				6C3639E81F034BA300268851 /* TZSTeamHeaderView.m in Sources */,

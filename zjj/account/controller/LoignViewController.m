@@ -10,7 +10,6 @@
 #import "TabbarViewController.h"
 #import "ResignAgumentViewController.h"
 #import "ADDChengUserViewController.h"
-#import "TzsTabbarViewController.h"
 #import "ForgetPasswordViewController.h"
 #import "JPUSHService.h"
 #import "ResignViewController.h"
@@ -171,6 +170,7 @@
             }
 
             TabbarViewController *tab = [[TabbarViewController alloc]init];
+            [UserModel shareInstance].tabbarStyle = @"health";
             self.view.window.rootViewController = tab;
             
             
@@ -229,6 +229,7 @@
         if ([UserModel shareInstance].nickName.length>0) {
             
             TabbarViewController *tab = [[TabbarViewController alloc]init];
+            [UserModel shareInstance].tabbarStyle = @"health";
             self.view.window.rootViewController = tab;
             
         }else{

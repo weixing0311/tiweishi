@@ -329,6 +329,7 @@
     WriteArtcleViewController*postVC = [[WriteArtcleViewController alloc]init];
     postVC.firstImage = image;
     postVC.shareType  =nil;
+    postVC.textStr = [NSString stringWithFormat:@"[减脂第%d天]",[UserModel shareInstance].userDays];
     [self.navigationController pushViewController:postVC animated:YES];
 
 }
