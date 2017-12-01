@@ -32,6 +32,7 @@
 @property (nonatomic,strong)NSMutableArray * thumbArray;//图片数组
 @property (nonatomic,copy) NSString * loadSuccess;
 @property (nonatomic,copy) NSString * topNum;//是否置顶 1是 0否
+@property (nonatomic,copy) NSString * location;//位置
 -(void)setInfoWithDict:(NSDictionary *)dict;
 
 @end

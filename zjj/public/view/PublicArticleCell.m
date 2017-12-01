@@ -9,6 +9,7 @@
 #import "PublicArticleCell.h"
 #import "PublicCollImageCell.h"
 #import <CoreImage/CoreImage.h>
+#import "NSString+dateWithString.h"
 #define BigImageWidth JFA_SCREEN_WIDTH-20
 #define BigImageHeight (JFA_SCREEN_WIDTH-20)*0.7
 @implementation PublicArticleCell
@@ -89,9 +90,10 @@
 
     
     self.contentlb.text      = str;
-    self.timelb.text         = item.releaseTime;
+    self.timelb.text         = [item.releaseTime compareCurrentTime];
     self.zanCountlb.text     = item.greatnum;
     self.commentCountlb.text = item.commentnum;
+    self.locationlb.text     = item.location;
 //    self.shareCountlb.text   = item.forwardingnum;
     self.levelLb.text        = item.level;
     if (item.isFabulous&&[item.isFabulous isEqualToString:@"1"]) {

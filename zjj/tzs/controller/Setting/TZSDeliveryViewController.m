@@ -140,13 +140,12 @@
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         DLog(@"%@",al.textFields.firstObject.text);
         BOOL isNum = [self deptNumInputShouldNumber:al.textFields.firstObject.text];
-        if (isNum !=YES||al.textFields.firstObject.text.length<1) {
+        if (isNum !=YES||al.textFields.firstObject.text.length<1||[al.textFields.firstObject.text intValue]<1) {
             [[UserModel shareInstance]showInfoWithStatus:@"请输入正确的数量"];
             return ;
         }
 
         if ([al.textFields.firstObject.text intValue]>=0&&[al.textFields.firstObject.text intValue]<=LimitCount) {
-            
             cell.numberLabel.text =al.textFields.firstObject.text;
             NSString * count = al.textFields.firstObject.text;
             [dic safeSetObject:count forKey:@"chooseCount"];
@@ -192,8 +191,9 @@
         count++;
         cell.numberLabel.text =[NSString stringWithFormat:@"%d",count];
         [dic safeSetObject:@(count) forKey:@"chooseCount"];
+        [self setInfoInChooseArr:dic add:YES];
+
     }
-    [self setInfoInChooseArr:dic add:YES];
     
 }
 
@@ -207,10 +207,10 @@
     else{
         count--;
         [dic safeSetObject:@(count) forKey:@"chooseCount"];
-
         cell.numberLabel.text =[NSString stringWithFormat:@"%d",count];
+        [self setInfoInChooseArr:dic add:NO];
+
     }
-    [self setInfoInChooseArr:dic add:NO];
     
 }
 - (IBAction)didNext:(id)sender {
@@ -261,34 +261,20 @@
     [test1dic setObject:@(chooseCount) forKey:@"quantity"];
     [test1dic setObject:[dict objectForKey:@"unitPrice"] forKey:@"unitPrice"];
     if (_chooseArray.count>0) {
-        
-        int count =0;
-        
-        for (int i =0;i<_chooseArray.count ;i++) {
+    for (int i =0;i<_chooseArray.count ;i++) {
             NSMutableDictionary * dic =_chooseArray[i];
             NSString * productNo1 = [dic objectForKey:@"productNo"];
             
             if ([productNo isEqualToString:productNo1]) {
-                count = [[dic objectForKey:@"quantity"]intValue];
                 [_chooseArray removeObject:dic];
             }
         }
-        if (isAdd==YES) {
-            [test1dic setObject:@(count+1) forKey:@"quantity"];
-            
-        }else{
-            [test1dic setObject:@(count-1) forKey:@"quantity"];
-            
-        }
-        [_chooseArray addObject:test1dic];
-        
-    }else{
-        if (isAdd==YES) {
+        if (chooseCount >0) {
             [_chooseArray addObject:test1dic];
         }
+    }else{
+        [_chooseArray addObject:test1dic];
     }
-    
-    
 }
 
 
@@ -354,9 +340,7 @@
         int subCount = [[dic objectForKey:@"quantity"]intValue];
         count +=subCount;
     }
-    
     return count;
-    
 }
 
 

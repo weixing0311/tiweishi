@@ -1,4 +1,4 @@
-//
+  //
 //  MyVoucthersViewController.m
 //  zjj
 //
@@ -44,7 +44,7 @@
     _dataArray = [NSMutableArray array];
     [self createTableview];
 
-    if (self.myType ==IS_FROM_MINE) {
+    if (_myType ==IS_FROM_MINE||_myType ==IS_FROM_SHOP||_myType ==IS_FROM_TZS) {
         [self createSegment];
     }else{
         [self getMyUseVoucthers];
@@ -53,6 +53,9 @@
 }
 -(void)createSegment
 {
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 65, JFA_SCREEN_WIDTH, 46)];
+    view.backgroundColor = HEXCOLOR(0xeeeeee);
+    [self.view addSubview:view];
     _segment = [[UISegmentedControl alloc]initWithItems:@[@"待使用",@"已使用",@"已过期"]];
     [_segment addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
     [self ChangeMySegmentStyle:_segment];
@@ -64,10 +67,12 @@
 -(void)createTableview
 {
     int height =0;
-    if (_myType ==IS_FROM_MINE) {
+    if (_myType ==IS_FROM_MINE||_myType ==IS_FROM_SHOP||_myType ==IS_FROM_TZS)
+    {
         height = 110;
     }
-    else{
+    else
+    {
         height = 70;
     }
     
@@ -78,7 +83,8 @@
     _tableview.separatorColor = HEXCOLOR(0xeeeeee);
     [self.view addSubview:_tableview];
     [self setExtraCellLineHiddenWithTb:_tableview];
-    if (self.myType ==IS_FROM_MINE) {
+    if (_myType ==IS_FROM_MINE||_myType ==IS_FROM_SHOP||_myType ==IS_FROM_TZS)
+    {
         [self setRefrshWithTableView:_tableview];
     }
 }
@@ -99,7 +105,7 @@
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:@(_segment.selectedSegmentIndex+1) forKey:@"status"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCoupon.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCoupon.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
         [self hiddenEmptyView];
         [_tableview.mj_header endRefreshing];
         [_tableview.mj_footer endRefreshing];
@@ -119,7 +125,9 @@
         [_tableview.mj_header endRefreshing];
         [_tableview.mj_footer endRefreshing];
         if ([error code]==402&&page==1) {
-            [self showEmptyViewWithTitle:@"无优惠券"];
+            [_dataArray removeAllObjects];
+            [_tableview reloadData];
+            [self showEmptyViewWithTitle:@"暂无优惠券！"];
             [self.view bringSubviewToFront:_segment];
         }
     }];
@@ -132,7 +140,7 @@
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:self.productArr forKey:@"productArr"];
     
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
         
         NSMutableArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
         [dataArr enumerateObjectsUsingBlock:^(id key, NSUInteger value, BOOL *stop) {
@@ -165,6 +173,7 @@
         [_tableview reloadData];
     } failure:^(NSError *error) {
         [self showEmptyViewWithTitle:@"暂无优惠券"];
+        [_tableview reloadData];
     }];
 
 }
@@ -201,67 +210,94 @@
     if (!cell) {
         cell = [self getXibCellWithTitle:identifier];
     }
+    
+
     cell.delegate = self;
     cell.tag = indexPath.row;
     
-    
-    
-    
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-    cell.titlelb.text = [dic safeObjectForKey:@"templateName"];
-    cell.timelb.text = [NSString stringWithFormat:@"有效期至:%@",[dic safeObjectForKey:@"validEndTime"]];
+    cell.titlelb.text = [dic safeObjectForKey:@"grantName"];
+    NSString * startTime = [[dic safeObjectForKey:@"validStartTime"] stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
+    NSString * endTime  = [[dic safeObjectForKey:@"validEndTime"] stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
+    
+    cell.timelb.text = [NSString stringWithFormat:@"%@-%@",startTime,endTime];
+
+    
     
     
     int type = [[dic safeObjectForKey:@"type"]intValue];
     if (type ==2) {
-        cell.faceValuelb.text = [NSString stringWithFormat:@"%.0f折",[[dic safeObjectForKey:@"discountAmount"]floatValue]*10];
-    }else{
-        cell.faceValuelb.text = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"discountAmount"]];
+        
+        
+        cell.faceValuelb.text = [NSString stringWithFormat:@"%@折",[cell formatFloat:[[dic safeObjectForKey:@"discountAmount"]floatValue]*10]];
     }
-    if (_segment) {
-        if (_segment.selectedSegmentIndex==1) {
-            cell.statusImage.hidden= NO;
-            cell.statusImage.image = getImage(@"vouchersHasBeenUserd_");
-            cell.didUseBtn.hidden = YES;
-        }else if (_segment.selectedSegmentIndex ==2)
-        {
-            cell.statusImage.hidden= NO;
-            cell.statusImage.image = getImage(@"vouchersexpried_");
-            cell.didUseBtn.hidden = YES;
-
+    else if(type==4)
+    {
+        cell.faceValuelb.text = @"免运费";
+    }
+    else
+    {
+        NSString * faceValue = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"discountAmount"]];
+        NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:faceValue];
+        
+        //总共
+        [tisString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(0, 1)];
+        cell.faceValuelb.attributedText = tisString;
+    }
+    
+    
+    //控制‘立即使用’button的显示和隐藏 --
+    if (self.myType ==IS_FROM_MINE) {
+        [cell setDidUserHidden:YES];
+        if (_segment) {
+            if (_segment.selectedSegmentIndex==1) {
+                cell.statusImage.hidden= NO;
+                cell.statusImage.image = getImage(@"vouchersHasBeenUserd_");
+            }else if (_segment.selectedSegmentIndex ==2)
+            {
+                cell.statusImage.hidden= NO;
+                cell.statusImage.image = getImage(@"vouchersexpried_");
+                
+            }else{
+                cell.statusImage.hidden= YES;
+            }
         }else{
             cell.statusImage.hidden= YES;
-            cell.didUseBtn.hidden = NO;
+            [cell setDidUserHidden:YES];
 
         }
     }else{
-        cell.statusImage.hidden= YES;
-        cell.didUseBtn.hidden = YES;
+        
+        if (_segment) {
+            if (_segment.selectedSegmentIndex==1) {
+                cell.statusImage.hidden= NO;
+                cell.statusImage.image = getImage(@"vouchersHasBeenUserd_");
+                [cell setDidUserHidden:YES];
+            }else if (_segment.selectedSegmentIndex ==2)
+            {
+                cell.statusImage.hidden= NO;
+                cell.statusImage.image = getImage(@"vouchersexpried_");
+                [cell setDidUserHidden:YES];
 
+            }else{
+                cell.statusImage.hidden= YES;
+                [cell setDidUserHidden:NO];
 
+            }
+        }else{
+            cell.statusImage.hidden= YES;
+            [cell setDidUserHidden:YES];
+        }
     }
     
-    
-//    cell.faceValuelb.text = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"discountAmount"]];
-    
-    //useRange//使用范围 0全部商品 1脂将军饼干 2 体脂称
-    int userRange = [[dic safeObjectForKey:@"useRange"]intValue];
-    if (userRange ==1) {
-        cell.limitGoodslb.text =@"仅限脂将军饼干使用";
-    }
-    else if(userRange ==2)
-    {
-        cell.limitGoodslb.text = @"仅限脂将军饼干使用";
-    }else
-    {
-        cell.limitGoodslb.text = @"(无限制)";
-    }
-    
+    cell.limitGoodslb.text = [cell getlimitWithArr:[dic safeObjectForKey:@"products"]];
+    cell.limit2Goodslb.text = [cell getlimitWithArr:[dic safeObjectForKey:@"products"]];
+
     int startAmount = [[dic safeObjectForKey:@"startAmount"]intValue];
     if (!startAmount||startAmount ==0) {
         cell.limitPricelb.text = @"(无限制)";
     }else{
-        cell.limitPricelb.text = [NSString stringWithFormat:@"满%d可用",startAmount];
+        cell.limitPricelb.text = [NSString stringWithFormat:@"满%d元可用",startAmount];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -302,7 +338,7 @@
 {
     NSDictionary * dic = [_dataArray objectAtIndex:cell.tag];
     int type = [[dic safeObjectForKey:@"type"]intValue];
-    NSString * useRange = [dic safeObjectForKey:@"useRange"];
+//    NSString * useRange = [dic safeObjectForKey:@"useRange"];
     
     if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"health"]) {
         return;

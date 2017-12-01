@@ -265,7 +265,7 @@
 //        cell.price2label.text = @"";
 //    }
     
-    cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[infoDic safeObjectForKey:@"unitPrice"] floatValue]];
+    cell.priceLabel.text = [NSString stringWithFormat:@"销售单价:￥%.2f",[[infoDic safeObjectForKey:@"normalPrice"] floatValue]];
     cell.countLabel.text = [NSString stringWithFormat:@"x%@",[infoDic safeObjectForKey:@"quantity"]];
     
     

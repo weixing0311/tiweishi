@@ -361,7 +361,7 @@ static UserModel *model;
 -(void)setHeadImageUrl:(NSString *)imageUrl
 {
     self.headUrl = imageUrl;
-    
+    [[SubUserItem shareInstance]setInfoWithHealthId:self.subId?self.subId:self.healthId];
     [self writeToDoc];
 }
 -(void)setHealthidWithId:(NSString *)healthId

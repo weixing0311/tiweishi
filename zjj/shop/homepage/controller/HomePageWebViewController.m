@@ -57,7 +57,7 @@
 //    self.webView.allowsBackForwardNavigationGestures = YES;
     
     
-    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT)];
+    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 65, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-65)];
 
     self.webView.scalesPageToFit = YES;
     self.webView.scrollView.delegate = self;

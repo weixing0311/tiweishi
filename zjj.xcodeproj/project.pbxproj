@@ -298,6 +298,14 @@
 		6C73B0231F31C36C0042C1A2 /* foundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73B0221F31C36C0042C1A2 /* foundViewController.xib */; };
 		6C73B0271F31C3E90042C1A2 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C73B0251F31C3E90042C1A2 /* MessageViewController.m */; };
 		6C73B0281F31C3E90042C1A2 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C73B0261F31C3E90042C1A2 /* MessageViewController.xib */; };
+		6C7939D61FCBAE7100A243A1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C7939D51FCBAE7100A243A1 /* CoreLocation.framework */; };
+		6C7939D91FCBAEED00A243A1 /* WXLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7939D81FCBAEED00A243A1 /* WXLocationManager.m */; };
+		6C7939DB1FCBB09300A243A1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C7939DA1FCBB09300A243A1 /* MapKit.framework */; };
+		6C7939DE1FCBDDCF00A243A1 /* JbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7939DD1FCBDDCF00A243A1 /* JbView.m */; };
+		6C7939E41FCC3AE900A243A1 /* VouchersOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7939E21FCC3AE900A243A1 /* VouchersOrderDetailViewController.m */; };
+		6C7939E51FCC3AE900A243A1 /* VouchersOrderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C7939E31FCC3AE900A243A1 /* VouchersOrderDetailViewController.xib */; };
+		6C7939E91FCC3BBF00A243A1 /* VouchersUpOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7939E71FCC3BBF00A243A1 /* VouchersUpOrderViewController.m */; };
+		6C7939EA1FCC3BBF00A243A1 /* VouchersUpOrderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C7939E81FCC3BBF00A243A1 /* VouchersUpOrderViewController.xib */; };
 		6C803D701FAAE79900B2E186 /* GuidePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C803D6E1FAAE79900B2E186 /* GuidePageViewController.m */; };
 		6C803D711FAAE79900B2E186 /* GuidePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C803D6F1FAAE79900B2E186 /* GuidePageViewController.xib */; };
 		6C803D751FAB10F800B2E186 /* Yd1View.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C803D741FAB10F800B2E186 /* Yd1View.m */; };
@@ -374,8 +382,6 @@
 		6CB7508D1F73942E007BAE04 /* NewMineHomePageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB7508B1F73942E007BAE04 /* NewMineHomePageCell.xib */; };
 		6CB750921F749AC5007BAE04 /* CommunityShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB750901F749AC5007BAE04 /* CommunityShareViewController.m */; };
 		6CB750931F749AC5007BAE04 /* CommunityShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB750911F749AC5007BAE04 /* CommunityShareViewController.xib */; };
-		6CB750981F749C80007BAE04 /* PostArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB750961F749C80007BAE04 /* PostArticleViewController.m */; };
-		6CB750991F749C80007BAE04 /* PostArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB750971F749C80007BAE04 /* PostArticleViewController.xib */; };
 		6CBC0AB91FABF98B00FB7857 /* IntegralSignInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBC0AB81FABF98B00FB7857 /* IntegralSignInView.m */; };
 		6CBC0ABB1FABF99400FB7857 /* IntegralSignInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CBC0ABA1FABF99400FB7857 /* IntegralSignInView.xib */; };
 		6CBC0AC01FAC457F00FB7857 /* TailoringImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBC0ABE1FAC457F00FB7857 /* TailoringImageViewController.m */; };
@@ -1352,6 +1358,18 @@
 		6C73B0241F31C3E90042C1A2 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		6C73B0251F31C3E90042C1A2 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		6C73B0261F31C3E90042C1A2 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
+		6C7939D51FCBAE7100A243A1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6C7939D71FCBAEED00A243A1 /* WXLocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXLocationManager.h; sourceTree = "<group>"; };
+		6C7939D81FCBAEED00A243A1 /* WXLocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WXLocationManager.m; sourceTree = "<group>"; };
+		6C7939DA1FCBB09300A243A1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6C7939DC1FCBDDCF00A243A1 /* JbView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JbView.h; sourceTree = "<group>"; };
+		6C7939DD1FCBDDCF00A243A1 /* JbView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JbView.m; sourceTree = "<group>"; };
+		6C7939E11FCC3AE900A243A1 /* VouchersOrderDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VouchersOrderDetailViewController.h; sourceTree = "<group>"; };
+		6C7939E21FCC3AE900A243A1 /* VouchersOrderDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VouchersOrderDetailViewController.m; sourceTree = "<group>"; };
+		6C7939E31FCC3AE900A243A1 /* VouchersOrderDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VouchersOrderDetailViewController.xib; sourceTree = "<group>"; };
+		6C7939E61FCC3BBF00A243A1 /* VouchersUpOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VouchersUpOrderViewController.h; sourceTree = "<group>"; };
+		6C7939E71FCC3BBF00A243A1 /* VouchersUpOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VouchersUpOrderViewController.m; sourceTree = "<group>"; };
+		6C7939E81FCC3BBF00A243A1 /* VouchersUpOrderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VouchersUpOrderViewController.xib; sourceTree = "<group>"; };
 		6C803D6D1FAAE79900B2E186 /* GuidePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuidePageViewController.h; sourceTree = "<group>"; };
 		6C803D6E1FAAE79900B2E186 /* GuidePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuidePageViewController.m; sourceTree = "<group>"; };
 		6C803D6F1FAAE79900B2E186 /* GuidePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GuidePageViewController.xib; sourceTree = "<group>"; };
@@ -1467,9 +1485,6 @@
 		6CB7508F1F749AC5007BAE04 /* CommunityShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommunityShareViewController.h; sourceTree = "<group>"; };
 		6CB750901F749AC5007BAE04 /* CommunityShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommunityShareViewController.m; sourceTree = "<group>"; };
 		6CB750911F749AC5007BAE04 /* CommunityShareViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityShareViewController.xib; sourceTree = "<group>"; };
-		6CB750951F749C80007BAE04 /* PostArticleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostArticleViewController.h; sourceTree = "<group>"; };
-		6CB750961F749C80007BAE04 /* PostArticleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostArticleViewController.m; sourceTree = "<group>"; };
-		6CB750971F749C80007BAE04 /* PostArticleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostArticleViewController.xib; sourceTree = "<group>"; };
 		6CBC0AB71FABF98B00FB7857 /* IntegralSignInView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralSignInView.h; sourceTree = "<group>"; };
 		6CBC0AB81FABF98B00FB7857 /* IntegralSignInView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntegralSignInView.m; sourceTree = "<group>"; };
 		6CBC0ABA1FABF99400FB7857 /* IntegralSignInView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntegralSignInView.xib; sourceTree = "<group>"; };
@@ -2066,6 +2081,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C7939DB1FCBB09300A243A1 /* MapKit.framework in Frameworks */,
+				6C7939D61FCBAE7100A243A1 /* CoreLocation.framework in Frameworks */,
 				6C2F464A1FAD9CFD00E9C914 /* AddressBook.framework in Frameworks */,
 				6C2F46481FAD9CF700E9C914 /* AddressBookUI.framework in Frameworks */,
 				6C3F13111F9ED8FD005D51C7 /* Photos.framework in Frameworks */,
@@ -2121,6 +2138,8 @@
 				6C2241B11F7DE43C001BB2FD /* CommunityCell.m */,
 				6C2241B21F7DE43C001BB2FD /* CommunityCell.xib */,
 				6C027F361FA0624D00556440 /* CommunityCellDelegate.h */,
+				6C7939DC1FCBDDCF00A243A1 /* JbView.h */,
+				6C7939DD1FCBDDCF00A243A1 /* JbView.m */,
 			);
 			path = "Community社区列表";
 			sourceTree = "<group>";
@@ -2565,6 +2584,8 @@
 				6C5779991FA701B800388986 /* ClearCecheModel.m */,
 				6CE17CEC1FC2CA9F001C7B73 /* VouchersModel.h */,
 				6CE17CED1FC2CA9F001C7B73 /* VouchersModel.m */,
+				6C7939D71FCBAEED00A243A1 /* WXLocationManager.h */,
+				6C7939D81FCBAEED00A243A1 /* WXLocationManager.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3697,6 +3718,9 @@
 				6C2F463E1FAD936200E9C914 /* PhoneChargesOrderViewController.h */,
 				6C2F463F1FAD936200E9C914 /* PhoneChargesOrderViewController.m */,
 				6C2F46401FAD936200E9C914 /* PhoneChargesOrderViewController.xib */,
+				6C7939E11FCC3AE900A243A1 /* VouchersOrderDetailViewController.h */,
+				6C7939E21FCC3AE900A243A1 /* VouchersOrderDetailViewController.m */,
+				6C7939E31FCC3AE900A243A1 /* VouchersOrderDetailViewController.xib */,
 			);
 			name = roderDetail;
 			sourceTree = "<group>";
@@ -3714,9 +3738,6 @@
 		6CB750941F749C47007BAE04 /* postArticle()写文章 */ = {
 			isa = PBXGroup;
 			children = (
-				6CB750951F749C80007BAE04 /* PostArticleViewController.h */,
-				6CB750961F749C80007BAE04 /* PostArticleViewController.m */,
-				6CB750971F749C80007BAE04 /* PostArticleViewController.xib */,
 				6C3EEE811F78F383001886EB /* AddImageCell.h */,
 				6C3EEE821F78F383001886EB /* AddImageCell.m */,
 				6C3EEE831F78F383001886EB /* AddImageCell.xib */,
@@ -3740,6 +3761,9 @@
 				6C2F46391FAD90CC00E9C914 /* PhoneChargesViewController.h */,
 				6C2F463A1FAD90CC00E9C914 /* PhoneChargesViewController.m */,
 				6C2F463B1FAD90CC00E9C914 /* PhoneChargesViewController.xib */,
+				6C7939E61FCC3BBF00A243A1 /* VouchersUpOrderViewController.h */,
+				6C7939E71FCC3BBF00A243A1 /* VouchersUpOrderViewController.m */,
+				6C7939E81FCC3BBF00A243A1 /* VouchersUpOrderViewController.xib */,
 			);
 			name = UpdateOrder;
 			sourceTree = "<group>";
@@ -4674,6 +4698,8 @@
 		D1E9214DBD69E802A4679F92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C7939DA1FCBB09300A243A1 /* MapKit.framework */,
+				6C7939D51FCBAE7100A243A1 /* CoreLocation.framework */,
 				6C2F46491FAD9CFD00E9C914 /* AddressBook.framework */,
 				6C2F46471FAD9CF700E9C914 /* AddressBookUI.framework */,
 				6C3F13101F9ED8FD005D51C7 /* Photos.framework */,
@@ -5000,7 +5026,6 @@
 				6CFDEC3C1F8B7DE7005D3971 /* help-icon04@2x.png in Resources */,
 				6CFDEC971F8B7DE8005D3971 /* person-xiao.png in Resources */,
 				6CFDEC0B1F8B7DE7005D3971 /* delete2@3x.png in Resources */,
-				6CB750991F749C80007BAE04 /* PostArticleViewController.xib in Resources */,
 				6CFDEC191F8B7DE7005D3971 /* fonter-help@3x.png in Resources */,
 				6CFDEC6B1F8B7DE8005D3971 /* jin@2x.png in Resources */,
 				6CFDEC401F8B7DE7005D3971 /* help-icon06@2x.png in Resources */,
@@ -5095,6 +5120,7 @@
 				6CFDEC991F8B7DE8005D3971 /* personal-bg@3x.png in Resources */,
 				6CFDEBF91F8B7DE7005D3971 /* contact-us-email@3x.png in Resources */,
 				6CFDECBE1F8B7DE8005D3971 /* record-jiangli@3x.png in Resources */,
+				6C7939EA1FCC3BBF00A243A1 /* VouchersUpOrderViewController.xib in Resources */,
 				6CFDEC691F8B7DE8005D3971 /* jian@2x.png in Resources */,
 				6CFDEC761F8B7DE8005D3971 /* map.png in Resources */,
 				6CFDECC21F8B7DE8005D3971 /* record-shui@3x.png in Resources */,
@@ -5273,6 +5299,7 @@
 				6C1B2B661EECDE350092AAF0 /* Assets.xcassets in Resources */,
 				6C3639BC1F00F38F00268851 /* ImageViewController.xib in Resources */,
 				6CFDEBD11F8B7DE7005D3971 /* before@3x.png in Resources */,
+				6C7939E51FCC3AE900A243A1 /* VouchersOrderDetailViewController.xib in Resources */,
 				6CFDEC291F8B7DE7005D3971 /* footer-ShoppingCart@3x.png in Resources */,
 				6CFDECC01F8B7DE8005D3971 /* record-shouru@3x.png in Resources */,
 				6CFDEC571F8B7DE8005D3971 /* home-weight02@2x.png in Resources */,
@@ -5355,6 +5382,7 @@
 				6C2241951F7C946E001BB2FD /* CLPlayerView.m in Sources */,
 				6C2241961F7C946E001BB2FD /* UINavigationController+CLPlayerRotation.m in Sources */,
 				6C2241971F7C946E001BB2FD /* UITabBarController+CLPlayerRotation.m in Sources */,
+				6C7939E91FCC3BBF00A243A1 /* VouchersUpOrderViewController.m in Sources */,
 				6C2241981F7C946E001BB2FD /* UIViewController+CLPlayerRotation.m in Sources */,
 				6CD19FB11F74FCB100DF1289 /* UserListCell.m in Sources */,
 				6CA024C11F19021C00F54DF3 /* AddSubUserCell.m in Sources */,
@@ -5459,6 +5487,7 @@
 				6CCEEB1D1EEE7EFE002E1618 /* ShopTabbbarController.m in Sources */,
 				6C8F53C51F11D38A00C7A275 /* UIImage+LocalImage.m in Sources */,
 				6C3639911EFE47E100268851 /* AAOptions3d.m in Sources */,
+				6C7939DE1FCBDDCF00A243A1 /* JbView.m in Sources */,
 				6C6CFE751F8F3D37005C2738 /* NewHealthViewController.m in Sources */,
 				6C803D821FAB126C00B2E186 /* Yd4View.m in Sources */,
 				6C803D9C1FAB169900B2E186 /* Yd8View.m in Sources */,
@@ -5538,6 +5567,7 @@
 				6C1B2BFE1EED4FBF0092AAF0 /* HealthMainCell.m in Sources */,
 				6CD0108B1EF3D19400FB9419 /* HealthItem.m in Sources */,
 				6CA024C81F19DBA100F54DF3 /* YMSocketUtils.m in Sources */,
+				6C7939E41FCC3AE900A243A1 /* VouchersOrderDetailViewController.m in Sources */,
 				6C6635141FBA7B00008763A7 /* SZCalendarCell.m in Sources */,
 				6C36398B1EFE47E100268851 /* AAItemStyle.m in Sources */,
 				6C6CFE7B1F8F5F42005C2738 /* UserDirectionsViewController.m in Sources */,
@@ -5561,6 +5591,7 @@
 				6CD0116F1EF8FA8700FB9419 /* OrderHeadView.m in Sources */,
 				6C8F53C21F11D38A00C7A275 /* NSString+TimeLabel.m in Sources */,
 				6C2AF2721F7206EF00C00F2A /* NewMineHomePageViewController.m in Sources */,
+				6C7939D91FCBAEED00A243A1 /* WXLocationManager.m in Sources */,
 				6CD011781EF8FC2E00FB9419 /* BodyFatDivisionAgreementViewController.m in Sources */,
 				6CCEEB421EEE8591002E1618 /* MineTableViewCell.m in Sources */,
 				6C125E5E1F441F0800B2323F /* QRCodeResignViewController.m in Sources */,
@@ -5630,7 +5661,6 @@
 				6CCEEB4D1EEF8B0A002E1618 /* BTManager.m in Sources */,
 				6CD0106F1EF3B9DE00FB9419 /* RSA.m in Sources */,
 				6C6635261FBC15EC008763A7 /* MyVouchersCell.m in Sources */,
-				6CB750981F749C80007BAE04 /* PostArticleViewController.m in Sources */,
 				6C3639181EFD0BE600268851 /* ChangePasswordViewController.m in Sources */,
 				6C3639D81F02A1CF00268851 /* TZSTeamDGViewController.m in Sources */,
 				6CD010C21EF5520800FB9419 /* ShopCarbottomView.m in Sources */,

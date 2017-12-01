@@ -27,7 +27,7 @@ static VouchersModel * model;
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:productArr forKey:@"productArr"];
     
-    [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+    [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
         NSArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
         success(dataArr);
     } failure:^(NSError *error) {
@@ -77,8 +77,48 @@ static VouchersModel * model;
     return nil;
 }
 
+-(float)getUhpriceWithDict:(NSDictionary *)dict weightPrice:(NSString *)weightStr
+{
+    if (!dict||[dict allKeys].count<1||![dict isKindOfClass:[NSDictionary class]]) {
+        return 0.00;
+    }
+    if (!weightStr) {
+        return 0.00;
+    }
+    int type = [[dict safeObjectForKey:@"type"]intValue];
+    float amount = [[dict safeObjectForKey:@"amount"]floatValue];
+    float weightPrice = [weightStr floatValue];
+    if (type ==4) {
+        return weightPrice;
+    }
+    else if (type==5)
+    {
+        return weightPrice-amount>0?amount:weightPrice;
+    }else{
+        return amount;
+    }
+}
+-(float)getPayAmountWeightWithDict:(NSDictionary *)dict Weight:(NSString*)weightStr
+{
+    if (!dict||[dict allKeys].count<1||![dict isKindOfClass:[NSDictionary class]]) {
+        return [weightStr floatValue];
+    }
+    if (!weightStr) {
+        return 0.00;
+    }
+    int type = [[dict safeObjectForKey:@"type"]intValue];
+    float amount = [[dict safeObjectForKey:@"amount"]floatValue];
 
-
+    if (type ==4) {
+        return 0;
+    }
+    else if ( type ==5)
+    {
+        return [weightStr floatValue]-amount>0?[weightStr floatValue]-amount:0;
+    }else{
+        return [weightStr floatValue];
+    }
+}
 
 
 

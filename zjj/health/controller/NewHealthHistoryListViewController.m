@@ -87,7 +87,7 @@
     [al addAction: [UIAlertAction actionWithTitle:@"朋友圈" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self didShareVX:nil];
     }]];
-    [al addAction: [UIAlertAction actionWithTitle:@"社区" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [al addAction: [UIAlertAction actionWithTitle:@"社群" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self didShareQQ:nil];
     }]];
     [al addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];

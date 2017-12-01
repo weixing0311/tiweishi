@@ -205,7 +205,7 @@
     int status = [[dic safeObjectForKey:@"status"]intValue];
     int operateStatus = [[dic safeObjectForKey:@"operateStatus"]intValue];
     float height = 0.0f;
-    if (status==1||status==3) {
+    if (status==1||(status==3&&operateStatus==4)) {
         height =87;
     }else{
         height =41;
@@ -284,7 +284,9 @@
 {
     NSDictionary *dic =[_dataArray objectAtIndex:section];
     int status = [[dic objectForKey:@"status"]intValue];
-    if (status ==1||status==3) {
+    int operateStatus = [[dic safeObjectForKey:@"operateStatus"]intValue];
+
+    if (status ==1||(status==3&&operateStatus==4)) {
         return 41+46;
     }else{
         return 41;

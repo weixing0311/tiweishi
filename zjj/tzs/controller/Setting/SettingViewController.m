@@ -59,7 +59,7 @@
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
-    self.integrallb.text = [NSString stringWithFormat:@"业务积分:%@",[UserModel shareInstance].tourismIntegral?[UserModel shareInstance].tourismIntegral:@"0"];
+    self.integrallb.text = [NSString stringWithFormat:@"旅游金币:%@",[UserModel shareInstance].tourismIntegral?[UserModel shareInstance].tourismIntegral:@"0"];
     if ([[UserModel shareInstance].phoneNum isEqualToString:@"15210642625"]) {
         self.czBtn.hidden = YES;
         self.thirdView.hidden = YES;
@@ -91,6 +91,8 @@
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
+    self.integrallb.text = [NSString stringWithFormat:@"旅游金币:%@",[UserModel shareInstance].tourismIntegral?[UserModel shareInstance].tourismIntegral:@"0"];
+
     self.assetsLabel.text = [NSString stringWithFormat:@"(余额:￥%.2f)",[[UserModel shareInstance].balance doubleValue]];
     [self showSetPassword];
     
@@ -273,6 +275,7 @@
 - (IBAction)getVouchers:(id)sender {
     self.navigationController.navigationBarHidden =NO;
     VouchersGetViewController * getVouchers =[[VouchersGetViewController alloc]init];
+    getVouchers.myType = IS_FROM_TZS;
     getVouchers.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:getVouchers animated:YES];
 }
@@ -280,7 +283,7 @@
     self.navigationController.navigationBarHidden =NO;
     MyVoucthersViewController * myVouchers =[[MyVoucthersViewController alloc]init];
     myVouchers.hidesBottomBarWhenPushed = YES;
-    myVouchers.myType = IS_FROM_MINE;
+    myVouchers.myType = IS_FROM_TZS;
     [self.navigationController pushViewController:myVouchers animated:YES];
 }
 #pragma mark--订购

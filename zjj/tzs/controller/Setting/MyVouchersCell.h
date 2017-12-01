@@ -13,6 +13,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *faceValuelb;
 @property (weak, nonatomic) IBOutlet UILabel *limitPricelb;
 @property (weak, nonatomic) IBOutlet UILabel *limitGoodslb;
+@property (weak, nonatomic) IBOutlet UILabel *limit2Goodslb;
+
+
+
 @property (weak, nonatomic) IBOutlet UILabel *timelb;
 @property (weak, nonatomic) IBOutlet UIButton *didUseBtn;
 - (IBAction)didClickUse:(id)sender;
@@ -20,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *didChooseImage;
 @property (weak, nonatomic) IBOutlet UIImageView *statusImage;
 @property (nonatomic,assign)id<myVouchersCellDelegate>delegate;
+-(NSString*)getlimitWithArr:(NSArray *)arr;
+- (NSString *)formatFloat:(float)f;
+-(void)setDidUserHidden:(BOOL)hidden;
 @end
  
 @protocol myVouchersCellDelegate <NSObject>

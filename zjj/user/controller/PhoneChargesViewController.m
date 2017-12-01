@@ -101,7 +101,6 @@
     [self.param safeSetObject:self.model.stockCode forKey:@"warehouseNo"];
     [self.param safeSetObject:@([self.model.productIntegral intValue]*self.goodsCount) forKey:@"integral"];
     
-    
     DLog(@"上传数据---%@",self.param);
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/integral/order/saveRechargeOrderInfo.do" HiddenProgress:NO paramters:self.param success:^(NSDictionary *dic) {
         DLog(@"下单成功--%@",dic);

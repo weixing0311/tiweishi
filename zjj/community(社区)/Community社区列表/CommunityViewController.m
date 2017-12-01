@@ -9,7 +9,6 @@
 #import "CommunityViewController.h"
 #import "PublicArticleCell.h"
 #import "CommunityModel.h"
-#import "PostArticleViewController.h"
 #import "WriteArtcleViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 
@@ -23,7 +22,7 @@
 #import "BeforeAfterContrastCell.h"
 #import "EditUserInfoImageCell.h"
 #import "EditUserInfoViewController.h"
-
+#import "JbView.h"
 
 #import "Yd7View.h"
 #import "Yd8View.h"
@@ -45,7 +44,7 @@
     int pageSize;
     CommunityCell * PlayingCell;
     int changeImageNum;
-
+    JbView * jbv;
 #pragma mark ---guide
     Yd7View * yd7 ;
     Yd8View * yd8 ;
@@ -73,6 +72,10 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    if (jbv) {
+        jbv.hidden = YES;
+        [jbv removeFromSuperview];
+    }
     [_playerView destroyPlayer];
     _playerView = nil;
     PlayingCell = nil;
@@ -135,12 +138,6 @@
 
 }
 
-- (IBAction)enterOldWrite:(id)sender {
-    PostArticleViewController *ar = [[PostArticleViewController alloc]init];
-    ar.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:ar animated:YES];
-
-}
 
 - (IBAction)enterWirte:(id)sender {
     [self didEnterWritePage];
@@ -148,7 +145,6 @@
 -(void)didEnterWritePage
 {
     WriteArtcleViewController * pr = [[WriteArtcleViewController alloc]init];
-//    PostArticleViewController * pr = [[PostArticleViewController alloc]init];
     pr.hidesBottomBarWhenPushed = YES;
     pr.shareType = @"6";
     [self.navigationController pushViewController:pr animated:YES];
@@ -889,14 +885,17 @@
 
     CommunityModel * model = [_dataArray objectAtIndex:index];
     
+
+    
+    
     if ([model.userId isEqualToString:[UserModel shareInstance].userId]) {
-        
+
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"确定要删除此文章吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        
+
         [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            
+
+
             NSMutableDictionary * params = [NSMutableDictionary dictionary];
             [params safeSetObject:model.uid forKey:@"articleId"];
             [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
@@ -912,34 +911,40 @@
     }
     else
     {
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            
-        }];
-        [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-        [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-            
-            if (strUrl.length<5) {
-                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
-                return ;
-            }
-            if (strUrl.length>64) {
-                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能大于64个字。"];
-                return ;
-            }
+        
+        jbv = [[JbView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-110)];
+        jbv.articleId = model.uid;
+        [self.view addSubview:jbv];
+        [self.view bringSubviewToFront:jbv];
 
-            NSMutableDictionary * params = [NSMutableDictionary dictionary];
-            [params safeSetObject:model.uid forKey:@"articleId"];
-            [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
-            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
-                [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
-            } failure:^(NSError *error) {
-                
-            }];
-        }]];
-        [self presentViewController:alert animated:YES completion:nil];
+//        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社群内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
+//        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+//
+//        }];
+//        [alert addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+//        [alert addAction: [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            NSString *strUrl = [alert.textFields.firstObject.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+//
+//            if (strUrl.length<5) {
+//                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能小于5个字。"];
+//                return ;
+//            }
+//            if (strUrl.length>64) {
+//                [[UserModel shareInstance]showInfoWithStatus:@"举报内容不能大于64个字。"];
+//                return ;
+//            }
+//
+//            NSMutableDictionary * params = [NSMutableDictionary dictionary];
+//            [params safeSetObject:model.uid forKey:@"articleId"];
+//            [params safeSetObject:alert.textFields.firstObject.text forKey:@"reportContent"];
+//            [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+//            self.currentTasks =[[BaseSservice sharedManager]post1:@"app/reportArticle/updateIsreported.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+//                [[UserModel shareInstance]showSuccessWithStatus:@"您已成功举报"];
+//            } failure:^(NSError *error) {
+//
+//            }];
+//        }]];
+//        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
@@ -1211,6 +1216,8 @@
 
 - (IBAction)didClickSegment:(UISegmentedControl *)sender {
     
+    jbv.hidden = YES;
+    [jbv removeFromSuperview];
     [self.tableview.mj_header beginRefreshing];
 }
 

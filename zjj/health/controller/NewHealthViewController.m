@@ -43,8 +43,6 @@
     self.tabBarController.tabBar.hidden = NO;
     [self refreshMyInfoView];
     
-    [self buildUserListView];
-    [[UserModel shareInstance]getbalance];
     [[UserModel shareInstance]getUpdateInfo];
 
 }
@@ -56,7 +54,9 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    
+    [self buildUserListView];
+    [[UserModel shareInstance]getbalance];
+
     
     
     

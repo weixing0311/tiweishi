@@ -20,6 +20,7 @@
 @property (nonatomic,assign)id<VouchersCellDelegate>delegate;
 - (IBAction)didClickGetVouchers:(id)sender;
 -(void)setCellInfoWithDict:(NSDictionary *)dict;
+-(void)refreshProgressWithDict:(NSDictionary *)dic;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UILabel *lastCountlb;
 

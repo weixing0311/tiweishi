@@ -260,6 +260,7 @@
 
 -(void)ChangeMySegmentStyle:(UISegmentedControl*)segment
 {
+    segment.backgroundColor = [UIColor whiteColor];
     [segment setTintColor:[UIColor whiteColor]];
     [segment setBackgroundImage:[UIImage imageNamed:@"selectImg"]
                             forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];

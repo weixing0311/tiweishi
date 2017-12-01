@@ -39,6 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNbColor];
+    self.title = @"商品详情";
     self.goodsCount =1;
     if (goodscarouselView) {
         [goodscarouselView removeFromSuperview];

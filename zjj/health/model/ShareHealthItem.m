@@ -32,7 +32,7 @@ static ShareHealthItem *item;
     self.warn =[[dict safeObjectForKey:@"warn"]intValue];//
     self.normal =[[dict safeObjectForKey:@"normal"]intValue];//
     self.serious =[[dict safeObjectForKey:@"serious"]intValue];//
-    
+    self.bmrLevel = [[dict safeObjectForKey:@"bmrLevel"]intValue];
     self.bmiLevel =[[dict safeObjectForKey:@"bmiLevel"]intValue];//bmi程度
     
     self.visceralFatPercentageLevel =[[dict safeObjectForKey:@"visceralFatPercentageLevel"]intValue];//内脂判定标准
@@ -280,6 +280,24 @@ static ShareHealthItem *item;
      */
 
     switch (isMytype) {
+        case IS_BMR:
+            switch (level) {
+                case 1:
+                    return @"正常";
+                    break;
+                case 2:
+                    return @"低";
+                    break;
+                case 3:
+                    return @"高";
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            break;
+
         case IS_BMI:
             switch (level) {
                 case 1:

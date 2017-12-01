@@ -8,10 +8,12 @@
 
 #import "JFABaseTableViewController.h"
 typedef enum {
-    IS_FROM_CONFIRM,
-    IS_FROM_TZSDG,
-    IS_FROM_SHOPDG,
-    IS_FROM_MINE,
+    IS_FROM_CONFIRM =1,
+    IS_FROM_TZSDG = 2,
+    IS_FROM_SHOPDG =3,
+    IS_FROM_MINE =4,
+    IS_FROM_SHOP =5,
+    IS_FROM_TZS =6,
 }isFromType;
 @protocol myVoucthersDelegate;
 @interface MyVoucthersViewController : JFABaseTableViewController

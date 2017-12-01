@@ -43,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIView *nemuView;
 
 @property (weak, nonatomic) IBOutlet UIView *playerBgView;
+@property (weak, nonatomic) IBOutlet UILabel *locationlb;
 
 
 @end

@@ -21,8 +21,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-09-22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hkB-Zu-3qn">
-                        <rect key="frame" x="60" y="41" width="73.5" height="15"/>
+                        <rect key="frame" x="60" y="41" width="77" height="15"/>
                         <constraints>
+                            <constraint firstAttribute="width" priority="10" constant="100" id="5Fe-Vh-ocF"/>
+                            <constraint firstAttribute="width" constant="77" id="c26-b2-sNJ"/>
                             <constraint firstAttribute="height" constant="15" id="kWj-Xy-VSb"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -314,10 +316,20 @@
                             <constraint firstAttribute="height" constant="20" id="SRo-UH-JQH"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京市天安门" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6i-Ou-PYf">
+                        <rect key="frame" x="147" y="41" width="128" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="DAi-Pk-Oea"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="P5d-Gw-Xgu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="0jA-J4-EUq"/>
                     <constraint firstItem="hkB-Zu-3qn" firstAttribute="leading" secondItem="P5d-Gw-Xgu" secondAttribute="trailing" constant="10" id="173-l7-Pi0"/>
+                    <constraint firstItem="as4-8A-JiC" firstAttribute="leading" secondItem="K6i-Ou-PYf" secondAttribute="trailing" constant="10" id="1s1-dE-Xqm"/>
                     <constraint firstItem="iZF-TU-n2q" firstAttribute="centerY" secondItem="Op7-Xa-bh0" secondAttribute="centerY" id="2Jf-km-ZoO"/>
                     <constraint firstItem="iZF-TU-n2q" firstAttribute="leading" secondItem="Op7-Xa-bh0" secondAttribute="trailing" constant="10" id="3Gx-Mk-xOP"/>
                     <constraint firstAttribute="trailingMargin" secondItem="1hM-WM-mAJ" secondAttribute="trailing" constant="10" id="61v-9E-zhD"/>
@@ -330,7 +342,9 @@
                     <constraint firstItem="1hM-WM-mAJ" firstAttribute="top" secondItem="P5d-Gw-Xgu" secondAttribute="bottom" constant="10" id="Iax-5g-6vM"/>
                     <constraint firstItem="9Ww-2U-20c" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="MIt-rk-qF7"/>
                     <constraint firstItem="tIk-z6-R5r" firstAttribute="top" secondItem="9Ww-2U-20c" secondAttribute="bottom" constant="10" id="OEd-Ey-mBO"/>
+                    <constraint firstItem="K6i-Ou-PYf" firstAttribute="top" secondItem="hkB-Zu-3qn" secondAttribute="top" id="Pjp-Im-oSb"/>
                     <constraint firstAttribute="trailing" secondItem="fPp-YK-jXP" secondAttribute="trailing" id="Szb-jd-kfR"/>
+                    <constraint firstItem="K6i-Ou-PYf" firstAttribute="leading" secondItem="hkB-Zu-3qn" secondAttribute="trailing" constant="10" id="T1n-gI-ytc"/>
                     <constraint firstItem="as4-8A-JiC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="UbI-hn-AVt"/>
                     <constraint firstItem="7rg-s3-YVR" firstAttribute="leading" secondItem="as4-8A-JiC" secondAttribute="trailing" id="WO3-2v-kwn"/>
                     <constraint firstAttribute="trailing" secondItem="9Ww-2U-20c" secondAttribute="trailing" constant="20" id="WiH-BV-wAi"/>
@@ -353,6 +367,7 @@
                 <outlet property="headImageView" destination="P5d-Gw-Xgu" id="Lua-uP-0gb"/>
                 <outlet property="jbBtn" destination="7rg-s3-YVR" id="K39-Ic-qbH"/>
                 <outlet property="levelLb" destination="Op7-Xa-bh0" id="6SM-2p-tDn"/>
+                <outlet property="locationlb" destination="K6i-Ou-PYf" id="biu-IJ-BQh"/>
                 <outlet property="midImageView" destination="qsd-r1-Y9c" id="fmA-P2-1HJ"/>
                 <outlet property="nemuView" destination="tIk-z6-R5r" id="CMy-Cp-IIc"/>
                 <outlet property="playBtn" destination="Jac-6E-w5y" id="FZJ-CK-pda"/>

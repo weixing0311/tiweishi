@@ -87,7 +87,13 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 140;
+    shopCarCellItem *item = [self.dataArray objectAtIndex:indexPath.row];
+    NSArray * promotTitle = item.promotTitle;
+    if (promotTitle&&promotTitle.count>0) {
+        return 140;
+    }else{
+        return 100;
+    }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -168,8 +174,6 @@
 {
     shopCarCellItem * shopItem = [self.dataArray objectAtIndex:cell.tag];
     
-    
-    
     NSMutableDictionary *param =[NSMutableDictionary dictionary];
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setObject:shopItem.productNo forKey:@"productNo"];
@@ -194,13 +198,11 @@
             [self.dataArray addObject:item];
         }
         shopCarCellItem * currentItem = [self.dataArray objectAtIndex:cell.tag];
-
         if (cell.chooseBtn.selected==NO) {
             cell.chooseBtn.selected =YES;
         }
         
         [self ChangeTotaPriceWithItem:currentItem];
-        
     } failure:^(NSError *error) {
         shopCarCellItem * item = [self.dataArray objectAtIndex:cell.tag];
         cell.countLabel.text = item.quantity;
@@ -250,11 +252,11 @@
             
             
             [self changePriceIsNull:NO];
-            [self.tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:[NSIndexPath indexPathForRow:cell.tag inSection:0 ]] withRowAnimation:UITableViewRowAnimationLeft];  //删除对应数据的cell
+//            [self.tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:[NSIndexPath indexPathForRow:cell.tag inSection:0 ]] withRowAnimation:UITableViewRowAnimationLeft];  //删除对应数据的cell
             [[UserModel shareInstance]showSuccessWithStatus:@""];
             
             
-            //            [self.tableView reloadData];
+        [self.tableView reloadData];
             
         } failure:^(NSError *error) {
             if ([error code]==402) {

@@ -46,7 +46,7 @@
     [titleView addSubview:titleLabel];
     
     UIButton * closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(JFA_SCREEN_WIDTH-40, 0, 40, 44)];
-    closeBtn.backgroundColor = [UIColor redColor];
+//    closeBtn.backgroundColor = [UIColor redColor];
     [closeBtn setImage:getImage(@"close_") forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(didClickhidden) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:closeBtn];
@@ -123,9 +123,9 @@
 }
 -(void)didBuy
 {
-    if (!chooseDict) {
-        return;
-    }
+//    if (!chooseDict) {
+//        return;
+//    }
     if (self.delegate&&[self.delegate respondsToSelector:@selector(didBuyWithDictionary:)]) {
         [self.delegate didBuyWithDictionary:chooseDict];
     }
@@ -147,9 +147,16 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:identifier owner:nil options:nil]lastObject];
     }
     NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-    cell.titlelb.text = [dic safeObjectForKey:@"templateName"];
-    cell.timelb.text = [NSString stringWithFormat:@"有效期至:%@",[dic safeObjectForKey:@"validEndTime"]];
+    cell.titlelb.text = [dic safeObjectForKey:@"grantName"];
+    cell.limitGoodslb.hidden = YES;
+    cell.limit2Goodslb.hidden = NO;
+
     
+    NSString * startTime = [[dic safeObjectForKey:@"validStartTime"] stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
+    NSString * endTime  = [[dic safeObjectForKey:@"validEndTime"] stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
+    
+    cell.timelb.text = [NSString stringWithFormat:@"%@-%@",startTime,endTime];
+
     if (chooseDict) {
         NSString * chooseNo = [chooseDict safeObjectForKey:@"couponNo"];
         NSString * cellNo = [dic safeObjectForKey:@"couponNo"];
@@ -162,30 +169,23 @@
         cell.didChooseImage.hidden = YES;
     }
     
-    
-    
     int type = [[dic safeObjectForKey:@"type"]intValue];
     if (type ==2) {
-        cell.faceValuelb.text = [NSString stringWithFormat:@"%.0f折",[[dic safeObjectForKey:@"discountAmount"]floatValue]*10];
+        cell.faceValuelb.text = [NSString stringWithFormat:@"%.1f折",[[dic safeObjectForKey:@"discountAmount"]floatValue]*10];
     }else{
-        cell.faceValuelb.text = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"discountAmount"]];
+        NSString * faceValue = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"discountAmount"]];
+        NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:faceValue];
+
+        [tisString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(0, 1)];
+        cell.faceValuelb.attributedText = tisString;
+
     }
     
     //    cell.faceValuelb.text = [NSString stringWithFormat:@"%@",[dic safeObjectForKey:@"discountAmount"]];
     
     //useRange//使用范围 0全部商品 1脂将军饼干 2 体脂称
-    int userRange = [[dic safeObjectForKey:@"useRange"]intValue];
-    if (userRange ==1) {
-        cell.limitGoodslb.text =@"仅限脂将军饼干使用";
-    }
-    else if(userRange ==2)
-    {
-        cell.limitGoodslb.text = @"仅限脂将军饼干使用";
-    }else
-    {
-        cell.limitGoodslb.text = @"(无限制)";
-    }
-    
+    cell.limit2Goodslb.text = [cell getlimitWithArr:[dic safeObjectForKey:@"products"]];
+
     int startAmount = [[dic safeObjectForKey:@"startAmount"]intValue];
     if (!startAmount||startAmount ==0) {
         cell.limitPricelb.text = @"(无限制)";

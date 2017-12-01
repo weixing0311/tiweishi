@@ -26,5 +26,6 @@
 @property (nonatomic,copy) NSString * productIntegral;
 @property (nonatomic,copy) NSString * classId;
 @property (nonatomic,copy) NSString * stockCode;
+@property (nonatomic,copy) NSString * couponId;
 -(void)setInfoWithDict:(NSDictionary *)dict;
 @end

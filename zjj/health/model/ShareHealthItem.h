@@ -16,6 +16,7 @@ typedef enum
     IS_SAME,///肌肉\骨骼肌\水分\蛋白质\骨重判定标准///骨骼肌
     IS_BODYWEIGHT,///体重判定
     IS_SIZE,///体型
+    IS_BMR,
 }mytype;
 @interface ShareHealthItem : NSObject
 +(ShareHealthItem *)shareInstance;
@@ -28,6 +29,8 @@ typedef enum
 @property (nonatomic,assign) float              score ; //健康得分
 @property (nonatomic,assign) float              weight ;// 体重
 @property (nonatomic,assign) float              bmr ;// 基础代谢率
+@property (nonatomic,assign) int              bmrLevel ;// 基础代谢率
+
 @property (nonatomic,assign) int                bodyAge ;// 身体年龄
 @property (nonatomic,assign) float              bmi ;// 体质指数
 @property (nonatomic,assign) int                warn ;//

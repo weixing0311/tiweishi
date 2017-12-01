@@ -284,28 +284,6 @@
             cell.titleLabel.text  =[_infoDict safeObjectForKey:@"clientDescription"];
             cell.timeLabel.text = [_infoDict safeObjectForKey:@"operationTime"];
         }
-//        else if(status ==1){
-//            cell.hidden = NO;
-//            cell.payTsView.hidden =NO;
-//            cell.lastTime.text =[NSString stringWithFormat:@"剩余时间：%@",@"0小时0分"];
-//            NSString * finishTime =[_infoDict safeObjectForKey:@"timer"];
-//            [cell setTimeLabelText:finishTime];
-//
-//            NSString * priceStr = [_infoDict safeObjectForKey:@"productPrice"];
-//            NSString * integral = [_infoDict safeObjectForKey:@"productIntegral"];
-//            if (integral.intValue>0&&priceStr.floatValue>0) {
-//                cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%@积分+%.2f元",integral,[priceStr floatValue]];
-//            }
-//            else{
-//                if (integral.intValue>0) {
-//                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%@积分",integral];
-//
-//                }else{
-//                    cell.paypriceLabel.text =[NSString stringWithFormat:@"需付款:%.2f元",[priceStr floatValue]];
-//                }
-//
-//            }
-//        }
         else{
             cell.hidden = YES;
             cell.payTsView.hidden = YES;

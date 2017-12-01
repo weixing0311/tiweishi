@@ -7,7 +7,6 @@
 //
 
 #import "HealthModel.h"
-#import "HealthDetailsItem.h"
 #import "SubProjectItem.h"
 
 #define warningColor   [UIColor colorWithRed:246/255.0 green:172/255.0 blue:2/255.0 alpha:1]
@@ -212,12 +211,29 @@
 }
 
 
--(UIColor *)getHealthDetailColorWithStatus:(isMyType)myType
+-(UIColor *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
 {
+   /*
+    weightLevel  1偏瘦2正常3警告4警告5超重6超重  1低 2正常  3456 高
+    fatPercentage level  1正常2低3高
+    
+    bmi  1低  2正常3高4高
+    fatweightlevel  1正常2低3高
+    
+    waterlevel 1正常 else 低
+        
+        蛋白质  1正常 else低
+            
+            muscle 肌肉 1正常 else 低
+                
+                boneMuscle  1正常 else低
+                    
+                    内脂  1正常2超标3高
+*/
 //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
     switch (myType) {
         case IS_MODEL_BMI:
-            switch ([HealthDetailsItem instance].bmiLevel) {
+            switch (item.bmiLevel) {
                 case 1:
                     return warningColor;
                     break;
@@ -235,7 +251,7 @@
                     break;
             }
         case IS_MODEL_FATPERCENT:
-            switch ([HealthDetailsItem instance].fatPercentageLevel) {
+            switch (item.fatPercentageLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -251,7 +267,7 @@
             }
             break;
         case IS_MODEL_FAT:
-            switch ([HealthDetailsItem instance].fatWeightLevel) {
+            switch (item.fatWeightLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -267,7 +283,7 @@
             }
              break;
         case IS_MODEL_WATER:
-            switch ([HealthDetailsItem instance].waterLevel) {
+            switch (item.waterLevel) {
             case 1:
                 return normalColor;
                 break;
@@ -280,7 +296,7 @@
         }
              break;
         case IS_MODEL_PROTEIN:
-            switch ([HealthDetailsItem instance].proteinLevel) {
+            switch (item.proteinLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -294,7 +310,7 @@
             
             break;
         case IS_MODEL_MUSCLE:
-            switch ([HealthDetailsItem instance].muscleLevel) {
+            switch (item.muscleLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -310,7 +326,7 @@
             
             break;
         case IS_MODEL_BONEMUSCLE:
-            switch ([HealthDetailsItem instance].boneLevel) {
+            switch (item.boneLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -325,7 +341,7 @@
             
             
         case IS_MODEL_VISCERALFAT:
-            switch ([HealthDetailsItem instance].visceralFatPercentageLevel) {
+            switch (item.visceralFatPercentageLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -340,7 +356,7 @@
             }
              break;
         case IS_MODEL_BONE:
-            switch ([HealthDetailsItem instance].boneLevel) {
+            switch (item.boneLevel) {
                 case 1:
                     return normalColor;
                     break;
@@ -351,10 +367,35 @@
                     break;
             }
             break;
-            
+        case IS_MODEL_WEIGHT:
+            switch (item.weightLevel) {
+                case 1:
+                    return warningColor;
+                    break;
+                case 2:
+                    return normalColor;
+                    break;
+                case 3:
+                    return warningColor;
+                    break;
+                case 4:
+                    return warningColor;
+                    break;
+                case 5:
+                    return seriousColor;
+                    break;
+                case 6:
+                    return seriousColor;
+                    break;
+
+                default:
+                    break;
+            }
+            break;
         default:
             break;
     }
+    
     return nil;
 }
 

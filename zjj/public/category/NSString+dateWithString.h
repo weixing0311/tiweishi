@@ -18,4 +18,5 @@
  *计算时差
  */
 +(NSString *)getNowTimeWithString:(NSString *)aTimeString;
+- (NSString *) compareCurrentTime;
 @end

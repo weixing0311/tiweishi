@@ -17,6 +17,7 @@
 #import "BaseWebViewController.h"
 #import "IntegralOrderDetailViewController.h"
 #import "PhoneChargesOrderViewController.h"
+#import "VouchersOrderDetailViewController.h"
 @interface IntegralOrderViewController ()<UITableViewDelegate,UITableViewDataSource,orderFootBtnViewDelegate,orderDetailViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *enptyView;
@@ -383,7 +384,14 @@
         PhoneChargesOrderViewController * phone = [[PhoneChargesOrderViewController alloc]init];
         phone.infoDict = dic;
         [self.navigationController pushViewController:phone animated:YES];
-    }else
+    }
+    else if([orderType isEqualToString:@"3"])
+    {
+        VouchersOrderDetailViewController * vouchersOrderDetail = [[VouchersOrderDetailViewController alloc]init];
+        vouchersOrderDetail.orderNo = [dic objectForKey:@"orderNo"];
+        [self.navigationController pushViewController:vouchersOrderDetail animated:YES];
+    }
+    else
     {
         IntegralOrderDetailViewController *or =[[IntegralOrderDetailViewController alloc]init];
         or.orderNo = [dic objectForKey:@"orderNo"];

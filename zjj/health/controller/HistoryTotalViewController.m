@@ -28,7 +28,7 @@
     //    self.navigationController.navigationBarHidden = YES;
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self setTBWhiteColor];
-    self.title = @"历史记录";
+    self.title = @"体脂趋势";
     
 }
 

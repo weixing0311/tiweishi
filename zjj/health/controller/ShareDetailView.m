@@ -109,7 +109,7 @@
     self.bodyAgelb.text = [NSString stringWithFormat:@"身体年龄:%d",item.bodyAge];
 
     self.weightlb.text = [NSString stringWithFormat:@"体重:%.1fkg",item.weight];
-    self.contentlb.text = [NSString stringWithFormat:@"在社区中排名第%d位，已超过社区%.0f%%的用户",item.ranking,item.percent];
+    self.contentlb.text = [NSString stringWithFormat:@"在社群中排名第%d位，已超过社群%.0f%%的用户",item.ranking,item.percent];
     
     
     NSString * scoreStr =[NSString stringWithFormat:@"%.1f分",item.myScore];
@@ -208,34 +208,34 @@
 -(void)setCurrInfo:(HealthDetailsItem *)item
 {
         self.value1lb.text = [NSString stringWithFormat:@"%.1f",item.bmi];
-        self.status1lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
+        self.status1lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_BMI item:item];
         
         self.value2lb.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
-        self.status2lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
+        self.status2lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_FAT item:item];
         
         self.value3lb.text = [NSString stringWithFormat:@"%.1f%%",item.fatPercentage];
-        self.status3lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT item:item];
+        self.status3lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_FATPERCENT item:item];
         
         
         self.value4lb.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
-        self.status4lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
+        self.status4lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_PROTEIN item:item];
         
         self.value5lb.text = [NSString stringWithFormat:@"%.1fkg",item.boneWeight];
-        self.status5lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONE item:item];
+        self.status5lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_BONE item:item];
         
         self.value6lb.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
-        self.status6lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        self.status6lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_WATER item:item];
         
         
         
         self.value7lb.text = [NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
-        self.status7lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_MUSCLE item:item];
+        self.status7lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_MUSCLE item:item];
         
         self.value8lb.text = [NSString stringWithFormat:@"%.1f",item.bmr];
-        self.status8lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        self.status8lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_WATER item:item];
         
         self.value9lb.text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
-        self.status9lb.text = [self getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT item:item];
+        self.status9lb.text = [self getHealthDetailTextWithStatus:IS_MODEL_VISCERALFAT item:item];
     
     self.status1lb.backgroundColor = [self getColorWithString:self.status1lb.text];
     self.status2lb.backgroundColor = [self getColorWithString:self.status2lb.text];
@@ -348,7 +348,7 @@
     return @"";
     
 }
--(NSString *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
+-(NSString *)getHealthDetailTextWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
 {
     //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
     //肌肉\骨骼肌\水分\蛋白质\骨重判定标准

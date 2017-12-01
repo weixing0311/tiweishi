@@ -8,6 +8,7 @@
 
 #import "CommunityCell.h"
 #import <CoreImage/CoreImage.h>
+#import "NSString+dateWithString.h"
 #define BigImageWidth JFA_SCREEN_WIDTH-40
 #define BigImageHeight (JFA_SCREEN_WIDTH-40)*0.6
 
@@ -37,11 +38,12 @@
     
     self.titleIb.text        = item.title;
     self.contentlb.text      = item.content;
-    self.timelb.text         = item.releaseTime;
+    self.timelb.text         = [item.releaseTime compareCurrentTime];
     self.zanCountlb.text     = item.greatnum;
     self.commentCountlb.text = item.commentnum;
 //    self.shareCountlb.text   = item.forwardingnum;
     self.levelLb.text        = item.level;
+    self.locationlb.text     = item.location;
     if (item.isFabulous&&[item.isFabulous isEqualToString:@"1"]) {
         
         self.zanImageView.image = getImage(@"praise_Selected");

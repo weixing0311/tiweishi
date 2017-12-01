@@ -21,12 +21,10 @@
     self.hdTitleLabel.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
     self.headerImgView.layer.borderWidth = 1;
     self.headerImgView.layer.borderColor=HEXCOLOR(0xeeeeee).CGColor;
-
-
 }
 - (IBAction)showCxDetail:(id)sender {
     
-    if (self.hdTitleLabel.text.length<1) {
+    if (self.huodongLabel.text.length<1) {
         return;
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(showCuXiaoDetailViewWithCell:)]) {
@@ -88,12 +86,10 @@
                 self.moreYhLabel.hidden = YES;
             }
         }
-        
     }else{
         self.hdTitleLabel.hidden = YES;
         self.huodongLabel.hidden = YES;
         self.moreYhLabel.hidden =YES;
-   
     }
 //    self.countLabel.text =item.
 }

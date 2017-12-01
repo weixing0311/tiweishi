@@ -203,15 +203,26 @@
     
     return cell;
 }
--(int)gettimeXWithTime1:(NSDate *)tiem1 time2:(NSDate *)time2
+-(NSInteger)gettimeXWithTime1:(NSDate *)tiem1 time2:(NSDate *)time2
 {
     
-    
-    NSTimeInterval start = [tiem1 timeIntervalSince1970]*1;
-    NSTimeInterval end = [time2 timeIntervalSince1970]*1;
-    NSTimeInterval value = end - start;
-    int day = round(value / (24 * 3600));
-    return  day;
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [gregorian setFirstWeekday:2];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *fromDate;
+    NSDate *toDate;
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&fromDate interval:NULL forDate:tiem1];
+    [gregorian rangeOfUnit:NSCalendarUnitDay startDate:&toDate interval:NULL forDate:time2];
+    NSDateComponents *dayComponents = [gregorian components:NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
+    // dayComponents.day  即为间隔的天数
+    NSLog(@"--%ld",(long)dayComponents.day);
+    return dayComponents.day;
+//    NSTimeInterval start = [tiem1 timeIntervalSince1970]*1;
+//    NSTimeInterval end = [time2 timeIntervalSince1970]*1;
+//    NSTimeInterval value = end - start;
+//    int day = round(value / (24 * 3600));
+//    return  day;
 }
 
 
@@ -256,79 +267,97 @@
     NSString *boneMuscle1 =[[ShareHealthItem shareInstance] getHeightWithLevel:item1.boneMuscleLevel status:IS_SAME];
     NSString *boneMuscle2 =[[ShareHealthItem shareInstance] getHeightWithLevel:item2.boneMuscleLevel status:IS_SAME];
 
+    NSString * bmr1 = [[ShareHealthItem shareInstance] getHeightWithLevel:item1.bmrLevel status:IS_BMR];
+    NSString * bmr2 = [[ShareHealthItem shareInstance] getHeightWithLevel:item2.bmrLevel status:IS_BMR];
+
     
-    NSDictionary * dic1 = [NSDictionary dictionaryWithObjectsAndKeys:@"身体年龄",@"title",
+    NSDictionary * dic1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"身体年龄",@"title",
                            [NSString stringWithFormat:@"%d",item1.bodyAge],@"value1",
                            [NSString stringWithFormat:@"%d",item2.bodyAge],@"value2", nil];
     
 //体重
-    NSDictionary * dic2 = [NSDictionary dictionaryWithObjectsAndKeys:@"体重(kg)",@"title",
+    NSDictionary * dic2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"体重(kg)",@"title",
                            [NSString stringWithFormat:@"%.1f",item1.weight],@"value1",
                            [NSString stringWithFormat:@"%.1f",item2.weight],@"value2",
                            weightStatus1,@"level1",
                            weightStatus2,@"level2", nil];
 //肥胖等级
-    NSDictionary * dic3 = [NSDictionary dictionaryWithObjectsAndKeys:@"肥胖等级",@"title",
+    NSDictionary * dic3 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"肥胖等级",@"title",
                            [self getwl:item1.weightLevel],@"value1",
                            [self getwl:item2.weightLevel],@"value2",
                            weightStatus1,@"level1",
                            weightStatus2,@"level2", nil];
 //体脂率
-    NSDictionary * dic4 = [NSDictionary dictionaryWithObjectsAndKeys:@"体脂率(%)",@"title",
+    NSDictionary * dic4 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"体脂率(%)",@"title",
                            [NSString stringWithFormat:@"%.1f",item1.fatPercentage*100],@"value1",
                            [NSString stringWithFormat:@"%.1f",item2.fatPercentage*100],@"value2",
                            fatpercent1,@"level1",
                            fatpercent2,@"level2", nil];
 //脂肪量
-    NSDictionary * dic5 = [NSDictionary dictionaryWithObjectsAndKeys:@"脂肪量(kg)",@"title",
+    NSDictionary * dic5 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"脂肪量(kg)",@"title",
                            [NSString stringWithFormat:@"%.1f",item1.fatWeight],@"value1",
                            [NSString stringWithFormat:@"%.1f",item2.fatWeight],@"value2",
                            fatLevel1,@"level1",
                            fatLevel2,@"level2",nil];
     //    内脏脂肪
-    NSDictionary * dic6 = [NSDictionary dictionaryWithObjectsAndKeys:@"内脂指数",@"title",
+    NSDictionary * dic6 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"内脂指数",@"title",
                             [NSString stringWithFormat:@"%.1f",item1.visceralFatPercentage],@"value1",
                             [NSString stringWithFormat:@"%.1f",item2.visceralFatPercentage],@"value2",
                             viscerlFat1,@"level1",
                             viscerlFat2,@"level2", nil];
 //BMI
-    NSDictionary * dic7 = [NSDictionary dictionaryWithObjectsAndKeys:@"BMI",@"title",
+    NSDictionary * dic7 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"BMI",@"title",
                            [NSString stringWithFormat:@"%.1f",item1.bmi],@"value1",
                            [NSString stringWithFormat:@"%.1f",item2.bmi],@"value2",
                            BMI1,@"level1",
                            BMI2,@"level2",nil];
 //基础代谢
-    NSDictionary * dic8 = [NSDictionary dictionaryWithObjectsAndKeys:@"基础代谢 ",@"title",
+    NSDictionary * dic8 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"基础代谢 ",@"title",
                            [NSString stringWithFormat:@"%.0f",item1.bmr],@"value1",
-                           [NSString stringWithFormat:@"%.0f",item2.bmr],@"value2", nil];
+                           [NSString stringWithFormat:@"%.0f",item2.bmr],@"value2",
+                           bmr1,@"level1",
+                           bmr2,@"level2",nil];
     //    肌肉
-    NSDictionary * dic9 = [NSDictionary dictionaryWithObjectsAndKeys:@"肌肉(kg)",@"title",
+    NSDictionary * dic9 = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"肌肉(kg)",@"title",
                             [NSString stringWithFormat:@"%.1f",item1.muscleWeight],@"value1",
                             [NSString stringWithFormat:@"%.1f",item2.muscleWeight],@"value2",
                             muscle1,@"level1",
                             muscle2,@"level2", nil];
 //蛋白质
-    NSDictionary * dic10 = [NSDictionary dictionaryWithObjectsAndKeys:@"蛋白质(kg)",@"title",
+    NSDictionary * dic10 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"蛋白质(kg)",@"title",
                            [NSString stringWithFormat:@"%.1f",item1.proteinWeight],@"value1",
                            [NSString stringWithFormat:@"%.1f",item2.proteinWeight],@"value2",
                            protein1,@"level1",
                            protein2,@"level2", nil];
 //骨量
-    NSDictionary * dic11 = [NSDictionary dictionaryWithObjectsAndKeys:@"骨量(kg)",@"title",
+    NSDictionary * dic11 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"骨量(kg)",@"title",
                            [NSString stringWithFormat:@"%.1f",item1.boneWeight],@"value1",
                            [NSString stringWithFormat:@"%.1f",item2.boneWeight],@"value2",
                            bone1,@"level1",
                            bone2,@"level2", nil];
     
     //骨骼肌
-    NSDictionary * dic12 = [NSDictionary dictionaryWithObjectsAndKeys:@"骨骼肌(kg)",@"title",
+    NSDictionary * dic12 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"骨骼肌(kg)",@"title",
     [NSString stringWithFormat:@"%.1f",item1.boneMuscleWeight],@"value1",
     [NSString stringWithFormat:@"%.1f",item2.boneMuscleWeight],@"value2",
     boneMuscle1,@"level1",
     boneMuscle2,@"level2", nil];
 
 //水分
-    NSDictionary * dic13 = [NSDictionary dictionaryWithObjectsAndKeys:@"水分(kg)",@"title",
+    NSDictionary * dic13 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"水分(kg)",@"title",
                             [NSString stringWithFormat:@"%.1f",item1.waterWeight],@"value1",
                             [NSString stringWithFormat:@"%.1f",item2.waterWeight],@"value2",
                             water1,@"level1",

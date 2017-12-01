@@ -33,6 +33,14 @@
     NSString *string= [outputFormatter stringFromDate:self];
     return string;
 }
+-(NSString*)HH
+{
+    NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];
+    [outputFormatter setLocale:[NSLocale currentLocale]];
+    [outputFormatter setDateFormat:@"HH"];
+    NSString *string= [outputFormatter stringFromDate:self];
+    return string;
+}
 -(NSString*)mmdd
 {
     NSDateFormatter *outputFormatter= [[NSDateFormatter alloc] init];
@@ -41,6 +49,7 @@
     NSString *string= [outputFormatter stringFromDate:self];
     return string;
 }
+
 //根据生日计算年龄
 -(NSString *)getAge{
     //获得当前系统时间

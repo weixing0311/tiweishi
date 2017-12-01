@@ -18,7 +18,7 @@
 #import "ShareListView.h"
 #import "ShareHealthItem.h"
 #import "ShareDetailView.h"
-@interface HealthDetailViewController ()<UITableViewDelegate,UITableViewDataSource,NewHealthDetileFiveDelegate,NewHealthDetailThirdDelegate>
+@interface HealthDetailViewController ()<UITableViewDelegate,UITableViewDataSource,NewHealthDetileFiveDelegate,NewHealthDetailFouthDelegate>
 @property (strong, nonatomic) UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray  * dataArray;
 @property (nonatomic,strong)HealthDetailsItem * infoItem ;
@@ -42,7 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"健康报告";
+    self.title = @"体脂报告";
     self.view.backgroundColor =[UIColor whiteColor];
     self.tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 70, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-70) style:UITableViewStylePlain];
     
@@ -60,10 +60,8 @@
     [self buildRightNaviBarItem];
     
     
-    if (self.subtractMaxWeight.length>0) {
-        [self showAlertViewWithsubtractMaxWeight:self.subtractMaxWeight];
-    }
     
+    [self showErrorView];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -120,24 +118,24 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 110;
+        return 80;
     }
     else if (indexPath.section ==1)
     {
-        return 125;
+        return 155;
 
     }
+//    else if (indexPath.section ==2)
+//    {
+//        return 55;
+//    }
+
     else if (indexPath.section ==2)
-    {
-        return 55;
-    }
-
-    else if (indexPath.section ==3)
     {
         return 70;
     }
 
-    else if (indexPath.section ==4)
+    else if (indexPath.section ==3)
     {
         if (((ClickItemNo>0&&ClickItemNo<4)&&indexPath.row==0)||
             ((ClickItemNo >3&&ClickItemNo<7)&&indexPath.row==1)||
@@ -161,11 +159,11 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section==4) {
+    if (section==3) {
         return 3;
     }else{
         return 1;
@@ -193,28 +191,28 @@
         if (!cell) {
             cell = [self getXibCellWithTitle:identifier];
         }
-        [cell setInfoWithDict:self.infoItem];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-
-        return cell;
-        
-    }
-    else if (indexPath.section ==2)
-    {
-        static NSString * identifier = @"NewHealthDetailThirdCell";
-        NewHealthDetailThirdCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [self getXibCellWithTitle:identifier];
-        }
         cell.delegate = self;
         [cell setInfoWithDict:self.infoItem];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
+
         return cell;
         
     }
-    else if (indexPath.section ==3)
+//    else if (indexPath.section ==2)
+//    {
+//        static NSString * identifier = @"NewHealthDetailThirdCell";
+//        NewHealthDetailThirdCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//        if (!cell) {
+//            cell = [self getXibCellWithTitle:identifier];
+//        }
+//        [cell setInfoWithDict:self.infoItem];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//        return cell;
+//
+//    }
+    else if (indexPath.section ==2)
     {
         static NSString * identifier = @"NewHealthDetailSecondCell";
         NewHealthDetailSecondCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -227,7 +225,7 @@
         return cell;
         
     }
-    else /*if (indexPath.section ==4)*/
+    else /*if (indexPath.section ==3)*/
     {
         static NSString * identifier = @"NewHealthDetailFivthCell";
         NewHealthDetailFivthCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -488,32 +486,33 @@
     return viewImage;
 }
 
-//分享到社区的文案
+//分享到社群的文案
 -(NSString *)getContentWithItem:(HealthDetailsItem *)item
 {
+    NSString * firstStr = [NSString stringWithFormat:@"您的分数为%.1f分,在社群中排名第%d位，已超过社群%.0f%%的用户;",item.myScore,item.ranking,item.percent];
     if (item.weight-item.lastWeight==0) {
         switch (item.weightLevel) {
             case 1:
-                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于偏瘦身材，可以考虑补充营养，进行锻炼，毕竟过于消瘦也不好奥。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                return [NSString stringWithFormat:@"[减脂第%d天]%@ 您的体重%.1fkg，体脂率%.1f%%，属于偏瘦身材，可以考虑补充营养，进行锻炼，毕竟过于消瘦也不好奥。",[UserModel shareInstance].userDays,firstStr,item.weight,item.fatPercentage];
                 break;
             case 2:
-                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于标准身材，您的体型很标准，继续保持，如果您对自己有更高要求，可以运动锻炼，进行增肌塑形。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                return [NSString stringWithFormat:@"[减脂第%d天]%@ 您的体重%.1fkg，体脂率%.1f%%，属于标准身材，您的体型很标准，继续保持，如果您对自己有更高要求，可以运动锻炼，进行增肌塑形。",[UserModel shareInstance].userDays,firstStr,item.weight,item.fatPercentage];
                 
                 break;
             case 3:
-                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                return [NSString stringWithFormat:@"[减脂第%d天]%@ 您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,item.weight,item.fatPercentage];
                 
                 break;
             case 4:
-                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                return [NSString stringWithFormat:@"[减脂第%d天]%@ 您的体重%.1fkg，体脂率%.1f%%，属于偏胖人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,item.weight,item.fatPercentage];
                 
                 break;
             case 5:
-                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                return [NSString stringWithFormat:@"[减脂第%d天]%@ 您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,item.weight,item.fatPercentage];
                 
                 break;
             case 6:
-                return [NSString stringWithFormat:@"[减脂第%d天]您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,item.weight,item.fatPercentage];
+                return [NSString stringWithFormat:@"[减脂第%d天]%@ 您的体重%.1fkg，体脂率%.1f%%，属于超重人群，建议您每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,item.weight,item.fatPercentage];
                 
                 break;
                 
@@ -524,55 +523,55 @@
         switch (item.weightLevel) {
             case 1:
                 if (item.weight-item.lastWeight>0) {
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，提醒您补充营养也要把握好尺度，不要被肥胖趁虚而入奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重上升%.1fkg，提醒您补充营养也要把握好尺度，不要被肥胖趁虚而入奥。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }else{
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }
                 break;
             case 2:
                 if (item.weight-item.lastWeight>0) {
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%1.fkg，建议您注意饮食，不要被肥胖趁虚而入奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重上升%1.fkg，建议您注意饮食，不要被肥胖趁虚而入奥。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }else{
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重下降%.1fkg，建议您保证三餐必须的营养摄入，不要为了身材而不顾健康奥。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }
                 break;
             case 3:
                 if (item.weight-item.lastWeight>0) {
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }else{
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }
                 break;
             case 4:
                 if (item.weight-item.lastWeight>0) {
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }else{
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }
                 break;
             case 5:
                 if (item.weight-item.lastWeight>0) {
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }else{
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }
                 break;
             case 6:
                 if (item.weight-item.lastWeight>0) {
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重上升%.1fkg，建议您注意饮食，每餐少油少盐，并进行适当运动以减轻身体负担。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }else{
-                    return [NSString stringWithFormat:@"[减脂第%d天]与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,fabsf(item.weight-item.lastWeight)];
+                    return [NSString stringWithFormat:@"[减脂第%d天]%@ 与上次相比，体重下降%.1fkg，继续加油，坚持下去你就会收获更好的自己。",[UserModel shareInstance].userDays,firstStr,fabsf(item.weight-item.lastWeight)];
                     
                 }
                 break;
@@ -586,6 +585,55 @@
     
 }
 
+#pragma mark ---显示各种弹窗
+-(void)showErrorView
+{
+    NSDictionary * nowDict = [self.shareDict safeObjectForKey:@"now"];
+    NSDictionary * firstDict = [self.shareDict safeObjectForKey:@"first"];
+    float  waterWeight1 = [[nowDict safeObjectForKey:@"waterWeight"]floatValue];
+    float  waterWeight2 = [[firstDict safeObjectForKey:@"waterWeight"]floatValue];
+    float weight1 = [[nowDict safeObjectForKey:@"weight"]floatValue];
+    float weight2 = [[firstDict safeObjectForKey:@"weight"]floatValue];
+    if (fabsf(waterWeight1-waterWeight2)>5) {
+        [self showWaterErrorAlert];
+        return;
+    }
+    if (fabsf(weight1-weight2)) {
+        [self showWeightErrorAlert];
+        return;
+    }
+    if (self.subtractMaxWeight.length>0) {
+        [self showAlertViewWithsubtractMaxWeight:self.subtractMaxWeight];
+        return;
+    }
+
+}
+
+-(void)showWaterErrorAlert
+{
+    NSString * info = @"系统检测到您本次测量状况异常，请检查您的测量状态，按照正确的方法使用体脂秤。（体脂秤使用过程中忌穿鞋袜，请将体脂秤放在坚硬平整的地面上，周边不可有除手机外的电子产品。）";
+    UIAlertController * lr = [UIAlertController alertControllerWithTitle:@"" message:info preferredStyle:UIAlertControllerStyleAlert];
+    [lr addAction:[UIAlertAction actionWithTitle:@"这是真实数据" style:UIAlertActionStyleCancel handler:nil]];
+    [lr addAction:[UIAlertAction actionWithTitle:@"重新体测" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    [self presentViewController:lr animated:YES completion:nil];
+    
+}
+
+-(void)showWeightErrorAlert
+{
+    NSString * info = [NSString stringWithFormat:@"您的体重为%.1f斤，与上次测量相差过大，如果不是本人请添加子用户，设置符合自身条件的数据进行测量，如果是您本人请继续使用。",[[[self.shareDict safeObjectForKey:@"now"]objectForKey:@"weight"]floatValue]];
+    NSString * title = [NSString stringWithFormat:@"您是%@本人吗？",[UserModel shareInstance].nickName];
+    UIAlertController * lr = [UIAlertController alertControllerWithTitle:title message:info preferredStyle:UIAlertControllerStyleAlert];
+    [lr addAction:[UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleCancel handler:nil]];
+    [lr addAction:[UIAlertAction actionWithTitle:@"去添加" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    [self presentViewController:lr animated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ShareHealthItem.h"
-
+#import "HealthDetailsItem.h"
 @interface HealthModel : NSObject
 
 +(HealthModel *)shareInstance;
@@ -61,10 +61,12 @@ typedef enum
     IS_MODEL_SIZE,//体型
     ///基础代谢
     IS_MODEL_BMR,
+    IS_MODEL_WEIGHT,
 }isMyType;
 -(NSString *)getStatus:(isMyType)isMytype;
 -(UIColor *)returnColorWithLevel:(int)level;
 -(UIColor *)getHealthDetailColorWithStatus:(isMyType)myType;
+-(UIColor *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item;
 -(UIColor *)getHealthHeaderColorWithStatus:(isMyType)myType item:(HealthItem*)item;
 -(UIColor *)getHealthShareColorWithStatus:(isMyType)myType item:(ShareHealthItem*)item;
 

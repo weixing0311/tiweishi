@@ -16,9 +16,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥10000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXS-Yy-haH">
-                    <rect key="frame" x="297" y="0.0" width="63" height="30"/>
+                    <rect key="frame" x="290" y="0.0" width="70" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" priority="40" constant="150" id="ObQ-Y3-4S7"/>
+                        <constraint firstAttribute="width" priority="40" constant="70" id="ObQ-Y3-4S7"/>
                         <constraint firstAttribute="height" constant="30" id="qGB-GB-YNd"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -26,7 +26,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="共计10项服务，合计：" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tsj-dI-z3y">
-                    <rect key="frame" x="133" y="0.0" width="154" height="30"/>
+                    <rect key="frame" x="10" y="0.0" width="270" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="e12-lz-7qh"/>
                     </constraints>
@@ -41,7 +41,9 @@
                 <constraint firstItem="dXS-Yy-haH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="FP7-eT-S2c"/>
                 <constraint firstAttribute="trailing" secondItem="dXS-Yy-haH" secondAttribute="trailing" constant="15" id="FZC-aO-g4h"/>
                 <constraint firstItem="tsj-dI-z3y" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WPm-qa-CPs"/>
+                <constraint firstItem="tsj-dI-z3y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="WWc-gS-nOe"/>
                 <constraint firstItem="tsj-dI-z3y" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="agJ-TV-mJb"/>
+                <constraint firstItem="dXS-Yy-haH" firstAttribute="leading" secondItem="tsj-dI-z3y" secondAttribute="trailing" constant="10" id="dc0-gw-Vd0"/>
                 <constraint firstItem="dXS-Yy-haH" firstAttribute="leading" secondItem="tsj-dI-z3y" secondAttribute="trailing" constant="10" id="kUP-Ra-wCg"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

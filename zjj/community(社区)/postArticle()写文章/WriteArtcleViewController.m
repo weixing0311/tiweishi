@@ -18,7 +18,7 @@
 #import "TZPhotoPreviewController.h"
 #import "TZGifPhotoPreviewController.h"
 #import "TZLocationManager.h"
-
+#import "WXLocationManager.h"
 @interface WriteArtcleViewController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate>
 {
     NSMutableArray *_selectedPhotos;
@@ -39,10 +39,17 @@
 @property (nonatomic,assign) BOOL isShooting;//判断是不是拍摄的视频
 @property (nonatomic,copy)   NSURL * shootingVideoUrl;
 @property (nonatomic,strong)UILabel * textViewCountLb;
+@property (nonatomic,copy) NSString * myLocationStr;//我的位置
+@property (nonatomic,strong)UIView * locationView;
 @end
 
 @implementation WriteArtcleViewController
-
+{
+    CLLocationManager *_locationManager;//定位服务管理类
+    CLGeocoder * _geocoder;//初始化地理编码器
+    UILabel * locationLabel;
+    UIImageView * locationImageView;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -55,20 +62,23 @@
     [super viewDidLoad];
     self.title = @"发表状态";
     self.isShooting = NO;
-    self.view.backgroundColor = [UIColor whiteColor];
+
+    self.view.backgroundColor = HEXCOLOR(0xffffff);
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
-    [self configCollectionView];
     [self buildTextView];
+    [self configCollectionView];
     [self buildRightNaviBarItem];
     [self myTypeIsShareImage];
+    [self buildLocationView];
     // Do any additional setup after loading the view.
 }
+
 -(void)buildCountLabel
 {
     self.textViewCountLb  = [[UILabel alloc]initWithFrame:CGRectMake(JFA_SCREEN_WIDTH-170, 285, 150, 15)];
     self.textViewCountLb.backgroundColor = [UIColor clearColor];
-    self.textViewCountLb.text = @"可输入121字";
+    self.textViewCountLb.text = @"可输入150字";
     self.textViewCountLb.textColor = HEXCOLOR(0x666666);
     self.textViewCountLb.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:self.textViewCountLb];
@@ -89,6 +99,7 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
 }
+
 #pragma mark ---网络请求
 -(void)didUpdateInfo
 {
@@ -97,14 +108,14 @@
     if (strUrl.length<1&&!self.videoUrlStr&&_selectedPhotos.count<1) {
         [[UserModel shareInstance]showInfoWithStatus:@"文章不能为空"];
     }
-    if (self.textView.text.length>100) {
-        [[UserModel shareInstance]showInfoWithStatus:@"文章最长100字"];
+    if (self.textView.text.length>150) {
+        [[UserModel shareInstance]showInfoWithStatus:@"文章最长150字"];
         return;
     }
     NSMutableDictionary * params =[NSMutableDictionary dictionary];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:self.textView.text forKey:@"content"];
-    
+    [params safeSetObject:self.myLocationStr forKey:@"location"];
     
     if (self.isHaveVideo==YES) {
         NSData * data;
@@ -166,26 +177,88 @@
 ///buildTextView
 -(void)buildTextView
 {
-    UIView * textBgView =[[UIView alloc]initWithFrame:CGRectMake(0, 80, JFA_SCREEN_WIDTH, 200)];
+    UIView * textBgView =[[UIView alloc]initWithFrame:CGRectMake(0, 80, JFA_SCREEN_WIDTH, 120)];
     textBgView.backgroundColor = HEXCOLOR(0xffffff);
     
     
     [self.view addSubview:textBgView];
     
-    _textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, JFA_SCREEN_WIDTH-20, 180) ];
+    _textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, JFA_SCREEN_WIDTH-20, 100) ];
     _textView.textColor = [UIColor blackColor];
     _textView.font  =[UIFont systemFontOfSize:15];
     _textView.delegate = self;
     _textView.returnKeyType = UIReturnKeyDone;
     [textBgView addSubview:_textView];
     
-    _textView.layer.borderWidth= 1;
-    _textView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
-    _textView.layer.cornerRadius = 5;
-    _textView.layer.masksToBounds =YES;
+//    _textView.layer.borderWidth= 1;
+//    _textView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+//    _textView.layer.cornerRadius = 5;
+//    _textView.layer.masksToBounds =YES;
     
 }
+- (void)configCollectionView {
+    
+    
+    
+    
+    // 如不需要长按排序效果，将LxGridViewFlowLayout类改成UICollectionViewFlowLayout即可
+    _layout = [[LxGridViewFlowLayout alloc] init];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(20, 200, JFA_SCREEN_WIDTH-40, 100) collectionViewLayout:_layout];
+    _collectionView.alwaysBounceVertical = YES;
+    _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.bounces = NO;
+    _collectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4);
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    [self.view addSubview:_collectionView];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"TZTestCell"bundle:nil]forCellWithReuseIdentifier:@"TZTestCell"];
+    
+}
+-(void)buildLocationView
+{
+   self.locationView= [[UIView alloc]initWithFrame:CGRectMake(0, 200+(JFA_SCREEN_WIDTH-20)/4, JFA_SCREEN_WIDTH, 40)];
+    self.locationView.backgroundColor = HEXCOLOR(0xffffff);
+    [self.view addSubview:self.locationView];
+    
+    UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, 1)];
+    lineView.backgroundColor = HEXCOLOR(0xeeeeee);
+    [self.locationView addSubview:lineView];
+    UIView * lineView1 = [[UIView alloc]initWithFrame:CGRectMake(0, 39, JFA_SCREEN_WIDTH, 1)];
+    lineView1.backgroundColor = HEXCOLOR(0xeeeeee);
+    [self.locationView addSubview:lineView1];
 
+    locationImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 8.5, 16, 23)];
+    locationImageView.image = getImage(@"location_");
+    [self.locationView addSubview:locationImageView];
+    
+    locationLabel = [[UILabel alloc]initWithFrame:CGRectMake(55, 10, 120, 20)];
+    locationLabel.font = [UIFont systemFontOfSize:15];
+    locationLabel.textColor = HEXCOLOR(0x666666);
+    locationLabel.text = @"所在位置";
+    [self.locationView addSubview:locationLabel];
+    
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(175, 10, 20, 20)];
+    [button setImage:getImage(@"close_green_") forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(deleteLocationStr:) forControlEvents:UIControlEventTouchUpInside];
+    [self.locationView addSubview:button];
+    button.hidden = YES;
+    
+    [[WXLocationManager shareLocation]getCity:^(NSString *addressString) {
+        self.myLocationStr = addressString;
+        locationLabel .text = addressString;
+        locationImageView.image = getImage(@"location_select_");
+        button.hidden = NO;
+    }];
+}
+//
+-(void)deleteLocationStr:(UIButton *)sender
+{
+    locationLabel.text = @"所在位置";
+    self.myLocationStr= nil;
+    locationImageView.image = getImage(@"location_");
+    sender.hidden = YES;
+}
 ///build imagePickerVc
 - (UIImagePickerController *)imagePickerVc {
     if (_imagePickerVc == nil) {
@@ -208,34 +281,33 @@
     }
     return _imagePickerVc;
 }
-- (void)configCollectionView {
-    // 如不需要长按排序效果，将LxGridViewFlowLayout类改成UICollectionViewFlowLayout即可
-    _layout = [[LxGridViewFlowLayout alloc] init];
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(20, 300, JFA_SCREEN_WIDTH-40, 300) collectionViewLayout:_layout];
-    _collectionView.alwaysBounceVertical = YES;
-    _collectionView.backgroundColor = [UIColor whiteColor];
-    
-    _collectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4);
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
-    _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-    [self.view addSubview:_collectionView];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"TZTestCell"bundle:nil]forCellWithReuseIdentifier:@"TZTestCell"];
-
-}
 #pragma mark UICollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (_selectedPhotos.count<4) {
+        _collectionView.frame = CGRectMake(20, 200, JFA_SCREEN_WIDTH-40, (JFA_SCREEN_WIDTH-20)/4);
+        self.locationView.frame = CGRectMake(0, 200+(JFA_SCREEN_WIDTH-20)/4, JFA_SCREEN_WIDTH, 40);
+    }else if (_selectedPhotos.count>3&&_selectedPhotos.count<8)
+    {
+        _collectionView.frame = CGRectMake(20, 200, JFA_SCREEN_WIDTH-40, (JFA_SCREEN_WIDTH-20)/2);
+        self.locationView.frame = CGRectMake(0, 200+(JFA_SCREEN_WIDTH-20)/2, JFA_SCREEN_WIDTH, 40);
+
+    }else if (_selectedPhotos.count>8)
+    {
+        _collectionView.frame = CGRectMake(20, 200, JFA_SCREEN_WIDTH-40, (JFA_SCREEN_WIDTH-20)/4*3);
+        self.locationView.frame = CGRectMake(0, 200+(JFA_SCREEN_WIDTH-20)/4*3, JFA_SCREEN_WIDTH, 40);
+
+    }
     return _selectedPhotos.count + 1;
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_selectedPhotos.count>0) {
-        if (self.isHaveVideo==YES) {
-            UIImage * image = [_selectedPhotos objectAtIndex:0];
-            
-            return CGSizeMake(280/image.size.height*image.size.width, 280);
-        }
+//        if (self.isHaveVideo==YES) {
+//            UIImage * image = [_selectedPhotos objectAtIndex:0];
+//
+//            return CGSizeMake(280/image.size.height*image.size.width, 280);
+//        }
         return CGSizeMake((JFA_SCREEN_WIDTH-20)/4-15, (JFA_SCREEN_WIDTH-20)/4-15);
 
     }else{
@@ -247,13 +319,13 @@
     TZTestCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TZTestCell" forIndexPath:indexPath];
     cell.videoImageView.hidden = YES;
     if (indexPath.row == _selectedPhotos.count) {
-        cell.imageView.image = [UIImage imageNamed:@"cameraO_"];
-        cell.deleteBtn.hidden = YES;
-
-        if (self.isHaveVideo==YES||_selectedPhotos.count==9) {
-            cell.imageView.hidden = YES;
+        if (self.isHaveVideo!=YES&&_selectedPhotos.count!=9) {
+            
+            cell.imageView.image = [UIImage imageNamed:@"cameraO_"];
+            cell.deleteBtn.hidden = YES;
         }else{
-            cell.imageView.hidden =NO;
+            cell.imageView.image = getImage(@"");
+            cell.deleteBtn.hidden = YES;
         }
     } else {
         cell.imageView.image = _selectedPhotos[indexPath.row];
@@ -332,9 +404,10 @@
 #pragma mark - LxGridViewDataSource
 
 /// 以下三个方法为长按排序相关代码
-//- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath {
 //    return indexPath.item < _selectedPhotos.count;
-//}
+    return NO;
+}
 
 //- (BOOL)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)sourceIndexPath canMoveToIndexPath:(NSIndexPath *)destinationIndexPath {
 //    return (sourceIndexPath.item < _selectedPhotos.count && destinationIndexPath.item < _selectedPhotos.count);
@@ -410,7 +483,7 @@
 }
 -(void)enterPhotoAlbum
 {
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9-_selectedPhotos.count columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 columnNumber:4 delegate:self pushPhotoPickerVc:YES];
     // imagePickerVc.navigationBar.translucent = NO;
     
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置

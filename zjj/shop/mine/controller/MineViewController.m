@@ -160,6 +160,7 @@
     if (indexPath.row ==0) {
         VouchersGetViewController * vo = [[VouchersGetViewController alloc]init];
         vo.hidesBottomBarWhenPushed=YES;
+        vo.myType = 5;
         [self.navigationController pushViewController:vo animated:YES];
 
     }

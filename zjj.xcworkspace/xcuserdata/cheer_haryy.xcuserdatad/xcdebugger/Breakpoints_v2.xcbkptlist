@@ -30,54 +30,6 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "zjj/public/controller/BaseWebViewController.m"
-            timestampString = "533208574.717608"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "721"
-            endingLineNumber = "721"
-            landmarkName = "-backWithPayType"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[BaseWebViewController backWithPayType]"
-                  moduleName = "zjj"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
-                  timestampString = "533208574.916156"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "721"
-                  endingLineNumber = "721"
-                  offsetFromSymbolStart = "1164">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[BaseWebViewController backWithPayType]"
-                  moduleName = "zjj"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cheer_haryy/Desktop/zjj/zjj/public/controller/BaseWebViewController.m"
-                  timestampString = "533208574.918021"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "721"
-                  endingLineNumber = "721"
-                  offsetFromSymbolStart = "1180">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "No"
@@ -105,7 +57,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "zjj/public/controller/BaseWebViewController.m"
-            timestampString = "533208574.717684"
+            timestampString = "533620314.328305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "224"

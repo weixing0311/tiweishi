@@ -55,6 +55,7 @@
 - (IBAction)didClickHeadImage:(id)sender;
 ///点击举报事件
 - (IBAction)didClickJB:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *locationlb;
 
 
 

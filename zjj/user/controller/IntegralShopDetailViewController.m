@@ -11,6 +11,7 @@
 #import "IntegralShopDetailModel.h"
 #import "IntegralOrderUpdateViewController.h"
 #import "PhoneChargesViewController.h"
+#import "VouchersUpOrderViewController.h"
 @interface IntegralShopDetailViewController ()<UITableViewDelegate,UITableViewDataSource,IntegralShopDetailCellDelegate,UITextFieldDelegate>
 {
     UITableView * _tableView;
@@ -82,9 +83,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    /*
-     本demo由SDAutoLayout库的使用者“李西亚”提供，感谢“李西亚”对本库的关注与支持！
-     */
+    
     IntegralShopDetailContentCell * cell = nil;
     IntegralShopDetailModel * model = _listArray[indexPath.row];
 
@@ -98,12 +97,10 @@
     cell.model = model;
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    ////// 此步设置用于实现cell的frame缓存，可以让tableview滑动更加流畅 //////
     
     cell.sd_tableView = tableView;
     cell.sd_indexPath = indexPath;
     
-    ///////////////////////////////////////////////////////////////////////
     
     return cell;
     
@@ -143,7 +140,7 @@
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         DLog(@"%@",al.textFields.firstObject.text);
         BOOL isNum = [self deptNumInputShouldNumber:al.textFields.firstObject.text];
-        if (isNum !=YES||al.textFields.firstObject.text.length<1) {
+        if (isNum !=YES||al.textFields.firstObject.text.length<1||[al.textFields.firstObject.text intValue]<1) {
             [[UserModel shareInstance]showInfoWithStatus:@"请输入正确的数量"];
             return ;
         }
@@ -192,13 +189,23 @@
         [phone.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
         [self.navigationController pushViewController:phone animated:YES];
     }
-    else
+    else if([model.classId isEqualToString:@"2"])
     {
     IntegralOrderUpdateViewController *upd =[[IntegralOrderUpdateViewController alloc]init];
     upd.model= model;
     upd.goodsCount = goodsCount;
     [upd.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
     [self.navigationController pushViewController:upd animated:YES];
+    }
+    else if ([model.classId isEqualToString:@"3"])
+    {
+        VouchersUpOrderViewController * phone = [[VouchersUpOrderViewController alloc]init];
+        phone.model = model;
+        phone.goodsCount = goodsCount;
+        [phone.param safeSetObject:[self getUpdateInfo] forKey:@"orderItem"];
+        [self.navigationController pushViewController:phone animated:YES];
+
+        
     }
 }
 //获取上传数据

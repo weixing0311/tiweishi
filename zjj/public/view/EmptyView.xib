@@ -16,19 +16,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="isEmpty.png" translatesAutoresizingMaskIntoConstraints="NO" id="M60-hf-Tod">
-                    <rect key="frame" x="147.5" y="258.5" width="100" height="110"/>
+                    <rect key="frame" x="147.5" y="268.5" width="80" height="90"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="110" id="2Qy-YW-XBx"/>
-                        <constraint firstAttribute="width" constant="100" id="Iv0-CJ-4HX"/>
+                        <constraint firstAttribute="height" constant="90" id="2Qy-YW-XBx"/>
+                        <constraint firstAttribute="width" constant="80" id="Iv0-CJ-4HX"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无内容" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCw-uy-Ce1">
-                    <rect key="frame" x="20" y="390" width="335" height="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无优惠券" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCw-uy-Ce1">
+                    <rect key="frame" x="20" y="380" width="335" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="5Wr-5U-1gf"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -38,7 +38,7 @@
                 <constraint firstItem="pCw-uy-Ce1" firstAttribute="top" secondItem="M60-hf-Tod" secondAttribute="bottom" constant="21.5" id="Y2k-5r-Uya"/>
                 <constraint firstItem="pCw-uy-Ce1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="YYk-7h-GnI"/>
                 <constraint firstItem="M60-hf-Tod" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-20" id="aXL-dm-FaP"/>
-                <constraint firstItem="M60-hf-Tod" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="10" id="cMM-qO-O7Q"/>
+                <constraint firstItem="M60-hf-Tod" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="cMM-qO-O7Q"/>
                 <constraint firstAttribute="trailing" secondItem="pCw-uy-Ce1" secondAttribute="trailing" constant="20" id="p3E-Pv-8kA"/>
             </constraints>
             <connections>

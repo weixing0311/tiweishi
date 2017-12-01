@@ -15,6 +15,7 @@
 #import "ImageViewController.h"
 #import "LoignViewController.h"
 #import "HomePageWebViewController.h"
+#import <AVFoundation/AVFoundation.h>
 @interface TZSEditViewController ()
 
 @end
@@ -318,11 +319,14 @@
     
     UIAlertController *al = [UIAlertController alertControllerWithTitle:nil message:@"修改头像" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    
-    
-    
     [al addAction:[UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
+        
+        NSString * mediaType = AVMediaTypeVideo;
+        AVAuthorizationStatus  authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        if (authorizationStatus == AVAuthorizationStatusRestricted|| authorizationStatus == AVAuthorizationStatusDenied) {
+        
+        }
         
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];//初始化

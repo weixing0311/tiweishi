@@ -32,46 +32,46 @@
     if (self.tag ==1) {//BMI 体重 体脂率
         self.title1Label.text = @"体脂率";
         self.value1Label.text = [NSString stringWithFormat:@"%.1f%%",item.fatPercentage];
-        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_FATPERCENT item:item];
+        self.status1Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_FATPERCENT item:item];
 
 
         self.title2Label.text = @"脂肪量";
         self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.fatWeight];
-        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_FAT item:item];
+        self.status2Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_FAT item:item];
         
         self.title3Label.text = @"内脏脂肪";
         self.value3Label.text = [NSString stringWithFormat:@"%.1f",item.visceralFatPercentage];
-        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_VISCERALFAT item:item];
+        self.status3Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_VISCERALFAT item:item];
 
         
     }else if(self.tag==2){//蛋白质  水分  脂肪量
         self.title1Label.text = @"肌肉";
         self.value1Label.text = [NSString stringWithFormat:@"%.1fkg",item.muscleWeight];
-        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_MUSCLE item:item];
+        self.status1Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_MUSCLE item:item];
 
         self.title2Label.text = @"蛋白质";
         self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.proteinWeight];
-        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_PROTEIN item:item];
+        self.status2Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_PROTEIN item:item];
         
         self.title3Label.text = @"骨量";
         self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneWeight];
-        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONE item:item];
+        self.status3Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_BONE item:item];
 
 
         
     }else{//肌肉  基础代谢  内脏脂肪
         self.title1Label.text = @"BMI";
         self.value1Label.text = [NSString stringWithFormat:@"%.1f",item.bmi];
-        self.status1Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BMI item:item];
+        self.status1Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_BMI item:item];
 
 
         self.title2Label.text = @"骨骼肌";
         self.value2Label.text = [NSString stringWithFormat:@"%.1fkg",item.boneMuscleWeight];
-        self.status2Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_BONEMUSCLE item:item];
+        self.status2Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_BONEMUSCLE item:item];
 
         self.title3Label.text = @"水分";
         self.value3Label.text = [NSString stringWithFormat:@"%.1fkg",item.waterWeight];
-        self.status3Label.text = [self getHealthDetailColorWithStatus:IS_MODEL_WATER item:item];
+        self.status3Label.text = [self getHealthDetailStatusTextWithStatus:IS_MODEL_WATER item:item];
 
         
     }
@@ -119,7 +119,7 @@
 
             break;
         case 3:
-            self.headerImageView.image = getImage(@"fei_");
+            self.headerImageView.image = getImage(@"fei1_");
             self.headerNamelb.text = @"内脏脂肪";
             self.headerValuelb.text = [NSString stringWithFormat:@"%.1f",self.currItem.visceralFatPercentage];
             self.secondTitle.text = self.headerNamelb.text;
@@ -343,7 +343,7 @@
 //    }
 }
 
--(NSString *)getHealthDetailColorWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
+-(NSString *)getHealthDetailStatusTextWithStatus:(isMyType)myType item:(HealthDetailsItem*)item
 {
     //    SubProjectItem * subItem = [[SubProjectItem alloc]init];
     //肌肉\骨骼肌\水分\蛋白质\骨重判定标准

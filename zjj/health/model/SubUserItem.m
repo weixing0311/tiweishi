@@ -52,6 +52,7 @@ static SubUserItem * item;
     self.age = 0;
     self.subId = nil;
 }
+
 -(void)setInfoWithHealthId:(NSString* )healthId
 {
     if ([[UserModel shareInstance].healthId isEqualToString:healthId]) {
@@ -59,7 +60,6 @@ static SubUserItem * item;
 
         return;
     }
-    
     for (NSDictionary *dic in [UserModel shareInstance].child) {
         NSString * heid = [dic safeObjectForKey:@"id"];
         if ([heid isEqualToString:healthId]) {

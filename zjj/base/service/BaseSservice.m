@@ -118,7 +118,7 @@
                 if (statusStr&&[statusStr isEqualToString:@"success"]) {
                     success(dic);
                 }else{
-                    if ([url isEqualToString:@"app/integral/growthsystem/gainPoints.do"]||[url isEqualToString:@"app/userGreat/queryGreatPerson.do"]||[url isEqualToString:@"app/integral/growthsystem/queryAll.do"]||[url isEqualToString:@"app/integral/growthsystem/queryTaskRule.do"]) {
+                    if ([url isEqualToString:@"app/integral/growthsystem/gainPoints.do"]||[url isEqualToString:@"app/userGreat/queryGreatPerson.do"]||[url isEqualToString:@"app/integral/growthsystem/queryAll.do"]||[url isEqualToString:@"app/integral/growthsystem/queryTaskRule.do"]||isHidden==YES) {
                         DLog(@"ISHIDDEN=YES url =%@",url);
                     }else{
                         [[UserModel shareInstance] showInfoWithStatus:[dic objectForKey:@"message"]];

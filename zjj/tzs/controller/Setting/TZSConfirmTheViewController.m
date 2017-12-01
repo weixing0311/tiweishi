@@ -27,6 +27,7 @@
     NSString * voucthersCouponNo;
     NSMutableDictionary * voucthersDict;
     NSString * vouchersCountStr;
+    NSString * vouchersNameStr;
 }
 - (instancetype)init
 {
@@ -57,7 +58,6 @@
     self.tableview.dataSource = self;
     [self setExtraCellLineHiddenWithTb:self.tableview];
     [self getDefaultAddressFromNet];
-    [self getVouchersWithArrString:[self getVoucthersInfo]];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)getVouchersWithArrString:(NSString *)string
@@ -94,6 +94,9 @@
 #pragma mark ---notifation
 -(void)getAddress:(NSNotification*)noti
 {
+    vouchersNameStr = nil;
+    voucthersDict = nil;
+
     addressDict = [NSMutableDictionary dictionaryWithCapacity:0];
     [addressDict setDictionary:noti.userInfo];
     [self.tableview reloadData];
@@ -153,7 +156,7 @@
     [param safeSetObject:warehouseNo forKey:@"warehouseNo"];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/freigthCount/freigthProductCount.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
         weightStr = [[dic objectForKey:@"data"]objectForKey:@"freight"];
-        
+        [self getVouchersWithArrString:[self getVoucthersInfo]];
         
         if (voucthersDict&&[voucthersDict allKeys].count>0) {
             int type = [[voucthersDict objectForKey:@"type"]intValue];
@@ -292,16 +295,7 @@
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         }
         cell.textLabel.text = @"优惠券";
-//        if (voucthersDict&&[voucthersDict allKeys].count>0) {
-//            int type  = [[voucthersDict objectForKey:@"type"]intValue];
-//            if (type ==4) {
-//                cell.detailTextLabel.text = @"运费抵用券";
-//            }else{
-//                cell.detailTextLabel.text = voucthersFaceValue?voucthersFaceValue:@"";
-//            }
-//        }else{
-            cell.detailTextLabel.text = vouchersCountStr;
-//        }
+        cell.detailTextLabel.text = vouchersNameStr?vouchersNameStr:vouchersCountStr;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
         
@@ -326,30 +320,11 @@
             cell = [self getXibCellWithTitle:identifier];
         }
         
-        float  weightPrice  = [weightStr floatValue];
         
-        if (voucthersDict&&[voucthersDict allKeys].count>0) {
-            int type = [[voucthersDict objectForKey:@"type"]intValue];
-            float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
-            
-            if (type ==4) {
-                cell.ufLabel.text =[NSString stringWithFormat:@"￥0.00"];
-                
-            }else if (type ==5)
-            {
-                if ([weightStr floatValue]>amount) {
-                    cell.ufLabel.text =[NSString stringWithFormat:@"￥%.2f",[weightStr floatValue]-amount];
-                }else{
-                    cell.ufLabel.text =[NSString stringWithFormat:@"￥0.00"];
-                }
-            }else
-            {
-                cell.ufLabel.text =[NSString stringWithFormat:@"￥%.2f",[weightStr floatValue]];
-            }
-            
-        }else{
-            cell.ufLabel.text   = [NSString stringWithFormat:@"+￥%.2f",weightPrice]?[NSString stringWithFormat:@"+￥%.2f",weightPrice]:@"0.00";
-        }
+        cell.ufLabel.text   = [NSString stringWithFormat:@"￥%.2f",[[VouchersModel shareInstance]getPayAmountWeightWithDict:voucthersDict Weight:weightStr]];
+        
+        cell.uhLabel.text = [NSString stringWithFormat:@"-￥%.2f",[[VouchersModel shareInstance]getUhpriceWithDict:voucthersDict weightPrice:weightStr]];
+        
         cell.totoaPriceLabel.textColor = [UIColor redColor];
         cell.ufLabel.textColor = [UIColor redColor];
         cell.uhLabel.textColor = [UIColor redColor];
@@ -385,7 +360,7 @@
     [dic safeSetObject:[dict safeObjectForKey:@"unitPrice"] forKey:@"productPrice"];
     [dic safeSetObject:[dict safeObjectForKey:@"productNo"] forKey:@"productNo"];
     [dic safeSetObject:[dict safeObjectForKey:@"productName"] forKey:@"productName"];
-    [dic safeSetObject:[dict safeObjectForKey:@"quantity"] forKey:@"quantity"];
+    [dic safeSetObject:[dict safeObjectForKey:@"chooseCount"] forKey:@"quantity"];
     [dic safeSetObject:weightStr forKey:@"itemTotalPrice"];
     [vouArr addObject:dic];
     return [self DataTOjsonString:vouArr];
@@ -423,33 +398,24 @@
     [param safeSetObject:self.productStr forKey:@"productArray"];
     [param safeSetObject:self.warehouseNo forKey:@"warehouseNo"];
     if (voucthersDict&&[voucthersDict allKeys].count>0) {
-        
     [param safeSetObject:[voucthersDict safeObjectForKey:@"couponNo"] forKey:@"couponNo"];
-        
-        
-        int voucthersPrice = [voucthersFaceValue intValue];
-        int weightPrice = [weightStr intValue];
-            weightPrice -=voucthersPrice;
-            if (weightPrice<0) {
-                weightPrice =0;
-            }
-        [param safeSetObject:@(weightPrice) forKey:@"freight"];
-    }else{
-        [param safeSetObject:weightStr forKey:@"freight"];
-
     }
+    NSString * weight = [NSString stringWithFormat:@"%.1f",[[VouchersModel shareInstance]getPayAmountWeightWithDict:voucthersDict Weight:weightStr]];
+    [param safeSetObject:weight forKey:@"freight"];
+
+    
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/order/orderDelivery/addDelivery.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
-        if (voucthersCouponNo&&voucthersCouponNo.length>0) {
-            int voucthersPrice = [voucthersFaceValue intValue];
+        if (voucthersDict) {
+            int type = [[voucthersDict safeObjectForKey:@"type"]intValue];
+            float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
             int weightPrice = [weightStr intValue];
-            weightPrice -=voucthersPrice;
-            if (weightPrice<0) {
+
+            if (type ==4||(type ==5&& weightPrice-amount<=0)) {
                 PaySuccessViewController * paySuccess = [[PaySuccessViewController alloc]init];
                 paySuccess.paySuccess = YES;
                 paySuccess.orderType = 2;
                 [self.navigationController pushViewController:paySuccess animated:YES];
                 return ;
-
             }
         }
         
@@ -513,19 +479,20 @@
     
     if (voucthersDict&&[voucthersDict allKeys].count>0) {
         NSString * couponNo= [voucthersId safeObjectForKey:@"couponNo"];
-        NSString * indexCouponNo = [voucthersDict safeObjectForKey:@"voucthersDict"];
+        NSString * indexCouponNo = [voucthersDict safeObjectForKey:@"couponNo"];
         
         if ([couponNo isEqualToString:indexCouponNo]) {
             voucthersDict =nil;
             voucthersFaceValue =nil;
             voucthersCouponNo = nil;
-            vouchersCountStr =@"";
+            vouchersNameStr =nil;
+            self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
 
         }else{
-            vouchersCountStr =[voucthersDict safeObjectForKey:@"grantName"];
+            voucthersDict  = [NSMutableDictionary dictionaryWithDictionary:voucthersId];
+            vouchersNameStr =[voucthersDict safeObjectForKey:@"grantName"];
             voucthersFaceValue =  [voucthersId safeObjectForKey:@"discountAmount"];
             voucthersCouponNo = [voucthersId safeObjectForKey:@"couponNo"];
-            [voucthersDict  setDictionary:voucthersId];
             int type = [[voucthersDict objectForKey:@"type"]intValue];
             float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
             
@@ -543,12 +510,12 @@
             {
                 self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
             }
-
         }
     }else{
+        voucthersDict  = [NSMutableDictionary dictionaryWithDictionary:voucthersId];
+        vouchersNameStr =[voucthersDict safeObjectForKey:@"grantName"];
         voucthersFaceValue =  [voucthersId safeObjectForKey:@"discountAmount"];
         voucthersCouponNo = [voucthersId safeObjectForKey:@"couponNo"];
-        [voucthersDict  setDictionary:voucthersId];
         int type = [[voucthersDict objectForKey:@"type"]intValue];
         float amount = [[voucthersDict safeObjectForKey:@"amount"]floatValue];
         
@@ -566,14 +533,7 @@
         {
             self.priceLabel.text =[NSString stringWithFormat:@"实付款：￥%.2f",[weightStr floatValue]];
         }
-
     }
-
-    
-    
-    
-    
-
     [self.tableview reloadData];
 }
 #pragma mark ----计算运费

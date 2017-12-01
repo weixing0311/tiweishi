@@ -10,7 +10,6 @@
 #import "PublicArticleCell.h"
 #import "NewMineHomePageCell.h"
 #import "CommunityModel.h"
-//#import "PostArticleViewController.h"
 #import "WriteArtcleViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "CLPlayerView.h"
@@ -810,7 +809,7 @@
     }
     else
     {
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社区内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:@"希望您能正确对待社群内容，不要随意举报他人，请确认该用户发表不良信息再进行举报。" preferredStyle:UIAlertControllerStyleAlert];
         [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             
         }];

@@ -66,7 +66,7 @@
     vouchersView = [[VouchersTzsDgView alloc]initWithFrame:CGRectMake(0, 64, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
     vouchersView.hidden= YES;
     vouchersView.delegate = self;
-    vouchersView.backgroundColor = [UIColor blackColor];
+    vouchersView.backgroundColor = RGBACOLOR(0, 0, 0, 0.6);
     [self.view addSubview:vouchersView];
 }
 
@@ -155,7 +155,7 @@
 
     
     [params setObject:[NSString stringWithFormat:@"%.0f",totalPrice] forKey:@"totalPrice"];
-    [params setObject:[NSString stringWithFormat:@"%.0f",payableAmount] forKey:@"payableAmount"];
+    [params setObject:[NSString stringWithFormat:@"%.2f",payableAmount] forKey:@"payableAmount"];
     [params setObject:str forKey:@"orderItem"];
     
     
@@ -364,7 +364,7 @@
     
     [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         DLog(@"%@",al.textFields.firstObject.text);
-        if (al.textFields.firstObject.text.length<1) {
+        if (al.textFields.firstObject.text.length<1||[al.textFields.firstObject.text intValue]<1) {
             return ;
         }
         if ([al.textFields.firstObject.text intValue]>=0&&[al.textFields.firstObject.text intValue]<=200) {
@@ -399,9 +399,7 @@
     [test1dic setObject:@"1" forKey:@"quantity"];
     [test1dic setObject:[dict objectForKey:@"productPrice"] forKey:@"unitPrice"];
     if (_chooseArray.count>0) {
-        
         int count =0;
-        
     for (int i =0;i<_chooseArray.count ;i++) {
         NSMutableDictionary * dic =_chooseArray[i];
         NSString * productNo1 = [dic objectForKey:@"productNo"];
@@ -414,13 +412,22 @@
     }
         if (isAdd==YES) {
             [test1dic setObject:@(count+1) forKey:@"quantity"];
-
+            [_chooseArray addObject:test1dic];
+            
         }else{
-            [test1dic setObject:@(count-1) forKey:@"quantity"];
-
+            if (count==1) {
+                for (int i =0; i<_chooseArray.count; i++) {
+                    NSDictionary * dic = _chooseArray[i];
+                    if ([[dic safeObjectForKey:@"productNo"]isEqualToString:productNo]) {
+                        [_chooseArray removeObject:dic];
+                    }
+                }
+            }else{
+                [test1dic setObject:@(count-1) forKey:@"quantity"];
+                [_chooseArray addObject:test1dic];
+            }
         }
-        [_chooseArray addObject:test1dic];
- 
+
     
     }else{
         if (isAdd==YES) {
@@ -455,7 +462,7 @@
 
 #pragma mark--//获取选择单种商品优惠价格
 
--(int)getPreferentialPriceWithID:(NSString *)goodsId count:(int)count
+-(float)getPreferentialPriceWithID:(NSString *)goodsId count:(int)count
 {
     NSDictionary *param =[NSDictionary dictionary];
     for (NSDictionary *dic in _dataArray) {
@@ -468,7 +475,7 @@
         if ([[dict objectForKey:@"promotionType"]intValue]==1) {
             int maxCount = [[dict safeObjectForKey:@"maxQuantity"]intValue];
             int minCount = [[dict safeObjectForKey:@"minQuantity"]intValue];
-            int reduceAmount =[[dict safeObjectForKey:@"reduceAmount"]intValue];
+            float reduceAmount =[[dict safeObjectForKey:@"reduceAmount"]floatValue];
             if (count>=minCount&&count<maxCount) {
                 return reduceAmount;
             }
@@ -531,20 +538,22 @@
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:productArr forKey:@"productArr"];
     [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
-        NSMutableArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
-        [dataArr enumerateObjectsUsingBlock:^(id key, NSUInteger value, BOOL *stop) {
-            NSDictionary * dict = key;
+        NSArray * arr =[[dic objectForKey:@"data"]objectForKey:@"array"];
+        
+        
+        //删除运费优惠券和运费抵用券
+        NSMutableArray * dataArr = [NSMutableArray array];
+        for (int i =0 ;i<arr.count;i++) {
+            NSDictionary * dict = [arr objectAtIndex:i];
             int type = [[dict safeObjectForKey:@"type"]intValue];
-            if (type ==4||type==5) {
-                *stop =YES;
-                if (*stop ==YES) {
-                    [dataArr removeObject:dict];
-                }
+            if (type !=4&&type!=5) {
+                [dataArr addObject:dict];
             }
-        }];
+        }
+
+        
         if (dataArr.count>0) {
             vouchersView.dataArray =[NSMutableArray arrayWithArray:dataArr];
-            [vouchersView didshow];
             if (GoodsType ==1) {
                 vouchersView.totalPrice = [[[_buyArray objectAtIndex:index]safeObjectForKey:@"totalPrice"]floatValue];
                 vouchersView.Preferentialprice = 0.0;
@@ -552,14 +561,18 @@
             vouchersView.totalPrice = [self getPrice];
             vouchersView.Preferentialprice =[self getAllPreferentialOrice];
             }
+            [vouchersView didshow];
+
         }else{
             [self updataGoodsInfo];
         }
     } failure:^(NSError *error) {
-        if ([error code]==402) {
+        if (GoodsType ==1) {
+            NSDictionary * dic = [_buyArray objectAtIndex:fuwuIndex];
+            [self updataWithConditionId:[dic safeObjectForKey:@"conditionId"]];
+        }else{
             [self updataGoodsInfo];
         }
-        
     }];
 
 }
@@ -578,7 +591,11 @@
         [dic safeSetObject:[chooseDic safeObjectForKey:@"unitPrice"] forKey:@"productPrice"];
         [dic safeSetObject:[chooseDic safeObjectForKey:@"productNo"] forKey:@"productNo"];
         [dic safeSetObject:[chooseDic safeObjectForKey:@"quantity"] forKey:@"quantity"];
-        [dic safeSetObject:@(totalPrice) forKey:@"itemTotalPrice"];
+//        [dic safeSetObject:@(totalPrice) forKey:@"itemTotalPrice"];
+        
+        float preferentPrice =[self getPreferentialPriceWithID:[chooseDic safeObjectForKey:@"productNo"] count:[[chooseDic safeObjectForKey:@"quantity"]intValue]];
+        [dic safeSetObject:@(totalPrice-preferentPrice) forKey:@"itemTotalPrice"];
+        
         [vouArr addObject:dic];
 
     }

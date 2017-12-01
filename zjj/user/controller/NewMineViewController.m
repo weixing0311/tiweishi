@@ -296,6 +296,7 @@
         else
         {
             VouchersGetViewController * vo = [[VouchersGetViewController alloc]init];
+            vo.myType = 4;
             vo.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:vo animated:YES];
         }

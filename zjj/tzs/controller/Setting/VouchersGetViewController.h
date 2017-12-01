@@ -9,5 +9,5 @@
 #import "JFABaseTableViewController.h"
 
 @interface VouchersGetViewController : JFABaseTableViewController
-
+@property (nonatomic,assign)int myType;
 @end

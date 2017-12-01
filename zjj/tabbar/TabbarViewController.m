@@ -54,7 +54,7 @@
 //    
     CommunityViewController *found = [[CommunityViewController alloc]init];
     UINavigationController * nav3 = [[UINavigationController alloc]initWithRootViewController:found];
-    found.title = @"社区";
+    found.title = @"社群";
 
 //    ShopTabbbarController *shop = [[ShopTabbbarController alloc]init];
 //    shop.title = @"商城";

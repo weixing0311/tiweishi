@@ -49,7 +49,7 @@
 -(void)didEnterMyVouchersPage
 {
     MyVoucthersViewController * myv = [[MyVoucthersViewController alloc]init];
-    myv.myType =IS_FROM_MINE;
+    myv.myType =self.myType;
     [self.navigationController pushViewController:myv animated:YES];
 }
 -(void)getVouchListInfo
@@ -58,7 +58,7 @@
     [params safeSetObject:@"10" forKey:@"pageSize"];
     [params safeSetObject:@(page) forKey:@"page"];
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
-    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/coupon/queryCouponList.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"app/coupon/queryCouponList.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
         [self.tableview.mj_header endRefreshing];
         [self.tableview.mj_footer endRefreshing];
         if (page ==1) {
@@ -78,6 +78,7 @@
         
         
     } failure:^(NSError *error) {
+        [self showEmptyViewWithTitle:@"暂无优惠券可领"];
         [self.tableview.mj_header endRefreshing];
         [self.tableview.mj_footer endRefreshing];
     }];
@@ -105,10 +106,10 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IS_IPHONE5) {
-        return 80;
-    }
-    return 130;
+//    if (IS_IPHONE5) {
+//        return 110;
+//    }
+    return 110;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -136,12 +137,13 @@
         cell.getBtn.selected = YES;
         cell.getBtn.backgroundColor = HEXCOLOR(0xeeeeee);
         [dict safeSetObject:@"1" forKey:@"isReceive"];
+        int receiveNum = [[dict safeObjectForKey:@"receiveNum"]intValue];
+        [dict safeSetObject:@(receiveNum+1) forKey:@"receiveNum"];
+        
+        [cell refreshProgressWithDict:dict];
         [[UserModel shareInstance]showSuccessWithStatus:@"领取成功"];
     } failure:^(NSError *error) {
     }];
-
-    
-    
 }
 
 

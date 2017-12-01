@@ -62,7 +62,7 @@
 //#define kMyBaseUrl @"http://192.168.1.74:9099/"
 
 //天龙
-//#define kMyBaseUrl @"http://192.168.1.85:8989/"
+//#define kMyBaseUrl @"http://192.168.1.103:8989/"
 
 //老张
 //#define kMyBaseUrl @"http://192.168.1.64:8080/"
@@ -96,7 +96,7 @@
 
 ///是否显示‘我的’引导页面
 #define kShowGuidePage2           @"showGuidePageWithThisKey2"
-///是否显示‘社区’引导页面
+///是否显示‘社群’引导页面
 #define kShowGuidePage3           @"showGuidePageWithThisKey3"
 
 

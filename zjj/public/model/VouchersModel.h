@@ -35,4 +35,11 @@ typedef void (^getVouchersFail)(NSString  *errorStr);
 ///获取选择的优惠券
 -(NSDictionary *)getChooseVoucherWithArr:(NSArray*)myMutableArr
                                 couponNo:(NSString *)couponNo;
+
+///获取优惠金额
+-(float)getUhpriceWithDict:(NSDictionary *)dict
+               weightPrice:(NSString *)weightStr;
+
+-(float)getPayAmountWeightWithDict:(NSDictionary *)dict
+                            Weight:(NSString*)weightStr;
 @end
