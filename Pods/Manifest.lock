@@ -28,7 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
-  - JPush (~> 3.0.5)
+  - JPush (~> 3.0.7)
   - Masonry (~> 1.0.2)
   - MJRefresh (~> 3.1.15)
   - SDAutoLayout (~> 2.1.8)
@@ -47,6 +47,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   TZImagePickerController: b44f4cfc6d320dab9a53adcdda725099be36dcda
 
-PODFILE CHECKSUM: 80318ffcfee0af7d4bda00fffbcf58542d887b9c
+PODFILE CHECKSUM: 4f65d766becba0a8a3a523396db94341fa2169d8
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

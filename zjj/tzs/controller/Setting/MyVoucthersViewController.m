@@ -9,8 +9,8 @@
 #import "MyVoucthersViewController.h"
 #import "MyVouchersCell.h"
 #import "TZSDingGouViewController.h"
-#import "ShopTabbbarController.h"
-#import "GoodsDetailViewController.h"
+//#import "ShopTabbbarController.h"
+//#import "GoodsDetailViewController.h"
 #import "TZSDeliveryViewController.h"
 @interface MyVoucthersViewController ()<UITableViewDelegate,UITableViewDataSource,myVoucthersDelegate>
 {
@@ -140,8 +140,9 @@
     [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
     [params safeSetObject:self.productArr forKey:@"productArr"];
     
+    [SVProgressHUD showWithStatus:@"加载中..."];
     self.currentTasks = [[BaseSservice sharedManager]post1:@"app/coupon/queryMyCouponByProduct.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
-        
+        [SVProgressHUD dismiss];
         NSMutableArray * dataArr =[[dic objectForKey:@"data"]objectForKey:@"array"];
         [dataArr enumerateObjectsUsingBlock:^(id key, NSUInteger value, BOOL *stop) {
             NSDictionary * dict = key;
@@ -172,6 +173,7 @@
         }
         [_tableview reloadData];
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
         [self showEmptyViewWithTitle:@"暂无优惠券"];
         [_tableview reloadData];
     }];
@@ -340,28 +342,28 @@
     int type = [[dic safeObjectForKey:@"type"]intValue];
 //    NSString * useRange = [dic safeObjectForKey:@"useRange"];
     
-    if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"health"]) {
-        return;
-    }
-    else if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"shop"])
-    {
-        
-        NSArray * arr = [dic safeObjectForKey:@"products"];
-        if (arr.count==1) {
-            NSDictionary * goodsDict = arr[0];
-            NSString * productNo = [goodsDict safeObjectForKey:@"productNo"];
-            GoodsDetailViewController * goodsd =[[GoodsDetailViewController alloc]init];
-            goodsd.productNo = productNo;
-            [self.navigationController pushViewController:goodsd animated:YES];
-        }
-        else{//全部商品
-            ShopTabbbarController * shop = [[ShopTabbbarController alloc]init];
-            self.view.window.rootViewController = shop;
-        }
-    }
+//    if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"health"]) {
+//        return;
+//    }
+//    else if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"shop"])
+//    {
+//
+//        NSArray * arr = [dic safeObjectForKey:@"products"];
+//        if (arr.count==1) {
+//            NSDictionary * goodsDict = arr[0];
+//            NSString * productNo = [goodsDict safeObjectForKey:@"productNo"];
+//            GoodsDetailViewController * goodsd =[[GoodsDetailViewController alloc]init];
+//            goodsd.productNo = productNo;
+//            [self.navigationController pushViewController:goodsd animated:YES];
+//        }
+//        else{//全部商品
+//            ShopTabbbarController * shop = [[ShopTabbbarController alloc]init];
+//            self.view.window.rootViewController = shop;
+//        }
+//    }
     
-    else if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"tzs"])
-    {
+//    else if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"tzs"])
+//    {
         if (type ==4||type==5) {
             TZSDeliveryViewController * com = [[TZSDeliveryViewController alloc]init];
             [self.navigationController pushViewController:com animated:YES];
@@ -369,7 +371,7 @@
             TZSDingGouViewController * tzsDG = [[TZSDingGouViewController alloc]init];
             [self.navigationController pushViewController:tzsDG animated:YES];
         }
-    }
+//    }
 
     
 }

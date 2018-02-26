@@ -16,6 +16,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
     [self getReadNum];
 }
 - (void)viewDidLoad {

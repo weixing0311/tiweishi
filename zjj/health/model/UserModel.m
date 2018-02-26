@@ -35,20 +35,6 @@ static UserModel *model;
     }
     return _child;
 }
--(void)setMainUserInfoWithDic:(NSDictionary *)dict
-{
-    self.headUrl     = [dict safeObjectForKey:@"headimgurl"];
-    self.nickName    = [dict safeObjectForKey:@"nickName"];
-    self.birthday    = [dict safeObjectForKey:@"birthday"];
-    self.heigth      = [[dict safeObjectForKey:@"heigth"]floatValue];
-    self.gender      = [[dict safeObjectForKey:@"sex"]intValue];
-    self.healthId    = [dict safeObjectForKey:@"id"];
-    self.subId       = [dict safeObjectForKey:@"id"];
-    self.age         = [[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
-    [self writeToDoc];
-    [[SubUserItem shareInstance]setInfoWithMainUser];
-
-}
 
 
 
@@ -71,10 +57,16 @@ static UserModel *model;
     self.isAttest    = [dict safeObjectForKey:@"isAttest"];
     self.healthId    = [dict safeObjectForKey:@"id"];
     self.subId       = [dict safeObjectForKey:@"id"];
+    
+    self.isPassword = [dict safeObjectForKey:@"isPassword"];
+    self.isNeedParent = [dict safeObjectForKey:@"isNeedParent"];
+    self.isTradePassword = [dict safeObjectForKey:@"isTradePassword"];
+
+    
+    
     [_child removeAllObjects];
     _child=[NSMutableArray arrayWithArray:[dict safeObjectForKey:@"child"]];
     
-    [[SubUserItem shareInstance]setInfoWithMainUser];
     self.age = [[TimeModel shareInstance] ageWithDateOfBirth:[dict safeObjectForKey:@"birthday"]];
     
     self.qrcodeImageUrl = [dict safeObjectForKey:@"cardUrl"];
@@ -89,6 +81,11 @@ static UserModel *model;
     // NSDocumentDirectory 要查找的文件
     // NSUserDomainMask 代表从用户文件夹下找
     // 在iOS中，只有一个目录跟传入的参数匹配，所以这个集合里面只有一个元素
+    
+    if ([self.isPassword isEqualToString:@"1"]||[self.isTradePassword isEqualToString:@"1"]||[self.isNeedParent isEqualToString:@"1"]||![self.isAttest isEqualToString:@"已认证"]) {
+        return;
+    }
+    
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict safeSetObject: self.mphoneNum  forKey:@"mphoneNum"];
@@ -111,6 +108,11 @@ static UserModel *model;
     [dict safeSetObject: @(self.age )        forKey:@"age"];
     [dict safeSetObject:self.qrcodeImageData forKey:@"qrcodeImageData"];
     [dict safeSetObject:self.qrcodeImageUrl forKey:@"qrcodeImageUrl"];
+    [dict safeSetObject:self.isPassword forKey:@"isPassword"];
+    [dict safeSetObject:self.isNeedParent forKey:@"isNeedParent"];
+    [dict safeSetObject:self.isTradePassword forKey:@"isTradePassword"];
+
+
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *filePath = [path stringByAppendingPathComponent:@"UserInfo.plist"];
     [dict writeToFile:filePath atomically:YES];
@@ -146,9 +148,11 @@ static UserModel *model;
     }
     self.qrcodeImageData = [dict safeObjectForKey:@"qrcodeImageData"];
     self.qrcodeImageUrl = [dict safeObjectForKey:@"qrcodeImageUrl"];
+    self.isPassword = [dict safeObjectForKey:@"isPassword"];
+    self.isNeedParent = [dict safeObjectForKey:@"isNeedParent"];
+    self.isTradePassword = [dict safeObjectForKey:@"isTradePassword"];
+
     
-    
-    [[SubUserItem shareInstance]setInfoWithHealthId:self.subId];
 }
 -(BOOL)isHaveUserInfo
 {
@@ -176,6 +180,9 @@ static UserModel *model;
     self.birthday = @"";
     self.token = @"";
     self.mphoneNum =@"";
+    self.isNeedParent = @"";
+    self.isPassword = @"";
+    self.isTradePassword = @"";
     [self.child removeAllObjects];
     self.userId = @"";
     NSString *localPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -273,6 +280,7 @@ static UserModel *model;
     self.parentId       = [dict safeObjectForKey:@"parentId"];
     self.partnerId      = [dict safeObjectForKey:@"partnerId"];
     self.grade          = [dict safeObjectForKey:@"grade"];
+    self.gradeImg       = [dict safeObjectForKey:@"gradeImg"];
     self.isHaveCard     = [dict safeObjectForKey:@"isHaveCard"];
     self.tourismIntegral =[dict safeObjectForKey:@"tourismIntegral"];
     self.qrcodeImageData =[NSData dataWithContentsOfURL:[NSURL URLWithString:self.qrcodeImageUrl]];
@@ -361,12 +369,6 @@ static UserModel *model;
 -(void)setHeadImageUrl:(NSString *)imageUrl
 {
     self.headUrl = imageUrl;
-    [[SubUserItem shareInstance]setInfoWithHealthId:self.subId?self.subId:self.healthId];
-    [self writeToDoc];
-}
--(void)setHealthidWithId:(NSString *)healthId
-{
-    self.subId = healthId;
     [self writeToDoc];
 }
 
@@ -468,6 +470,7 @@ static UserModel *model;
 ///获取通知广告
 -(void)getNotiadvertising
 {
+    
     [[BaseSservice sharedManager]post1:@"app/notify/queryNotifyInfo.do" HiddenProgress:NO paramters:nil success:^(NSDictionary *dic) {
         DLog(@"url--%@  dic--%@",@"app/notify/queryNotifyInfo.do",dic);
         
@@ -543,6 +546,90 @@ static UserModel *model;
         }
     }
 }
+/**
+ *获取url 中的参数 以字典方式返回
+ */
+- (NSMutableDictionary *)getURLParameters:(NSString *)urlStr {
+    
+    //    urlStr = @"http://test.fitgeneral.com/mall/notfy.jsp?orderType=3&total_amount=0.01&timestamp=2017-08-14+14:31:26&sign=PvPo75w/XeteSKJ1o+E1EqgPYPlDdUhCONCiARQR92FUJjT2i7gfsmCUCqcYMaeaZqZJQhEHEPm0nAGliUkULkYYKpRCN1A0oZFhzMuLaSXAjc6BcLH6Cy5JwIFVcOMjs2xVMZ5Pm+fVj+GlHqO7w8jrHTF/sxZu3vBB68zj9HbV0Om+t23k39tqK9t6JI7heLSObf1YQ/+MwtBnly+3hx90sKVLw2IaFpKAfEfvVxhvXACur3gF35MysByu8+mDQUdbPZTpH/mvmt2eMYeO1gARh/djxS2ZdJ0brl9HkNQkAsG1NT8e9rtTSklF3wYt9KY8TfLjQY6IadR8iWNolg==&trade_no=2017081421001004940270810861&sign_type=RSA2&auth_app_id=2017050307089464&charset=UTF-8&seller_id=2088621870283133&method=alipay.trade.wap.pay.return&app_id=2017050307089464&out_trade_no=131708141426510531472&version=1.0";
+    // 查找参数
+    NSRange range = [urlStr rangeOfString:@"?"];
+    if (range.location == NSNotFound) {
+        return nil;
+    }
+    
+    // 以字典形式将参数返回
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    // 截取参数
+    NSString *parametersString = [urlStr substringFromIndex:range.location + 1];
+    
+    // 判断参数是单个参数还是多个参数
+    if ([parametersString containsString:@"&"]) {
+        
+        // 多个参数，分割参数
+        NSArray *urlComponents = [parametersString componentsSeparatedByString:@"&"];
+        
+        for (NSString *keyValuePair in urlComponents) {
+            // 生成Key/Value
+            NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+            NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
+            NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
+            
+            // Key不能为nil
+            if (key == nil || value == nil) {
+                continue;
+            }
+            
+            id existValue = [params valueForKey:key];
+            
+            if (existValue != nil) {
+                
+                // 已存在的值，生成数组
+                if ([existValue isKindOfClass:[NSArray class]]) {
+                    // 已存在的值生成数组
+                    NSMutableArray *items = [NSMutableArray arrayWithArray:existValue];
+                    [items addObject:value];
+                    
+                    [params setValue:items forKey:key];
+                } else {
+                    
+                    // 非数组
+                    [params setValue:@[existValue, value] forKey:key];
+                }
+                
+            } else {
+                
+                // 设置值
+                [params setValue:value forKey:key];
+            }
+        }
+    } else {
+        // 单个参数
+        
+        // 生成Key/Value
+        NSArray *pairComponents = [parametersString componentsSeparatedByString:@"="];
+        
+        // 只有一个参数，没有值
+        if (pairComponents.count == 1) {
+            return nil;
+        }
+        
+        // 分隔值
+        NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
+        NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
+        
+        // Key不能为nil
+        if (key == nil || value == nil) {
+            return nil;
+        }
+        
+        // 设置值
+        [params setValue:value forKey:key];
+    }
+    
+    return params;
+}
 
 -(BOOL)getSignInNotifacationStatus
 {
@@ -561,4 +648,8 @@ static UserModel *model;
         return YES;
     }
 }
+
+
+
+
 @end

@@ -36,8 +36,6 @@
     CGContextStrokePath(ctx1);  //渲染
 
     
-    
-    
     CGContextRef ctx = UIGraphicsGetCurrentContext();//获取上下文
     CGPoint center = CGPointMake(25, 25);  //设置圆心位置
     CGFloat radius = 23;  //设置半径

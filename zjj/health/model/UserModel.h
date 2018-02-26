@@ -99,6 +99,11 @@
 @property (nonatomic,copy  ) NSString * grade;//体脂师等级
 
 /**
+ *   体脂师等级 图片
+ */
+@property (nonatomic,copy  ) NSString * gradeImg;//
+
+/**
  *  是否实名认证
  */
 @property (nonatomic,copy  ) NSString * isAttest;//是否认证
@@ -156,6 +161,19 @@
  *简介
  */
 @property (nonatomic,copy)NSString * jjStr;
+
+/**
+ *是否有交易密码
+ */
+@property (nonatomic,copy)NSString * isTradePassword;
+/**
+ *是否有上级
+ */
+@property (nonatomic,copy)NSString * isNeedParent;
+/**
+ *是否有登录密码
+ */
+@property (nonatomic,copy)NSString * isPassword;
 /**
  *   获取修改个人信息Dict
  */
@@ -326,5 +344,8 @@
 
 ///修改签到弹窗状态
 -(void)changeUserDefaultWithSignInType:(int)type;
-
+/**
+ *获取url 中的参数 以字典方式返回
+ */
+- (NSMutableDictionary *)getURLParameters:(NSString *)urlStr;
 @end

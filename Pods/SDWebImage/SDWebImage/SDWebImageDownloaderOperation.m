@@ -427,9 +427,6 @@ didReceiveResponse:(NSURLResponse *)response
                 [self callCompletionBlocksWithImage:nil imageData:nil error:nil finished:YES];
             } else if (self.imageData) {
                 UIImage *image = [UIImage sd_imageWithData:self.imageData];
-                NSData *data = UIImageJPEGRepresentation(image, 1);
-                self.imageData = [NSMutableData dataWithData:data];
-
                 NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:self.request.URL];
                 image = [self scaledImageForKey:key image:image];
                 

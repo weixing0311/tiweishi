@@ -48,22 +48,22 @@
 /**
  *  iPhone4 or iPhone4s
  */
-#define  iPhone4_4s     (Width == 320.f && Height == 480.f ? YES : NO)
+#define  iPhone4_4s     (JFA_SCREEN_WIDTH == 320.f && JFA_SCREEN_HEIGHT == 480.f ? YES : NO)
 
 /**
  *  iPhone5 or iPhone5s
  */
-#define  iPhone5_5s     (Width == 320.f && Height == 568.f ? YES : NO)
+#define  iPhone5_5s     (JFA_SCREEN_WIDTH == 320.f && JFA_SCREEN_HEIGHT == 568.f ? YES : NO)
 
 /**
  *  iPhone6 or iPhone6s
  */
-#define  iPhone6_6s     (Width == 375.f && Height == 667.f ? YES : NO)
+#define  iPhone6_6s     (JFA_SCREEN_WIDTH == 375.f && JFA_SCREEN_HEIGHT == 667.f ? YES : NO)
 
 /**
  *  iPhone6Plus or iPhone6sPlus
  */
-#define  iPhone6_6sPlus (Width == 414.f && Height == 736.f ? YES : NO)
+#define  iPhone6_6sPlus (JFA_SCREEN_WIDTH == 414.f && JFA_SCREEN_HEIGHT == 736.f ? YES : NO)
 
 @interface UIView (CLSetRect)
 

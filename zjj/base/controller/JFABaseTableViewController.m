@@ -11,6 +11,9 @@
 #import "JFASubNetWorkErrorView.h"
 #import "LoignViewController.h"
 #import "MJRefresh.h"
+#import "PerfectInformationViewController.h"
+#import "BodyFatDivisionAgreementViewController.h"
+#import "TzsTabbarViewController.h"
 @interface JFABaseTableViewController ()
 {
     NSTimer * hiddenErrorTimer;
@@ -62,6 +65,7 @@
         _emptyView.hidden = YES;
         _emptyView.frame = self.view.bounds;
         _emptyView.backgroundColor =HEXCOLOR(0xeeeeee);
+        [_emptyView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapEmptyView)]];
         [self.view addSubview:_emptyView];
     }
     return _emptyView;
@@ -292,7 +296,37 @@
     return jsonString;
 }
 
+-(void)refreshEmptyView
+{
+    
+}
+-(void)didTapEmptyView
+{
+    [self refreshEmptyView];
+}
 
+-(void)loignSuccessSetRootViewController
+{
+    if ([[UserModel shareInstance].isPassword isEqualToString:@"1"]||[[UserModel shareInstance].isTradePassword isEqualToString:@"1"]||[[UserModel shareInstance].isNeedParent isEqualToString:@"1"])
+    {
+        PerfectInformationViewController * per = [[PerfectInformationViewController alloc]init];
+        UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:per];
+        self.view.window.rootViewController = nav;
+
+    }
+    else if (![[UserModel shareInstance].isAttest isEqualToString:@"已认证"])
+    {
+        BodyFatDivisionAgreementViewController * bd = [[BodyFatDivisionAgreementViewController alloc]init];
+        UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:bd];
+        self.view.window.rootViewController = nav;
+    }
+    else
+    {
+        TzsTabbarViewController *tab = [[TzsTabbarViewController alloc]init];
+        self.view.window.rootViewController = tab;
+
+    }
+}
 
 /*
 #pragma mark - Navigation

@@ -17,17 +17,15 @@
 #import "BaseWebViewController.h"
 #import "LoignViewController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
-#import "OrderViewController.h"
+//#import "OrderViewController.h"
 #import "TZSDistributionViewController.h"
 #import "TZSMyDingGouViewController.h"
 #import "TZSDingGouViewController.h"
 #import "TZSOrderDetailViewController.h"
 #import "TZSDistributionDetailViewController.h"
 #import "WXAlipayController.h"
-#import "GoodsDetailViewController.h"
+//#import "GoodsDetailViewController.h"
 #import "PaySuccessViewController.h"
-#import "IntegralOrderViewController.h"
-#import "IntegralOrderDetailViewController.h"
 @interface BaseWebViewController ()<WKUIDelegate,WKNavigationDelegate,WKScriptMessageHandler,UIGestureRecognizerDelegate,UIScrollViewDelegate>
 @end
 
@@ -200,7 +198,7 @@
     }
     if([url containsString:@"notify.jsp?"]&&![url containsString:@"https://openapi.alipay.com/gateway.do"] )//支付成功回调
     {
-        NSDictionary * urlDict = [self getURLParameters:url];
+        NSDictionary * urlDict = [[UserModel shareInstance] getURLParameters:url];
         
         int orderType = [[urlDict safeObjectForKey:@"orderType"]intValue];
         orderType=3;
@@ -217,7 +215,7 @@
     }
     if([url containsString:@"notifyFail.jsp?"])//支付失败回调
     {
-        NSDictionary * urlDict = [self getURLParameters:url];
+        NSDictionary * urlDict = [[UserModel shareInstance] getURLParameters:url];
         
         int orderType = [[urlDict safeObjectForKey:@"orderType"]intValue];
         orderType=3;
@@ -700,24 +698,24 @@
 //支付页面返回方法
 -(void)backWithPayType
 {
-    if (self.payType ==1) {
-        for (UIViewController * controller in self.navigationController.viewControllers) {
-            
-            if ([controller isKindOfClass:[OrderViewController class]]) {
-                [self.navigationController popToViewController:controller animated:YES];
-                return ;
-            }
-        }
-        OrderViewController * ordVC = [[OrderViewController alloc]init];
-        ordVC.hidesBottomBarWhenPushed = YES;
-        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
-        [arr removeLastObject];
-        [arr removeLastObject];
-        [arr addObject:ordVC];
-        [self.navigationController setViewControllers:arr];
-        
-    }
-    else if (self.payType ==2) {
+//    if (self.payType ==1) {
+//        for (UIViewController * controller in self.navigationController.viewControllers) {
+//
+//            if ([controller isKindOfClass:[OrderViewController class]]) {
+//                [self.navigationController popToViewController:controller animated:YES];
+//                return ;
+//            }
+//        }
+//        OrderViewController * ordVC = [[OrderViewController alloc]init];
+//        ordVC.hidesBottomBarWhenPushed = YES;
+//        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+//        [arr removeLastObject];
+//        [arr removeLastObject];
+//        [arr addObject:ordVC];
+//        [self.navigationController setViewControllers:arr];
+//
+//    }
+     if (self.payType ==2) {
         for (UIViewController * controller in self.navigationController.viewControllers) {
             
             if ([controller isKindOfClass:[TZSDistributionViewController class]]) {
@@ -752,30 +750,6 @@
         [arr removeLastObject];
         [arr addObject:mdVC];
         [self.navigationController setViewControllers:arr];
-    }else if (self.payType ==5)
-    {
-        for (UIViewController * controller in self.navigationController.viewControllers) {
-            
-            if ([controller isKindOfClass:[IntegralOrderDetailViewController class]]) {
-                [self.navigationController popToViewController:controller animated:YES];
-                //                DLog(@"我曹草草草");
-                return ;
-            }
-            else if ([controller isKindOfClass:[IntegralOrderViewController class]])
-            {
-                [self.navigationController popToViewController:controller animated:YES];
-                return;
-            }
-        }
-        IntegralOrderViewController * mdVC = [[IntegralOrderViewController alloc]init];
-        mdVC.hidesBottomBarWhenPushed = YES;
-        
-        NSMutableArray * arr = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
-        [arr removeLastObject];
-        [arr removeLastObject];
-        [arr addObject:mdVC];
-        [self.navigationController setViewControllers:arr];
-
     }
     else{
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -828,90 +802,6 @@
     
 }
 
-/**
- *获取url 中的参数 以字典方式返回
- */
-- (NSMutableDictionary *)getURLParameters:(NSString *)urlStr {
-    
-//    urlStr = @"http://test.fitgeneral.com/mall/notfy.jsp?orderType=3&total_amount=0.01&timestamp=2017-08-14+14:31:26&sign=PvPo75w/XeteSKJ1o+E1EqgPYPlDdUhCONCiARQR92FUJjT2i7gfsmCUCqcYMaeaZqZJQhEHEPm0nAGliUkULkYYKpRCN1A0oZFhzMuLaSXAjc6BcLH6Cy5JwIFVcOMjs2xVMZ5Pm+fVj+GlHqO7w8jrHTF/sxZu3vBB68zj9HbV0Om+t23k39tqK9t6JI7heLSObf1YQ/+MwtBnly+3hx90sKVLw2IaFpKAfEfvVxhvXACur3gF35MysByu8+mDQUdbPZTpH/mvmt2eMYeO1gARh/djxS2ZdJ0brl9HkNQkAsG1NT8e9rtTSklF3wYt9KY8TfLjQY6IadR8iWNolg==&trade_no=2017081421001004940270810861&sign_type=RSA2&auth_app_id=2017050307089464&charset=UTF-8&seller_id=2088621870283133&method=alipay.trade.wap.pay.return&app_id=2017050307089464&out_trade_no=131708141426510531472&version=1.0";
-    // 查找参数
-    NSRange range = [urlStr rangeOfString:@"?"];
-    if (range.location == NSNotFound) {
-        return nil;
-    }
-    
-    // 以字典形式将参数返回
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    
-    // 截取参数
-    NSString *parametersString = [urlStr substringFromIndex:range.location + 1];
-    
-    // 判断参数是单个参数还是多个参数
-    if ([parametersString containsString:@"&"]) {
-        
-        // 多个参数，分割参数
-        NSArray *urlComponents = [parametersString componentsSeparatedByString:@"&"];
-        
-        for (NSString *keyValuePair in urlComponents) {
-            // 生成Key/Value
-            NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
-            NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
-            NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
-            
-            // Key不能为nil
-            if (key == nil || value == nil) {
-                continue;
-            }
-            
-            id existValue = [params valueForKey:key];
-            
-            if (existValue != nil) {
-                
-                // 已存在的值，生成数组
-                if ([existValue isKindOfClass:[NSArray class]]) {
-                    // 已存在的值生成数组
-                    NSMutableArray *items = [NSMutableArray arrayWithArray:existValue];
-                    [items addObject:value];
-                    
-                    [params setValue:items forKey:key];
-                } else {
-                    
-                    // 非数组
-                    [params setValue:@[existValue, value] forKey:key];
-                }
-                
-            } else {
-                
-                // 设置值
-                [params setValue:value forKey:key];
-            }
-        }
-    } else {
-        // 单个参数
-        
-        // 生成Key/Value
-        NSArray *pairComponents = [parametersString componentsSeparatedByString:@"="];
-        
-        // 只有一个参数，没有值
-        if (pairComponents.count == 1) {
-            return nil;
-        }
-        
-        // 分隔值
-        NSString *key = [pairComponents.firstObject stringByRemovingPercentEncoding];
-        NSString *value = [pairComponents.lastObject stringByRemovingPercentEncoding];
-        
-        // Key不能为nil
-        if (key == nil || value == nil) {
-            return nil;
-        }
-        
-        // 设置值
-        [params setValue:value forKey:key];
-    }
-    
-    return params;
-}
 
 //清除WK缓存，否则H5界面跟新，这边不会更新
 -(void)remoViewCookies{

@@ -14,7 +14,9 @@
     [super awakeFromNib];
     
     self.bgView.layer.borderWidth= 1;
-    self.bgView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+    self.bgView.layer.borderColor = HEXCOLOR(0xffffff).CGColor;
+    self.BigImageView.contentMode =UIViewContentModeScaleAspectFill;
+    self.BigImageView.clipsToBounds = YES;
 
     
     // Initialization code
@@ -29,7 +31,7 @@
     
     self.contentLabel.text = [dict safeObjectForKey:@"content"];
     self.contentLabel.hidden =NO;
-    self.titleLabel.text = [dict safeObjectForKey:@"operaterName"];
+    self.titleLabel.text = [dict safeObjectForKey:@"title"];
 }
 -(float)getWidthWithString:(NSString *)str
 {

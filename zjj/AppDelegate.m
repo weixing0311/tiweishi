@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "TabbarViewController.h"
+#import "TzsTabbarViewController.h"
+//#import "ShopTabbbarController.h"
 #import "LoignViewController.h"
 #import "WXXShareManager.h"
 
@@ -16,14 +17,12 @@
 #import "WXApi.h"
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
-#import "ADDChengUserViewController.h"
 #import <UMMobClick/MobClick.h>
 #import "YMSocketUtils.h"
 
 #import "HomePageWebViewController.h"
-#import "GuidePageViewController.h"
-
-#import "JPUSHService.h"
+#import "PerfectInformationViewController.h"
+#import "BodyFatDivisionAgreementViewController.h"
 // iOS10注册APNs所需头文件
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
@@ -68,60 +67,58 @@
         //可以添加自定义categories
     }
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-    
+
     //如不需要使用IDFA，advertisingIdentifier 可为nil
-    [JPUSHService setupWithOption:launchOptions appKey:@"7cb890cf010077ca9b1c4648"
+    [JPUSHService setupWithOption:launchOptions appKey:@"2c1e2e0a4df5e14abfb1c495"
                           channel:@"Publish channel"
                  apsForProduction:FALSE
             advertisingIdentifier:advertisingId];
-    
+
     //2.1.9版本新增获取registration id block接口。
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
         if(resCode == 0){
             NSLog(@"registrationID获取成功：%@",registrationID);
-            
+
         }
         else{
             NSLog(@"registrationID获取失败，code：%d",resCode);
         }
     }];
     
+        
+    
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    
-    
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:kShowGuidePage]) {
-        if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
-            [[UserModel shareInstance]readToDoc];
-            if ([UserModel shareInstance].birthday.length>2) {
-                TabbarViewController * tabbar = [[TabbarViewController alloc]init];
-                [UserModel shareInstance].tabbarStyle = @"health";
-                [self.window setRootViewController:tabbar];
-                
-                if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {
-                    [[UserModel shareInstance]getNotiadvertising];
-                }
-            }else{
-                ADDChengUserViewController * cg =[[ADDChengUserViewController alloc]init];
-                cg.isResignUser = YES;
-                [self.window setRootViewController:cg];
-            }
-        }else{
-            
-            lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
-            [self.window setRootViewController:lo];
+    if ([[UserModel shareInstance]isHaveUserInfo]==YES) {
+        [[UserModel shareInstance]readToDoc];
+        
+        if ([[UserModel shareInstance].isPassword isEqualToString:@"1"]||[[UserModel shareInstance].isTradePassword isEqualToString:@"1"]||[[UserModel shareInstance].isNeedParent isEqualToString:@"1"])
+        {
+            PerfectInformationViewController * per = [[PerfectInformationViewController alloc]init];
+            UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:per];
+            [self.window setRootViewController:nav];
             
         }
+        else if (![[UserModel shareInstance].isAttest isEqualToString:@"已认证"])
+        {
+            BodyFatDivisionAgreementViewController * bd = [[BodyFatDivisionAgreementViewController alloc]init];
+            UINavigationController * nav =[[UINavigationController alloc]initWithRootViewController:bd];
 
+            [self.window setRootViewController:nav];
+        }
+        else
+        {
+            TzsTabbarViewController *tab = [[TzsTabbarViewController alloc]init];
+            [self.window setRootViewController:tab];
+            
+        }
     }else{
-        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:kShowGuidePage];
-        GuidePageViewController * guide = [[GuidePageViewController alloc]init];
-        [self.window setRootViewController: guide];
+        
+        lo = [[LoignViewController alloc]initWithNibName:@"LoignViewController" bundle:nil];
+        [self.window setRootViewController:lo];
     }
-    
-    
     
     [ShareSDK registerActivePlatforms:@[
                                         @(SSDKPlatformTypeWechat),
@@ -146,8 +143,8 @@
                           switch (platformType)
                           {
                               case SSDKPlatformTypeWechat:
-                                  [appInfo SSDKSetupWeChatByAppId:@"wxea8fcaf6d87a2715"
-                                                        appSecret:@"504c2084e7c1636499478fc8e079acf1"];
+                                  [appInfo SSDKSetupWeChatByAppId:@"wx73e8ecf655df6f44"
+                                                        appSecret:@"e7b17d257b212fe4cfa5cbf986ac072c"];
                                   break;
                               case SSDKPlatformTypeQQ:
                                   [appInfo SSDKSetupQQByAppId:@"1106040974"
@@ -166,7 +163,6 @@
 -(void)loignOut
 {
     [[UserModel shareInstance]removeAllObject];
-    [[SubUserItem shareInstance]removeAll];
     [JPUSHService setAlias:@"" callbackSelector:nil object:self];
 
     UIAlertController *al = [UIAlertController alertControllerWithTitle:@"警告" message:@"有人在其他设备登录您的脂将军账号，本设备将会强制退出。如果这不是您本人操作，请立刻通过登录页面找回密码功能修改密码，慎防盗号。" preferredStyle:UIAlertControllerStyleAlert];
@@ -200,7 +196,7 @@
     UIAlertController * la =[UIAlertController alertControllerWithTitle:@"有新版本需要更新" message:[UserModel shareInstance].updateMessage preferredStyle:UIAlertControllerStyleAlert];
         
     [la addAction:[UIAlertAction actionWithTitle:@"跳转到AppStore" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication ] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/id1209417912"]];
+        [[UIApplication sharedApplication ] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/id1335471147"]];
     }]];
     
     if ([UserModel shareInstance].isForce==0) {
@@ -291,7 +287,7 @@ fetchCompletionHandler:
 
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
-//    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+    [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max

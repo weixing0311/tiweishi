@@ -30,6 +30,12 @@
     NSArray * _segmentArray;
     NSString * showSegType;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"朋友圈推广";

@@ -25,12 +25,10 @@
 #import "UserModel.h"
 #import "BaseSservice.h"
 #import "NSString+RSA.h"
-#import "HealthItem.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIButton+AFNetworking.h"
 #import "UIView+Board.h"
 #import "MJRefresh.h"
-#import "SubUserItem.h"
 #import "SVProgressHUD.h"
 #import <ShareSDK/ShareSDK.h>
 #import "UIImageView+WebCache.h"
@@ -45,14 +43,15 @@
 #import "NSString+Eomji.h"
 #import "UIImageView+wx_imageView.h"
 #import "VouchersModel.h"
-
+#import "UIView+CLSetRect.h"
+#import "JPUSHService.h"
 #define  ShareContentInfo @"脂将军是专注于健康减脂技术的品牌，这项技术结合“能量负平衡、低升糖、营养均衡”的三大减脂原理，为脂肪超标的人群制定有针对性的、定制化的健康管理方案，同时脂将军在减脂过程中采用智能化设备和云平台的远程监控，实现一年365天无缝隙的检测体脂情况，达到有效、及时的体脂管理目的。科学减脂理念，让每一个都享受健康生活。"
 
 //domain
 //正式
-//#define kMyBaseUrl @"https://mall.fitgeneral.com/"
+#define kMyBaseUrl @"https://mall.i851.com/"
 //生产
-#define kMyBaseUrl @"http://test123.fitgeneral.com/"
+//#define kMyBaseUrl @"http://test123.fitgeneral.com:8103/"
 //测试域名
 //#define kMyBaseUrl @"http://192.168.1.130:8101/"
 //鹏飞

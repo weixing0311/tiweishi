@@ -289,19 +289,7 @@
         return cell;
     }
     else if (indexPath.section ==2){
-        static NSString *identifier = @"VotchersCell";
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-        }
-        cell.textLabel.text = @"优惠券";
-        cell.detailTextLabel.text = vouchersNameStr?vouchersNameStr:vouchersCountStr;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return cell;
-        
-    }
-
-    else if(indexPath.section ==3){
+      
         static NSString * identifier = @"PublicCell";
         PublicCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell ) {
@@ -312,6 +300,19 @@
         cell.titleLabel.text = @"配送方式";
         cell.secondLabel.text =[NSString stringWithFormat:@"快递配送" ];
         return cell;
+    }
+
+    else if(indexPath.section ==3){
+        static NSString *identifier = @"VotchersCell";
+        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
+        }
+        cell.textLabel.text = @"优惠券";
+        cell.detailTextLabel.text = vouchersNameStr?vouchersNameStr:vouchersCountStr;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+
     }else
     {
         static NSString * identifier = @"DistributionBottomCell";
@@ -341,7 +342,7 @@
         address.isComeFromOrder = YES;
         [self.navigationController pushViewController:address animated:YES];
     }
-    else if(indexPath.section ==2)
+    else if(indexPath.section ==3)
     {
         MyVoucthersViewController * voucther = [[MyVoucthersViewController alloc]init];
         voucther.delegate = self;

@@ -290,12 +290,16 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
     
     self.currentTasks = [[BaseSservice sharedManager]postImage:@"app/user/uploadHeadImg.do" paramters:param imageData:fileData imageName:@"headimgurl" success:^(NSDictionary *dic) {
-        [SVProgressHUD dismiss];
-        [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
-        [self.tableview reloadData];
         [[UserModel shareInstance] showSuccessWithStatus:@"上传成功"];
+
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[UserModel shareInstance] setHeadImageUrl: [[dic objectForKey:@"data"]objectForKey:@"headimgurl"]];
+            [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
+
+            [self.tableview reloadData];
+        });
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:kRefreshInfo object:nil];
     } failure:^(NSError *error) {
         
         DLog(@"faile-error-%@",error);

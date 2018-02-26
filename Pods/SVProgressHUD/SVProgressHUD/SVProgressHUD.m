@@ -1150,15 +1150,10 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 #pragma mark - Getters
 
-//+ (NSTimeInterval)displayDurationForString:(NSString*)string {
-//    CGFloat minimum = MAX((CGFloat)string.length * 0.06 + 0.5, [self sharedView].minimumDismissTimeInterval);
-//    return MIN(minimum, [self sharedView].maximumDismissTimeInterval);
-//}
 + (NSTimeInterval)displayDurationForString:(NSString*)string {
-    CGFloat minimum = MAX(1, [self sharedView].minimumDismissTimeInterval);
+    CGFloat minimum = MAX((CGFloat)string.length * 0.06 + 0.5, [self sharedView].minimumDismissTimeInterval);
     return MIN(minimum, [self sharedView].maximumDismissTimeInterval);
 }
-
 
 - (UIColor*)foregroundColorForStyle {
     if(self.defaultStyle == SVProgressHUDStyleLight) {

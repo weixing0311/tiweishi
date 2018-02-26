@@ -201,15 +201,11 @@
         if (cell.chooseBtn.selected==NO) {
             cell.chooseBtn.selected =YES;
         }
-        
         [self ChangeTotaPriceWithItem:currentItem];
     } failure:^(NSError *error) {
         shopCarCellItem * item = [self.dataArray objectAtIndex:cell.tag];
         cell.countLabel.text = item.quantity;
     }];
-    
-
-
 }
 -(void)ChangeTotaPriceWithItem:(shopCarCellItem *)currentItem
 {

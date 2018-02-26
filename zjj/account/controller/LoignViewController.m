@@ -7,11 +7,10 @@
 //
 
 #import "LoignViewController.h"
-#import "TabbarViewController.h"
+#import "TzsTabbarViewController.h"
 #import "ResignAgumentViewController.h"
-#import "ADDChengUserViewController.h"
 #import "ForgetPasswordViewController.h"
-#import "JPUSHService.h"
+//#import "JPUSHService.h"
 #import "ResignViewController.h"
 @interface LoignViewController ()
 
@@ -163,23 +162,14 @@
         
         
         
-        if ([UserModel shareInstance].nickName.length>0) {
-            
+        
             if ([[UserModel shareInstance].userType isEqualToString:@"2"]) {
                 [[UserModel shareInstance]getNotiadvertising];
             }
 
-            TabbarViewController *tab = [[TabbarViewController alloc]init];
-            [UserModel shareInstance].tabbarStyle = @"health";
-            self.view.window.rootViewController = tab;
+        [self loignSuccessSetRootViewController];
+        
             
-            
-        }else{
-            ADDChengUserViewController *cg =[[ADDChengUserViewController alloc]init];
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cg];
-            cg.isResignUser =YES;
-            [self presentViewController:nav animated:YES completion:nil];
-        }
 
     } failure:^(NSError *error) {
 //        [SVProgressHUD dismiss];
@@ -226,18 +216,8 @@
         
         
         
-        if ([UserModel shareInstance].nickName.length>0) {
-            
-            TabbarViewController *tab = [[TabbarViewController alloc]init];
-            [UserModel shareInstance].tabbarStyle = @"health";
-            self.view.window.rootViewController = tab;
-            
-        }else{
-            ADDChengUserViewController *cg =[[ADDChengUserViewController alloc]init];
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cg];
-            cg.isResignUser =YES;
-            [self presentViewController:nav animated:YES completion:nil];
-        }
+        [self loignSuccessSetRootViewController];
+
         
         
         

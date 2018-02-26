@@ -66,5 +66,9 @@
 -(void)showEmptyViewWithTitle:(NSString *)title;
 
 -(void)hiddenEmptyView;
+-(void)refreshEmptyView;
 
+
+///登录成功跳转
+-(void)loignSuccessSetRootViewController;
 @end

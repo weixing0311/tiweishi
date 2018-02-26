@@ -10,7 +10,7 @@
 #import "TZSEditViewController.h"
 #import "AddressListViewController.h"
 #import "BaseWebViewController.h"
-#import "EidtViewController.h"
+//#import "EidtViewController.h"
 #import "TZSDingGouViewController.h"
 #import "TZSMyDingGouViewController.h"
 #import "TZSTeamDGViewController.h"
@@ -20,11 +20,11 @@
 #import "AddTradingPsController.h"
 #import "AdvertisingView.h"
 #import "BusinessCardViewController.h"
-#import "TabbarViewController.h"
 #import "BodyFatDivisionAgreementViewController.h"
 #import "KfViewController.h"
 #import "MyVoucthersViewController.h"
 #import "VouchersGetViewController.h"
+#import "TravleDetailViewController.h"
 @interface SettingViewController ()<qrcodeDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
@@ -59,7 +59,7 @@
     self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
-    self.integrallb.text = [NSString stringWithFormat:@"旅游金币:%@",[UserModel shareInstance].tourismIntegral?[UserModel shareInstance].tourismIntegral:@"0"];
+    self.integrallb.text = [NSString stringWithFormat:@"金币:%@",[UserModel shareInstance].tourismIntegral?[UserModel shareInstance].tourismIntegral:@"0"];
     if ([[UserModel shareInstance].phoneNum isEqualToString:@"15210642625"]) {
         self.czBtn.hidden = YES;
         self.thirdView.hidden = YES;
@@ -88,7 +88,11 @@
 {
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].headUrl] placeholderImage:[UIImage imageNamed:@"head_default"]];
     self.nameLabel.text = [UserModel shareInstance].nickName;
-    self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
+//    self.LevelImageView.image = [[UserModel shareInstance]getLevelImage];
+    
+    
+    [self.LevelImageView sd_setImageWithURL:[NSURL URLWithString:[UserModel shareInstance].gradeImg] placeholderImage:getImage(@"")];
+    
     self.tzsLabel.text = [UserModel shareInstance].gradeName;
     self.cerLabel.text = [UserModel shareInstance].isAttest;
     self.integrallb.text = [NSString stringWithFormat:@"旅游金币:%@",[UserModel shareInstance].tourismIntegral?[UserModel shareInstance].tourismIntegral:@"0"];
@@ -105,7 +109,6 @@
     [self.thirdView  setViewShadow];
     [self.forthView  setViewShadow];
     [self.fifthView  setViewShadow];
-
 }
 
 -(void)tj//统计
@@ -138,9 +141,9 @@
     if (![[UserModel shareInstance].isAttest isEqualToString:@"已认证"]) {
         UIAlertController * al = [UIAlertController alertControllerWithTitle:@"" message:@"您还未实名认证，请去实名认证" preferredStyle:UIAlertControllerStyleAlert];
         [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            TabbarViewController * tb= [[TabbarViewController alloc]init];
-            [UserModel shareInstance].tabbarStyle = @"health";
-            self.view.window.rootViewController = tb;
+//            TabbarViewController * tb= [[TabbarViewController alloc]init];
+//            [UserModel shareInstance].tabbarStyle = @"health";
+//            self.view.window.rootViewController = tb;
             
         }]];
         
@@ -414,6 +417,17 @@
 }
 
 - (IBAction)toViewRank:(id)sender {
+    self.navigationController.navigationBarHidden =NO;
+    BaseWebViewController *web =[[BaseWebViewController alloc]init];
+    web.title = @"金币特权";
+    web.hidesBottomBarWhenPushed =YES;
+    web.urlStr = @"app/fatTeacher/tourismActivity.html";
+    [self.navigationController pushViewController:web animated:YES];
+
+//    TravleDetailViewController * bs = [[TravleDetailViewController alloc]init];
+//    bs.hidesBottomBarWhenPushed =YES;
+//    [self.navigationController pushViewController:bs animated:YES];
+
 }
 #pragma mark--设置
 - (IBAction)didEdit:(id)sender {
