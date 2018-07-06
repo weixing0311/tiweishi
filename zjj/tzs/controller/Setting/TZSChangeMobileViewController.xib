@@ -29,7 +29,7 @@
                     <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bvo-at-WP7">
-                    <rect key="frame" x="0.0" y="71" width="375" height="60"/>
+                    <rect key="frame" x="0.0" y="141" width="375" height="60"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入新手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SKL-Su-KGz">
                             <rect key="frame" x="10" y="10" width="355" height="40"/>
@@ -48,7 +48,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uhE-Dt-LQ3">
-                    <rect key="frame" x="0.0" y="132" width="375" height="60"/>
+                    <rect key="frame" x="0.0" y="202" width="375" height="60"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V8q-Rv-XAp">
                             <rect key="frame" x="245" y="15" width="100" height="30"/>
@@ -83,7 +83,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mhi-9W-waW">
-                    <rect key="frame" x="0.0" y="193" width="375" height="60"/>
+                    <rect key="frame" x="0.0" y="263" width="375" height="60"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入登录密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="67w-i9-ICb">
                             <rect key="frame" x="10" y="10" width="355" height="40"/>
@@ -102,7 +102,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kY9-dU-e33">
-                    <rect key="frame" x="20" y="283" width="335" height="50"/>
+                    <rect key="frame" x="20" y="353" width="335" height="50"/>
                     <color key="backgroundColor" red="0.93333333333333335" green="0.039215686274509803" blue="0.23137254901960785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="6Va-2l-n6F"/>
@@ -123,7 +123,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6g4-VP-2Iv">
                     <rect key="frame" x="0.0" y="80" width="375" height="60"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入注册手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ddY-nk-vel">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入当前手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ddY-nk-vel">
                             <rect key="frame" x="10" y="10" width="355" height="40"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -157,9 +157,9 @@
                 <constraint firstItem="3Ev-oA-IjN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g3Q-e5-zMC"/>
                 <constraint firstItem="6g4-VP-2Iv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="hzB-8K-ku9"/>
                 <constraint firstItem="Bvo-at-WP7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="iFx-CW-DVK"/>
-                <constraint firstItem="Bvo-at-WP7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="71" id="jhp-tm-bZy"/>
                 <constraint firstItem="Mhi-9W-waW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oeV-lK-eZE"/>
                 <constraint firstItem="kY9-dU-e33" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="tIB-Lx-UBF"/>
+                <constraint firstItem="Bvo-at-WP7" firstAttribute="top" secondItem="6g4-VP-2Iv" secondAttribute="bottom" constant="1" id="tqX-WR-NfU"/>
                 <constraint firstAttribute="trailing" secondItem="uhE-Dt-LQ3" secondAttribute="trailing" id="ue8-gL-9fG"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>

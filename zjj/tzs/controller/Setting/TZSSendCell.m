@@ -40,6 +40,14 @@
     }
 
 }
+
+- (IBAction)didBreakUp:(id)sender {
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(didBreakUpWithCell:)]) {
+        [self.delegate didBreakUpWithCell:self ];
+    }
+
+}
 - (IBAction)showCount:(id)sender {
     
     if (self.delegate &&[self.delegate respondsToSelector:@selector(didChangeCountWithCell:)]) {

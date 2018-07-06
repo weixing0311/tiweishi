@@ -541,37 +541,37 @@
 -(NSString *)getufUpdatainfo
 {
     //proviceId 省份 products
-    NSMutableArray * arr =[NSMutableArray array];
-    NSMutableDictionary * products1 =[NSMutableDictionary dictionary];
-    NSMutableDictionary * products2 =[NSMutableDictionary dictionary];
-    float weight1 =0.0;
-    float weight2 = 0.0;
+    NSMutableArray * resultArr =[NSMutableArray array];
     
-    for (int i=0; i<_dataArray.count; i++) {
-        NSDictionary *dic   =[self.dataArray objectAtIndex:i];
-        
-        int freightTemplateId  =[[dic objectForKey:@"freightTemplateId"] intValue];
-        float weight = [[dic objectForKey:@"productWeight"] floatValue];
-        int count = [[dic objectForKey:@"chooseCount"] intValue];
-        if (freightTemplateId ==0) {
-            weight1 +=weight * count;
-        }else{
-            weight2 +=weight * count;
+
+    
+     NSArray *titleArray = [self classifiedArray:_dataArray];
+    
+    
+    for (int i =0; i<titleArray.count; i++) {
+        NSArray  * arr = [titleArray objectAtIndex:i];
+        double weight = 0.00;
+        NSString * freightTemplateId ;
+        for (int j =0; j<arr.count; j++) {
+            
+            NSDictionary * item = [arr objectAtIndex:j];
+            
+            int count = [[item objectForKey:@"chooseCount"] intValue];
+            weight += [[item safeObjectForKey:@"productWeight"] doubleValue]*count;
+            
+            freightTemplateId = [item safeObjectForKey:@"freightTemplateId"];
+            
+        }
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        [dic safeSetObject:@(weight) forKey:@"weight"];
+        [dic safeSetObject:freightTemplateId forKey:@"freightTemplateId"];
+        if (weight>0) {
+            [resultArr addObject:dic];
         }
     }
-    [products1 setObject:@(weight1) forKey:@"weight"];
-    [products1 setObject:@(0) forKey:@"freightTemplateId"];
-    [products2 setObject:@(weight2) forKey:@"weight"];
-    [products2 setObject:@(1) forKey:@"freightTemplateId"];
-    if (weight1>0) {
-        [arr addObject:products1];
-    }
-    if (weight2>0) {
-        [arr addObject:products2];
-    }
-    
-    DLog(@"计算运费参数 arr-%@",arr);
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:nil];
+
+    DLog(@"计算运费参数 arr-%@",resultArr);
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:resultArr options:NSJSONWritingPrettyPrinted error:nil];
     NSString * str =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     return str;
@@ -596,6 +596,42 @@
     
     return str;
 
+}
+//根据数组中字典中的某个参数将数组分组
+-(NSArray *)classifiedArray:(NSMutableArray *)array
+{
+    
+    NSMutableArray * classArray =[NSMutableArray array];
+    NSMutableArray * currArray = [NSMutableArray array];
+    NSMutableArray * perArray  = [NSMutableArray array];
+    
+    [perArray addObject:[array objectAtIndex:0]];
+    [classArray addObject:perArray];
+    
+    for (int i =1; i<array.count; i++) {
+        
+            NSDictionary * currDic = array[i];
+            BOOL isHaveSame = NO;
+            for (int j = 0;j<classArray.count; j++) {
+                NSMutableArray * currperArray = [classArray objectAtIndex:j];
+                NSDictionary * classDict = currperArray[0];
+                if ([[currDic safeObjectForKey:@"freightTemplateId"] isEqualToString:[classDict safeObjectForKey:@"freightTemplateId"]]) {
+                    isHaveSame = YES;
+                    [currperArray addObject:currDic];
+                }
+                
+            }
+            if (isHaveSame ==NO) {
+                currArray = [NSMutableArray array];
+                [currArray addObject:currDic];
+                [classArray addObject:currArray];
+            }
+    }
+    
+    
+ 
+    
+    return classArray;
 }
 
 @end

@@ -215,8 +215,6 @@
         [self.view addSubview:adv];
         [adv setImageWithUrl:imageUrl];
     }
-    
-    
 }
 
 

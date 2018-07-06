@@ -88,6 +88,11 @@
     cell.selectionStyle =UITableViewCellSelectionStyleNone;
     NSDictionary *dict =[_dataArray objectAtIndex:indexPath.row];
     [cell.headimageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"defPicture"]] placeholderImage:[UIImage imageNamed:@"find_default"]];
+    if ([[dict safeObjectForKey:@"productNo"]isEqualToString:@"157296"]&&![[dict safeObjectForKey:@"quantity"]isEqualToString:@"0"]) {
+        cell.breakUpBtn.hidden = NO;
+    }else{
+        cell.breakUpBtn.hidden = YES;
+    }
     cell.delegate = self;
     cell.tag = indexPath.row;
     
@@ -213,6 +218,33 @@
     }
     
 }
+-(void)didBreakUpWithCell:(TZSSendCell*)cell
+{
+    UIAlertController * al = [UIAlertController alertControllerWithTitle:@"提示" message:@"您将拆分一件脂将军体制管理服务为体验装，是否确认拆分？" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        DLog(@"%@",al.textFields.firstObject.text);
+        NSMutableDictionary * params =[NSMutableDictionary dictionary];
+        [params safeSetObject:[UserModel shareInstance].userId forKey:@"userId"];
+        self.currentTasks =[[BaseSservice sharedManager]post1:@"app/order/orderDelivery/splitProduct.do" HiddenProgress:NO paramters:params success:^(NSDictionary *dic) {
+            [self getInfoList];
+        } failure:^(NSError *error) {
+            
+        }];
+        
+    }]];
+    [al addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:al animated:YES completion:nil];
+
+}
+
+
+
+
+
+
+
 - (IBAction)didNext:(id)sender {
     
     if (_chooseArray.count<1) {

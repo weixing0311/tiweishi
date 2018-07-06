@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UIButton *breakUpBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *headimageView;
 - (IBAction)didAdd:(id)sender;
 - (IBAction)didRed:(id)sender;
@@ -26,4 +27,6 @@
 -(void)didAddWithCell:(TZSSendCell*)cell;
 -(void)didRedWithCell:(TZSSendCell*)cell;
 -(void)didChangeCountWithCell:(TZSSendCell*)cell;
+-(void)didBreakUpWithCell:(TZSSendCell*)cell;
+
 @end

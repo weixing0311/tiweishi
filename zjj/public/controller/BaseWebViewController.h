@@ -25,4 +25,5 @@ typedef enum
 @property (nonatomic,copy  ) NSString * rightBtnUrl;
 @property (nonatomic,strong) UIProgressView * progressView;
 @property (nonatomic,copy  ) NSString * integral;
+@property (nonatomic,copy  ) NSString * wxPayCallBackUrl;
 @end

@@ -7,52 +7,123 @@
 //
 
 #import "WXAlipayController.h"
-
+#import "PaySuccessViewController.h"
 @interface WXAlipayController ()<UIWebViewDelegate>
 @property (nonatomic,strong)UIWebView * webView;
 @end
 
 @implementation WXAlipayController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForegroundNotification) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    //    self.navigationController.navigationBar.hidden = YES;;
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+-(void)appWillEnterForegroundNotification
+{
+    [self getNet];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTBRedColor];
-    self.webView=[[UIWebView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH, JFA_SCREEN_HEIGHT-64)];
-    self.webView.delegate = self;
-    [self.view addSubview:self.webView];
+    self.title = @"微信支付";
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIView * bgView =[[UIView alloc]initWithFrame:self.view.bounds];
+    bgView.backgroundColor = HEXCOLOR(0xeeeeee);
+    [self.view addSubview:bgView];
+
+    NSMutableArray * arr =[NSMutableArray arrayWithArray:self.navigationController.viewControllers ];
+    [arr removeObjectAtIndex:arr.count-2];
+    [self.navigationController setViewControllers:arr];
+
+    [self loadWChat];
+    [self buildBtnView];
     
-    
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[kMyBaseUrl stringByAppendingString:self.urlStr]]]];
-    // Do any additional setup after loading the view.
 }
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+-(void)getNet
 {
-    NSString *urlStr = [webView.request.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if ([urlStr containsString:@"alipays://"]) {
+    NSDictionary * dic =[[UserModel shareInstance]getURLParameters:self.orderNoUrl];
+    
+    NSMutableDictionary * params =[NSMutableDictionary dictionary];
+    [params safeSetObject:[dic objectForKey:@"orderNo"] forKey:@"orderNo"];
+    self.currentTasks = [[BaseSservice sharedManager]post1:@"pay/lakalapay/lakalaOrderPayStatus.do" HiddenProgress:YES paramters:params success:^(NSDictionary *dic) {
+        int payStatus = [[dic safeObjectForKey:@"payStatus"]intValue];
+        if (payStatus ==2) {
+            PaySuccessViewController * success =[[PaySuccessViewController alloc]init];
+            success.paySuccess = YES;
+            success.orderType = [[dic safeObjectForKey:@"orderType"]intValue];
+            [self.navigationController pushViewController:success animated:YES];
+        }else{
+            [[UserModel shareInstance]showInfoWithStatus:@"支付失败"];
+        }
         
-        NSRange range = [urlStr rangeOfString:@"alipays://"]; //截取的字符串起始位置
-        NSString * resultStr = [urlStr substringFromIndex:range.location]; //截取字符串
+    } failure:^(NSError *error) {
         
-        NSURL *alipayURL = [NSURL URLWithString:resultStr];
-        
-        [[UIApplication sharedApplication] openURL:alipayURL options:@{UIApplicationOpenURLOptionUniversalLinksOnly: @NO} completionHandler:^(BOOL success) {
-            
-        }];
+    }];
+    
+}
+
+-(void)buildBtnView
+{
+    UIView * btnView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-60, 100)];
+    btnView.layer.masksToBounds = YES;
+    btnView.layer.cornerRadius = 5;
+    btnView.backgroundColor =HEXCOLOR(0xeeeeee);
+    btnView.layer.borderWidth = 1;
+    btnView.layer.borderColor = HEXCOLOR(0xeeeeee).CGColor;
+    btnView.center = CGPointMake(JFA_SCREEN_WIDTH/2, JFA_SCREEN_HEIGHT/2);
+    [self.view addSubview:btnView];
+    
+    UIButton *button1 =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, JFA_SCREEN_WIDTH-60, 49)];
+    [button1 setTitle:@"已经完成支付" forState:UIControlStateNormal];
+    [button1 addTarget:self action:@selector(getweChatPayResult) forControlEvents:UIControlEventTouchUpInside];
+    button1.backgroundColor =[UIColor whiteColor];
+    [button1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btnView addSubview:button1];
+    UIButton *button2 =[[UIButton alloc]initWithFrame:CGRectMake(0, 50, JFA_SCREEN_WIDTH-60, 49)];
+    [button2 addTarget:self action:@selector(reWeChatPay) forControlEvents:UIControlEventTouchUpInside];
+    button2.backgroundColor =[UIColor whiteColor];
+    [button2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+    [button2 setTitle:@"支付遇到问题，重新支付" forState:UIControlStateNormal];
+    [btnView addSubview:button2];
+
+}
+-(void)getweChatPayResult
+{
+    [self getNet];
+}
+-(void)reWeChatPay
+{
+    [self loadWChat];
+}
+
+-(void)loadWChat
+{
+    if ([_urlStr containsString:kMyBaseUrl]) {
+        _urlStr = [_urlStr stringByReplacingOccurrencesOfString:kMyBaseUrl withString:@""];
     }
-    return YES;
-}
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
     
-}
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
+    //解决wkwebview weixin://无法打开微信客户端的处理
     
+    if ([[UIApplication sharedApplication]respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_urlStr] options:@{UIApplicationOpenURLOptionUniversalLinksOnly: @NO} completionHandler:^(BOOL success) {}];
+    } else {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:_urlStr]];
+    }
+
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    
-}
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
