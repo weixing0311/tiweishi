@@ -147,10 +147,15 @@
 		6C47123F1F25CE0000E5E750 /* WebViewCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C47123E1F25CE0000E5E750 /* WebViewCall.m */; };
 		6C47124D1F27391700E5E750 /* WXPsTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C47124B1F27391700E5E750 /* WXPsTitleCell.m */; };
 		6C47124E1F27391700E5E750 /* WXPsTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */; };
+		6C523D252101D161000CD873 /* MyVouchers2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C523D232101D161000CD873 /* MyVouchers2Cell.m */; };
+		6C523D262101D161000CD873 /* MyVouchers2Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C523D242101D161000CD873 /* MyVouchers2Cell.xib */; };
 		6C57799A1FA701B800388986 /* ClearCecheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5779991FA701B800388986 /* ClearCecheModel.m */; };
 		6C5779A01FA8668300388986 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57799F1FA8668300388986 /* EmptyView.m */; };
 		6C5779A21FA8669000388986 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5779A11FA8669000388986 /* EmptyView.xib */; };
 		6C5779A81FAAAD1700388986 /* UIImageView+wx_imageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5779A71FAAAD1700388986 /* UIImageView+wx_imageView.m */; };
+		6C5796EE21114DE00083C548 /* MyVouchersCell2Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5796ED21114DE00083C548 /* MyVouchersCell2Model.m */; };
+		6C5796F22111AFF30083C548 /* KfVcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C5796F02111AFF30083C548 /* KfVcodeViewController.m */; };
+		6C5796F32111AFF30083C548 /* KfVcodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5796F12111AFF30083C548 /* KfVcodeViewController.xib */; };
 		6C6635121FBA7B00008763A7 /* bt_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C6635091FBA7B00008763A7 /* bt_next@2x.png */; };
 		6C6635131FBA7B00008763A7 /* bt_previous@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C66350A1FBA7B00008763A7 /* bt_previous@2x.png */; };
 		6C6635141FBA7B00008763A7 /* SZCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C66350C1FBA7B00008763A7 /* SZCalendarCell.m */; };
@@ -856,6 +861,9 @@
 		6C47124A1F27391700E5E750 /* WXPsTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXPsTitleCell.h; sourceTree = "<group>"; };
 		6C47124B1F27391700E5E750 /* WXPsTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXPsTitleCell.m; sourceTree = "<group>"; };
 		6C47124C1F27391700E5E750 /* WXPsTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXPsTitleCell.xib; sourceTree = "<group>"; };
+		6C523D222101D161000CD873 /* MyVouchers2Cell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyVouchers2Cell.h; sourceTree = "<group>"; };
+		6C523D232101D161000CD873 /* MyVouchers2Cell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyVouchers2Cell.m; sourceTree = "<group>"; };
+		6C523D242101D161000CD873 /* MyVouchers2Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyVouchers2Cell.xib; sourceTree = "<group>"; };
 		6C5779981FA701B800388986 /* ClearCecheModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClearCecheModel.h; sourceTree = "<group>"; };
 		6C5779991FA701B800388986 /* ClearCecheModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClearCecheModel.m; sourceTree = "<group>"; };
 		6C57799E1FA8668300388986 /* EmptyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
@@ -863,6 +871,11 @@
 		6C5779A11FA8669000388986 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		6C5779A61FAAAD1700388986 /* UIImageView+wx_imageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+wx_imageView.h"; sourceTree = "<group>"; };
 		6C5779A71FAAAD1700388986 /* UIImageView+wx_imageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+wx_imageView.m"; sourceTree = "<group>"; };
+		6C5796EC21114DE00083C548 /* MyVouchersCell2Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyVouchersCell2Model.h; sourceTree = "<group>"; };
+		6C5796ED21114DE00083C548 /* MyVouchersCell2Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyVouchersCell2Model.m; sourceTree = "<group>"; };
+		6C5796EF2111AFF30083C548 /* KfVcodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KfVcodeViewController.h; sourceTree = "<group>"; };
+		6C5796F02111AFF30083C548 /* KfVcodeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KfVcodeViewController.m; sourceTree = "<group>"; };
+		6C5796F12111AFF30083C548 /* KfVcodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KfVcodeViewController.xib; sourceTree = "<group>"; };
 		6C6635091FBA7B00008763A7 /* bt_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_next@2x.png"; sourceTree = "<group>"; };
 		6C66350A1FBA7B00008763A7 /* bt_previous@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bt_previous@2x.png"; sourceTree = "<group>"; };
 		6C66350B1FBA7B00008763A7 /* SZCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZCalendarCell.h; sourceTree = "<group>"; };
@@ -2318,10 +2331,18 @@
 				6C6635231FBC15EC008763A7 /* MyVouchersCell.h */,
 				6C6635241FBC15EC008763A7 /* MyVouchersCell.m */,
 				6C6635251FBC15EC008763A7 /* MyVouchersCell.xib */,
+				6C523D222101D161000CD873 /* MyVouchers2Cell.h */,
+				6C523D232101D161000CD873 /* MyVouchers2Cell.m */,
+				6C523D242101D161000CD873 /* MyVouchers2Cell.xib */,
+				6C5796EC21114DE00083C548 /* MyVouchersCell2Model.h */,
+				6C5796ED21114DE00083C548 /* MyVouchersCell2Model.m */,
 				6C66352D1FBC1E74008763A7 /* MyVoucthersViewController.h */,
 				6C66352E1FBC1E74008763A7 /* MyVoucthersViewController.m */,
 				6CE17CEF1FC8110C001C7B73 /* RingProgressView.h */,
 				6CE17CF01FC8110C001C7B73 /* RingProgressView.m */,
+				6C5796EF2111AFF30083C548 /* KfVcodeViewController.h */,
+				6C5796F02111AFF30083C548 /* KfVcodeViewController.m */,
+				6C5796F12111AFF30083C548 /* KfVcodeViewController.xib */,
 			);
 			name = "vouchers(优惠券)";
 			sourceTree = "<group>";
@@ -3302,6 +3323,7 @@
 				6CEA184420182E0D00CB7E7F /* AddressListCell.xib in Resources */,
 				6C3638F11EFCEBD800268851 /* TZSDistributionViewController.xib in Resources */,
 				6CFDEBDF1F8B7DE7005D3971 /* boy@2x.png in Resources */,
+				6C5796F32111AFF30083C548 /* KfVcodeViewController.xib in Resources */,
 				6C3639811EFE47E100268851 /* AAHighchartsLibrary.js in Resources */,
 				6CFDEC601F8B7DE8005D3971 /* integral@3x.png in Resources */,
 				6C3639C11F023F6600268851 /* HDCell.xib in Resources */,
@@ -3579,6 +3601,7 @@
 				6CFDEC291F8B7DE7005D3971 /* footer-ShoppingCart@3x.png in Resources */,
 				6CFDECC01F8B7DE8005D3971 /* record-shouru@3x.png in Resources */,
 				6CFDEC571F8B7DE8005D3971 /* home-weight02@2x.png in Resources */,
+				6C523D262101D161000CD873 /* MyVouchers2Cell.xib in Resources */,
 				6CFDEC221F8B7DE7005D3971 /* footer-PersonalCenter-red@2x.png in Resources */,
 				6CFDEBFA1F8B7DE7005D3971 /* contact-us-img@2x.png in Resources */,
 				6CFDECBD1F8B7DE8005D3971 /* record-jiangli@2x.png in Resources */,
@@ -3674,6 +3697,7 @@
 				6C3639941EFE47E100268851 /* AAPlotOptions.m in Sources */,
 				6CFD99341EF26DBB00802AA4 /* UserModel.m in Sources */,
 				6C3638E41EFCEB4800268851 /* TZSMessageViewController.m in Sources */,
+				6C5796F22111AFF30083C548 /* KfVcodeViewController.m in Sources */,
 				6CD0110B1EF8293900FB9419 /* TzsTabbarViewController.m in Sources */,
 				6C1DBD751F6634BD00F5B975 /* LoadedImageModel.m in Sources */,
 				6C3639CA1F02532500268851 /* OrderFooter.m in Sources */,
@@ -3717,6 +3741,7 @@
 				6C1B2BDB1EECEB030092AAF0 /* ServiceResultErrorView.m in Sources */,
 				6C1B2BD51EECE6520092AAF0 /* BaseSservice.m in Sources */,
 				6CEA185A201830D200CB7E7F /* DetailCxCell.m in Sources */,
+				6C5796EE21114DE00083C548 /* MyVouchersCell2Model.m in Sources */,
 				6C66351C1FBC11CD008763A7 /* VouchersGetViewController.m in Sources */,
 				6CD011121EF82A0A00FB9419 /* HelpViewController.m in Sources */,
 				6C8F53C51F11D38A00C7A275 /* UIImage+LocalImage.m in Sources */,
@@ -3758,6 +3783,7 @@
 				6CE17CE81FC2AA04001C7B73 /* VouchersTzsDgView.m in Sources */,
 				6CE17CF11FC8110D001C7B73 /* RingProgressView.m in Sources */,
 				6C3639E81F034BA300268851 /* TZSTeamHeaderView.m in Sources */,
+				6C523D252101D161000CD873 /* MyVouchers2Cell.m in Sources */,
 				6C3639C71F02531C00268851 /* TZSOrderHeader.m in Sources */,
 				6C73AFFF1F31B7360042C1A2 /* FriendsCircleCell.m in Sources */,
 				6C3639971EFE47E100268851 /* AASpline.m in Sources */,

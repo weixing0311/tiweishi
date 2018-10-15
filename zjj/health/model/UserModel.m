@@ -394,8 +394,8 @@ static UserModel *model;
 }
 -(void)showInfoWithStatus:(NSString *)status
 {
-    [SVProgressHUD setMaximumDismissTimeInterval:1];
-    [SVProgressHUD setMinimumDismissTimeInterval:1];
+    [SVProgressHUD setMaximumDismissTimeInterval:2];
+    [SVProgressHUD setMinimumDismissTimeInterval:2];
     [SVProgressHUD showInfoWithStatus:status];
 }
 -(void)dismiss

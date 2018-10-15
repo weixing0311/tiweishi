@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KfVcodeViewController">
+            <connections>
+                <outlet property="bgImageView" destination="FSw-3O-Zce" id="3oy-yU-0iz"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kf_vcode" translatesAutoresizingMaskIntoConstraints="NO" id="FSw-3O-Zce">
+                    <rect key="frame" x="0.0" y="70" width="375" height="597"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbW-7X-09x">
+                    <rect key="frame" x="30" y="567" width="315" height="50"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5802386558219178" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Mj8-co-V8v"/>
+                    </constraints>
+                    <state key="normal" title="保存到相册">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="saveImage:" destination="-1" eventType="touchUpInside" id="npr-zb-0G7"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="FSw-3O-Zce" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="2MZ-Az-vje"/>
+                <constraint firstAttribute="bottom" secondItem="qbW-7X-09x" secondAttribute="bottom" constant="50" id="3Ea-gu-yzu"/>
+                <constraint firstItem="FSw-3O-Zce" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7en-ii-4I5"/>
+                <constraint firstItem="qbW-7X-09x" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="JJb-IL-5q1"/>
+                <constraint firstAttribute="bottom" secondItem="FSw-3O-Zce" secondAttribute="bottom" id="Jh5-Se-eVw"/>
+                <constraint firstAttribute="trailing" secondItem="qbW-7X-09x" secondAttribute="trailing" constant="30" id="UWT-Ar-3MU"/>
+                <constraint firstAttribute="trailing" secondItem="FSw-3O-Zce" secondAttribute="trailing" id="WuM-PO-br4"/>
+                <constraint firstItem="qbW-7X-09x" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="eRk-pt-9bL"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="kf_vcode" width="833" height="1250"/>
+    </resources>
+</document>

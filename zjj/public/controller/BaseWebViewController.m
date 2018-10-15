@@ -96,6 +96,7 @@
     [userContentController addScriptMessageHandler:self name:@"toMyOrderDetail"];
     [userContentController addScriptMessageHandler:self name:@"toForward"];
     [userContentController addScriptMessageHandler:self name:@"lakalaCallback"];
+    [userContentController addScriptMessageHandler:self name:@"dialingPhone"];
 
     configuration.userContentController = userContentController;
     
@@ -432,6 +433,11 @@
     {
         [self lakalaCallBackDict:message.body];
     }
+    else if([message.name isEqualToString:@"dialingPhone"])
+    {
+        [self callPhoneWithDict:message.body];
+    }
+    
 }
 
 
@@ -834,7 +840,20 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
+///打电话
+-(void)callPhoneWithDict:(NSDictionary *)dict
+{
+    if (![dict isKindOfClass:[NSDictionary class]]) {
+        [[UserModel shareInstance]showInfoWithStatus:@"后台参数错误"];
+        return;
+    }
+    
+    NSString * phoneNum = [dict safeObjectForKey:@"phone"];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phoneNum]]];
 
+    
+    
+}
 
 
 -(NSString*)DataTOjsonString:(id)object

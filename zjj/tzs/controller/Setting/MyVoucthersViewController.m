@@ -12,7 +12,11 @@
 //#import "ShopTabbbarController.h"
 //#import "GoodsDetailViewController.h"
 #import "TZSDeliveryViewController.h"
-@interface MyVoucthersViewController ()<UITableViewDelegate,UITableViewDataSource,myVoucthersDelegate>
+#import "MyVouchers2Cell.h"
+#import "BaseWebViewController.h"
+#import "MyVouchersCell2Model.h"
+#import "KfVcodeViewController.h"
+@interface MyVoucthersViewController ()<UITableViewDelegate,UITableViewDataSource,myVoucthersDelegate,myVouchers2Delegate>
 {
     UISegmentedControl * _segment;
     UITableView * _tableview;
@@ -118,7 +122,15 @@
         if (dataArr.count<30) {
             _tableview.mj_footer.hidden =YES;
         }
-        [_dataArray addObjectsFromArray:dataArr];
+        
+        
+        for (int i =0; i<dataArr.count; i++) {
+            NSDictionary * dict = [dataArr objectAtIndex:i];
+            MyVouchersCell2Model *model = [MyVouchersCell2Model new];
+            [model setInfoWithDict:dict];
+            [_dataArray addObject:model];
+            
+        }
         [_tableview reloadData];
 
     } failure:^(NSError *error) {
@@ -156,16 +168,28 @@
                     }
                 }
 
-            }else if (self.myType ==IS_FROM_CONFIRM)
-            
-            if (type !=4&&type!=5) {
-                *stop =YES;
-                if (*stop ==YES) {
-                    [dataArr removeObject:dict];
+            }
+            else if (self.myType ==IS_FROM_CONFIRM)
+            {
+                if (type !=4&&type!=5) {
+                    *stop =YES;
+                    if (*stop ==YES) {
+                        [dataArr removeObject:dict];
+                    }
                 }
             }
         }];
-        [_dataArray addObjectsFromArray:dataArr];
+        
+        
+        
+        
+        for (int i =0; i<dataArr.count; i++) {
+            NSDictionary * dict = [dataArr objectAtIndex:i];
+            MyVouchersCell2Model *model = [MyVouchersCell2Model new];
+            [model setInfoWithDict:dict];
+            [_dataArray addObject:model];
+            
+        }
         if (_dataArray.count==0) {
             [self showEmptyViewWithTitle:@"无可用优惠券"];
         }else{
@@ -203,124 +227,190 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    MyVouchersCell2Model * model = [_dataArray objectAtIndex:indexPath.row];
+    
+    int type = [model.type intValue];
+    if (type ==6) {
+        if ([model.showContent isEqualToString:@"open"]) {
+            
+            return [_tableview cellHeightForIndexPath:indexPath model:model keyPath:@"model" cellClass:[MyVouchers2Cell class] contentViewWidth:JFA_SCREEN_WIDTH];
+        }else{
+            return 130;
+    }
+    }
     return 110;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * identifier = @"MyVouchersCell";
-    MyVouchersCell * cell = [_tableview dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [self getXibCellWithTitle:identifier];
-    }
     
+    
+    MyVouchersCell2Model * model = [_dataArray objectAtIndex:indexPath.row];
 
-    cell.delegate = self;
-    cell.tag = indexPath.row;
-    
-    NSDictionary * dic = [_dataArray objectAtIndex:indexPath.row];
-    cell.titlelb.text = [dic safeObjectForKey:@"grantName"];
-    NSString * startTime = [[dic safeObjectForKey:@"validStartTime"] stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
-    NSString * endTime  = [[dic safeObjectForKey:@"validEndTime"] stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
-    
-    cell.timelb.text = [NSString stringWithFormat:@"%@-%@",startTime,endTime];
+    int type = [model.type intValue];
 
-    
-    
-    
-    int type = [[dic safeObjectForKey:@"type"]intValue];
-    if (type ==2) {
+    if (type ==6) {
+        static NSString * identifier = @"MyVouchers2Cell";
+        MyVouchers2Cell * cell = [_tableview dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [self getXibCellWithTitle:identifier];
+        }
+        cell.delegate = self;
+        cell.tag = indexPath.row;
+        cell.model = model;
+        if (_segment.selectedSegmentIndex ==0) {
+            [cell.useBtn setTitle:@"立即使用" forState:UIControlStateNormal];
+            [cell.useBtn setTitleColor:HEXCOLOR(0xffffff) forState:UIControlStateNormal];
+            cell.useBtn.backgroundColor = [UIColor redColor];
+            cell.useBtn.hidden = NO;
+        }else{
+            cell.useBtn.hidden = YES;
+        }
+        //        else{
+        //            NSString * depositStatus = [dic safeObjectForKey:@"depositStatus"];
+        //            if ([depositStatus isEqualToString:@"2"]) {
+        //                [cell.useBtn setTitle:@"退保证金" forState:UIControlStateNormal];
+        //                [cell.useBtn setTitleColor:HEXCOLOR(0xffffff) forState:UIControlStateNormal];
+        //                cell.useBtn.backgroundColor = [UIColor orangeColor];
+        //
+        //            }
+        //            else if ([depositStatus isEqualToString:@"3"]||[depositStatus isEqualToString:@"4"])
+        //            {
+        //                [cell.useBtn setTitle:@"退款审核中" forState:UIControlStateNormal];
+        //                [cell.useBtn setTitleColor:HEXCOLOR(0x666666) forState:UIControlStateNormal];
+        //                cell.useBtn.backgroundColor = HEXCOLOR(0xeeeeee);
+        //
+        //            }
+        //            else if ([depositStatus isEqualToString:@"10"])
+        //            {
+        //                [cell.useBtn setTitle:@"已退款" forState:UIControlStateNormal];
+        //                [cell.useBtn setTitleColor:HEXCOLOR(0x666666) forState:UIControlStateNormal];
+        //                cell.useBtn.backgroundColor = HEXCOLOR(0xeeeeee);
+        //
+        //            }
+        //
+        //        }
+        //
+
+        return cell;
+    }else{
+        static NSString * identifier = @"MyVouchersCell";
+        MyVouchersCell * cell = [_tableview dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [self getXibCellWithTitle:identifier];
+        }
         
         
-        cell.faceValuelb.text = [NSString stringWithFormat:@"%@折",[cell formatFloat:[[dic safeObjectForKey:@"discountAmount"]floatValue]*10]];
-    }
-    else if(type==4)
-    {
-        cell.faceValuelb.text = @"免运费";
-    }
-    else
-    {
-        NSString * faceValue = [NSString stringWithFormat:@"￥%@",[dic safeObjectForKey:@"discountAmount"]];
-        NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:faceValue];
+        cell.delegate = self;
+        cell.tag = indexPath.row;
         
-        //总共
-        [tisString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(0, 1)];
-        cell.faceValuelb.attributedText = tisString;
-    }
-    
-    
-    //控制‘立即使用’button的显示和隐藏 --
-    if (self.myType ==IS_FROM_MINE) {
-        [cell setDidUserHidden:YES];
-        if (_segment) {
-            if (_segment.selectedSegmentIndex==1) {
-                cell.statusImage.hidden= NO;
-                cell.statusImage.image = getImage(@"vouchersHasBeenUserd_");
-            }else if (_segment.selectedSegmentIndex ==2)
-            {
-                cell.statusImage.hidden= NO;
-                cell.statusImage.image = getImage(@"vouchersexpried_");
+        cell.titlelb.text = model.grantName;
+        NSString * startTime = [model.validStartTime stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
+        NSString * endTime  = [model.validEndTime stringByReplacingOccurrencesOfString:@"-" withString:@"."];//替换字符
+        
+        cell.timelb.text = [NSString stringWithFormat:@"%@-%@",startTime,endTime];
+        
+        
+        int type = [model.type intValue];
+        if (type ==2) {
+            
+            
+            cell.faceValuelb.text = [NSString stringWithFormat:@"%@折",[cell formatFloat:[model.discountAmount floatValue]*10]];
+        }
+        else if(type==4)
+        {
+            cell.faceValuelb.text = @"免运费";
+        }
+        else
+        {
+            NSString * faceValue = [NSString stringWithFormat:@"￥%@",model.discountAmount];
+            NSMutableAttributedString * tisString = [[NSMutableAttributedString alloc]initWithString:faceValue];
+            
+            //总共
+            [tisString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(0, 1)];
+            cell.faceValuelb.attributedText = tisString;
+        }
+        
+        
+        //控制‘立即使用’button的显示和隐藏 --
+        if (self.myType ==IS_FROM_MINE) {
+            [cell setDidUserHidden:YES];
+            if (_segment) {
+                if (_segment.selectedSegmentIndex==1) {
+                    cell.statusImage.hidden= NO;
+                    cell.statusImage.image = getImage(@"vouchersHasBeenUserd_");
+                }else if (_segment.selectedSegmentIndex ==2)
+                {
+                    cell.statusImage.hidden= NO;
+                    cell.statusImage.image = getImage(@"vouchersexpried_");
+                    
+                }else{
+                    cell.statusImage.hidden= YES;
+                }
+            }else{
+                cell.statusImage.hidden= YES;
+                [cell setDidUserHidden:YES];
                 
-            }else{
-                cell.statusImage.hidden= YES;
             }
         }else{
-            cell.statusImage.hidden= YES;
-            [cell setDidUserHidden:YES];
-
+            
+            if (_segment) {
+                if (_segment.selectedSegmentIndex==1) {
+                    cell.statusImage.hidden= NO;
+                    cell.statusImage.image = getImage(@"vouchersHasBeenUserd_");
+                    [cell setDidUserHidden:YES];
+                }else if (_segment.selectedSegmentIndex ==2)
+                {
+                    cell.statusImage.hidden= NO;
+                    cell.statusImage.image = getImage(@"vouchersexpried_");
+                    [cell setDidUserHidden:YES];
+                    
+                }else{
+                    cell.statusImage.hidden= YES;
+                    [cell setDidUserHidden:NO];
+                    
+                }
+            }else{
+                cell.statusImage.hidden= YES;
+                [cell setDidUserHidden:YES];
+            }
         }
-    }else{
         
-        if (_segment) {
-            if (_segment.selectedSegmentIndex==1) {
-                cell.statusImage.hidden= NO;
-                cell.statusImage.image = getImage(@"vouchersHasBeenUserd_");
-                [cell setDidUserHidden:YES];
-            }else if (_segment.selectedSegmentIndex ==2)
-            {
-                cell.statusImage.hidden= NO;
-                cell.statusImage.image = getImage(@"vouchersexpried_");
-                [cell setDidUserHidden:YES];
-
-            }else{
-                cell.statusImage.hidden= YES;
-                [cell setDidUserHidden:NO];
-
-            }
+        cell.limitGoodslb.text = [cell getlimitWithArr:model.products];
+        cell.limit2Goodslb.text = [cell getlimitWithArr:model.products];
+        
+        int startAmount = [model.startAmount intValue];
+        if (!startAmount||startAmount ==0) {
+            cell.limitPricelb.text = @"(无限制)";
         }else{
-            cell.statusImage.hidden= YES;
-            [cell setDidUserHidden:YES];
+            cell.limitPricelb.text = [NSString stringWithFormat:@"满%d元可用",startAmount];
         }
-    }
-    
-    cell.limitGoodslb.text = [cell getlimitWithArr:[dic safeObjectForKey:@"products"]];
-    cell.limit2Goodslb.text = [cell getlimitWithArr:[dic safeObjectForKey:@"products"]];
-
-    int startAmount = [[dic safeObjectForKey:@"startAmount"]intValue];
-    if (!startAmount||startAmount ==0) {
-        cell.limitPricelb.text = @"(无限制)";
-    }else{
-        cell.limitPricelb.text = [NSString stringWithFormat:@"满%d元可用",startAmount];
-    }
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-    
-    
-    if (self.chooseDict) {
-        NSString * couponNo= [self.chooseDict safeObjectForKey:@"couponNo"];
-        NSString * indexCouponNo = [dic safeObjectForKey:@"couponNo"];
-        if ([couponNo isEqualToString:indexCouponNo]) {
-            cell.didChooseImage.hidden = NO;
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
+        
+        if (self.chooseDict) {
+            NSString * couponNo= [self.chooseDict safeObjectForKey:@"couponNo"];
+            NSString * indexCouponNo = model.couponNo;
+            if ([couponNo isEqualToString:indexCouponNo]) {
+                cell.didChooseImage.hidden = NO;
+            }else{
+                cell.didChooseImage.hidden = YES;
+            }
         }else{
             cell.didChooseImage.hidden = YES;
         }
-    }else{
-        cell.didChooseImage.hidden = YES;
+        
+        
+        
+        return cell;
+
     }
     
     
     
-    return cell;
+    
+    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -338,32 +428,8 @@
 
 -(void)didUserVoucherWithCell:(MyVouchersCell*)cell
 {
-    NSDictionary * dic = [_dataArray objectAtIndex:cell.tag];
-    int type = [[dic safeObjectForKey:@"type"]intValue];
-//    NSString * useRange = [dic safeObjectForKey:@"useRange"];
-    
-//    if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"health"]) {
-//        return;
-//    }
-//    else if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"shop"])
-//    {
-//
-//        NSArray * arr = [dic safeObjectForKey:@"products"];
-//        if (arr.count==1) {
-//            NSDictionary * goodsDict = arr[0];
-//            NSString * productNo = [goodsDict safeObjectForKey:@"productNo"];
-//            GoodsDetailViewController * goodsd =[[GoodsDetailViewController alloc]init];
-//            goodsd.productNo = productNo;
-//            [self.navigationController pushViewController:goodsd animated:YES];
-//        }
-//        else{//全部商品
-//            ShopTabbbarController * shop = [[ShopTabbbarController alloc]init];
-//            self.view.window.rootViewController = shop;
-//        }
-//    }
-    
-//    else if ([[UserModel shareInstance].tabbarStyle isEqualToString:@"tzs"])
-//    {
+    MyVouchersCell2Model * model = [_dataArray objectAtIndex:cell.tag];
+    int type = [model.type intValue];
         if (type ==4||type==5) {
             TZSDeliveryViewController * com = [[TZSDeliveryViewController alloc]init];
             [self.navigationController pushViewController:com animated:YES];
@@ -375,7 +441,99 @@
 
     
 }
+-(void)showContentInfoWithCell:(MyVouchers2Cell *)cell
+{
+    MyVouchersCell2Model * model = [_dataArray objectAtIndex:cell.tag];
+    
+        if ([model.showContent isEqualToString:@"open"]) {
+            model.showContent = @"close";
+        }else{
+            model.showContent = @"open";
+        }
+    [_tableview reloadData];
+}
+-(void)userTheVoucherWithCell:(MyVouchers2Cell *)cell
+{
+    
+    
+    if (_segment.selectedSegmentIndex ==0) {
+        MyVouchersCell2Model * model = [_dataArray objectAtIndex:cell.tag];
+        
+        NSMutableDictionary *param =[NSMutableDictionary dictionary];
+        [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+        [param safeSetObject:model.startAmount forKey:@"totalPrice"];
+        [param safeSetObject:model.startAmount forKey:@"payableAmount"];
+        
+        [param safeSetObject:model.couponNo forKey:@"couponNo"];
+        
+        
+        self.currentTasks = [[BaseSservice sharedManager]post1:@"app/ordertrail/saveOrderTrial.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
+            DLog(@"success--%@",dic);
+            NSDictionary * dataDict = [dic safeObjectForKey:@"data"];
 
+            if ([[dataDict safeObjectForKey:@"payableAmount"] doubleValue]<1) {
+                [[UserModel shareInstance]showSuccessWithStatus:@"使用成功！"];
+                [self getMyVoucthersInfo];
+                
+                KfVcodeViewController *kf = [[KfVcodeViewController alloc]init];
+                [self.navigationController pushViewController:kf animated:YES];
+                
+                
+                
+                return ;
+            }
+            
+            
+            BaseWebViewController *web = [[BaseWebViewController alloc]init];
+            web.urlStr = @"app/checkstand.html";
+            web.payableAmount = [dataDict safeObjectForKey:@"payableAmount"];
+            //payType 1 消费者订购 2 配送订购 3 服务订购 4 充值
+            web.payType =7;
+            web.opt =5;
+            web.integral = @"3";
+            web.orderNo = [dataDict safeObjectForKey:@"orderNo"];
+            web.title  =@"收银台";
+            [self.navigationController pushViewController:web animated:YES];
+            
+            
+        } failure:^(NSError *error) {
+            DLog(@"faile:%@",error);
+        }];
+
+    }else{
+        MyVouchersCell2Model * model = [_dataArray objectAtIndex:cell.tag];
+
+        NSString * depositStatus = model.depositStatus;
+        if ([depositStatus isEqualToString:@"2"]) {
+
+        UIAlertController * al = [UIAlertController alertControllerWithTitle:@"确定要退保证金？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [al addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            NSMutableDictionary *param =[NSMutableDictionary dictionary];
+            [param setObject:[UserModel shareInstance].userId forKey:@"userId"];
+            [param safeSetObject:model.couponNo forKey:@"couponNo"];
+            
+            
+            self.currentTasks = [[BaseSservice sharedManager]post1:@"app/ordertrail/refundDepositApply.do" HiddenProgress:NO paramters:param success:^(NSDictionary *dic) {
+                DLog(@"success--%@",dic);
+                
+
+                [_tableview.mj_header beginRefreshing];
+            } failure:^(NSError *error) {
+                DLog(@"faile:%@",error);
+            }];
+
+        }]];
+        [al addAction:[UIAlertAction actionWithTitle:@"再想想" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:al animated:YES completion:nil];
+    }
+    
+    
+    }
+
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

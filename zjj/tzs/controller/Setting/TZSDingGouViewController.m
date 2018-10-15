@@ -546,7 +546,7 @@
         for (int i =0 ;i<arr.count;i++) {
             NSDictionary * dict = [arr objectAtIndex:i];
             int type = [[dict safeObjectForKey:@"type"]intValue];
-            if (type !=4&&type!=5) {
+            if (type !=4&&type!=5&&type!=6) {
                 [dataArr addObject:dict];
             }
         }

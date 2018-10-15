@@ -49,20 +49,17 @@
 
 //domain
 //正式
-//#define kMyBaseUrl @"https://mall.i851.com/"
+#define kMyBaseUrl @"https://mall.i851.com/"
 //生产
-#define kMyBaseUrl @"https://yunfuwu.i851.com/"
+//#define kMyBaseUrl @"https://yunfuwu.i851.com/"
 
 //测试域名
 //#define kMyBaseUrl @"http://192.168.1.130:8101/"
-//鹏飞
-//#define kMyBaseUrl @"http://192.168.1.81:8080/"
 
-//皮皮刚
-//#define kMyBaseUrl @"http://192.168.1.74:9099/"
+//小陈
+//#define kMyBaseUrl @"http://192.168.1.102:8080/"
 
-//天龙
-//#define kMyBaseUrl @"http://192.168.1.103:8989/"
+
 
 //老张
 //#define kMyBaseUrl @"http://192.168.1.64:8080/"
